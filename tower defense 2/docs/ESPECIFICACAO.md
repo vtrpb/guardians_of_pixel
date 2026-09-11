@@ -1,4 +1,4 @@
-# Especificação do jogo
+﻿# Especificação do jogo
 
 ## Identidade
 
@@ -1707,9 +1707,9 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 **Não alterar:** maior fase concluída, atributos das torres, preços, recompensas por disparo, intervalo de Boss ou quantidade padrão de 20 waves.
 **Aceitação:**
 - O portal existe somente no cenário de lobby da Fase 1, fica visualmente atrás da primeira árvore e permanece aceso com brilho preto, roxo e ciano.
-- Antes da conclusão da Fase 6, o portal permanece visível e aceso, mas selado, informa que a Fase 6 precisa ser concluída e não inicia o teleporte.
+- Antes da conclusão da Fase 6, o portal permanece visível e aceso, mas selado. Ao clicar, abre uma conversa curta da entidade do portal com **Ainda não...** e 3 opções de resposta (**Como assim?**, **O quê?**, **Quem é você?**). A conversa não inicia teleporte e fecha ao escolher qualquer opção.
 - Depois da conclusão da Fase 6, clicar no portal registra imediatamente a descoberta em armazenamento local e impede cliques repetidos durante o teleporte.
-- Não existe confirmação nem escolha de resposta: o portal é a única entrada e inicia diretamente uma transição de 1.600 ms.
+- Com a fase concluída, o portal é a única entrada e inicia diretamente uma transição de 1.600 ms.
 - Durante a transição, toda a interface sofre deslocamentos, inversões de cor, separação dos canais ciano e magenta, cortes horizontais e uma camada de ruído com as mensagens **SINAL CORROMPIDO** e **A realidade está falhando...**.
 - A música do lobby para, começa a composição procedural assustadora e corrompida do portal e toca um efeito sintetizado exclusivo com quatro notas quebradas e ruído filtrado.
 - A faixa usada na transição continua sendo a composição procedural assustadora e corrompida exclusiva desse diálogo de chegada, com passos de 540 ms e ganho relativo de 185%.

@@ -8,7 +8,7 @@ const especificacao = fs.readFileSync("docs/ESPECIFICACAO.md", "utf8");
 assert.doesNotMatch(html, /class="cabecalho-jogo"/);
 assert.doesNotMatch(html, /class="marca-jogo"/);
 assert.doesNotMatch(html, /Comando de defesa|Zona sob proteção/);
-assert.match(html, /<div class="aplicacao-jogo">\s*<div class="palco-com-torres">/);
+assert.match(html, /<div class="aplicacao-jogo"[^>]*>\s*<div class="palco-com-torres">/);
 assert.match(html, /class="controles"/);
 
 assert.match(

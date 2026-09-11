@@ -125,7 +125,6 @@ const contexto = {
     atualizarIdentidadeDoApoiador() {},
     atualizarBotoesDeConstrucao() {},
     atualizarBotoesDaTorre() {},
-    atualizarPainelDeBoosts() {},
     atualizarConteudoMenuAberto() {},
     atualizarConfirmacaoDaCompraDaLoja() {},
     camadaConfirmacaoCompraLoja: { hidden: true },

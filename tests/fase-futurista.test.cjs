@@ -137,6 +137,7 @@ const contextoDaReversao = {
 vm.createContext(contextoDaReversao);
 vm.runInContext([
     extrairFuncao("calcularProgressoDoInimigo"),
+    extrairFuncao("obterPosicaoNoCaminhoPeloProgresso"),
     extrairFuncao("posicionarInimigoNoProgressoDoCaminho"),
     extrairFuncao("recuarInimigoNoCaminho"),
     extrairFuncao("ativarReversaoDeEmergencia")

@@ -12,7 +12,9 @@ assert.match(html, /data-i18n="lobby\.capitulos">Capítulos</);
 assert.doesNotMatch(html, /onclick="mostrarFases\(\)"/);
 assert.match(codigo, /capitulos: Object\.freeze\(\[[\s\S]*?faseInicial: 1, faseFinal: 6[\s\S]*?faseInicial: 7, faseFinal: 12[\s\S]*?faseInicial: 13, faseFinal: 18/);
 assert.match(codigo, /numero: 2[\s\S]*?requerVitoriaNaFaseSecreta: true/);
+assert.match(codigo, /numero: 3[\s\S]*?requerVitoriaNoIntervaloPerdido: true/);
 assert.match(codigo, /CHAVE_CAPITULO_2_DESBLOQUEADO = "guardians-of-pixel-capitulo-2-desbloqueado-v1"/);
+assert.match(codigo, /CHAVE_CAPITULO_3_DESBLOQUEADO = "guardians-of-pixel-capitulo-3-desbloqueado-v1"/);
 assert.match(codigo, /function mostrarCapitulos\(\)[\s\S]*?CONFIG\.capitulos\.map/);
 assert.match(codigo, /data-numero-capitulo="\$\{capitulo\.numero\}"/);
 assert.match(codigo, /function abrirCapitulo\(numeroDoCapitulo\)/);
@@ -45,15 +47,16 @@ const contexto = {
         capitulos: [
             { numero: 1, faseInicial: 1, faseFinal: 6 },
             { numero: 2, faseInicial: 7, faseFinal: 12, requerVitoriaNaFaseSecreta: true },
-            { numero: 3, faseInicial: 13, faseFinal: 18 }
+            { numero: 3, faseInicial: 13, faseFinal: 18, requerVitoriaNoIntervaloPerdido: true }
         ],
-        fases: Array.from({ length: 7 }, (_, indice) => ({ numero: indice + 1 }))
+        fases: Array.from({ length: 13 }, (_, indice) => ({ numero: indice + 1 }))
     }
 };
 vm.createContext(contexto);
 vm.runInContext([
     "var maiorFaseConcluida = 0;",
     "var capitulo2Desbloqueado = false;",
+    "var capitulo3Desbloqueado = false;",
     extrairFuncao("obterCapitulo"),
     extrairFuncao("obterCapituloDaFase"),
     extrairFuncao("obterProgressoDoCapitulo"),
@@ -88,8 +91,11 @@ assert.strictEqual(contexto.capituloEstaDesbloqueado(3), false);
 
 contexto.maiorFaseConcluida = 12;
 assert.strictEqual(contexto.capituloEstaConcluido(2), true);
+assert.strictEqual(contexto.capituloEstaDesbloqueado(3), false);
+assert.strictEqual(contexto.faseEstaDesbloqueada(13), false);
+contexto.capitulo3Desbloqueado = true;
 assert.strictEqual(contexto.capituloEstaDesbloqueado(3), true);
-assert.strictEqual(contexto.faseEstaDesbloqueada(13), false, "Uma fase futura ainda precisa existir no catálogo.");
+assert.strictEqual(contexto.faseEstaDesbloqueada(13), true);
 assert.strictEqual(contexto.capituloEstaDesbloqueado(4), false);
 assert.strictEqual(contexto.obterCapituloDaFase(99), null);
 
@@ -98,8 +104,10 @@ const contextoDaConclusao = {
     maiorFaseConcluida: 5,
     faseSelecionada: 6,
     capitulo2Desbloqueado: false,
+    capitulo3Desbloqueado: false,
     salvarProgressoDasFases() {},
-    atualizarPortalFaseSecreta() {}
+    atualizarPortalFaseSecreta() {},
+    atualizarRelogioQuebradoDoIntervalo() {}
 };
 vm.createContext(contextoDaConclusao);
 vm.runInContext([
@@ -117,8 +125,9 @@ assert.strictEqual(contextoDaConclusao.faseEstaDesbloqueada(7), false);
 assert.match(especificacao, /### Mudança: campanha organizada em capítulos/);
 assert.match(especificacao, /Capítulo 1.*Fases 1 a 6/);
 assert.match(especificacao, /Capítulo 2.*Fases 7 a 12/);
-assert.match(especificacao, /vencer a fase secreta libera o Capítulo 2/i);
+assert.match(especificacao, /vencer a (?:fase secreta )?Dimensão Glitch libera o Capítulo 2/i);
 assert.match(especificacao, /Capítulo 3.*Fases 13 a 18/);
+assert.match(especificacao, /vencer o Intervalo Perdido libera o Capítulo 3/i);
 assert.match(especificacao, /não pertence a nenhum capítulo/i);
 
 console.log("Capítulos: navegação, intervalos e bloqueios progressivos validados.");

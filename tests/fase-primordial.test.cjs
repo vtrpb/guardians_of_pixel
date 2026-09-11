@@ -154,13 +154,13 @@ const contextoDoPulso = {
     proximaWaveDoPulsoTemporal: 1,
     pulsoTemporalNormalExpiraEm: 0,
     pulsoTemporalBossExpiraEm: 0,
-    postoPulsoTemporal: { hidden: true },
-    botaoPulsoTemporal: { disabled: true, dataset: {} },
+    botaoPulsoTemporal: { disabled: true, hidden: true, dataset: {} },
     estadoPulsoTemporal: { textContent: "" },
     localizar(texto, variaveis = {}) {
         return texto.replace("{segundos}", variaveis.segundos)
             .replace("{wave}", variaveis.wave);
     },
+    registrarUsoDoPulsoTemporalParaConquistas() {},
     mostrarAviso(texto) { this.ultimoAviso = texto; }
 };
 vm.createContext(contextoDoPulso);
@@ -169,7 +169,7 @@ vm.runInContext([
     extrairFuncao("pulsoTemporalEstaDesbloqueado"),
     extrairFuncao("pulsoTemporalEstaAtivo"),
     extrairFuncao("pulsoTemporalPodeSerAtivado"),
-    extrairFuncao("atualizarPulsoTemporalNoPosto"),
+    extrairFuncao("atualizarPulsoTemporalNoControle"),
     extrairFuncao("ativarPulsoTemporal"),
     extrairFuncao("oncaEstaEmDisparada"),
     extrairFuncao("javaliEstaEmArrancada"),
@@ -197,7 +197,6 @@ contextoDoPulso.wave = 6;
 assert.strictEqual(contextoDoPulso.pulsoTemporalPodeSerAtivado(), true);
 
 [
-    'id="posto-pulso-temporal"',
     'id="botao-pulso-temporal"',
     'onclick="ativarPulsoTemporal()"',
     "decoracao-lobby-primordial",

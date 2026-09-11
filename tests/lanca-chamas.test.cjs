@@ -25,14 +25,14 @@ const especificacao = fs.readFileSync(
     "danoPorIntervalo: 5",
     "intervaloEntreDanos: 1000",
     "duracao: 10000",
-    "function aplicarEfeitoDeQueimadura(inimigo, efeitoDeQueimadura, agora = Date.now())",
+    "function aplicarEfeitoDeQueimadura(",
     "function atualizarDanoDaQueimaduraNoInimigo(inimigo, agora = Date.now())",
     "function desenharTanqueDeCombustivelDoLancaChamas(estilo)",
     "function desenharArmamentoDoLancaChamas(estilo)",
     "function desenharBolaDeFogo(tiro)",
     "function desenharEfeitoDeQueimaduraNoInimigo(inimigo, x, y, tamanho)",
     "efeitoDeQueimadura: configuracaoAtual.efeitoDeQueimadura || null",
-    "aplicarEfeitoDeQueimadura(tiro.alvo, tiro.efeitoDeQueimadura);",
+    "inimigo.elementoDaQueimadura = elemento;",
     "inimigo.queimaduraExpiraEm = deslocarCronometroAposPausa(",
     "inimigo.proximoDanoDeQueimaduraEm = deslocarCronometroAposPausa("
 ].forEach((trecho) => assert.ok(codigo.includes(trecho), `Integração ausente: ${trecho}`));

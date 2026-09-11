@@ -11,8 +11,8 @@ assert.match(codigo, /CHAVE_MAQUINA_DO_TEMPO_DESBLOQUEADA = "guardians-of-pixel-
 assert.match(codigo, /CHAVE_EPOCA_DA_MAQUINA_DO_TEMPO = "guardians-of-pixel-epoca-temporal-v1"/);
 assert.match(codigo, /maquinaDoTempo: Object\.freeze\(\{[\s\S]*?faseQueConcede: 7[\s\S]*?epocaInicial: "presente"/);
 assert.match(codigo, /passado: Object\.freeze\(\[8, 10\]\)/);
-assert.match(codigo, /presente: Object\.freeze\(\[7, 11\]\)/);
-assert.match(codigo, /futuro: Object\.freeze\(\[9, 12\]\)/);
+assert.match(codigo, /presente: Object\.freeze\(\[7\]\)/);
+assert.match(codigo, /futuro: Object\.freeze\(\[9, 11, 12\]\)/);
 assert.match(codigo, /function finalizarPartidaComVitoria\(\)[\s\S]*?deveMostrarCartaDaMaquinaDoTempoAposVitoria\(\)[\s\S]*?mostrarCutsceneDaCarta\("maquinaDoTempo"\)/);
 assert.match(codigo, /function mostrarCapitulos\(\)[\s\S]*?criarBotaoDaMaquinaDoTempoNoCapitulo\(\)/);
 assert.match(codigo, /function mostrarFases\([\s\S]*?criarPainelDaMaquinaDoTempo\(\)/);
@@ -23,7 +23,7 @@ assert.match(estilos, /\.botao-maquina-tempo-capitulo\s*\{[\s\S]*?position: abso
 assert.match(estilos, /\.maquina-tempo-destinos\s*\{[\s\S]*?grid-template-columns: repeat\(3/);
 assert.match(estilos, /\.fase-tema-primordial\s*\{/);
 assert.match(especificacao, /### Mudança: carta da Fase 7 e Máquina do Tempo/);
-assert.match(especificacao, /Fases 8 e 10 no Passado, 7 e 11 no Presente, e 9 e 12 no Futuro/);
+assert.match(especificacao, /Fases 8 e 10 no Passado, a Fase 7 no Presente e as Fases 9, 11 e 12 no Futuro/);
 
 function extrairFuncao(nome) {
     const inicio = codigo.indexOf(`function ${nome}(`);
@@ -54,8 +54,8 @@ const contexto = {
             ],
             fasesPlanejadasPorEpoca: {
                 passado: [8, 10],
-                presente: [7, 11],
-                futuro: [9, 12]
+                presente: [7],
+                futuro: [9, 11, 12]
             }
         },
         fases: [{ numero: 7 }, { numero: 8 }]

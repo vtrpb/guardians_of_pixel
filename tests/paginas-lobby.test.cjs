@@ -18,7 +18,8 @@ for (const tela of [
     "loja",
     "pacoteApoiador",
     "missoes",
-    "conquistas"
+    "conquistas",
+    "salvos"
 ]) {
     assert.match(javascript, new RegExp(`definirTelaDoMenuAberta\\("${tela}"\\)`));
 }

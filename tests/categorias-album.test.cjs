@@ -132,9 +132,9 @@ assert.match(especificacao, /### Mudança: categorias do Álbum/);
 assert.match(especificacao, /\*\*Torres\*\*, \*\*Inimigos\*\*, \*\*Bosses\*\*, \*\*Minas\*\* e \*\*Skins\*\*/);
 assert.match(especificacao, /histórico de figurinhas de inimigos começa vazio/);
 assert.match(especificacao, /não apaga nem altera estatísticas permanentes/);
-assert.match(especificacao, /Conceito futuro: forma humana do Senhor do Tempo/);
-assert.match(especificacao, /inicialmente com `ativa: false`/i);
-assert.match(especificacao, /braços grossos proporcionais ao torso/i);
+assert.match(especificacao, /Forma humana do Senhor do Tempo/);
+assert.match(especificacao, /manter `CONFIG\.faseSecreta\.senhorDoTempo\.formaHumanaFutura\.ativa` como `false`/i);
+assert.match(especificacao, /forma humana completa na cena final do Ponto Zero/i);
 assert.match(especificacao, /bolso baixo do paletó/i);
 
 console.log("Álbum de Figurinhas: coleção, descoberta, persistência e responsividade validadas.");

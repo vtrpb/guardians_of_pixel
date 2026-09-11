@@ -6,10 +6,50 @@
     <meta name="theme-color" content="#07150f">
     <meta name="token-csrf-checkout" content="">
     <title>Guardians of Pixel</title>
-    <link rel="stylesheet" href="styles.css?v=maquina-tempo-1">
+    <link rel="stylesheet" href="styles.css?v=maquina-tempo-1&build=salvos-28">
 </head>
-<body>
-<div class="aplicacao-jogo">
+<body class="jogo-antes-do-lobby">
+<section id="tela-carregamento" class="tela-carregamento" role="status" aria-live="polite" aria-label="Carregando Guardians of Pixel" data-i18n-aria-label="abertura.carregandoJogo">
+    <div class="carregamento-conteudo">
+        <span class="carregamento-selo" data-i18n="abertura.umaProducao">UMA PRODUÇÃO</span>
+        <div class="carregamento-logo-moldura">
+            <img src="assets/logo-lpg-studios.png" alt="LPG Studios" width="660" height="552">
+        </div>
+        <p data-i18n="abertura.preparando">Preparando as defesas</p>
+        <div class="carregamento-barra" aria-hidden="true"><span></span></div>
+        <strong data-i18n="abertura.carregando">CARREGANDO...</strong>
+    </div>
+</section>
+
+<section id="tela-inicial-jogo" class="tela-inicial-jogo" role="dialog" aria-modal="true" aria-labelledby="titulo-menu-inicial" hidden>
+    <div class="menu-inicial-cenario" aria-hidden="true">
+        <span class="menu-inicial-relogio-fundo"><i></i><b></b></span>
+        <span class="menu-inicial-torre menu-inicial-torre-esquerda"><i></i></span>
+        <span class="menu-inicial-torre menu-inicial-torre-direita"><i></i></span>
+        <span class="menu-inicial-inimigo menu-inicial-inimigo-1"></span>
+        <span class="menu-inicial-inimigo menu-inicial-inimigo-2"></span>
+        <span class="menu-inicial-inimigo menu-inicial-inimigo-3"></span>
+    </div>
+    <div class="menu-inicial-conteudo">
+        <span class="menu-inicial-selo" aria-hidden="true">GP</span>
+        <p id="saudacao-menu-inicial" class="menu-inicial-saudacao">Bem-vindo!</p>
+        <h1 id="titulo-menu-inicial"><span>Guardians</span><strong>of Pixel</strong></h1>
+        <p id="descricao-menu-inicial" class="menu-inicial-descricao" data-i18n="abertura.descricao">Prepare suas torres e proteja a linha do tempo.</p>
+        <div class="menu-inicial-acoes">
+            <button id="botao-jogar-menu-inicial" class="botao-menu-inicial botao-menu-inicial-jogar" type="button" onclick="entrarNoLobbyPeloMenuInicial()">
+                <span aria-hidden="true">▶</span>
+                <strong data-i18n="abertura.jogar">JOGAR</strong>
+            </button>
+            <button id="botao-sair-menu-inicial" class="botao-menu-inicial botao-menu-inicial-sair" type="button" onclick="sairDoJogoPeloMenuInicial()">
+                <span aria-hidden="true">×</span>
+                <strong data-i18n="abertura.sair">SAIR</strong>
+            </button>
+        </div>
+        <small class="menu-inicial-produtora">LPG STUDIOS · LEQU48</small>
+    </div>
+</section>
+
+<div class="aplicacao-jogo" inert aria-hidden="true">
     <div class="palco-com-torres">
         <div class="palco-jogo">
             <div id="menu-partida" class="menu-partida oculto">
@@ -27,40 +67,6 @@
                 </aside>
             </div>
 
-            <aside class="posto-comando-lateral" aria-label="Boosts da partida" data-localizar-aria-label="Boosts da partida">
-                <header class="posto-boosts-cabecalho">
-                    <strong data-localizar="Boosts">Boosts</strong>
-                    <small data-localizar="Partida atual">Partida atual</small>
-                </header>
-                <div id="lista-bonus-posto" class="posto-boosts-lista" aria-live="polite">
-                    <p class="posto-boosts-vazio" data-localizar="Derrote um Boss para escolher seu primeiro boost.">Derrote um Boss para escolher seu primeiro boost.</p>
-                </div>
-                <section class="posto-boost-temporario" aria-label="Boost temporário" data-localizar-aria-label="Boost temporário">
-                    <span class="posto-boost-secao" data-localizar="Temporário">Temporário</span>
-                    <div id="boost-fliperama-posto" class="posto-boost-item posto-boost-fliperama" data-estado="inativo">
-                        <span class="posto-boost-icone" aria-hidden="true">⚡</span>
-                        <span class="posto-boost-texto">
-                            <strong>Fliperama</strong>
-                            <small id="estado-boost-fliperama-posto" data-localizar="Aguardando evento">Aguardando evento</small>
-                        </span>
-                        <span class="posto-boost-barra" aria-hidden="true">
-                            <i id="barra-boost-fliperama-posto" class="barra-boost-cadencia"></i>
-                            <i id="barra-boost-dano-fliperama-posto" class="barra-boost-dano"></i>
-                        </span>
-                    </div>
-                </section>
-                <section id="posto-pulso-temporal" class="posto-pulso-temporal" aria-label="Habilidade temporal" data-localizar-aria-label="Habilidade temporal" hidden>
-                    <span class="posto-boost-secao" data-localizar="Habilidade temporal">Habilidade temporal</span>
-                    <button id="botao-pulso-temporal" class="botao-pulso-temporal" type="button" onclick="ativarPulsoTemporal()" disabled>
-                        <span class="posto-pulso-icone" aria-hidden="true">⌛</span>
-                        <span class="posto-pulso-texto">
-                            <strong data-localizar="Pulso Temporal">Pulso Temporal</strong>
-                            <small id="estado-pulso-temporal" data-localizar="Pronto para usar">Pronto para usar</small>
-                        </span>
-                    </button>
-                </section>
-            </aside>
-
             <canvas id="game" width="1200" height="700" aria-label="Mapa do jogo Guardians of Pixel" data-localizar-aria-label="Mapa do jogo Guardians of Pixel"></canvas>
         </div>
 
@@ -77,14 +83,24 @@
                 <button id="botao-torre-esporos" class="botao botao-construcao botao-construcao-esporos" onclick="selecionarTipoDeTorre('torreEsporos')" aria-pressed="false" aria-disabled="true" disabled>Torre de Esporos (Conclua Fase 4)</button>
                 <button id="botao-obliterador" class="botao botao-construcao botao-construcao-obliterador" onclick="selecionarTipoDeTorre('obliterador')" aria-pressed="false" aria-disabled="true" disabled>Obliterador (Conclua Fase 5)</button>
                 <button id="botao-torre-sismica" class="botao botao-construcao botao-construcao-sismica" onclick="selecionarTipoDeTorre('torreSismica')" aria-pressed="false" aria-disabled="true" disabled>Torre Sísmica (Conclua Fase 6)</button>
+                <button id="botao-torre-varredura" class="botao botao-construcao botao-construcao-varredura" onclick="selecionarTipoDeTorre('torreDeVarredura')" aria-pressed="false" aria-disabled="true" disabled>Torre de Varredura (Conclua Fase 13)</button>
                 <button id="botao-isca-blindada" class="botao botao-construcao botao-construcao-isca" onclick="selecionarTipoDeTorre('iscaBlindada')" aria-pressed="false" aria-disabled="true" disabled>Isca Blindada (Compre na Loja)</button>
                 <button id="botao-amplificador-pixel" class="botao botao-construcao botao-construcao-amplificador" onclick="selecionarTipoDeTorre('amplificadorPixel')" aria-pressed="false" aria-disabled="true" disabled>Amplificador Pixel (Compre na Loja)</button>
                 <button id="botao-gerador-creditos" class="botao botao-construcao botao-construcao-gerador" onclick="selecionarTipoDeTorre('geradorDeCreditos')" aria-pressed="false" aria-disabled="true" disabled>Gerador de Créditos (Compre na Loja)</button>
                 <button id="botao-torre-raios" class="botao botao-construcao botao-construcao-raios" onclick="selecionarTipoDeTorre('torreDeRaios')" aria-pressed="false" aria-disabled="true" disabled>Torre de Raios (Compre na Loja)</button>
                 <button id="botao-lanca-chamas" class="botao botao-construcao botao-construcao-lanca-chamas" onclick="selecionarTipoDeTorre('lancaChamas')" aria-pressed="false" aria-disabled="true" disabled>Lança-Chamas (Compre na Loja)</button>
+                <button id="botao-torre-perfuradora" class="botao botao-construcao botao-construcao-perfuradora" onclick="selecionarTipoDeTorre('torrePerfuradora')" aria-pressed="false" aria-disabled="true" disabled>Torre Perfuradora (Compre na Loja)</button>
+                <button id="botao-torre-marcadora" class="botao botao-construcao botao-construcao-marcadora" onclick="selecionarTipoDeTorre('torreMarcadora')" aria-pressed="false" aria-disabled="true" disabled>Torre Marcadora (Compre na Loja)</button>
+                <button id="botao-torre-drones" class="botao botao-construcao botao-construcao-drones" onclick="selecionarTipoDeTorre('torreDrones')" aria-pressed="false" aria-disabled="true" disabled>Torre de Drones (Compre na Loja)</button>
+                <button id="botao-torre-correntes" class="botao botao-construcao botao-construcao-correntes" onclick="selecionarTipoDeTorre('torreCorrentes')" aria-pressed="false" aria-disabled="true" disabled>Torre de Correntes (Compre na Loja)</button>
+                <button id="botao-torre-sucata" class="botao botao-construcao botao-construcao-sucata" onclick="selecionarTipoDeTorre('torreSucata')" aria-pressed="false" aria-disabled="true" disabled>Torre de Sucata (Compre na Loja)</button>
+                <button id="botao-canhao-prismatico" class="botao botao-construcao botao-construcao-prismatico" onclick="selecionarTipoDeTorre('canhaoPrismatico')" aria-pressed="false" aria-disabled="true" disabled>Canhão Prismático (Compre na Loja)</button>
                 <button id="botao-mina-terrestre" class="botao botao-construcao botao-construcao-mina" onclick="selecionarTipoDeTorre('minaTerrestre')" aria-pressed="false" aria-disabled="true" disabled>Mina Terrestre (Compre na Loja)</button>
                 <button id="botao-mina-congelante" class="botao botao-construcao botao-construcao-mina-congelante" onclick="selecionarTipoDeTorre('minaCongelante')" aria-pressed="false" aria-disabled="true" disabled>Mina Congelante (Compre na Loja)</button>
+                <button id="botao-mina-pulso" class="botao botao-construcao botao-construcao-mina-pulso" onclick="selecionarTipoDeTorre('minaDePulso')" aria-pressed="false" aria-disabled="true" disabled>Mina de Pulso (Compre na Loja)</button>
+                <button id="botao-mina-corrosiva" class="botao botao-construcao botao-construcao-mina-corrosiva" onclick="selecionarTipoDeTorre('minaCorrosiva')" aria-pressed="false" aria-disabled="true" disabled>Mina Corrosiva (Compre na Loja)</button>
                 <button id="botao-bomba-pesada" class="botao botao-construcao botao-construcao-bomba" onclick="selecionarTipoDeTorre('bombaPesada')" aria-pressed="false" aria-disabled="true" disabled>Bomba Pesada (Compre na Loja)</button>
+                <button id="botao-bomba-fragmentacao" class="botao botao-construcao botao-construcao-bomba-fragmentacao" onclick="selecionarTipoDeTorre('bombaDeFragmentacao')" aria-pressed="false" aria-disabled="true" disabled>Bomba de Fragmentação (Compre na Loja)</button>
             </div>
         </aside>
     </div>
@@ -95,6 +111,13 @@
             <span><strong data-localizar="Central da torre">Central da torre</strong><small data-localizar="Selecione uma torre no mapa">Selecione uma torre no mapa</small></span>
         </div>
         <div class="controles-acoes">
+            <button id="botao-pulso-temporal" class="botao botao-pulso-temporal" type="button" onclick="ativarPulsoTemporal()" disabled hidden>
+                <span class="controle-pulso-icone" aria-hidden="true">⌛</span>
+                <span class="controle-pulso-texto">
+                    <strong data-localizar="Pulso Temporal">Pulso Temporal</strong>
+                    <small id="estado-pulso-temporal" data-localizar="Pronto para usar">Pronto para usar</small>
+                </span>
+            </button>
             <button id="botao-modo-alvo" class="botao botao-secundario" onclick="alternarModoDeAlvoDaTorreSelecionada()" title="Alternar entre primeiro, último e aleatório" data-localizar-title="Alternar entre primeiro, último e aleatório" disabled>Alvo: selecione uma torre</button>
             <button id="botao-melhorar" class="botao botao-primario botao-com-atalho" data-atalho="E" onclick="melhorarTorreSelecionada()" aria-keyshortcuts="E" disabled>Selecione uma torre</button>
             <button id="botao-vender" class="botao botao-perigo botao-com-atalho" data-atalho="X" onclick="venderTorreSelecionada()" aria-keyshortcuts="X" disabled>Selecione uma torre</button>
@@ -216,13 +239,16 @@
     <div class="painel-minigame-fliperama">
         <header class="cabecalho-minigame-fliperama">
             <div>
-                <span class="selo-minigame-fliperama" data-localizar="Evento especial">Evento especial</span>
+                <span id="selo-minigame-fliperama" class="selo-minigame-fliperama" data-localizar="Evento especial">Evento especial</span>
                 <h2 id="titulo-minigame-fliperama">Tiro ao alvo</h2>
                 <p id="descricao-minigame-fliperama">Acerte o alvo móvel 10 vezes antes que o tempo termine.</p>
             </div>
-            <div class="status-minigame-fliperama" aria-live="polite">
-                <span><em id="rotulo-pontos-minigame-fliperama">Acertos</em><strong id="pontos-minigame-fliperama">0/10</strong></span>
-                <span><em data-localizar="Tempo">Tempo</em><strong id="tempo-minigame-fliperama">15s</strong></span>
+            <div class="painel-status-minigame-fliperama">
+                <div class="status-minigame-fliperama" aria-live="polite">
+                    <span><em id="rotulo-pontos-minigame-fliperama">Acertos</em><strong id="pontos-minigame-fliperama">0/10</strong></span>
+                    <span><em id="rotulo-tempo-minigame-fliperama" data-localizar="Tempo">Tempo</em><strong id="tempo-minigame-fliperama">15s</strong></span>
+                </div>
+                <button id="botao-sair-minigame-fliperama-treinamento" class="botao botao-sair-minigame-treinamento" type="button" onclick="abandonarMinigameDoFliperamaEmTreinamento()" hidden>← Voltar</button>
             </div>
         </header>
         <canvas
@@ -230,6 +256,7 @@
             class="minigame-fliperama"
             width="720"
             height="420"
+            tabindex="0"
             aria-label="Área do minigame com alvo móvel"
         ></canvas>
         <div
@@ -248,6 +275,17 @@
     </div>
 </section>
 
+<section
+    id="camada-minigame-treinamento-fliperama"
+    class="camada-minigame-treinamento-fliperama"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Minigame do fliperama"
+    hidden
+>
+    <div id="painel-minigame-treinamento-fliperama" class="painel-minigame-treinamento-fliperama"></div>
+</section>
+
 <div
     id="regiao-notificacoes-progresso"
     class="regiao-notificacoes-progresso"
@@ -257,7 +295,7 @@
 
 <audio id="musica" loop><source src="background_music.mp3" type="audio/mpeg"></audio>
 
-<main id="menu-principal" class="menu-principal">
+<main id="menu-principal" class="menu-principal" inert aria-hidden="true">
     <div class="lobby-cenario" aria-hidden="true">
         <span class="lago-lobby"></span>
         <span class="arvore-lobby arvore-lobby-2"></span>
@@ -348,6 +386,24 @@
         <span class="decoracao-lobby-futurista arvore-holografica-lobby arvore-holografica-lobby-2"></span>
         <span class="decoracao-lobby-futurista linha-neon-lobby linha-neon-lobby-1"></span>
         <span class="decoracao-lobby-futurista linha-neon-lobby linha-neon-lobby-2"></span>
+        <span class="decoracao-lobby-laboratorio bobina-laboratorio-lobby bobina-laboratorio-lobby-1"></span>
+        <span class="decoracao-lobby-laboratorio bobina-laboratorio-lobby bobina-laboratorio-lobby-2"></span>
+        <span class="decoracao-lobby-laboratorio tubo-laboratorio-lobby tubo-laboratorio-lobby-1"></span>
+        <span class="decoracao-lobby-laboratorio tubo-laboratorio-lobby tubo-laboratorio-lobby-2"></span>
+        <span class="decoracao-lobby-laboratorio cabo-laboratorio-lobby cabo-laboratorio-lobby-1"></span>
+        <span class="decoracao-lobby-laboratorio cabo-laboratorio-lobby cabo-laboratorio-lobby-2"></span>
+        <span class="decoracao-lobby-futuro-despedacado ruina-futuro-lobby ruina-futuro-lobby-1"></span>
+        <span class="decoracao-lobby-futuro-despedacado ruina-futuro-lobby ruina-futuro-lobby-2"></span>
+        <span class="decoracao-lobby-futuro-despedacado relogio-futuro-lobby relogio-futuro-lobby-1"></span>
+        <span class="decoracao-lobby-futuro-despedacado relogio-futuro-lobby relogio-futuro-lobby-2"></span>
+        <span class="decoracao-lobby-futuro-despedacado fenda-futuro-lobby fenda-futuro-lobby-1"></span>
+        <span class="decoracao-lobby-futuro-despedacado fenda-futuro-lobby fenda-futuro-lobby-2"></span>
+        <span class="decoracao-lobby-ponto-zero anel-ponto-zero-lobby anel-ponto-zero-lobby-1"></span>
+        <span class="decoracao-lobby-ponto-zero anel-ponto-zero-lobby anel-ponto-zero-lobby-2"></span>
+        <span class="decoracao-lobby-ponto-zero terminal-ponto-zero-lobby terminal-ponto-zero-lobby-1"></span>
+        <span class="decoracao-lobby-ponto-zero terminal-ponto-zero-lobby terminal-ponto-zero-lobby-2"></span>
+        <span class="decoracao-lobby-ponto-zero linha-ponto-zero-lobby linha-ponto-zero-lobby-1"></span>
+        <span class="decoracao-lobby-ponto-zero linha-ponto-zero-lobby linha-ponto-zero-lobby-2"></span>
     </div>
 
     <div class="segredo-arvore-lobby">
@@ -360,6 +416,37 @@
         ><span aria-hidden="true">?</span></button>
         <span class="arvore-lobby arvore-lobby-1" aria-hidden="true"></span>
     </div>
+
+    <button
+        id="relogio-quebrado-intervalo"
+        class="relogio-quebrado-intervalo"
+        type="button"
+        onclick="interagirComRelogioQuebrado()"
+        aria-label="Investigar relógio quebrado"
+        hidden
+    >
+        <span class="relogio-quebrado-corpo" aria-hidden="true">
+            <span class="relogio-quebrado-aro"></span>
+            <span class="relogio-quebrado-mostrador">
+                <span class="relogio-quebrado-marcas">
+                    <i></i><i></i><i></i><i></i><i></i><i></i>
+                    <i></i><i></i><i></i><i></i><i></i><i></i>
+                </span>
+                <i class="relogio-ponteiro relogio-ponteiro-horas"></i>
+                <i class="relogio-ponteiro relogio-ponteiro-minutos"></i>
+                <span class="relogio-quebrado-pino"></span>
+                <span class="relogio-rachadura relogio-rachadura-1"></span>
+                <span class="relogio-rachadura relogio-rachadura-2"></span>
+                <span class="relogio-rachadura relogio-rachadura-3"></span>
+                <span class="relogio-quebrado-falta"></span>
+            </span>
+        </span>
+        <span class="relogio-quebrado-cacos" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="relogio-quebrado-legenda">
+            <strong>00:00</strong>
+            <small data-localizar="ERA INEXISTENTE">ERA INEXISTENTE</small>
+        </span>
+    </button>
 
     <section class="menu-cartao" aria-labelledby="titulo-menu">
         <header class="lobby-topo">
@@ -420,10 +507,25 @@
                 <strong data-i18n="lobby.conquistas">Conquistas</strong>
                 <small id="resumo-conquistas-menu">0/6 desbloqueadas</small>
             </button>
+            <button class="botao-lobby-extra botao-lobby-salvos" onclick="mostrarSalvos()">
+                <span aria-hidden="true">▣</span>
+                <strong data-i18n="lobby.salvos">Salvos</strong>
+                <small data-i18n="lobby.espacosDeProgresso">3 espaços de progresso</small>
+            </button>
             <button class="botao-lobby-extra botao-lobby-infinito" onclick="abrirSelecaoDeDefesas(true)">
                 <span aria-hidden="true">∞</span>
                 <strong data-i18n="lobby.wavesInfinitas">Waves infinitas</strong>
                 <small data-i18n="lobby.jogueAteBaseCair">Jogue até sua base cair</small>
+            </button>
+            <button id="botao-editor-menu" class="botao-lobby-extra botao-lobby-editor botao-lobby-editor-bloqueado" onclick="mostrarEditorDeFases()" disabled aria-disabled="true">
+                <span aria-hidden="true">✎</span>
+                <strong data-i18n="lobby.editor">Editor</strong>
+                <small id="estado-editor-menu">Requer nível 5</small>
+            </button>
+            <button class="botao-lobby-extra botao-lobby-treinamento" onclick="mostrarCentroDeTreinamento()">
+                <span aria-hidden="true">⚡</span>
+                <strong data-i18n="lobby.treinamento">Treinamento</strong>
+                <small data-i18n="lobby.minigamesForaDoFliperama">Minigames fora do fliperama</small>
             </button>
         </div>
 
@@ -432,6 +534,21 @@
                 <span id="lobby-avatar" class="lobby-avatar" aria-hidden="true">GP</span>
                 <span><small id="rotulo-defensor-lobby">DEFENSOR</small><strong id="estado-defensor-lobby">PRONTO PARA JOGAR</strong></span>
             </div>
+            <button
+                id="progresso-nivel-lobby"
+                class="lobby-nivel"
+                type="button"
+                onclick="mostrarNiveis()"
+                aria-label="Abrir progressão de nível"
+                data-i18n-aria-label="lobby.abrirNiveis"
+            >
+                <span class="lobby-nivel-selo"><small data-i18n="lobby.nivel">NÍVEL</small><strong id="nivel-jogador-menu">1</strong></span>
+                <span class="lobby-nivel-dados">
+                    <small data-i18n="lobby.experiencia">XP DO DEFENSOR</small>
+                    <em id="experiencia-jogador-menu">0/200 XP</em>
+                    <span class="lobby-nivel-barra" role="progressbar" aria-valuemin="0" aria-valuemax="200" aria-valuenow="0"><i id="barra-experiencia-jogador-menu"></i></span>
+                </span>
+            </button>
             <div class="lobby-status" aria-label="Resumo da partida">
                 <span><strong id="creditos-iniciais-menu">150</strong> <em data-i18n="lobby.creditos">créditos</em></span>
                 <span><strong id="fragmentos-pixel-menu">0</strong> <em data-i18n="lobby.fragmentos">fragmentos</em></span>
@@ -459,6 +576,20 @@
     <div class="transicao-glitch-mensagem">
         <small data-localizar="SINAL CORROMPIDO">SINAL CORROMPIDO</small>
         <strong data-localizar="A realidade está falhando...">A realidade está falhando...</strong>
+    </div>
+</div>
+
+<div
+    id="camada-transicao-intervalo"
+    class="camada-transicao-intervalo"
+    role="status"
+    aria-live="assertive"
+    hidden
+>
+    <span class="transicao-intervalo-ponteiro" aria-hidden="true"></span>
+    <div class="transicao-intervalo-mensagem">
+        <small data-localizar="COORDENADA 00:00">COORDENADA 00:00</small>
+        <strong data-localizar="ENTRANDO NO INTERVALO PERDIDO...">ENTRANDO NO INTERVALO PERDIDO...</strong>
     </div>
 </div>
 
@@ -540,6 +671,42 @@
                     <span class="radio-transmissao-botao radio-transmissao-botao-esquerdo"></span>
                     <span class="radio-transmissao-botao radio-transmissao-botao-direito"></span>
                 </div>
+                <div class="terminal-registro" aria-hidden="true">
+                    <span class="terminal-registro-tela">
+                        <i></i><i></i><i></i>
+                    </span>
+                    <span class="terminal-registro-teclas">
+                        <i></i><i></i><i></i>
+                    </span>
+                    <span class="terminal-registro-base"></span>
+                </div>
+                <div class="maquina-tempo-cena-final" aria-hidden="true">
+                    <span class="maquina-tempo-relogio">
+                        <i></i>
+                        <b></b>
+                    </span>
+                    <span class="coordenada-temporal">
+                        <i></i><i></i><i></i>
+                    </span>
+                </div>
+                <div class="transmissao-futuro-visual" aria-hidden="true">
+                    <span class="transmissao-futuro-relogio"><i></i><b></b></span>
+                    <span class="transmissao-futuro-corpo"></span>
+                    <span class="transmissao-futuro-falha transmissao-futuro-falha-1"></span>
+                    <span class="transmissao-futuro-falha transmissao-futuro-falha-2"></span>
+                </div>
+                <div class="senhor-tempo-revelado senhor-tempo-forma-humana" aria-hidden="true">
+                    <div class="senhor-tempo-corpo">
+                        <i class="senhor-tempo-braco senhor-tempo-braco-solto"></i>
+                        <i class="senhor-tempo-braco senhor-tempo-braco-no-bolso"></i>
+                        <i class="senhor-tempo-bolso"></i>
+                    </div>
+                    <div class="senhor-tempo-cabeca">
+                        <i class="ponteiro-relogio ponteiro-relogio-hora"></i>
+                        <i class="ponteiro-relogio ponteiro-relogio-minuto"></i>
+                        <i class="centro-relogio"></i>
+                    </div>
+                </div>
                 <p id="texto-cutscene-carta">Você está pronto. Algo estará lhe esperando no lobby da Fase 1, entre as árvores. Venha ver meu desafio.</p>
                 <strong id="assinatura-cutscene-carta">???</strong>
             </article>
@@ -616,6 +783,6 @@
     </section>
 </div>
 
-    <script src="game.js?v=maquina-tempo-1"></script>
+    <script src="game.js?v=maquina-tempo-1&build=salvos-28"></script>
 </body>
 </html>

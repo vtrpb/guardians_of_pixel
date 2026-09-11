@@ -1,6 +1,14 @@
 // Elementos da página
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+const telaCarregamento = document.getElementById("tela-carregamento");
+const telaInicialJogo = document.getElementById("tela-inicial-jogo");
+const saudacaoMenuInicial = document.getElementById("saudacao-menu-inicial");
+const descricaoMenuInicial = document.getElementById("descricao-menu-inicial");
+const botaoJogarMenuInicial = document.getElementById("botao-jogar-menu-inicial");
+const botaoSairMenuInicial = document.getElementById("botao-sair-menu-inicial");
+const aplicacaoJogo = document.querySelector(".aplicacao-jogo");
+const inicioDoCarregamento = Date.now();
 const musica = document.getElementById("musica");
 const botaoMusica = document.getElementById("botao-musica");
 const botaoTorrePadrao = document.getElementById("botao-torre-padrao");
@@ -10,14 +18,24 @@ const botaoTorreBesta = document.getElementById("botao-torre-besta");
 const botaoTorreEsporos = document.getElementById("botao-torre-esporos");
 const botaoObliterador = document.getElementById("botao-obliterador");
 const botaoTorreSismica = document.getElementById("botao-torre-sismica");
+const botaoTorreVarredura = document.getElementById("botao-torre-varredura");
 const botaoIscaBlindada = document.getElementById("botao-isca-blindada");
 const botaoAmplificadorPixel = document.getElementById("botao-amplificador-pixel");
 const botaoGeradorCreditos = document.getElementById("botao-gerador-creditos");
 const botaoTorreRaios = document.getElementById("botao-torre-raios");
 const botaoLancaChamas = document.getElementById("botao-lanca-chamas");
+const botaoTorrePerfuradora = document.getElementById("botao-torre-perfuradora");
+const botaoTorreMarcadora = document.getElementById("botao-torre-marcadora");
+const botaoTorreDrones = document.getElementById("botao-torre-drones");
+const botaoTorreCorrentes = document.getElementById("botao-torre-correntes");
+const botaoTorreSucata = document.getElementById("botao-torre-sucata");
+const botaoCanhaoPrismatico = document.getElementById("botao-canhao-prismatico");
 const botaoMinaTerrestre = document.getElementById("botao-mina-terrestre");
 const botaoMinaCongelante = document.getElementById("botao-mina-congelante");
+const botaoMinaPulso = document.getElementById("botao-mina-pulso");
+const botaoMinaCorrosiva = document.getElementById("botao-mina-corrosiva");
 const botaoBombaPesada = document.getElementById("botao-bomba-pesada");
+const botaoBombaFragmentacao = document.getElementById("botao-bomba-fragmentacao");
 const botaoMelhorar = document.getElementById("botao-melhorar");
 const botaoVender = document.getElementById("botao-vender");
 const botaoModoDeAlvo = document.getElementById("botao-modo-alvo");
@@ -39,8 +57,15 @@ const creditosIniciaisMenu = document.getElementById("creditos-iniciais-menu");
 const resumoMissoesMenu = document.getElementById("resumo-missoes-menu");
 const resumoConquistasMenu = document.getElementById("resumo-conquistas-menu");
 const estadoPacoteApoiadorMenu = document.getElementById("estado-pacote-apoiador-menu");
+const nivelJogadorMenu = document.getElementById("nivel-jogador-menu");
+const experienciaJogadorMenu = document.getElementById("experiencia-jogador-menu");
+const barraExperienciaJogadorMenu = document.getElementById("barra-experiencia-jogador-menu");
+const botaoEditorMenu = document.getElementById("botao-editor-menu");
+const estadoEditorMenu = document.getElementById("estado-editor-menu");
 const portalFaseSecreta = document.getElementById("portal-fase-secreta");
+const relogioQuebradoIntervalo = document.getElementById("relogio-quebrado-intervalo");
 const camadaTransicaoGlitch = document.getElementById("camada-transicao-glitch");
+const camadaTransicaoIntervalo = document.getElementById("camada-transicao-intervalo");
 const camadaCorredoresAmarelos = document.getElementById("camada-corredores-amarelos");
 const canvasLabirintoAmarelo = document.getElementById("labirinto-amarelo");
 const ctxLabirintoAmarelo = canvasLabirintoAmarelo.getContext?.("2d") || null;
@@ -94,45 +119,74 @@ const botaoProximaFaseResultado = document.getElementById("botao-proxima-fase-re
 const camadaBonusPosBoss = document.getElementById("camada-bonus-pos-boss");
 const opcoesBonusPosBoss = document.getElementById("opcoes-bonus-pos-boss");
 const camadaMinigameFliperama = document.getElementById("camada-minigame-fliperama");
+const seloMinigameFliperama = document.getElementById("selo-minigame-fliperama");
 const canvasMinigameFliperama = document.getElementById("minigame-fliperama");
 const ctxMinigameFliperama = canvasMinigameFliperama.getContext("2d");
 const tituloMinigameFliperama = document.getElementById("titulo-minigame-fliperama");
 const descricaoMinigameFliperama = document.getElementById("descricao-minigame-fliperama");
 const rotuloPontosMinigameFliperama = document.getElementById("rotulo-pontos-minigame-fliperama");
 const pontosMinigameFliperama = document.getElementById("pontos-minigame-fliperama");
+const rotuloTempoMinigameFliperama = document.getElementById("rotulo-tempo-minigame-fliperama");
 const tempoMinigameFliperama = document.getElementById("tempo-minigame-fliperama");
 const instrucaoMinigameFliperama = document.getElementById("instrucao-minigame-fliperama");
 const controlesToqueLabirinto = document.getElementById("controles-toque-labirinto");
 const botoesDirecaoLabirinto = [...document.querySelectorAll("[data-direcao-labirinto]")];
-const listaBonusPosBossNoPosto = document.getElementById("lista-bonus-posto");
-const boostFliperamaNoPosto = document.getElementById("boost-fliperama-posto");
-const estadoBoostFliperamaNoPosto = document.getElementById("estado-boost-fliperama-posto");
-const barraBoostFliperamaNoPosto = document.getElementById("barra-boost-fliperama-posto");
-const barraBoostDanoFliperamaNoPosto = document.getElementById("barra-boost-dano-fliperama-posto");
-const postoPulsoTemporal = document.getElementById("posto-pulso-temporal");
+const botaoSairMinigameFliperamaTreinamento = document.getElementById("botao-sair-minigame-fliperama-treinamento");
+const camadaMinigameTreinamentoFliperama = document.getElementById("camada-minigame-treinamento-fliperama");
+const painelMinigameTreinamentoFliperama = document.getElementById("painel-minigame-treinamento-fliperama");
 const botaoPulsoTemporal = document.getElementById("botao-pulso-temporal");
 const estadoPulsoTemporal = document.getElementById("estado-pulso-temporal");
 
 const VOLUME_MUSICA_DE_FUNDO = 0.35;
 const CHAVE_PROGRESSO_FASES = "tower-defense-2-progresso-fases-v2";
+const CHAVE_CORRECAO_PROGRESSO_FASES = "guardians-of-pixel-correcao-progresso-fases-13-14-v1";
+const CHAVE_ENTRADA_ANTERIOR = "guardians-of-pixel-entrada-anterior-v1";
 const CHAVE_FRAGMENTOS_PIXEL = "guardians-of-pixel-fragmentos-v2";
 const CHAVE_COMPRAS_LOJA = "guardians-of-pixel-compras-v2";
+const CHAVE_OFERTA_SEMANAL_LOJA = "guardians-of-pixel-oferta-semanal-v1";
 const CHAVE_TUTORIAL_CONCLUIDO = "guardians-of-pixel-tutorial-concluido-v1";
 const CHAVE_MISSOES_SEMANAIS = "guardians-of-pixel-missoes-semanais-v1";
 const CHAVE_RECOMPENSAS_MISSOES = "guardians-of-pixel-recompensas-missoes-v1";
 const CHAVE_ESTATISTICAS_CONQUISTAS = "guardians-of-pixel-estatisticas-conquistas-v1";
+const CHAVE_PROGRESSAO_NIVEL = "guardians-of-pixel-progressao-nivel-v1";
 const CHAVE_PACOTE_APOIADOR = "guardians-of-pixel-pacote-apoiador-v1";
 const CHAVE_IDIOMA = "guardians-of-pixel-idioma-v1";
 const CHAVE_PREFERENCIAS = "guardians-of-pixel-preferencias-v1";
 const CHAVE_FASE_SECRETA_DESCOBERTA = "guardians-of-pixel-fase-secreta-v1";
 const CHAVE_CAPITULO_2_DESBLOQUEADO = "guardians-of-pixel-capitulo-2-desbloqueado-v1";
+const CHAVE_INTERVALO_PERDIDO_DESCOBERTO = "guardians-of-pixel-intervalo-perdido-v1";
+const CHAVE_CAPITULO_3_DESBLOQUEADO = "guardians-of-pixel-capitulo-3-desbloqueado-v1";
 const CHAVE_CARTA_MISTERIOSA_VISTA = "guardians-of-pixel-carta-misteriosa-v1";
 const CHAVE_CARTA_MAQUINA_DO_TEMPO_VISTA = "guardians-of-pixel-carta-maquina-tempo-v1";
 const CHAVE_MAQUINA_DO_TEMPO_DESBLOQUEADA = "guardians-of-pixel-maquina-tempo-v1";
 const CHAVE_EPOCA_DA_MAQUINA_DO_TEMPO = "guardians-of-pixel-epoca-temporal-v1";
 const CHAVE_TRANSMISSAO_PROJETO_RELOGIO_VISTA = "guardians-of-pixel-transmissao-projeto-relogio-v1";
+const CHAVE_REGISTRO_LABORATORIO_VISTO = "guardians-of-pixel-registro-laboratorio-v1";
+const CHAVE_CENA_FINAL_LABORATORIO_VISTA = "guardians-of-pixel-cena-final-laboratorio-v1";
+const CHAVE_TRANSMISSAO_FUTURO_DESPEDACADO_VISTA = "guardians-of-pixel-transmissao-futuro-despedacado-v1";
+const CHAVE_CENA_FINAL_FUTURO_DESPEDACADO_VISTA = "guardians-of-pixel-cena-final-futuro-despedacado-v1";
+const CHAVE_CENA_FINAL_PONTO_ZERO_VISTA = "guardians-of-pixel-cena-final-ponto-zero-v1";
+const CHAVE_CENA_FINAL_INTERVALO_PERDIDO_VISTA = "guardians-of-pixel-cena-final-intervalo-v1";
+const CHAVE_INTRODUCAO_FASE_13_VISTA = "guardians-of-pixel-introducao-fase-13-v1";
+const CHAVE_CENA_FINAL_FASE_13_VISTA = "guardians-of-pixel-cena-final-fase-13-v1";
+const CHAVE_INTRODUCAO_FASE_14_VISTA = "guardians-of-pixel-introducao-fase-14-v2";
+const CHAVE_CENA_FINAL_FASE_14_VISTA = "guardians-of-pixel-cena-final-fase-14-v1";
 const CHAVE_FIGURINHAS_DO_ALBUM = "guardians-of-pixel-album-figurinhas-v1";
 const CHAVE_SELECAO_DE_DEFESAS = "guardians-of-pixel-selecao-defesas-v1";
+const CHAVE_MAPAS_DO_EDITOR = "guardians-of-pixel-editor-mapas-v1";
+const CHAVE_MAPAS_IMPORTADOS_DO_EDITOR = "guardians-of-pixel-editor-comunidade-v1";
+const CHAVE_AVALIACOES_DO_EDITOR = "guardians-of-pixel-editor-avaliacoes-v1";
+const CHAVE_CENTRO_DE_TREINAMENTO = "guardians-of-pixel-centro-treinamento-v1";
+const CHAVE_SISTEMA_DE_SALVOS = "guardians-of-pixel-salvos-v1";
+const PREFIXOS_DOS_DADOS_DE_PROGRESSO = Object.freeze([
+    "guardians-of-pixel-",
+    "tower-defense-2-"
+]);
+const CHAVES_GLOBAIS_DO_JOGO = Object.freeze([
+    CHAVE_SISTEMA_DE_SALVOS,
+    CHAVE_IDIOMA,
+    CHAVE_PREFERENCIAS
+]);
 const IDIOMAS_SUPORTADOS = Object.freeze(["pt-BR", "en", "es"]);
 const TRADUCOES = Object.freeze({
     "pt-BR": Object.freeze({
@@ -149,6 +203,17 @@ const TRADUCOES = Object.freeze({
         "configuracoes.modoNoite": "Modo noite",
         "configuracoes.idioma": "Idioma",
         "configuracoes.escolherIdioma": "Escolher idioma",
+        "abertura.umaProducao": "Uma produção",
+        "abertura.preparando": "Preparando as defesas",
+        "abertura.carregando": "CARREGANDO...",
+        "abertura.carregandoJogo": "Carregando Guardians of Pixel",
+        "abertura.bemVindo": "Bem-vindo!",
+        "abertura.bemVindoDeVolta": "Bem-vindo de volta!",
+        "abertura.descricao": "Prepare suas torres e proteja a linha do tempo.",
+        "abertura.jogar": "JOGAR",
+        "abertura.sair": "SAIR",
+        "abertura.ateLogo": "Até logo!",
+        "abertura.podeFechar": "O jogo foi encerrado. Você já pode fechar esta aba.",
         "lobby.sobreviva": "Sobreviva até o fim!",
         "lobby.album": "Álbum",
         "lobby.torresInimigos": "Complete suas figurinhas",
@@ -173,6 +238,197 @@ const TRADUCOES = Object.freeze({
         "lobby.apoiador": "APOIADOR",
         "lobby.prontoParaJogar": "PRONTO PARA JOGAR",
         "lobby.coracaoDePixel": "CORAÇÃO DE PIXEL",
+        "lobby.nivel": "NÍVEL",
+        "lobby.experiencia": "XP DO DEFENSOR",
+        "lobby.abrirNiveis": "Abrir progressão de nível",
+        "nivel.titulo": "Nível de experiência",
+        "nivel.descricao": "Derrote inimigos e conclua fases para ganhar XP e liberar recompensas.",
+        "nivel.alcancado": "Nível alcançado",
+        "nivel.recompensa": "Recompensa: {recompensa}",
+        "nivel.semRecompensa": "Continue avançando para chegar à próxima recompensa.",
+        "nivel.proximo": "Próximo nível",
+        "nivel.recompensas": "Recompensas de nível",
+        "nivel.desbloqueada": "Desbloqueada",
+        "nivel.bloqueada": "Desbloqueia no nível {nivel}",
+        "nivel.equiparSkin": "Equipar skin",
+        "nivel.usarOriginal": "Usar visual original",
+        "nivel.xpAtual": "{atual}/{necessaria} XP",
+        "nivel.xpTotal": "{quantidade} XP total",
+        "nivel.rotulo": "Nível {nivel}",
+        "nivel.porInimigo": "por inimigo",
+        "nivel.porBoss": "por Boss",
+        "nivel.porFase": "por fase concluída",
+        "nivel.skinVanguarda": "Skin Vanguarda Esmeralda",
+        "nivel.skinVanguardaDescricao": "Visual verde-esmeralda conquistado pela experiência do defensor.",
+        "nivel.origemSkin": "Obtida no nível 2.",
+        "nivel.torreRaiosDescricao": "Libera permanentemente a Torre de Raios sem custo de Fragmentos.",
+        "nivel.miraCalibradaDescricao": "Libera permanentemente a melhoria Mira Calibrada sem custo de Fragmentos.",
+        "nivel.xpPartida": " Você recebeu {quantidade} XP nesta partida.",
+        "lobby.editor": "Editor",
+        "lobby.crieSuaFase": "Crie sua própria fase",
+        "lobby.salvos": "Salvos",
+        "lobby.espacosDeProgresso": "3 espaços de progresso",
+        "salvos.titulo": "Salvos",
+        "salvos.descricao": "Use espaços separados para jogar e testar sem misturar o progresso.",
+        "salvos.avisoTitulo": "PROGRESSO PROTEGIDO",
+        "salvos.aviso": "Cada save guarda campanha, XP, Fragmentos, compras, coleção, missões, mapas e recordes. Idioma, áudio e iluminação são compartilhados.",
+        "salvos.save": "Save {numero}",
+        "salvos.ativo": "ATIVO",
+        "salvos.preenchido": "SALVO",
+        "salvos.vazio": "VAZIO",
+        "salvos.progressoAtual": "Seu progresso atual",
+        "salvos.progressoGuardado": "Progresso guardado",
+        "salvos.espacoDisponivel": "Espaço disponível para uma nova jornada.",
+        "salvos.nivel": "Nível {nivel}",
+        "salvos.faseDisponivel": "Fase {fase} disponível",
+        "salvos.campanhaConcluida": "Campanha atual concluída",
+        "salvos.fragmentos": "{quantidade} Fragmentos",
+        "salvos.itens": "{quantidade} itens da Loja",
+        "salvos.carregar": "Carregar save",
+        "salvos.novo": "Começar do zero",
+        "salvos.emUso": "Em uso",
+        "salvos.erroTroca": "Não foi possível trocar de save. Seu progresso atual foi mantido.",
+        "lobby.treinamento": "Treinamento",
+        "lobby.minigamesForaDoFliperama": "Pratique os 8 jogos do fliperama",
+        "treinamento.titulo": "Centro de Treinamento",
+        "treinamento.descricao": "Escolha e pratique todos os minigames do fliperama.",
+        "treinamento.local": "CENTRAL DO FLIPERAMA",
+        "treinamento.aviso": "Treine os oito jogos à vontade: os recordes ficam salvos, mas esta área não entrega XP, Fragmentos, créditos ou boosts.",
+        "treinamento.alvo.nome": "Tiro ao alvo",
+        "treinamento.alvo.descricao": "Acompanhe e acerte dez vezes o alvo móvel.",
+        "treinamento.labirinto.nome": "Labirinto Pixel",
+        "treinamento.labirinto.descricao": "Guie o robô até a saída sem tocar nas paredes.",
+        "treinamento.voo.nome": "Voo Pixel",
+        "treinamento.voo.descricao": "Atravesse cinco portais sem colidir com os obstáculos.",
+        "treinamento.coleta.nome": "Chuva de Pixels",
+        "treinamento.coleta.descricao": "Colete oito pixels amarelos e evite os corrompidos.",
+        "treinamento.sequencia.nome": "Sequência Neon",
+        "treinamento.sequencia.descricao": "Observe e repita corretamente os cinco sinais.",
+        "treinamento.carga.nome": "Carga Máxima",
+        "treinamento.carga.descricao": "Aperte o botão o mais rápido possível e carregue o núcleo.",
+        "treinamento.carga.instrucao": "Aperte o botão ou use Espaço e Enter repetidamente.",
+        "treinamento.reflexo.nome": "Sinal de Reflexo",
+        "treinamento.reflexo.descricao": "Espere o sinal verde e reaja antes que ele desapareça.",
+        "treinamento.reflexo.instrucao": "Não aperte antes do sinal. Acerte cinco sinais antes de cometer três falhas.",
+        "treinamento.pulso.nome": "Trava de Pulso",
+        "treinamento.pulso.descricao": "Trave o marcador móvel dentro das zonas de energia.",
+        "treinamento.pulso.instrucao": "Aperte quando o marcador estiver dentro da faixa luminosa. Faça três acertos.",
+        "treinamento.jogar": "Jogar",
+        "treinamento.recorde": "RECORDE",
+        "treinamento.semRecorde": "Ainda sem recorde",
+        "treinamento.melhorTempo": "Melhor tempo: {tempo}s",
+        "treinamento.melhorReflexo": "Melhor média: {tempo} ms",
+        "treinamento.preparar": "PREPARE-SE",
+        "treinamento.comecaEm": "Começa em",
+        "treinamento.tempo": "Tempo",
+        "treinamento.meta": "Meta",
+        "treinamento.apertos": "Apertos",
+        "treinamento.sinais": "Sinais",
+        "treinamento.travas": "Travas",
+        "treinamento.apertar": "APERTAR!",
+        "treinamento.aguarde": "AGUARDE...",
+        "treinamento.agora": "AGORA!",
+        "treinamento.travar": "TRAVAR!",
+        "treinamento.cedo": "Muito cedo!",
+        "treinamento.tarde": "O sinal passou!",
+        "treinamento.acerto": "Boa!",
+        "treinamento.erro": "Fora da faixa!",
+        "treinamento.vitoria": "Treinamento concluído!",
+        "treinamento.derrota": "Treinamento encerrado",
+        "treinamento.resultadoCarga": "Você carregou o núcleo em {tempo}s.",
+        "treinamento.resultadoReflexo": "Seu tempo médio de reação foi {tempo} ms.",
+        "treinamento.resultadoPulso": "Você estabilizou as três faixas em {tempo}s.",
+        "treinamento.resultadoFliperama": "Você concluiu o desafio em {tempo}s.",
+        "treinamento.resultadoFalha": "Tente novamente para completar o desafio e registrar um recorde.",
+        "treinamento.novoRecorde": "NOVO RECORDE!",
+        "treinamento.modoTreino": "Modo treino",
+        "treinamento.repetir": "Jogar novamente",
+        "treinamento.voltar": "Voltar aos minigames",
+        "fliperama.cargaConcluida": "Carga Máxima concluída! Torres aceleradas por {segundos} segundos.",
+        "fliperama.reflexoConcluido": "Sinal de Reflexo concluído! Torres com +{percentual}% de dano por {segundos} segundos.",
+        "fliperama.pulsoConcluido": "Trava de Pulso concluída! Você recebeu {creditos} créditos.",
+        "fliperama.tentativaEncerrada": "Tentativa encerrada no fliperama.",
+        "editor.titulo": "Editor de fases",
+        "editor.requerNivel": "Requer nível {nivel}",
+        "editor.bloqueado": "O Editor é desbloqueado no nível {nivel}.",
+        "editor.descricao": "Crie desafios simples, teste e compartilhe com outros jogadores.",
+        "editor.meusMapas": "Meus mapas",
+        "editor.comunidade": "Comunidade",
+        "editor.espacos": "{usados} de {limite} espaços usados",
+        "editor.novoMapa": "Criar novo mapa",
+        "editor.semMapas": "Você ainda não criou nenhum mapa.",
+        "editor.editar": "Editar",
+        "editor.jogar": "Jogar",
+        "editor.publicar": "Publicar e copiar código",
+        "editor.excluir": "Excluir",
+        "editor.confirmarExclusao": "Confirmar exclusão",
+        "editor.cancelar": "Cancelar",
+        "editor.voltar": "← Voltar aos mapas",
+        "editor.novoTitulo": "Novo mapa",
+        "editor.editarTitulo": "Editar mapa",
+        "editor.identidade": "1 · Identidade",
+        "editor.nome": "Nome do mapa",
+        "editor.criador": "Nome do criador",
+        "editor.descricaoMapa": "Descrição",
+        "editor.visual": "2 · Cenário",
+        "editor.cenario": "Tema visual",
+        "editor.caminho": "Formato do caminho",
+        "editor.decoracoes": "Decorações",
+        "editor.semDecoracoes": "Nenhuma",
+        "editor.poucasDecoracoes": "Poucas",
+        "editor.decoracoesNormais": "Normal",
+        "editor.muitasDecoracoes": "Cheio",
+        "editor.regras": "3 · Regras",
+        "editor.creditos": "Créditos iniciais",
+        "editor.limiteTorres": "Limite de torres",
+        "editor.waves": "4 · Waves e inimigos",
+        "editor.novaWave": "+ Nova wave",
+        "editor.adicionarInimigo": "+ Inimigo nesta wave",
+        "editor.removerWave": "Remover wave",
+        "editor.remover": "Remover",
+        "editor.wave": "Wave {numero}",
+        "editor.tipoInimigo": "Tipo de inimigo",
+        "editor.quantidade": "Quantidade",
+        "editor.salvar": "Salvar mapa",
+        "editor.inimigosTotal": "{quantidade} inimigos no total",
+        "editor.previa": "Prévia do mapa",
+        "editor.entrada": "ENTRADA",
+        "editor.base": "BASE",
+        "editor.codigo": "Código de compartilhamento",
+        "editor.codigoAjuda": "Este jogo não usa servidor. Envie este código para outro jogador importar o mapa.",
+        "editor.copiarCodigo": "Copiar código",
+        "editor.importarTitulo": "Importar mapa de outro jogador",
+        "editor.importarAjuda": "Cole abaixo um código que começa com GP-MAPA-1.",
+        "editor.importar": "Importar mapa",
+        "editor.semComunidade": "Nenhum mapa de outro jogador foi importado neste aparelho.",
+        "editor.avaliacao": "Sua avaliação",
+        "editor.comentario": "Comentário opcional",
+        "editor.salvarAvaliacao": "Salvar avaliação",
+        "editor.removerImportado": "Remover da biblioteca",
+        "editor.publicado": "Publicado por código",
+        "editor.rascunho": "Rascunho local",
+        "editor.criadoPor": "Criado por {criador}",
+        "editor.resumo": "{waves} waves · {inimigos} inimigos · limite {torres} torres",
+        "editor.mapaSalvo": "Mapa salvo!",
+        "editor.mapaExcluido": "Mapa excluído.",
+        "editor.codigoCopiado": "Código copiado!",
+        "editor.codigoPronto": "Código pronto para compartilhar.",
+        "editor.mapaImportado": "Mapa importado para a Comunidade!",
+        "editor.importacaoInvalida": "Esse código de mapa é inválido ou ultrapassa os limites do editor.",
+        "editor.limiteCriados": "Os dois espaços já estão ocupados. Exclua um mapa para criar outro.",
+        "editor.limiteImportados": "A biblioteca comunitária já possui 20 mapas.",
+        "editor.dadosInvalidos": "Revise nome, criador, waves e quantidades antes de salvar.",
+        "editor.avaliacaoSalva": "Avaliação salva!",
+        "editor.mapaPersonalizado": "MAPA PERSONALIZADO · {waves} WAVES CONCLUÍDAS",
+        "editor.vitoria": "Desafio de {criador} concluído. Esta partida não altera o progresso da campanha.",
+        "editor.reiniciado": "Mapa personalizado reiniciado.",
+        "editor.defesasTitulo": "Defesas para {mapa}",
+        "editor.hud": "MAPA · WAVE",
+        "editor.caminho.ziguezague": "Zigue-zague",
+        "editor.caminho.serpente": "Serpente",
+        "editor.caminho.escadaria": "Escadaria",
+        "editor.caminho.onda": "Onda longa",
+        "editor.caminho.atalhos": "Curvas curtas",
         "lobby.faseWave": "Fase {fase} · Wave 1",
         "lobby.creditos": "créditos",
         "lobby.fragmentos": "fragmentos",
@@ -184,6 +440,11 @@ const TRADUCOES = Object.freeze({
         "loja.confirmacaoCompra": "Comprar {item} por {preco} Fragmentos? Seu saldo ficará em {saldo} Fragmentos.",
         "loja.comprar": "Comprar",
         "loja.cancelar": "Cancelar",
+        "loja.ofertaSemanal": "Oferta semanal",
+        "loja.ofertaDescricao": "Até 3 itens com descontos de 5% a 15%.",
+        "loja.renovacaoOferta": "Renova {data} à 0h",
+        "loja.precoComDesconto": "De {precoOriginal} por {precoAtual} Fragmentos, {percentual}% de desconto.",
+        "loja.semOfertas": "SEM OFERTAS",
         "notificacoes.missaoConcluida": "Missão concluída",
         "notificacoes.resgatarMissao": "Abra Missões para resgatar o prêmio.",
         "notificacoes.conquistaDesbloqueada": "Conquista desbloqueada",
@@ -206,6 +467,17 @@ const TRADUCOES = Object.freeze({
         "configuracoes.modoNoite": "Night mode",
         "configuracoes.idioma": "Language",
         "configuracoes.escolherIdioma": "Choose language",
+        "abertura.umaProducao": "A production by",
+        "abertura.preparando": "Preparing the defenses",
+        "abertura.carregando": "LOADING...",
+        "abertura.carregandoJogo": "Loading Guardians of Pixel",
+        "abertura.bemVindo": "Welcome!",
+        "abertura.bemVindoDeVolta": "Welcome back!",
+        "abertura.descricao": "Prepare your towers and protect the timeline.",
+        "abertura.jogar": "PLAY",
+        "abertura.sair": "EXIT",
+        "abertura.ateLogo": "See you soon!",
+        "abertura.podeFechar": "The game has ended. You can now close this tab.",
         "lobby.sobreviva": "Survive until the end!",
         "lobby.album": "Album",
         "lobby.torresInimigos": "Complete your sticker album",
@@ -230,6 +502,197 @@ const TRADUCOES = Object.freeze({
         "lobby.apoiador": "SUPPORTER",
         "lobby.prontoParaJogar": "READY TO PLAY",
         "lobby.coracaoDePixel": "PIXEL HEART",
+        "lobby.nivel": "LEVEL",
+        "lobby.experiencia": "DEFENDER XP",
+        "lobby.abrirNiveis": "Open level progression",
+        "nivel.titulo": "Experience level",
+        "nivel.descricao": "Defeat enemies and complete stages to earn XP and unlock rewards.",
+        "nivel.alcancado": "Level reached",
+        "nivel.recompensa": "Reward: {recompensa}",
+        "nivel.semRecompensa": "Keep advancing to reach the next reward.",
+        "nivel.proximo": "Next level",
+        "nivel.recompensas": "Level rewards",
+        "nivel.desbloqueada": "Unlocked",
+        "nivel.bloqueada": "Unlocks at level {nivel}",
+        "nivel.equiparSkin": "Equip skin",
+        "nivel.usarOriginal": "Use original look",
+        "nivel.xpAtual": "{atual}/{necessaria} XP",
+        "nivel.xpTotal": "{quantidade} total XP",
+        "nivel.rotulo": "Level {nivel}",
+        "nivel.porInimigo": "per enemy",
+        "nivel.porBoss": "per Boss",
+        "nivel.porFase": "per completed stage",
+        "nivel.skinVanguarda": "Emerald Vanguard Skin",
+        "nivel.skinVanguardaDescricao": "An emerald-green look earned through defender experience.",
+        "nivel.origemSkin": "Earned at level 2.",
+        "nivel.torreRaiosDescricao": "Permanently unlocks the Lightning Tower without spending Fragments.",
+        "nivel.miraCalibradaDescricao": "Permanently unlocks the Calibrated Aim upgrade without spending Fragments.",
+        "nivel.xpPartida": " You earned {quantidade} XP in this match.",
+        "lobby.editor": "Editor",
+        "lobby.crieSuaFase": "Create your own stage",
+        "lobby.salvos": "Saves",
+        "lobby.espacosDeProgresso": "3 progress slots",
+        "salvos.titulo": "Saves",
+        "salvos.descricao": "Use separate slots to play and test without mixing progress.",
+        "salvos.avisoTitulo": "PROGRESS PROTECTED",
+        "salvos.aviso": "Each save stores campaign, XP, Fragments, purchases, collection, missions, maps, and records. Language, audio, and lighting are shared.",
+        "salvos.save": "Save {numero}",
+        "salvos.ativo": "ACTIVE",
+        "salvos.preenchido": "SAVED",
+        "salvos.vazio": "EMPTY",
+        "salvos.progressoAtual": "Your current progress",
+        "salvos.progressoGuardado": "Saved progress",
+        "salvos.espacoDisponivel": "Available for a new journey.",
+        "salvos.nivel": "Level {nivel}",
+        "salvos.faseDisponivel": "Stage {fase} available",
+        "salvos.campanhaConcluida": "Current campaign completed",
+        "salvos.fragmentos": "{quantidade} Fragments",
+        "salvos.itens": "{quantidade} Shop items",
+        "salvos.carregar": "Load save",
+        "salvos.novo": "Start from zero",
+        "salvos.emUso": "In use",
+        "salvos.erroTroca": "The save could not be changed. Your current progress was preserved.",
+        "lobby.treinamento": "Training",
+        "lobby.minigamesForaDoFliperama": "Practice all 8 arcade games",
+        "treinamento.titulo": "Training Center",
+        "treinamento.descricao": "Choose and practice every arcade minigame.",
+        "treinamento.local": "ARCADE TRAINING HUB",
+        "treinamento.aviso": "Practice all eight games as much as you like: records are saved, but this area does not award XP, Fragments, credits, or boosts.",
+        "treinamento.alvo.nome": "Target Practice",
+        "treinamento.alvo.descricao": "Track and hit the moving target ten times.",
+        "treinamento.labirinto.nome": "Pixel Maze",
+        "treinamento.labirinto.descricao": "Guide the robot to the exit without touching the walls.",
+        "treinamento.voo.nome": "Pixel Flight",
+        "treinamento.voo.descricao": "Fly through five portals without hitting the obstacles.",
+        "treinamento.coleta.nome": "Pixel Rain",
+        "treinamento.coleta.descricao": "Collect eight yellow pixels and avoid corrupted ones.",
+        "treinamento.sequencia.nome": "Neon Sequence",
+        "treinamento.sequencia.descricao": "Watch and correctly repeat the five signals.",
+        "treinamento.carga.nome": "Maximum Charge",
+        "treinamento.carga.descricao": "Press the button as fast as possible and charge the core.",
+        "treinamento.carga.instrucao": "Press the button or repeatedly use Space and Enter.",
+        "treinamento.reflexo.nome": "Reflex Signal",
+        "treinamento.reflexo.descricao": "Wait for the green signal and react before it disappears.",
+        "treinamento.reflexo.instrucao": "Do not press before the signal. Hit five signals before making three mistakes.",
+        "treinamento.pulso.nome": "Pulse Lock",
+        "treinamento.pulso.descricao": "Lock the moving marker inside the energy zones.",
+        "treinamento.pulso.instrucao": "Press when the marker is inside the glowing band. Land three hits.",
+        "treinamento.jogar": "Play",
+        "treinamento.recorde": "RECORD",
+        "treinamento.semRecorde": "No record yet",
+        "treinamento.melhorTempo": "Best time: {tempo}s",
+        "treinamento.melhorReflexo": "Best average: {tempo} ms",
+        "treinamento.preparar": "GET READY",
+        "treinamento.comecaEm": "Starts in",
+        "treinamento.tempo": "Time",
+        "treinamento.meta": "Goal",
+        "treinamento.apertos": "Presses",
+        "treinamento.sinais": "Signals",
+        "treinamento.travas": "Locks",
+        "treinamento.apertar": "PRESS!",
+        "treinamento.aguarde": "WAIT...",
+        "treinamento.agora": "NOW!",
+        "treinamento.travar": "LOCK!",
+        "treinamento.cedo": "Too soon!",
+        "treinamento.tarde": "The signal is gone!",
+        "treinamento.acerto": "Good!",
+        "treinamento.erro": "Outside the band!",
+        "treinamento.vitoria": "Training complete!",
+        "treinamento.derrota": "Training over",
+        "treinamento.resultadoCarga": "You charged the core in {tempo}s.",
+        "treinamento.resultadoReflexo": "Your average reaction time was {tempo} ms.",
+        "treinamento.resultadoPulso": "You stabilized all three bands in {tempo}s.",
+        "treinamento.resultadoFliperama": "You completed the challenge in {tempo}s.",
+        "treinamento.resultadoFalha": "Try again to complete the challenge and set a record.",
+        "treinamento.novoRecorde": "NEW RECORD!",
+        "treinamento.modoTreino": "Training mode",
+        "treinamento.repetir": "Play again",
+        "treinamento.voltar": "Back to minigames",
+        "fliperama.cargaConcluida": "Maximum Charge complete! Towers attack faster for {segundos} seconds.",
+        "fliperama.reflexoConcluido": "Reflex Signal complete! Towers deal +{percentual}% damage for {segundos} seconds.",
+        "fliperama.pulsoConcluido": "Pulse Lock complete! You received {creditos} credits.",
+        "fliperama.tentativaEncerrada": "Arcade attempt over.",
+        "editor.titulo": "Stage editor",
+        "editor.requerNivel": "Requires level {nivel}",
+        "editor.bloqueado": "The Editor unlocks at level {nivel}.",
+        "editor.descricao": "Create simple challenges, test them, and share them with other players.",
+        "editor.meusMapas": "My maps",
+        "editor.comunidade": "Community",
+        "editor.espacos": "{usados} of {limite} slots used",
+        "editor.novoMapa": "Create new map",
+        "editor.semMapas": "You have not created a map yet.",
+        "editor.editar": "Edit",
+        "editor.jogar": "Play",
+        "editor.publicar": "Publish and copy code",
+        "editor.excluir": "Delete",
+        "editor.confirmarExclusao": "Confirm deletion",
+        "editor.cancelar": "Cancel",
+        "editor.voltar": "← Back to maps",
+        "editor.novoTitulo": "New map",
+        "editor.editarTitulo": "Edit map",
+        "editor.identidade": "1 · Identity",
+        "editor.nome": "Map name",
+        "editor.criador": "Creator name",
+        "editor.descricaoMapa": "Description",
+        "editor.visual": "2 · Scenery",
+        "editor.cenario": "Visual theme",
+        "editor.caminho": "Path shape",
+        "editor.decoracoes": "Decorations",
+        "editor.semDecoracoes": "None",
+        "editor.poucasDecoracoes": "Few",
+        "editor.decoracoesNormais": "Normal",
+        "editor.muitasDecoracoes": "Full",
+        "editor.regras": "3 · Rules",
+        "editor.creditos": "Starting credits",
+        "editor.limiteTorres": "Tower limit",
+        "editor.waves": "4 · Waves and enemies",
+        "editor.novaWave": "+ New wave",
+        "editor.adicionarInimigo": "+ Enemy in this wave",
+        "editor.removerWave": "Remove wave",
+        "editor.remover": "Remove",
+        "editor.wave": "Wave {numero}",
+        "editor.tipoInimigo": "Enemy type",
+        "editor.quantidade": "Amount",
+        "editor.salvar": "Save map",
+        "editor.inimigosTotal": "{quantidade} enemies total",
+        "editor.previa": "Map preview",
+        "editor.entrada": "ENTRY",
+        "editor.base": "BASE",
+        "editor.codigo": "Share code",
+        "editor.codigoAjuda": "This game has no server. Send this code to another player so they can import the map.",
+        "editor.copiarCodigo": "Copy code",
+        "editor.importarTitulo": "Import another player's map",
+        "editor.importarAjuda": "Paste a code beginning with GP-MAPA-1 below.",
+        "editor.importar": "Import map",
+        "editor.semComunidade": "No map from another player has been imported on this device.",
+        "editor.avaliacao": "Your rating",
+        "editor.comentario": "Optional comment",
+        "editor.salvarAvaliacao": "Save rating",
+        "editor.removerImportado": "Remove from library",
+        "editor.publicado": "Published by code",
+        "editor.rascunho": "Local draft",
+        "editor.criadoPor": "Created by {criador}",
+        "editor.resumo": "{waves} waves · {inimigos} enemies · {torres} tower limit",
+        "editor.mapaSalvo": "Map saved!",
+        "editor.mapaExcluido": "Map deleted.",
+        "editor.codigoCopiado": "Code copied!",
+        "editor.codigoPronto": "Code ready to share.",
+        "editor.mapaImportado": "Map imported into Community!",
+        "editor.importacaoInvalida": "This map code is invalid or exceeds the editor limits.",
+        "editor.limiteCriados": "Both slots are occupied. Delete a map to create another.",
+        "editor.limiteImportados": "The community library already contains 20 maps.",
+        "editor.dadosInvalidos": "Review the name, creator, waves, and amounts before saving.",
+        "editor.avaliacaoSalva": "Rating saved!",
+        "editor.mapaPersonalizado": "CUSTOM MAP · {waves} WAVES COMPLETED",
+        "editor.vitoria": "{criador}'s challenge completed. This match does not change campaign progress.",
+        "editor.reiniciado": "Custom map restarted.",
+        "editor.defesasTitulo": "Defenses for {mapa}",
+        "editor.hud": "MAP · WAVE",
+        "editor.caminho.ziguezague": "Zigzag",
+        "editor.caminho.serpente": "Snake",
+        "editor.caminho.escadaria": "Staircase",
+        "editor.caminho.onda": "Long wave",
+        "editor.caminho.atalhos": "Short turns",
         "lobby.faseWave": "Stage {fase} · Wave 1",
         "lobby.creditos": "credits",
         "lobby.fragmentos": "fragments",
@@ -241,6 +704,11 @@ const TRADUCOES = Object.freeze({
         "loja.confirmacaoCompra": "Buy {item} for {preco} Fragments? Your balance will be {saldo} Fragments.",
         "loja.comprar": "Buy",
         "loja.cancelar": "Cancel",
+        "loja.ofertaSemanal": "Weekly sale",
+        "loja.ofertaDescricao": "Up to 3 items with discounts from 5% to 15%.",
+        "loja.renovacaoOferta": "Resets {data} at midnight",
+        "loja.precoComDesconto": "From {precoOriginal} to {precoAtual} Fragments, {percentual}% off.",
+        "loja.semOfertas": "NO SALES",
         "notificacoes.missaoConcluida": "Mission complete",
         "notificacoes.resgatarMissao": "Open Missions to claim the reward.",
         "notificacoes.conquistaDesbloqueada": "Achievement unlocked",
@@ -263,6 +731,17 @@ const TRADUCOES = Object.freeze({
         "configuracoes.modoNoite": "Modo noche",
         "configuracoes.idioma": "Idioma",
         "configuracoes.escolherIdioma": "Elegir idioma",
+        "abertura.umaProducao": "Una producción de",
+        "abertura.preparando": "Preparando las defensas",
+        "abertura.carregando": "CARGANDO...",
+        "abertura.carregandoJogo": "Cargando Guardians of Pixel",
+        "abertura.bemVindo": "¡Bienvenido!",
+        "abertura.bemVindoDeVolta": "¡Bienvenido de nuevo!",
+        "abertura.descricao": "Prepara tus torres y protege la línea temporal.",
+        "abertura.jogar": "JUGAR",
+        "abertura.sair": "SALIR",
+        "abertura.ateLogo": "¡Hasta pronto!",
+        "abertura.podeFechar": "El juego ha terminado. Ya puedes cerrar esta pestaña.",
         "lobby.sobreviva": "¡Sobrevive hasta el final!",
         "lobby.album": "Álbum",
         "lobby.torresInimigos": "Completa tu álbum de cromos",
@@ -287,6 +766,197 @@ const TRADUCOES = Object.freeze({
         "lobby.apoiador": "COLABORADOR",
         "lobby.prontoParaJogar": "LISTO PARA JUGAR",
         "lobby.coracaoDePixel": "CORAZÓN DE PÍXEL",
+        "lobby.nivel": "NIVEL",
+        "lobby.experiencia": "XP DEL DEFENSOR",
+        "lobby.abrirNiveis": "Abrir progresión de nivel",
+        "nivel.titulo": "Nivel de experiencia",
+        "nivel.descricao": "Derrota enemigos y completa fases para ganar XP y desbloquear recompensas.",
+        "nivel.alcancado": "Nivel alcanzado",
+        "nivel.recompensa": "Recompensa: {recompensa}",
+        "nivel.semRecompensa": "Sigue avanzando para alcanzar la próxima recompensa.",
+        "nivel.proximo": "Próximo nivel",
+        "nivel.recompensas": "Recompensas de nivel",
+        "nivel.desbloqueada": "Desbloqueada",
+        "nivel.bloqueada": "Se desbloquea en el nivel {nivel}",
+        "nivel.equiparSkin": "Equipar skin",
+        "nivel.usarOriginal": "Usar aspecto original",
+        "nivel.xpAtual": "{atual}/{necessaria} XP",
+        "nivel.xpTotal": "{quantidade} XP total",
+        "nivel.rotulo": "Nivel {nivel}",
+        "nivel.porInimigo": "por enemigo",
+        "nivel.porBoss": "por Jefe",
+        "nivel.porFase": "por fase completada",
+        "nivel.skinVanguarda": "Skin Vanguardia Esmeralda",
+        "nivel.skinVanguardaDescricao": "Un aspecto verde esmeralda obtenido con la experiencia del defensor.",
+        "nivel.origemSkin": "Obtenida en el nivel 2.",
+        "nivel.torreRaiosDescricao": "Desbloquea permanentemente la Torre de Rayos sin gastar Fragmentos.",
+        "nivel.miraCalibradaDescricao": "Desbloquea permanentemente la mejora Mira Calibrada sin gastar Fragmentos.",
+        "nivel.xpPartida": " Has recibido {quantidade} XP en esta partida.",
+        "lobby.editor": "Editor",
+        "lobby.crieSuaFase": "Crea tu propia fase",
+        "lobby.salvos": "Partidas",
+        "lobby.espacosDeProgresso": "3 espacios de progreso",
+        "salvos.titulo": "Partidas guardadas",
+        "salvos.descricao": "Usa espacios separados para jugar y probar sin mezclar el progreso.",
+        "salvos.avisoTitulo": "PROGRESO PROTEGIDO",
+        "salvos.aviso": "Cada partida guarda campaña, XP, Fragmentos, compras, colección, misiones, mapas y récords. El idioma, el audio y la iluminación son compartidos.",
+        "salvos.save": "Partida {numero}",
+        "salvos.ativo": "ACTIVA",
+        "salvos.preenchido": "GUARDADA",
+        "salvos.vazio": "VACÍA",
+        "salvos.progressoAtual": "Tu progreso actual",
+        "salvos.progressoGuardado": "Progreso guardado",
+        "salvos.espacoDisponivel": "Espacio disponible para una nueva aventura.",
+        "salvos.nivel": "Nivel {nivel}",
+        "salvos.faseDisponivel": "Fase {fase} disponible",
+        "salvos.campanhaConcluida": "Campaña actual completada",
+        "salvos.fragmentos": "{quantidade} Fragmentos",
+        "salvos.itens": "{quantidade} objetos de la Tienda",
+        "salvos.carregar": "Cargar partida",
+        "salvos.novo": "Empezar desde cero",
+        "salvos.emUso": "En uso",
+        "salvos.erroTroca": "No fue posible cambiar de partida. Tu progreso actual se conservó.",
+        "lobby.treinamento": "Entrenamiento",
+        "lobby.minigamesForaDoFliperama": "Practica los 8 juegos del arcade",
+        "treinamento.titulo": "Centro de Entrenamiento",
+        "treinamento.descricao": "Elige y practica todos los minijuegos del arcade.",
+        "treinamento.local": "CENTRAL DE ENTRENAMIENTO",
+        "treinamento.aviso": "Practica los ocho juegos cuanto quieras: los récords se guardan, pero esta área no otorga XP, Fragmentos, créditos ni mejoras.",
+        "treinamento.alvo.nome": "Tiro al blanco",
+        "treinamento.alvo.descricao": "Sigue y golpea diez veces el blanco móvil.",
+        "treinamento.labirinto.nome": "Laberinto Pixel",
+        "treinamento.labirinto.descricao": "Guía al robot hasta la salida sin tocar las paredes.",
+        "treinamento.voo.nome": "Vuelo Pixel",
+        "treinamento.voo.descricao": "Cruza cinco portales sin chocar con los obstáculos.",
+        "treinamento.coleta.nome": "Lluvia de Píxeles",
+        "treinamento.coleta.descricao": "Recoge ocho píxeles amarillos y evita los corruptos.",
+        "treinamento.sequencia.nome": "Secuencia Neón",
+        "treinamento.sequencia.descricao": "Observa y repite correctamente las cinco señales.",
+        "treinamento.carga.nome": "Carga Máxima",
+        "treinamento.carga.descricao": "Pulsa el botón lo más rápido posible y carga el núcleo.",
+        "treinamento.carga.instrucao": "Pulsa el botón o usa Espacio y Enter repetidamente.",
+        "treinamento.reflexo.nome": "Señal de Reflejos",
+        "treinamento.reflexo.descricao": "Espera la señal verde y reacciona antes de que desaparezca.",
+        "treinamento.reflexo.instrucao": "No pulses antes de la señal. Acierta cinco señales antes de cometer tres fallos.",
+        "treinamento.pulso.nome": "Bloqueo de Pulso",
+        "treinamento.pulso.descricao": "Bloquea el marcador móvil dentro de las zonas de energía.",
+        "treinamento.pulso.instrucao": "Pulsa cuando el marcador esté dentro de la franja luminosa. Consigue tres aciertos.",
+        "treinamento.jogar": "Jugar",
+        "treinamento.recorde": "RÉCORD",
+        "treinamento.semRecorde": "Todavía sin récord",
+        "treinamento.melhorTempo": "Mejor tiempo: {tempo}s",
+        "treinamento.melhorReflexo": "Mejor media: {tempo} ms",
+        "treinamento.preparar": "PREPÁRATE",
+        "treinamento.comecaEm": "Empieza en",
+        "treinamento.tempo": "Tiempo",
+        "treinamento.meta": "Meta",
+        "treinamento.apertos": "Pulsaciones",
+        "treinamento.sinais": "Señales",
+        "treinamento.travas": "Bloqueos",
+        "treinamento.apertar": "¡PULSAR!",
+        "treinamento.aguarde": "ESPERA...",
+        "treinamento.agora": "¡AHORA!",
+        "treinamento.travar": "¡BLOQUEAR!",
+        "treinamento.cedo": "¡Demasiado pronto!",
+        "treinamento.tarde": "¡La señal pasó!",
+        "treinamento.acerto": "¡Bien!",
+        "treinamento.erro": "¡Fuera de la franja!",
+        "treinamento.vitoria": "¡Entrenamiento completado!",
+        "treinamento.derrota": "Entrenamiento terminado",
+        "treinamento.resultadoCarga": "Cargaste el núcleo en {tempo}s.",
+        "treinamento.resultadoReflexo": "Tu tiempo medio de reacción fue de {tempo} ms.",
+        "treinamento.resultadoPulso": "Estabilizaste las tres franjas en {tempo}s.",
+        "treinamento.resultadoFliperama": "Completaste el desafío en {tempo}s.",
+        "treinamento.resultadoFalha": "Inténtalo de nuevo para completar el desafío y registrar un récord.",
+        "treinamento.novoRecorde": "¡NUEVO RÉCORD!",
+        "treinamento.modoTreino": "Modo entrenamiento",
+        "treinamento.repetir": "Jugar de nuevo",
+        "treinamento.voltar": "Volver a los minijuegos",
+        "fliperama.cargaConcluida": "¡Carga Máxima completada! Las torres atacan más rápido durante {segundos} segundos.",
+        "fliperama.reflexoConcluido": "¡Señal de Reflejos completada! Las torres causan +{percentual}% de daño durante {segundos} segundos.",
+        "fliperama.pulsoConcluido": "¡Bloqueo de Pulso completado! Recibiste {creditos} créditos.",
+        "fliperama.tentativaEncerrada": "Intento terminado en el arcade.",
+        "editor.titulo": "Editor de fases",
+        "editor.requerNivel": "Requiere nivel {nivel}",
+        "editor.bloqueado": "El Editor se desbloquea en el nivel {nivel}.",
+        "editor.descricao": "Crea desafíos sencillos, pruébalos y compártelos con otros jugadores.",
+        "editor.meusMapas": "Mis mapas",
+        "editor.comunidade": "Comunidad",
+        "editor.espacos": "{usados} de {limite} espacios usados",
+        "editor.novoMapa": "Crear nuevo mapa",
+        "editor.semMapas": "Todavía no has creado ningún mapa.",
+        "editor.editar": "Editar",
+        "editor.jogar": "Jugar",
+        "editor.publicar": "Publicar y copiar código",
+        "editor.excluir": "Eliminar",
+        "editor.confirmarExclusao": "Confirmar eliminación",
+        "editor.cancelar": "Cancelar",
+        "editor.voltar": "← Volver a los mapas",
+        "editor.novoTitulo": "Nuevo mapa",
+        "editor.editarTitulo": "Editar mapa",
+        "editor.identidade": "1 · Identidad",
+        "editor.nome": "Nombre del mapa",
+        "editor.criador": "Nombre del creador",
+        "editor.descricaoMapa": "Descripción",
+        "editor.visual": "2 · Escenario",
+        "editor.cenario": "Tema visual",
+        "editor.caminho": "Forma del camino",
+        "editor.decoracoes": "Decoraciones",
+        "editor.semDecoracoes": "Ninguna",
+        "editor.poucasDecoracoes": "Pocas",
+        "editor.decoracoesNormais": "Normal",
+        "editor.muitasDecoracoes": "Lleno",
+        "editor.regras": "3 · Reglas",
+        "editor.creditos": "Créditos iniciales",
+        "editor.limiteTorres": "Límite de torres",
+        "editor.waves": "4 · Oleadas y enemigos",
+        "editor.novaWave": "+ Nueva oleada",
+        "editor.adicionarInimigo": "+ Enemigo en esta oleada",
+        "editor.removerWave": "Eliminar oleada",
+        "editor.remover": "Eliminar",
+        "editor.wave": "Oleada {numero}",
+        "editor.tipoInimigo": "Tipo de enemigo",
+        "editor.quantidade": "Cantidad",
+        "editor.salvar": "Guardar mapa",
+        "editor.inimigosTotal": "{quantidade} enemigos en total",
+        "editor.previa": "Vista previa del mapa",
+        "editor.entrada": "ENTRADA",
+        "editor.base": "BASE",
+        "editor.codigo": "Código para compartir",
+        "editor.codigoAjuda": "Este juego no usa servidor. Envía este código a otro jugador para que importe el mapa.",
+        "editor.copiarCodigo": "Copiar código",
+        "editor.importarTitulo": "Importar el mapa de otro jugador",
+        "editor.importarAjuda": "Pega abajo un código que empiece por GP-MAPA-1.",
+        "editor.importar": "Importar mapa",
+        "editor.semComunidade": "No se ha importado ningún mapa de otro jugador en este dispositivo.",
+        "editor.avaliacao": "Tu valoración",
+        "editor.comentario": "Comentario opcional",
+        "editor.salvarAvaliacao": "Guardar valoración",
+        "editor.removerImportado": "Eliminar de la biblioteca",
+        "editor.publicado": "Publicado por código",
+        "editor.rascunho": "Borrador local",
+        "editor.criadoPor": "Creado por {criador}",
+        "editor.resumo": "{waves} oleadas · {inimigos} enemigos · límite de {torres} torres",
+        "editor.mapaSalvo": "¡Mapa guardado!",
+        "editor.mapaExcluido": "Mapa eliminado.",
+        "editor.codigoCopiado": "¡Código copiado!",
+        "editor.codigoPronto": "Código listo para compartir.",
+        "editor.mapaImportado": "¡Mapa importado a Comunidad!",
+        "editor.importacaoInvalida": "Este código de mapa no es válido o supera los límites del editor.",
+        "editor.limiteCriados": "Los dos espacios están ocupados. Elimina un mapa para crear otro.",
+        "editor.limiteImportados": "La biblioteca comunitaria ya contiene 20 mapas.",
+        "editor.dadosInvalidos": "Revisa el nombre, el creador, las oleadas y las cantidades antes de guardar.",
+        "editor.avaliacaoSalva": "¡Valoración guardada!",
+        "editor.mapaPersonalizado": "MAPA PERSONALIZADO · {waves} OLEADAS COMPLETADAS",
+        "editor.vitoria": "Desafío de {criador} completado. Esta partida no cambia el progreso de la campaña.",
+        "editor.reiniciado": "Mapa personalizado reiniciado.",
+        "editor.defesasTitulo": "Defensas para {mapa}",
+        "editor.hud": "MAPA · OLEADA",
+        "editor.caminho.ziguezague": "Zigzag",
+        "editor.caminho.serpente": "Serpiente",
+        "editor.caminho.escadaria": "Escalera",
+        "editor.caminho.onda": "Onda larga",
+        "editor.caminho.atalhos": "Curvas cortas",
         "lobby.faseWave": "Fase {fase} · Oleada 1",
         "lobby.creditos": "créditos",
         "lobby.fragmentos": "fragmentos",
@@ -298,6 +968,11 @@ const TRADUCOES = Object.freeze({
         "loja.confirmacaoCompra": "¿Comprar {item} por {preco} Fragmentos? Tu saldo quedará en {saldo} Fragmentos.",
         "loja.comprar": "Comprar",
         "loja.cancelar": "Cancelar",
+        "loja.ofertaSemanal": "Oferta semanal",
+        "loja.ofertaDescricao": "Hasta 3 objetos con descuentos del 5% al 15%.",
+        "loja.renovacaoOferta": "Se renueva {data} a medianoche",
+        "loja.precoComDesconto": "De {precoOriginal} a {precoAtual} Fragmentos, {percentual}% de descuento.",
+        "loja.semOfertas": "SIN OFERTAS",
         "notificacoes.missaoConcluida": "Misión completada",
         "notificacoes.resgatarMissao": "Abre Misiones para reclamar el premio.",
         "notificacoes.conquistaDesbloqueada": "Logro desbloqueado",
@@ -316,6 +991,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Selecionada": "Selected",
         "Disponível": "Available",
         "Obrigatória no tutorial": "Required in the tutorial",
+        "Obrigatória na Fase 14": "Required in Stage 14",
         "{custo} créditos": "{custo} credits",
         "Vaga livre": "Empty slot",
         "Defesas para Waves infinitas": "Defenses for Endless Waves",
@@ -329,6 +1005,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "SUA EQUIPE": "YOUR TEAM",
         "6 vagas para a batalha": "6 slots for battle",
         "A Torre padrão precisa ficar na equipe durante o tutorial.": "The Standard Tower must stay on the team during the tutorial.",
+        "A Torre de Varredura precisa ficar na equipe para detectar os inimigos camuflados da Fase 14.": "The Sweep Tower must stay on the team to detect the camouflaged enemies in Stage 14.",
         "Sua equipe já está completa. Retire uma defesa para escolher outra.": "Your team is already full. Remove a defense to choose another one.",
         "Escolha pelo menos uma defesa.": "Choose at least one defense.",
         "Caçador de Pixels": "Pixel Hunter",
@@ -360,12 +1037,23 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "???": "???",
         "Ainda está te esperando, sempre vai estar.": "It is still waiting for you. It always will be.",
         "Mestre do Arsenal": "Arsenal Master",
-        "Compre todos os itens disponíveis na Loja.": "Buy every item available in the Shop.",
+        "Compre todos os 23 itens disponíveis na Loja.": "Buy all 23 items available in the Shop.",
         "Lenda do Infinito": "Endless Legend",
         "Alcance a wave 100 no modo infinito.": "Reach wave 100 in endless mode.",
         "Caçador de Pixels Supremo": "Supreme Pixel Hunter",
         "Elimine 500 inimigos em qualquer modo.": "Defeat 500 enemies in any mode.",
         "Resgate a missão semanal da wave 40 infinita.": "Claim the weekly endless wave 40 mission.",
+        "Os Seis Guardiões": "The Six Guardians",
+        "Construa as seis defesas escolhidas para a equipe na mesma partida.": "Build all six defenses selected for the team in the same game.",
+        "Mestre do Fliperama": "Arcade Master",
+        "Conclua os cinco minigames do fliperama pelo menos uma vez.": "Complete all five arcade minigames at least once.",
+        "Pare o Relógio!": "Stop the Clock!",
+        "Ative o Pulso Temporal com um Boss e pelo menos cinco inimigos comuns no mapa.": "Activate Time Pulse with a Boss and at least five regular enemies on the map.",
+        "Demolição em Massa": "Mass Demolition",
+        "Elimine oito inimigos com uma única Bomba Pesada.": "Defeat eight enemies with a single Heavy Bomb.",
+        "Frequência 09": "Frequency 09",
+        "Encontre e escute até o fim a transmissão do Projeto ???.": "Find and listen to the Project ??? transmission to the end.",
+        "O futuro guarda uma frequência esquecida.": "The future holds a forgotten frequency.",
         "Fase 1": "Stage 1",
         "Fase 2": "Stage 2",
         "Fase 3": "Stage 3",
@@ -375,6 +1063,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Fase 7": "Stage 7",
         "Fase 8": "Stage 8",
         "Fase 9": "Stage 9",
+        "Fase 10": "Stage 10",
+        "Fase 11": "Stage 11",
+        "Fase 12": "Stage 12",
         "Campo verde": "Green Fields",
         "Deserto antigo": "Ancient Desert",
         "Tundra congelada": "Frozen Tundra",
@@ -384,6 +1075,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Pântano Tóxico": "Toxic Swamp",
         "Selva Primordial": "Primal Jungle",
         "Metrópole Neon": "Neon Metropolis",
+        "Laboratório Abandonado": "Abandoned Laboratory",
+        "Futuro Despedaçado": "Shattered Future",
+        "Ponto Zero": "Point Zero",
         "Reserva de Créditos": "Credit Reserve",
         "Aumenta permanentemente os créditos disponíveis no começo de cada partida.": "Permanently increases the credits available at the start of every game.",
         "+50 créditos iniciais em todas as fases e no modo infinito": "+50 starting credits in every stage and endless mode",
@@ -393,6 +1087,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Recompensa Otimizada": "Optimized Reward",
         "Melhora permanentemente o pagamento recebido pelas torres de combate.": "Permanently improves the payment earned by combat towers.",
         "+2 créditos por disparo realizado pelas torres": "+2 credits for every shot fired by towers",
+        "Mira Calibrada": "Calibrated Aim",
+        "Aumenta permanentemente a força dos disparos das torres de combate.": "Permanently increases the power of combat tower shots.",
+        "+5% de dano para todas as torres de combate": "+5% damage for all combat towers",
+        "Sensores de Longo Alcance": "Long-Range Sensors",
+        "Amplia permanentemente a área vigiada pelas torres de combate.": "Permanently expands the area watched by combat towers.",
+        "+5% de alcance para todas as torres de combate": "+5% range for all combat towers",
+        "Contrato de Recuperação": "Recovery Contract",
+        "Recupera uma parte maior dos créditos investidos ao vender uma torre.": "Recovers a larger share of invested credits when selling a tower.",
+        "A venda devolve 70% do valor investido em vez de 60%": "Selling returns 70% of the invested value instead of 60%",
         "Torres": "Towers",
         "Defesas e estruturas especiais para levar às partidas.": "Special defenses and structures to bring into games.",
         "Minas": "Mines",
@@ -447,6 +1150,20 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Sentinela de Escudo": "Shield Sentinel",
         "Protocolo Zero": "Protocol Zero",
         "Reversão de Emergência ativada!": "Emergency Reversal activated!",
+        "Autômato de Cobre": "Copper Automaton",
+        "Cobaia Instável": "Unstable Test Subject",
+        "Guarda de Contenção": "Containment Guard",
+        "Protótipo Alfa": "Alpha Prototype",
+        "Andarilho de Sucata": "Scrap Walker",
+        "Eco Temporal": "Temporal Echo",
+        "Sentinela Cronológica": "Chronological Sentinel",
+        "Sentinela do Amanhã": "Sentinel of Tomorrow",
+        "Resíduo Temporal": "Temporal Residue",
+        "Arquivista Corrompido": "Corrupted Archivist",
+        "Fragmento de Arquivo": "Archive Fragment",
+        "Vigia do Ponto Zero": "Point Zero Watcher",
+        "Guardião do Ponto Zero": "Point Zero Guardian",
+        "Pulso de Estase ativado!": "Stasis Pulse activated!",
         "Boss comum": "Common Boss",
         "Faraó de Areia": "Sand Pharaoh",
         "Titã Glacial": "Frost Titan",
@@ -553,15 +1270,32 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Em desenvolvimento": "In development",
         "Dispara bolas de fogo e incendeia o alvo: {dano} de dano por segundo durante {segundos} segundos. Novos acertos renovam a duração.": "Fires fireballs and ignites the target for {dano} damage per second for {segundos} seconds. New hits refresh the duration.",
         "Dispara uma carga que salta entre até {quantidade} inimigos próximos e perde dano a cada salto.": "Fires a charge that jumps between up to {quantidade} nearby enemies and loses damage with each jump.",
+        "Perfura todos os inimigos em uma faixa de {largura} px até o limite do alcance.": "Pierces every enemy in a {largura} px lane up to the range limit.",
+        "Marca o alvo por {segundos} segundos e faz com que ele receba {percentual}% mais dano de todas as defesas.": "Marks the target for {segundos} seconds, causing it to take {percentual}% more damage from all defenses.",
+        "Lança {quantidade} drones por ataque e divide os disparos entre alvos diferentes quando possível.": "Launches {quantidade} drones per attack and splits the shots between different targets when possible.",
+        "A corrente alcança um segundo inimigo a até {alcance} px e causa {percentual}% do dano original.": "The chain reaches a second enemy up to {alcance} px away and deals {percentual}% of the original damage.",
+        "Coleta até {pecas} peças de inimigos derrotados próximos; cada peça aumenta seu dano em {percentual}%.": "Collects up to {pecas} parts from nearby defeated enemies; each part increases its damage by {percentual}%.",
+        "Alterna disparos: vermelho causa mais dano, azul desacelera e amarelo ignora reduções de dano.": "Cycles shots: red deals more damage, blue slows, and yellow ignores damage reductions.",
+        "Torre de combate com {dano} de dano e {alcance} px de alcance.": "Combat tower with {dano} damage and {alcance} px range.",
         "Explode por contato, causa {dano} de dano em {raio} px e desacelera inimigos em {percentual}%.": "Explodes on contact, deals {dano} damage in {raio} px, and slows enemies by {percentual}%.",
+        "Explode por contato, causa {dano} de dano em {raio} px e empurra inimigos comuns {distancia} px.": "Explodes on contact, deals {dano} damage in {raio} px, and pushes common enemies back {distancia} px.",
+        "Explode por contato, causa {dano} de dano em {raio} px e faz os inimigos receberem {percentual}% mais dano por {segundos} segundos.": "Explodes on contact, deals {dano} damage in {raio} px, and makes enemies take {percentual}% more damage for {segundos} seconds.",
+        " · Corrosão +{percentual}% por {segundos}s": " · Corrosion +{percentual}% for {segundos}s",
+        " · Empurra {distancia} px": " · Pushes {distancia} px",
         "Explode somente quando um inimigo encosta nela e causa {dano} de dano em uma área de {raio} px.": "Explodes only when an enemy touches it and deals {dano} damage in a {raio} px area.",
         "Clique na Bomba para acender o pavio. Após {segundos} segundo, ela causa {dano} de dano em uma área de {raio} px.": "Click the Bomb to light its fuse. After {segundos} second, it deals {dano} damage in a {raio} px area.",
+        "Clique para acender o pavio. A explosão principal causa {dano} de dano e lança {quantidade} fragmentos explosivos ao redor.": "Click to light the fuse. The main explosion deals {dano} damage and launches {quantidade} explosive fragments around it.",
+        "Dano {dano} + {quantidade} fragmentos de {danoFragmento} · Clique para detonar · Limite {limite}": "Damage {dano} + {quantidade} fragments dealing {danoFragmento} · Click to detonate · Limit {limite}",
         "Aumenta em {percentual}% a velocidade de ataque das torres dentro de {alcance} px. O bônus não acumula.": "Increases the attack speed of towers within {alcance} px by {percentual}%. The bonus does not stack.",
         "Produz {creditos} créditos ao concluir uma wave inteira. Precisa sobreviver até o fim para pagar.": "Produces {creditos} credits after completing a full wave. It must survive until the end to pay out.",
         "Atrai Sabotadores, Macacos e Corujas dentro do alcance deles. Aguenta {tiros} tiros e não atira.": "Draws Saboteurs, Monkeys, and Owls within their range. Withstands {tiros} shots and does not fire.",
         "Custa ${custo} na partida · máximo de {limite} no mapa · não ocupa vaga de torre": "Costs ${custo} in game · maximum {limite} on the map · uses no tower slot",
         "Custa ${custo} na partida · máximo de {limite} por partida": "Costs ${custo} in game · maximum {limite} per game",
+        "Custa ${custo} na partida · usa o limite geral de torres": "Costs ${custo} in game · uses the general tower limit",
         "Gerador produziu {creditos} créditos.": "Generator produced {creditos} credits.",
+        "Ofertas": "Offers",
+        "Itens sorteados para receber descontos nesta semana.": "Items selected to receive discounts this week.",
+        "Você já comprou todos os itens disponíveis na Loja.": "You have already purchased every item available in the Shop.",
         "Comprada": "Purchased",
         "Comprar por {preco}◆": "Buy for {preco}◆",
         "Faltam {preco}◆": "Need {preco}◆",
@@ -603,17 +1337,30 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Exclusivo da Fase 8 | Muita vida": "Exclusive to Stage 8 | High health",
         "Exclusivo da Fase 8 | Invoca 2 Raptors com 60% e 30% de vida": "Exclusive to Stage 8 | Summons 2 Raptors at 60% and 30% health",
         "Exclusivo da Fase 9 | Muito rápido e ainda mais veloz nos trilhos": "Exclusive to Stage 9 | Very fast and even faster on boost rails",
+        "Fases 9 e 11 | Muito rápido; não usa Fendas Temporais": "Stages 9 and 11 | Very fast; does not use Temporal Rifts",
         "Exclusivo da Fase 9 | Restaura 45 de vida de um aliado próximo": "Exclusive to Stage 9 | Restores 45 health to a nearby ally",
         "Exclusivo da Fase 9 | Reduz 25% do dano recebido por aliados próximos": "Exclusive to Stage 9 | Reduces damage received by nearby allies by 25%",
         "Exclusivo da Fase 9 | Rebobina o caminho e recupera vida duas vezes": "Exclusive to Stage 9 | Rewinds the path and recovers health twice",
-        "Habilidade temporal": "Time ability",
+        "Exclusivo da Fase 10 | Muito rápido": "Exclusive to Stage 10 | Very fast",
+        "Exclusiva da Fase 10 | Acelera 55% depois de alcançar 50% da vida": "Exclusive to Stage 10 | Speeds up by 55% after reaching 50% health",
+        "Exclusivo da Fase 10 | Reduz 25% do dano recebido": "Exclusive to Stage 10 | Reduces incoming damage by 25%",
+        "Exclusivo da Fase 10 | Paralisa até 3 torres com 70% e 35% de vida": "Exclusive to Stage 10 | Paralyzes up to 3 towers at 70% and 35% health",
+        "Exclusivo da Fase 11 | Resistente e capaz de usar Fendas Temporais": "Exclusive to Stage 11 | Tough and able to use Temporal Rifts",
+        "Exclusivo da Fase 11 | Retorna uma vez com metade da vida": "Exclusive to Stage 11 | Returns once with half health",
+        "Exclusiva da Fase 11 | Reduz 30% do dano perto das fendas": "Exclusive to Stage 11 | Reduces damage by 30% near rifts",
+        "Exclusiva da Fase 11 | Recua sem recuperar vida aos 70% e 35%": "Exclusive to Stage 11 | Moves back without healing at 70% and 35%",
+        "Exclusivo da Fase 12 | Muito rápido": "Exclusive to Stage 12 | Very fast",
+        "Exclusivo da Fase 12 | Libera 2 Fragmentos de Arquivo com 50% da vida": "Exclusive to Stage 12 | Releases 2 Archive Fragments at 50% health",
+        "Criado pelo Arquivista Corrompido": "Created by the Corrupted Archivist",
+        "Exclusivo da Fase 12 | Reduz 25% do dano no setor de ruptura": "Exclusive to Stage 12 | Reduces damage by 25% in the rupture sector",
+        "Exclusivo da Fase 12 | Aos 70% e 35%, invoca Resíduos e ativa um escudo": "Exclusive to Stage 12 | At 70% and 35%, summons Residues and activates a shield",
         "Pulso Temporal": "Time Pulse",
         "Pronto para usar": "Ready to use",
         "Tempo alterado · {segundos}s": "Time altered · {segundos}s",
         "Disponível na wave 1": "Available on wave 1",
         "Recarrega na wave {wave}": "Recharges on wave {wave}",
         "Pulso Temporal ativado!": "Time Pulse activated!",
-        "Pulso Temporal desbloqueado! Ele estará disponível no posto lateral das próximas partidas.": "Time Pulse unlocked! It will be available in the side station during future games.",
+        "Pulso Temporal desbloqueado! Ele estará disponível na barra inferior das próximas partidas.": "Time Pulse unlocked! It will be available in the bottom control bar during future games.",
         "TIRANO": "TYRANT",
         "Caminho Alto": "High Path",
         "Caminho Baixo": "Low Path",
@@ -632,6 +1379,98 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Se alguém ainda recebe este sinal, procure o Projeto Relógio. Objetivo registrado: criar um guardião capaz de existir em todas as eras. Consciência temporal detectada. Preparando corpo para transferência... RESULTADO: ARQUIVO CORROMPIDO.": "If anyone still receives this signal, find the Clock Project. Recorded objective: create a guardian capable of existing in every era. Temporal consciousness detected. Preparing body for transfer... RESULT: CORRUPTED FILE.",
         "FREQUÊNCIA: PROJETO RELÓGIO": "FREQUENCY: CLOCK PROJECT",
         "Desligar rádio": "Turn off radio",
+        "PROTÓTIPO ALFA": "ALPHA PROTOTYPE",
+        "Terminal do Projeto Relógio encontrado!": "Clock Project terminal found!",
+        "LER · REGISTRO 00": "READ · RECORD 00",
+        "Deixe espaço livre ao redor do terminal.": "Leave some clear space around the terminal.",
+        "REGISTRO DE ATIVAÇÃO 00": "ACTIVATION RECORD 00",
+        "Projeto Relógio. Transferência iniciada às 03:17. O corpo permaneceu vazio. O pesquisador-chefe desapareceu durante o pulso. Nenhuma porta foi aberta. A assinatura temporal continuou respondendo.": "Clock Project. Transfer started at 03:17. The body remained empty. The lead researcher disappeared during the pulse. No door was opened. The temporal signature continued to respond.",
+        "ARQUIVO: ORIGEM / ACESSO PARCIAL": "FILE: ORIGIN / PARTIAL ACCESS",
+        "Fechar registro": "Close record",
+        "ARQUIVO RECUPERADO": "RECOVERED FILE",
+        "O Projeto Relógio não criou a consciência temporal. Ela já existia antes da ativação. Nós apenas construímos um corpo para que ela pudesse entrar.": "The Clock Project did not create the temporal consciousness. It already existed before activation. We merely built a body so it could enter.",
+        "ARQUIVO: ORIGEM / TRECHO RESTAURADO": "FILE: ORIGIN / RESTORED EXCERPT",
+        "Reproduzir gravação": "Play recording",
+        "GRAVAÇÃO DO PESQUISADOR-CHEFE": "LEAD RESEARCHER RECORDING",
+        "Existe alguém observando o laboratório. Ele conhece acontecimentos que ainda não ocorreram. Se eu desaparecer, destruam a máquina.": "Someone is watching the laboratory. He knows events that have not happened yet. If I disappear, destroy the machine.",
+        "IDENTIDADE VISUAL: ARQUIVO CORROMPIDO": "VISUAL IDENTITY: CORRUPTED FILE",
+        "COORDENADA NÃO SOLICITADA": "UNREQUESTED COORDINATE",
+        "A Máquina do Tempo foi ativada sem nenhum comando. Uma nova coordenada acaba de ser registrada. Ela aponta para um futuro que não deveria existir.": "The Time Machine activated without any command. A new coordinate has just been registered. It points to a future that should not exist.",
+        "DESTINO: FUTURO / ORIGEM: DESCONHECIDA": "DESTINATION: FUTURE / ORIGIN: UNKNOWN",
+        "Ver resultado": "View result",
+        "PROTOCOLO DE CONTENÇÃO": "CONTAINMENT PROTOCOL",
+        "CÂMARA {camara}": "CHAMBER {camara}",
+        "PRONTO": "READY",
+        "AGUARDE {segundos}s": "WAIT {segundos}s",
+        "FECHADA {segundos}s": "CLOSED {segundos}s",
+        "USADO": "USED",
+        "Escolha uma câmara durante uma wave ativa.": "Choose a chamber during an active wave.",
+        "O Protocolo de Contenção já foi usado nesta wave.": "The Containment Protocol has already been used this wave.",
+        "O Protocolo de Contenção não pode ser ativado com a partida pausada.": "The Containment Protocol cannot be activated while the game is paused.",
+        "Câmara {camara} selecionada · fechamento em {segundos}s.": "Chamber {camara} selected · closing in {segundos}s.",
+        "Protocolo de Contenção ativado na Câmara {camara}!": "Containment Protocol activated in Chamber {camara}!",
+        "Deixe espaço livre ao redor do painel de contenção.": "Leave some clear space around the containment panel.",
+        "SENTINELA DO AMANHÃ": "SENTINEL OF TOMORROW",
+        "Anomalia identificada.": "Anomaly identified.",
+        "Você não deveria possuir essa máquina.": "You should not possess that machine.",
+        "Cada vitória sua está destruindo o futuro.": "Each of your victories is destroying the future.",
+        "O Eco Temporal retornou pelo caminho!": "The Temporal Echo returned along the path!",
+        "Transmissão fragmentada encontrada!": "Fragmented transmission found!",
+        "OUVIR · TRANSMISSÃO 11": "LISTEN · TRANSMISSION 11",
+        "Deixe espaço livre ao redor do transmissor.": "Leave some clear space around the transmitter.",
+        "FENDA {fenda} · {tipo}": "RIFT {fenda} · {tipo}",
+        "TRANSMISSÃO FRAGMENTADA 11": "FRAGMENTED TRANSMISSION 11",
+        "Se você encontrou esta mensagem, ainda há tempo. Não confie em quem lhe deu a máquina.": "If you found this message, there is still time. Do not trust whoever gave you the machine.",
+        "GUARDIANS OF PIXEL · SINAL DE EMERGÊNCIA": "GUARDIANS OF PIXEL · EMERGENCY SIGNAL",
+        "Encerrar transmissão": "End transmission",
+        "Nós não criamos um deus. Apenas abrimos a porta para ele.": "We did not create a god. We only opened the door for him.",
+        "PROJETO RELÓGIO · EQUIPE ENCERRADA": "CLOCK PROJECT · TEAM SHUT DOWN",
+        "Recuperar imagem": "Recover image",
+        "QUADRO 03:17": "FRAME 03:17",
+        "A gravação mostra apenas uma silhueta humana alta, de terno, com algo semelhante a um relógio no lugar da cabeça. O rosto e a identidade permanecem corrompidos.": "The recording shows only a tall human silhouette in a suit, with something like a clock in place of its head. The face and identity remain corrupted.",
+        "IDENTIDADE: ARQUIVO CORROMPIDO": "IDENTITY: CORRUPTED FILE",
+        "Rastrear sinal": "Trace signal",
+        "COORDENADA FRAGMENTADA": "FRAGMENTED COORDINATE",
+        "Entre as torres destruídas e os relógios parados em 03:17, resta um ponto de origem. A Máquina do Tempo guardou o destino, mas parte das coordenadas ainda está corrompida.": "Among the destroyed towers and clocks frozen at 03:17, one point of origin remains. The Time Machine stored the destination, but part of the coordinates is still corrupted.",
+        "DESTINO: PONTO DE RUPTURA / ACESSO INCOMPLETO": "DESTINATION: RUPTURE POINT / INCOMPLETE ACCESS",
+        "GUARDIÃO DO PONTO ZERO": "POINT ZERO GUARDIAN",
+        "Acesso ao Ponto Zero negado.": "Access to Point Zero denied.",
+        "Arquivo selado.": "Archive sealed.",
+        "Linha temporal protegida.": "Timeline protected.",
+        "O Arquivista liberou Fragmentos de Arquivo!": "The Archivist released Archive Fragments!",
+        "Oscilação temporal · Setor {estavel} estável · Setor {ruptura} acelerado.": "Temporal oscillation · Sector {estavel} stable · Sector {ruptura} accelerated.",
+        "SETOR {setor} · ESTÁVEL −25%": "SECTOR {setor} · STABLE −25%",
+        "SETOR {setor} · RUPTURA +30%": "SECTOR {setor} · RUPTURE +30%",
+        "Registro {numero} do Ponto Zero recuperado!": "Point Zero record {numero} recovered!",
+        "LER · REGISTRO {numero}": "READ · RECORD {numero}",
+        "REGISTRO {numero} · LIDO": "RECORD {numero} · READ",
+        "Deixe espaço livre ao redor dos registros.": "Leave some clear space around the records.",
+        "REGISTRO I — O CORPO": "RECORD I — THE BODY",
+        "O corpo foi concluído. Ele poderia existir fora do fluxo normal do tempo.": "The body was completed. It could exist outside the normal flow of time.",
+        "PROJETO RELÓGIO · COMPONENTE FÍSICO": "CLOCK PROJECT · PHYSICAL COMPONENT",
+        "REGISTRO II — A CONSCIÊNCIA": "RECORD II — THE CONSCIOUSNESS",
+        "A consciência detectada não era artificial. Ela respondeu antes de o sistema ser ligado.": "The detected consciousness was not artificial. It responded before the system was turned on.",
+        "PROJETO RELÓGIO · ORIGEM DESCONHECIDA": "CLOCK PROJECT · UNKNOWN ORIGIN",
+        "REGISTRO III — 03:17": "RECORD III — 03:17",
+        "O pesquisador-chefe entrou na câmara no instante da ativação. Às 03:17, duas assinaturas se tornaram uma.": "The lead researcher entered the chamber at activation. At 03:17, two signatures became one.",
+        "PROJETO RELÓGIO · TRANSFERÊNCIA CONCLUÍDA": "CLOCK PROJECT · TRANSFER COMPLETE",
+        "ARQUIVO DO PONTO ZERO REUNIDO": "POINT ZERO ARCHIVE ASSEMBLED",
+        "Nós não criamos o Senhor do Tempo. Criamos apenas o corpo que permitiu sua entrada. Quando a transferência terminou, a criatura carregava a mente e as lembranças do pesquisador.": "We did not create the Lord of Time. We only built the body that allowed him to enter. When the transfer ended, the creature carried the researcher's mind and memories.",
+        "PROJETO RELÓGIO · CONCLUSÃO FINAL": "CLOCK PROJECT · FINAL CONCLUSION",
+        "Revelar identidade": "Reveal identity",
+        "SENHOR DO TEMPO": "LORD OF TIME",
+        "Então você finalmente descobriu. Eu esperava que demorasse um pouco mais.": "So you finally found out. I expected it to take a little longer.",
+        "IDENTIDADE CONFIRMADA": "IDENTITY CONFIRMED",
+        "COORDENADAS MANIPULADAS": "MANIPULATED COORDINATES",
+        "A Máquina do Tempo nunca escolheu os destinos. Ela apenas seguiu as coordenadas que eu preparei para você.": "The Time Machine never chose the destinations. It only followed the coordinates I prepared for you.",
+        "ORIGEM DOS COMANDOS: SENHOR DO TEMPO": "COMMAND SOURCE: LORD OF TIME",
+        "Exigir respostas": "Demand answers",
+        "A ÚLTIMA PROTEÇÃO": "THE LAST PROTECTION",
+        "Cada vitória sua removeu uma proteção espalhada pelas épocas. Você abriu o caminho que eu não podia atravessar sozinho.": "Each of your victories removed a protection scattered across the eras. You opened the path I could not cross alone.",
+        "DESTINO DA PRISÃO: DESCONHECIDO": "PRISON DESTINATION: UNKNOWN",
+        "CAPÍTULO 3 — A GUERRA PELO TEMPO": "CHAPTER 3 — THE WAR FOR TIME",
+        "Agora que a última proteção caiu, podemos começar de verdade.": "Now that the last protection has fallen, we can truly begin.",
+        "O TEMPO ESTÁ EM GUERRA": "TIME IS AT WAR",
         "{quantidade} lasers de {dano} de dano · Alcance {alcance}": "{quantidade} lasers dealing {dano} damage · Range {alcance}",
         " | {quantidade} lasers por ataque": " | {quantidade} lasers per attack",
         "Álbum de Figurinhas": "Sticker Album",
@@ -672,6 +1511,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Custo: {custo} | Dano em área: {dano} | Raio: {raio} px | Limite: {limite}": "Cost: {custo} | Area damage: {dano} | Radius: {raio} px | Limit: {limite}",
         " | Detonação manual": " | Manual detonation",
         " | Detonação por contato": " | Contact detonation",
+        " | Corrosão: +{percentual}% de dano por {segundos}s": " | Corrosion: +{percentual}% damage for {segundos}s",
+        " | Fragmentos: {quantidade} de {dano} de dano em {raio} px": " | Fragments: {quantidade} dealing {dano} damage in {raio} px",
         "Custo: {custo} | Cadência próxima: +{percentual}% | Alcance: {alcance} | Limite: {limite}": "Cost: {custo} | Nearby fire rate: +{percentual}% | Range: {alcance} | Limit: {limite}",
         "Custo: {custo} | Carga: {cargas} inimigos | Empurrão: {distancia} px | Limite: {limite}": "Cost: {custo} | Charge: {cargas} enemies | Push: {distancia} px | Limit: {limite}",
         "Custo: {custo} | Produção: {creditos} por wave | Limite: {limite}": "Cost: {custo} | Production: {creditos} per wave | Limit: {limite}",
@@ -728,11 +1569,6 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Jogo pausado": "Game paused",
         "Desistir": "Give up",
         "Reiniciar fase": "Restart stage",
-        "Boosts": "Boosts",
-        "Partida atual": "Current game",
-        "Derrote um Boss para escolher seu primeiro boost.": "Defeat a Boss to choose your first boost.",
-        "Temporário": "Temporary",
-        "Aguardando evento": "Waiting for event",
         "Defesas": "Defenses",
         "Torres e explosivos": "Towers and explosives",
         "Central da torre": "Tower Hub",
@@ -747,12 +1583,11 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Boss derrotado": "Boss defeated",
         "Escolha um bônus": "Choose a bonus",
         "A recompensa escolhida permanece ativa até o fim da partida.": "The chosen reward remains active until the game ends.",
-        "-{percentual}% intervalo": "-{percentual}% interval",
         "+{creditos} créditos": "+{creditos} credits",
-        "dano": "damage",
-        "alcance": "range",
-        "Bônus escolhido: {nome}.": "Bonus chosen: {nome}.",
+        "Bônus escolhido: {nome}. {descricao}": "Bonus chosen: {nome}. {descricao}",
         "Um fliperama apareceu no mapa!": "An arcade machine appeared on the map!",
+        "Começa em": "Starts in",
+        "Prepare-se!": "Get ready!",
         "Labirinto Pixel": "Pixel Maze",
         "Mapa {mapa}: leve o robô até a saída sem tocar nas paredes.": "Map {mapa}: guide the robot to the exit without touching the walls.",
         "Mapa": "Map",
@@ -770,8 +1605,29 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Acertos": "Hits",
         "Acompanhe o alvo: ele se move livremente e rebate nas bordas.": "Track the target: it moves freely and bounces off the edges.",
         "Área do minigame com alvo móvel": "Minigame area with a moving target",
+        "Controles de movimento do coletor": "Collector movement controls",
+        "Voo Pixel": "Pixel Flight",
+        "Atravesse {portais} portais sem tocar nos obstáculos.": "Fly through {portais} gates without touching the obstacles.",
+        "Portais": "Gates",
+        "Clique, toque ou use Espaço, W ou seta para cima para voar.": "Click, tap, or use Space, W, or the up arrow to fly.",
+        "Área do Voo Pixel com portais em movimento": "Pixel Flight area with moving gates",
+        "Chuva de Pixels": "Pixel Rain",
+        "Colete {pixels} pixels amarelos e evite os pixels corrompidos.": "Collect {pixels} yellow pixels and avoid corrupted pixels.",
+        "Coletados": "Collected",
+        "Use A, D, as setas ou os botões da tela. Pixels vermelhos retiram um ponto.": "Use A, D, the arrow keys, or the on-screen buttons. Red pixels remove one point.",
+        "Área da Chuva de Pixels com coletor móvel": "Pixel Rain area with a moving collector",
+        "Sequência Neon": "Neon Sequence",
+        "Observe os {sinais} sinais e repita a sequência.": "Watch the {sinais} signals and repeat the sequence.",
+        "Progresso": "Progress",
+        "Observe": "Watch",
+        "Espere a demonstração terminar e clique ou toque nos painéis na mesma ordem.": "Wait for the demonstration to end, then click or tap the panels in the same order.",
+        "Quatro painéis da Sequência Neon": "Four Neon Sequence panels",
         "Labirinto concluído! Torres com +{percentual}% de dano por {segundos} segundos.": "Maze complete! Towers gain +{percentual}% damage for {segundos} seconds.",
         "Tiro ao alvo concluído! Torres aceleradas por {segundos} segundos.": "Target practice complete! Towers attack faster for {segundos} seconds.",
+        "Chuva de Pixels concluída! Torres com +{percentual}% de dano por {segundos} segundos.": "Pixel Rain complete! Towers gain +{percentual}% damage for {segundos} seconds.",
+        "Voo Pixel concluído! Torres aceleradas por {segundos} segundos.": "Pixel Flight complete! Towers attack faster for {segundos} seconds.",
+        "Sequência Neon concluída! Você recebeu {creditos} créditos.": "Neon Sequence complete! You received {creditos} credits.",
+        "O robô colidiu. Tente novamente no próximo fliperama.": "The robot crashed. Try again at the next arcade machine.",
         "Tempo esgotado no fliperama.": "Time ran out in the arcade.",
         "O boost do fliperama terminou.": "The arcade boost has ended.",
         "FASE {fase} · {waves} WAVES CONCLUÍDAS": "STAGE {fase} · {waves} WAVES COMPLETED",
@@ -798,7 +1654,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Clique na Torre padrão que você acabou de construir.": "Click the Standard Tower you just built.",
         "Mina armada · {dano} de dano em {raio} px.": "Armed mine · {dano} damage in {raio} px.",
         "Pavio aceso · explosão em {segundos}s.": "Fuse lit · explosion in {segundos}s.",
-        "Pavio aceso! A Bomba Pesada explode em {segundos} segundo.": "Fuse lit! The Heavy Bomb explodes in {segundos} second.",
+        "Pavio aceso! {nome} explode em {segundos} segundo.": "Fuse lit! {nome} explodes in {segundos} second.",
         "A {nome} só pode ser colocada no caminho.": "The {nome} can only be placed on the path.",
         "Não é possível colocar torres no caminho.": "Towers cannot be placed on the path.",
         "Deixe espaço livre ao redor do fliperama.": "Leave free space around the arcade machine.",
@@ -806,8 +1662,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Dinheiro insuficiente para construir {nome}.": "Not enough credits to build {nome}.",
         "Você já atingiu o limite de torres.": "You have reached the tower limit.",
         "Não coloque minas muito perto umas das outras.": "Do not place mines too close together.",
-        "Não coloque Bombas Pesadas muito perto umas das outras.": "Do not place Heavy Bombs too close together.",
-        "Não coloque esta defesa muito perto de torres ou Bombas Pesadas.": "Do not place this defense too close to towers or Heavy Bombs.",
+        "Não coloque bombas muito perto umas das outras.": "Do not place bombs too close together.",
+        "Não coloque esta defesa muito perto de torres ou bombas.": "Do not place this defense too close to towers or bombs.",
         "Bomba posicionada · clique nela para acender o pavio · {quantidade}/{limite} no mapa.": "Bomb placed · click it to light the fuse · {quantidade}/{limite} on the map.",
         "Mina armada · {quantidade}/{limite} no mapa.": "Mine armed · {quantidade}/{limite} on the map.",
         "Inimigo": "Enemy",
@@ -848,8 +1704,6 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "BOSS": "BOSS",
         "ALGO ESTÁ VINDO...": "SOMETHING IS COMING...",
         "Menu da partida": "Game menu",
-        "Boosts da partida": "Game boosts",
-        "Boost temporário": "Temporary boost",
         "Mapa do jogo Guardians of Pixel": "Guardians of Pixel game map",
         "Defesas disponíveis": "Available defenses",
         "Controles da partida": "Game controls",
@@ -863,14 +1717,104 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Torre de Esporos": "Spore Tower",
         "Obliterador": "Obliterator",
         "Torre Sísmica": "Seismic Tower",
+        "Torre de Varredura": "Sweep Tower",
         "Isca Blindada": "Armored Decoy",
         "Amplificador Pixel": "Pixel Amplifier",
         "Gerador de Créditos": "Credit Generator",
         "Torre de Raios": "Lightning Tower",
         "Lança-Chamas": "Flamethrower",
+        "Torre Perfuradora": "Piercing Tower",
+        "Torre Marcadora": "Marker Tower",
+        "Torre de Drones": "Drone Tower",
+        "Torre de Correntes": "Chain Tower",
+        "Torre de Sucata": "Scrap Tower",
+        "Canhão Prismático": "Prism Cannon",
+        "Elemento: {elemento}": "Element: {elemento}",
+        "{elemento} +{percentual}%": "{elemento} +{percentual}%",
+        "Fraqueza: {fraquezas}": "Weakness: {fraquezas}",
+        "Detecção": "Detection",
+        "Inimigos camuflados": "Camouflaged enemies",
+        "Dano {dano} · Detecta camuflados · Alcance {alcance}": "Damage {dano} · Detects camouflage · Range {alcance}",
+        "Fogo": "Fire",
+        "Gelo": "Ice",
+        "Elétrico": "Electric",
+        "Sísmico": "Seismic",
+        "Tóxico": "Toxic",
+        "SUPER EFETIVO!": "SUPER EFFECTIVE!",
+        "Abrir detalhes de {nome}": "Open details for {nome}",
+        "DETALHES DA FIGURINHA": "STICKER DETAILS",
+        "Fechar detalhes": "Close details",
+        "Categoria": "Category",
+        "Nível": "Level",
+        "Nível único": "Single level",
+        "Força (dano)": "Power (damage)",
+        "Sem dano direto": "No direct damage",
+        "Tempo para atacar": "Attack time",
+        "{segundos} s": "{segundos} s",
+        "Não ataca": "Does not attack",
+        "Alcance": "Range",
+        "{alcance} px": "{alcance} px",
+        "Área de dano": "Damage area",
+        "{raio} px": "{raio} px",
+        "Elemento": "Element",
+        "Neutro": "Neutral",
+        "Melhor contra": "Best against",
+        "Sem vantagem elemental": "No elemental advantage",
+        "{alvos} (+{percentual}% de dano)": "{alvos} (+{percentual}% damage)",
+        "Custo": "Cost",
+        "Custo da melhoria": "Upgrade cost",
+        "Limite por partida": "Match limit",
+        "{limite} unidades": "{limite} units",
+        "Limite geral da fase": "General stage limit",
+        "Torre de combate": "Combat tower",
+        "Torre de controle": "Control tower",
+        "Suporte": "Support",
+        "Mina": "Mine",
+        "Bomba": "Bomb",
+        "Contra o mesmo elemento, o dano permanece normal.": "Against the same element, damage remains normal.",
+        "Esta defesa não possui vantagem elemental.": "This defense has no elemental advantage.",
+        "Ataques neutros causam o dano normal em todos os tipos.": "Neutral attacks deal normal damage to every type.",
+        "Mecânico": "Mechanical",
+        "Pedra": "Stone",
+        "Blindado": "Armored",
+        "Orgânico": "Organic",
+        "Sem característica elemental": "No elemental characteristic",
+        "Inimigo comum": "Common enemy",
+        "Boss": "Boss",
+        "Vida base": "Base health",
+        "Velocidade": "Speed",
+        "{velocidade} px por quadro": "{velocidade} px per frame",
+        "Tamanho": "Size",
+        "{tamanho} px": "{tamanho} px",
+        "Características": "Characteristics",
+        "Fraquezas": "Weaknesses",
+        "Nenhuma fraqueza elemental": "No elemental weakness",
+        "Aumento por aparição": "Increase per appearance",
+        "+{vida} de vida": "+{vida} health",
+        "Sem habilidade especial.": "No special ability.",
+        "Armas elementais sem vantagem causam dano normal.": "Elemental weapons without an advantage deal normal damage.",
+        "Use os elementos indicados para causar o dano adicional mostrado.": "Use the listed elements to deal the additional damage shown.",
+        "Skin": "Skin",
+        "Estado": "Status",
+        "Uso": "Used by",
+        "Bônus de combate": "Combat bonus",
+        "Nenhum; esta skin é somente cosmética.": "None; this skin is cosmetic only.",
+        "Conceito": "Concept",
+        "Registro de personagem": "Character record",
+        "Esta figurinha não representa uma unidade de combate.": "This sticker does not represent a combat unit.",
+        "Funcionamento": "How it works",
+        "Dano {dano} · Perfura uma faixa de {largura} px · Alcance {alcance}": "Damage {dano} · Pierces a {largura} px lane · Range {alcance}",
+        "Dano {dano} · Marca +{percentual}% de dano · Alcance {alcance}": "Damage {dano} · Marks for +{percentual}% damage · Range {alcance}",
+        "{quantidade} drones de {dano} de dano · Alcance {alcance}": "{quantidade} drones dealing {dano} damage · Range {alcance}",
+        "Dano {dano} · Corrente {percentual}% · Alcance {alcance}": "Damage {dano} · {percentual}% chain · Range {alcance}",
+        "Dano {dano} · Até {pecas} peças de sucata · Alcance {alcance}": "Damage {dano} · Up to {pecas} scrap parts · Range {alcance}",
+        "Dano {dano} · Alterna vermelho, azul e amarelo · Alcance {alcance}": "Damage {dano} · Cycles red, blue, and yellow · Range {alcance}",
         "Mina Terrestre": "Land Mine",
         "Mina Congelante": "Frost Mine",
+        "Mina de Pulso": "Pulse Mine",
+        "Mina Corrosiva": "Corrosive Mine",
         "Bomba Pesada": "Heavy Bomb",
+        "Bomba de Fragmentação": "Fragmentation Bomb",
         "Dimensão Glitch": "Glitch Dimension",
         "Uma cópia quebrada do mundo, escondida atrás da árvore da Fase 1.": "A broken copy of the world, hidden behind the Stage 1 tree.",
         "Senhor do Tempo": "Lord of Time",
@@ -969,6 +1913,168 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Encontrado na fase secreta | Muito rápido": "Found in the secret stage | Very fast",
         "Encontrado na fase secreta | Muita vida": "Found in the secret stage | High health",
         "Boss da fase secreta | Fica mais forte a cada aparição": "Secret stage boss | Gets stronger with each appearance",
+        "O Intervalo Perdido": "The Lost Interval",
+        "O espaço impossível que existe entre um segundo e o seguinte.": "The impossible space that exists between one second and the next.",
+        "Fase 13": "Stage 13",
+        "Linha de Frente Temporal": "Temporal Front Line",
+        "Fragmento de Segundo": "Second Fragment",
+        "Ponteiro Errante": "Wandering Hand",
+        "Paradoxo Blindado": "Armored Paradox",
+        "Carcereiro do Intervalo": "Interval Warden",
+        "Executor Cronal": "Chronal Executor",
+        "Soldado Cronal": "Chronal Soldier",
+        "Portador da Fenda": "Rift Bearer",
+        "COLISÃO TEMPORAL": "TEMPORAL COLLISION",
+        "A linha temporal se partiu em três frentes. Reforços podem atravessar Passado, Presente ou Futuro.": "The timeline has split into three fronts. Reinforcements can cross through Past, Present, or Future.",
+        "SISTEMA DA MÁQUINA DO TEMPO": "TIME MACHINE SYSTEM",
+        "Ouvir transmissão": "Listen to transmission",
+        "Você atravessou o lugar onde o tempo não existe. Agora verá o que existe quando todas as eras entram em guerra.": "You crossed the place where time does not exist. Now you will see what happens when every era goes to war.",
+        "TRANSMISSÃO HOSTIL": "HOSTILE TRANSMISSION",
+        "Entrar na guerra": "Enter the war",
+        "Frentes Temporais serão abertas nas waves 2, 5, 8, 11, 14, 17 e 20.": "Temporal Fronts will open on waves 2, 5, 8, 11, 14, 17, and 20.",
+        "PASSADO": "PAST",
+        "PRESENTE": "PRESENT",
+        "FUTURO": "FUTURE",
+        "FRENTE {era}: uma entrada de reforços está se abrindo!": "{era} FRONT: a reinforcement entrance is opening!",
+        "FRENTE {era} ABERTA: reforço atravessou a linha temporal!": "{era} FRONT OPEN: a reinforcement crossed the timeline!",
+        "FRENTE {era} · ABRINDO": "{era} FRONT · OPENING",
+        "FRENTE {era} · ATIVA": "{era} FRONT · ACTIVE",
+        "O Executor deslocou a frente ativa para {era}!": "The Executor shifted the active front to {era}!",
+        "Uma Fenda Residual foi aberta no caminho!": "A Residual Rift opened on the path!",
+        "A Fenda Residual transportou um inimigo 140 px adiante!": "The Residual Rift transported an enemy 140 px forward!",
+        "Intervalo Perdido · Wave 1": "Lost Interval · Wave 1",
+        "INTERVALO · WAVE": "INTERVAL · WAVE",
+        "INTERVALO PERDIDO · {waves} WAVES CONCLUÍDAS": "LOST INTERVAL · {waves} WAVES COMPLETE",
+        "Vença O Intervalo Perdido para desbloquear": "Defeat The Lost Interval to unlock",
+        "Reabrir O Intervalo Perdido": "Reopen The Lost Interval",
+        "Investigar o relógio quebrado na coordenada 00:00": "Investigate the broken clock at coordinate 00:00",
+        "O Intervalo Perdido foi vencido": "The Lost Interval was defeated",
+        "Coordenada 00:00 · Era inexistente": "Coordinate 00:00 · Nonexistent era",
+        "Os Relógios de Ruptura serão ativados nas waves 3, 6 e 9.": "Rift Clocks will activate on waves 3, 6, and 9.",
+        "Relógios de Ruptura: memorize a sequência!": "Rift Clocks: memorize the sequence!",
+        "Repita a sequência clicando nos três relógios!": "Repeat the sequence by clicking the three clocks!",
+        "Sequência correta! Os inimigos ficaram mais lentos por 4 segundos.": "Correct sequence! Enemies are slower for 4 seconds.",
+        "Sequência incorreta! Dois Ecos Temporais atravessaram a ruptura.": "Wrong sequence! Two Temporal Echoes crossed the rift.",
+        "O relógio está parado em 00:00.": "The clock is stopped at 00:00.",
+        "Observe a sequência antes de responder.": "Watch the sequence before answering.",
+        "Relógio {atual} de {total} correto.": "Clock {atual} of {total} correct.",
+        "Senhor do Tempo: {fala} Inimigos acelerados por 6 segundos.": "Time Lord: {fala} Enemies accelerated for 6 seconds.",
+        "Senhor do Tempo: {fala} {quantidade} torres entraram em estase.": "Time Lord: {fala} {quantidade} towers entered stasis.",
+        "O tempo não seguirá as suas regras.": "Time will not follow your rules.",
+        "Vamos ver como luta sem controlar todas as peças.": "Let's see how you fight without controlling every piece.",
+        "O Executor Cronal convocou reforços de duas eras!": "The Chronal Executor summoned reinforcements from two eras!",
+        "Deixe espaço livre ao redor dos Relógios de Ruptura.": "Leave free space around the Rift Clocks.",
+        "MEMORIZE A SEQUÊNCIA": "MEMORIZE THE SEQUENCE",
+        "REPITA A SEQUÊNCIA · {segundos}s": "REPEAT THE SEQUENCE · {segundos}s",
+        "CARCEREIRO": "WARDEN",
+        "EXECUTOR CRONAL": "CHRONAL EXECUTOR",
+        "O Intervalo foi atravessado e o caminho para o Capítulo 3 está aberto.": "The Interval was crossed and the path to Chapter 3 is open.",
+        "O relógio voltou a 00:00. Vença para escapar do Intervalo.": "The clock returned to 00:00. Win to escape the Interval.",
+        "Intervalo Perdido reiniciado.": "Lost Interval restarted.",
+        "A saída do Intervalo só aparece depois da vitória.": "The exit from the Interval only appears after victory.",
+        "Boss do Intervalo Perdido | Passado: Sísmico +25% | Futuro: Elétrico +30% | Intervalo: sem fraqueza e mais rápido": "Lost Interval boss | Past: Seismic +25% | Future: Electric +30% | Interval: no weakness and faster",
+        "Exclusivo do Intervalo Perdido | Unidade básica presa entre segundos": "Exclusive to the Lost Interval | Basic unit trapped between seconds",
+        "Exclusivo do Intervalo Perdido | Muito rápido": "Exclusive to the Lost Interval | Very fast",
+        "Exclusivo do Intervalo Perdido | Blindado; recebe 18% menos dano": "Exclusive to the Lost Interval | Armored; takes 18% less damage",
+        "Exclusivo da Fase 13 | Convoca um Raptor e um Drone com 60% e 30% de vida": "Exclusive to Stage 13 | Summons a Raptor and a Drone at 60% and 30% health",
+        "Exclusivo da Fase 13 | Alterna entre Passado resistente e Futuro veloz": "Exclusive to Stage 13 | Alternates between a resistant Past and a fast Future",
+        "Exclusivo da Fase 13 | Ao morrer, deixa uma fenda que transporta o próximo inimigo": "Exclusive to Stage 13 | On death, leaves a rift that transports the next enemy",
+        "Exclusivo da Fase 13 | Convoca duas eras e muda a frente ativa com 60% e 30% de vida": "Exclusive to Stage 13 | Summons two eras and changes the active front at 60% and 30% health",
+        "Fases 13 a 18": "Stages 13 to 18",
+        "ERA INEXISTENTE": "NONEXISTENT ERA",
+        "COORDENADA 00:00": "COORDINATE 00:00",
+        "ENTRANDO NO INTERVALO PERDIDO...": "ENTERING THE LOST INTERVAL...",
+        "INTERVALO DETECTADO": "INTERVAL DETECTED",
+        "A última proteção caiu, mas uma coordenada impossível surgiu no relógio quebrado. O Capítulo 3 ainda está do outro lado dela.": "The last protection fell, but an impossible coordinate appeared on the broken clock. Chapter 3 is still on the other side.",
+        "COORDENADA 00:00 · ERA INEXISTENTE": "COORDINATE 00:00 · NONEXISTENT ERA",
+        "Guardar coordenada": "Save coordinate",
+        "SISTEMA DA MÁQUINA": "MACHINE SYSTEM",
+        "Coordenada 00:00 confirmada. Erro: nenhuma era corresponde a este destino.": "Coordinate 00:00 confirmed. Error: no era matches this destination.",
+        "FORA DA LINHA TEMPORAL": "OUTSIDE THE TIMELINE",
+        "Tentar conexão": "Attempt connection",
+        "Você abriu o Intervalo Perdido. Agora sobreviva ao que estava preso entre os segundos.": "You opened the Lost Interval. Now survive what was trapped between the seconds.",
+        "ORIGEM NÃO IDENTIFICADA": "UNIDENTIFIED ORIGIN",
+        "Começar defesa": "Begin defense",
+        "CONDENAÇÃO TEMPORAL": "TEMPORAL SENTENCE",
+        "Você sabe o que eu sou agora. Não posso deixar que continue livre.": "You know what I am now. I cannot let you remain free.",
+        "Vou levar você para onde ninguém poderá encontrá-lo. O tempo não existe lá. Nada existe de verdade.": "I will take you where no one will ever find you. Time does not exist there. Nothing truly exists there.",
+        "Aquele lugar apenas recria fragmentos de tudo o que você já viveu. Você ficará preso entre essas lembranças para sempre.": "That place only recreates fragments of everything you have lived through. You will be trapped among those memories forever.",
+        "Não sou eu quem controla o que existe naquele lugar. Quando chegar lá, você estará sozinho... Adeus.": "I am not the one who controls what exists in that place. When you arrive, you will be alone... Goodbye.",
+        "Tentar resistir": "Try to resist",
+        "REGISTRO FORA DO TEMPO": "RECORD OUTSIDE TIME",
+        "O Senhor do Tempo não criou este lugar. Ele estava tentando mantê-lo fechado.": "The Time Lord did not create this place. He was trying to keep it closed.",
+        "ARQUIVO SEM DATA": "UNDATED FILE",
+        "SINAL DESCONHECIDO": "UNKNOWN SIGNAL",
+        "Existe alguma coisa vivendo fora da linha temporal.": "Something is living outside the timeline.",
+        "ORIGEM: ALÉM DO INTERVALO": "ORIGIN: BEYOND THE INTERVAL",
+        "Ouvir sinal": "Listen to signal",
+        "Finalmente alguém abriu o intervalo.": "At last, someone opened the interval.",
+        "IDENTIDADE NÃO RECONHECIDA": "IDENTITY NOT RECOGNIZED",
+        "Você atravessou o único lugar que eu não conseguia observar. Agora nós dois temos um problema.": "You crossed the only place I could not observe. Now we both have a problem.",
+        "CANAL TEMPORAL RESTAURADO": "TEMPORAL CHANNEL RESTORED",
+        "Revelar Capítulo 3": "Reveal Chapter 3",
+        "Você ainda não entende. Eu removi as proteções porque elas já estavam falhando.": "You still do not understand. I removed the protections because they were already failing.",
+        "LINHA DE FRENTE TEMPORAL": "TEMPORAL FRONT LINE",
+        "Continue avançando. Cada vitória abre outra passagem.": "Keep moving forward. Each victory opens another passage.",
+        "SINAL EXTERNO DETECTADO": "EXTERNAL SIGNAL DETECTED",
+        "Rastrear próximo destino": "Track next destination",
+        "COORDENADA INSTÁVEL": "UNSTABLE COORDINATE",
+        "A frente temporal se estende para uma era que ainda não foi estabilizada.": "The temporal front extends into an era that has not yet stabilized.",
+        "DESTINO SEGUINTE: FASE 14": "NEXT DESTINATION: STAGE 14",
+        "Investigar ruído": "Investigate noise",
+        "PROTÓTIPO NÃO REGISTRADO": "UNREGISTERED PROTOTYPE",
+        "O que é isso? Parece ser um tipo de defesa. A única inscrição legível na carcaça diz: PROTÓTIPO V-13.": "What is this? It looks like some kind of defense. The only readable marking on its frame says: PROTOTYPE V-13.",
+        "OBJETO ENCONTRADO FORA DA LINHA DE FRENTE": "OBJECT FOUND OUTSIDE THE FRONT LINE",
+        "Procurar registros": "Search for records",
+        "FICHA TÉCNICA ENCONTRADA": "TECHNICAL FILE FOUND",
+        "Ao lado da defesa, você encontra uma ficha. Criação: 17/09/2087. Criadora: Dra. Lina Varela. Função: detectar e atacar inimigos camuflados.": "Beside the defense, you find a file. Created: 09/17/2087. Creator: Dr. Lina Varela. Function: detect and attack camouflaged enemies.",
+        "MODELO: TORRE DE VARREDURA · PROTÓTIPO V-13": "MODEL: SWEEP TOWER · PROTOTYPE V-13",
+        "Ler observação": "Read note",
+        "REGISTRO DO DEFENSOR": "DEFENDER LOG",
+        "Como assim inimigos camuflados?": "What do you mean, camouflaged enemies?",
+        "TORRE DE VARREDURA DESBLOQUEADA": "SWEEP TOWER UNLOCKED",
+        "Fase 14": "Stage 14",
+        "A Era Apagada": "The Erased Era",
+        "Infiltrador Camuflado": "Camouflaged Infiltrator",
+        "Rascunho Vivo": "Living Draft",
+        "Sentinela Incompleta": "Incomplete Sentinel",
+        "Sombra Congelada": "Frozen Shadow",
+        "Curador do Vazio": "Void Curator",
+        "Exclusivo da Fase 14 | Muito rápido e parcialmente apagado": "Exclusive to Stage 14 | Very fast and partially erased",
+        "Exclusivo da Fase 14 | Somente a Torre de Varredura consegue detectá-lo": "Exclusive to Stage 14 | Only the Sweep Tower can detect it",
+        "Exclusiva da Fase 14 | Blindada; recebe 18% menos dano": "Exclusive to Stage 14 | Armored; takes 18% less damage",
+        "Exclusiva da Fase 14 | Uma pessoa preservada como sombra temporal": "Exclusive to Stage 14 | A person preserved as a temporal shadow",
+        "Exclusivo da Fase 14 | Aos 50% de vida, restaura até 2 inimigos derrotados nos últimos 5 segundos": "Exclusive to Stage 14 | At 50% health, restores up to 2 enemies defeated in the last 5 seconds",
+        "COORDENADA APAGADA": "ERASED COORDINATE",
+        "A Máquina do Tempo encontrou uma era removida da história. A cidade existe apenas em fragmentos.": "The Time Machine found an era removed from history. The city exists only in fragments.",
+        "DATA: INEXISTENTE": "DATE: NONEXISTENT",
+        "Esta era foi apagada por um motivo. Se continuar, não poderei reconstruí-la.": "This era was erased for a reason. If you continue, I will not be able to rebuild it.",
+        "REESCRITA TEMPORAL DETECTADA": "TEMPORAL REWRITE DETECTED",
+        "Ouvir ameaça": "Hear threat",
+        "Certo, você sobreviveu até aqui. Mas agora criei um inimigo que nenhuma das suas torres enxerga. Eles são camuflados; nada pode vê-los.": "All right, you survived this far. But now I have created an enemy none of your towers can see. They are camouflaged; nothing can spot them.",
+        "NOVA ASSINATURA HOSTIL DETECTADA": "NEW HOSTILE SIGNATURE DETECTED",
+        "Preparar defesa": "Prepare defense",
+        "PENSAMENTO DO DEFENSOR": "DEFENDER'S THOUGHT",
+        "Eu tenho uma torre específica para isso... mas ele não sabe.": "I have a tower made specifically for this... but he does not know.",
+        "PROTÓTIPO V-13 PRONTO PARA CONSTRUÇÃO": "PROTOTYPE V-13 READY TO BUILD",
+        "Entrar na Era Apagada": "Enter the Erased Era",
+        "A Reescrita Temporal atingirá as waves 3, 6, 9, 12, 15 e 18.": "Temporal Rewrite will strike waves 3, 6, 9, 12, 15, and 18.",
+        "REESCRITA TEMPORAL: uma área do mapa será apagada!": "TEMPORAL REWRITE: an area of the map will be erased!",
+        "Área apagada: {quantidade} torres de combate entraram em estase.": "Area erased: {quantidade} combat towers entered stasis.",
+        "A área apagada voltou à linha temporal.": "The erased area returned to the timeline.",
+        "ÁREA APAGADA · TORRES EM ESTASE": "ERASED AREA · TOWERS IN STASIS",
+        "REESCRITA IMINENTE": "REWRITE IMMINENT",
+        "O Curador do Vazio restaurou {quantidade} inimigos apagados!": "The Void Curator restored {quantidade} erased enemies!",
+        "CURADOR DO VAZIO": "VOID CURATOR",
+        "GRAVAÇÃO RESTAURADA": "RESTORED RECORDING",
+        "Se alguém encontrou isto, então ele ainda usa meu rosto.": "If someone found this, then he is still using my face.",
+        "AUTOR: PESQUISADOR-CHEFE DO PROJETO ???": "AUTHOR: PROJECT ??? LEAD RESEARCHER",
+        "Verificar assinatura": "Verify signature",
+        "ARQUIVO IMPOSSÍVEL": "IMPOSSIBLE FILE",
+        "A voz pertence ao pesquisador desaparecido. O registro foi criado 47 anos depois de seu desaparecimento.": "The voice belongs to the missing researcher. The record was created 47 years after his disappearance.",
+        "IDENTIDADE CONFIRMADA · DATA INVÁLIDA": "IDENTITY CONFIRMED · INVALID DATE",
+        "Desligue isso. Essa gravação não é uma memória. É uma isca.": "Turn that off. This recording is not a memory. It is bait.",
+        "CANAL ENCERRADO À FORÇA": "CHANNEL FORCIBLY CLOSED",
         "ERRO": "ERROR"
     }),
     es: Object.freeze({
@@ -976,6 +2082,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Selecionada": "Seleccionada",
         "Disponível": "Disponible",
         "Obrigatória no tutorial": "Obligatoria en el tutorial",
+        "Obrigatória na Fase 14": "Obligatoria en la Fase 14",
         "{custo} créditos": "{custo} créditos",
         "Vaga livre": "Espacio libre",
         "Defesas para Waves infinitas": "Defensas para Oleadas infinitas",
@@ -989,6 +2096,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "SUA EQUIPE": "TU EQUIPO",
         "6 vagas para a batalha": "6 espacios para la batalla",
         "A Torre padrão precisa ficar na equipe durante o tutorial.": "La Torre estándar debe permanecer en el equipo durante el tutorial.",
+        "A Torre de Varredura precisa ficar na equipe para detectar os inimigos camuflados da Fase 14.": "La Torre de Barrido debe permanecer en el equipo para detectar a los enemigos camuflados de la Fase 14.",
         "Sua equipe já está completa. Retire uma defesa para escolher outra.": "Tu equipo ya está completo. Retira una defensa para elegir otra.",
         "Escolha pelo menos uma defesa.": "Elige al menos una defensa.",
         "Caçador de Pixels": "Cazador de Píxeles",
@@ -1020,12 +2128,23 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "???": "???",
         "Ainda está te esperando, sempre vai estar.": "Todavía te está esperando, siempre lo estará.",
         "Mestre do Arsenal": "Maestro del Arsenal",
-        "Compre todos os itens disponíveis na Loja.": "Compra todos los objetos disponibles en la Tienda.",
+        "Compre todos os 23 itens disponíveis na Loja.": "Compra los 23 objetos disponibles en la Tienda.",
         "Lenda do Infinito": "Leyenda del Infinito",
         "Alcance a wave 100 no modo infinito.": "Alcanza la oleada 100 en el modo infinito.",
         "Caçador de Pixels Supremo": "Cazador de Píxeles Supremo",
         "Elimine 500 inimigos em qualquer modo.": "Elimina 500 enemigos en cualquier modo.",
         "Resgate a missão semanal da wave 40 infinita.": "Reclama la misión semanal de la oleada infinita 40.",
+        "Os Seis Guardiões": "Los Seis Guardianes",
+        "Construa as seis defesas escolhidas para a equipe na mesma partida.": "Construye las seis defensas elegidas para el equipo en la misma partida.",
+        "Mestre do Fliperama": "Maestro del Salón Recreativo",
+        "Conclua os cinco minigames do fliperama pelo menos uma vez.": "Completa los cinco minijuegos del salón recreativo al menos una vez.",
+        "Pare o Relógio!": "¡Detén el Reloj!",
+        "Ative o Pulso Temporal com um Boss e pelo menos cinco inimigos comuns no mapa.": "Activa el Pulso Temporal con un Jefe y al menos cinco enemigos comunes en el mapa.",
+        "Demolição em Massa": "Demolición Masiva",
+        "Elimine oito inimigos com uma única Bomba Pesada.": "Elimina ocho enemigos con una sola Bomba Pesada.",
+        "Frequência 09": "Frecuencia 09",
+        "Encontre e escute até o fim a transmissão do Projeto ???.": "Encuentra y escucha hasta el final la transmisión del Proyecto ???.",
+        "O futuro guarda uma frequência esquecida.": "El futuro guarda una frecuencia olvidada.",
         "Fase 1": "Fase 1",
         "Fase 2": "Fase 2",
         "Fase 3": "Fase 3",
@@ -1035,6 +2154,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Fase 7": "Fase 7",
         "Fase 8": "Fase 8",
         "Fase 9": "Fase 9",
+        "Fase 10": "Fase 10",
+        "Fase 11": "Fase 11",
+        "Fase 12": "Fase 12",
         "Campo verde": "Campos Verdes",
         "Deserto antigo": "Desierto Antiguo",
         "Tundra congelada": "Tundra Helada",
@@ -1044,6 +2166,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Pântano Tóxico": "Pantano Tóxico",
         "Selva Primordial": "Selva Primordial",
         "Metrópole Neon": "Metrópolis Neón",
+        "Laboratório Abandonado": "Laboratorio Abandonado",
+        "Futuro Despedaçado": "Futuro Despedazado",
+        "Ponto Zero": "Punto Cero",
         "Reserva de Créditos": "Reserva de Créditos",
         "Aumenta permanentemente os créditos disponíveis no começo de cada partida.": "Aumenta permanentemente los créditos disponibles al comienzo de cada partida.",
         "+50 créditos iniciais em todas as fases e no modo infinito": "+50 créditos iniciales en todas las fases y en el modo infinito",
@@ -1053,6 +2178,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Recompensa Otimizada": "Recompensa Optimizada",
         "Melhora permanentemente o pagamento recebido pelas torres de combate.": "Mejora permanentemente el pago recibido por las torres de combate.",
         "+2 créditos por disparo realizado pelas torres": "+2 créditos por cada disparo de las torres",
+        "Mira Calibrada": "Mira Calibrada",
+        "Aumenta permanentemente a força dos disparos das torres de combate.": "Aumenta permanentemente la potencia de los disparos de las torres de combate.",
+        "+5% de dano para todas as torres de combate": "+5% de daño para todas las torres de combate",
+        "Sensores de Longo Alcance": "Sensores de Largo Alcance",
+        "Amplia permanentemente a área vigiada pelas torres de combate.": "Amplía permanentemente el área vigilada por las torres de combate.",
+        "+5% de alcance para todas as torres de combate": "+5% de alcance para todas las torres de combate",
+        "Contrato de Recuperação": "Contrato de Recuperación",
+        "Recupera uma parte maior dos créditos investidos ao vender uma torre.": "Recupera una parte mayor de los créditos invertidos al vender una torre.",
+        "A venda devolve 70% do valor investido em vez de 60%": "La venta devuelve el 70% del valor invertido en lugar del 60%",
         "Torres": "Torres",
         "Defesas e estruturas especiais para levar às partidas.": "Defensas y estructuras especiales para llevar a las partidas.",
         "Minas": "Minas",
@@ -1107,6 +2241,20 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Sentinela de Escudo": "Centinela de Escudo",
         "Protocolo Zero": "Protocolo Cero",
         "Reversão de Emergência ativada!": "¡Reversión de Emergencia activada!",
+        "Autômato de Cobre": "Autómata de Cobre",
+        "Cobaia Instável": "Sujeto de Prueba Inestable",
+        "Guarda de Contenção": "Guardia de Contención",
+        "Protótipo Alfa": "Prototipo Alfa",
+        "Andarilho de Sucata": "Caminante de Chatarra",
+        "Eco Temporal": "Eco Temporal",
+        "Sentinela Cronológica": "Centinela Cronológica",
+        "Sentinela do Amanhã": "Centinela del Mañana",
+        "Resíduo Temporal": "Residuo Temporal",
+        "Arquivista Corrompido": "Archivista Corrupto",
+        "Fragmento de Arquivo": "Fragmento de Archivo",
+        "Vigia do Ponto Zero": "Vigía del Punto Cero",
+        "Guardião do Ponto Zero": "Guardián del Punto Cero",
+        "Pulso de Estase ativado!": "¡Pulso de Estasis activado!",
         "Boss comum": "Jefe Común",
         "Faraó de Areia": "Faraón de Arena",
         "Titã Glacial": "Titán Glacial",
@@ -1213,15 +2361,32 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Em desenvolvimento": "En desarrollo",
         "Dispara bolas de fogo e incendeia o alvo: {dano} de dano por segundo durante {segundos} segundos. Novos acertos renovam a duração.": "Dispara bolas de fuego e incendia el objetivo: {dano} de daño por segundo durante {segundos} segundos. Los nuevos impactos renuevan la duración.",
         "Dispara uma carga que salta entre até {quantidade} inimigos próximos e perde dano a cada salto.": "Dispara una carga que salta entre hasta {quantidade} enemigos cercanos y pierde daño con cada salto.",
+        "Perfura todos os inimigos em uma faixa de {largura} px até o limite do alcance.": "Perfora a todos los enemigos en una franja de {largura} px hasta el límite del alcance.",
+        "Marca o alvo por {segundos} segundos e faz com que ele receba {percentual}% mais dano de todas as defesas.": "Marca al objetivo durante {segundos} segundos y hace que reciba un {percentual}% más de daño de todas las defensas.",
+        "Lança {quantidade} drones por ataque e divide os disparos entre alvos diferentes quando possível.": "Lanza {quantidade} drones por ataque y divide los disparos entre objetivos diferentes cuando es posible.",
+        "A corrente alcança um segundo inimigo a até {alcance} px e causa {percentual}% do dano original.": "La cadena alcanza a un segundo enemigo a hasta {alcance} px y le causa un {percentual}% del daño original.",
+        "Coleta até {pecas} peças de inimigos derrotados próximos; cada peça aumenta seu dano em {percentual}%.": "Recoge hasta {pecas} piezas de enemigos derrotados cercanos; cada pieza aumenta su daño un {percentual}%.",
+        "Alterna disparos: vermelho causa mais dano, azul desacelera e amarelo ignora reduções de dano.": "Alterna disparos: el rojo causa más daño, el azul ralentiza y el amarillo ignora reducciones de daño.",
+        "Torre de combate com {dano} de dano e {alcance} px de alcance.": "Torre de combate con {dano} de daño y {alcance} px de alcance.",
         "Explode por contato, causa {dano} de dano em {raio} px e desacelera inimigos em {percentual}%.": "Explota por contacto, causa {dano} de daño en {raio} px y ralentiza a los enemigos un {percentual}%.",
+        "Explode por contato, causa {dano} de dano em {raio} px e empurra inimigos comuns {distancia} px.": "Explota por contacto, causa {dano} de daño en {raio} px y empuja a los enemigos comunes {distancia} px.",
+        "Explode por contato, causa {dano} de dano em {raio} px e faz os inimigos receberem {percentual}% mais dano por {segundos} segundos.": "Explota por contacto, causa {dano} de daño en {raio} px y hace que los enemigos reciban un {percentual}% más de daño durante {segundos} segundos.",
+        " · Corrosão +{percentual}% por {segundos}s": " · Corrosión +{percentual}% durante {segundos}s",
+        " · Empurra {distancia} px": " · Empuja {distancia} px",
         "Explode somente quando um inimigo encosta nela e causa {dano} de dano em uma área de {raio} px.": "Explota solo cuando un enemigo la toca y causa {dano} de daño en un área de {raio} px.",
         "Clique na Bomba para acender o pavio. Após {segundos} segundo, ela causa {dano} de dano em uma área de {raio} px.": "Haz clic en la Bomba para encender la mecha. Tras {segundos} segundo, causa {dano} de daño en un área de {raio} px.",
+        "Clique para acender o pavio. A explosão principal causa {dano} de dano e lança {quantidade} fragmentos explosivos ao redor.": "Haz clic para encender la mecha. La explosión principal causa {dano} de daño y lanza {quantidade} fragmentos explosivos alrededor.",
+        "Dano {dano} + {quantidade} fragmentos de {danoFragmento} · Clique para detonar · Limite {limite}": "Daño {dano} + {quantidade} fragmentos de {danoFragmento} · Haz clic para detonar · Límite {limite}",
         "Aumenta em {percentual}% a velocidade de ataque das torres dentro de {alcance} px. O bônus não acumula.": "Aumenta un {percentual}% la velocidad de ataque de las torres dentro de {alcance} px. El bono no se acumula.",
         "Produz {creditos} créditos ao concluir uma wave inteira. Precisa sobreviver até o fim para pagar.": "Produce {creditos} créditos al completar una oleada entera. Debe sobrevivir hasta el final para pagar.",
         "Atrai Sabotadores, Macacos e Corujas dentro do alcance deles. Aguenta {tiros} tiros e não atira.": "Atrae a Saboteadores, Monos y Búhos dentro de su alcance. Resiste {tiros} disparos y no ataca.",
         "Custa ${custo} na partida · máximo de {limite} no mapa · não ocupa vaga de torre": "Cuesta ${custo} en la partida · máximo {limite} en el mapa · no ocupa espacio de torre",
         "Custa ${custo} na partida · máximo de {limite} por partida": "Cuesta ${custo} en la partida · máximo {limite} por partida",
+        "Custa ${custo} na partida · usa o limite geral de torres": "Cuesta ${custo} en la partida · usa el límite general de torres",
         "Gerador produziu {creditos} créditos.": "El generador produjo {creditos} créditos.",
+        "Ofertas": "Ofertas",
+        "Itens sorteados para receber descontos nesta semana.": "Objetos seleccionados para recibir descuentos esta semana.",
+        "Você já comprou todos os itens disponíveis na Loja.": "Ya compraste todos los objetos disponibles en la Tienda.",
         "Comprada": "Comprada",
         "Comprar por {preco}◆": "Comprar por {preco}◆",
         "Faltam {preco}◆": "Faltan {preco}◆",
@@ -1263,17 +2428,30 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Exclusivo da Fase 8 | Muita vida": "Exclusivo de la Fase 8 | Mucha vida",
         "Exclusivo da Fase 8 | Invoca 2 Raptors com 60% e 30% de vida": "Exclusivo de la Fase 8 | Invoca 2 Raptors con 60% y 30% de vida",
         "Exclusivo da Fase 9 | Muito rápido e ainda mais veloz nos trilhos": "Exclusivo de la Fase 9 | Muy rápido y aún más veloz en los rieles de impulso",
+        "Fases 9 e 11 | Muito rápido; não usa Fendas Temporais": "Fases 9 y 11 | Muy rápido; no usa Grietas Temporales",
         "Exclusivo da Fase 9 | Restaura 45 de vida de um aliado próximo": "Exclusivo de la Fase 9 | Restaura 45 de vida a un aliado cercano",
         "Exclusivo da Fase 9 | Reduz 25% do dano recebido por aliados próximos": "Exclusivo de la Fase 9 | Reduce un 25% el daño recibido por aliados cercanos",
         "Exclusivo da Fase 9 | Rebobina o caminho e recupera vida duas vezes": "Exclusivo de la Fase 9 | Rebobina el camino y recupera vida dos veces",
-        "Habilidade temporal": "Habilidad temporal",
+        "Exclusivo da Fase 10 | Muito rápido": "Exclusivo de la Fase 10 | Muy rápido",
+        "Exclusiva da Fase 10 | Acelera 55% depois de alcançar 50% da vida": "Exclusiva de la Fase 10 | Acelera un 55% después de alcanzar el 50% de vida",
+        "Exclusivo da Fase 10 | Reduz 25% do dano recebido": "Exclusivo de la Fase 10 | Reduce un 25% el daño recibido",
+        "Exclusivo da Fase 10 | Paralisa até 3 torres com 70% e 35% de vida": "Exclusivo de la Fase 10 | Paraliza hasta 3 torres con 70% y 35% de vida",
+        "Exclusivo da Fase 11 | Resistente e capaz de usar Fendas Temporais": "Exclusivo de la Fase 11 | Resistente y capaz de usar Grietas Temporales",
+        "Exclusivo da Fase 11 | Retorna uma vez com metade da vida": "Exclusivo de la Fase 11 | Regresa una vez con la mitad de la vida",
+        "Exclusiva da Fase 11 | Reduz 30% do dano perto das fendas": "Exclusiva de la Fase 11 | Reduce un 30% el daño cerca de las grietas",
+        "Exclusiva da Fase 11 | Recua sem recuperar vida aos 70% e 35%": "Exclusiva de la Fase 11 | Retrocede sin recuperar vida al 70% y 35%",
+        "Exclusivo da Fase 12 | Muito rápido": "Exclusivo de la Fase 12 | Muy rápido",
+        "Exclusivo da Fase 12 | Libera 2 Fragmentos de Arquivo com 50% da vida": "Exclusivo de la Fase 12 | Libera 2 Fragmentos de Archivo con 50% de vida",
+        "Criado pelo Arquivista Corrompido": "Creado por el Archivista Corrupto",
+        "Exclusivo da Fase 12 | Reduz 25% do dano no setor de ruptura": "Exclusivo de la Fase 12 | Reduce un 25% el daño en el sector de ruptura",
+        "Exclusivo da Fase 12 | Aos 70% e 35%, invoca Resíduos e ativa um escudo": "Exclusivo de la Fase 12 | Al 70% y 35%, invoca Residuos y activa un escudo",
         "Pulso Temporal": "Pulso Temporal",
         "Pronto para usar": "Listo para usar",
         "Tempo alterado · {segundos}s": "Tiempo alterado · {segundos}s",
         "Disponível na wave 1": "Disponible en la oleada 1",
         "Recarrega na wave {wave}": "Recarga en la oleada {wave}",
         "Pulso Temporal ativado!": "¡Pulso Temporal activado!",
-        "Pulso Temporal desbloqueado! Ele estará disponível no posto lateral das próximas partidas.": "¡Pulso Temporal desbloqueado! Estará disponible en el puesto lateral de las próximas partidas.",
+        "Pulso Temporal desbloqueado! Ele estará disponível na barra inferior das próximas partidas.": "¡Pulso Temporal desbloqueado! Estará disponible en la barra inferior de las próximas partidas.",
         "TIRANO": "TIRANO",
         "Caminho Alto": "Camino Alto",
         "Caminho Baixo": "Camino Bajo",
@@ -1292,6 +2470,98 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Se alguém ainda recebe este sinal, procure o Projeto Relógio. Objetivo registrado: criar um guardião capaz de existir em todas as eras. Consciência temporal detectada. Preparando corpo para transferência... RESULTADO: ARQUIVO CORROMPIDO.": "Si alguien aún recibe esta señal, busca el Proyecto Reloj. Objetivo registrado: crear un guardián capaz de existir en todas las eras. Conciencia temporal detectada. Preparando cuerpo para transferencia... RESULTADO: ARCHIVO CORRUPTO.",
         "FREQUÊNCIA: PROJETO RELÓGIO": "FRECUENCIA: PROYECTO RELOJ",
         "Desligar rádio": "Apagar radio",
+        "PROTÓTIPO ALFA": "PROTOTIPO ALFA",
+        "Terminal do Projeto Relógio encontrado!": "¡Terminal del Proyecto Reloj encontrado!",
+        "LER · REGISTRO 00": "LEER · REGISTRO 00",
+        "Deixe espaço livre ao redor do terminal.": "Deja espacio libre alrededor del terminal.",
+        "REGISTRO DE ATIVAÇÃO 00": "REGISTRO DE ACTIVACIÓN 00",
+        "Projeto Relógio. Transferência iniciada às 03:17. O corpo permaneceu vazio. O pesquisador-chefe desapareceu durante o pulso. Nenhuma porta foi aberta. A assinatura temporal continuou respondendo.": "Proyecto Reloj. Transferencia iniciada a las 03:17. El cuerpo permaneció vacío. El investigador principal desapareció durante el pulso. Ninguna puerta fue abierta. La firma temporal continuó respondiendo.",
+        "ARQUIVO: ORIGEM / ACESSO PARCIAL": "ARCHIVO: ORIGEN / ACCESO PARCIAL",
+        "Fechar registro": "Cerrar registro",
+        "ARQUIVO RECUPERADO": "ARCHIVO RECUPERADO",
+        "O Projeto Relógio não criou a consciência temporal. Ela já existia antes da ativação. Nós apenas construímos um corpo para que ela pudesse entrar.": "El Proyecto Reloj no creó la conciencia temporal. Ya existía antes de la activación. Nosotros solo construimos un cuerpo para que pudiera entrar.",
+        "ARQUIVO: ORIGEM / TRECHO RESTAURADO": "ARCHIVO: ORIGEN / FRAGMENTO RESTAURADO",
+        "Reproduzir gravação": "Reproducir grabación",
+        "GRAVAÇÃO DO PESQUISADOR-CHEFE": "GRABACIÓN DEL INVESTIGADOR PRINCIPAL",
+        "Existe alguém observando o laboratório. Ele conhece acontecimentos que ainda não ocorreram. Se eu desaparecer, destruam a máquina.": "Hay alguien observando el laboratorio. Conoce acontecimientos que aún no han ocurrido. Si desaparezco, destruyan la máquina.",
+        "IDENTIDADE VISUAL: ARQUIVO CORROMPIDO": "IDENTIDAD VISUAL: ARCHIVO CORRUPTO",
+        "COORDENADA NÃO SOLICITADA": "COORDENADA NO SOLICITADA",
+        "A Máquina do Tempo foi ativada sem nenhum comando. Uma nova coordenada acaba de ser registrada. Ela aponta para um futuro que não deveria existir.": "La Máquina del Tiempo se activó sin ninguna orden. Se acaba de registrar una nueva coordenada. Apunta a un futuro que no debería existir.",
+        "DESTINO: FUTURO / ORIGEM: DESCONHECIDA": "DESTINO: FUTURO / ORIGEN: DESCONOCIDO",
+        "Ver resultado": "Ver resultado",
+        "PROTOCOLO DE CONTENÇÃO": "PROTOCOLO DE CONTENCIÓN",
+        "CÂMARA {camara}": "CÁMARA {camara}",
+        "PRONTO": "LISTO",
+        "AGUARDE {segundos}s": "ESPERA {segundos}s",
+        "FECHADA {segundos}s": "CERRADA {segundos}s",
+        "USADO": "USADO",
+        "Escolha uma câmara durante uma wave ativa.": "Elige una cámara durante una oleada activa.",
+        "O Protocolo de Contenção já foi usado nesta wave.": "El Protocolo de Contención ya fue usado en esta oleada.",
+        "O Protocolo de Contenção não pode ser ativado com a partida pausada.": "El Protocolo de Contención no puede activarse con la partida pausada.",
+        "Câmara {camara} selecionada · fechamento em {segundos}s.": "Cámara {camara} seleccionada · cierre en {segundos}s.",
+        "Protocolo de Contenção ativado na Câmara {camara}!": "¡Protocolo de Contención activado en la Cámara {camara}!",
+        "Deixe espaço livre ao redor do painel de contenção.": "Deja espacio libre alrededor del panel de contención.",
+        "SENTINELA DO AMANHÃ": "CENTINELA DEL MAÑANA",
+        "Anomalia identificada.": "Anomalía identificada.",
+        "Você não deveria possuir essa máquina.": "No deberías poseer esa máquina.",
+        "Cada vitória sua está destruindo o futuro.": "Cada victoria tuya está destruyendo el futuro.",
+        "O Eco Temporal retornou pelo caminho!": "¡El Eco Temporal regresó por el camino!",
+        "Transmissão fragmentada encontrada!": "¡Transmisión fragmentada encontrada!",
+        "OUVIR · TRANSMISSÃO 11": "ESCUCHAR · TRANSMISIÓN 11",
+        "Deixe espaço livre ao redor do transmissor.": "Deja espacio libre alrededor del transmisor.",
+        "FENDA {fenda} · {tipo}": "GRIETA {fenda} · {tipo}",
+        "TRANSMISSÃO FRAGMENTADA 11": "TRANSMISIÓN FRAGMENTADA 11",
+        "Se você encontrou esta mensagem, ainda há tempo. Não confie em quem lhe deu a máquina.": "Si encontraste este mensaje, aún hay tiempo. No confíes en quien te dio la máquina.",
+        "GUARDIANS OF PIXEL · SINAL DE EMERGÊNCIA": "GUARDIANS OF PIXEL · SEÑAL DE EMERGENCIA",
+        "Encerrar transmissão": "Finalizar transmisión",
+        "Nós não criamos um deus. Apenas abrimos a porta para ele.": "No creamos un dios. Solo abrimos la puerta para él.",
+        "PROJETO RELÓGIO · EQUIPE ENCERRADA": "PROYECTO RELOJ · EQUIPO CLAUSURADO",
+        "Recuperar imagem": "Recuperar imagen",
+        "QUADRO 03:17": "FOTOGRAMA 03:17",
+        "A gravação mostra apenas uma silhueta humana alta, de terno, com algo semelhante a um relógio no lugar da cabeça. O rosto e a identidade permanecem corrompidos.": "La grabación solo muestra una silueta humana alta, de traje, con algo parecido a un reloj en lugar de la cabeza. El rostro y la identidad siguen corruptos.",
+        "IDENTIDADE: ARQUIVO CORROMPIDO": "IDENTIDAD: ARCHIVO CORRUPTO",
+        "Rastrear sinal": "Rastrear señal",
+        "COORDENADA FRAGMENTADA": "COORDENADA FRAGMENTADA",
+        "Entre as torres destruídas e os relógios parados em 03:17, resta um ponto de origem. A Máquina do Tempo guardou o destino, mas parte das coordenadas ainda está corrompida.": "Entre las torres destruidas y los relojes detenidos a las 03:17, queda un punto de origen. La Máquina del Tiempo guardó el destino, pero parte de las coordenadas sigue corrupta.",
+        "DESTINO: PONTO DE RUPTURA / ACESSO INCOMPLETO": "DESTINO: PUNTO DE RUPTURA / ACCESO INCOMPLETO",
+        "GUARDIÃO DO PONTO ZERO": "GUARDIÁN DEL PUNTO CERO",
+        "Acesso ao Ponto Zero negado.": "Acceso al Punto Cero denegado.",
+        "Arquivo selado.": "Archivo sellado.",
+        "Linha temporal protegida.": "Línea temporal protegida.",
+        "O Arquivista liberou Fragmentos de Arquivo!": "¡El Archivista liberó Fragmentos de Archivo!",
+        "Oscilação temporal · Setor {estavel} estável · Setor {ruptura} acelerado.": "Oscilación temporal · Sector {estavel} estable · Sector {ruptura} acelerado.",
+        "SETOR {setor} · ESTÁVEL −25%": "SECTOR {setor} · ESTABLE −25%",
+        "SETOR {setor} · RUPTURA +30%": "SECTOR {setor} · RUPTURA +30%",
+        "Registro {numero} do Ponto Zero recuperado!": "¡Registro {numero} del Punto Cero recuperado!",
+        "LER · REGISTRO {numero}": "LEER · REGISTRO {numero}",
+        "REGISTRO {numero} · LIDO": "REGISTRO {numero} · LEÍDO",
+        "Deixe espaço livre ao redor dos registros.": "Deja espacio libre alrededor de los registros.",
+        "REGISTRO I — O CORPO": "REGISTRO I — EL CUERPO",
+        "O corpo foi concluído. Ele poderia existir fora do fluxo normal do tempo.": "El cuerpo fue terminado. Podía existir fuera del flujo normal del tiempo.",
+        "PROJETO RELÓGIO · COMPONENTE FÍSICO": "PROYECTO RELOJ · COMPONENTE FÍSICO",
+        "REGISTRO II — A CONSCIÊNCIA": "REGISTRO II — LA CONCIENCIA",
+        "A consciência detectada não era artificial. Ela respondeu antes de o sistema ser ligado.": "La conciencia detectada no era artificial. Respondió antes de que el sistema se encendiera.",
+        "PROJETO RELÓGIO · ORIGEM DESCONHECIDA": "PROYECTO RELOJ · ORIGEN DESCONOCIDO",
+        "REGISTRO III — 03:17": "REGISTRO III — 03:17",
+        "O pesquisador-chefe entrou na câmara no instante da ativação. Às 03:17, duas assinaturas se tornaram uma.": "El investigador principal entró en la cámara en el instante de la activación. A las 03:17, dos firmas se convirtieron en una.",
+        "PROJETO RELÓGIO · TRANSFERÊNCIA CONCLUÍDA": "PROYECTO RELOJ · TRANSFERENCIA COMPLETADA",
+        "ARQUIVO DO PONTO ZERO REUNIDO": "ARCHIVO DEL PUNTO CERO REUNIDO",
+        "Nós não criamos o Senhor do Tempo. Criamos apenas o corpo que permitiu sua entrada. Quando a transferência terminou, a criatura carregava a mente e as lembranças do pesquisador.": "No creamos al Señor del Tiempo. Solo construimos el cuerpo que permitió su entrada. Cuando terminó la transferencia, la criatura llevaba la mente y los recuerdos del investigador.",
+        "PROJETO RELÓGIO · CONCLUSÃO FINAL": "PROYECTO RELOJ · CONCLUSIÓN FINAL",
+        "Revelar identidade": "Revelar identidad",
+        "SENHOR DO TEMPO": "SEÑOR DEL TIEMPO",
+        "Então você finalmente descobriu. Eu esperava que demorasse um pouco mais.": "Así que finalmente lo descubriste. Esperaba que tardaras un poco más.",
+        "IDENTIDADE CONFIRMADA": "IDENTIDAD CONFIRMADA",
+        "COORDENADAS MANIPULADAS": "COORDENADAS MANIPULADAS",
+        "A Máquina do Tempo nunca escolheu os destinos. Ela apenas seguiu as coordenadas que eu preparei para você.": "La Máquina del Tiempo nunca eligió los destinos. Solo siguió las coordenadas que preparé para ti.",
+        "ORIGEM DOS COMANDOS: SENHOR DO TEMPO": "ORIGEN DE LOS COMANDOS: SEÑOR DEL TIEMPO",
+        "Exigir respostas": "Exigir respuestas",
+        "A ÚLTIMA PROTEÇÃO": "LA ÚLTIMA PROTECCIÓN",
+        "Cada vitória sua removeu uma proteção espalhada pelas épocas. Você abriu o caminho que eu não podia atravessar sozinho.": "Cada una de tus victorias eliminó una protección repartida entre las eras. Abriste el camino que yo no podía cruzar solo.",
+        "DESTINO DA PRISÃO: DESCONHECIDO": "DESTINO DE LA PRISIÓN: DESCONOCIDO",
+        "CAPÍTULO 3 — A GUERRA PELO TEMPO": "CAPÍTULO 3 — LA GUERRA POR EL TIEMPO",
+        "Agora que a última proteção caiu, podemos começar de verdade.": "Ahora que la última protección ha caído, podemos empezar de verdad.",
+        "O TEMPO ESTÁ EM GUERRA": "EL TIEMPO ESTÁ EN GUERRA",
         "{quantidade} lasers de {dano} de dano · Alcance {alcance}": "{quantidade} láseres de {dano} de daño · Alcance {alcance}",
         " | {quantidade} lasers por ataque": " | {quantidade} láseres por ataque",
         "Álbum de Figurinhas": "Álbum de Cromos",
@@ -1332,6 +2602,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Custo: {custo} | Dano em área: {dano} | Raio: {raio} px | Limite: {limite}": "Costo: {custo} | Daño de área: {dano} | Radio: {raio} px | Límite: {limite}",
         " | Detonação manual": " | Detonación manual",
         " | Detonação por contato": " | Detonación por contacto",
+        " | Corrosão: +{percentual}% de dano por {segundos}s": " | Corrosión: +{percentual}% de daño durante {segundos}s",
+        " | Fragmentos: {quantidade} de {dano} de dano em {raio} px": " | Fragmentos: {quantidade} de {dano} de daño en {raio} px",
         "Custo: {custo} | Cadência próxima: +{percentual}% | Alcance: {alcance} | Limite: {limite}": "Costo: {custo} | Cadencia cercana: +{percentual}% | Alcance: {alcance} | Límite: {limite}",
         "Custo: {custo} | Carga: {cargas} inimigos | Empurrão: {distancia} px | Limite: {limite}": "Costo: {custo} | Carga: {cargas} enemigos | Empuje: {distancia} px | Límite: {limite}",
         "Custo: {custo} | Produção: {creditos} por wave | Limite: {limite}": "Costo: {custo} | Producción: {creditos} por oleada | Límite: {limite}",
@@ -1388,11 +2660,6 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Jogo pausado": "Juego pausado",
         "Desistir": "Rendirse",
         "Reiniciar fase": "Reiniciar fase",
-        "Boosts": "Bonificaciones",
-        "Partida atual": "Partida actual",
-        "Derrote um Boss para escolher seu primeiro boost.": "Derrota a un Jefe para elegir tu primera bonificación.",
-        "Temporário": "Temporal",
-        "Aguardando evento": "Esperando evento",
         "Defesas": "Defensas",
         "Torres e explosivos": "Torres y explosivos",
         "Central da torre": "Central de la torre",
@@ -1407,12 +2674,11 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Boss derrotado": "Jefe derrotado",
         "Escolha um bônus": "Elige una bonificación",
         "A recompensa escolhida permanece ativa até o fim da partida.": "La recompensa elegida permanece activa hasta el final de la partida.",
-        "-{percentual}% intervalo": "-{percentual}% de intervalo",
         "+{creditos} créditos": "+{creditos} créditos",
-        "dano": "daño",
-        "alcance": "alcance",
-        "Bônus escolhido: {nome}.": "Bonificación elegida: {nome}.",
+        "Bônus escolhido: {nome}. {descricao}": "Bonificación elegida: {nome}. {descricao}",
         "Um fliperama apareceu no mapa!": "¡Apareció una máquina recreativa en el mapa!",
+        "Começa em": "Comienza en",
+        "Prepare-se!": "¡Prepárate!",
         "Labirinto Pixel": "Laberinto Píxel",
         "Mapa {mapa}: leve o robô até a saída sem tocar nas paredes.": "Mapa {mapa}: lleva el robot hasta la salida sin tocar las paredes.",
         "Mapa": "Mapa",
@@ -1430,8 +2696,29 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Acertos": "Aciertos",
         "Acompanhe o alvo: ele se move livremente e rebate nas bordas.": "Sigue el objetivo: se mueve libremente y rebota en los bordes.",
         "Área do minigame com alvo móvel": "Área del minijuego con objetivo móvil",
+        "Controles de movimento do coletor": "Controles de movimiento del recolector",
+        "Voo Pixel": "Vuelo Píxel",
+        "Atravesse {portais} portais sem tocar nos obstáculos.": "Atraviesa {portais} portales sin tocar los obstáculos.",
+        "Portais": "Portales",
+        "Clique, toque ou use Espaço, W ou seta para cima para voar.": "Haz clic, toca o usa Espacio, W o la flecha arriba para volar.",
+        "Área do Voo Pixel com portais em movimento": "Área de Vuelo Píxel con portales en movimiento",
+        "Chuva de Pixels": "Lluvia de Píxeles",
+        "Colete {pixels} pixels amarelos e evite os pixels corrompidos.": "Recoge {pixels} píxeles amarillos y evita los píxeles corruptos.",
+        "Coletados": "Recogidos",
+        "Use A, D, as setas ou os botões da tela. Pixels vermelhos retiram um ponto.": "Usa A, D, las flechas o los botones de la pantalla. Los píxeles rojos restan un punto.",
+        "Área da Chuva de Pixels com coletor móvel": "Área de Lluvia de Píxeles con recolector móvil",
+        "Sequência Neon": "Secuencia Neón",
+        "Observe os {sinais} sinais e repita a sequência.": "Observa las {sinais} señales y repite la secuencia.",
+        "Progresso": "Progreso",
+        "Observe": "Observa",
+        "Espere a demonstração terminar e clique ou toque nos painéis na mesma ordem.": "Espera a que termine la demostración y haz clic o toca los paneles en el mismo orden.",
+        "Quatro painéis da Sequência Neon": "Cuatro paneles de la Secuencia Neón",
         "Labirinto concluído! Torres com +{percentual}% de dano por {segundos} segundos.": "¡Laberinto completado! Las torres obtienen +{percentual}% de daño durante {segundos} segundos.",
         "Tiro ao alvo concluído! Torres aceleradas por {segundos} segundos.": "¡Tiro al blanco completado! Las torres atacan más rápido durante {segundos} segundos.",
+        "Chuva de Pixels concluída! Torres com +{percentual}% de dano por {segundos} segundos.": "¡Lluvia de Píxeles completada! Las torres obtienen +{percentual}% de daño durante {segundos} segundos.",
+        "Voo Pixel concluído! Torres aceleradas por {segundos} segundos.": "¡Vuelo Píxel completado! Las torres atacan más rápido durante {segundos} segundos.",
+        "Sequência Neon concluída! Você recebeu {creditos} créditos.": "¡Secuencia Neón completada! Recibiste {creditos} créditos.",
+        "O robô colidiu. Tente novamente no próximo fliperama.": "El robot chocó. Inténtalo de nuevo en la próxima máquina recreativa.",
         "Tempo esgotado no fliperama.": "Se acabó el tiempo en la máquina recreativa.",
         "O boost do fliperama terminou.": "La bonificación de la máquina recreativa terminó.",
         "FASE {fase} · {waves} WAVES CONCLUÍDAS": "FASE {fase} · {waves} OLEADAS COMPLETADAS",
@@ -1458,7 +2745,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Clique na Torre padrão que você acabou de construir.": "Haz clic en la Torre estándar que acabas de construir.",
         "Mina armada · {dano} de dano em {raio} px.": "Mina armada · {dano} de daño en {raio} px.",
         "Pavio aceso · explosão em {segundos}s.": "Mecha encendida · explosión en {segundos}s.",
-        "Pavio aceso! A Bomba Pesada explode em {segundos} segundo.": "¡Mecha encendida! La Bomba Pesada explota en {segundos} segundo.",
+        "Pavio aceso! {nome} explode em {segundos} segundo.": "¡Mecha encendida! {nome} explota en {segundos} segundo.",
         "A {nome} só pode ser colocada no caminho.": "La {nome} solo se puede colocar en el camino.",
         "Não é possível colocar torres no caminho.": "No se pueden colocar torres en el camino.",
         "Deixe espaço livre ao redor do fliperama.": "Deja espacio libre alrededor de la máquina recreativa.",
@@ -1466,8 +2753,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Dinheiro insuficiente para construir {nome}.": "No tienes créditos suficientes para construir {nome}.",
         "Você já atingiu o limite de torres.": "Ya alcanzaste el límite de torres.",
         "Não coloque minas muito perto umas das outras.": "No coloques minas demasiado cerca entre sí.",
-        "Não coloque Bombas Pesadas muito perto umas das outras.": "No coloques Bombas Pesadas demasiado cerca entre sí.",
-        "Não coloque esta defesa muito perto de torres ou Bombas Pesadas.": "No coloques esta defensa demasiado cerca de torres o Bombas Pesadas.",
+        "Não coloque bombas muito perto umas das outras.": "No coloques bombas demasiado cerca entre sí.",
+        "Não coloque esta defesa muito perto de torres ou bombas.": "No coloques esta defensa demasiado cerca de torres o bombas.",
         "Bomba posicionada · clique nela para acender o pavio · {quantidade}/{limite} no mapa.": "Bomba colocada · haz clic para encender la mecha · {quantidade}/{limite} en el mapa.",
         "Mina armada · {quantidade}/{limite} no mapa.": "Mina armada · {quantidade}/{limite} en el mapa.",
         "Inimigo": "Enemigo",
@@ -1508,8 +2795,6 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "BOSS": "JEFE",
         "ALGO ESTÁ VINDO...": "ALGO SE ACERCA...",
         "Menu da partida": "Menú de la partida",
-        "Boosts da partida": "Bonificaciones de la partida",
-        "Boost temporário": "Bonificación temporal",
         "Mapa do jogo Guardians of Pixel": "Mapa del juego Guardians of Pixel",
         "Defesas disponíveis": "Defensas disponibles",
         "Controles da partida": "Controles de la partida",
@@ -1523,14 +2808,104 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Torre de Esporos": "Torre de Esporas",
         "Obliterador": "Obliterador",
         "Torre Sísmica": "Torre Sísmica",
+        "Torre de Varredura": "Torre de Barrido",
         "Isca Blindada": "Señuelo Blindado",
         "Amplificador Pixel": "Amplificador Píxel",
         "Gerador de Créditos": "Generador de Créditos",
         "Torre de Raios": "Torre de Rayos",
         "Lança-Chamas": "Lanzallamas",
+        "Torre Perfuradora": "Torre Perforadora",
+        "Torre Marcadora": "Torre Marcadora",
+        "Torre de Drones": "Torre de Drones",
+        "Torre de Correntes": "Torre de Cadenas",
+        "Torre de Sucata": "Torre de Chatarra",
+        "Canhão Prismático": "Cañón Prismático",
+        "Elemento: {elemento}": "Elemento: {elemento}",
+        "{elemento} +{percentual}%": "{elemento} +{percentual}%",
+        "Fraqueza: {fraquezas}": "Debilidad: {fraquezas}",
+        "Detecção": "Detección",
+        "Inimigos camuflados": "Enemigos camuflados",
+        "Dano {dano} · Detecta camuflados · Alcance {alcance}": "Daño {dano} · Detecta camuflados · Alcance {alcance}",
+        "Fogo": "Fuego",
+        "Gelo": "Hielo",
+        "Elétrico": "Eléctrico",
+        "Sísmico": "Sísmico",
+        "Tóxico": "Tóxico",
+        "SUPER EFETIVO!": "¡SÚPER EFECTIVO!",
+        "Abrir detalhes de {nome}": "Abrir detalles de {nome}",
+        "DETALHES DA FIGURINHA": "DETALLES DEL CROMO",
+        "Fechar detalhes": "Cerrar detalles",
+        "Categoria": "Categoría",
+        "Nível": "Nivel",
+        "Nível único": "Nivel único",
+        "Força (dano)": "Fuerza (daño)",
+        "Sem dano direto": "Sin daño directo",
+        "Tempo para atacar": "Tiempo para atacar",
+        "{segundos} s": "{segundos} s",
+        "Não ataca": "No ataca",
+        "Alcance": "Alcance",
+        "{alcance} px": "{alcance} px",
+        "Área de dano": "Área de daño",
+        "{raio} px": "{raio} px",
+        "Elemento": "Elemento",
+        "Neutro": "Neutro",
+        "Melhor contra": "Mejor contra",
+        "Sem vantagem elemental": "Sin ventaja elemental",
+        "{alvos} (+{percentual}% de dano)": "{alvos} (+{percentual}% de daño)",
+        "Custo": "Costo",
+        "Custo da melhoria": "Costo de la mejora",
+        "Limite por partida": "Límite por partida",
+        "{limite} unidades": "{limite} unidades",
+        "Limite geral da fase": "Límite general de la fase",
+        "Torre de combate": "Torre de combate",
+        "Torre de controle": "Torre de control",
+        "Suporte": "Apoyo",
+        "Mina": "Mina",
+        "Bomba": "Bomba",
+        "Contra o mesmo elemento, o dano permanece normal.": "Contra el mismo elemento, el daño permanece normal.",
+        "Esta defesa não possui vantagem elemental.": "Esta defensa no tiene ventaja elemental.",
+        "Ataques neutros causam o dano normal em todos os tipos.": "Los ataques neutros causan daño normal a todos los tipos.",
+        "Mecânico": "Mecánico",
+        "Pedra": "Piedra",
+        "Blindado": "Blindado",
+        "Orgânico": "Orgánico",
+        "Sem característica elemental": "Sin característica elemental",
+        "Inimigo comum": "Enemigo común",
+        "Boss": "Jefe",
+        "Vida base": "Vida base",
+        "Velocidade": "Velocidad",
+        "{velocidade} px por quadro": "{velocidade} px por fotograma",
+        "Tamanho": "Tamaño",
+        "{tamanho} px": "{tamanho} px",
+        "Características": "Características",
+        "Fraquezas": "Debilidades",
+        "Nenhuma fraqueza elemental": "Ninguna debilidad elemental",
+        "Aumento por aparição": "Aumento por aparición",
+        "+{vida} de vida": "+{vida} de vida",
+        "Sem habilidade especial.": "Sin habilidad especial.",
+        "Armas elementais sem vantagem causam dano normal.": "Las armas elementales sin ventaja causan daño normal.",
+        "Use os elementos indicados para causar o dano adicional mostrado.": "Usa los elementos indicados para causar el daño adicional mostrado.",
+        "Skin": "Aspecto",
+        "Estado": "Estado",
+        "Uso": "Uso",
+        "Bônus de combate": "Bono de combate",
+        "Nenhum; esta skin é somente cosmética.": "Ninguno; este aspecto es solo cosmético.",
+        "Conceito": "Concepto",
+        "Registro de personagem": "Registro de personaje",
+        "Esta figurinha não representa uma unidade de combate.": "Este cromo no representa una unidad de combate.",
+        "Funcionamento": "Funcionamiento",
+        "Dano {dano} · Perfura uma faixa de {largura} px · Alcance {alcance}": "Daño {dano} · Perfora una franja de {largura} px · Alcance {alcance}",
+        "Dano {dano} · Marca +{percentual}% de dano · Alcance {alcance}": "Daño {dano} · Marca para +{percentual}% de daño · Alcance {alcance}",
+        "{quantidade} drones de {dano} de dano · Alcance {alcance}": "{quantidade} drones de {dano} de daño · Alcance {alcance}",
+        "Dano {dano} · Corrente {percentual}% · Alcance {alcance}": "Daño {dano} · Cadena {percentual}% · Alcance {alcance}",
+        "Dano {dano} · Até {pecas} peças de sucata · Alcance {alcance}": "Daño {dano} · Hasta {pecas} piezas de chatarra · Alcance {alcance}",
+        "Dano {dano} · Alterna vermelho, azul e amarelo · Alcance {alcance}": "Daño {dano} · Alterna rojo, azul y amarillo · Alcance {alcance}",
         "Mina Terrestre": "Mina Terrestre",
         "Mina Congelante": "Mina Congelante",
+        "Mina de Pulso": "Mina de Pulso",
+        "Mina Corrosiva": "Mina Corrosiva",
         "Bomba Pesada": "Bomba Pesada",
+        "Bomba de Fragmentação": "Bomba de Fragmentación",
         "Dimensão Glitch": "Dimensión Glitch",
         "Uma cópia quebrada do mundo, escondida atrás da árvore da Fase 1.": "Una copia rota del mundo, escondida detrás del árbol de la Fase 1.",
         "Senhor do Tempo": "Señor del Tiempo",
@@ -1629,6 +3004,168 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Encontrado na fase secreta | Muito rápido": "Encontrado en la fase secreta | Muy rápido",
         "Encontrado na fase secreta | Muita vida": "Encontrado en la fase secreta | Mucha vida",
         "Boss da fase secreta | Fica mais forte a cada aparição": "Jefe de la fase secreta | Se fortalece en cada aparición",
+        "O Intervalo Perdido": "El Intervalo Perdido",
+        "O espaço impossível que existe entre um segundo e o seguinte.": "El espacio imposible que existe entre un segundo y el siguiente.",
+        "Fase 13": "Fase 13",
+        "Linha de Frente Temporal": "Frente Temporal",
+        "Fragmento de Segundo": "Fragmento de Segundo",
+        "Ponteiro Errante": "Aguja Errante",
+        "Paradoxo Blindado": "Paradoja Blindada",
+        "Carcereiro do Intervalo": "Carcelero del Intervalo",
+        "Executor Cronal": "Ejecutor Cronal",
+        "Soldado Cronal": "Soldado Cronal",
+        "Portador da Fenda": "Portador de la Grieta",
+        "COLISÃO TEMPORAL": "COLISIÓN TEMPORAL",
+        "A linha temporal se partiu em três frentes. Reforços podem atravessar Passado, Presente ou Futuro.": "La línea temporal se dividió en tres frentes. Los refuerzos pueden cruzar por el Pasado, el Presente o el Futuro.",
+        "SISTEMA DA MÁQUINA DO TEMPO": "SISTEMA DE LA MÁQUINA DEL TIEMPO",
+        "Ouvir transmissão": "Escuchar transmisión",
+        "Você atravessou o lugar onde o tempo não existe. Agora verá o que existe quando todas as eras entram em guerra.": "Atravesaste el lugar donde el tiempo no existe. Ahora verás qué ocurre cuando todas las eras entran en guerra.",
+        "TRANSMISSÃO HOSTIL": "TRANSMISIÓN HOSTIL",
+        "Entrar na guerra": "Entrar en la guerra",
+        "Frentes Temporais serão abertas nas waves 2, 5, 8, 11, 14, 17 e 20.": "Los Frentes Temporales se abrirán en las oleadas 2, 5, 8, 11, 14, 17 y 20.",
+        "PASSADO": "PASADO",
+        "PRESENTE": "PRESENTE",
+        "FUTURO": "FUTURO",
+        "FRENTE {era}: uma entrada de reforços está se abrindo!": "FRENTE {era}: ¡se está abriendo una entrada de refuerzos!",
+        "FRENTE {era} ABERTA: reforço atravessou a linha temporal!": "FRENTE {era} ABIERTO: ¡un refuerzo cruzó la línea temporal!",
+        "FRENTE {era} · ABRINDO": "FRENTE {era} · ABRIENDO",
+        "FRENTE {era} · ATIVA": "FRENTE {era} · ACTIVO",
+        "O Executor deslocou a frente ativa para {era}!": "¡El Ejecutor desplazó el frente activo a {era}!",
+        "Uma Fenda Residual foi aberta no caminho!": "¡Se abrió una Grieta Residual en el camino!",
+        "A Fenda Residual transportou um inimigo 140 px adiante!": "¡La Grieta Residual transportó a un enemigo 140 px hacia delante!",
+        "Intervalo Perdido · Wave 1": "Intervalo Perdido · Oleada 1",
+        "INTERVALO · WAVE": "INTERVALO · OLEADA",
+        "INTERVALO PERDIDO · {waves} WAVES CONCLUÍDAS": "INTERVALO PERDIDO · {waves} OLEADAS COMPLETADAS",
+        "Vença O Intervalo Perdido para desbloquear": "Vence El Intervalo Perdido para desbloquear",
+        "Reabrir O Intervalo Perdido": "Reabrir El Intervalo Perdido",
+        "Investigar o relógio quebrado na coordenada 00:00": "Investigar el reloj roto en la coordenada 00:00",
+        "O Intervalo Perdido foi vencido": "El Intervalo Perdido fue derrotado",
+        "Coordenada 00:00 · Era inexistente": "Coordenada 00:00 · Era inexistente",
+        "Os Relógios de Ruptura serão ativados nas waves 3, 6 e 9.": "Los Relojes de Ruptura se activarán en las oleadas 3, 6 y 9.",
+        "Relógios de Ruptura: memorize a sequência!": "Relojes de Ruptura: ¡memoriza la secuencia!",
+        "Repita a sequência clicando nos três relógios!": "¡Repite la secuencia haciendo clic en los tres relojes!",
+        "Sequência correta! Os inimigos ficaram mais lentos por 4 segundos.": "¡Secuencia correcta! Los enemigos son más lentos durante 4 segundos.",
+        "Sequência incorreta! Dois Ecos Temporais atravessaram a ruptura.": "¡Secuencia incorrecta! Dos Ecos Temporales cruzaron la ruptura.",
+        "O relógio está parado em 00:00.": "El reloj está detenido en 00:00.",
+        "Observe a sequência antes de responder.": "Observa la secuencia antes de responder.",
+        "Relógio {atual} de {total} correto.": "Reloj {atual} de {total} correcto.",
+        "Senhor do Tempo: {fala} Inimigos acelerados por 6 segundos.": "Señor del Tiempo: {fala} Enemigos acelerados durante 6 segundos.",
+        "Senhor do Tempo: {fala} {quantidade} torres entraram em estase.": "Señor del Tiempo: {fala} {quantidade} torres entraron en estasis.",
+        "O tempo não seguirá as suas regras.": "El tiempo no seguirá tus reglas.",
+        "Vamos ver como luta sem controlar todas as peças.": "Veamos cómo luchas sin controlar todas las piezas.",
+        "O Executor Cronal convocou reforços de duas eras!": "¡El Ejecutor Cronal convocó refuerzos de dos eras!",
+        "Deixe espaço livre ao redor dos Relógios de Ruptura.": "Deja espacio libre alrededor de los Relojes de Ruptura.",
+        "MEMORIZE A SEQUÊNCIA": "MEMORIZA LA SECUENCIA",
+        "REPITA A SEQUÊNCIA · {segundos}s": "REPITE LA SECUENCIA · {segundos}s",
+        "CARCEREIRO": "CARCELERO",
+        "EXECUTOR CRONAL": "EJECUTOR CRONAL",
+        "O Intervalo foi atravessado e o caminho para o Capítulo 3 está aberto.": "El Intervalo fue cruzado y el camino al Capítulo 3 está abierto.",
+        "O relógio voltou a 00:00. Vença para escapar do Intervalo.": "El reloj volvió a 00:00. Vence para escapar del Intervalo.",
+        "Intervalo Perdido reiniciado.": "Intervalo Perdido reiniciado.",
+        "A saída do Intervalo só aparece depois da vitória.": "La salida del Intervalo solo aparece después de la victoria.",
+        "Boss do Intervalo Perdido | Passado: Sísmico +25% | Futuro: Elétrico +30% | Intervalo: sem fraqueza e mais rápido": "Jefe del Intervalo Perdido | Pasado: Sísmico +25% | Futuro: Eléctrico +30% | Intervalo: sin debilidad y más rápido",
+        "Exclusivo do Intervalo Perdido | Unidade básica presa entre segundos": "Exclusivo del Intervalo Perdido | Unidad básica atrapada entre segundos",
+        "Exclusivo do Intervalo Perdido | Muito rápido": "Exclusivo del Intervalo Perdido | Muy rápido",
+        "Exclusivo do Intervalo Perdido | Blindado; recebe 18% menos dano": "Exclusivo del Intervalo Perdido | Blindado; recibe un 18% menos de daño",
+        "Exclusivo da Fase 13 | Convoca um Raptor e um Drone com 60% e 30% de vida": "Exclusivo de la Fase 13 | Convoca un Raptor y un Dron al 60% y 30% de vida",
+        "Exclusivo da Fase 13 | Alterna entre Passado resistente e Futuro veloz": "Exclusivo de la Fase 13 | Alterna entre un Pasado resistente y un Futuro veloz",
+        "Exclusivo da Fase 13 | Ao morrer, deixa uma fenda que transporta o próximo inimigo": "Exclusivo de la Fase 13 | Al morir, deja una grieta que transporta al siguiente enemigo",
+        "Exclusivo da Fase 13 | Convoca duas eras e muda a frente ativa com 60% e 30% de vida": "Exclusivo de la Fase 13 | Convoca dos eras y cambia el frente activo al 60% y 30% de vida",
+        "Fases 13 a 18": "Fases 13 a 18",
+        "ERA INEXISTENTE": "ERA INEXISTENTE",
+        "COORDENADA 00:00": "COORDENADA 00:00",
+        "ENTRANDO NO INTERVALO PERDIDO...": "ENTRANDO EN EL INTERVALO PERDIDO...",
+        "INTERVALO DETECTADO": "INTERVALO DETECTADO",
+        "A última proteção caiu, mas uma coordenada impossível surgiu no relógio quebrado. O Capítulo 3 ainda está do outro lado dela.": "La última protección cayó, pero una coordenada imposible apareció en el reloj roto. El Capítulo 3 sigue al otro lado.",
+        "COORDENADA 00:00 · ERA INEXISTENTE": "COORDENADA 00:00 · ERA INEXISTENTE",
+        "Guardar coordenada": "Guardar coordenada",
+        "SISTEMA DA MÁQUINA": "SISTEMA DE LA MÁQUINA",
+        "Coordenada 00:00 confirmada. Erro: nenhuma era corresponde a este destino.": "Coordenada 00:00 confirmada. Error: ninguna era corresponde a este destino.",
+        "FORA DA LINHA TEMPORAL": "FUERA DE LA LÍNEA TEMPORAL",
+        "Tentar conexão": "Intentar conexión",
+        "Você abriu o Intervalo Perdido. Agora sobreviva ao que estava preso entre os segundos.": "Abriste el Intervalo Perdido. Ahora sobrevive a lo que estaba atrapado entre los segundos.",
+        "ORIGEM NÃO IDENTIFICADA": "ORIGEN NO IDENTIFICADO",
+        "Começar defesa": "Comenzar defensa",
+        "CONDENAÇÃO TEMPORAL": "CONDENA TEMPORAL",
+        "Você sabe o que eu sou agora. Não posso deixar que continue livre.": "Ahora sabes lo que soy. No puedo permitir que sigas libre.",
+        "Vou levar você para onde ninguém poderá encontrá-lo. O tempo não existe lá. Nada existe de verdade.": "Te llevaré adonde nadie podrá encontrarte. Allí el tiempo no existe. Nada existe de verdad.",
+        "Aquele lugar apenas recria fragmentos de tudo o que você já viveu. Você ficará preso entre essas lembranças para sempre.": "Ese lugar solo recrea fragmentos de todo lo que ya viviste. Quedarás atrapado entre esos recuerdos para siempre.",
+        "Não sou eu quem controla o que existe naquele lugar. Quando chegar lá, você estará sozinho... Adeus.": "No soy yo quien controla lo que existe en ese lugar. Cuando llegues, estarás solo... Adiós.",
+        "Tentar resistir": "Intentar resistir",
+        "REGISTRO FORA DO TEMPO": "REGISTRO FUERA DEL TIEMPO",
+        "O Senhor do Tempo não criou este lugar. Ele estava tentando mantê-lo fechado.": "El Señor del Tiempo no creó este lugar. Intentaba mantenerlo cerrado.",
+        "ARQUIVO SEM DATA": "ARCHIVO SIN FECHA",
+        "SINAL DESCONHECIDO": "SEÑAL DESCONOCIDA",
+        "Existe alguma coisa vivendo fora da linha temporal.": "Hay algo viviendo fuera de la línea temporal.",
+        "ORIGEM: ALÉM DO INTERVALO": "ORIGEN: MÁS ALLÁ DEL INTERVALO",
+        "Ouvir sinal": "Escuchar señal",
+        "Finalmente alguém abriu o intervalo.": "Por fin alguien abrió el intervalo.",
+        "IDENTIDADE NÃO RECONHECIDA": "IDENTIDAD NO RECONOCIDA",
+        "Você atravessou o único lugar que eu não conseguia observar. Agora nós dois temos um problema.": "Atravesaste el único lugar que no podía observar. Ahora los dos tenemos un problema.",
+        "CANAL TEMPORAL RESTAURADO": "CANAL TEMPORAL RESTAURADO",
+        "Revelar Capítulo 3": "Revelar Capítulo 3",
+        "Você ainda não entende. Eu removi as proteções porque elas já estavam falhando.": "Aún no lo entiendes. Quité las protecciones porque ya estaban fallando.",
+        "LINHA DE FRENTE TEMPORAL": "FRENTE TEMPORAL",
+        "Continue avançando. Cada vitória abre outra passagem.": "Sigue avanzando. Cada victoria abre otro paso.",
+        "SINAL EXTERNO DETECTADO": "SEÑAL EXTERNA DETECTADA",
+        "Rastrear próximo destino": "Rastrear siguiente destino",
+        "COORDENADA INSTÁVEL": "COORDENADA INESTABLE",
+        "A frente temporal se estende para uma era que ainda não foi estabilizada.": "El frente temporal se extiende hacia una era que aún no ha sido estabilizada.",
+        "DESTINO SEGUINTE: FASE 14": "SIGUIENTE DESTINO: FASE 14",
+        "Investigar ruído": "Investigar ruido",
+        "PROTÓTIPO NÃO REGISTRADO": "PROTOTIPO NO REGISTRADO",
+        "O que é isso? Parece ser um tipo de defesa. A única inscrição legível na carcaça diz: PROTÓTIPO V-13.": "¿Qué es esto? Parece algún tipo de defensa. La única inscripción legible en la carcasa dice: PROTOTIPO V-13.",
+        "OBJETO ENCONTRADO FORA DA LINHA DE FRENTE": "OBJETO ENCONTRADO FUERA DEL FRENTE",
+        "Procurar registros": "Buscar registros",
+        "FICHA TÉCNICA ENCONTRADA": "FICHA TÉCNICA ENCONTRADA",
+        "Ao lado da defesa, você encontra uma ficha. Criação: 17/09/2087. Criadora: Dra. Lina Varela. Função: detectar e atacar inimigos camuflados.": "Junto a la defensa encuentras una ficha. Creación: 17/09/2087. Creadora: Dra. Lina Varela. Función: detectar y atacar enemigos camuflados.",
+        "MODELO: TORRE DE VARREDURA · PROTÓTIPO V-13": "MODELO: TORRE DE BARRIDO · PROTOTIPO V-13",
+        "Ler observação": "Leer observación",
+        "REGISTRO DO DEFENSOR": "REGISTRO DEL DEFENSOR",
+        "Como assim inimigos camuflados?": "¿Cómo que enemigos camuflados?",
+        "TORRE DE VARREDURA DESBLOQUEADA": "TORRE DE BARRIDO DESBLOQUEADA",
+        "Fase 14": "Fase 14",
+        "A Era Apagada": "La Era Borrada",
+        "Infiltrador Camuflado": "Infiltrador Camuflado",
+        "Rascunho Vivo": "Boceto Viviente",
+        "Sentinela Incompleta": "Centinela Incompleta",
+        "Sombra Congelada": "Sombra Congelada",
+        "Curador do Vazio": "Curador del Vacío",
+        "Exclusivo da Fase 14 | Muito rápido e parcialmente apagado": "Exclusivo de la Fase 14 | Muy rápido y parcialmente borrado",
+        "Exclusivo da Fase 14 | Somente a Torre de Varredura consegue detectá-lo": "Exclusivo de la Fase 14 | Solo la Torre de Barrido puede detectarlo",
+        "Exclusiva da Fase 14 | Blindada; recebe 18% menos dano": "Exclusiva de la Fase 14 | Blindada; recibe un 18% menos de daño",
+        "Exclusiva da Fase 14 | Uma pessoa preservada como sombra temporal": "Exclusiva de la Fase 14 | Una persona preservada como sombra temporal",
+        "Exclusivo da Fase 14 | Aos 50% de vida, restaura até 2 inimigos derrotados nos últimos 5 segundos": "Exclusivo de la Fase 14 | Al 50% de vida, restaura hasta 2 enemigos derrotados en los últimos 5 segundos",
+        "COORDENADA APAGADA": "COORDENADA BORRADA",
+        "A Máquina do Tempo encontrou uma era removida da história. A cidade existe apenas em fragmentos.": "La Máquina del Tiempo encontró una era borrada de la historia. La ciudad solo existe en fragmentos.",
+        "DATA: INEXISTENTE": "FECHA: INEXISTENTE",
+        "Esta era foi apagada por um motivo. Se continuar, não poderei reconstruí-la.": "Esta era fue borrada por una razón. Si continúas, no podré reconstruirla.",
+        "REESCRITA TEMPORAL DETECTADA": "REESCRITURA TEMPORAL DETECTADA",
+        "Ouvir ameaça": "Escuchar amenaza",
+        "Certo, você sobreviveu até aqui. Mas agora criei um inimigo que nenhuma das suas torres enxerga. Eles são camuflados; nada pode vê-los.": "Bien, sobreviviste hasta aquí. Pero ahora creé un enemigo que ninguna de tus torres puede ver. Están camuflados; nada puede detectarlos.",
+        "NOVA ASSINATURA HOSTIL DETECTADA": "NUEVA SEÑAL HOSTIL DETECTADA",
+        "Preparar defesa": "Preparar defensa",
+        "PENSAMENTO DO DEFENSOR": "PENSAMIENTO DEL DEFENSOR",
+        "Eu tenho uma torre específica para isso... mas ele não sabe.": "Tengo una torre específica para esto... pero él no lo sabe.",
+        "PROTÓTIPO V-13 PRONTO PARA CONSTRUÇÃO": "PROTOTIPO V-13 LISTO PARA CONSTRUIR",
+        "Entrar na Era Apagada": "Entrar en la Era Borrada",
+        "A Reescrita Temporal atingirá as waves 3, 6, 9, 12, 15 e 18.": "La Reescritura Temporal golpeará las oleadas 3, 6, 9, 12, 15 y 18.",
+        "REESCRITA TEMPORAL: uma área do mapa será apagada!": "REESCRITURA TEMPORAL: ¡un área del mapa será borrada!",
+        "Área apagada: {quantidade} torres de combate entraram em estase.": "Área borrada: {quantidade} torres de combate entraron en estasis.",
+        "A área apagada voltou à linha temporal.": "El área borrada regresó a la línea temporal.",
+        "ÁREA APAGADA · TORRES EM ESTASE": "ÁREA BORRADA · TORRES EN ESTASIS",
+        "REESCRITA IMINENTE": "REESCRITURA INMINENTE",
+        "O Curador do Vazio restaurou {quantidade} inimigos apagados!": "¡El Curador del Vacío restauró {quantidade} enemigos borrados!",
+        "CURADOR DO VAZIO": "CURADOR DEL VACÍO",
+        "GRAVAÇÃO RESTAURADA": "GRABACIÓN RESTAURADA",
+        "Se alguém encontrou isto, então ele ainda usa meu rosto.": "Si alguien encontró esto, entonces todavía usa mi rostro.",
+        "AUTOR: PESQUISADOR-CHEFE DO PROJETO ???": "AUTOR: INVESTIGADOR JEFE DEL PROYECTO ???",
+        "Verificar assinatura": "Verificar firma",
+        "ARQUIVO IMPOSSÍVEL": "ARCHIVO IMPOSIBLE",
+        "A voz pertence ao pesquisador desaparecido. O registro foi criado 47 anos depois de seu desaparecimento.": "La voz pertenece al investigador desaparecido. El registro fue creado 47 años después de su desaparición.",
+        "IDENTIDADE CONFIRMADA · DATA INVÁLIDA": "IDENTIDAD CONFIRMADA · FECHA INVÁLIDA",
+        "Desligue isso. Essa gravação não é uma memória. É uma isca.": "Apaga eso. Esta grabación no es un recuerdo. Es un señuelo.",
+        "CANAL ENCERRADO À FORÇA": "CANAL CERRADO POR LA FUERZA",
         "ERRO": "ERROR"
     })
 });
@@ -1859,17 +3396,25 @@ function aplicarIdiomaNaInterface() {
     }
 
     atualizarControleDeIdioma();
+    if (typeof atualizarTextosDaAbertura === "function") {
+        atualizarTextosDaAbertura();
+    }
     atualizarBotoesDaMusica();
     atualizarControleDosEfeitos();
     atualizarControleDoModoDiaNoite();
     atualizarIndicadorFaseSelecionada();
+    if (typeof atualizarResumoDoNivelNoMenu === "function") {
+        atualizarResumoDoNivelNoMenu();
+    }
     atualizarPortalFaseSecreta();
+    if (typeof atualizarRelogioQuebradoDoIntervalo === "function") {
+        atualizarRelogioQuebradoDoIntervalo();
+    }
     atualizarResumoDasMissoesNoMenu();
     atualizarResumoDasConquistasNoMenu();
     atualizarIdentidadeDoApoiador();
     atualizarBotoesDeConstrucao();
     atualizarBotoesDaTorre();
-    atualizarPainelDeBoosts();
     atualizarConteudoMenuAberto();
 
     if (!camadaConfirmacaoCompraLoja.hidden) {
@@ -2280,6 +3825,30 @@ function atualizarGanhoDaMusicaDaSelva() {
 
 function obterConfiguracaoDaMusicaDaSelva() {
     const tema = obterFaseAtual().tema;
+
+    if (tema === "eraApagada") {
+        return CONFIG.audio.musicaDaEraApagada;
+    }
+
+    if (tema === "linhaTemporal") {
+        return CONFIG.audio.musicaDaLinhaTemporal;
+    }
+
+    if (tema === "intervaloPerdido") {
+        return CONFIG.audio.musicaDoIntervaloPerdido;
+    }
+
+    if (tema === "pontoZero") {
+        return CONFIG.audio.musicaDoPontoZero;
+    }
+
+    if (tema === "futuroDespedacado") {
+        return CONFIG.audio.musicaDoFuturoDespedacado;
+    }
+
+    if (tema === "laboratorio") {
+        return CONFIG.audio.musicaDoLaboratorio;
+    }
 
     if (tema === "futurista") {
         return CONFIG.audio.musicaDaMetropoleNeon;
@@ -2760,6 +4329,27 @@ function tocarPassoDaMusicaDaSelva() {
     }
 
     const configuracao = obterConfiguracaoDaMusicaDaSelva();
+
+    if (configuracao === CONFIG.audio.musicaDaEraApagada) {
+        tocarPassoDaMusicaDaEraApagada(audio, configuracao);
+        return;
+    }
+
+    if (configuracao === CONFIG.audio.musicaDoIntervaloPerdido) {
+        tocarPassoDaMusicaDoIntervaloPerdido(audio, configuracao);
+        return;
+    }
+
+    if (configuracao === CONFIG.audio.musicaDaLinhaTemporal) {
+        tocarPassoDaMusicaDaLinhaTemporal(audio, configuracao);
+        return;
+    }
+
+    if (configuracao === CONFIG.audio.musicaDoPontoZero) {
+        tocarPassoDaMusicaDoPontoZero(audio, configuracao);
+        return;
+    }
+
     const indice = passoDaMusicaDaSelva % configuracao.melodia.length;
     const nota = configuracao.melodia[indice];
     const intensidadeDaPercussao = configuracao.percussao[
@@ -2834,6 +4424,300 @@ function tocarPassoDaMusicaDaSelva() {
             0.03,
             ganhoDaMusicaDaSelva,
             nota * 2.5
+        );
+    }
+
+    passoDaMusicaDaSelva = (passoDaMusicaDaSelva + 1)
+        % configuracao.melodia.length;
+}
+
+function tocarPassoDaMusicaDoIntervaloPerdido(audio, configuracao) {
+    const indice = passoDaMusicaDaSelva % configuracao.melodia.length;
+    const nota = configuracao.melodia[indice];
+    const agora = audio.currentTime;
+    const duracaoDoPasso = configuracao.intervaloDoPasso / 1000;
+    const destino = ganhoDaMusicaDaSelva;
+
+    if (nota > 0) {
+        tocarNotaSintetizada(
+            nota,
+            agora,
+            duracaoDoPasso * 2.45,
+            "sine",
+            0.075,
+            destino,
+            nota * 0.997
+        );
+        tocarNotaSintetizada(
+            nota * 2,
+            agora + duracaoDoPasso * 0.12,
+            duracaoDoPasso * 1.15,
+            "triangle",
+            0.018,
+            destino,
+            nota * 1.985
+        );
+    }
+
+    if (indice % 4 === 0) {
+        const notaDoBaixo = configuracao.baixo[(indice / 4) % configuracao.baixo.length];
+        tocarNotaSintetizada(
+            notaDoBaixo,
+            agora,
+            duracaoDoPasso * 4.2,
+            "sine",
+            0.07,
+            destino,
+            notaDoBaixo * 1.005
+        );
+    }
+
+    if (indice % 4 === 3) {
+        const badalada = configuracao.badaladas[Math.floor(indice / 4)];
+        tocarNotaSintetizada(
+            badalada,
+            agora + duracaoDoPasso * 0.56,
+            duracaoDoPasso * 1.4,
+            "sine",
+            0.035,
+            destino,
+            badalada / 2
+        );
+    }
+
+    if (indice === 7 || indice === 15) {
+        tocarNotaSintetizada(
+            2093,
+            agora + duracaoDoPasso * 0.2,
+            duracaoDoPasso * 1.8,
+            "sine",
+            0.022,
+            destino,
+            261.63
+        );
+    }
+
+    passoDaMusicaDaSelva = (passoDaMusicaDaSelva + 1)
+        % configuracao.melodia.length;
+}
+
+function tocarPassoDaMusicaDaLinhaTemporal(audio, configuracao) {
+    const indice = passoDaMusicaDaSelva % configuracao.pulsoDoPresente.length;
+    const agora = audio.currentTime;
+    const duracaoDoPasso = configuracao.intervaloDoPasso / 1000;
+    const eraEmDestaque = typeof frenteTemporalAtiva !== "undefined"
+        ? frenteTemporalAtiva?.entrada?.id
+        : null;
+    const obterIntensidadeDaEra = era => {
+        if (!eraEmDestaque) {
+            return 1;
+        }
+
+        return eraEmDestaque === era
+            ? configuracao.multiplicadorDaEraEmDestaque
+            : configuracao.multiplicadorDasErasEmRecuo;
+    };
+    const notaDoPassado = configuracao.notasDoPassado[indice];
+    const notaDoPresente = configuracao.pulsoDoPresente[indice];
+    const notaDoFuturo = configuracao.arpejoDoFuturo[indice];
+
+    if (notaDoPassado > 0) {
+        tocarNotaSintetizada(
+            notaDoPassado,
+            agora,
+            duracaoDoPasso * 2.8,
+            "triangle",
+            configuracao.volumeDoPassado * obterIntensidadeDaEra("passado"),
+            ganhoDaMusicaDaSelva,
+            notaDoPassado * 0.994
+        );
+    }
+
+    if (notaDoPresente > 0) {
+        tocarNotaSintetizada(
+            notaDoPresente,
+            agora + duracaoDoPasso * 0.08,
+            duracaoDoPasso * 0.55,
+            "square",
+            configuracao.volumeDoPresente * obterIntensidadeDaEra("presente"),
+            ganhoDaMusicaDaSelva
+        );
+    }
+
+    if (notaDoFuturo > 0) {
+        tocarNotaSintetizada(
+            notaDoFuturo,
+            agora + duracaoDoPasso * 0.42,
+            duracaoDoPasso * 0.82,
+            "sine",
+            configuracao.volumeDoFuturo * obterIntensidadeDaEra("futuro"),
+            ganhoDaMusicaDaSelva,
+            notaDoFuturo * 1.012
+        );
+    }
+
+    if (indice % 4 === 0) {
+        const notaDoBaixo = configuracao.baixoDeGuerra[
+            (indice / 4) % configuracao.baixoDeGuerra.length
+        ];
+        tocarNotaSintetizada(
+            notaDoBaixo,
+            agora,
+            duracaoDoPasso * 3.8,
+            "sine",
+            configuracao.volumeDoBaixo,
+            ganhoDaMusicaDaSelva,
+            notaDoBaixo * 0.99
+        );
+    }
+
+    const intensidadeDaPercussao = configuracao.percussao[indice];
+    if (intensidadeDaPercussao > 0) {
+        tocarRuidoSintetizado(
+            agora,
+            indice % 4 === 0 ? 0.11 : 0.035,
+            configuracao.volumeDaPercussao * intensidadeDaPercussao,
+            indice % 4 === 0 ? 360 : 2600,
+            ganhoDaMusicaDaSelva
+        );
+    }
+
+    passoDaMusicaDaSelva = (passoDaMusicaDaSelva + 1)
+        % configuracao.pulsoDoPresente.length;
+}
+
+function tocarPassoDaMusicaDoPontoZero(audio, configuracao) {
+    const indice = passoDaMusicaDaSelva % configuracao.melodia.length;
+    const nota = configuracao.melodia[indice];
+    const agora = audio.currentTime;
+    const duracaoDoPasso = configuracao.intervaloDoPasso / 1000;
+
+    if (nota > 0) {
+        tocarNotaSintetizada(
+            nota,
+            agora,
+            duracaoDoPasso * 1.75,
+            "sine",
+            0.105,
+            ganhoDaMusicaDaSelva,
+            nota * 0.998
+        );
+        tocarNotaSintetizada(
+            nota * 2,
+            agora + 0.025,
+            duracaoDoPasso * 0.8,
+            "triangle",
+            0.032,
+            ganhoDaMusicaDaSelva,
+            nota * 1.985
+        );
+    }
+
+    if (indice % 3 === 0) {
+        const indiceDoBaixo = Math.floor(indice / 3) % configuracao.baixo.length;
+        const notaDoBaixo = configuracao.baixo[indiceDoBaixo];
+        tocarNotaSintetizada(
+            notaDoBaixo,
+            agora,
+            duracaoDoPasso * 2.75,
+            "sine",
+            0.12,
+            ganhoDaMusicaDaSelva,
+            notaDoBaixo * 0.994
+        );
+    }
+
+    const intensidadeDoTique = configuracao.percussao[
+        indice % configuracao.percussao.length
+    ];
+    tocarRuidoSintetizado(
+        agora + duracaoDoPasso * 0.48,
+        0.022,
+        intensidadeDoTique * 0.024,
+        indice % 3 === 0 ? 900 : 3200,
+        ganhoDaMusicaDaSelva
+    );
+
+    if (indice === 5 || indice === 11) {
+        tocarNotaSintetizada(
+            1046.5,
+            agora + duracaoDoPasso * 0.3,
+            duracaoDoPasso * 0.68,
+            "sine",
+            0.028,
+            ganhoDaMusicaDaSelva,
+            130.81
+        );
+    }
+
+    passoDaMusicaDaSelva = (passoDaMusicaDaSelva + 1)
+        % configuracao.melodia.length;
+}
+
+function tocarPassoDaMusicaDaEraApagada(audio, configuracao) {
+    const indice = passoDaMusicaDaSelva % configuracao.melodia.length;
+    const nota = configuracao.melodia[indice];
+    const eco = configuracao.ecos[indice];
+    const agora = audio.currentTime;
+    const duracaoDoPasso = configuracao.intervaloDoPasso / 1000;
+
+    if (nota > 0) {
+        tocarNotaSintetizada(
+            nota,
+            agora,
+            duracaoDoPasso * 1.85,
+            "triangle",
+            configuracao.volumeDaMelodia,
+            ganhoDaMusicaDaSelva,
+            nota * 0.985
+        );
+    }
+
+    if (eco > 0) {
+        tocarNotaSintetizada(
+            eco,
+            agora + duracaoDoPasso * 0.38,
+            duracaoDoPasso * 0.72,
+            "sine",
+            configuracao.volumeDoEco,
+            ganhoDaMusicaDaSelva,
+            eco * 0.96
+        );
+    }
+
+    if (indice % 4 === 0) {
+        const notaDoBaixo = configuracao.baixo[(indice / 4) % configuracao.baixo.length];
+        tocarNotaSintetizada(
+            notaDoBaixo,
+            agora,
+            duracaoDoPasso * 4.1,
+            "sine",
+            configuracao.volumeDoBaixo,
+            ganhoDaMusicaDaSelva,
+            notaDoBaixo * 0.992
+        );
+    }
+
+    const intensidadeDaFalha = configuracao.percussao[indice];
+    if (intensidadeDaFalha > 0) {
+        tocarRuidoSintetizado(
+            agora + duracaoDoPasso * 0.54,
+            indice % 4 === 0 ? 0.09 : 0.026,
+            configuracao.volumeDaPercussao * intensidadeDaFalha,
+            indice % 4 === 0 ? 520 : 3100,
+            ganhoDaMusicaDaSelva
+        );
+    }
+
+    if (indice === 7 || indice === 15) {
+        tocarNotaSintetizada(
+            1567.98,
+            agora + duracaoDoPasso * 0.18,
+            duracaoDoPasso * 0.95,
+            "square",
+            configuracao.volumeDaFalhaTemporal,
+            ganhoDaMusicaDaSelva,
+            98
         );
     }
 
@@ -3412,7 +5296,17 @@ function selecionarTrilhaDaPartida() {
     trilhaDaConversaDoPortalAtiva = false;
     trilhaDoDesertoAtiva = faseAtual.tema === "deserto";
     trilhaDoArticoAtiva = faseAtual.tema === "artico";
-    trilhaDaSelvaAtiva = ["selva", "primordial", "futurista"].includes(faseAtual.tema);
+    trilhaDaSelvaAtiva = [
+        "selva",
+        "primordial",
+        "futurista",
+        "laboratorio",
+        "futuroDespedacado",
+        "pontoZero",
+        "linhaTemporal",
+        "intervaloPerdido",
+        "eraApagada"
+    ].includes(faseAtual.tema);
     trilhaDoBosqueAtiva = faseAtual.tema === "temperada";
     trilhaDaForjaAtiva = faseAtual.tema === "vulcanica";
     trilhaDoPantanoAtiva = faseAtual.tema === "pantano";
@@ -3690,7 +5584,7 @@ function definirJogoPausado(pausar) {
         jogoPausado = true;
         pausaIniciadaEm = Date.now();
         reiniciarRelogioDaSimulacao();
-        atualizarPulsoTemporalNoPosto();
+        atualizarPulsoTemporalNoControle();
         return;
     }
 
@@ -3718,6 +5612,65 @@ function definirJogoPausado(pausar) {
         pulsoTemporalBossExpiraEm,
         duracaoDaPausa
     );
+    lentidaoDosRelogiosDoIntervaloExpiraEm = deslocarCronometroAposPausa(
+        lentidaoDosRelogiosDoIntervaloExpiraEm,
+        duracaoDaPausa
+    );
+    aceleracaoDaInterferenciaTemporalExpiraEm = deslocarCronometroAposPausa(
+        aceleracaoDaInterferenciaTemporalExpiraEm,
+        duracaoDaPausa
+    );
+    interferenciaVisualDoSenhorDoTempoExpiraEm = deslocarCronometroAposPausa(
+        interferenciaVisualDoSenhorDoTempoExpiraEm,
+        duracaoDaPausa
+    );
+    if (frenteTemporalAtiva) {
+        frenteTemporalAtiva.ativaEm = deslocarCronometroAposPausa(
+            frenteTemporalAtiva.ativaEm || 0,
+            duracaoDaPausa
+        );
+        frenteTemporalAtiva.terminaEm = deslocarCronometroAposPausa(
+            frenteTemporalAtiva.terminaEm || 0,
+            duracaoDaPausa
+        );
+    }
+    for (const fenda of fendasDosPortadores) {
+        fenda.expiraEm = deslocarCronometroAposPausa(fenda.expiraEm, duracaoDaPausa);
+    }
+    if (reescritaTemporalDaEraApagada) {
+        reescritaTemporalDaEraApagada.ativaEm = deslocarCronometroAposPausa(
+            reescritaTemporalDaEraApagada.ativaEm || 0,
+            duracaoDaPausa
+        );
+        reescritaTemporalDaEraApagada.terminaEm = deslocarCronometroAposPausa(
+            reescritaTemporalDaEraApagada.terminaEm || 0,
+            duracaoDaPausa
+        );
+    }
+    inimigosDerrotadosRecentementeNaEraApagada.forEach((registro) => {
+        registro.eliminadoEm = deslocarCronometroAposPausa(
+            registro.eliminadoEm,
+            duracaoDaPausa
+        );
+    });
+    if (desafioDosRelogiosDoIntervalo) {
+        desafioDosRelogiosDoIntervalo.iniciadoEm = deslocarCronometroAposPausa(
+            desafioDosRelogiosDoIntervalo.iniciadoEm,
+            duracaoDaPausa
+        );
+        desafioDosRelogiosDoIntervalo.terminaEm = deslocarCronometroAposPausa(
+            desafioDosRelogiosDoIntervalo.terminaEm || 0,
+            duracaoDaPausa
+        );
+    }
+    contencaoLaboratorioFechaEm = deslocarCronometroAposPausa(
+        contencaoLaboratorioFechaEm,
+        duracaoDaPausa
+    );
+    contencaoLaboratorioExpiraEm = deslocarCronometroAposPausa(
+        contencaoLaboratorioExpiraEm,
+        duracaoDaPausa
+    );
 
     if (fliperamaNoMapa) {
         fliperamaNoMapa.expiraEm = deslocarCronometroAposPausa(
@@ -3740,8 +5693,16 @@ function definirJogoPausado(pausar) {
             torre.atordoadaPeloUrsoAte || 0,
             duracaoDaPausa
         );
+        torre.estaseTemporalExpiraEm = deslocarCronometroAposPausa(
+            torre.estaseTemporalExpiraEm || 0,
+            duracaoDaPausa
+        );
         torre.impactoSismicoSecundarioEm = deslocarCronometroAposPausa(
             torre.impactoSismicoSecundarioEm || 0,
+            duracaoDaPausa
+        );
+        torre.sucataExpiraEm = deslocarCronometroAposPausa(
+            torre.sucataExpiraEm || 0,
             duracaoDaPausa
         );
     }
@@ -3797,6 +5758,14 @@ function definirJogoPausado(pausar) {
             inimigo.vulnerabilidadeSismicaExpiraEm || 0,
             duracaoDaPausa
         );
+        inimigo.marcaExpiraEm = deslocarCronometroAposPausa(
+            inimigo.marcaExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.corrosaoExpiraEm = deslocarCronometroAposPausa(
+            inimigo.corrosaoExpiraEm || 0,
+            duracaoDaPausa
+        );
         inimigo.chamadoPrimordialExpiraEm = deslocarCronometroAposPausa(
             inimigo.chamadoPrimordialExpiraEm || 0,
             duracaoDaPausa
@@ -3817,9 +5786,49 @@ function definirJogoPausado(pausar) {
             inimigo.reversaoTemporalExpiraEm || 0,
             duracaoDaPausa
         );
+        inimigo.estaseExpiraEm = deslocarCronometroAposPausa(
+            inimigo.estaseExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.contencaoLaboratorioExpiraEm = deslocarCronometroAposPausa(
+            inimigo.contencaoLaboratorioExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.fendaTemporalTeleportaEm = deslocarCronometroAposPausa(
+            inimigo.fendaTemporalTeleportaEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.fendaTemporalSaidaExpiraEm = deslocarCronometroAposPausa(
+            inimigo.fendaTemporalSaidaExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.retornoDoEcoExpiraEm = deslocarCronometroAposPausa(
+            inimigo.retornoDoEcoExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.recuoDaSentinelaExpiraEm = deslocarCronometroAposPausa(
+            inimigo.recuoDaSentinelaExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.escudoPontoZeroExpiraEm = deslocarCronometroAposPausa(
+            inimigo.escudoPontoZeroExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.rupturaPontoZeroExpiraEm = deslocarCronometroAposPausa(
+            inimigo.rupturaPontoZeroExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.ordemCronalExpiraEm = deslocarCronometroAposPausa(
+            inimigo.ordemCronalExpiraEm || 0,
+            duracaoDaPausa
+        );
+        inimigo.proximaTrocaDeFormaCronalEm = deslocarCronometroAposPausa(
+            inimigo.proximaTrocaDeFormaCronalEm || 0,
+            duracaoDaPausa
+        );
     }
 
-    atualizarPulsoTemporalNoPosto();
+    atualizarPulsoTemporalNoControle();
 }
 
 function definirMenuDaPartidaAberto(aberto) {
@@ -3847,19 +5856,52 @@ function alternarMenuDaPartida() {
 }
 
 function compensarMinigameAposOcultarPagina(duracaoOculta) {
-    if (!minigameFliperamaAtivo || duracaoOculta <= 0) {
+    if (duracaoOculta <= 0) {
         return;
     }
 
-    minigameFliperamaTerminaEm += duracaoOculta;
+    if (minigameFliperamaAtivo) {
+        minigameFliperamaComecaEm += duracaoOculta;
+        minigameFliperamaTerminaEm += duracaoOculta;
 
-    if (alvoDoMinigameFliperama) {
-        alvoDoMinigameFliperama.atualizadoEm += duracaoOculta;
-        alvoDoMinigameFliperama.podeSerAtingidoEm += duracaoOculta;
+        if (alvoDoMinigameFliperama) {
+            alvoDoMinigameFliperama.atualizadoEm += duracaoOculta;
+            alvoDoMinigameFliperama.podeSerAtingidoEm += duracaoOculta;
+        }
+
+        if (roboDoLabirintoFliperama) {
+            roboDoLabirintoFliperama.atualizadoEm += duracaoOculta;
+        }
+
+        if (estadoVooPixel) {
+            estadoVooPixel.atualizadoEm += duracaoOculta;
+        }
+
+        if (estadoChuvaDePixels) {
+            estadoChuvaDePixels.atualizadoEm += duracaoOculta;
+            estadoChuvaDePixels.ultimoPixelEm += duracaoOculta;
+        }
+
+        if (estadoSequenciaNeon) {
+            estadoSequenciaNeon.proximaMudancaEm += duracaoOculta;
+            estadoSequenciaNeon.sinalAtivoAte += duracaoOculta;
+            estadoSequenciaNeon.erroAte += duracaoOculta;
+        }
     }
 
-    if (roboDoLabirintoFliperama) {
-        roboDoLabirintoFliperama.atualizadoEm += duracaoOculta;
+    if (
+        typeof desafioDeTreinamentoAtivo !== "undefined"
+        && desafioDeTreinamentoAtivo
+        && desafioDeTreinamentoAtivo.estado !== "resultado"
+    ) {
+        desafioDeTreinamentoAtivo.comecaEm += duracaoOculta;
+        desafioDeTreinamentoAtivo.terminaEm += duracaoOculta;
+        desafioDeTreinamentoAtivo.feedbackAte += duracaoOculta;
+        desafioDeTreinamentoAtivo.proximoSinalEm += duracaoOculta;
+        desafioDeTreinamentoAtivo.sinalAtivadoEm += duracaoOculta;
+        if (desafioDeTreinamentoAtivo.iniciadoEm > 0) {
+            desafioDeTreinamentoAtivo.iniciadoEm += duracaoOculta;
+        }
     }
 }
 
@@ -3901,6 +5943,7 @@ function controlarAtalhosDaPartida(evento) {
             conversaDoSenhorDoTempoAtiva
             || cutsceneDoCapitulo2Ativa
             || cutsceneDaCartaAtiva
+            || conversaDoPortalSecretoBloqueadoAtiva
             || labirintoAmareloAtivo
         )
         && evento.key === "Escape"
@@ -3915,7 +5958,15 @@ function controlarAtalhosDaPartida(evento) {
         return;
     }
 
-    if (!camadaBonusPosBoss.hidden || !camadaMinigameFliperama.hidden) {
+    if (!camadaMinigameFliperama.hidden) {
+        if (evento.key === "Escape" && minigameFliperamaEmTreinamento) {
+            evento.preventDefault();
+            abandonarMinigameDoFliperamaEmTreinamento();
+        }
+        return;
+    }
+
+    if (!camadaBonusPosBoss.hidden || !camadaMinigameTreinamentoFliperama.hidden) {
         return;
     }
 
@@ -3933,6 +5984,12 @@ function controlarAtalhosDaPartida(evento) {
         if (!camadaConfiguracoes.hidden) {
             evento.preventDefault();
             fecharConfiguracoes();
+            return;
+        }
+
+        if (conteudoMenu.querySelector(".album-detalhes-camada")) {
+            evento.preventDefault();
+            fecharDetalhesDaFigurinhaDoAlbum();
             return;
         }
 
@@ -4051,6 +6108,132 @@ function configurarInicioAutomaticoDaMusicaDoLobby() {
     }
 }
 
+function carregarRegistroDeEntradaAnterior() {
+    try {
+        if (localStorage.getItem(CHAVE_ENTRADA_ANTERIOR) === "true") {
+            return true;
+        }
+
+        return [
+            CHAVE_TUTORIAL_CONCLUIDO,
+            CHAVE_PROGRESSO_FASES,
+            CHAVE_FRAGMENTOS_PIXEL,
+            CHAVE_COMPRAS_LOJA,
+            CHAVE_PROGRESSAO_NIVEL
+        ].some(chave => localStorage.getItem(chave) !== null);
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarRegistroDeEntradaAnterior() {
+    try {
+        localStorage.setItem(CHAVE_ENTRADA_ANTERIOR, "true");
+    } catch (erro) {
+        // A saudação continua correta durante a sessão sem armazenamento local.
+    }
+}
+
+function atualizarTextosDaAbertura() {
+    if (!saudacaoMenuInicial || !descricaoMenuInicial) {
+        return;
+    }
+
+    const jogoEncerrado = telaInicialJogo?.dataset.estado === "encerrado";
+    saudacaoMenuInicial.textContent = jogoEncerrado
+        ? traduzir("abertura.ateLogo")
+        : traduzir(
+            jogadorJaEntrouAntes
+                ? "abertura.bemVindoDeVolta"
+                : "abertura.bemVindo"
+        );
+    descricaoMenuInicial.textContent = jogoEncerrado
+        ? traduzir("abertura.podeFechar")
+        : traduzir("abertura.descricao");
+}
+
+function obterDuracaoDaAbertura(nomeDaDuracao) {
+    return typeof navigator !== "undefined" && navigator.webdriver
+        ? 0
+        : CONFIG.aberturaDoJogo[nomeDaDuracao];
+}
+
+function revelarMenuInicial() {
+    if (telaInicialPronta) {
+        return;
+    }
+
+    telaInicialPronta = true;
+    atualizarTextosDaAbertura();
+    salvarRegistroDeEntradaAnterior();
+    telaInicialJogo.hidden = false;
+    requestAnimationFrame(() => telaInicialJogo.classList.add("menu-inicial-visivel"));
+    telaCarregamento.classList.add("carregamento-concluido");
+
+    setTimeout(() => {
+        telaCarregamento.hidden = true;
+        botaoJogarMenuInicial.focus();
+    }, obterDuracaoDaAbertura("duracaoTransicaoMs"));
+}
+
+function concluirCarregamentoDaAbertura() {
+    configurarInicioAutomaticoDaMusicaDoLobby();
+    const tempoDecorrido = Date.now() - inicioDoCarregamento;
+    const tempoRestante = Math.max(
+        0,
+        obterDuracaoDaAbertura("duracaoMinimaCarregamentoMs") - tempoDecorrido
+    );
+    setTimeout(revelarMenuInicial, tempoRestante);
+}
+
+function liberarConteudoDoJogo() {
+    document.body.classList.remove("jogo-antes-do-lobby");
+    document.body.classList.add("jogo-liberado");
+    aplicacaoJogo.removeAttribute("inert");
+    aplicacaoJogo.setAttribute("aria-hidden", "false");
+    menuPrincipal.removeAttribute("inert");
+    menuPrincipal.setAttribute("aria-hidden", "false");
+}
+
+function entrarNoLobbyPeloMenuInicial() {
+    if (!telaInicialPronta || !telaCarregamento.hidden) {
+        return;
+    }
+
+    botaoJogarMenuInicial.disabled = true;
+    botaoSairMenuInicial.disabled = true;
+    liberarConteudoDoJogo();
+    telaInicialJogo.classList.add("menu-inicial-saindo");
+    tentarIniciarMusicaDoLobby();
+
+    setTimeout(() => {
+        telaInicialJogo.hidden = true;
+        telaInicialJogo.classList.remove("menu-inicial-visivel", "menu-inicial-saindo");
+        if (!tutorialConcluido) {
+            mostrarTutorial();
+            return;
+        }
+        document.querySelector(".botao-lobby-jogar")?.focus();
+    }, obterDuracaoDaAbertura("duracaoTransicaoMs"));
+}
+
+function sairDoJogoPeloMenuInicial() {
+    if (!telaInicialPronta || !telaCarregamento.hidden) {
+        return;
+    }
+
+    telaInicialJogo.dataset.estado = "encerrado";
+    atualizarTextosDaAbertura();
+    botaoJogarMenuInicial.disabled = true;
+    botaoSairMenuInicial.disabled = true;
+
+    try {
+        window.close();
+    } catch (erro) {
+        // Navegadores comuns podem impedir que a página feche a própria aba.
+    }
+}
+
 atualizarVolumeEfetivoDaMusica();
 controleVolumeMusica.addEventListener("input", (evento) => ajustarVolumeDaMusica(evento.target.value));
 controleVolumeEfeitos.addEventListener("input", (evento) => ajustarVolumeDosEfeitos(evento.target.value));
@@ -4067,12 +6250,165 @@ const CONFIG = Object.freeze({
         quadrosPorSegundoDeReferencia: 60,
         deltaMaximoMs: 50
     }),
+    progressoDaCampanha: Object.freeze({
+        maiorFaseConfiavelAntesDaCorrecao: 12
+    }),
+    aberturaDoJogo: Object.freeze({
+        duracaoMinimaCarregamentoMs: 1800,
+        duracaoTransicaoMs: 360
+    }),
     interface: Object.freeze({
         duracaoNotificacaoDeProgressoMs: 5200,
         duracaoSaidaDaNotificacaoMs: 240
     }),
+    salvos: Object.freeze({
+        versao: 1,
+        quantidadeDeEspacos: 3
+    }),
     tutorial: Object.freeze({
         quantidadeDePassos: 5
+    }),
+    editorDeFases: Object.freeze({
+        nivelNecessarioParaDesbloqueio: 5,
+        numeroInterno: 101,
+        maximoDeMapasCriados: 2,
+        maximoDeMapasImportados: 20,
+        maximoDeWaves: 20,
+        maximoDeGruposPorWave: 6,
+        maximoDeInimigosPorGrupo: 50,
+        maximoDeInimigosPorMapa: 600,
+        minimoDeCreditos: 150,
+        maximoDeCreditos: 2000,
+        passoDeCreditos: 50,
+        minimoDeTorres: 3,
+        maximoDeTorres: 30,
+        nomePadraoDoCriador: "Lequ48",
+        cenarios: Object.freeze([
+            Object.freeze({ id: "campo", nome: "Campo verde" }),
+            Object.freeze({ id: "deserto", nome: "Deserto antigo" }),
+            Object.freeze({ id: "artico", nome: "Tundra congelada" }),
+            Object.freeze({ id: "selva", nome: "Ruínas da Selva" }),
+            Object.freeze({ id: "temperada", nome: "Bosque do Crepúsculo" }),
+            Object.freeze({ id: "vulcanica", nome: "Forja Vulcânica" }),
+            Object.freeze({ id: "pantano", nome: "Pântano Tóxico" }),
+            Object.freeze({ id: "futurista", nome: "Metrópole Neon" })
+        ]),
+        caminhos: Object.freeze([
+            Object.freeze({
+                id: "ziguezague",
+                nome: "Zigue-zague",
+                pontos: Object.freeze([
+                    Object.freeze({ x: 0, y: 560 }), Object.freeze({ x: 180, y: 560 }),
+                    Object.freeze({ x: 180, y: 160 }), Object.freeze({ x: 410, y: 160 }),
+                    Object.freeze({ x: 410, y: 500 }), Object.freeze({ x: 660, y: 500 }),
+                    Object.freeze({ x: 660, y: 110 }), Object.freeze({ x: 910, y: 110 }),
+                    Object.freeze({ x: 910, y: 420 }), Object.freeze({ x: 1200, y: 420 })
+                ])
+            }),
+            Object.freeze({
+                id: "serpente",
+                nome: "Serpente",
+                pontos: Object.freeze([
+                    Object.freeze({ x: 0, y: 120 }), Object.freeze({ x: 250, y: 120 }),
+                    Object.freeze({ x: 250, y: 580 }), Object.freeze({ x: 500, y: 580 }),
+                    Object.freeze({ x: 500, y: 170 }), Object.freeze({ x: 760, y: 170 }),
+                    Object.freeze({ x: 760, y: 560 }), Object.freeze({ x: 1010, y: 560 }),
+                    Object.freeze({ x: 1010, y: 300 }), Object.freeze({ x: 1200, y: 300 })
+                ])
+            }),
+            Object.freeze({
+                id: "escadaria",
+                nome: "Escadaria",
+                pontos: Object.freeze([
+                    Object.freeze({ x: 0, y: 620 }), Object.freeze({ x: 230, y: 620 }),
+                    Object.freeze({ x: 230, y: 470 }), Object.freeze({ x: 450, y: 470 }),
+                    Object.freeze({ x: 450, y: 320 }), Object.freeze({ x: 680, y: 320 }),
+                    Object.freeze({ x: 680, y: 170 }), Object.freeze({ x: 920, y: 170 }),
+                    Object.freeze({ x: 920, y: 80 }), Object.freeze({ x: 1200, y: 80 })
+                ])
+            }),
+            Object.freeze({
+                id: "onda",
+                nome: "Onda longa",
+                pontos: Object.freeze([
+                    Object.freeze({ x: 0, y: 360 }), Object.freeze({ x: 150, y: 360 }),
+                    Object.freeze({ x: 280, y: 130 }), Object.freeze({ x: 450, y: 130 }),
+                    Object.freeze({ x: 590, y: 590 }), Object.freeze({ x: 760, y: 590 }),
+                    Object.freeze({ x: 900, y: 210 }), Object.freeze({ x: 1040, y: 210 }),
+                    Object.freeze({ x: 1200, y: 360 })
+                ])
+            }),
+            Object.freeze({
+                id: "atalhos",
+                nome: "Curvas curtas",
+                pontos: Object.freeze([
+                    Object.freeze({ x: 0, y: 260 }), Object.freeze({ x: 210, y: 260 }),
+                    Object.freeze({ x: 210, y: 520 }), Object.freeze({ x: 450, y: 520 }),
+                    Object.freeze({ x: 450, y: 250 }), Object.freeze({ x: 720, y: 250 }),
+                    Object.freeze({ x: 720, y: 470 }), Object.freeze({ x: 960, y: 470 }),
+                    Object.freeze({ x: 960, y: 250 }), Object.freeze({ x: 1200, y: 250 })
+                ])
+            })
+        ]),
+        inimigos: Object.freeze([
+            "normal", "rapido", "elite", "sabotador", "escorpiao",
+            "loboDeGelo", "macacoSaqueador", "javaliFurioso",
+            "golemDeMagma", "mosquitoDoBrejo", "raptorAncestral",
+            "droneCacador", "automatoDeCobre", "residuoTemporal", "boss"
+        ]),
+        percentuaisDeDecoracoes: Object.freeze([0, 0.35, 0.7, 1])
+    }),
+    progressaoDeNivel: Object.freeze({
+        experienciaPorInimigo: 1,
+        experienciaPorBoss: 15,
+        experienciaPorFaseConcluida: 100,
+        experienciaBasePorNivel: 200,
+        aumentoDeExperienciaPorNivel: 100,
+        recompensas: Object.freeze([
+            Object.freeze({
+                id: "skinVanguardaEsmeralda",
+                nivel: 2,
+                tipo: "skin",
+                idDoItem: "vanguardaEsmeralda",
+                nome: "Skin Vanguarda Esmeralda",
+                descricao: "Visual verde-esmeralda conquistado pela experiência do defensor.",
+                icone: "✦",
+                fragmentosAlternativos: 5
+            }),
+            Object.freeze({
+                id: "torreRaiosPorNivel",
+                nivel: 4,
+                tipo: "torre",
+                idDoItem: "torreDeRaios",
+                nome: "Torre de Raios",
+                descricao: "Libera permanentemente a Torre de Raios sem custo de Fragmentos.",
+                icone: "ϟ",
+                fragmentosAlternativos: 10
+            }),
+            Object.freeze({
+                id: "miraCalibradaPorNivel",
+                nivel: 6,
+                tipo: "melhoria",
+                idDoItem: "miraCalibrada",
+                nome: "Mira Calibrada",
+                descricao: "Libera permanentemente a melhoria Mira Calibrada sem custo de Fragmentos.",
+                icone: "+5%",
+                fragmentosAlternativos: 10
+            })
+        ]),
+        skins: Object.freeze({
+            vanguardaEsmeralda: Object.freeze({
+                nome: "Skin Vanguarda Esmeralda",
+                tipoDeTorre: "padrao",
+                descricao: "Visual verde-esmeralda conquistado pela experiência do defensor.",
+                coresPorNivel: Object.freeze([
+                    Object.freeze({ corBase: "#168b63", corCanhao: "#b9f6d2" }),
+                    Object.freeze({ corBase: "#20a875", corCanhao: "#d0ffe1" }),
+                    Object.freeze({ corBase: "#2acb86", corCanhao: "#fff071" }),
+                    Object.freeze({ corBase: "#45e59a", corCanhao: "#f4ffbc" })
+                ])
+            })
+        })
     }),
     missoes: Object.freeze({
         semanais: Object.freeze([
@@ -4231,7 +6567,7 @@ const CONFIG = Object.freeze({
         }),
         mestreDoArsenal: Object.freeze({
             nome: "Mestre do Arsenal",
-            descricao: "Compre todos os itens disponíveis na Loja.",
+            descricao: "Compre todos os 23 itens disponíveis na Loja.",
             icone: "⚒",
             tipoDeCriterio: "loja"
         }),
@@ -4263,6 +6599,54 @@ const CONFIG = Object.freeze({
             descricao: "Ainda está te esperando, sempre vai estar.",
             icone: "?",
             tipoDeCriterio: "especial",
+            objetivo: 1
+        }),
+        osSeisGuardioes: Object.freeze({
+            nome: "Os Seis Guardiões",
+            descricao: "Construa as seis defesas escolhidas para a equipe na mesma partida.",
+            icone: "VI",
+            tipoDeCriterio: "especial",
+            objetivo: 6
+        }),
+        mestreDoFliperama: Object.freeze({
+            nome: "Mestre do Fliperama",
+            descricao: "Conclua os cinco minigames do fliperama pelo menos uma vez.",
+            icone: "★",
+            tipoDeCriterio: "colecao",
+            propriedade: "minigamesFliperamaConcluidos",
+            itensObrigatorios: Object.freeze([
+                "alvo",
+                "labirinto",
+                "voo",
+                "coleta",
+                "sequencia"
+            ]),
+            objetivo: 5
+        }),
+        pareORelogio: Object.freeze({
+            nome: "Pare o Relógio!",
+            descricao: "Ative o Pulso Temporal com um Boss e pelo menos cinco inimigos comuns no mapa.",
+            icone: "⌛",
+            tipoDeCriterio: "especial",
+            quantidadeMinimaDeInimigosComuns: 5,
+            objetivo: 1
+        }),
+        demolicaoEmMassa: Object.freeze({
+            nome: "Demolição em Massa",
+            descricao: "Elimine oito inimigos com uma única Bomba Pesada.",
+            icone: "BOOM",
+            tipoDeCriterio: "especial",
+            objetivo: 8
+        }),
+        frequencia09: Object.freeze({
+            nome: "Frequência 09",
+            nomeBloqueado: "Frequência 09",
+            descricao: "Encontre e escute até o fim a transmissão do Projeto ???.",
+            descricaoBloqueada: "O futuro guarda uma frequência esquecida.",
+            icone: "09",
+            iconeBloqueado: "?",
+            tipoDeCriterio: "especial",
+            secreta: true,
             objetivo: 1
         })
     }),
@@ -4370,8 +6754,8 @@ const CONFIG = Object.freeze({
         ]),
         fasesPlanejadasPorEpoca: Object.freeze({
             passado: Object.freeze([8, 10]),
-            presente: Object.freeze([7, 11]),
-            futuro: Object.freeze([9, 12])
+            presente: Object.freeze([7]),
+            futuro: Object.freeze([9, 11, 12])
         })
     }),
     caminhoVivo: Object.freeze({
@@ -4406,6 +6790,511 @@ const CONFIG = Object.freeze({
             assinatura: "FREQUÊNCIA: PROJETO RELÓGIO"
         })
     }),
+    laboratorioAbandonado: Object.freeze({
+        numeroDaFase: 10,
+        contencao: Object.freeze({
+            atrasoDoFechamento: 900,
+            duracaoDoFechamento: 3000,
+            duracaoDoFechamentoParaBosses: 1500,
+            distanciaMinimaDasTorres: 64,
+            camaras: Object.freeze([
+                Object.freeze({
+                    id: "a",
+                    rotuloDaCamara: "A",
+                    painel: Object.freeze({ x: 250, y: 105, raioDeClique: 34 }),
+                    area: Object.freeze({ x: 190, y: 125, largura: 120, altura: 70 })
+                }),
+                Object.freeze({
+                    id: "b",
+                    rotuloDaCamara: "B",
+                    painel: Object.freeze({ x: 855, y: 535, raioDeClique: 34 }),
+                    area: Object.freeze({ x: 810, y: 575, largura: 90, altura: 70 })
+                })
+            ])
+        }),
+        terminal: Object.freeze({
+            x: 650,
+            y: 350,
+            raioDeClique: 50,
+            distanciaMinimaDasTorres: 82,
+            waveDeAtivacao: 10,
+            titulo: "REGISTRO DE ATIVAÇÃO 00",
+            texto: "Projeto Relógio. Transferência iniciada às 03:17. O corpo permaneceu vazio. O pesquisador-chefe desapareceu durante o pulso. Nenhuma porta foi aberta. A assinatura temporal continuou respondendo.",
+            assinatura: "ARQUIVO: ORIGEM / ACESSO PARCIAL"
+        }),
+        cenaFinal: Object.freeze({
+            etapas: Object.freeze([
+                Object.freeze({
+                    id: "arquivo",
+                    titulo: "ARQUIVO RECUPERADO",
+                    texto: "O Projeto Relógio não criou a consciência temporal. Ela já existia antes da ativação. Nós apenas construímos um corpo para que ela pudesse entrar.",
+                    assinatura: "ARQUIVO: ORIGEM / TRECHO RESTAURADO",
+                    textoDoBotao: "Reproduzir gravação"
+                }),
+                Object.freeze({
+                    id: "gravacao",
+                    titulo: "GRAVAÇÃO DO PESQUISADOR-CHEFE",
+                    texto: "Existe alguém observando o laboratório. Ele conhece acontecimentos que ainda não ocorreram. Se eu desaparecer, destruam a máquina.",
+                    assinatura: "IDENTIDADE VISUAL: ARQUIVO CORROMPIDO",
+                    textoDoBotao: "Continuar"
+                }),
+                Object.freeze({
+                    id: "coordenada",
+                    titulo: "COORDENADA NÃO SOLICITADA",
+                    texto: "A Máquina do Tempo foi ativada sem nenhum comando. Uma nova coordenada acaba de ser registrada. Ela aponta para um futuro que não deveria existir.",
+                    assinatura: "DESTINO: FUTURO / ORIGEM: DESCONHECIDA",
+                    textoDoBotao: "Ver resultado"
+                })
+            ])
+        })
+    }),
+    futuroDespedacado: Object.freeze({
+        numeroDaFase: 11,
+        fendasTemporais: Object.freeze({
+            duracaoDaContagem: 850,
+            raioVisual: 34,
+            pares: Object.freeze([
+                Object.freeze({
+                    id: "a",
+                    entradaProgresso: 620,
+                    saidaProgresso: 1040
+                }),
+                Object.freeze({
+                    id: "b",
+                    entradaProgresso: 1740,
+                    saidaProgresso: 2180
+                })
+            ])
+        }),
+        transmissor: Object.freeze({
+            x: 675,
+            y: 405,
+            raioDeClique: 52,
+            distanciaMinimaDasTorres: 84,
+            waveDeAtivacao: 1,
+            titulo: "TRANSMISSÃO FRAGMENTADA 11",
+            texto: "Se você encontrou esta mensagem, ainda há tempo. Não confie em quem lhe deu a máquina.",
+            assinatura: "GUARDIANS OF PIXEL · SINAL DE EMERGÊNCIA"
+        }),
+        cenaFinal: Object.freeze({
+            etapas: Object.freeze([
+                Object.freeze({
+                    id: "arquivo",
+                    titulo: "ARQUIVO RESTAURADO",
+                    texto: "Nós não criamos um deus. Apenas abrimos a porta para ele.",
+                    assinatura: "PROJETO RELÓGIO · EQUIPE ENCERRADA",
+                    textoDoBotao: "Recuperar imagem"
+                }),
+                Object.freeze({
+                    id: "silhueta",
+                    titulo: "QUADRO 03:17",
+                    texto: "A gravação mostra apenas uma silhueta humana alta, de terno, com algo semelhante a um relógio no lugar da cabeça. O rosto e a identidade permanecem corrompidos.",
+                    assinatura: "IDENTIDADE: ARQUIVO CORROMPIDO",
+                    textoDoBotao: "Rastrear sinal"
+                }),
+                Object.freeze({
+                    id: "coordenada",
+                    titulo: "COORDENADA FRAGMENTADA",
+                    texto: "Entre as torres destruídas e os relógios parados em 03:17, resta um ponto de origem. A Máquina do Tempo guardou o destino, mas parte das coordenadas ainda está corrompida.",
+                    assinatura: "DESTINO: PONTO DE RUPTURA / ACESSO INCOMPLETO",
+                    textoDoBotao: "Ver resultado"
+                })
+            ])
+        })
+    }),
+    pontoZero: Object.freeze({
+        numeroDaFase: 12,
+        oscilacaoTemporal: Object.freeze({
+            multiplicadorDoSetorEstavel: 0.75,
+            multiplicadorDoSetorDeRuptura: 1.3,
+            setores: Object.freeze([
+                Object.freeze({
+                    id: "a",
+                    inicioProgresso: 80,
+                    fimProgresso: 240
+                }),
+                Object.freeze({
+                    id: "b",
+                    inicioProgresso: 1740,
+                    fimProgresso: 1940
+                })
+            ])
+        }),
+        registros: Object.freeze([
+            Object.freeze({
+                id: "corpo",
+                numero: 1,
+                waveDeAtivacao: 5,
+                x: 170,
+                y: 180,
+                raioDeClique: 45,
+                titulo: "REGISTRO I — O CORPO",
+                texto: "O corpo foi concluído. Ele poderia existir fora do fluxo normal do tempo.",
+                assinatura: "PROJETO RELÓGIO · COMPONENTE FÍSICO"
+            }),
+            Object.freeze({
+                id: "consciencia",
+                numero: 2,
+                waveDeAtivacao: 10,
+                x: 540,
+                y: 260,
+                raioDeClique: 45,
+                titulo: "REGISTRO II — A CONSCIÊNCIA",
+                texto: "A consciência detectada não era artificial. Ela respondeu antes de o sistema ser ligado.",
+                assinatura: "PROJETO RELÓGIO · ORIGEM DESCONHECIDA"
+            }),
+            Object.freeze({
+                id: "fusao",
+                numero: 3,
+                waveDeAtivacao: 15,
+                x: 1030,
+                y: 390,
+                raioDeClique: 45,
+                titulo: "REGISTRO III — 03:17",
+                texto: "O pesquisador-chefe entrou na câmara no instante da ativação. Às 03:17, duas assinaturas se tornaram uma.",
+                assinatura: "PROJETO RELÓGIO · TRANSFERÊNCIA CONCLUÍDA"
+            })
+        ]),
+        distanciaMinimaDosRegistrosParaTorres: 76,
+        cenaFinal: Object.freeze({
+            etapas: Object.freeze([
+                Object.freeze({
+                    id: "arquivo",
+                    titulo: "ARQUIVO DO PONTO ZERO REUNIDO",
+                    texto: "Nós não criamos o Senhor do Tempo. Criamos apenas o corpo que permitiu sua entrada. Quando a transferência terminou, a criatura carregava a mente e as lembranças do pesquisador.",
+                    assinatura: "PROJETO RELÓGIO · CONCLUSÃO FINAL",
+                    textoDoBotao: "Revelar identidade"
+                }),
+                Object.freeze({
+                    id: "aparicao",
+                    titulo: "SENHOR DO TEMPO",
+                    texto: "Então você finalmente descobriu. Eu esperava que demorasse um pouco mais.",
+                    assinatura: "IDENTIDADE CONFIRMADA",
+                    textoDoBotao: "Continuar"
+                }),
+                Object.freeze({
+                    id: "maquina",
+                    titulo: "COORDENADAS MANIPULADAS",
+                    texto: "A Máquina do Tempo nunca escolheu os destinos. Ela apenas seguiu as coordenadas que eu preparei para você.",
+                    assinatura: "ORIGEM DOS COMANDOS: SENHOR DO TEMPO",
+                    textoDoBotao: "Exigir respostas"
+                }),
+                Object.freeze({
+                    id: "protecoes",
+                    titulo: "A ÚLTIMA PROTEÇÃO",
+                    texto: "Cada vitória sua removeu uma proteção espalhada pelas épocas. Você abriu o caminho que eu não podia atravessar sozinho.",
+                    assinatura: "DESTINO DA PRISÃO: DESCONHECIDO",
+                    textoDoBotao: "Continuar"
+                }),
+                Object.freeze({
+                    id: "capitulo3",
+                    titulo: "INTERVALO DETECTADO",
+                    texto: "A última proteção caiu, mas uma coordenada impossível surgiu no relógio quebrado. O Capítulo 3 ainda está do outro lado dela.",
+                    assinatura: "COORDENADA 00:00 · ERA INEXISTENTE",
+                    textoDoBotao: "Guardar coordenada"
+                })
+            ])
+        })
+    }),
+    intervaloPerdido: Object.freeze({
+        numeroInterno: 100,
+        nome: "O Intervalo Perdido",
+        tema: "intervaloPerdido",
+        descricao: "O espaço impossível que existe entre um segundo e o seguinte.",
+        faseConcluidaParaAcesso: 12,
+        totalDeWaves: 10,
+        duracaoDaTransicaoMs: 1400,
+        armadilhaDoSenhorDoTempo: Object.freeze([
+            Object.freeze({
+                id: "revelacao",
+                texto: "Você sabe o que eu sou agora. Não posso deixar que continue livre.",
+                textoDoBotao: "Continuar"
+            }),
+            Object.freeze({
+                id: "desterro",
+                texto: "Vou levar você para onde ninguém poderá encontrá-lo. O tempo não existe lá. Nada existe de verdade.",
+                textoDoBotao: "Continuar"
+            }),
+            Object.freeze({
+                id: "prisioneiro",
+                texto: "Aquele lugar apenas recria fragmentos de tudo o que você já viveu. Você ficará preso entre essas lembranças para sempre.",
+                textoDoBotao: "Continuar"
+            }),
+            Object.freeze({
+                id: "adeus",
+                texto: "Não sou eu quem controla o que existe naquele lugar. Quando chegar lá, você estará sozinho... Adeus.",
+                textoDoBotao: "Tentar resistir"
+            })
+        ]),
+        introducao: Object.freeze([
+            Object.freeze({
+                id: "coordenada",
+                titulo: "SISTEMA DA MÁQUINA",
+                texto: "Coordenada 00:00 confirmada. Erro: nenhuma era corresponde a este destino.",
+                assinatura: "FORA DA LINHA TEMPORAL",
+                textoDoBotao: "Tentar conexão"
+            }),
+            Object.freeze({
+                id: "sinal",
+                titulo: "SINAL DESCONHECIDO",
+                texto: "Você abriu o Intervalo Perdido. Agora sobreviva ao que estava preso entre os segundos.",
+                assinatura: "ORIGEM NÃO IDENTIFICADA",
+                textoDoBotao: "Começar defesa"
+            })
+        ]),
+        relogiosDeRuptura: Object.freeze({
+            wavesDeAtivacao: Object.freeze([3, 6, 9]),
+            intervaloDeExibicaoMs: 620,
+            tempoDeRespostaMs: 5000,
+            percentualDeLentidao: 0.35,
+            duracaoDaLentidaoMs: 4000,
+            ecosTemporaisPorFalha: 2,
+            raioDeClique: 42,
+            distanciaMinimaDasTorres: 70,
+            posicoes: Object.freeze([
+                Object.freeze({ id: "a", x: 255, y: 250 }),
+                Object.freeze({ id: "b", x: 600, y: 350 }),
+                Object.freeze({ id: "c", x: 990, y: 420 })
+            ])
+        }),
+        waves: Object.freeze({
+            quantidadeBaseDeFragmentosDeSegundo: 3,
+            fragmentosDeSegundoPorWave: 1,
+            primeiraWavePonteiroErrante: 2,
+            wavesPorNovoPonteiroErrante: 3,
+            primeiraWaveParadoxoBlindado: 4,
+            wavesPorNovoParadoxoBlindado: 3
+        }),
+        cenaFinal: Object.freeze({
+            etapas: Object.freeze([
+                Object.freeze({
+                    id: "registro",
+                    titulo: "REGISTRO FORA DO TEMPO",
+                    texto: "O Senhor do Tempo não criou este lugar. Ele estava tentando mantê-lo fechado.",
+                    assinatura: "ARQUIVO SEM DATA",
+                    textoDoBotao: "Continuar"
+                }),
+                Object.freeze({
+                    id: "alerta",
+                    titulo: "SINAL DESCONHECIDO",
+                    texto: "Existe alguma coisa vivendo fora da linha temporal.",
+                    assinatura: "ORIGEM: ALÉM DO INTERVALO",
+                    textoDoBotao: "Ouvir sinal"
+                }),
+                Object.freeze({
+                    id: "voz",
+                    titulo: "???",
+                    texto: "Finalmente alguém abriu o intervalo.",
+                    assinatura: "IDENTIDADE NÃO RECONHECIDA",
+                    textoDoBotao: "Continuar"
+                }),
+                Object.freeze({
+                    id: "senhorDoTempo",
+                    titulo: "SENHOR DO TEMPO",
+                    texto: "Você atravessou o único lugar que eu não conseguia observar. Agora nós dois temos um problema.",
+                    assinatura: "CANAL TEMPORAL RESTAURADO",
+                    textoDoBotao: "Revelar Capítulo 3"
+                })
+            ])
+        })
+    }),
+    linhaDeFrenteTemporal: Object.freeze({
+        numeroDaFase: 13,
+        introducao: Object.freeze([
+            Object.freeze({
+                id: "colisao",
+                titulo: "COLISÃO TEMPORAL",
+                texto: "A linha temporal se partiu em três frentes. Reforços podem atravessar Passado, Presente ou Futuro.",
+                assinatura: "SISTEMA DA MÁQUINA DO TEMPO",
+                textoDoBotao: "Ouvir transmissão"
+            }),
+            Object.freeze({
+                id: "ameaca",
+                titulo: "SENHOR DO TEMPO",
+                texto: "Você atravessou o lugar onde o tempo não existe. Agora verá o que existe quando todas as eras entram em guerra.",
+                assinatura: "TRANSMISSÃO HOSTIL",
+                textoDoBotao: "Entrar na guerra"
+            })
+        ]),
+        frentesTemporais: Object.freeze({
+            wavesDeAtivacao: Object.freeze([2, 5, 8, 11, 14, 17, 20]),
+            duracaoDoAvisoMs: 1800,
+            duracaoAtivaMs: 6500,
+            reforcosPorAbertura: 1,
+            entradas: Object.freeze([
+                Object.freeze({
+                    id: "passado",
+                    nome: "PASSADO",
+                    indiceDoPontoNoCaminho: 2,
+                    tipoDoReforco: "raptorAncestral",
+                    cor: "#efb653"
+                }),
+                Object.freeze({
+                    id: "presente",
+                    nome: "PRESENTE",
+                    indiceDoPontoNoCaminho: 5,
+                    tipoDoReforco: "soldadoCronal",
+                    cor: "#d95ee5"
+                }),
+                Object.freeze({
+                    id: "futuro",
+                    nome: "FUTURO",
+                    indiceDoPontoNoCaminho: 9,
+                    tipoDoReforco: "droneCacador",
+                    cor: "#60e3d4"
+                })
+            ])
+        }),
+        interferencia: Object.freeze({
+            wavesDeAtivacao: Object.freeze([4, 8, 12, 16, 20]),
+            multiplicadorDeVelocidade: 1.25,
+            duracaoDaAceleracaoMs: 6000,
+            quantidadeDeTorresEmEstase: 2,
+            duracaoDaEstaseMs: 3200,
+            falas: Object.freeze([
+                "O tempo não seguirá as suas regras.",
+                "Vamos ver como luta sem controlar todas as peças."
+            ])
+        }),
+        waves: Object.freeze({
+            primeiraWaveRaptor: 2,
+            wavesPorNovoRaptor: 4,
+            primeiraWaveMorcegoDeFogo: 3,
+            wavesPorNovoMorcegoDeFogo: 5,
+            primeiraWaveDrone: 4,
+            wavesPorNovoDrone: 4,
+            primeiraWaveEcoTemporal: 6,
+            wavesPorNovoEcoTemporal: 5,
+            primeiraWaveSoldadoCronal: 3,
+            wavesPorNovoSoldadoCronal: 5,
+            primeiraWavePortadorDaFenda: 6,
+            wavesPorNovoPortadorDaFenda: 6
+        }),
+        cenaFinal: Object.freeze({
+            etapas: Object.freeze([
+                Object.freeze({
+                    id: "explicacao",
+                    titulo: "SENHOR DO TEMPO",
+                    texto: "Você ainda não entende. Eu removi as proteções porque elas já estavam falhando.",
+                    assinatura: "LINHA DE FRENTE TEMPORAL",
+                    textoDoBotao: "Continuar"
+                }),
+                Object.freeze({
+                    id: "interferencia",
+                    titulo: "???",
+                    texto: "Continue avançando. Cada vitória abre outra passagem.",
+                    assinatura: "SINAL EXTERNO DETECTADO",
+                    textoDoBotao: "Rastrear próximo destino"
+                }),
+                Object.freeze({
+                    id: "destino",
+                    titulo: "COORDENADA INSTÁVEL",
+                    texto: "A frente temporal se estende para uma era que ainda não foi estabilizada.",
+                    assinatura: "DESTINO SEGUINTE: FASE 14",
+                    textoDoBotao: "Investigar ruído"
+                }),
+                Object.freeze({
+                    id: "prototipo",
+                    titulo: "PROTÓTIPO NÃO REGISTRADO",
+                    texto: "O que é isso? Parece ser um tipo de defesa. A única inscrição legível na carcaça diz: PROTÓTIPO V-13.",
+                    assinatura: "OBJETO ENCONTRADO FORA DA LINHA DE FRENTE",
+                    textoDoBotao: "Procurar registros"
+                }),
+                Object.freeze({
+                    id: "fichaTecnica",
+                    titulo: "FICHA TÉCNICA ENCONTRADA",
+                    texto: "Ao lado da defesa, você encontra uma ficha. Criação: 17/09/2087. Criadora: Dra. Lina Varela. Função: detectar e atacar inimigos camuflados.",
+                    assinatura: "MODELO: TORRE DE VARREDURA · PROTÓTIPO V-13",
+                    textoDoBotao: "Ler observação"
+                }),
+                Object.freeze({
+                    id: "camuflados",
+                    titulo: "REGISTRO DO DEFENSOR",
+                    texto: "Como assim inimigos camuflados?",
+                    assinatura: "TORRE DE VARREDURA DESBLOQUEADA",
+                    textoDoBotao: "Ver resultado"
+                })
+            ])
+        })
+    }),
+    eraApagada: Object.freeze({
+        numeroDaFase: 14,
+        reescritaTemporal: Object.freeze({
+            wavesDeAtivacao: Object.freeze([3, 6, 9, 12, 15, 18]),
+            duracaoDoAvisoMs: 2200,
+            duracaoDaEstaseMs: 3600,
+            regioes: Object.freeze([
+                Object.freeze({ id: "norte", x: 205, y: 45, largura: 285, altura: 210 }),
+                Object.freeze({ id: "centro", x: 510, y: 245, largura: 260, altura: 230 }),
+                Object.freeze({ id: "sul", x: 785, y: 455, largura: 270, altura: 205 })
+            ])
+        }),
+        waves: Object.freeze({
+            primeiraWaveInfiltradorCamuflado: 2,
+            wavesPorNovoInfiltradorCamuflado: 4,
+            primeiraWaveRascunhoVivo: 3,
+            wavesPorNovoRascunhoVivo: 4,
+            primeiraWaveSentinelaIncompleta: 5,
+            wavesPorNovaSentinelaIncompleta: 4,
+            primeiraWaveSombraCongelada: 7,
+            wavesPorNovaSombraCongelada: 5
+        }),
+        introducao: Object.freeze([
+            Object.freeze({
+                id: "coordenadaApagada",
+                titulo: "COORDENADA APAGADA",
+                texto: "A Máquina do Tempo encontrou uma era removida da história. A cidade existe apenas em fragmentos.",
+                assinatura: "DATA: INEXISTENTE",
+                textoDoBotao: "Continuar"
+            }),
+            Object.freeze({
+                id: "avisoReescrita",
+                titulo: "SENHOR DO TEMPO",
+                texto: "Esta era foi apagada por um motivo. Se continuar, não poderei reconstruí-la.",
+                assinatura: "REESCRITA TEMPORAL DETECTADA",
+                textoDoBotao: "Ouvir ameaça"
+            }),
+            Object.freeze({
+                id: "inimigosCamuflados",
+                titulo: "SENHOR DO TEMPO",
+                texto: "Certo, você sobreviveu até aqui. Mas agora criei um inimigo que nenhuma das suas torres enxerga. Eles são camuflados; nada pode vê-los.",
+                assinatura: "NOVA ASSINATURA HOSTIL DETECTADA",
+                textoDoBotao: "Preparar defesa"
+            }),
+            Object.freeze({
+                id: "respostaPrototipo",
+                titulo: "PENSAMENTO DO DEFENSOR",
+                texto: "Eu tenho uma torre específica para isso... mas ele não sabe.",
+                assinatura: "PROTÓTIPO V-13 PRONTO PARA CONSTRUÇÃO",
+                textoDoBotao: "Entrar na Era Apagada"
+            })
+        ]),
+        cenaFinal: Object.freeze({
+            etapas: Object.freeze([
+                Object.freeze({
+                    id: "gravacao",
+                    titulo: "GRAVAÇÃO RESTAURADA",
+                    texto: "Se alguém encontrou isto, então ele ainda usa meu rosto.",
+                    assinatura: "AUTOR: PESQUISADOR-CHEFE DO PROJETO ???",
+                    textoDoBotao: "Verificar assinatura"
+                }),
+                Object.freeze({
+                    id: "assinatura",
+                    titulo: "ARQUIVO IMPOSSÍVEL",
+                    texto: "A voz pertence ao pesquisador desaparecido. O registro foi criado 47 anos depois de seu desaparecimento.",
+                    assinatura: "IDENTIDADE CONFIRMADA · DATA INVÁLIDA",
+                    textoDoBotao: "Continuar"
+                }),
+                Object.freeze({
+                    id: "interrupcao",
+                    titulo: "SENHOR DO TEMPO",
+                    texto: "Desligue isso. Essa gravação não é uma memória. É uma isca.",
+                    assinatura: "CANAL ENCERRADO À FORÇA",
+                    textoDoBotao: "Ver resultado"
+                })
+            ])
+        })
+    }),
     pulsoTemporal: Object.freeze({
         faseConcluidaParaDesbloqueio: 8,
         duracaoInimigosComuns: 4000,
@@ -4416,7 +7305,7 @@ const CONFIG = Object.freeze({
     capitulos: Object.freeze([
         Object.freeze({ numero: 1, nome: "Capítulo 1", faseInicial: 1, faseFinal: 6, tema: "origens" }),
         Object.freeze({ numero: 2, nome: "Capítulo 2", faseInicial: 7, faseFinal: 12, tema: "fronteira", requerVitoriaNaFaseSecreta: true }),
-        Object.freeze({ numero: 3, nome: "Capítulo 3", faseInicial: 13, faseFinal: 18, tema: "misterio" })
+        Object.freeze({ numero: 3, nome: "Capítulo 3", faseInicial: 13, faseFinal: 18, tema: "misterio", requerVitoriaNoIntervaloPerdido: true })
     ]),
     fases: Object.freeze([
         Object.freeze({ numero: 1, nome: "Fase 1", tema: "campo", descricao: "Campo verde" }),
@@ -4427,7 +7316,12 @@ const CONFIG = Object.freeze({
         Object.freeze({ numero: 6, nome: "Fase 6", tema: "vulcanica", descricao: "Forja Vulcânica" }),
         Object.freeze({ numero: 7, nome: "Fase 7", tema: "pantano", descricao: "Pântano Tóxico" }),
         Object.freeze({ numero: 8, nome: "Fase 8", tema: "primordial", descricao: "Selva Primordial" }),
-        Object.freeze({ numero: 9, nome: "Fase 9", tema: "futurista", descricao: "Metrópole Neon" })
+        Object.freeze({ numero: 9, nome: "Fase 9", tema: "futurista", descricao: "Metrópole Neon" }),
+        Object.freeze({ numero: 10, nome: "Fase 10", tema: "laboratorio", descricao: "Laboratório Abandonado" }),
+        Object.freeze({ numero: 11, nome: "Fase 11", tema: "futuroDespedacado", descricao: "Futuro Despedaçado" }),
+        Object.freeze({ numero: 12, nome: "Fase 12", tema: "pontoZero", descricao: "Ponto Zero" }),
+        Object.freeze({ numero: 13, nome: "Fase 13", tema: "linhaTemporal", descricao: "Linha de Frente Temporal" }),
+        Object.freeze({ numero: 14, nome: "Fase 14", tema: "eraApagada", descricao: "A Era Apagada" })
     ]),
     album: Object.freeze({
         categorias: Object.freeze([
@@ -4468,6 +7362,10 @@ const CONFIG = Object.freeze({
         fragmentosPorWaveAlcancada: 1,
         primeiraWaveComRecompensa: 2,
         wavesPorFragmentoNoModoInfinito: 2,
+        ofertaSemanal: Object.freeze({
+            quantidadeMaximaDeItens: 3,
+            percentuaisDeDesconto: Object.freeze([5, 10, 15])
+        }),
         itens: Object.freeze({
             reservaDeCreditos: Object.freeze({
                 nome: "Reserva de Créditos",
@@ -4501,9 +7399,49 @@ const CONFIG = Object.freeze({
                 descricao: "Melhora permanentemente o pagamento recebido pelas torres de combate.",
                 detalhe: "+2 créditos por disparo realizado pelas torres",
                 bonusRecompensaPorTiro: 2
+            }),
+            miraCalibrada: Object.freeze({
+                nome: "Mira Calibrada",
+                tipoDeItem: "melhoria",
+                categoriaLoja: "melhorias",
+                custoNaLoja: 60,
+                rotuloVisual: "+5%",
+                classeVisual: "melhoria-mira-calibrada",
+                descricao: "Aumenta permanentemente a força dos disparos das torres de combate.",
+                detalhe: "+5% de dano para todas as torres de combate",
+                bonusPercentualDanoDasTorres: 0.05
+            }),
+            sensoresDeLongoAlcance: Object.freeze({
+                nome: "Sensores de Longo Alcance",
+                tipoDeItem: "melhoria",
+                categoriaLoja: "melhorias",
+                custoNaLoja: 65,
+                rotuloVisual: "+5%",
+                classeVisual: "melhoria-sensores-longo-alcance",
+                descricao: "Amplia permanentemente a área vigiada pelas torres de combate.",
+                detalhe: "+5% de alcance para todas as torres de combate",
+                bonusPercentualAlcanceDasTorres: 0.05
+            }),
+            contratoDeRecuperacao: Object.freeze({
+                nome: "Contrato de Recuperação",
+                tipoDeItem: "melhoria",
+                categoriaLoja: "melhorias",
+                custoNaLoja: 90,
+                rotuloVisual: "70%",
+                classeVisual: "melhoria-contrato-recuperacao",
+                descricao: "Recupera uma parte maior dos créditos investidos ao vender uma torre.",
+                detalhe: "A venda devolve 70% do valor investido em vez de 60%",
+                bonusPercentualDeVenda: 0.1
             })
         }),
         categorias: Object.freeze([
+            Object.freeze({
+                id: "ofertas",
+                nome: "Ofertas",
+                icone: "%",
+                descricao: "Itens sorteados para receber descontos nesta semana.",
+                mensagemVazia: "Você já comprou todos os itens disponíveis na Loja."
+            }),
             Object.freeze({
                 id: "torres",
                 nome: "Torres",
@@ -4608,6 +7546,126 @@ const CONFIG = Object.freeze({
             ]),
             baixo: Object.freeze([55, 61.74, 49, 65.41]),
             percussao: Object.freeze([1, 0.2, 0.65, 0.35, 1, 0.28, 0.78, 0.42])
+        }),
+        musicaDoLaboratorio: Object.freeze({
+            intervaloDoPasso: 250,
+            volumeRelativo: 1.75,
+            melodia: Object.freeze([
+                174.61, 220, 261.63, 329.63,
+                164.81, 207.65, 246.94, 311.13,
+                146.83, 196, 233.08, 293.66,
+                155.56, 185, 246.94, 277.18
+            ]),
+            baixo: Object.freeze([43.65, 49, 41.2, 46.25]),
+            percussao: Object.freeze([1, 0.18, 0.55, 0.24, 0.88, 0.32, 0.64, 0.28])
+        }),
+        musicaDoFuturoDespedacado: Object.freeze({
+            intervaloDoPasso: 235,
+            volumeRelativo: 1.8,
+            melodia: Object.freeze([
+                220, 261.63, 329.63, 311.13,
+                196, 246.94, 293.66, 277.18,
+                164.81, 220, 261.63, 246.94,
+                185, 233.08, 293.66, 220
+            ]),
+            baixo: Object.freeze([46.25, 41.2, 49, 36.71]),
+            percussao: Object.freeze([1, 0.12, 0.68, 0.18, 0.9, 0.24, 0.76, 0.34])
+        }),
+        musicaDoPontoZero: Object.freeze({
+            intervaloDoPasso: 340,
+            volumeRelativo: 2.05,
+            melodia: Object.freeze([
+                261.63, 0, 392,
+                329.63, 0, 493.88,
+                246.94, 0, 369.99,
+                293.66, 0, 196
+            ]),
+            baixo: Object.freeze([32.7, 36.71, 30.87, 41.2]),
+            percussao: Object.freeze([
+                1, 0.35, 0.55,
+                0.8, 0.3, 0.48,
+                1, 0.25, 0.5,
+                0.85, 0.32, 0.6
+            ])
+        }),
+        musicaDaEraApagada: Object.freeze({
+            nomeInterno: "Memórias que Não Existem",
+            intervaloDoPasso: 360,
+            volumeRelativo: 1.95,
+            volumeDaMelodia: 0.068,
+            volumeDoEco: 0.022,
+            volumeDoBaixo: 0.09,
+            volumeDaPercussao: 0.025,
+            volumeDaFalhaTemporal: 0.012,
+            melodia: Object.freeze([
+                261.63, 0, 311.13, 293.66,
+                0, 392, 349.23, 0,
+                246.94, 293.66, 0, 220,
+                329.63, 0, 277.18, 196
+            ]),
+            ecos: Object.freeze([
+                0, 523.25, 0, 622.25,
+                587.33, 0, 783.99, 0,
+                493.88, 0, 587.33, 0,
+                659.25, 554.37, 0, 392
+            ]),
+            baixo: Object.freeze([49, 43.65, 55, 41.2]),
+            percussao: Object.freeze([
+                1, 0.18, 0, 0.42,
+                0.75, 0, 0.3, 0,
+                1, 0.22, 0.5, 0,
+                0.8, 0, 0.28, 0.6
+            ])
+        }),
+        musicaDoIntervaloPerdido: Object.freeze({
+            nomeInterno: "Ecos do Limbo",
+            intervaloDoPasso: 480,
+            volumeRelativo: 1.9,
+            melodia: Object.freeze([
+                523.25, 0, 659.25, 0,
+                783.99, 698.46, 0, 587.33,
+                493.88, 0, 739.99, 0,
+                659.25, 587.33, 0, 392
+            ]),
+            baixo: Object.freeze([65.41, 55, 73.42, 49]),
+            badaladas: Object.freeze([1046.5, 1318.51, 987.77, 1567.98])
+        }),
+        musicaDaLinhaTemporal: Object.freeze({
+            nomeInterno: "Guerra dos Séculos",
+            intervaloDoPasso: 280,
+            volumeRelativo: 1.85,
+            multiplicadorDaEraEmDestaque: 1.25,
+            multiplicadorDasErasEmRecuo: 0.68,
+            volumeDoPassado: 0.07,
+            volumeDoPresente: 0.055,
+            volumeDoFuturo: 0.034,
+            volumeDoBaixo: 0.085,
+            volumeDaPercussao: 0.034,
+            notasDoPassado: Object.freeze([
+                130.81, 0, 146.83, 0,
+                116.54, 0, 138.59, 0,
+                110, 0, 130.81, 0,
+                123.47, 0, 98, 0
+            ]),
+            pulsoDoPresente: Object.freeze([
+                261.63, 293.66, 329.63, 293.66,
+                233.08, 261.63, 349.23, 293.66,
+                220, 261.63, 311.13, 261.63,
+                246.94, 293.66, 369.99, 329.63
+            ]),
+            arpejoDoFuturo: Object.freeze([
+                0, 659.25, 783.99, 0,
+                698.46, 0, 587.33, 880,
+                0, 523.25, 739.99, 0,
+                659.25, 987.77, 0, 783.99
+            ]),
+            baixoDeGuerra: Object.freeze([55, 49, 46.25, 61.74]),
+            percussao: Object.freeze([
+                1, 0.18, 0.52, 0.24,
+                0.9, 0.22, 0.62, 0.3,
+                1, 0.16, 0.56, 0.26,
+                0.92, 0.24, 0.7, 0.34
+            ])
         }),
         musicaDoBosque: Object.freeze({
             intervaloDoPasso: 330,
@@ -4733,6 +7791,26 @@ const CONFIG = Object.freeze({
         wavesPorNovoRoboReparador: 4,
         primeiraWaveSentinelaDeEscudo: 7,
         wavesPorNovaSentinelaDeEscudo: 5,
+        primeiraWaveAutomatoDeCobre: 3,
+        wavesPorNovoAutomatoDeCobre: 4,
+        primeiraWaveCobaiaInstavel: 5,
+        wavesPorNovaCobaiaInstavel: 4,
+        primeiraWaveGuardaDeContencao: 7,
+        wavesPorNovoGuardaDeContencao: 5,
+        primeiraWaveDroneCacadorNoFuturoDespedacado: 3,
+        wavesPorNovoDroneCacadorNoFuturoDespedacado: 5,
+        primeiraWaveAndarilhoDeSucata: 5,
+        wavesPorNovoAndarilhoDeSucata: 4,
+        primeiraWaveEcoTemporal: 7,
+        wavesPorNovoEcoTemporal: 4,
+        primeiraWaveSentinelaCronologica: 9,
+        wavesPorNovaSentinelaCronologica: 5,
+        primeiraWaveResiduoTemporal: 3,
+        wavesPorNovoResiduoTemporal: 4,
+        primeiraWaveArquivistaCorrompido: 5,
+        wavesPorNovoArquivistaCorrompido: 4,
+        primeiraWaveVigiaDoPontoZero: 8,
+        wavesPorNovoVigiaDoPontoZero: 5,
         primeiraWaveSabotador: 6,
         wavesPorNovoSabotador: 5,
         intervaloDeBoss: 5,
@@ -4769,7 +7847,7 @@ const CONFIG = Object.freeze({
         })
     }),
     fliperama: Object.freeze({
-        wavesDeAparicao: Object.freeze([7, 14]),
+        intervaloDeAparicao: 4,
         tempoDisponivelNoMapa: 10000,
         raioDeClique: 46,
         margemDoMapa: 70,
@@ -4783,11 +7861,64 @@ const CONFIG = Object.freeze({
         }),
         minigame: Object.freeze({
             duracao: 15000,
+            duracaoDaContagemRegressiva: 3000,
             alvosNecessarios: 10,
             raioDoAlvo: 34,
             velocidadeDoAlvo: 185,
             intervaloMinimoEntreAcertos: 140,
-            tiposDisponiveis: Object.freeze(["alvo", "labirinto"]),
+            tiposDisponiveis: Object.freeze([
+                "alvo",
+                "labirinto",
+                "voo",
+                "coleta",
+                "sequencia",
+                "carga",
+                "reflexo",
+                "pulso"
+            ]),
+            tiposNoCanvas: Object.freeze([
+                "alvo",
+                "labirinto",
+                "voo",
+                "coleta",
+                "sequencia"
+            ]),
+            voo: Object.freeze({
+                portaisNecessarios: 5,
+                xDoRobo: 140,
+                yInicialDoRobo: 210,
+                raioDoRobo: 14,
+                gravidade: 900,
+                impulso: -360,
+                velocidadeDosPortais: 190,
+                larguraDoPortal: 52,
+                alturaDoVao: 150,
+                distanciaInicial: 760,
+                espacamentoDosPortais: 230,
+                centrosDosVaos: Object.freeze([125, 285, 180, 305, 135])
+            }),
+            coleta: Object.freeze({
+                pixelsNecessarios: 8,
+                velocidadeDoColetor: 340,
+                larguraDoColetor: 84,
+                alturaDoColetor: 24,
+                yDoColetor: 370,
+                tamanhoDoPixel: 22,
+                velocidadeDosPixels: 235,
+                intervaloEntrePixels: 600,
+                frequenciaDePixelCorrompido: 4,
+                posicoesDeSurgimento: Object.freeze([
+                    70, 180, 310, 450, 640, 540, 245, 110, 390, 665
+                ])
+            }),
+            sequencia: Object.freeze({
+                quantidadeDeSinais: 5,
+                atrasoInicial: 600,
+                intervaloEntreSinais: 450,
+                duracaoDoSinal: 260,
+                duracaoDoRetorno: 240,
+                recompensaEmCreditos: 200
+            }),
             labirinto: Object.freeze({
                 velocidadeDoRobo: 220,
                 raioDoRobo: 10,
@@ -4837,6 +7968,109 @@ const CONFIG = Object.freeze({
             percentualDeCadencia: 0.2,
             percentualDeDano: 0.15,
             duracao: 30000
+        })
+    }),
+    centroDeTreinamento: Object.freeze({
+        duracaoDaContagemRegressiva: 3000,
+        intervaloDeAtualizacao: 32,
+        tiposDisponiveis: Object.freeze([
+            "alvo", "labirinto", "voo", "coleta", "sequencia",
+            "carga", "reflexo", "pulso"
+        ]),
+        carga: Object.freeze({
+            duracao: 7000,
+            apertosNecessarios: 35
+        }),
+        reflexo: Object.freeze({
+            duracao: 22000,
+            acertosNecessarios: 5,
+            maximoDeFalhas: 3,
+            atrasoMinimoDoSinal: 700,
+            atrasoMaximoDoSinal: 1800,
+            janelaDoSinal: 650
+        }),
+        pulso: Object.freeze({
+            duracao: 12000,
+            acertosNecessarios: 3,
+            maximoDeErros: 4,
+            duracaoDoPercurso: 1350,
+            larguraDaFaixa: 0.16,
+            centrosDasFaixas: Object.freeze([0.25, 0.68, 0.42])
+        }),
+        recompensasNoFliperama: Object.freeze({
+            carga: Object.freeze({ tipo: "cadencia" }),
+            reflexo: Object.freeze({ tipo: "dano" }),
+            pulso: Object.freeze({ tipo: "creditos", valor: 250 })
+        })
+    }),
+    elementos: Object.freeze({
+        duracaoDoAvisoSuperEfetivoMs: 700,
+        tipos: Object.freeze({
+            fogo: Object.freeze({
+                nome: "Fogo",
+                cor: "#ff7448",
+                multiplicadorDeVantagem: 1.35,
+                vantagensContra: Object.freeze(["gelo"])
+            }),
+            gelo: Object.freeze({
+                nome: "Gelo",
+                cor: "#78e5ff",
+                multiplicadorDeVantagem: 1.25,
+                vantagensContra: Object.freeze(["fogo"])
+            }),
+            eletrico: Object.freeze({
+                nome: "Elétrico",
+                cor: "#ffe66a",
+                multiplicadorDeVantagem: 1.3,
+                vantagensContra: Object.freeze(["mecanico"])
+            }),
+            sismico: Object.freeze({
+                nome: "Sísmico",
+                cor: "#d99a62",
+                multiplicadorDeVantagem: 1.25,
+                vantagensContra: Object.freeze(["pedra", "blindado"])
+            }),
+            toxico: Object.freeze({
+                nome: "Tóxico",
+                cor: "#9ee85c",
+                multiplicadorDeVantagem: 1.25,
+                vantagensContra: Object.freeze(["organico"])
+            })
+        }),
+        caracteristicasDosInimigos: Object.freeze({
+            gelo: Object.freeze(["loboDeGelo", "yeti", "bossArtico"]),
+            fogo: Object.freeze([
+                "morcegoDeFogo", "lagartoVulcanico", "golemDeMagma",
+                "fragmentoDeMagma", "bossVulcanico"
+            ]),
+            mecanico: Object.freeze([
+                "droneCacador", "roboReparador", "sentinelaDeEscudo",
+                "automatoDeCobre", "andarilhoDeSucata", "sentinelaCronologica",
+                "vigiaDoPontoZero", "protocoloZero", "prototipoAlfa",
+                "sentinelaDoAmanha", "guardiaoDoPontoZero", "executorCronal",
+                "soldadoCronal", "portadorDaFenda", "sentinelaIncompleta",
+                "curadorDoVazio"
+            ]),
+            pedra: Object.freeze([
+                "golemDeMagma", "fragmentoDeMagma", "bossVulcanico"
+            ]),
+            blindado: Object.freeze([
+                "besouroDeAmbar", "triceratopo", "guardaDeContencao",
+                "sentinelaDeEscudo", "andarilhoDeSucata", "sentinelaCronologica",
+                "vigiaDoPontoZero", "protocoloZero", "prototipoAlfa",
+                "sentinelaDoAmanha", "guardiaoDoPontoZero", "paradoxoBlindado",
+                "soldadoCronal", "portadorDaFenda", "sentinelaIncompleta",
+                "curadorDoVazio"
+            ]),
+            organico: Object.freeze([
+                "escorpiao", "loboDeGelo", "yeti", "macacoSaqueador",
+                "oncaDaSelva", "gorilaDaSelva", "raposaLadina", "javaliFurioso",
+                "corujaSombria", "morcegoDeFogo", "lagartoVulcanico",
+                "mosquitoDoBrejo", "sapoVenenoso", "guardiaoDeLodo",
+                "raptorAncestral", "besouroDeAmbar", "triceratopo",
+                "cobaiaInstavel", "bossArtico", "bossSelva", "bossTemperado",
+                "bossPantano", "bossPrimordial"
+            ])
         })
     }),
     inimigo: Object.freeze({
@@ -5014,6 +8248,90 @@ const CONFIG = Object.freeze({
             raioDoEscudo: 150,
             reducaoDeDanoAosAliados: 0.25
         }),
+        automatoDeCobre: Object.freeze({
+            nome: "Autômato de Cobre",
+            vida: 520,
+            velocidade: 2.75,
+            tamanho: 22,
+            cor: "#b87333"
+        }),
+        cobaiaInstavel: Object.freeze({
+            nome: "Cobaia Instável",
+            vida: 900,
+            velocidade: 1.25,
+            tamanho: 30,
+            cor: "#7fb0a5",
+            percentualVidaParaColapso: 0.5,
+            multiplicadorVelocidadeNoColapso: 1.55
+        }),
+        guardaDeContencao: Object.freeze({
+            nome: "Guarda de Contenção",
+            vida: 1650,
+            velocidade: 0.62,
+            tamanho: 40,
+            cor: "#76634c",
+            reducaoDeDano: 0.25
+        }),
+        andarilhoDeSucata: Object.freeze({
+            nome: "Andarilho de Sucata",
+            vida: 1150,
+            velocidade: 0.74,
+            tamanho: 35,
+            cor: "#8a6f62",
+            usaFendasTemporais: true
+        }),
+        ecoTemporal: Object.freeze({
+            nome: "Eco Temporal",
+            vida: 760,
+            velocidade: 1.35,
+            tamanho: 28,
+            cor: "#a96cf2",
+            usaFendasTemporais: true,
+            percentualDeVidaNoRetorno: 0.5,
+            distanciaDoRetorno: 220,
+            duracaoVisualDoRetorno: 650
+        }),
+        sentinelaCronologica: Object.freeze({
+            nome: "Sentinela Cronológica",
+            vida: 1550,
+            velocidade: 0.66,
+            tamanho: 39,
+            cor: "#436c82",
+            usaFendasTemporais: true,
+            raioDeProtecaoDaFenda: 115,
+            reducaoDeDanoPertoDaFenda: 0.3
+        }),
+        residuoTemporal: Object.freeze({
+            nome: "Resíduo Temporal",
+            vida: 400,
+            velocidade: 2.9,
+            tamanho: 21,
+            cor: "#f0bd62"
+        }),
+        arquivistaCorrompido: Object.freeze({
+            nome: "Arquivista Corrompido",
+            vida: 1050,
+            velocidade: 0.75,
+            tamanho: 31,
+            cor: "#8f5fb5",
+            percentualDeVidaParaFragmentar: 0.5,
+            fragmentosLiberados: 2
+        }),
+        fragmentoDeArquivo: Object.freeze({
+            nome: "Fragmento de Arquivo",
+            vida: 300,
+            velocidade: 2,
+            tamanho: 16,
+            cor: "#67e5db"
+        }),
+        vigiaDoPontoZero: Object.freeze({
+            nome: "Vigia do Ponto Zero",
+            vida: 1850,
+            velocidade: 0.6,
+            tamanho: 41,
+            cor: "#435b6f",
+            reducaoDeDanoNoSetorDeRuptura: 0.25
+        }),
         pixelCorrompido: Object.freeze({
             nome: "Pixel Corrompido",
             vida: 190,
@@ -5128,6 +8446,159 @@ const CONFIG = Object.freeze({
             percentualDeVidaRestaurada: 0.08,
             duracaoVisualDaReversao: 700
         }),
+        prototipoAlfa: Object.freeze({
+            nome: "Protótipo Alfa",
+            vida: 5900,
+            incrementoVidaPorAparicao: 700,
+            velocidade: 0.7,
+            tamanho: 62,
+            cor: "#5f5649",
+            percentuaisDeVidaParaEstase: Object.freeze([0.7, 0.35]),
+            quantidadeDeTorresParalisadas: 3,
+            duracaoDaEstase: 2500,
+            duracaoVisualDaEstase: 650
+        }),
+        sentinelaDoAmanha: Object.freeze({
+            nome: "Sentinela do Amanhã",
+            vida: 6500,
+            incrementoVidaPorAparicao: 750,
+            velocidade: 0.7,
+            tamanho: 64,
+            cor: "#24334a",
+            percentuaisDeVidaParaRecuo: Object.freeze([0.7, 0.35]),
+            distanciaDoRecuo: 320,
+            duracaoVisualDoRecuo: 700,
+            falas: Object.freeze([
+                "Anomalia identificada.",
+                "Você não deveria possuir essa máquina.",
+                "Cada vitória sua está destruindo o futuro."
+            ])
+        }),
+        guardiaoDoPontoZero: Object.freeze({
+            nome: "Guardião do Ponto Zero",
+            vida: 3500,
+            incrementoVidaPorAparicao: 1100,
+            velocidade: 0.65,
+            tamanho: 68,
+            cor: "#202a3c",
+            percentuaisDeVidaParaRuptura: Object.freeze([0.7, 0.35]),
+            residuosPorRuptura: 1,
+            reducaoDeDanoDoEscudo: 0.3,
+            duracaoDoEscudo: 1500,
+            duracaoVisualDaRuptura: 700,
+            falas: Object.freeze([
+                "Acesso ao Ponto Zero negado.",
+                "Arquivo selado.",
+                "Linha temporal protegida."
+            ])
+        }),
+        fragmentoDeSegundo: Object.freeze({
+            nome: "Fragmento de Segundo",
+            vida: 140,
+            velocidade: 1.65,
+            tamanho: 21,
+            cor: "#62e4d6"
+        }),
+        ponteiroErrante: Object.freeze({
+            nome: "Ponteiro Errante",
+            vida: 320,
+            velocidade: 2.45,
+            tamanho: 23,
+            cor: "#f0b95f"
+        }),
+        paradoxoBlindado: Object.freeze({
+            nome: "Paradoxo Blindado",
+            vida: 1100,
+            velocidade: 0.68,
+            tamanho: 42,
+            cor: "#7b4d91",
+            reducaoDeDano: 0.18
+        }),
+        carcereiroDoIntervalo: Object.freeze({
+            nome: "Carcereiro do Intervalo",
+            vida: 5000,
+            incrementoVidaPorAparicao: 800,
+            velocidade: 0.72,
+            tamanho: 66,
+            cor: "#392250",
+            multiplicadorDeVelocidadeNoIntervalo: 1.35,
+            reducaoDeDanoNoPassado: 0.18,
+            percentualDaFormaPassado: 0.66,
+            percentualDaFormaFuturo: 0.33
+        }),
+        executorCronal: Object.freeze({
+            nome: "Executor Cronal",
+            vida: 6200,
+            incrementoVidaPorAparicao: 650,
+            velocidade: 0.7,
+            tamanho: 68,
+            cor: "#263552",
+            percentuaisDeVidaParaOrdem: Object.freeze([0.6, 0.3]),
+            duracaoVisualDaOrdem: 650
+        }),
+        soldadoCronal: Object.freeze({
+            nome: "Soldado Cronal",
+            vida: 700,
+            velocidade: 0.95,
+            tamanho: 31,
+            cor: "#5d456e",
+            duracaoDeCadaFormaMs: 3600,
+            reducaoDeDanoNoPassado: 0.2,
+            multiplicadorDeVelocidadeNoFuturo: 1.65
+        }),
+        portadorDaFenda: Object.freeze({
+            nome: "Portador da Fenda",
+            vida: 900,
+            velocidade: 0.82,
+            tamanho: 35,
+            cor: "#3a3152",
+            duracaoDaFendaMs: 6500,
+            raioDaFenda: 36,
+            distanciaDoTeleporte: 140
+        }),
+        infiltradorCamuflado: Object.freeze({
+            nome: "Infiltrador Camuflado",
+            vida: 180,
+            velocidade: 1.85,
+            tamanho: 24,
+            cor: "#79eee2",
+            camuflado: true
+        }),
+        rascunhoVivo: Object.freeze({
+            nome: "Rascunho Vivo",
+            vida: 480,
+            velocidade: 2.6,
+            tamanho: 22,
+            cor: "#d9d7df"
+        }),
+        sentinelaIncompleta: Object.freeze({
+            nome: "Sentinela Incompleta",
+            vida: 1350,
+            velocidade: 0.78,
+            tamanho: 37,
+            cor: "#6c7180",
+            reducaoDeDano: 0.18
+        }),
+        sombraCongelada: Object.freeze({
+            nome: "Sombra Congelada",
+            vida: 900,
+            velocidade: 1.15,
+            tamanho: 31,
+            cor: "#4a4654"
+        }),
+        curadorDoVazio: Object.freeze({
+            nome: "Curador do Vazio",
+            vida: 5600,
+            incrementoVidaPorAparicao: 600,
+            velocidade: 0.62,
+            tamanho: 68,
+            cor: "#252631",
+            percentualDeVidaParaRestauracao: 0.5,
+            quantidadeMaximaDeInimigosRestaurados: 2,
+            janelaDeRestauracaoMs: 5000,
+            percentualDeVidaRestaurada: 0.45,
+            duracaoVisualDaRestauracaoMs: 800
+        }),
         bossGlitch: Object.freeze({
             nome: "Núcleo Glitch",
             vida: 2600,
@@ -5155,7 +8626,7 @@ const CONFIG = Object.freeze({
             Object.freeze({ id: "ultimo", nome: "Último" }),
             Object.freeze({ id: "aleatorio", nome: "Aleatório" })
         ]),
-        limitesPorFase: Object.freeze({ 1: 10, 2: 12, 3: 12, 4: 14, 5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 99: 12 }),
+        limitesPorFase: Object.freeze({ 1: 10, 2: 12, 3: 12, 4: 14, 5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 10: 15, 11: 15, 12: 15, 13: 15, 14: 15, 99: 12, 100: 12 }),
         distanciaMinima: 70,
         tipos: Object.freeze({
             padrao: Object.freeze({
@@ -5258,6 +8729,7 @@ const CONFIG = Object.freeze({
             }),
             torreGlacial: Object.freeze({
                 nome: "Torre Glacial",
+                elemento: "gelo",
                 faseConcluidaParaDesbloqueio: 2,
                 custo: 350,
                 alcance: 170,
@@ -5412,6 +8884,7 @@ const CONFIG = Object.freeze({
             }),
             torreEsporos: Object.freeze({
                 nome: "Torre de Esporos",
+                elemento: "toxico",
                 faseConcluidaParaDesbloqueio: 4,
                 custo: 475,
                 alcance: 185,
@@ -5492,7 +8965,7 @@ const CONFIG = Object.freeze({
                 faseConcluidaParaDesbloqueio: 5,
                 custo: 550,
                 alcance: 230,
-                dano: 38,
+                dano: 34,
                 velocidadeAtaque: 1600,
                 velocidadeTiro: 13,
                 quantidadeDeLasers: 3,
@@ -5507,7 +8980,7 @@ const CONFIG = Object.freeze({
                 melhorias: Object.freeze([
                     Object.freeze({
                         custo: 650,
-                        dano: 52,
+                        dano: 47,
                         alcance: 245,
                         velocidadeAtaque: 1500,
                         velocidadeTiro: 13.5,
@@ -5523,7 +8996,7 @@ const CONFIG = Object.freeze({
                     }),
                     Object.freeze({
                         custo: 850,
-                        dano: 70,
+                        dano: 63,
                         alcance: 260,
                         velocidadeAtaque: 1400,
                         velocidadeTiro: 14,
@@ -5539,7 +9012,7 @@ const CONFIG = Object.freeze({
                     }),
                     Object.freeze({
                         custo: 1100,
-                        dano: 96,
+                        dano: 86,
                         alcance: 280,
                         velocidadeAtaque: 1250,
                         velocidadeTiro: 15,
@@ -5557,6 +9030,7 @@ const CONFIG = Object.freeze({
             }),
             torreSismica: Object.freeze({
                 nome: "Torre Sísmica",
+                elemento: "sismico",
                 faseConcluidaParaDesbloqueio: 6,
                 custo: 600,
                 alcance: 170,
@@ -5566,8 +9040,8 @@ const CONFIG = Object.freeze({
                 limitePorPartida: 2,
                 efeitoSismico: Object.freeze({
                     cargasNecessarias: 3,
-                    distanciaDoEmpurrao: 120,
-                    duracaoDoAtordoamentoDoBoss: 1000,
+                    distanciaDoEmpurrao: 110,
+                    duracaoDoAtordoamentoDoBoss: 900,
                     percentualDeVulnerabilidade: 0,
                     duracaoDaVulnerabilidade: 0,
                     atrasoDoSegundoImpacto: 0,
@@ -5589,8 +9063,8 @@ const CONFIG = Object.freeze({
                         alcance: 170,
                         efeitoSismico: Object.freeze({
                             cargasNecessarias: 2,
-                            distanciaDoEmpurrao: 120,
-                            duracaoDoAtordoamentoDoBoss: 1000,
+                            distanciaDoEmpurrao: 110,
+                            duracaoDoAtordoamentoDoBoss: 900,
                             percentualDeVulnerabilidade: 0,
                             duracaoDaVulnerabilidade: 0,
                             atrasoDoSegundoImpacto: 0,
@@ -5612,9 +9086,9 @@ const CONFIG = Object.freeze({
                         alcance: 170,
                         efeitoSismico: Object.freeze({
                             cargasNecessarias: 2,
-                            distanciaDoEmpurrao: 120,
-                            duracaoDoAtordoamentoDoBoss: 1000,
-                            percentualDeVulnerabilidade: 0.2,
+                            distanciaDoEmpurrao: 110,
+                            duracaoDoAtordoamentoDoBoss: 900,
+                            percentualDeVulnerabilidade: 0.15,
                             duracaoDaVulnerabilidade: 3000,
                             atrasoDoSegundoImpacto: 0,
                             multiplicadorDoSegundoImpacto: 0.5,
@@ -5635,12 +9109,12 @@ const CONFIG = Object.freeze({
                         alcance: 170,
                         efeitoSismico: Object.freeze({
                             cargasNecessarias: 2,
-                            distanciaDoEmpurrao: 120,
-                            duracaoDoAtordoamentoDoBoss: 1000,
-                            percentualDeVulnerabilidade: 0.2,
+                            distanciaDoEmpurrao: 110,
+                            duracaoDoAtordoamentoDoBoss: 900,
+                            percentualDeVulnerabilidade: 0.15,
                             duracaoDaVulnerabilidade: 3000,
-                            atrasoDoSegundoImpacto: 600,
-                            multiplicadorDoSegundoImpacto: 0.65,
+                            atrasoDoSegundoImpacto: 700,
+                            multiplicadorDoSegundoImpacto: 0.55,
                             duracaoVisualEmQuadros: 38
                         }),
                         visual: Object.freeze({
@@ -5650,6 +9124,68 @@ const CONFIG = Object.freeze({
                             corDetalhe: "#ffe08f",
                             corFissura: "#ffb258",
                             raioBase: 34,
+                            nivelVisual: 3
+                        })
+                    })
+                ])
+            }),
+            torreDeVarredura: Object.freeze({
+                nome: "Torre de Varredura",
+                faseConcluidaParaDesbloqueio: 13,
+                custo: 150,
+                alcance: 170,
+                dano: 12,
+                velocidadeAtaque: 500,
+                velocidadeTiro: 10,
+                detectaCamuflados: true,
+                visualBase: Object.freeze({
+                    tipoVisual: "varredura",
+                    corBase: "#263943",
+                    corCanhao: "#d9fbf7",
+                    corDetalhe: "#62e4d6",
+                    raioBase: 24,
+                    nivelVisual: 0
+                }),
+                melhorias: Object.freeze([
+                    Object.freeze({
+                        custo: 250,
+                        dano: 18,
+                        alcance: 185,
+                        velocidadeAtaque: 450,
+                        visual: Object.freeze({
+                            tipoVisual: "varredura",
+                            corBase: "#2e4b55",
+                            corCanhao: "#ecffff",
+                            corDetalhe: "#71f4e6",
+                            raioBase: 26,
+                            nivelVisual: 1
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 400,
+                        dano: 26,
+                        alcance: 205,
+                        velocidadeAtaque: 400,
+                        visual: Object.freeze({
+                            tipoVisual: "varredura",
+                            corBase: "#385967",
+                            corCanhao: "#ffffff",
+                            corDetalhe: "#fff17a",
+                            raioBase: 28,
+                            nivelVisual: 2
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 600,
+                        dano: 36,
+                        alcance: 225,
+                        velocidadeAtaque: 350,
+                        visual: Object.freeze({
+                            tipoVisual: "varredura",
+                            corBase: "#29424e",
+                            corCanhao: "#f5ffff",
+                            corDetalhe: "#ffcf64",
+                            raioBase: 30,
                             nivelVisual: 3
                         })
                     })
@@ -5766,6 +9302,7 @@ const CONFIG = Object.freeze({
             }),
             torreDeRaios: Object.freeze({
                 nome: "Torre de Raios",
+                elemento: "eletrico",
                 faseConcluidaParaDesbloqueio: 0,
                 requerCompraNaLoja: true,
                 categoriaLoja: "torres",
@@ -5792,6 +9329,7 @@ const CONFIG = Object.freeze({
             }),
             lancaChamas: Object.freeze({
                 nome: "Lança-Chamas",
+                elemento: "fogo",
                 faseConcluidaParaDesbloqueio: 0,
                 requerCompraNaLoja: true,
                 categoriaLoja: "torres",
@@ -5816,6 +9354,316 @@ const CONFIG = Object.freeze({
                     raioBase: 28
                 }),
                 melhorias: Object.freeze([])
+            }),
+            torrePerfuradora: Object.freeze({
+                nome: "Torre Perfuradora",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "torres",
+                custoNaLoja: 80,
+                custo: 500,
+                alcance: 230,
+                dano: 42,
+                velocidadeAtaque: 1200,
+                velocidadeTiro: 12,
+                efeitoPerfurante: Object.freeze({ larguraDoFeixe: 24 }),
+                visualBase: Object.freeze({
+                    tipoVisual: "perfuradora",
+                    corBase: "#234c55",
+                    corCanhao: "#69e5da",
+                    corDetalhe: "#d4fffa",
+                    raioBase: 27,
+                    nivelVisual: 0
+                }),
+                melhorias: Object.freeze([
+                    Object.freeze({
+                        custo: 525,
+                        dano: 56,
+                        alcance: 240,
+                        velocidadeAtaque: 1120,
+                        efeitoPerfurante: Object.freeze({ larguraDoFeixe: 26 }),
+                        visual: Object.freeze({
+                            tipoVisual: "perfuradora", corBase: "#28606a",
+                            corCanhao: "#75f1e6", corDetalhe: "#e1fffb",
+                            raioBase: 29, nivelVisual: 1
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 700,
+                        dano: 74,
+                        alcance: 255,
+                        velocidadeAtaque: 1030,
+                        efeitoPerfurante: Object.freeze({ larguraDoFeixe: 30 }),
+                        visual: Object.freeze({
+                            tipoVisual: "perfuradora", corBase: "#32747d",
+                            corCanhao: "#8bfff3", corDetalhe: "#ffffff",
+                            raioBase: 31, nivelVisual: 2
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 900,
+                        dano: 98,
+                        alcance: 275,
+                        velocidadeAtaque: 920,
+                        efeitoPerfurante: Object.freeze({ larguraDoFeixe: 34 }),
+                        visual: Object.freeze({
+                            tipoVisual: "perfuradora", corBase: "#18434b",
+                            corCanhao: "#a2fff7", corDetalhe: "#fff49a",
+                            raioBase: 33, nivelVisual: 3
+                        })
+                    })
+                ])
+            }),
+            torreMarcadora: Object.freeze({
+                nome: "Torre Marcadora",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "torres",
+                custoNaLoja: 65,
+                custo: 375,
+                alcance: 210,
+                dano: 12,
+                velocidadeAtaque: 850,
+                velocidadeTiro: 10,
+                efeitoDeMarca: Object.freeze({
+                    percentualDanoAdicional: 0.15,
+                    duracao: 3200
+                }),
+                visualBase: Object.freeze({
+                    tipoVisual: "marcadora", corBase: "#453365",
+                    corCanhao: "#cf71ff", corDetalhe: "#76f5ff",
+                    raioBase: 26, nivelVisual: 0
+                }),
+                melhorias: Object.freeze([
+                    Object.freeze({
+                        custo: 400, dano: 16, alcance: 220, velocidadeAtaque: 800,
+                        efeitoDeMarca: Object.freeze({ percentualDanoAdicional: 0.17, duracao: 3500 }),
+                        visual: Object.freeze({
+                            tipoVisual: "marcadora", corBase: "#533c78",
+                            corCanhao: "#dc83ff", corDetalhe: "#8df8ff",
+                            raioBase: 28, nivelVisual: 1
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 550, dano: 21, alcance: 235, velocidadeAtaque: 740,
+                        efeitoDeMarca: Object.freeze({ percentualDanoAdicional: 0.2, duracao: 3800 }),
+                        visual: Object.freeze({
+                            tipoVisual: "marcadora", corBase: "#623f8c",
+                            corCanhao: "#e993ff", corDetalhe: "#b5fbff",
+                            raioBase: 30, nivelVisual: 2
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 725, dano: 28, alcance: 250, velocidadeAtaque: 660,
+                        efeitoDeMarca: Object.freeze({ percentualDanoAdicional: 0.24, duracao: 4200 }),
+                        visual: Object.freeze({
+                            tipoVisual: "marcadora", corBase: "#392453",
+                            corCanhao: "#f1a2ff", corDetalhe: "#fff17d",
+                            raioBase: 32, nivelVisual: 3
+                        })
+                    })
+                ])
+            }),
+            torreDrones: Object.freeze({
+                nome: "Torre de Drones",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "torres",
+                custoNaLoja: 110,
+                custo: 650,
+                alcance: 245,
+                dano: 20,
+                velocidadeAtaque: 1100,
+                velocidadeTiro: 9,
+                efeitoDeDrones: Object.freeze({ quantidade: 2 }),
+                visualBase: Object.freeze({
+                    tipoVisual: "drones", corBase: "#29466b",
+                    corCanhao: "#ff9e3d", corDetalhe: "#8fe8ff",
+                    raioBase: 28, nivelVisual: 0
+                }),
+                melhorias: Object.freeze([
+                    Object.freeze({
+                        custo: 600, dano: 26, alcance: 255, velocidadeAtaque: 1030,
+                        efeitoDeDrones: Object.freeze({ quantidade: 2 }),
+                        visual: Object.freeze({
+                            tipoVisual: "drones", corBase: "#31547e",
+                            corCanhao: "#ffad50", corDetalhe: "#a5efff",
+                            raioBase: 30, nivelVisual: 1
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 800, dano: 32, alcance: 270, velocidadeAtaque: 950,
+                        efeitoDeDrones: Object.freeze({ quantidade: 3 }),
+                        visual: Object.freeze({
+                            tipoVisual: "drones", corBase: "#39648f",
+                            corCanhao: "#ffc061", corDetalhe: "#c1f5ff",
+                            raioBase: 32, nivelVisual: 2
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 1050, dano: 42, alcance: 290, velocidadeAtaque: 850,
+                        efeitoDeDrones: Object.freeze({ quantidade: 3 }),
+                        visual: Object.freeze({
+                            tipoVisual: "drones", corBase: "#213b5e",
+                            corCanhao: "#ffd06f", corDetalhe: "#fff28c",
+                            raioBase: 34, nivelVisual: 3
+                        })
+                    })
+                ])
+            }),
+            torreCorrentes: Object.freeze({
+                nome: "Torre de Correntes",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "torres",
+                custoNaLoja: 90,
+                custo: 525,
+                alcance: 190,
+                dano: 34,
+                velocidadeAtaque: 1000,
+                velocidadeTiro: 10,
+                efeitoDeCorrente: Object.freeze({
+                    alcanceDoSegundoAlvo: 125,
+                    multiplicadorDanoSegundoAlvo: 0.65
+                }),
+                visualBase: Object.freeze({
+                    tipoVisual: "correntes", corBase: "#554235",
+                    corCanhao: "#d39448", corDetalhe: "#f3d184",
+                    raioBase: 27, nivelVisual: 0
+                }),
+                melhorias: Object.freeze([
+                    Object.freeze({
+                        custo: 500, dano: 44, alcance: 200, velocidadeAtaque: 940,
+                        efeitoDeCorrente: Object.freeze({ alcanceDoSegundoAlvo: 135, multiplicadorDanoSegundoAlvo: 0.68 }),
+                        visual: Object.freeze({
+                            tipoVisual: "correntes", corBase: "#654d3c",
+                            corCanhao: "#e0a254", corDetalhe: "#ffe09a",
+                            raioBase: 29, nivelVisual: 1
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 675, dano: 58, alcance: 215, velocidadeAtaque: 860,
+                        efeitoDeCorrente: Object.freeze({ alcanceDoSegundoAlvo: 145, multiplicadorDanoSegundoAlvo: 0.72 }),
+                        visual: Object.freeze({
+                            tipoVisual: "correntes", corBase: "#755941",
+                            corCanhao: "#edb05d", corDetalhe: "#ffedb4",
+                            raioBase: 31, nivelVisual: 2
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 875, dano: 76, alcance: 230, velocidadeAtaque: 760,
+                        efeitoDeCorrente: Object.freeze({ alcanceDoSegundoAlvo: 160, multiplicadorDanoSegundoAlvo: 0.78 }),
+                        visual: Object.freeze({
+                            tipoVisual: "correntes", corBase: "#49362d",
+                            corCanhao: "#ffc169", corDetalhe: "#fff382",
+                            raioBase: 33, nivelVisual: 3
+                        })
+                    })
+                ])
+            }),
+            torreSucata: Object.freeze({
+                nome: "Torre de Sucata",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "torres",
+                custoNaLoja: 75,
+                custo: 450,
+                alcance: 185,
+                dano: 28,
+                velocidadeAtaque: 850,
+                velocidadeTiro: 8,
+                efeitoDeSucata: Object.freeze({
+                    raioDeColeta: 210,
+                    maximoDePecas: 5,
+                    percentualDanoPorPeca: 0.06,
+                    duracao: 8000
+                }),
+                visualBase: Object.freeze({
+                    tipoVisual: "sucata", corBase: "#4e5351",
+                    corCanhao: "#a86e43", corDetalhe: "#d6ba72",
+                    raioBase: 27, nivelVisual: 0
+                }),
+                melhorias: Object.freeze([
+                    Object.freeze({
+                        custo: 425, dano: 36, alcance: 195, velocidadeAtaque: 800,
+                        efeitoDeSucata: Object.freeze({ raioDeColeta: 210, maximoDePecas: 5, percentualDanoPorPeca: 0.07, duracao: 8500 }),
+                        visual: Object.freeze({
+                            tipoVisual: "sucata", corBase: "#5b615e",
+                            corCanhao: "#bc7b49", corDetalhe: "#e5ca82",
+                            raioBase: 29, nivelVisual: 1
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 575, dano: 47, alcance: 210, velocidadeAtaque: 730,
+                        efeitoDeSucata: Object.freeze({ raioDeColeta: 210, maximoDePecas: 6, percentualDanoPorPeca: 0.08, duracao: 9000 }),
+                        visual: Object.freeze({
+                            tipoVisual: "sucata", corBase: "#68706b",
+                            corCanhao: "#ce8b52", corDetalhe: "#f2d992",
+                            raioBase: 31, nivelVisual: 2
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 775, dano: 62, alcance: 225, velocidadeAtaque: 650,
+                        efeitoDeSucata: Object.freeze({ raioDeColeta: 210, maximoDePecas: 7, percentualDanoPorPeca: 0.09, duracao: 10000 }),
+                        visual: Object.freeze({
+                            tipoVisual: "sucata", corBase: "#414845",
+                            corCanhao: "#e79b59", corDetalhe: "#fff08a",
+                            raioBase: 33, nivelVisual: 3
+                        })
+                    })
+                ])
+            }),
+            canhaoPrismatico: Object.freeze({
+                nome: "Canhão Prismático",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "torres",
+                custoNaLoja: 125,
+                custo: 700,
+                alcance: 220,
+                dano: 44,
+                velocidadeAtaque: 1150,
+                velocidadeTiro: 11,
+                efeitoPrismatico: Object.freeze({
+                    multiplicadorVermelho: 1.45,
+                    multiplicadorAzul: 0.8,
+                    percentualLentidaoAzul: 0.3,
+                    duracaoLentidaoAzul: 1800
+                }),
+                visualBase: Object.freeze({
+                    tipoVisual: "prismatico", corBase: "#303858",
+                    corCanhao: "#e9edff", corDetalhe: "#ff5e75",
+                    raioBase: 28, nivelVisual: 0
+                }),
+                melhorias: Object.freeze([
+                    Object.freeze({
+                        custo: 650, dano: 56, alcance: 230, velocidadeAtaque: 1070,
+                        efeitoPrismatico: Object.freeze({ multiplicadorVermelho: 1.5, multiplicadorAzul: 0.82, percentualLentidaoAzul: 0.32, duracaoLentidaoAzul: 2000 }),
+                        visual: Object.freeze({
+                            tipoVisual: "prismatico", corBase: "#39436a",
+                            corCanhao: "#f1f3ff", corDetalhe: "#61c9ff",
+                            raioBase: 30, nivelVisual: 1
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 850, dano: 72, alcance: 245, velocidadeAtaque: 980,
+                        efeitoPrismatico: Object.freeze({ multiplicadorVermelho: 1.55, multiplicadorAzul: 0.85, percentualLentidaoAzul: 0.35, duracaoLentidaoAzul: 2200 }),
+                        visual: Object.freeze({
+                            tipoVisual: "prismatico", corBase: "#454f79",
+                            corCanhao: "#ffffff", corDetalhe: "#ffe15c",
+                            raioBase: 32, nivelVisual: 2
+                        })
+                    }),
+                    Object.freeze({
+                        custo: 1100, dano: 94, alcance: 265, velocidadeAtaque: 860,
+                        efeitoPrismatico: Object.freeze({ multiplicadorVermelho: 1.65, multiplicadorAzul: 0.9, percentualLentidaoAzul: 0.4, duracaoLentidaoAzul: 2500 }),
+                        visual: Object.freeze({
+                            tipoVisual: "prismatico", corBase: "#252d4b",
+                            corCanhao: "#ffffff", corDetalhe: "#ff76c9",
+                            raioBase: 34, nivelVisual: 3
+                        })
+                    })
+                ])
             }),
             minaTerrestre: Object.freeze({
                 nome: "Mina Terrestre",
@@ -5847,6 +9695,7 @@ const CONFIG = Object.freeze({
             }),
             minaCongelante: Object.freeze({
                 nome: "Mina Congelante",
+                elemento: "gelo",
                 tipoDeItem: "mina",
                 faseConcluidaParaDesbloqueio: 0,
                 requerCompraNaLoja: true,
@@ -5881,6 +9730,75 @@ const CONFIG = Object.freeze({
                 }),
                 melhorias: Object.freeze([])
             }),
+            minaDePulso: Object.freeze({
+                nome: "Mina de Pulso",
+                elemento: "eletrico",
+                tipoDeItem: "mina",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "minas",
+                custoNaLoja: 50,
+                custo: 175,
+                alcance: 0,
+                dano: 35,
+                velocidadeAtaque: 0,
+                naoAtira: true,
+                exigeCaminho: true,
+                naoContaNoLimiteDeTorres: true,
+                raioExplosao: 90,
+                raioDeContato: 18,
+                duracaoExplosaoEmQuadros: 28,
+                distanciaMinimaEntreMinas: 40,
+                limitePorPartida: 4,
+                tipoVisualDaExplosao: "pulso",
+                efeitoDePulso: Object.freeze({
+                    distanciaDoEmpurrao: 120
+                }),
+                visualBase: Object.freeze({
+                    tipoVisual: "mina",
+                    corBase: "#493b74",
+                    corCanhao: "#61edf2",
+                    corDetalhe: "#bd78ff",
+                    corBrilho: "#ffffff",
+                    raioBase: 18
+                }),
+                melhorias: Object.freeze([])
+            }),
+            minaCorrosiva: Object.freeze({
+                nome: "Mina Corrosiva",
+                elemento: "toxico",
+                tipoDeItem: "mina",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "minas",
+                custoNaLoja: 45,
+                custo: 150,
+                alcance: 0,
+                dano: 30,
+                velocidadeAtaque: 0,
+                naoAtira: true,
+                exigeCaminho: true,
+                naoContaNoLimiteDeTorres: true,
+                raioExplosao: 85,
+                raioDeContato: 18,
+                duracaoExplosaoEmQuadros: 28,
+                distanciaMinimaEntreMinas: 40,
+                limitePorPartida: 4,
+                tipoVisualDaExplosao: "corrosao",
+                efeitoCorrosivo: Object.freeze({
+                    percentualDanoAdicional: 0.18,
+                    duracao: 4500
+                }),
+                visualBase: Object.freeze({
+                    tipoVisual: "mina",
+                    corBase: "#3e6535",
+                    corCanhao: "#a8ef55",
+                    corDetalhe: "#d7ff84",
+                    corBrilho: "#f4ffbe",
+                    raioBase: 18
+                }),
+                melhorias: Object.freeze([])
+            }),
             bombaPesada: Object.freeze({
                 nome: "Bomba Pesada",
                 tipoDeItem: "bomba",
@@ -5893,6 +9811,7 @@ const CONFIG = Object.freeze({
                 dano: 200,
                 velocidadeAtaque: 0,
                 naoAtira: true,
+                exigeCaminho: true,
                 naoContaNoLimiteDeTorres: true,
                 raioExplosao: 100,
                 tempoDoPavio: 1500,
@@ -5904,6 +9823,41 @@ const CONFIG = Object.freeze({
                     corBase: "#31373f",
                     corCanhao: "#ff7a3d",
                     corDetalhe: "#e4b94f",
+                    raioBase: 20
+                }),
+                melhorias: Object.freeze([])
+            }),
+            bombaDeFragmentacao: Object.freeze({
+                nome: "Bomba de Fragmentação",
+                tipoDeItem: "bomba",
+                faseConcluidaParaDesbloqueio: 0,
+                requerCompraNaLoja: true,
+                categoriaLoja: "minas",
+                custoNaLoja: 55,
+                custo: 225,
+                alcance: 0,
+                dano: 80,
+                velocidadeAtaque: 0,
+                naoAtira: true,
+                exigeCaminho: true,
+                naoContaNoLimiteDeTorres: true,
+                raioExplosao: 70,
+                tempoDoPavio: 1000,
+                duracaoExplosaoEmQuadros: 28,
+                distanciaMinimaEntreBombas: 50,
+                limitePorPartida: 3,
+                tipoVisualDaExplosao: "fragmentacao",
+                efeitoDeFragmentacao: Object.freeze({
+                    quantidadeDeFragmentos: 4,
+                    distanciaDoCentro: 72,
+                    raioDeCadaFragmento: 42,
+                    danoDeCadaFragmento: 45
+                }),
+                visualBase: Object.freeze({
+                    tipoVisual: "bomba",
+                    corBase: "#613b31",
+                    corCanhao: "#ffbc55",
+                    corDetalhe: "#ff7048",
                     raioBase: 20
                 }),
                 melhorias: Object.freeze([])
@@ -6095,6 +10049,92 @@ const caminhosDasFases = Object.freeze({
         { x: 1040, y: 280 },
         { x: 1200, y: 280 }
     ]),
+    10: Object.freeze([
+        { x: 0, y: 560 },
+        { x: 150, y: 560 },
+        { x: 150, y: 160 },
+        { x: 350, y: 160 },
+        { x: 350, y: 450 },
+        { x: 540, y: 450 },
+        { x: 540, y: 80 },
+        { x: 760, y: 80 },
+        { x: 760, y: 610 },
+        { x: 950, y: 610 },
+        { x: 950, y: 250 },
+        { x: 1200, y: 250 }
+    ]),
+    11: Object.freeze([
+        { x: 0, y: 360 },
+        { x: 140, y: 360 },
+        { x: 140, y: 100 },
+        { x: 330, y: 100 },
+        { x: 330, y: 580 },
+        { x: 560, y: 580 },
+        { x: 560, y: 220 },
+        { x: 790, y: 220 },
+        { x: 790, y: 620 },
+        { x: 1010, y: 620 },
+        { x: 1010, y: 160 },
+        { x: 1200, y: 160 }
+    ]),
+    12: Object.freeze([
+        Object.freeze([
+            { x: 0, y: 370 },
+            { x: 240, y: 370 },
+            { x: 240, y: 340 },
+            { x: 290, y: 340 },
+            { x: 290, y: 310 },
+            { x: 350, y: 310 },
+            { x: 350, y: 90 },
+            { x: 680, y: 90 },
+            { x: 680, y: 370 },
+            { x: 850, y: 370 },
+            { x: 850, y: 110 },
+            { x: 1200, y: 110 }
+        ]),
+        Object.freeze([
+            { x: 0, y: 370 },
+            { x: 240, y: 370 },
+            { x: 240, y: 400 },
+            { x: 290, y: 400 },
+            { x: 290, y: 430 },
+            { x: 350, y: 430 },
+            { x: 350, y: 650 },
+            { x: 680, y: 650 },
+            { x: 680, y: 370 },
+            { x: 850, y: 370 },
+            { x: 850, y: 110 },
+            { x: 1200, y: 110 }
+        ])
+    ]),
+    13: Object.freeze([
+        { x: 0, y: 350 },
+        { x: 150, y: 350 },
+        { x: 150, y: 100 },
+        { x: 360, y: 100 },
+        { x: 360, y: 600 },
+        { x: 600, y: 600 },
+        { x: 600, y: 180 },
+        { x: 820, y: 180 },
+        { x: 820, y: 550 },
+        { x: 1030, y: 550 },
+        { x: 1030, y: 250 },
+        { x: 1200, y: 250 }
+    ]),
+    14: Object.freeze([
+        { x: 0, y: 570 },
+        { x: 170, y: 570 },
+        { x: 170, y: 150 },
+        { x: 390, y: 150 },
+        { x: 390, y: 490 },
+        { x: 610, y: 490 },
+        { x: 610, y: 90 },
+        { x: 840, y: 90 },
+        { x: 840, y: 610 },
+        { x: 1050, y: 610 },
+        { x: 1050, y: 300 },
+        { x: 1200, y: 300 }
+    ]),
     99: Object.freeze([
         { x: 0, y: 590 },
         { x: 190, y: 590 },
@@ -6108,6 +10148,20 @@ const caminhosDasFases = Object.freeze({
         { x: 1080, y: 620 },
         { x: 1080, y: 360 },
         { x: 1200, y: 360 }
+    ]),
+    100: Object.freeze([
+        { x: 0, y: 360 },
+        { x: 150, y: 360 },
+        { x: 150, y: 100 },
+        { x: 380, y: 100 },
+        { x: 380, y: 590 },
+        { x: 680, y: 590 },
+        { x: 680, y: 190 },
+        { x: 900, y: 190 },
+        { x: 900, y: 560 },
+        { x: 1080, y: 560 },
+        { x: 1080, y: 320 },
+        { x: 1200, y: 320 }
     ])
 });
 
@@ -6228,6 +10282,84 @@ const temasDoMapa = Object.freeze({
         torreFinalCorpo: "#263c5b",
         torreFinalDetalhe: "#e54ed9",
         torreFinalNucleo: "#53f5ff"
+    }),
+    laboratorio: Object.freeze({
+        terrenoBase: "#292a2a",
+        terrenoClaro: "#343432",
+        terrenoEscuro: "#232526",
+        caminhoContorno: "#111414",
+        caminhoBase: "#5f5548",
+        caminhoCentro: "#827361",
+        caminhoMarcas: "#d5a84d",
+        torreFinalBase: "#151817",
+        torreFinalCorpo: "#5b665f",
+        torreFinalDetalhe: "#b98943",
+        torreFinalNucleo: "#75e0cf"
+    }),
+    futuroDespedacado: Object.freeze({
+        terrenoBase: "#11151f",
+        terrenoClaro: "#19202d",
+        terrenoEscuro: "#0c111a",
+        caminhoContorno: "#05080d",
+        caminhoBase: "#2b3441",
+        caminhoCentro: "#414c59",
+        caminhoMarcas: "#aa62d8",
+        torreFinalBase: "#080b11",
+        torreFinalCorpo: "#303a47",
+        torreFinalDetalhe: "#7a5c91",
+        torreFinalNucleo: "#65d8d2"
+    }),
+    pontoZero: Object.freeze({
+        terrenoBase: "#171822",
+        terrenoClaro: "#242532",
+        terrenoEscuro: "#11131c",
+        caminhoContorno: "#05070c",
+        caminhoBase: "#3c4050",
+        caminhoCentro: "#5a5d68",
+        caminhoMarcas: "#e8bd72",
+        torreFinalBase: "#07090e",
+        torreFinalCorpo: "#34394b",
+        torreFinalDetalhe: "#67e5db",
+        torreFinalNucleo: "#f0bd62"
+    }),
+    linhaTemporal: Object.freeze({
+        terrenoBase: "#171424",
+        terrenoClaro: "#25203a",
+        terrenoEscuro: "#101523",
+        caminhoContorno: "#05070c",
+        caminhoBase: "#4b4052",
+        caminhoCentro: "#78606b",
+        caminhoMarcas: "#60e3d4",
+        torreFinalBase: "#080a11",
+        torreFinalCorpo: "#3e3555",
+        torreFinalDetalhe: "#efb653",
+        torreFinalNucleo: "#60e3d4"
+    }),
+    eraApagada: Object.freeze({
+        terrenoBase: "#d9d9dc",
+        terrenoClaro: "#f0f0ef",
+        terrenoEscuro: "#c9c9cd",
+        caminhoContorno: "#555762",
+        caminhoBase: "#8a8990",
+        caminhoCentro: "#b7b5b8",
+        caminhoMarcas: "#f5f1cf",
+        torreFinalBase: "#4a4b55",
+        torreFinalCorpo: "#8b8d96",
+        torreFinalDetalhe: "#eee8c6",
+        torreFinalNucleo: "#9ae5df"
+    }),
+    intervaloPerdido: Object.freeze({
+        terrenoBase: "#fbfbf7",
+        terrenoClaro: "#ffffff",
+        terrenoEscuro: "#f4f3ee",
+        caminhoContorno: "#adb4bf",
+        caminhoBase: "#d9dde3",
+        caminhoCentro: "#f2f3f1",
+        caminhoMarcas: "#9b7748",
+        torreFinalBase: "#9ca5b1",
+        torreFinalCorpo: "#e8ebee",
+        torreFinalDetalhe: "#536b78",
+        torreFinalNucleo: "#b88745"
     }),
     glitch: Object.freeze({
         terrenoBase: "#150d22",
@@ -6383,15 +10515,292 @@ const decoracoesDoMapa = Object.freeze({
         Object.freeze({ tipo: "placaNeon", x: 270, y: 60, escala: 0.9 }),
         Object.freeze({ tipo: "placaNeon", x: 945, y: 90, escala: 0.85 })
     ]),
+    laboratorio: Object.freeze([
+        Object.freeze({ tipo: "bobinaTemporal", x: 85, y: 95, escala: 0.9 }),
+        Object.freeze({ tipo: "terminalAntigo", x: 275, y: 625, escala: 0.8 }),
+        Object.freeze({ tipo: "tuboDeContencao", x: 455, y: 285, escala: 0.9 }),
+        Object.freeze({ tipo: "documentosDoLaboratorio", x: 465, y: 650, escala: 1 }),
+        Object.freeze({ tipo: "bobinaTemporal", x: 655, y: 245, escala: 1.05 }),
+        Object.freeze({ tipo: "tuboDeContencao", x: 865, y: 420, escala: 0.85 }),
+        Object.freeze({ tipo: "terminalAntigo", x: 1085, y: 95, escala: 0.9 }),
+        Object.freeze({ tipo: "documentosDoLaboratorio", x: 1110, y: 565, escala: 0.9 })
+    ]),
+    futuroDespedacado: Object.freeze([
+        Object.freeze({ tipo: "predioDestruido", x: 75, y: 90, escala: 0.9 }),
+        Object.freeze({ tipo: "predioDestruido", x: 245, y: 655, escala: 0.78 }),
+        Object.freeze({ tipo: "predioDestruido", x: 455, y: 335, escala: 1.05 }),
+        Object.freeze({ tipo: "predioDestruido", x: 680, y: 90, escala: 0.88 }),
+        Object.freeze({ tipo: "predioDestruido", x: 900, y: 390, escala: 1 }),
+        Object.freeze({ tipo: "predioDestruido", x: 1120, y: 650, escala: 0.82 }),
+        Object.freeze({ tipo: "relogioParado", x: 235, y: 300, escala: 0.9 }),
+        Object.freeze({ tipo: "relogioParado", x: 680, y: 650, escala: 1.05 }),
+        Object.freeze({ tipo: "relogioParado", x: 1120, y: 335, escala: 0.82 }),
+        Object.freeze({ tipo: "simboloGuardians", x: 455, y: 650, escala: 0.95 }),
+        Object.freeze({ tipo: "simboloGuardians", x: 900, y: 85, escala: 0.82 })
+    ]),
+    pontoZero: Object.freeze([
+        Object.freeze({ tipo: "bobinaTemporal", x: 75, y: 90, escala: 0.78 }),
+        Object.freeze({ tipo: "predioDestruido", x: 235, y: 625, escala: 0.72 }),
+        Object.freeze({ tipo: "tuboDeContencao", x: 800, y: 610, escala: 0.82 }),
+        Object.freeze({ tipo: "relogioParado", x: 750, y: 70, escala: 1.05 }),
+        Object.freeze({ tipo: "terminalAntigo", x: 930, y: 315, escala: 0.82 }),
+        Object.freeze({ tipo: "simboloGuardians", x: 1120, y: 620, escala: 0.9 }),
+        Object.freeze({ tipo: "documentosDoLaboratorio", x: 850, y: 610, escala: 0.85 }),
+        Object.freeze({ tipo: "relogioParado", x: 1120, y: 280, escala: 0.8 })
+    ]),
+    linhaTemporal: Object.freeze([
+        Object.freeze({ tipo: "cristalDeAmbar", x: 80, y: 90, escala: 0.82 }),
+        Object.freeze({ tipo: "predioDestruido", x: 270, y: 650, escala: 0.74 }),
+        Object.freeze({ tipo: "cristalDeObsidiana", x: 505, y: 320, escala: 0.82 }),
+        Object.freeze({ tipo: "arvoreHolografica", x: 720, y: 650, escala: 0.84 }),
+        Object.freeze({ tipo: "relogioParado", x: 925, y: 350, escala: 0.9 }),
+        Object.freeze({ tipo: "simboloGuardians", x: 1130, y: 650, escala: 0.86 })
+    ]),
+    eraApagada: Object.freeze([
+        Object.freeze({ tipo: "predioApagado", x: 78, y: 95, escala: 0.9 }),
+        Object.freeze({ tipo: "silhuetaCongelada", x: 285, y: 360, escala: 0.82 }),
+        Object.freeze({ tipo: "fragmentoApagado", x: 310, y: 655, escala: 0.9 }),
+        Object.freeze({ tipo: "predioApagado", x: 510, y: 640, escala: 0.78 }),
+        Object.freeze({ tipo: "relogioParado", x: 515, y: 300, escala: 0.82 }),
+        Object.freeze({ tipo: "silhuetaCongelada", x: 730, y: 350, escala: 0.95 }),
+        Object.freeze({ tipo: "fragmentoApagado", x: 735, y: 630, escala: 0.82 }),
+        Object.freeze({ tipo: "predioApagado", x: 955, y: 320, escala: 0.9 }),
+        Object.freeze({ tipo: "silhuetaCongelada", x: 1120, y: 120, escala: 0.78 }),
+        Object.freeze({ tipo: "fragmentoApagado", x: 1130, y: 650, escala: 0.86 })
+    ]),
+    intervaloPerdido: Object.freeze([
+        Object.freeze({ tipo: "ilhaDoLimbo", origem: "campo", x: 76, y: 112, escala: 0.72 }),
+        Object.freeze({ tipo: "ilhaDoLimbo", origem: "deserto", x: 270, y: 465, escala: 0.64 }),
+        Object.freeze({ tipo: "ilhaDoLimbo", origem: "artico", x: 520, y: 405, escala: 0.68 }),
+        Object.freeze({ tipo: "ilhaDoLimbo", origem: "selva", x: 550, y: 112, escala: 0.62 }),
+        Object.freeze({ tipo: "ilhaDoLimbo", origem: "vulcanica", x: 790, y: 390, escala: 0.68 }),
+        Object.freeze({ tipo: "ilhaDoLimbo", origem: "futurista", x: 1030, y: 108, escala: 0.66 }),
+        Object.freeze({ tipo: "ilhaDoLimbo", origem: "pontoZero", x: 1010, y: 670, escala: 0.58 }),
+        Object.freeze({ tipo: "relogioFlutuanteDoLimbo", x: 85, y: 630, escala: 0.72, angulo: -0.12 }),
+        Object.freeze({ tipo: "relogioFlutuanteDoLimbo", x: 490, y: 265, escala: 0.54, angulo: 0.18 }),
+        Object.freeze({ tipo: "relogioFlutuanteDoLimbo", x: 790, y: 690, escala: 0.62, angulo: -0.2 }),
+        Object.freeze({ tipo: "relogioFlutuanteDoLimbo", x: 1010, y: 255, escala: 0.56, angulo: 0.14 })
+    ]),
     glitch: Object.freeze([])
 });
 
+function chavePertenceAoProgressoDoSalvo(chave) {
+    return typeof chave === "string"
+        && !CHAVES_GLOBAIS_DO_JOGO.includes(chave)
+        && PREFIXOS_DOS_DADOS_DE_PROGRESSO.some(prefixo => chave.startsWith(prefixo));
+}
+
+function normalizarDadosDoSalvo(valor) {
+    if (!valor || typeof valor !== "object" || Array.isArray(valor)) {
+        return {};
+    }
+
+    return Object.fromEntries(Object.entries(valor).filter(
+        ([chave, dado]) => chavePertenceAoProgressoDoSalvo(chave)
+            && typeof dado === "string"
+    ));
+}
+
+function capturarDadosDoSalvoAtivo() {
+    const dados = {};
+
+    try {
+        for (let indice = 0; indice < localStorage.length; indice++) {
+            const chave = localStorage.key(indice);
+            if (!chavePertenceAoProgressoDoSalvo(chave)) {
+                continue;
+            }
+            const valor = localStorage.getItem(chave);
+            if (valor !== null) {
+                dados[chave] = valor;
+            }
+        }
+    } catch {
+        // O progresso que já está carregado continua disponível durante a sessão.
+    }
+
+    return dados;
+}
+
+function criarRegistroDeSalvo(dados, registroAnterior = null) {
+    const agora = Date.now();
+    return {
+        criadoEm: Number.isFinite(registroAnterior?.criadoEm)
+            ? registroAnterior.criadoEm
+            : agora,
+        atualizadoEm: agora,
+        dados: normalizarDadosDoSalvo(dados)
+    };
+}
+
+function normalizarRegistroDeSalvo(valor) {
+    if (!valor || typeof valor !== "object" || Array.isArray(valor)) {
+        return null;
+    }
+
+    return {
+        criadoEm: Number.isFinite(valor.criadoEm) ? Math.max(0, valor.criadoEm) : 0,
+        atualizadoEm: Number.isFinite(valor.atualizadoEm) ? Math.max(0, valor.atualizadoEm) : 0,
+        dados: normalizarDadosDoSalvo(valor.dados)
+    };
+}
+
+function salvarSistemaDeSalvos(sistema) {
+    try {
+        localStorage.setItem(CHAVE_SISTEMA_DE_SALVOS, JSON.stringify(sistema));
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function carregarSistemaDeSalvos() {
+    try {
+        const valor = JSON.parse(localStorage.getItem(CHAVE_SISTEMA_DE_SALVOS) || "null");
+        if (
+            !valor
+            || valor.versao !== CONFIG.salvos.versao
+            || !Array.isArray(valor.espacos)
+        ) {
+            return null;
+        }
+
+        const espacos = Array.from(
+            { length: CONFIG.salvos.quantidadeDeEspacos },
+            (_, indice) => normalizarRegistroDeSalvo(valor.espacos[indice])
+        );
+        const indiceAtivo = Number.isInteger(valor.indiceAtivo)
+            && valor.indiceAtivo >= 0
+            && valor.indiceAtivo < espacos.length
+            ? valor.indiceAtivo
+            : 0;
+
+        return {
+            versao: CONFIG.salvos.versao,
+            indiceAtivo,
+            espacos
+        };
+    } catch {
+        return null;
+    }
+}
+
+function criarSistemaDeSalvosInicial() {
+    const espacos = Array(CONFIG.salvos.quantidadeDeEspacos).fill(null);
+    espacos[0] = criarRegistroDeSalvo(capturarDadosDoSalvoAtivo());
+    return {
+        versao: CONFIG.salvos.versao,
+        indiceAtivo: 0,
+        espacos
+    };
+}
+
+function inicializarSistemaDeSalvos() {
+    const sistemaExistente = carregarSistemaDeSalvos();
+    if (!sistemaExistente) {
+        const sistemaInicial = criarSistemaDeSalvosInicial();
+        salvarSistemaDeSalvos(sistemaInicial);
+        return sistemaInicial;
+    }
+
+    const espacos = [...sistemaExistente.espacos];
+    espacos[sistemaExistente.indiceAtivo] = criarRegistroDeSalvo(
+        capturarDadosDoSalvoAtivo(),
+        espacos[sistemaExistente.indiceAtivo]
+    );
+    const sistemaAtualizado = { ...sistemaExistente, espacos };
+    salvarSistemaDeSalvos(sistemaAtualizado);
+    return sistemaAtualizado;
+}
+
+function atualizarSalvoAtivo() {
+    const espacos = [...sistemaDeSalvos.espacos];
+    espacos[sistemaDeSalvos.indiceAtivo] = criarRegistroDeSalvo(
+        capturarDadosDoSalvoAtivo(),
+        espacos[sistemaDeSalvos.indiceAtivo]
+    );
+    const sistemaAtualizado = { ...sistemaDeSalvos, espacos };
+
+    if (salvarSistemaDeSalvos(sistemaAtualizado)) {
+        sistemaDeSalvos = sistemaAtualizado;
+        return true;
+    }
+    return false;
+}
+
+function aplicarDadosDoSalvo(dados) {
+    try {
+        const chavesParaRemover = [];
+        for (let indice = 0; indice < localStorage.length; indice++) {
+            const chave = localStorage.key(indice);
+            if (chavePertenceAoProgressoDoSalvo(chave)) {
+                chavesParaRemover.push(chave);
+            }
+        }
+        chavesParaRemover.forEach(chave => localStorage.removeItem(chave));
+        Object.entries(normalizarDadosDoSalvo(dados)).forEach(([chave, valor]) => {
+            localStorage.setItem(chave, valor);
+        });
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function trocarSalvoAtivo(numeroDoSalvo) {
+    const indiceNovo = Number(numeroDoSalvo) - 1;
+    if (
+        !Number.isInteger(indiceNovo)
+        || indiceNovo < 0
+        || indiceNovo >= CONFIG.salvos.quantidadeDeEspacos
+        || indiceNovo === sistemaDeSalvos.indiceAtivo
+    ) {
+        return false;
+    }
+
+    const dadosAtuais = capturarDadosDoSalvoAtivo();
+    const espacosAtuais = [...sistemaDeSalvos.espacos];
+    espacosAtuais[sistemaDeSalvos.indiceAtivo] = criarRegistroDeSalvo(
+        dadosAtuais,
+        espacosAtuais[sistemaDeSalvos.indiceAtivo]
+    );
+    const sistemaComSalvoAtual = { ...sistemaDeSalvos, espacos: espacosAtuais };
+    const espacosNovos = [...espacosAtuais];
+    espacosNovos[indiceNovo] = espacosNovos[indiceNovo]
+        || criarRegistroDeSalvo({});
+    const sistemaNovo = {
+        ...sistemaComSalvoAtual,
+        indiceAtivo: indiceNovo,
+        espacos: espacosNovos
+    };
+
+    if (!salvarSistemaDeSalvos(sistemaNovo)) {
+        mostrarAviso(traduzir("salvos.erroTroca"));
+        return false;
+    }
+
+    if (!aplicarDadosDoSalvo(espacosNovos[indiceNovo].dados)) {
+        salvarSistemaDeSalvos(sistemaComSalvoAtual);
+        aplicarDadosDoSalvo(dadosAtuais);
+        mostrarAviso(traduzir("salvos.erroTroca"));
+        return false;
+    }
+
+    sistemaDeSalvos = sistemaNovo;
+    window.location.reload();
+    return true;
+}
+
+let sistemaDeSalvos = inicializarSistemaDeSalvos();
+
 aplicarPreferenciasSalvas();
 
-if (document.readyState === "complete") {
-    setTimeout(configurarInicioAutomaticoDaMusicaDoLobby, 0);
-} else {
-    window.addEventListener("load", configurarInicioAutomaticoDaMusicaDoLobby, { once: true });
+if (typeof window.requestAnimationFrame === "function") {
+    if (document.readyState === "complete") {
+        setTimeout(concluirCarregamentoDaAbertura, 0);
+    } else {
+        window.addEventListener("load", concluirCarregamentoDaAbertura, { once: true });
+    }
 }
 
 const desenhadoresDeDecoracao = Object.freeze({
@@ -6432,7 +10841,19 @@ const desenhadoresDeDecoracao = Object.freeze({
     ossosPrimordiais: desenharOssosPrimordiais,
     predioNeon: desenharPredioNeon,
     arvoreHolografica: desenharArvoreHolografica,
-    placaNeon: desenharPlacaNeon
+    placaNeon: desenharPlacaNeon,
+    bobinaTemporal: desenharBobinaTemporal,
+    terminalAntigo: desenharTerminalAntigo,
+    tuboDeContencao: desenharTuboDeContencao,
+    documentosDoLaboratorio: desenharDocumentosDoLaboratorio,
+    predioDestruido: desenharPredioDestruido,
+    relogioParado: desenharRelogioParado,
+    simboloGuardians: desenharSimboloGuardians,
+    predioApagado: desenharPredioApagado,
+    silhuetaCongelada: desenharSilhuetaCongelada,
+    fragmentoApagado: desenharFragmentoApagado,
+    ilhaDoLimbo: desenharIlhaDoLimbo,
+    relogioFlutuanteDoLimbo: desenharRelogioFlutuanteDoLimbo
 });
 
 // Estado do jogo
@@ -6473,6 +10894,25 @@ let inimigosTriceratoposParaCriar = 0;
 let inimigosDronesCacadoresParaCriar = 0;
 let inimigosRobosReparadoresParaCriar = 0;
 let inimigosSentinelasDeEscudoParaCriar = 0;
+let inimigosAutomatosDeCobreParaCriar = 0;
+let inimigosCobaiasInstaveisParaCriar = 0;
+let inimigosGuardasDeContencaoParaCriar = 0;
+let inimigosDronesDoFuturoDespedacadoParaCriar = 0;
+let inimigosAndarilhosDeSucataParaCriar = 0;
+let inimigosEcosTemporaisParaCriar = 0;
+let inimigosSentinelasCronologicasParaCriar = 0;
+let inimigosResiduosTemporaisParaCriar = 0;
+let inimigosArquivistasCorrompidosParaCriar = 0;
+let inimigosVigiasDoPontoZeroParaCriar = 0;
+let inimigosSoldadosCronaisParaCriar = 0;
+let inimigosPortadoresDaFendaParaCriar = 0;
+let inimigosInfiltradoresCamufladosParaCriar = 0;
+let inimigosRascunhosVivosParaCriar = 0;
+let inimigosSentinelasIncompletasParaCriar = 0;
+let inimigosSombrasCongeladasParaCriar = 0;
+let fragmentosDeSegundoParaCriar = 0;
+let ponteirosErrantesParaCriar = 0;
+let paradoxosBlindadosParaCriar = 0;
 let pixelsCorrompidosParaCriar = 0;
 let errosVelozesParaCriar = 0;
 let blocosInstaveisParaCriar = 0;
@@ -6492,6 +10932,8 @@ let pausaIniciadaEm = 0;
 let instanteDoUltimoQuadro = 0;
 let paginaOcultadaEm = 0;
 let pausaAutomaticaPorOcultacao = false;
+let jogadorJaEntrouAntes = carregarRegistroDeEntradaAnterior();
+let telaInicialPronta = false;
 let tutorialConcluido = carregarTutorialConcluido();
 let tutorialAtivo = false;
 let passoTutorial = 0;
@@ -6503,13 +10945,29 @@ let estatisticasDasConquistas = carregarEstatisticasDasConquistas();
 let maiorFaseConcluida = carregarMaiorFaseConcluida();
 let faseSecretaDescoberta = carregarFaseSecretaDescoberta();
 let capitulo2Desbloqueado = carregarDesbloqueioDoCapitulo2();
+let intervaloPerdidoDescoberto = carregarIntervaloPerdidoDescoberto();
+let capitulo3Desbloqueado = carregarDesbloqueioDoCapitulo3();
 let cartaMisteriosaVista = carregarCartaMisteriosaVista();
 let cartaDaMaquinaDoTempoVista = carregarCartaDaMaquinaDoTempoVista();
 let maquinaDoTempoDesbloqueada = carregarMaquinaDoTempoDesbloqueada();
 let epocaDaMaquinaDoTempoSelecionada = carregarEpocaDaMaquinaDoTempo();
 let transmissaoProjetoRelogioVista = carregarTransmissaoProjetoRelogioVista();
+let registroLaboratorioVisto = carregarRegistroLaboratorioVisto();
+let cenaFinalLaboratorioVista = carregarCenaFinalLaboratorioVista();
+let transmissaoFuturoDespedacadoVista = carregarTransmissaoFuturoDespedacadoVista();
+let cenaFinalFuturoDespedacadoVista = carregarCenaFinalFuturoDespedacadoVista();
+let cenaFinalPontoZeroVista = carregarCenaFinalPontoZeroVista();
+let cenaFinalIntervaloPerdidoVista = carregarCenaFinalIntervaloPerdidoVista();
+let introducaoFase13Vista = carregarIntroducaoFase13Vista();
+let cenaFinalFase13Vista = carregarCenaFinalFase13Vista();
+let introducaoFase14Vista = carregarIntroducaoFase14Vista();
+let cenaFinalFase14Vista = carregarCenaFinalFase14Vista();
 let teleporteGlitchEmAndamento = false;
+let teleporteIntervaloEmAndamento = false;
+let conversaDaArmadilhaDoIntervaloAtiva = false;
+let indiceDaFalaDaArmadilhaDoIntervalo = 0;
 let labirintoAmareloAtivo = false;
+let conversaDoPortalSecretoBloqueadoAtiva = false;
 let jogadorDosCorredoresAmarelos = null;
 let teclasPressionadasNosCorredores = new Set();
 let animacaoDosCorredoresAmarelos = null;
@@ -6519,19 +10977,63 @@ let tipoDaConversaDoSenhorDoTempo = "entrada";
 let cutsceneDoCapitulo2Ativa = false;
 let cutsceneDaCartaAtiva = false;
 let cutsceneDaTransmissaoRetomaPartida = false;
+let indiceDaCenaFinalLaboratorio = 0;
+let indiceDaCenaFinalFuturoDespedacado = 0;
+let indiceDaCenaFinalPontoZero = 0;
+let indiceDaIntroducaoIntervaloPerdido = 0;
+let indiceDaCenaFinalIntervaloPerdido = 0;
+let indiceDaIntroducaoFase13 = 0;
+let indiceDaCenaFinalFase13 = 0;
+let indiceDaIntroducaoFase14 = 0;
+let indiceDaCenaFinalFase14 = 0;
 let maquinaDoTempoAcabouDeSerConcedida = false;
 let pulsoTemporalAcabouDeSerDesbloqueado = false;
 let temporizadorDoTeleporteGlitch = null;
+let temporizadorDoTeleporteIntervalo = null;
 let radioProjetoRelogioDisponivel = false;
+let terminalLaboratorioDisponivel = false;
+let transmissorFuturoDespedacadoDisponivel = false;
+let registrosPontoZeroAnunciados = new Set();
+let registrosPontoZeroLidos = new Set();
+let contencaoLaboratorioUsadaNaWave = false;
+let idDaCamaraDeContencaoSelecionada = null;
+let contencaoLaboratorioFechaEm = 0;
+let contencaoLaboratorioExpiraEm = 0;
+let contencaoLaboratorioAtivada = false;
+let numeroDaAtivacaoDaContencao = 0;
 let fragmentosPixel = carregarFragmentosPixel();
 let comprasDaLoja = carregarComprasDaLoja();
+let progressaoDeNivel = carregarProgressaoDeNivel();
+let ofertaSemanalDaLoja = carregarOfertaSemanalDaLoja();
 let defesasSelecionadasParaPartida = carregarSelecaoDeDefesas();
 let selecaoDeDefesasEmEdicao = new Set();
 let selecaoDeDefesasParaModoInfinito = false;
 let mensagemDaSelecaoDeDefesas = "";
+let mapasCriadosNoEditor = carregarMapasDoEditor(
+    CHAVE_MAPAS_DO_EDITOR,
+    CONFIG.editorDeFases.maximoDeMapasCriados
+);
+let mapasImportadosNoEditor = carregarMapasDoEditor(
+    CHAVE_MAPAS_IMPORTADOS_DO_EDITOR,
+    CONFIG.editorDeFases.maximoDeMapasImportados
+);
+let avaliacoesDosMapasImportados = carregarAvaliacoesDoEditor();
+let abaDoEditorSelecionada = "meus";
+let rascunhoDoMapaNoEditor = null;
+let idDoMapaAguardandoExclusao = null;
+let compartilhamentoDoEditor = null;
+let mensagemDoEditor = "";
+let historicoDoCentroDeTreinamento = carregarHistoricoDoCentroDeTreinamento();
+let desafioDeTreinamentoAtivo = null;
+let temporizadorDoCentroDeTreinamento = null;
+let mapaPersonalizadoAtivo = null;
+let origemDoMapaPersonalizadoAtivo = "meus";
+let faseSelecionadaAntesDoMapaPersonalizado = 1;
+let filaDeInimigosDoMapaPersonalizado = [];
 let inimigosDerrotadosNoAlbum = carregarInimigosDerrotadosNoAlbum();
 let categoriaDaLojaSelecionada = "torres";
 let categoriaDoAlbumSelecionada = "torres";
+let elementoDeOrigemDosDetalhesDoAlbum = null;
 let telaDoMenuAberta = null;
 const TELAS_DO_LOBBY_EM_TELA_CHEIA = new Set([
     "album",
@@ -6542,10 +11044,15 @@ const TELAS_DO_LOBBY_EM_TELA_CHEIA = new Set([
     "pacoteApoiador",
     "missoes",
     "conquistas",
+    "niveis",
+    "salvos",
+    "editor",
+    "treinamento",
     "selecaoDefesas"
 ]);
 let elementoDeOrigemDoConteudoMenu = null;
 let idDaCompraPendente = null;
+let precoDaCompraPendente = null;
 let elementoDeOrigemDaCompra = null;
 let filaDeNotificacoesDeProgresso = [];
 let notificacaoDeProgressoAtiva = null;
@@ -6557,12 +11064,13 @@ let faseSelecionada = 1;
 let capituloSelecionado = 1;
 let novaFaseDesbloqueada = false;
 let fragmentosRecebidosNoResultado = 0;
+let experienciaRecebidaNaPartida = 0;
 let modoWavesInfinitas = false;
 let tipoDeTorreParaConstruir = "padrao";
 let posicaoCursorNoMapa = null;
 let ultimaWaveComBonusOferecido = 0;
 let opcoesDeBonusAtuais = [];
-let bonusPosBossEscolhidos = [];
+let tiposDeDefesaConstruidosNaPartida = new Set();
 let multiplicadorDeDanoDasTorres = 1;
 let multiplicadorDeAlcanceDasTorres = 1;
 let multiplicadorDeCadenciaDasTorres = 1;
@@ -6579,12 +11087,17 @@ if (imagemFliperamaNoMapa) {
 
 let fliperamaNoMapa = null;
 let minigameFliperamaAtivo = false;
+let minigameFliperamaEmTreinamento = false;
 let tipoMinigameFliperamaAtivo = "alvo";
 let modeloLabirintoFliperamaAtivo = null;
 let alvoDoMinigameFliperama = null;
 let roboDoLabirintoFliperama = null;
+let estadoVooPixel = null;
+let estadoChuvaDePixels = null;
+let estadoSequenciaNeon = null;
 let teclasPressionadasNoLabirinto = new Set();
 let acertosNoMinigameFliperama = 0;
+let minigameFliperamaComecaEm = 0;
 let minigameFliperamaTerminaEm = 0;
 let animacaoDoMinigameFliperama = null;
 let boostFliperamaAtivo = false;
@@ -6594,31 +11107,41 @@ let boostDanoFliperamaExpiraEm = 0;
 let proximaWaveDoPulsoTemporal = 1;
 let pulsoTemporalNormalExpiraEm = 0;
 let pulsoTemporalBossExpiraEm = 0;
+let desafioDosRelogiosDoIntervalo = null;
+let lentidaoDosRelogiosDoIntervaloExpiraEm = 0;
+let aceleracaoDaInterferenciaTemporalExpiraEm = 0;
+let interferenciaVisualDoSenhorDoTempoExpiraEm = 0;
+let frenteTemporalAtiva = null;
+let indiceDaUltimaFrenteTemporal = -1;
+let fendasDosPortadores = [];
+let reescritaTemporalDaEraApagada = null;
+let inimigosDerrotadosRecentementeNaEraApagada = [];
 
 defesasSelecionadasParaPartida = normalizarSelecaoDeDefesas(
     defesasSelecionadasParaPartida
 );
 salvarSelecaoDeDefesas();
+importarExperienciaDoHistorico();
+concederRecompensasDoNivelAtual();
 
 controles.classList.add("oculto");
 seletorTorres.classList.add("oculto");
 atualizarIndicadorFaseSelecionada();
 atualizarTemaDoLobby();
 atualizarPortalFaseSecreta();
+atualizarRelogioQuebradoDoIntervalo();
 atualizarBotoesDeConstrucao();
-atualizarPainelDeBoosts();
-atualizarPulsoTemporalNoPosto();
+atualizarPulsoTemporalNoControle();
 atualizarSaldoDeFragmentos();
+atualizarResumoDoNivelNoMenu();
 atualizarResumoDasMissoesNoMenu();
+revalidarConquistaMestreDoArsenal();
+revalidarConquistaMestreDoFliperama();
 verificarConquistasAutomaticas();
 atualizarResumoDasConquistasNoMenu();
 atualizarIdentidadeDoApoiador();
 aplicarIdiomaNaInterface();
 sincronizarPacoteApoiadorComServidor();
-
-if (!tutorialConcluido) {
-    mostrarTutorial();
-}
 
 function carregarTutorialConcluido() {
     try {
@@ -6657,6 +11180,38 @@ function salvarDesbloqueioDoCapitulo2() {
         localStorage.setItem(CHAVE_CAPITULO_2_DESBLOQUEADO, "true");
     } catch (erro) {
         // O desbloqueio continua válido durante a sessão sem armazenamento local.
+    }
+}
+
+function carregarIntervaloPerdidoDescoberto() {
+    try {
+        return localStorage.getItem(CHAVE_INTERVALO_PERDIDO_DESCOBERTO) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarIntervaloPerdidoDescoberto() {
+    try {
+        localStorage.setItem(CHAVE_INTERVALO_PERDIDO_DESCOBERTO, "true");
+    } catch (erro) {
+        // A descoberta continua válida durante a sessão.
+    }
+}
+
+function carregarDesbloqueioDoCapitulo3() {
+    try {
+        return localStorage.getItem(CHAVE_CAPITULO_3_DESBLOQUEADO) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarDesbloqueioDoCapitulo3() {
+    try {
+        localStorage.setItem(CHAVE_CAPITULO_3_DESBLOQUEADO, "true");
+    } catch (erro) {
+        // O desbloqueio continua válido durante a sessão.
     }
 }
 
@@ -6705,6 +11260,166 @@ function salvarTransmissaoProjetoRelogioVista() {
         localStorage.setItem(CHAVE_TRANSMISSAO_PROJETO_RELOGIO_VISTA, "true");
     } catch (erro) {
         // A transmissão continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarRegistroLaboratorioVisto() {
+    try {
+        return localStorage.getItem(CHAVE_REGISTRO_LABORATORIO_VISTO) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarRegistroLaboratorioVisto() {
+    try {
+        localStorage.setItem(CHAVE_REGISTRO_LABORATORIO_VISTO, "true");
+    } catch (erro) {
+        // O registro continua marcado como visto durante a sessão.
+    }
+}
+
+function carregarCenaFinalLaboratorioVista() {
+    try {
+        return localStorage.getItem(CHAVE_CENA_FINAL_LABORATORIO_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarCenaFinalLaboratorioVista() {
+    try {
+        localStorage.setItem(CHAVE_CENA_FINAL_LABORATORIO_VISTA, "true");
+    } catch (erro) {
+        // A cena continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarTransmissaoFuturoDespedacadoVista() {
+    try {
+        return localStorage.getItem(CHAVE_TRANSMISSAO_FUTURO_DESPEDACADO_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarTransmissaoFuturoDespedacadoVista() {
+    try {
+        localStorage.setItem(CHAVE_TRANSMISSAO_FUTURO_DESPEDACADO_VISTA, "true");
+    } catch (erro) {
+        // A transmissão continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarCenaFinalFuturoDespedacadoVista() {
+    try {
+        return localStorage.getItem(CHAVE_CENA_FINAL_FUTURO_DESPEDACADO_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarCenaFinalFuturoDespedacadoVista() {
+    try {
+        localStorage.setItem(CHAVE_CENA_FINAL_FUTURO_DESPEDACADO_VISTA, "true");
+    } catch (erro) {
+        // A cena continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarCenaFinalPontoZeroVista() {
+    try {
+        return localStorage.getItem(CHAVE_CENA_FINAL_PONTO_ZERO_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarCenaFinalPontoZeroVista() {
+    try {
+        localStorage.setItem(CHAVE_CENA_FINAL_PONTO_ZERO_VISTA, "true");
+    } catch (erro) {
+        // A revelação continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarCenaFinalIntervaloPerdidoVista() {
+    try {
+        return localStorage.getItem(CHAVE_CENA_FINAL_INTERVALO_PERDIDO_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarCenaFinalIntervaloPerdidoVista() {
+    try {
+        localStorage.setItem(CHAVE_CENA_FINAL_INTERVALO_PERDIDO_VISTA, "true");
+    } catch (erro) {
+        // A cena continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarIntroducaoFase13Vista() {
+    try {
+        return localStorage.getItem(CHAVE_INTRODUCAO_FASE_13_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarIntroducaoFase13Vista() {
+    try {
+        localStorage.setItem(CHAVE_INTRODUCAO_FASE_13_VISTA, "true");
+    } catch (erro) {
+        // A introdução continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarCenaFinalFase13Vista() {
+    try {
+        return localStorage.getItem(CHAVE_CENA_FINAL_FASE_13_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarCenaFinalFase13Vista() {
+    try {
+        localStorage.setItem(CHAVE_CENA_FINAL_FASE_13_VISTA, "true");
+    } catch (erro) {
+        // A cena continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarIntroducaoFase14Vista() {
+    try {
+        return localStorage.getItem(CHAVE_INTRODUCAO_FASE_14_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarIntroducaoFase14Vista() {
+    try {
+        localStorage.setItem(CHAVE_INTRODUCAO_FASE_14_VISTA, "true");
+    } catch (erro) {
+        // A introdução continua marcada como vista durante a sessão.
+    }
+}
+
+function carregarCenaFinalFase14Vista() {
+    try {
+        return localStorage.getItem(CHAVE_CENA_FINAL_FASE_14_VISTA) === "true";
+    } catch (erro) {
+        return false;
+    }
+}
+
+function salvarCenaFinalFase14Vista() {
+    try {
+        localStorage.setItem(CHAVE_CENA_FINAL_FASE_14_VISTA, "true");
+    } catch (erro) {
+        // A cena continua marcada como vista durante a sessão.
     }
 }
 
@@ -6805,6 +11520,29 @@ function normalizarSelecaoDeDefesas(selecao, preencherSeVazia = true) {
     return new Set(tiposSelecionados);
 }
 
+function faseAtualExigeTorreDeVarredura() {
+    return !mapaPersonalizadoAtivo
+        && !selecaoDeDefesasParaModoInfinito
+        && faseSelecionada === CONFIG.eraApagada.numeroDaFase
+        && torreEstaDesbloqueada("torreDeVarredura");
+}
+
+function incluirTorreDeVarreduraNaSelecao(selecao) {
+    const tipoObrigatorio = "torreDeVarredura";
+    const tipos = [...(selecao || [])];
+
+    if (tipos.includes(tipoObrigatorio)) {
+        return new Set(tipos);
+    }
+
+    if (tipos.length >= CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas) {
+        tipos.pop();
+    }
+
+    tipos.push(tipoObrigatorio);
+    return new Set(tipos);
+}
+
 function prepararSelecaoDeDefesasParaPartida(tutorialDeveIniciar = false) {
     defesasSelecionadasParaPartida = normalizarSelecaoDeDefesas(
         defesasSelecionadasParaPartida
@@ -6818,6 +11556,12 @@ function prepararSelecaoDeDefesasParaPartida(tutorialDeveIniciar = false) {
                 CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas - 1
             )
         ]);
+    }
+
+    if (faseAtualExigeTorreDeVarredura()) {
+        defesasSelecionadasParaPartida = incluirTorreDeVarreduraNaSelecao(
+            defesasSelecionadasParaPartida
+        );
     }
 
     salvarSelecaoDeDefesas();
@@ -6961,7 +11705,10 @@ function carregarRecompensasPermanentesDasMissoes() {
             return recompensasVazias;
         }
 
-        const skinsValidas = new Set(Object.keys(CONFIG.missoes.skins));
+        const skinsValidas = new Set([
+            ...Object.keys(CONFIG.missoes.skins),
+            ...Object.keys(CONFIG.progressaoDeNivel.skins)
+        ]);
         const conquistasValidas = new Set(Object.keys(CONFIG.conquistas));
         const skinsDesbloqueadas = Array.isArray(valorSalvo.skinsDesbloqueadas)
             ? [...new Set(valorSalvo.skinsDesbloqueadas.filter(id => skinsValidas.has(id)))]
@@ -7041,7 +11788,8 @@ function carregarEstatisticasDasConquistas() {
     const estatisticasVazias = {
         inimigosEliminados: progressoMissoesSemanais.inimigosEliminados || 0,
         fasesConcluidas: progressoMissoesSemanais.fasesConcluidas || 0,
-        maiorWaveInfinita: progressoMissoesSemanais.maiorWaveInfinita || 0
+        maiorWaveInfinita: progressoMissoesSemanais.maiorWaveInfinita || 0,
+        minigamesFliperamaConcluidos: []
     };
 
     try {
@@ -7056,6 +11804,16 @@ function carregarEstatisticasDasConquistas() {
         const normalizarContador = valor => (
             Number.isInteger(valor) && valor >= 0 ? valor : 0
         );
+        const tiposValidosDeMinigame = new Set(
+            CONFIG.fliperama.minigame.tiposDisponiveis
+        );
+        const minigamesFliperamaConcluidos = Array.isArray(
+            valorSalvo.minigamesFliperamaConcluidos
+        )
+            ? [...new Set(valorSalvo.minigamesFliperamaConcluidos)].filter(
+                tipo => tiposValidosDeMinigame.has(tipo)
+            )
+            : [];
 
         return {
             inimigosEliminados: Math.max(
@@ -7069,7 +11827,8 @@ function carregarEstatisticasDasConquistas() {
             maiorWaveInfinita: Math.max(
                 estatisticasVazias.maiorWaveInfinita,
                 normalizarContador(valorSalvo.maiorWaveInfinita)
-            )
+            ),
+            minigamesFliperamaConcluidos
         };
     } catch (erro) {
         return estatisticasVazias;
@@ -7095,7 +11854,26 @@ function carregarMaiorFaseConcluida() {
             return 0;
         }
 
-        return Math.max(0, Math.min(valorSalvo, CONFIG.fases.length));
+        const valorNormalizado = Math.max(0, Math.min(valorSalvo, CONFIG.fases.length));
+        const correcaoJaAplicada = localStorage.getItem(
+            CHAVE_CORRECAO_PROGRESSO_FASES
+        ) === "true";
+
+        if (!correcaoJaAplicada) {
+            const valorCorrigido = Math.min(
+                valorNormalizado,
+                CONFIG.progressoDaCampanha.maiorFaseConfiavelAntesDaCorrecao
+            );
+            localStorage.setItem(CHAVE_PROGRESSO_FASES, valorCorrigido.toString());
+            localStorage.setItem(CHAVE_CORRECAO_PROGRESSO_FASES, "true");
+            return valorCorrigido;
+        }
+
+        if (valorSalvo !== valorNormalizado) {
+            localStorage.setItem(CHAVE_PROGRESSO_FASES, valorNormalizado.toString());
+        }
+
+        return valorNormalizado;
     } catch {
         return 0;
     }
@@ -7154,6 +11932,1793 @@ function salvarComprasDaLoja() {
     }
 }
 
+function criarProgressaoDeNivelVazia() {
+    return {
+        experienciaTotal: 0,
+        recompensasConcedidas: [],
+        historicoImportado: false
+    };
+}
+
+function normalizarProgressaoDeNivel(valorSalvo) {
+    const progressoVazio = criarProgressaoDeNivelVazia();
+    const idsValidos = new Set(
+        CONFIG.progressaoDeNivel.recompensas.map(recompensa => recompensa.id)
+    );
+
+    if (!valorSalvo || typeof valorSalvo !== "object") {
+        return progressoVazio;
+    }
+
+    return {
+        experienciaTotal: Number.isInteger(valorSalvo.experienciaTotal)
+            && valorSalvo.experienciaTotal >= 0
+            ? Math.min(valorSalvo.experienciaTotal, 10000000)
+            : 0,
+        recompensasConcedidas: Array.isArray(valorSalvo.recompensasConcedidas)
+            ? [...new Set(valorSalvo.recompensasConcedidas.filter(id => idsValidos.has(id)))]
+            : [],
+        historicoImportado: valorSalvo.historicoImportado === true
+    };
+}
+
+function carregarProgressaoDeNivel() {
+    try {
+        return normalizarProgressaoDeNivel(JSON.parse(
+            localStorage.getItem(CHAVE_PROGRESSAO_NIVEL) || "null"
+        ));
+    } catch {
+        return criarProgressaoDeNivelVazia();
+    }
+}
+
+function salvarProgressaoDeNivel() {
+    try {
+        localStorage.setItem(
+            CHAVE_PROGRESSAO_NIVEL,
+            JSON.stringify(progressaoDeNivel)
+        );
+    } catch {
+        // O nível e o XP continuam válidos durante a sessão.
+    }
+}
+
+function calcularExperienciaParaProximoNivel(nivel) {
+    const nivelSeguro = Math.max(1, Math.floor(nivel));
+    return CONFIG.progressaoDeNivel.experienciaBasePorNivel
+        + (nivelSeguro - 1) * CONFIG.progressaoDeNivel.aumentoDeExperienciaPorNivel;
+}
+
+function obterDadosDoNivel(experienciaTotal = progressaoDeNivel.experienciaTotal) {
+    let nivel = 1;
+    let experienciaNoNivel = Math.max(0, Math.floor(experienciaTotal));
+    let experienciaParaProximoNivel = calcularExperienciaParaProximoNivel(nivel);
+
+    while (experienciaNoNivel >= experienciaParaProximoNivel) {
+        experienciaNoNivel -= experienciaParaProximoNivel;
+        nivel++;
+        experienciaParaProximoNivel = calcularExperienciaParaProximoNivel(nivel);
+    }
+
+    return {
+        nivel,
+        experienciaNoNivel,
+        experienciaParaProximoNivel,
+        percentual: Math.min(
+            100,
+            Math.floor((experienciaNoNivel / experienciaParaProximoNivel) * 100)
+        )
+    };
+}
+
+function obterSkinConquistavel(idDaSkin) {
+    return CONFIG.missoes.skins[idDaSkin]
+        || CONFIG.progressaoDeNivel.skins[idDaSkin]
+        || null;
+}
+
+function importarExperienciaDoHistorico() {
+    if (progressaoDeNivel.historicoImportado) {
+        return 0;
+    }
+
+    const inimigosEliminados = Number.isInteger(estatisticasDasConquistas.inimigosEliminados)
+        ? Math.max(0, estatisticasDasConquistas.inimigosEliminados)
+        : 0;
+    const fasesConcluidas = Number.isInteger(estatisticasDasConquistas.fasesConcluidas)
+        ? Math.max(0, estatisticasDasConquistas.fasesConcluidas)
+        : 0;
+    const experienciaImportada = inimigosEliminados
+        * CONFIG.progressaoDeNivel.experienciaPorInimigo
+        + fasesConcluidas * CONFIG.progressaoDeNivel.experienciaPorFaseConcluida;
+
+    progressaoDeNivel.experienciaTotal += experienciaImportada;
+    progressaoDeNivel.historicoImportado = true;
+    salvarProgressaoDeNivel();
+    return experienciaImportada;
+}
+
+function concederRecompensaDeNivel(recompensa) {
+    let jaPossuia = false;
+
+    if (recompensa.tipo === "skin") {
+        jaPossuia = recompensasPermanentesDasMissoes.skinsDesbloqueadas
+            .includes(recompensa.idDoItem);
+
+        if (!jaPossuia) {
+            recompensasPermanentesDasMissoes.skinsDesbloqueadas.push(recompensa.idDoItem);
+            salvarRecompensasPermanentesDasMissoes();
+        }
+    } else {
+        jaPossuia = comprasDaLoja.has(recompensa.idDoItem);
+
+        if (!jaPossuia) {
+            comprasDaLoja.add(recompensa.idDoItem);
+            salvarComprasDaLoja();
+        }
+    }
+
+    let nomeConcedido = obterNomeLocalizado(recompensa);
+
+    if (jaPossuia && recompensa.fragmentosAlternativos > 0) {
+        fragmentosPixel += recompensa.fragmentosAlternativos;
+        salvarFragmentosPixel();
+        nomeConcedido = localizar("{quantidade} Fragmentos de Pixel", {
+            quantidade: recompensa.fragmentosAlternativos
+        });
+    }
+
+    progressaoDeNivel.recompensasConcedidas.push(recompensa.id);
+    return { ...recompensa, nomeConcedido };
+}
+
+function concederRecompensasDoNivelAtual() {
+    const { nivel } = obterDadosDoNivel();
+    const concedidasAgora = CONFIG.progressaoDeNivel.recompensas
+        .filter(recompensa => (
+            recompensa.nivel <= nivel
+            && !progressaoDeNivel.recompensasConcedidas.includes(recompensa.id)
+        ))
+        .map(concederRecompensaDeNivel);
+
+    if (concedidasAgora.length === 0) {
+        return concedidasAgora;
+    }
+
+    salvarProgressaoDeNivel();
+    atualizarSaldoDeFragmentos();
+    atualizarBotoesDeConstrucao();
+    verificarConquistasAutomaticas();
+    atualizarResumoDasConquistasNoMenu();
+    return concedidasAgora;
+}
+
+function atualizarResumoDoNivelNoMenu() {
+    if (!nivelJogadorMenu || !experienciaJogadorMenu || !barraExperienciaJogadorMenu) {
+        return;
+    }
+
+    const dados = obterDadosDoNivel();
+    nivelJogadorMenu.textContent = dados.nivel;
+    experienciaJogadorMenu.textContent = traduzir("nivel.xpAtual", {
+        atual: dados.experienciaNoNivel,
+        necessaria: dados.experienciaParaProximoNivel
+    });
+    barraExperienciaJogadorMenu.style.width = `${dados.percentual}%`;
+    barraExperienciaJogadorMenu.parentElement?.setAttribute(
+        "aria-valuenow",
+        dados.experienciaNoNivel.toString()
+    );
+    barraExperienciaJogadorMenu.parentElement?.setAttribute(
+        "aria-valuemax",
+        dados.experienciaParaProximoNivel.toString()
+    );
+    atualizarDisponibilidadeDoEditor();
+}
+
+function registrarExperiencia(quantidade) {
+    if (!Number.isInteger(quantidade) || quantidade <= 0) {
+        return 0;
+    }
+
+    const nivelAnterior = obterDadosDoNivel().nivel;
+    progressaoDeNivel.experienciaTotal = Math.min(
+        10000000,
+        progressaoDeNivel.experienciaTotal + quantidade
+    );
+    salvarProgressaoDeNivel();
+    const recompensasConcedidas = concederRecompensasDoNivelAtual();
+    const nivelAtual = obterDadosDoNivel().nivel;
+
+    for (let nivel = nivelAnterior + 1; nivel <= nivelAtual; nivel++) {
+        const recompensa = recompensasConcedidas.find(item => item.nivel === nivel);
+        enfileirarNotificacaoDeProgresso(
+            "nivel",
+            traduzir("nivel.alcancado"),
+            traduzir("nivel.rotulo", { nivel }),
+            recompensa
+                ? traduzir("nivel.recompensa", { recompensa: recompensa.nomeConcedido })
+                : traduzir("nivel.semRecompensa"),
+            recompensa?.icone || "★"
+        );
+    }
+
+    atualizarResumoDoNivelNoMenu();
+
+    if (telaDoMenuAberta === "niveis") {
+        mostrarNiveis();
+    }
+
+    return quantidade;
+}
+
+function registrarExperienciaDaPartida(quantidade) {
+    const experienciaConcedida = registrarExperiencia(quantidade);
+    experienciaRecebidaNaPartida += experienciaConcedida;
+    return experienciaConcedida;
+}
+
+function escaparTextoDoEditor(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, caractere => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+    })[caractere]);
+}
+
+function criarIdDoMapaNoEditor() {
+    return `mapa-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function clonarMapaDoEditor(mapa) {
+    return JSON.parse(JSON.stringify(mapa));
+}
+
+function contarInimigosDoMapa(mapa) {
+    return mapa.waves.reduce((total, waveDoMapa) => (
+        total + waveDoMapa.grupos.reduce((subtotal, grupo) => subtotal + grupo.quantidade, 0)
+    ), 0);
+}
+
+function normalizarMapaDoEditor(valor) {
+    const configuracao = CONFIG.editorDeFases;
+
+    if (!valor || typeof valor !== "object") {
+        return null;
+    }
+
+    const id = typeof valor.id === "string" && /^[a-z0-9_-]{1,80}$/i.test(valor.id)
+        ? valor.id
+        : null;
+    const nome = typeof valor.nome === "string" ? valor.nome.trim() : "";
+    const criador = typeof valor.criador === "string" ? valor.criador.trim() : "";
+    const descricao = typeof valor.descricao === "string" ? valor.descricao.trim() : "";
+    const temaValido = configuracao.cenarios.some(cenario => cenario.id === valor.tema);
+    const caminhoValido = configuracao.caminhos.some(caminho => caminho.id === valor.idDoCaminho);
+    const creditosValidos = Number.isInteger(valor.creditosIniciais)
+        && valor.creditosIniciais >= configuracao.minimoDeCreditos
+        && valor.creditosIniciais <= configuracao.maximoDeCreditos
+        && valor.creditosIniciais % configuracao.passoDeCreditos === 0;
+    const limiteValido = Number.isInteger(valor.limiteDeTorres)
+        && valor.limiteDeTorres >= configuracao.minimoDeTorres
+        && valor.limiteDeTorres <= configuracao.maximoDeTorres;
+    const decoracoesValidas = Number.isInteger(valor.nivelDeDecoracoes)
+        && valor.nivelDeDecoracoes >= 0
+        && valor.nivelDeDecoracoes < configuracao.percentuaisDeDecoracoes.length;
+
+    if (
+        !id
+        || nome.length < 1
+        || nome.length > 32
+        || criador.length < 1
+        || criador.length > 18
+        || descricao.length > 140
+        || !temaValido
+        || !caminhoValido
+        || !creditosValidos
+        || !limiteValido
+        || !decoracoesValidas
+        || !Array.isArray(valor.waves)
+        || valor.waves.length < 1
+        || valor.waves.length > configuracao.maximoDeWaves
+    ) {
+        return null;
+    }
+
+    const waves = [];
+    for (const waveDoMapa of valor.waves) {
+        if (
+            !waveDoMapa
+            || !Array.isArray(waveDoMapa.grupos)
+            || waveDoMapa.grupos.length < 1
+            || waveDoMapa.grupos.length > configuracao.maximoDeGruposPorWave
+        ) {
+            return null;
+        }
+
+        const grupos = [];
+        for (const grupo of waveDoMapa.grupos) {
+            if (
+                !grupo
+                || !configuracao.inimigos.includes(grupo.tipo)
+                || !Number.isInteger(grupo.quantidade)
+                || grupo.quantidade < 1
+                || grupo.quantidade > configuracao.maximoDeInimigosPorGrupo
+            ) {
+                return null;
+            }
+            grupos.push({ tipo: grupo.tipo, quantidade: grupo.quantidade });
+        }
+        waves.push({ grupos });
+    }
+
+    const mapaNormalizado = {
+        id,
+        nome,
+        criador,
+        descricao,
+        tema: valor.tema,
+        idDoCaminho: valor.idDoCaminho,
+        nivelDeDecoracoes: valor.nivelDeDecoracoes,
+        creditosIniciais: valor.creditosIniciais,
+        limiteDeTorres: valor.limiteDeTorres,
+        waves,
+        publicado: valor.publicado === true,
+        atualizadoEm: Number.isFinite(valor.atualizadoEm)
+            ? Math.max(0, Math.floor(valor.atualizadoEm))
+            : Date.now()
+    };
+
+    return contarInimigosDoMapa(mapaNormalizado) <= configuracao.maximoDeInimigosPorMapa
+        ? mapaNormalizado
+        : null;
+}
+
+function carregarMapasDoEditor(chave, limite) {
+    try {
+        const dados = JSON.parse(localStorage.getItem(chave) || "[]");
+        if (!Array.isArray(dados)) {
+            return [];
+        }
+        return dados.map(normalizarMapaDoEditor).filter(Boolean).slice(0, limite);
+    } catch {
+        return [];
+    }
+}
+
+function salvarMapasDoEditor() {
+    try {
+        localStorage.setItem(CHAVE_MAPAS_DO_EDITOR, JSON.stringify(mapasCriadosNoEditor));
+        localStorage.setItem(
+            CHAVE_MAPAS_IMPORTADOS_DO_EDITOR,
+            JSON.stringify(mapasImportadosNoEditor)
+        );
+    } catch {
+        // Os mapas continuam disponíveis durante a sessão atual.
+    }
+}
+
+function carregarAvaliacoesDoEditor() {
+    try {
+        const dados = JSON.parse(localStorage.getItem(CHAVE_AVALIACOES_DO_EDITOR) || "{}");
+        if (!dados || typeof dados !== "object" || Array.isArray(dados)) {
+            return {};
+        }
+
+        return Object.fromEntries(Object.entries(dados).flatMap(([id, avaliacao]) => {
+            const notaValida = Number.isInteger(avaliacao?.nota)
+                && avaliacao.nota >= 1
+                && avaliacao.nota <= 5;
+            const comentario = typeof avaliacao?.comentario === "string"
+                ? avaliacao.comentario.trim().slice(0, 180)
+                : "";
+            return notaValida && /^[a-z0-9_-]{1,80}$/i.test(id)
+                ? [[id, { nota: avaliacao.nota, comentario }]]
+                : [];
+        }));
+    } catch {
+        return {};
+    }
+}
+
+function salvarAvaliacoesDoEditor() {
+    try {
+        localStorage.setItem(
+            CHAVE_AVALIACOES_DO_EDITOR,
+            JSON.stringify(avaliacoesDosMapasImportados)
+        );
+    } catch {
+        // A avaliação continua disponível durante a sessão atual.
+    }
+}
+
+function criarMapaPadraoDoEditor() {
+    return {
+        id: criarIdDoMapaNoEditor(),
+        nome: "",
+        criador: CONFIG.editorDeFases.nomePadraoDoCriador,
+        descricao: "",
+        tema: "campo",
+        idDoCaminho: "ziguezague",
+        nivelDeDecoracoes: 2,
+        creditosIniciais: 500,
+        limiteDeTorres: 12,
+        waves: [
+            { grupos: [{ tipo: "normal", quantidade: 5 }] },
+            { grupos: [{ tipo: "rapido", quantidade: 7 }] },
+            { grupos: [{ tipo: "elite", quantidade: 4 }] }
+        ],
+        publicado: false,
+        atualizadoEm: Date.now()
+    };
+}
+
+function obterNomeDoCaminhoDoEditor(idDoCaminho) {
+    return traduzir(`editor.caminho.${idDoCaminho}`);
+}
+
+function criarResumoDoMapaNoEditor(mapa) {
+    return traduzir("editor.resumo", {
+        waves: mapa.waves.length,
+        inimigos: contarInimigosDoMapa(mapa),
+        torres: mapa.limiteDeTorres
+    });
+}
+
+function calcularAssinaturaDoCodigoDoEditor(texto) {
+    let assinatura = 2166136261;
+    for (let indice = 0; indice < texto.length; indice++) {
+        assinatura ^= texto.charCodeAt(indice);
+        assinatura = Math.imul(assinatura, 16777619);
+    }
+    return (assinatura >>> 0).toString(36);
+}
+
+function codificarTextoDoEditor(texto) {
+    const bytes = new TextEncoder().encode(texto);
+    let binario = "";
+    for (const byte of bytes) {
+        binario += String.fromCharCode(byte);
+    }
+    return btoa(binario);
+}
+
+function decodificarTextoDoEditor(texto) {
+    const binario = atob(texto);
+    const bytes = Uint8Array.from(binario, caractere => caractere.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+}
+
+function gerarCodigoDoMapaNoEditor(mapa) {
+    const conteudo = JSON.stringify({
+        versao: 1,
+        mapa: {
+            nome: mapa.nome,
+            criador: mapa.criador,
+            descricao: mapa.descricao,
+            tema: mapa.tema,
+            idDoCaminho: mapa.idDoCaminho,
+            nivelDeDecoracoes: mapa.nivelDeDecoracoes,
+            creditosIniciais: mapa.creditosIniciais,
+            limiteDeTorres: mapa.limiteDeTorres,
+            waves: mapa.waves
+        }
+    });
+    const carga = codificarTextoDoEditor(conteudo);
+    return `GP-MAPA-1.${carga}.${calcularAssinaturaDoCodigoDoEditor(carga)}`;
+}
+
+function importarMapaPeloCodigo(codigo) {
+    try {
+        const partes = String(codigo || "").trim().split(".");
+        if (
+            partes.length !== 3
+            || partes[0] !== "GP-MAPA-1"
+            || calcularAssinaturaDoCodigoDoEditor(partes[1]) !== partes[2]
+        ) {
+            return null;
+        }
+
+        const conteudo = JSON.parse(decodificarTextoDoEditor(partes[1]));
+        if (conteudo?.versao !== 1 || !conteudo.mapa) {
+            return null;
+        }
+
+        return normalizarMapaDoEditor({
+            ...conteudo.mapa,
+            id: `comunidade-${calcularAssinaturaDoCodigoDoEditor(partes[1])}`,
+            publicado: true,
+            atualizadoEm: Date.now()
+        });
+    } catch {
+        return null;
+    }
+}
+
+function criarBotoesDeExclusaoDoMapa(mapa) {
+    if (idDoMapaAguardandoExclusao !== mapa.id) {
+        return `<button class="botao editor-botao-perigo" onclick="solicitarExclusaoDoMapa('${mapa.id}')">${traduzir("editor.excluir")}</button>`;
+    }
+
+    return `
+        <button class="botao editor-botao-perigo editor-botao-confirmar" onclick="excluirMapaCriado('${mapa.id}')">${traduzir("editor.confirmarExclusao")}</button>
+        <button class="botao" onclick="cancelarExclusaoDoMapa()">${traduzir("editor.cancelar")}</button>
+    `;
+}
+
+function criarCartaoDoMapaNoEditor(mapa, importado = false) {
+    const avaliacao = avaliacoesDosMapasImportados[mapa.id] || { nota: 5, comentario: "" };
+    const codigoVisivel = !importado && compartilhamentoDoEditor?.id === mapa.id
+        ? `
+            <div class="editor-compartilhamento">
+                <strong>${traduzir("editor.codigo")}</strong>
+                <p>${traduzir("editor.codigoAjuda")}</p>
+                <textarea id="codigo-compartilhamento-editor" readonly>${escaparTextoDoEditor(compartilhamentoDoEditor.codigo)}</textarea>
+                <button class="botao" onclick="copiarCodigoDoMapa('${mapa.id}')">${traduzir("editor.copiarCodigo")}</button>
+            </div>
+        `
+        : "";
+    const avaliacaoVisivel = importado
+        ? `
+            <div class="editor-avaliacao">
+                <label>${traduzir("editor.avaliacao")}
+                    <select id="nota-editor-${mapa.id}">
+                        ${[1, 2, 3, 4, 5].map(nota => `<option value="${nota}" ${avaliacao.nota === nota ? "selected" : ""}>${"★".repeat(nota)}</option>`).join("")}
+                    </select>
+                </label>
+                <label>${traduzir("editor.comentario")}
+                    <textarea id="comentario-editor-${mapa.id}" maxlength="180">${escaparTextoDoEditor(avaliacao.comentario)}</textarea>
+                </label>
+                <button class="botao" onclick="salvarAvaliacaoDoMapa('${mapa.id}')">${traduzir("editor.salvarAvaliacao")}</button>
+            </div>
+        `
+        : "";
+
+    return `
+        <article class="editor-mapa-cartao" data-id-mapa="${mapa.id}">
+            <header>
+                <span class="editor-mapa-tema">${escaparTextoDoEditor(localizar(
+                    CONFIG.editorDeFases.cenarios.find(cenario => cenario.id === mapa.tema)?.nome || mapa.tema
+                ))}</span>
+                <small>${traduzir(importado || mapa.publicado ? "editor.publicado" : "editor.rascunho")}</small>
+            </header>
+            <h3>${escaparTextoDoEditor(mapa.nome)}</h3>
+            <strong>${escaparTextoDoEditor(traduzir("editor.criadoPor", { criador: mapa.criador }))}</strong>
+            <p>${escaparTextoDoEditor(mapa.descricao || "—")}</p>
+            <em>${escaparTextoDoEditor(criarResumoDoMapaNoEditor(mapa))}</em>
+            <div class="editor-mapa-acoes">
+                <button class="botao botao-primario" onclick="jogarMapaDoEditor('${mapa.id}', '${importado ? "comunidade" : "meus"}')">${traduzir("editor.jogar")}</button>
+                ${importado
+                    ? `<button class="botao editor-botao-perigo" onclick="removerMapaImportado('${mapa.id}')">${traduzir("editor.removerImportado")}</button>`
+                    : `
+                        <button class="botao" onclick="editarMapaNoEditor('${mapa.id}')">${traduzir("editor.editar")}</button>
+                        <button class="botao" onclick="publicarMapaDoEditor('${mapa.id}')">${traduzir("editor.publicar")}</button>
+                        ${criarBotoesDeExclusaoDoMapa(mapa)}
+                    `}
+            </div>
+            ${codigoVisivel}
+            ${avaliacaoVisivel}
+        </article>
+    `;
+}
+
+function criarHistoricoVazioDoCentroDeTreinamento() {
+    return {
+        partidas: 0,
+        vitorias: 0,
+        tiposConcluidos: [],
+        recordes: Object.fromEntries(
+            CONFIG.centroDeTreinamento.tiposDisponiveis.map(tipo => [tipo, null])
+        )
+    };
+}
+
+function normalizarHistoricoDoCentroDeTreinamento(dados) {
+    const historico = criarHistoricoVazioDoCentroDeTreinamento();
+    if (!dados || typeof dados !== "object") {
+        return historico;
+    }
+
+    historico.partidas = Math.max(0, Math.floor(Number(dados.partidas) || 0));
+    historico.vitorias = Math.min(
+        historico.partidas,
+        Math.max(0, Math.floor(Number(dados.vitorias) || 0))
+    );
+    historico.tiposConcluidos = [...new Set(
+        Array.isArray(dados.tiposConcluidos)
+            ? dados.tiposConcluidos.filter(tipo => (
+                CONFIG.centroDeTreinamento.tiposDisponiveis.includes(tipo)
+            ))
+            : []
+    )];
+
+    CONFIG.centroDeTreinamento.tiposDisponiveis.forEach(tipo => {
+        const recorde = Number(dados.recordes?.[tipo]);
+        historico.recordes[tipo] = Number.isFinite(recorde) && recorde > 0
+            ? Math.round(recorde)
+            : null;
+    });
+
+    return historico;
+}
+
+function carregarHistoricoDoCentroDeTreinamento() {
+    try {
+        return normalizarHistoricoDoCentroDeTreinamento(JSON.parse(
+            localStorage.getItem(CHAVE_CENTRO_DE_TREINAMENTO) || "null"
+        ));
+    } catch (erro) {
+        return criarHistoricoVazioDoCentroDeTreinamento();
+    }
+}
+
+function salvarHistoricoDoCentroDeTreinamento() {
+    try {
+        localStorage.setItem(
+            CHAVE_CENTRO_DE_TREINAMENTO,
+            JSON.stringify(historicoDoCentroDeTreinamento)
+        );
+    } catch (erro) {
+        // O treino continua disponível mesmo quando o armazenamento local falha.
+    }
+}
+
+function obterDadosVisuaisDoMinigameDeTreinamento(tipo) {
+    const dadosPorTipo = {
+        alvo: {
+            icone: "◎",
+            chaveDoNome: "treinamento.alvo.nome",
+            chaveDaDescricao: "treinamento.alvo.descricao"
+        },
+        labirinto: {
+            icone: "▦",
+            chaveDoNome: "treinamento.labirinto.nome",
+            chaveDaDescricao: "treinamento.labirinto.descricao"
+        },
+        voo: {
+            icone: "▲",
+            chaveDoNome: "treinamento.voo.nome",
+            chaveDaDescricao: "treinamento.voo.descricao"
+        },
+        coleta: {
+            icone: "◆",
+            chaveDoNome: "treinamento.coleta.nome",
+            chaveDaDescricao: "treinamento.coleta.descricao"
+        },
+        sequencia: {
+            icone: "1·2",
+            chaveDoNome: "treinamento.sequencia.nome",
+            chaveDaDescricao: "treinamento.sequencia.descricao"
+        },
+        carga: {
+            icone: "⚡",
+            chaveDoNome: "treinamento.carga.nome",
+            chaveDaDescricao: "treinamento.carga.descricao",
+            chaveDaInstrucao: "treinamento.carga.instrucao"
+        },
+        reflexo: {
+            icone: "!",
+            chaveDoNome: "treinamento.reflexo.nome",
+            chaveDaDescricao: "treinamento.reflexo.descricao",
+            chaveDaInstrucao: "treinamento.reflexo.instrucao"
+        },
+        pulso: {
+            icone: "◇",
+            chaveDoNome: "treinamento.pulso.nome",
+            chaveDaDescricao: "treinamento.pulso.descricao",
+            chaveDaInstrucao: "treinamento.pulso.instrucao"
+        }
+    };
+    return dadosPorTipo[tipo] || dadosPorTipo.carga;
+}
+
+function formatarTempoDoTreinamento(duracao) {
+    return (Math.max(0, duracao) / 1000).toLocaleString(idiomaAtual, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function obterTextoDoRecordeDeTreinamento(tipo) {
+    const recorde = historicoDoCentroDeTreinamento.recordes[tipo];
+    if (!recorde) {
+        return traduzir("treinamento.semRecorde");
+    }
+    if (tipo === "reflexo") {
+        return traduzir("treinamento.melhorReflexo", { tempo: recorde });
+    }
+    return traduzir("treinamento.melhorTempo", {
+        tempo: formatarTempoDoTreinamento(recorde)
+    });
+}
+
+function criarCartaoDoMinigameDeTreinamento(tipo) {
+    const dados = obterDadosVisuaisDoMinigameDeTreinamento(tipo);
+    const concluido = historicoDoCentroDeTreinamento.tiposConcluidos.includes(tipo);
+    return `
+        <article class="treinamento-cartao" data-tipo="${tipo}" data-concluido="${concluido}">
+            <div class="treinamento-cartao-maquina" aria-hidden="true">
+                <span>${dados.icone}</span><i></i><i></i><i></i>
+            </div>
+            <div class="treinamento-cartao-conteudo">
+                <small>${traduzir("treinamento.recorde")}</small>
+                <h3>${traduzir(dados.chaveDoNome)}</h3>
+                <p>${traduzir(dados.chaveDaDescricao)}</p>
+                <strong>${obterTextoDoRecordeDeTreinamento(tipo)}</strong>
+                <button class="botao botao-primario" onclick="iniciarMinigameDaCentralDeTreinamento('${tipo}')">${traduzir("treinamento.jogar")}</button>
+            </div>
+        </article>
+    `;
+}
+
+function criarVisualDoDesafioDeTreinamento(tipo) {
+    if (tipo === "carga") {
+        return `
+            <div class="treinamento-nucleo" aria-hidden="true"><i id="energia-nucleo-treinamento"></i><span>GP</span></div>
+            <button id="controle-minigame-treinamento" class="treinamento-botao-acao treinamento-botao-carga" type="button" onclick="acionarControleDoTreinamento()" disabled>${traduzir("treinamento.apertar")}</button>
+        `;
+    }
+    if (tipo === "reflexo") {
+        return `
+            <div class="treinamento-luzes" aria-hidden="true"><i></i><i></i><i></i></div>
+            <button id="controle-minigame-treinamento" class="treinamento-botao-acao treinamento-botao-reflexo" type="button" data-estado="aguarde" onclick="acionarControleDoTreinamento()" disabled>${traduzir("treinamento.aguarde")}</button>
+        `;
+    }
+    return `
+        <div class="treinamento-medidor" aria-hidden="true">
+            <i id="faixa-alvo-treinamento" class="treinamento-faixa-alvo"></i>
+            <span id="marcador-pulso-treinamento" class="treinamento-marcador-pulso"></span>
+        </div>
+        <button id="controle-minigame-treinamento" class="treinamento-botao-acao treinamento-botao-pulso" type="button" onclick="acionarControleDoTreinamento()" disabled>${traduzir("treinamento.travar")}</button>
+    `;
+}
+
+function criarPainelDoDesafioDeTreinamento() {
+    const desafio = desafioDeTreinamentoAtivo;
+    const dados = obterDadosVisuaisDoMinigameDeTreinamento(desafio.tipo);
+    const configuracao = CONFIG.centroDeTreinamento[desafio.tipo];
+    const rotuloDosPontos = desafio.tipo === "carga"
+        ? "treinamento.apertos"
+        : desafio.tipo === "reflexo"
+            ? "treinamento.sinais"
+            : "treinamento.travas";
+    const meta = desafio.tipo === "carga"
+        ? configuracao.apertosNecessarios
+        : configuracao.acertosNecessarios;
+
+    return `
+        <section class="treinamento-desafio" data-tipo="${desafio.tipo}" data-origem="${desafio.origem}">
+            <header class="treinamento-desafio-topo">
+                ${desafio.origem === "central" ? `<button class="botao" onclick="abandonarMinigameDeTreinamento()">← ${traduzir("treinamento.voltar")}</button>` : ""}
+                <div>
+                    <small>${traduzir("treinamento.local")}</small>
+                    <h3>${traduzir(dados.chaveDoNome)}</h3>
+                </div>
+                <div class="treinamento-status" aria-live="polite">
+                    <span><small>${traduzir(rotuloDosPontos)}</small><strong id="pontos-minigame-treinamento">0/${meta}</strong></span>
+                    <span><small id="rotulo-tempo-treinamento">${traduzir("treinamento.comecaEm")}</small><strong id="tempo-minigame-treinamento">3</strong></span>
+                </div>
+            </header>
+            <p class="treinamento-instrucao">${traduzir(dados.chaveDaInstrucao)}</p>
+            <div class="treinamento-arena" data-tipo="${desafio.tipo}">
+                <div id="contagem-minigame-treinamento" class="treinamento-contagem" aria-live="assertive">
+                    <small>${traduzir("treinamento.preparar")}</small><strong>3</strong>
+                </div>
+                ${criarVisualDoDesafioDeTreinamento(desafio.tipo)}
+                <p id="feedback-minigame-treinamento" class="treinamento-feedback" aria-live="polite"></p>
+            </div>
+        </section>
+    `;
+}
+
+function criarResultadoDoDesafioDeTreinamento() {
+    const desafio = desafioDeTreinamentoAtivo;
+    const dados = obterDadosVisuaisDoMinigameDeTreinamento(desafio.tipo);
+    let descricao = traduzir("treinamento.resultadoFalha");
+    if (desafio.vitoria) {
+        const chave = CONFIG.fliperama.minigame.tiposNoCanvas.includes(desafio.tipo)
+            ? "treinamento.resultadoFliperama"
+            : desafio.tipo === "carga"
+                ? "treinamento.resultadoCarga"
+                : desafio.tipo === "reflexo"
+                    ? "treinamento.resultadoReflexo"
+                    : "treinamento.resultadoPulso";
+        descricao = traduzir(chave, {
+            tempo: desafio.tipo === "reflexo"
+                ? desafio.valorDoResultado
+                : formatarTempoDoTreinamento(desafio.valorDoResultado)
+        });
+    }
+
+    return `
+        <section class="treinamento-resultado" data-vitoria="${desafio.vitoria}">
+            <div class="treinamento-resultado-emblema" aria-hidden="true">${desafio.vitoria ? "★" : dados.icone}</div>
+            <small>${traduzir(dados.chaveDoNome)}</small>
+            <h3>${traduzir(desafio.vitoria ? "treinamento.vitoria" : "treinamento.derrota")}</h3>
+            <p>${descricao}</p>
+            ${desafio.novoRecorde ? `<strong>${traduzir("treinamento.novoRecorde")}</strong>` : ""}
+            <div>
+                <button class="botao botao-primario" onclick="iniciarMinigameDaCentralDeTreinamento('${desafio.tipo}')">${traduzir("treinamento.repetir")}</button>
+                <button class="botao" onclick="abandonarMinigameDeTreinamento()">${traduzir("treinamento.voltar")}</button>
+            </div>
+        </section>
+    `;
+}
+
+function mostrarCentroDeTreinamento() {
+    definirTelaDoMenuAberta("treinamento");
+    tentarIniciarMusicaDoLobby();
+
+    const conteudo = desafioDeTreinamentoAtivo
+        ? desafioDeTreinamentoAtivo.estado === "resultado"
+            ? criarResultadoDoDesafioDeTreinamento()
+            : criarPainelDoDesafioDeTreinamento()
+        : `
+            <section class="treinamento-apresentacao">
+                <div class="treinamento-oficina-visual" aria-hidden="true"><span>GP</span><i></i><i></i></div>
+                <div>
+                    <small>${traduzir("treinamento.local")}</small>
+                    <p>${traduzir("treinamento.aviso")}</p>
+                </div>
+            </section>
+            <section class="treinamento-grade">
+                ${CONFIG.centroDeTreinamento.tiposDisponiveis.map(criarCartaoDoMinigameDeTreinamento).join("")}
+            </section>
+        `;
+
+    conteudoMenu.innerHTML = `
+        ${criarCabecalhoConteudoMenu(
+            traduzir("treinamento.titulo"),
+            traduzir("treinamento.descricao")
+        )}
+        ${conteudo}
+    `;
+
+    if (desafioDeTreinamentoAtivo?.estado !== "resultado") {
+        atualizarMinigameDeTreinamento();
+    }
+}
+
+function mostrarMinigameDeTreinamentoNoFliperama() {
+    if (!desafioDeTreinamentoAtivo || desafioDeTreinamentoAtivo.origem !== "fliperama") {
+        return;
+    }
+    camadaMinigameTreinamentoFliperama.hidden = false;
+    camadaMinigameTreinamentoFliperama.setAttribute(
+        "aria-label",
+        traduzir(obterDadosVisuaisDoMinigameDeTreinamento(
+            desafioDeTreinamentoAtivo.tipo
+        ).chaveDoNome)
+    );
+    painelMinigameTreinamentoFliperama.innerHTML = criarPainelDoDesafioDeTreinamento();
+    atualizarMinigameDeTreinamento();
+}
+
+function ocultarMinigameDeTreinamentoNoFliperama() {
+    encerrarTemporizadorDoCentroDeTreinamento();
+    camadaMinigameTreinamentoFliperama.hidden = true;
+    painelMinigameTreinamentoFliperama.innerHTML = "";
+    if (desafioDeTreinamentoAtivo?.origem === "fliperama") {
+        desafioDeTreinamentoAtivo = null;
+    }
+}
+
+function encerrarTemporizadorDoCentroDeTreinamento() {
+    if (temporizadorDoCentroDeTreinamento !== null) {
+        clearInterval(temporizadorDoCentroDeTreinamento);
+        temporizadorDoCentroDeTreinamento = null;
+    }
+}
+
+function iniciarMinigameDaCentralDeTreinamento(tipo) {
+    if (CONFIG.fliperama.minigame.tiposNoCanvas.includes(tipo)) {
+        iniciarMinigameFliperama(tipo, true);
+        return;
+    }
+    iniciarMinigameDeTreinamento(tipo, "central");
+}
+
+function iniciarMinigameDeTreinamento(tipo, origem = "central") {
+    if (!CONFIG.centroDeTreinamento.tiposDisponiveis.includes(tipo)) {
+        return;
+    }
+
+    encerrarTemporizadorDoCentroDeTreinamento();
+    const agora = Date.now();
+    desafioDeTreinamentoAtivo = {
+        tipo,
+        origem: origem === "fliperama" ? "fliperama" : "central",
+        estado: "contagem",
+        comecaEm: agora + CONFIG.centroDeTreinamento.duracaoDaContagemRegressiva,
+        iniciadoEm: 0,
+        terminaEm: 0,
+        acertos: 0,
+        falhas: 0,
+        temposDeReacao: [],
+        sinalAtivo: false,
+        proximoSinalEm: 0,
+        sinalAtivadoEm: 0,
+        indiceDaFaixa: 0,
+        feedback: "",
+        feedbackAte: 0
+    };
+    if (desafioDeTreinamentoAtivo.origem === "fliperama") {
+        mostrarMinigameDeTreinamentoNoFliperama();
+    } else {
+        mostrarCentroDeTreinamento();
+    }
+    temporizadorDoCentroDeTreinamento = setInterval(
+        atualizarMinigameDeTreinamento,
+        CONFIG.centroDeTreinamento.intervaloDeAtualizacao
+    );
+}
+
+function iniciarEtapaJogavelDoTreinamento(agora) {
+    const desafio = desafioDeTreinamentoAtivo;
+    if (!desafio || desafio.estado !== "contagem") {
+        return;
+    }
+    const configuracao = CONFIG.centroDeTreinamento[desafio.tipo];
+    desafio.estado = "jogando";
+    desafio.iniciadoEm = agora;
+    desafio.terminaEm = agora + configuracao.duracao;
+    if (desafio.tipo === "reflexo") {
+        prepararProximoSinalDoTreinamento(agora);
+    }
+
+    const contagem = document.getElementById("contagem-minigame-treinamento");
+    if (contagem) {
+        contagem.hidden = true;
+    }
+    const controle = document.getElementById("controle-minigame-treinamento");
+    if (controle) {
+        controle.disabled = false;
+        controle.focus({ preventScroll: true });
+    }
+}
+
+function sortearAtrasoDoSinalDeTreinamento() {
+    const configuracao = CONFIG.centroDeTreinamento.reflexo;
+    return configuracao.atrasoMinimoDoSinal + Math.random() * (
+        configuracao.atrasoMaximoDoSinal - configuracao.atrasoMinimoDoSinal
+    );
+}
+
+function prepararProximoSinalDoTreinamento(agora) {
+    if (!desafioDeTreinamentoAtivo || desafioDeTreinamentoAtivo.tipo !== "reflexo") {
+        return;
+    }
+    desafioDeTreinamentoAtivo.sinalAtivo = false;
+    desafioDeTreinamentoAtivo.sinalAtivadoEm = 0;
+    desafioDeTreinamentoAtivo.proximoSinalEm = agora + sortearAtrasoDoSinalDeTreinamento();
+}
+
+function definirFeedbackDoTreinamento(chave, agora = Date.now()) {
+    if (!desafioDeTreinamentoAtivo) {
+        return;
+    }
+    desafioDeTreinamentoAtivo.feedback = chave;
+    desafioDeTreinamentoAtivo.feedbackAte = agora + 650;
+}
+
+function obterPosicaoDoMarcadorDePulso(agora = Date.now()) {
+    const desafio = desafioDeTreinamentoAtivo;
+    if (!desafio?.iniciadoEm) {
+        return 0;
+    }
+    const duracao = CONFIG.centroDeTreinamento.pulso.duracaoDoPercurso;
+    const progresso = ((agora - desafio.iniciadoEm) % duracao) / duracao;
+    return progresso <= 0.5 ? progresso * 2 : (1 - progresso) * 2;
+}
+
+function registrarFalhaNoReflexoDoTreinamento(chave, agora) {
+    const desafio = desafioDeTreinamentoAtivo;
+    desafio.falhas += 1;
+    definirFeedbackDoTreinamento(chave, agora);
+    if (desafio.falhas >= CONFIG.centroDeTreinamento.reflexo.maximoDeFalhas) {
+        finalizarMinigameDeTreinamento(false, agora);
+        return;
+    }
+    prepararProximoSinalDoTreinamento(agora);
+}
+
+function acionarControleDoTreinamento() {
+    const desafio = desafioDeTreinamentoAtivo;
+    if (!desafio || desafio.estado !== "jogando") {
+        return;
+    }
+    const agora = Date.now();
+
+    if (desafio.tipo === "carga") {
+        desafio.acertos += 1;
+        if (desafio.acertos >= CONFIG.centroDeTreinamento.carga.apertosNecessarios) {
+            finalizarMinigameDeTreinamento(true, agora);
+            return;
+        }
+    } else if (desafio.tipo === "reflexo") {
+        if (!desafio.sinalAtivo) {
+            registrarFalhaNoReflexoDoTreinamento("treinamento.cedo", agora);
+            return;
+        }
+        desafio.temposDeReacao.push(Math.max(1, agora - desafio.sinalAtivadoEm));
+        desafio.acertos += 1;
+        definirFeedbackDoTreinamento("treinamento.acerto", agora);
+        if (desafio.acertos >= CONFIG.centroDeTreinamento.reflexo.acertosNecessarios) {
+            finalizarMinigameDeTreinamento(true, agora);
+            return;
+        }
+        prepararProximoSinalDoTreinamento(agora);
+    } else {
+        const configuracao = CONFIG.centroDeTreinamento.pulso;
+        const posicao = obterPosicaoDoMarcadorDePulso(agora);
+        const centro = configuracao.centrosDasFaixas[desafio.indiceDaFaixa];
+        const acertou = Math.abs(posicao - centro) <= configuracao.larguraDaFaixa / 2;
+        if (acertou) {
+            desafio.acertos += 1;
+            desafio.indiceDaFaixa += 1;
+            definirFeedbackDoTreinamento("treinamento.acerto", agora);
+            if (desafio.acertos >= configuracao.acertosNecessarios) {
+                finalizarMinigameDeTreinamento(true, agora);
+                return;
+            }
+        } else {
+            desafio.falhas += 1;
+            definirFeedbackDoTreinamento("treinamento.erro", agora);
+            if (desafio.falhas >= configuracao.maximoDeErros) {
+                finalizarMinigameDeTreinamento(false, agora);
+                return;
+            }
+        }
+    }
+    atualizarMinigameDeTreinamento(agora);
+}
+
+function atualizarInterfaceDoTreinamento(agora) {
+    const desafio = desafioDeTreinamentoAtivo;
+    const configuracao = CONFIG.centroDeTreinamento[desafio.tipo];
+    const pontos = document.getElementById("pontos-minigame-treinamento");
+    const tempo = document.getElementById("tempo-minigame-treinamento");
+    const rotuloTempo = document.getElementById("rotulo-tempo-treinamento");
+    const feedback = document.getElementById("feedback-minigame-treinamento");
+    const controle = document.getElementById("controle-minigame-treinamento");
+    const meta = desafio.tipo === "carga"
+        ? configuracao.apertosNecessarios
+        : configuracao.acertosNecessarios;
+
+    if (pontos) {
+        pontos.textContent = `${desafio.acertos}/${meta}` + (
+            desafio.tipo === "carga" ? "" : ` · ×${desafio.falhas}`
+        );
+    }
+    if (tempo) {
+        tempo.textContent = `${Math.max(0, Math.ceil((desafio.terminaEm - agora) / 1000))}s`;
+    }
+    if (rotuloTempo) {
+        rotuloTempo.textContent = traduzir("treinamento.tempo");
+    }
+    if (feedback) {
+        feedback.textContent = agora < desafio.feedbackAte && desafio.feedback
+            ? traduzir(desafio.feedback)
+            : "";
+    }
+
+    if (desafio.tipo === "carga") {
+        const energia = document.getElementById("energia-nucleo-treinamento");
+        if (energia) {
+            energia.style.height = `${Math.min(100, desafio.acertos / meta * 100)}%`;
+        }
+    } else if (desafio.tipo === "reflexo" && controle) {
+        controle.dataset.estado = desafio.sinalAtivo ? "agora" : "aguarde";
+        controle.textContent = traduzir(
+            desafio.sinalAtivo ? "treinamento.agora" : "treinamento.aguarde"
+        );
+    } else if (desafio.tipo === "pulso") {
+        const marcador = document.getElementById("marcador-pulso-treinamento");
+        const faixa = document.getElementById("faixa-alvo-treinamento");
+        const centro = configuracao.centrosDasFaixas[Math.min(
+            desafio.indiceDaFaixa,
+            configuracao.centrosDasFaixas.length - 1
+        )];
+        if (marcador) {
+            marcador.style.left = `${obterPosicaoDoMarcadorDePulso(agora) * 100}%`;
+        }
+        if (faixa) {
+            faixa.style.left = `${(centro - configuracao.larguraDaFaixa / 2) * 100}%`;
+            faixa.style.width = `${configuracao.larguraDaFaixa * 100}%`;
+        }
+    }
+}
+
+function atualizarMinigameDeTreinamento(agora = Date.now()) {
+    const desafio = desafioDeTreinamentoAtivo;
+    if (!desafio || desafio.estado === "resultado") {
+        return;
+    }
+
+    if (desafio.estado === "contagem") {
+        const restante = Math.max(1, Math.ceil((desafio.comecaEm - agora) / 1000));
+        const contagem = document.getElementById("contagem-minigame-treinamento");
+        const tempo = document.getElementById("tempo-minigame-treinamento");
+        if (contagem) {
+            contagem.hidden = false;
+            const numero = contagem.querySelector("strong");
+            if (numero) numero.textContent = restante;
+        }
+        if (tempo) tempo.textContent = restante;
+        if (agora >= desafio.comecaEm) {
+            iniciarEtapaJogavelDoTreinamento(agora);
+        } else {
+            return;
+        }
+    }
+
+    if (agora >= desafio.terminaEm) {
+        finalizarMinigameDeTreinamento(false, agora);
+        return;
+    }
+
+    if (desafio.tipo === "reflexo") {
+        const janela = CONFIG.centroDeTreinamento.reflexo.janelaDoSinal;
+        if (!desafio.sinalAtivo && agora >= desafio.proximoSinalEm) {
+            desafio.sinalAtivo = true;
+            desafio.sinalAtivadoEm = agora;
+        } else if (desafio.sinalAtivo && agora - desafio.sinalAtivadoEm > janela) {
+            registrarFalhaNoReflexoDoTreinamento("treinamento.tarde", agora);
+            if (desafio.estado === "resultado") return;
+        }
+    }
+
+    atualizarInterfaceDoTreinamento(agora);
+}
+
+function registrarResultadoDoCentroDeTreinamento(tipo, vitoria, valorDoResultado) {
+    const recordeAnterior = historicoDoCentroDeTreinamento.recordes[tipo];
+    const novoRecorde = Boolean(vitoria && (
+        !recordeAnterior || valorDoResultado < recordeAnterior
+    ));
+
+    historicoDoCentroDeTreinamento.partidas += 1;
+    if (vitoria) {
+        historicoDoCentroDeTreinamento.vitorias += 1;
+        if (!historicoDoCentroDeTreinamento.tiposConcluidos.includes(tipo)) {
+            historicoDoCentroDeTreinamento.tiposConcluidos.push(tipo);
+        }
+        if (novoRecorde) {
+            historicoDoCentroDeTreinamento.recordes[tipo] = valorDoResultado;
+        }
+    }
+    salvarHistoricoDoCentroDeTreinamento();
+    return novoRecorde;
+}
+
+function concederRecompensaDoMinigameDeTreinamentoNoFliperama(tipo) {
+    const recompensa = CONFIG.centroDeTreinamento.recompensasNoFliperama[tipo];
+    if (!recompensa) {
+        return;
+    }
+
+    if (recompensa.tipo === "cadencia") {
+        aplicarBoostDeCadenciaDoFliperama();
+        mostrarAviso(traduzir("fliperama.cargaConcluida", {
+            segundos: CONFIG.fliperama.boost.duracao / 1000
+        }));
+    } else if (recompensa.tipo === "dano") {
+        aplicarBoostDeDanoDoFliperama();
+        mostrarAviso(traduzir("fliperama.reflexoConcluido", {
+            percentual: obterPercentualInteiro(CONFIG.fliperama.boost.percentualDeDano),
+            segundos: CONFIG.fliperama.boost.duracao / 1000
+        }));
+    } else if (recompensa.tipo === "creditos") {
+        dinheiro += recompensa.valor;
+        atualizarBotoesDaTorre();
+        mostrarAviso(traduzir("fliperama.pulsoConcluido", {
+            creditos: recompensa.valor
+        }));
+    }
+}
+
+function finalizarMinigameDeTreinamento(vitoria, agora = Date.now()) {
+    const desafio = desafioDeTreinamentoAtivo;
+    if (!desafio || desafio.estado === "resultado") {
+        return;
+    }
+    encerrarTemporizadorDoCentroDeTreinamento();
+
+    const duracao = Math.max(1, agora - desafio.iniciadoEm);
+    const valorDoResultado = desafio.tipo === "reflexo" && desafio.temposDeReacao.length
+        ? Math.round(desafio.temposDeReacao.reduce((total, valor) => total + valor, 0) / desafio.temposDeReacao.length)
+        : duracao;
+
+    if (desafio.origem === "fliperama") {
+        const tipoConcluido = desafio.tipo;
+        ocultarMinigameDeTreinamentoNoFliperama();
+        definirJogoPausado(false);
+        if (vitoria) {
+            concederRecompensaDoMinigameDeTreinamentoNoFliperama(tipoConcluido);
+            registrarMinigameFliperamaConcluidoParaConquistas(tipoConcluido);
+        } else {
+            mostrarAviso(traduzir("fliperama.tentativaEncerrada"));
+        }
+        return;
+    }
+
+    const novoRecorde = registrarResultadoDoCentroDeTreinamento(
+        desafio.tipo,
+        vitoria,
+        valorDoResultado
+    );
+
+    desafio.estado = "resultado";
+    desafio.vitoria = Boolean(vitoria);
+    desafio.valorDoResultado = valorDoResultado;
+    desafio.novoRecorde = novoRecorde;
+    mostrarCentroDeTreinamento();
+}
+
+function abandonarMinigameDeTreinamento() {
+    encerrarTemporizadorDoCentroDeTreinamento();
+    desafioDeTreinamentoAtivo = null;
+    mostrarCentroDeTreinamento();
+}
+
+function limparCentroDeTreinamento() {
+    encerrarTemporizadorDoCentroDeTreinamento();
+    desafioDeTreinamentoAtivo = null;
+}
+
+function editorDeFasesEstaDesbloqueado() {
+    return obterDadosDoNivel().nivel >= CONFIG.editorDeFases.nivelNecessarioParaDesbloqueio;
+}
+
+function atualizarDisponibilidadeDoEditor() {
+    if (!botaoEditorMenu || !estadoEditorMenu) {
+        return;
+    }
+
+    const desbloqueado = editorDeFasesEstaDesbloqueado();
+    const nivelNecessario = CONFIG.editorDeFases.nivelNecessarioParaDesbloqueio;
+    botaoEditorMenu.disabled = !desbloqueado;
+    botaoEditorMenu.setAttribute("aria-disabled", (!desbloqueado).toString());
+    botaoEditorMenu.classList.toggle("botao-lobby-editor-bloqueado", !desbloqueado);
+    estadoEditorMenu.textContent = traduzir(
+        desbloqueado ? "lobby.crieSuaFase" : "editor.requerNivel",
+        { nivel: nivelNecessario }
+    );
+    botaoEditorMenu.title = desbloqueado
+        ? ""
+        : traduzir("editor.bloqueado", { nivel: nivelNecessario });
+}
+
+function mostrarEditorDeFases(aba = abaDoEditorSelecionada) {
+    if (!editorDeFasesEstaDesbloqueado()) {
+        atualizarDisponibilidadeDoEditor();
+        mostrarAviso(traduzir("editor.bloqueado", {
+            nivel: CONFIG.editorDeFases.nivelNecessarioParaDesbloqueio
+        }));
+        return;
+    }
+
+    abaDoEditorSelecionada = aba === "comunidade" ? "comunidade" : "meus";
+    rascunhoDoMapaNoEditor = null;
+    definirTelaDoMenuAberta("editor");
+    tentarIniciarMusicaDoLobby();
+
+    const mostrandoComunidade = abaDoEditorSelecionada === "comunidade";
+    const mapas = mostrandoComunidade ? mapasImportadosNoEditor : mapasCriadosNoEditor;
+    const cartoes = mapas.length > 0
+        ? mapas.map(mapa => criarCartaoDoMapaNoEditor(mapa, mostrandoComunidade)).join("")
+        : `<p class="editor-vazio">${traduzir(mostrandoComunidade ? "editor.semComunidade" : "editor.semMapas")}</p>`;
+    const podeCriar = mapasCriadosNoEditor.length < CONFIG.editorDeFases.maximoDeMapasCriados;
+
+    conteudoMenu.innerHTML = `
+        ${criarCabecalhoConteudoMenu(traduzir("editor.titulo"), traduzir("editor.descricao"))}
+        <nav class="editor-abas" aria-label="${traduzir("editor.titulo")}">
+            <button class="botao ${!mostrandoComunidade ? "ativo" : ""}" aria-pressed="${!mostrandoComunidade}" onclick="mostrarEditorDeFases('meus')">${traduzir("editor.meusMapas")}</button>
+            <button class="botao ${mostrandoComunidade ? "ativo" : ""}" aria-pressed="${mostrandoComunidade}" onclick="mostrarEditorDeFases('comunidade')">${traduzir("editor.comunidade")}</button>
+        </nav>
+        ${mensagemDoEditor ? `<p class="editor-mensagem" role="status">${escaparTextoDoEditor(mensagemDoEditor)}</p>` : ""}
+        ${mostrandoComunidade ? `
+            <section class="editor-importacao">
+                <div>
+                    <h3>${traduzir("editor.importarTitulo")}</h3>
+                    <p>${traduzir("editor.importarAjuda")}</p>
+                </div>
+                <textarea id="codigo-importacao-editor" placeholder="GP-MAPA-1..."></textarea>
+                <button class="botao botao-primario" onclick="importarCodigoNoEditor()">${traduzir("editor.importar")}</button>
+            </section>
+        ` : `
+            <section class="editor-barra-criacao">
+                <strong>${traduzir("editor.espacos", {
+                    usados: mapasCriadosNoEditor.length,
+                    limite: CONFIG.editorDeFases.maximoDeMapasCriados
+                })}</strong>
+                <button class="botao botao-primario" onclick="criarNovoMapaNoEditor()" ${podeCriar ? "" : "disabled"}>${traduzir("editor.novoMapa")}</button>
+            </section>
+        `}
+        <section class="editor-mapas-grade">${cartoes}</section>
+    `;
+}
+
+function criarNovoMapaNoEditor() {
+    if (mapasCriadosNoEditor.length >= CONFIG.editorDeFases.maximoDeMapasCriados) {
+        mensagemDoEditor = traduzir("editor.limiteCriados");
+        mostrarEditorDeFases("meus");
+        return;
+    }
+    mensagemDoEditor = "";
+    rascunhoDoMapaNoEditor = criarMapaPadraoDoEditor();
+    mostrarFormularioDoEditor(false);
+}
+
+function editarMapaNoEditor(idDoMapa) {
+    const mapa = mapasCriadosNoEditor.find(item => item.id === idDoMapa);
+    if (!mapa) {
+        return;
+    }
+    mensagemDoEditor = "";
+    rascunhoDoMapaNoEditor = clonarMapaDoEditor(mapa);
+    mostrarFormularioDoEditor(true);
+}
+
+function criarOpcoesDeInimigosDoEditor(tipoSelecionado) {
+    return CONFIG.editorDeFases.inimigos.map(tipo => {
+        const nome = obterNomeLocalizado(CONFIG.inimigo[tipo]);
+        return `<option value="${tipo}" ${tipo === tipoSelecionado ? "selected" : ""}>${escaparTextoDoEditor(nome)}</option>`;
+    }).join("");
+}
+
+function criarCartaoDaWaveNoEditor(waveDoMapa, indiceDaWave) {
+    const grupos = waveDoMapa.grupos.map((grupo, indiceDoGrupo) => `
+        <div class="editor-grupo-inimigo">
+            <label>${traduzir("editor.tipoInimigo")}
+                <select onchange="atualizarGrupoDoEditor(${indiceDaWave}, ${indiceDoGrupo}, 'tipo', this.value)">${criarOpcoesDeInimigosDoEditor(grupo.tipo)}</select>
+            </label>
+            <label>${traduzir("editor.quantidade")}
+                <input type="number" min="1" max="${CONFIG.editorDeFases.maximoDeInimigosPorGrupo}" value="${grupo.quantidade}" oninput="atualizarGrupoDoEditor(${indiceDaWave}, ${indiceDoGrupo}, 'quantidade', this.value)">
+            </label>
+            <button class="botao editor-botao-perigo" onclick="removerGrupoDoEditor(${indiceDaWave}, ${indiceDoGrupo})" ${waveDoMapa.grupos.length === 1 ? "disabled" : ""}>${traduzir("editor.remover")}</button>
+        </div>
+    `).join("");
+
+    return `
+        <article class="editor-wave-cartao">
+            <header>
+                <h4>${traduzir("editor.wave", { numero: indiceDaWave + 1 })}</h4>
+                <button class="botao editor-botao-perigo" onclick="removerWaveDoEditor(${indiceDaWave})" ${rascunhoDoMapaNoEditor.waves.length === 1 ? "disabled" : ""}>${traduzir("editor.removerWave")}</button>
+            </header>
+            ${grupos}
+            <button class="botao" onclick="adicionarGrupoAoEditor(${indiceDaWave})" ${waveDoMapa.grupos.length >= CONFIG.editorDeFases.maximoDeGruposPorWave ? "disabled" : ""}>${traduzir("editor.adicionarInimigo")}</button>
+        </article>
+    `;
+}
+
+function mostrarFormularioDoEditor(editando = Boolean(
+    rascunhoDoMapaNoEditor
+    && mapasCriadosNoEditor.some(mapa => mapa.id === rascunhoDoMapaNoEditor.id)
+)) {
+    if (!rascunhoDoMapaNoEditor) {
+        mostrarEditorDeFases("meus");
+        return;
+    }
+
+    definirTelaDoMenuAberta("editor");
+    const mapa = rascunhoDoMapaNoEditor;
+    const opcoesDeCenario = CONFIG.editorDeFases.cenarios.map(cenario => `
+        <option value="${cenario.id}" ${cenario.id === mapa.tema ? "selected" : ""}>${escaparTextoDoEditor(localizar(cenario.nome))}</option>
+    `).join("");
+    const opcoesDeCaminho = CONFIG.editorDeFases.caminhos.map(caminho => `
+        <option value="${caminho.id}" ${caminho.id === mapa.idDoCaminho ? "selected" : ""}>${escaparTextoDoEditor(obterNomeDoCaminhoDoEditor(caminho.id))}</option>
+    `).join("");
+    const rotulosDecoracoes = [
+        "editor.semDecoracoes",
+        "editor.poucasDecoracoes",
+        "editor.decoracoesNormais",
+        "editor.muitasDecoracoes"
+    ];
+
+    conteudoMenu.innerHTML = `
+        ${criarCabecalhoConteudoMenu(
+            traduzir(editando ? "editor.editarTitulo" : "editor.novoTitulo"),
+            traduzir("editor.descricao")
+        )}
+        <button class="botao editor-voltar" onclick="voltarParaListaDoEditor()">${traduzir("editor.voltar")}</button>
+        ${mensagemDoEditor ? `<p class="editor-mensagem" role="alert">${escaparTextoDoEditor(mensagemDoEditor)}</p>` : ""}
+        <div class="editor-formulario-layout">
+            <form class="editor-formulario" onsubmit="salvarMapaDoEditor(event)">
+                <fieldset>
+                    <legend>${traduzir("editor.identidade")}</legend>
+                    <label>${traduzir("editor.nome")}
+                        <input id="nome-mapa-editor" maxlength="32" required value="${escaparTextoDoEditor(mapa.nome)}" oninput="atualizarCampoDoEditor('nome', this.value)">
+                    </label>
+                    <label>${traduzir("editor.criador")}
+                        <input id="criador-mapa-editor" maxlength="18" required value="${escaparTextoDoEditor(mapa.criador)}" oninput="atualizarCampoDoEditor('criador', this.value)">
+                    </label>
+                    <label>${traduzir("editor.descricaoMapa")}
+                        <textarea maxlength="140" oninput="atualizarCampoDoEditor('descricao', this.value)">${escaparTextoDoEditor(mapa.descricao)}</textarea>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <legend>${traduzir("editor.visual")}</legend>
+                    <label>${traduzir("editor.cenario")}
+                        <select onchange="atualizarCampoDoEditor('tema', this.value)">${opcoesDeCenario}</select>
+                    </label>
+                    <label>${traduzir("editor.caminho")}
+                        <select onchange="atualizarCampoDoEditor('idDoCaminho', this.value)">${opcoesDeCaminho}</select>
+                    </label>
+                    <label>${traduzir("editor.decoracoes")}
+                        <select onchange="atualizarCampoDoEditor('nivelDeDecoracoes', this.value)">
+                            ${rotulosDecoracoes.map((rotulo, indice) => `<option value="${indice}" ${mapa.nivelDeDecoracoes === indice ? "selected" : ""}>${traduzir(rotulo)}</option>`).join("")}
+                        </select>
+                    </label>
+                </fieldset>
+                <fieldset class="editor-regras-grade">
+                    <legend>${traduzir("editor.regras")}</legend>
+                    <label>${traduzir("editor.creditos")}
+                        <input type="number" min="${CONFIG.editorDeFases.minimoDeCreditos}" max="${CONFIG.editorDeFases.maximoDeCreditos}" step="${CONFIG.editorDeFases.passoDeCreditos}" value="${mapa.creditosIniciais}" oninput="atualizarCampoDoEditor('creditosIniciais', this.value)">
+                    </label>
+                    <label>${traduzir("editor.limiteTorres")}
+                        <input type="number" min="${CONFIG.editorDeFases.minimoDeTorres}" max="${CONFIG.editorDeFases.maximoDeTorres}" value="${mapa.limiteDeTorres}" oninput="atualizarCampoDoEditor('limiteDeTorres', this.value)">
+                    </label>
+                </fieldset>
+                <fieldset class="editor-waves">
+                    <legend>${traduzir("editor.waves")}</legend>
+                    <div class="editor-waves-topo">
+                        <strong id="total-inimigos-editor">${traduzir("editor.inimigosTotal", { quantidade: contarInimigosDoMapa(mapa) })}</strong>
+                        <button class="botao" type="button" onclick="adicionarWaveAoEditor()" ${mapa.waves.length >= CONFIG.editorDeFases.maximoDeWaves ? "disabled" : ""}>${traduzir("editor.novaWave")}</button>
+                    </div>
+                    <div class="editor-waves-lista">${mapa.waves.map(criarCartaoDaWaveNoEditor).join("")}</div>
+                </fieldset>
+                <button class="botao botao-primario editor-salvar" type="submit">${traduzir("editor.salvar")}</button>
+            </form>
+            <aside class="editor-previa-painel">
+                <strong>${traduzir("editor.previa")}</strong>
+                <canvas id="previa-mapa-editor" width="600" height="360" aria-label="${traduzir("editor.previa")}"></canvas>
+                <p id="resumo-previa-editor">${escaparTextoDoEditor(criarResumoDoMapaNoEditor(mapa))}</p>
+            </aside>
+        </div>
+    `;
+    requestAnimationFrame(desenharPreviaDoEditor);
+}
+
+function atualizarCampoDoEditor(campo, valor) {
+    if (!rascunhoDoMapaNoEditor) {
+        return;
+    }
+    rascunhoDoMapaNoEditor[campo] = [
+        "nivelDeDecoracoes", "creditosIniciais", "limiteDeTorres"
+    ].includes(campo) ? Number(valor) : valor;
+
+    if (["tema", "idDoCaminho", "nivelDeDecoracoes"].includes(campo)) {
+        desenharPreviaDoEditor();
+    }
+    const resumo = document.getElementById("resumo-previa-editor");
+    if (resumo) {
+        resumo.textContent = criarResumoDoMapaNoEditor(rascunhoDoMapaNoEditor);
+    }
+}
+
+function atualizarGrupoDoEditor(indiceDaWave, indiceDoGrupo, campo, valor) {
+    const grupo = rascunhoDoMapaNoEditor?.waves[indiceDaWave]?.grupos[indiceDoGrupo];
+    if (!grupo) {
+        return;
+    }
+    grupo[campo] = campo === "quantidade" ? Number(valor) : valor;
+    const total = document.getElementById("total-inimigos-editor");
+    if (total) {
+        total.textContent = traduzir("editor.inimigosTotal", {
+            quantidade: contarInimigosDoMapa(rascunhoDoMapaNoEditor)
+        });
+    }
+    const resumo = document.getElementById("resumo-previa-editor");
+    if (resumo) {
+        resumo.textContent = criarResumoDoMapaNoEditor(rascunhoDoMapaNoEditor);
+    }
+}
+
+function adicionarWaveAoEditor() {
+    if (!rascunhoDoMapaNoEditor || rascunhoDoMapaNoEditor.waves.length >= CONFIG.editorDeFases.maximoDeWaves) {
+        return;
+    }
+    rascunhoDoMapaNoEditor.waves.push({ grupos: [{ tipo: "normal", quantidade: 5 }] });
+    mostrarFormularioDoEditor();
+}
+
+function removerWaveDoEditor(indiceDaWave) {
+    if (!rascunhoDoMapaNoEditor || rascunhoDoMapaNoEditor.waves.length <= 1) {
+        return;
+    }
+    rascunhoDoMapaNoEditor.waves.splice(indiceDaWave, 1);
+    mostrarFormularioDoEditor();
+}
+
+function adicionarGrupoAoEditor(indiceDaWave) {
+    const waveDoMapa = rascunhoDoMapaNoEditor?.waves[indiceDaWave];
+    if (!waveDoMapa || waveDoMapa.grupos.length >= CONFIG.editorDeFases.maximoDeGruposPorWave) {
+        return;
+    }
+    waveDoMapa.grupos.push({ tipo: "normal", quantidade: 5 });
+    mostrarFormularioDoEditor();
+}
+
+function removerGrupoDoEditor(indiceDaWave, indiceDoGrupo) {
+    const waveDoMapa = rascunhoDoMapaNoEditor?.waves[indiceDaWave];
+    if (!waveDoMapa || waveDoMapa.grupos.length <= 1) {
+        return;
+    }
+    waveDoMapa.grupos.splice(indiceDoGrupo, 1);
+    mostrarFormularioDoEditor();
+}
+
+function voltarParaListaDoEditor() {
+    rascunhoDoMapaNoEditor = null;
+    mensagemDoEditor = "";
+    mostrarEditorDeFases("meus");
+}
+
+function salvarMapaDoEditor(evento) {
+    evento?.preventDefault();
+    if (!rascunhoDoMapaNoEditor) {
+        return;
+    }
+
+    const mapa = normalizarMapaDoEditor({
+        ...rascunhoDoMapaNoEditor,
+        publicado: false,
+        atualizadoEm: Date.now()
+    });
+    if (!mapa) {
+        mensagemDoEditor = traduzir("editor.dadosInvalidos");
+        mostrarFormularioDoEditor();
+        return;
+    }
+
+    const indiceExistente = mapasCriadosNoEditor.findIndex(item => item.id === mapa.id);
+    if (indiceExistente >= 0) {
+        mapasCriadosNoEditor[indiceExistente] = mapa;
+    } else if (mapasCriadosNoEditor.length < CONFIG.editorDeFases.maximoDeMapasCriados) {
+        mapasCriadosNoEditor.push(mapa);
+    } else {
+        mensagemDoEditor = traduzir("editor.limiteCriados");
+        mostrarFormularioDoEditor();
+        return;
+    }
+
+    salvarMapasDoEditor();
+    compartilhamentoDoEditor = null;
+    mensagemDoEditor = traduzir("editor.mapaSalvo");
+    rascunhoDoMapaNoEditor = null;
+    mostrarEditorDeFases("meus");
+}
+
+function solicitarExclusaoDoMapa(idDoMapa) {
+    idDoMapaAguardandoExclusao = idDoMapa;
+    mostrarEditorDeFases("meus");
+}
+
+function cancelarExclusaoDoMapa() {
+    idDoMapaAguardandoExclusao = null;
+    mostrarEditorDeFases("meus");
+}
+
+function excluirMapaCriado(idDoMapa) {
+    mapasCriadosNoEditor = mapasCriadosNoEditor.filter(mapa => mapa.id !== idDoMapa);
+    idDoMapaAguardandoExclusao = null;
+    if (compartilhamentoDoEditor?.id === idDoMapa) {
+        compartilhamentoDoEditor = null;
+    }
+    salvarMapasDoEditor();
+    mensagemDoEditor = traduzir("editor.mapaExcluido");
+    mostrarEditorDeFases("meus");
+}
+
+async function copiarTextoDoEditor(texto) {
+    try {
+        await navigator.clipboard.writeText(texto);
+        return true;
+    } catch {
+        const campo = document.getElementById("codigo-compartilhamento-editor");
+        campo?.focus();
+        campo?.select();
+        try {
+            return document.execCommand("copy");
+        } catch {
+            return false;
+        }
+    }
+}
+
+async function publicarMapaDoEditor(idDoMapa) {
+    const mapa = mapasCriadosNoEditor.find(item => item.id === idDoMapa);
+    if (!mapa) {
+        return;
+    }
+    mapa.publicado = true;
+    mapa.atualizadoEm = Date.now();
+    salvarMapasDoEditor();
+    compartilhamentoDoEditor = { id: mapa.id, codigo: gerarCodigoDoMapaNoEditor(mapa) };
+    mensagemDoEditor = traduzir("editor.codigoPronto");
+    mostrarEditorDeFases("meus");
+    if (await copiarTextoDoEditor(compartilhamentoDoEditor.codigo)) {
+        mensagemDoEditor = traduzir("editor.codigoCopiado");
+        const mensagem = conteudoMenu.querySelector(".editor-mensagem");
+        if (mensagem) {
+            mensagem.textContent = mensagemDoEditor;
+        }
+    }
+}
+
+async function copiarCodigoDoMapa(idDoMapa) {
+    const mapa = mapasCriadosNoEditor.find(item => item.id === idDoMapa);
+    if (!mapa) {
+        return;
+    }
+    const codigo = compartilhamentoDoEditor?.id === idDoMapa
+        ? compartilhamentoDoEditor.codigo
+        : gerarCodigoDoMapaNoEditor(mapa);
+    if (await copiarTextoDoEditor(codigo)) {
+        mensagemDoEditor = traduzir("editor.codigoCopiado");
+        mostrarAviso(mensagemDoEditor);
+    }
+}
+
+function importarCodigoNoEditor() {
+    const codigo = document.getElementById("codigo-importacao-editor")?.value || "";
+    const mapa = importarMapaPeloCodigo(codigo);
+    if (!mapa) {
+        mensagemDoEditor = traduzir("editor.importacaoInvalida");
+        mostrarEditorDeFases("comunidade");
+        return;
+    }
+
+    const indiceExistente = mapasImportadosNoEditor.findIndex(item => item.id === mapa.id);
+    if (indiceExistente >= 0) {
+        mapasImportadosNoEditor[indiceExistente] = mapa;
+    } else if (mapasImportadosNoEditor.length < CONFIG.editorDeFases.maximoDeMapasImportados) {
+        mapasImportadosNoEditor.unshift(mapa);
+    } else {
+        mensagemDoEditor = traduzir("editor.limiteImportados");
+        mostrarEditorDeFases("comunidade");
+        return;
+    }
+    salvarMapasDoEditor();
+    mensagemDoEditor = traduzir("editor.mapaImportado");
+    mostrarEditorDeFases("comunidade");
+}
+
+function removerMapaImportado(idDoMapa) {
+    mapasImportadosNoEditor = mapasImportadosNoEditor.filter(mapa => mapa.id !== idDoMapa);
+    delete avaliacoesDosMapasImportados[idDoMapa];
+    salvarMapasDoEditor();
+    salvarAvaliacoesDoEditor();
+    mensagemDoEditor = traduzir("editor.mapaExcluido");
+    mostrarEditorDeFases("comunidade");
+}
+
+function salvarAvaliacaoDoMapa(idDoMapa) {
+    if (!mapasImportadosNoEditor.some(mapa => mapa.id === idDoMapa)) {
+        return;
+    }
+    const nota = Number(document.getElementById(`nota-editor-${idDoMapa}`)?.value);
+    const comentario = document.getElementById(`comentario-editor-${idDoMapa}`)?.value.trim() || "";
+    if (!Number.isInteger(nota) || nota < 1 || nota > 5 || comentario.length > 180) {
+        return;
+    }
+    avaliacoesDosMapasImportados[idDoMapa] = { nota, comentario };
+    salvarAvaliacoesDoEditor();
+    mensagemDoEditor = traduzir("editor.avaliacaoSalva");
+    mostrarEditorDeFases("comunidade");
+}
+
+function desenharPreviaDoEditor() {
+    const canvasDaPrevia = document.getElementById("previa-mapa-editor");
+    const mapa = rascunhoDoMapaNoEditor;
+    if (!canvasDaPrevia || !mapa) {
+        return;
+    }
+
+    const contexto = canvasDaPrevia.getContext("2d");
+    const tema = temasDoMapa[mapa.tema] || temasDoMapa.campo;
+    const caminho = CONFIG.editorDeFases.caminhos.find(item => item.id === mapa.idDoCaminho)
+        || CONFIG.editorDeFases.caminhos[0];
+    const escalaX = canvasDaPrevia.width / 1200;
+    const escalaY = canvasDaPrevia.height / 720;
+    contexto.fillStyle = tema.terrenoBase;
+    contexto.fillRect(0, 0, canvasDaPrevia.width, canvasDaPrevia.height);
+    contexto.fillStyle = tema.terrenoClaro;
+    for (let x = 0; x < canvasDaPrevia.width; x += 48) {
+        for (let y = (x / 48) % 2 * 24; y < canvasDaPrevia.height; y += 48) {
+            contexto.fillRect(x, y, 24, 24);
+        }
+    }
+
+    const decoracoes = decoracoesDoMapa[mapa.tema] || decoracoesDoMapa.campo;
+    const percentual = CONFIG.editorDeFases.percentuaisDeDecoracoes[mapa.nivelDeDecoracoes] || 0;
+    const quantidade = Math.round(decoracoes.length * percentual);
+    contexto.fillStyle = tema.terrenoEscuro;
+    for (const decoracao of decoracoes.slice(0, quantidade)) {
+        const x = decoracao.x * escalaX;
+        const y = decoracao.y * escalaY;
+        contexto.fillRect(x - 5, y - 5, 11, 11);
+        contexto.fillStyle = tema.torreFinalDetalhe;
+        contexto.fillRect(x - 2, y - 9, 5, 5);
+        contexto.fillStyle = tema.terrenoEscuro;
+    }
+
+    contexto.lineJoin = "round";
+    contexto.lineCap = "round";
+    for (const [cor, largura] of [
+        [tema.caminhoContorno, 34],
+        [tema.caminhoBase, 27],
+        [tema.caminhoCentro, 18]
+    ]) {
+        contexto.beginPath();
+        caminho.pontos.forEach((ponto, indice) => {
+            const x = ponto.x * escalaX;
+            const y = ponto.y * escalaY;
+            if (indice === 0) contexto.moveTo(x, y);
+            else contexto.lineTo(x, y);
+        });
+        contexto.strokeStyle = cor;
+        contexto.lineWidth = largura;
+        contexto.stroke();
+    }
+
+    const inicio = caminho.pontos[0];
+    const fim = caminho.pontos[caminho.pontos.length - 1];
+    contexto.fillStyle = "#fff36a";
+    contexto.fillRect(0, inicio.y * escalaY - 10, 22, 20);
+    contexto.fillStyle = tema.torreFinalBase;
+    contexto.fillRect(fim.x * escalaX - 28, fim.y * escalaY - 28, 56, 56);
+    contexto.fillStyle = tema.torreFinalNucleo;
+    contexto.fillRect(fim.x * escalaX - 10, fim.y * escalaY - 10, 20, 20);
+}
+
+function jogarMapaDoEditor(idDoMapa, origem = "meus") {
+    const colecao = origem === "comunidade" ? mapasImportadosNoEditor : mapasCriadosNoEditor;
+    const mapa = colecao.find(item => item.id === idDoMapa);
+    if (!mapa || jogoIniciado) {
+        return;
+    }
+
+    const mapaSeguro = normalizarMapaDoEditor(mapa);
+    if (!mapaSeguro) {
+        return;
+    }
+    faseSelecionadaAntesDoMapaPersonalizado = faseSelecionada === CONFIG.editorDeFases.numeroInterno
+        ? faseSelecionadaAntesDoMapaPersonalizado
+        : faseSelecionada;
+    mapaPersonalizadoAtivo = clonarMapaDoEditor(mapaSeguro);
+    origemDoMapaPersonalizadoAtivo = origem === "comunidade" ? "comunidade" : "meus";
+    faseSelecionada = CONFIG.editorDeFases.numeroInterno;
+    abrirSelecaoDeDefesas(false);
+}
+
+function desativarMapaPersonalizado() {
+    if (!mapaPersonalizadoAtivo) {
+        return;
+    }
+    mapaPersonalizadoAtivo = null;
+    filaDeInimigosDoMapaPersonalizado = [];
+    faseSelecionada = faseSelecionadaAntesDoMapaPersonalizado;
+    atualizarIndicadorFaseSelecionada();
+    atualizarTemaDoLobby();
+}
+
+function configurarComposicaoDaWavePersonalizada() {
+    const waveDoMapa = mapaPersonalizadoAtivo?.waves[wave - 1];
+    filaDeInimigosDoMapaPersonalizado = waveDoMapa
+        ? waveDoMapa.grupos.flatMap(grupo => Array(grupo.quantidade).fill(grupo.tipo))
+        : [];
+    inimigosParaCriar = filaDeInimigosDoMapaPersonalizado.length;
+    inimigosChefesParaCriar = filaDeInimigosDoMapaPersonalizado
+        .filter(tipoEhBoss).length;
+    avisoBossExpiraEm = inimigosChefesParaCriar > 0 ? Date.now() + 2500 : 0;
+    proximoInimigoEm = Date.now();
+    proximaWaveEm = 0;
+}
+
 function carregarInimigosDerrotadosNoAlbum() {
     try {
         const valorSalvo = JSON.parse(
@@ -7206,6 +13771,200 @@ function obterItensDaLoja() {
     return [...defesasCompraveis, ...Object.entries(CONFIG.loja.itens)];
 }
 
+function obterPontuacaoDeterministicaDaOfertaSemanal(idDoItem, semana) {
+    const textoDaSemente = `${semana}:${idDoItem}`;
+    let pontuacao = 2166136261;
+
+    for (let indice = 0; indice < textoDaSemente.length; indice++) {
+        pontuacao ^= textoDaSemente.charCodeAt(indice);
+        pontuacao = Math.imul(pontuacao, 16777619);
+    }
+
+    return pontuacao >>> 0;
+}
+
+function calcularPrecoComDescontoDaLoja(precoOriginal, percentualDeDesconto) {
+    if (
+        !Number.isInteger(precoOriginal)
+        || precoOriginal < 1
+        || !Number.isInteger(percentualDeDesconto)
+        || percentualDeDesconto < 0
+        || percentualDeDesconto >= 100
+    ) {
+        return precoOriginal;
+    }
+
+    return Math.max(1, Math.floor(precoOriginal * (1 - percentualDeDesconto / 100)));
+}
+
+function criarOfertaSemanalDaLoja(data = new Date(), comprasJaRealizadas = comprasDaLoja) {
+    const semana = obterIdentificadorDaSemana(data);
+    const configuracaoDaOferta = CONFIG.loja.ofertaSemanal;
+    const percentuais = configuracaoDaOferta.percentuaisDeDesconto;
+    const itensDisponiveis = obterItensDaLoja()
+        .filter(([idDoItem]) => !comprasJaRealizadas.has(idDoItem));
+    const quantidadeDeItens = Math.min(
+        configuracaoDaOferta.quantidadeMaximaDeItens,
+        percentuais.length,
+        itensDisponiveis.length
+    );
+    const deslocamentoDosPercentuais = obterPontuacaoDeterministicaDaOfertaSemanal(
+        "percentuais",
+        semana
+    ) % percentuais.length;
+
+    const itens = itensDisponiveis
+        .map(([idDoItem]) => ({
+            idDoItem,
+            pontuacao: obterPontuacaoDeterministicaDaOfertaSemanal(idDoItem, semana)
+        }))
+        .sort((primeiro, segundo) => (
+            primeiro.pontuacao - segundo.pontuacao
+            || primeiro.idDoItem.localeCompare(segundo.idDoItem)
+        ))
+        .slice(0, quantidadeDeItens)
+        .map((item, indice) => {
+            const percentualDeDesconto = percentuais[
+                (indice + deslocamentoDosPercentuais) % percentuais.length
+            ];
+            return {
+                idDoItem: item.idDoItem,
+                percentualDeDesconto
+            };
+        });
+
+    return { semana, itens };
+}
+
+function normalizarOfertaSemanalDaLoja(valorSalvo, data = new Date()) {
+    const semanaAtual = obterIdentificadorDaSemana(data);
+    const configuracaoDaOferta = CONFIG.loja.ofertaSemanal;
+    const idsValidos = new Set(obterItensDaLoja().map(([idDoItem]) => idDoItem));
+    const percentuaisValidos = new Set(configuracaoDaOferta.percentuaisDeDesconto);
+    const quantidadeMaxima = Math.min(
+        configuracaoDaOferta.quantidadeMaximaDeItens,
+        percentuaisValidos.size
+    );
+
+    if (
+        !valorSalvo
+        || valorSalvo.semana !== semanaAtual
+        || !Array.isArray(valorSalvo.itens)
+        || valorSalvo.itens.length > quantidadeMaxima
+    ) {
+        return criarOfertaSemanalDaLoja(data);
+    }
+
+    const idsRecebidos = new Set();
+    const percentuaisRecebidos = new Set();
+    const itensSaoValidos = valorSalvo.itens.every(item => {
+        if (
+            !item
+            || !idsValidos.has(item.idDoItem)
+            || !percentuaisValidos.has(item.percentualDeDesconto)
+            || idsRecebidos.has(item.idDoItem)
+            || percentuaisRecebidos.has(item.percentualDeDesconto)
+        ) {
+            return false;
+        }
+
+        idsRecebidos.add(item.idDoItem);
+        percentuaisRecebidos.add(item.percentualDeDesconto);
+        return true;
+    });
+    const existemItensAindaNaoComprados = obterItensDaLoja()
+        .some(([idDoItem]) => !comprasDaLoja.has(idDoItem));
+
+    if (!itensSaoValidos || (valorSalvo.itens.length === 0 && existemItensAindaNaoComprados)) {
+        return criarOfertaSemanalDaLoja(data);
+    }
+
+    return {
+        semana: semanaAtual,
+        itens: valorSalvo.itens.map(item => ({
+            idDoItem: item.idDoItem,
+            percentualDeDesconto: item.percentualDeDesconto
+        }))
+    };
+}
+
+function salvarOfertaSemanalDaLoja() {
+    try {
+        localStorage.setItem(
+            CHAVE_OFERTA_SEMANAL_LOJA,
+            JSON.stringify(ofertaSemanalDaLoja)
+        );
+    } catch {
+        // A oferta continua fixa durante a sessão quando o armazenamento está indisponível.
+    }
+}
+
+function carregarOfertaSemanalDaLoja() {
+    try {
+        const valorSalvo = JSON.parse(
+            localStorage.getItem(CHAVE_OFERTA_SEMANAL_LOJA) || "null"
+        );
+        const ofertaNormalizada = normalizarOfertaSemanalDaLoja(valorSalvo);
+        localStorage.setItem(
+            CHAVE_OFERTA_SEMANAL_LOJA,
+            JSON.stringify(ofertaNormalizada)
+        );
+        return ofertaNormalizada;
+    } catch {
+        return criarOfertaSemanalDaLoja();
+    }
+}
+
+function garantirOfertaSemanalDaLoja(data = new Date()) {
+    const semanaAtual = obterIdentificadorDaSemana(data);
+
+    if (ofertaSemanalDaLoja.semana === semanaAtual) {
+        return;
+    }
+
+    ofertaSemanalDaLoja = criarOfertaSemanalDaLoja(data);
+    salvarOfertaSemanalDaLoja();
+}
+
+function obterOfertasSemanaisDaLoja(data = new Date()) {
+    garantirOfertaSemanalDaLoja(data);
+
+    return ofertaSemanalDaLoja.itens.flatMap(item => {
+        const configuracao = obterConfiguracaoDoItemDaLoja(item.idDoItem);
+
+        if (!configuracao) {
+            return [];
+        }
+
+        return [{
+            ...item,
+            configuracao,
+            semana: ofertaSemanalDaLoja.semana,
+            precoOriginal: configuracao.custoNaLoja,
+            precoComDesconto: calcularPrecoComDescontoDaLoja(
+                configuracao.custoNaLoja,
+                item.percentualDeDesconto
+            )
+        }];
+    });
+}
+
+function obterOfertaSemanalDoItemDaLoja(idDoItem, data = new Date()) {
+    return obterOfertasSemanaisDaLoja(data)
+        .find(oferta => oferta.idDoItem === idDoItem) || null;
+}
+
+function obterPrecoAtualDoItemDaLoja(idDoItem, data = new Date()) {
+    const configuracao = obterConfiguracaoDoItemDaLoja(idDoItem);
+
+    if (!configuracao) {
+        return null;
+    }
+
+    return obterOfertaSemanalDoItemDaLoja(idDoItem, data)?.precoComDesconto
+        ?? configuracao.custoNaLoja;
+}
+
 function obterConfiguracaoDoItemDaLoja(idDoItem) {
     const configuracaoDaDefesa = CONFIG.torre.tipos[idDoItem];
 
@@ -7224,7 +13983,15 @@ function obterBonusPermanenteDaLoja(propriedade) {
     ), 0);
 }
 
+function obterMultiplicadorPermanenteDaLoja(propriedade) {
+    return 1 + obterBonusPermanenteDaLoja(propriedade);
+}
+
 function obterDinheiroInicial() {
+    if (mapaPersonalizadoAtivo) {
+        return mapaPersonalizadoAtivo.creditosIniciais;
+    }
+
     return CONFIG.economia.dinheiroInicial
         + obterBonusPermanenteDaLoja("bonusDinheiroInicial")
         + (faseAtualEhSecreta() ? CONFIG.faseSecreta.bonusCreditosIniciais : 0);
@@ -7235,14 +14002,16 @@ function obterRecompensaPorTiro() {
         + obterBonusPermanenteDaLoja("bonusRecompensaPorTiro");
 }
 
-function podeComprarItemDaLoja(idDoItem) {
+function podeComprarItemDaLoja(idDoItem, data = new Date()) {
     const configuracao = obterConfiguracaoDoItemDaLoja(idDoItem);
+    const precoAtual = obterPrecoAtualDoItemDaLoja(idDoItem, data);
 
     return Boolean(
         configuracao
         && !comprasDaLoja.has(idDoItem)
         && Number.isInteger(fragmentosPixel)
-        && fragmentosPixel >= configuracao.custoNaLoja
+        && Number.isInteger(precoAtual)
+        && fragmentosPixel >= precoAtual
     );
 }
 
@@ -7293,7 +14062,11 @@ function capituloEstaDesbloqueado(numeroDoCapitulo) {
         return false;
     }
 
-    return !capitulo.requerVitoriaNaFaseSecreta || capitulo2Desbloqueado;
+    if (capitulo.requerVitoriaNaFaseSecreta && !capitulo2Desbloqueado) {
+        return false;
+    }
+
+    return !capitulo.requerVitoriaNoIntervaloPerdido || capitulo3Desbloqueado;
 }
 
 function faseEstaDesbloqueada(numeroDaFase) {
@@ -7312,6 +14085,7 @@ function registrarConclusaoDaFase() {
     maiorFaseConcluida = Math.max(maiorFaseConcluida, faseSelecionada);
     salvarProgressoDasFases();
     atualizarPortalFaseSecreta();
+    atualizarRelogioQuebradoDoIntervalo();
 
     const proximaFase = faseSelecionada + 1;
     return proximaFase <= CONFIG.fases.length
@@ -7323,6 +14097,24 @@ function faseAtualEhSecreta() {
     return faseSelecionada === CONFIG.faseSecreta.numeroInterno;
 }
 
+function faseAtualEhIntervaloPerdido() {
+    return faseSelecionada === CONFIG.intervaloPerdido.numeroInterno;
+}
+
+function faseAtualEhAlgumaFaseSecreta() {
+    return faseAtualEhSecreta() || faseAtualEhIntervaloPerdido();
+}
+
+function obterUltimaWaveDaFase() {
+    if (mapaPersonalizadoAtivo) {
+        return mapaPersonalizadoAtivo.waves.length;
+    }
+
+    return faseAtualEhIntervaloPerdido()
+        ? CONFIG.intervaloPerdido.totalDeWaves
+        : CONFIG.wave.ultimaWave;
+}
+
 function todasAsFasesForamConcluidas() {
     return maiorFaseConcluida >= CONFIG.fases.length;
 }
@@ -7331,10 +14123,18 @@ function podeEntrarNaFaseSecreta() {
     return maiorFaseConcluida >= CONFIG.faseSecreta.faseConcluidaParaAcesso;
 }
 
+function podeEntrarNoIntervaloPerdido() {
+    return maiorFaseConcluida >= CONFIG.intervaloPerdido.faseConcluidaParaAcesso;
+}
+
 function calcularFragmentosPelasWavesAlcancadas(
     waveAlcancada = wave,
     partidaInfinita = modoWavesInfinitas
 ) {
+    if (mapaPersonalizadoAtivo) {
+        return 0;
+    }
+
     if (waveAlcancada < CONFIG.loja.primeiraWaveComRecompensa) {
         return 0;
     }
@@ -7364,14 +14164,34 @@ function concederFragmentosPelasWavesAlcancadas() {
 }
 
 function atualizarIndicadorFaseSelecionada() {
-    indicadorFaseSelecionada.textContent = faseAtualEhSecreta()
-        ? localizar("Fase secreta · Wave 1")
-        : traduzir("lobby.faseWave", { fase: faseSelecionada });
+    indicadorFaseSelecionada.textContent = faseAtualEhIntervaloPerdido()
+        ? localizar("Intervalo Perdido · Wave 1")
+        : faseAtualEhSecreta()
+            ? localizar("Fase secreta · Wave 1")
+            : traduzir("lobby.faseWave", { fase: faseSelecionada });
     limiteTorresMenu.textContent = obterLimiteDeTorres().toString();
     creditosIniciaisMenu.textContent = obterDinheiroInicial().toString();
 }
 
 function obterFaseAtual() {
+    if (mapaPersonalizadoAtivo) {
+        return {
+            numero: CONFIG.editorDeFases.numeroInterno,
+            nome: mapaPersonalizadoAtivo.nome,
+            tema: mapaPersonalizadoAtivo.tema,
+            descricao: mapaPersonalizadoAtivo.descricao
+        };
+    }
+
+    if (faseAtualEhIntervaloPerdido()) {
+        return {
+            numero: CONFIG.intervaloPerdido.numeroInterno,
+            nome: CONFIG.intervaloPerdido.nome,
+            tema: CONFIG.intervaloPerdido.tema,
+            descricao: CONFIG.intervaloPerdido.descricao
+        };
+    }
+
     if (faseAtualEhSecreta()) {
         return {
             numero: CONFIG.faseSecreta.numeroInterno,
@@ -7386,12 +14206,23 @@ function obterFaseAtual() {
 }
 
 function obterLimiteDeTorres(numeroDaFase = faseSelecionada) {
+    if (mapaPersonalizadoAtivo) {
+        return mapaPersonalizadoAtivo.limiteDeTorres;
+    }
+
     const limiteBase = CONFIG.torre.limitesPorFase[numeroDaFase]
         ?? CONFIG.torre.limitesPorFase[1];
     return limiteBase + obterBonusPermanenteDaLoja("bonusLimiteDeTorres");
 }
 
 function obterCaminhosAtuais() {
+    if (mapaPersonalizadoAtivo) {
+        const caminho = CONFIG.editorDeFases.caminhos.find(
+            item => item.id === mapaPersonalizadoAtivo.idDoCaminho
+        ) || CONFIG.editorDeFases.caminhos[0];
+        return [caminho.pontos];
+    }
+
     const configuracaoDosCaminhos = caminhosDasFases[faseSelecionada] || caminhosDasFases[1];
     return Array.isArray(configuracaoDosCaminhos[0])
         ? configuracaoDosCaminhos
@@ -7533,6 +14364,320 @@ function disponibilizarRadioProjetoRelogio() {
     return true;
 }
 
+function faseAtualUsaLaboratorioAbandonado() {
+    return faseSelecionada === CONFIG.laboratorioAbandonado.numeroDaFase;
+}
+
+function recarregarProtocoloDeContencao() {
+    contencaoLaboratorioUsadaNaWave = false;
+    idDaCamaraDeContencaoSelecionada = null;
+    contencaoLaboratorioFechaEm = 0;
+    contencaoLaboratorioExpiraEm = 0;
+    contencaoLaboratorioAtivada = false;
+}
+
+function obterCamaraDeContencao(idDaCamara) {
+    return CONFIG.laboratorioAbandonado.contencao.camaras.find(
+        camara => camara.id === idDaCamara
+    ) || null;
+}
+
+function obterPainelDeContencaoNaPosicao(x, y) {
+    if (!faseAtualUsaLaboratorioAbandonado()) {
+        return null;
+    }
+
+    return CONFIG.laboratorioAbandonado.contencao.camaras.find(camara => (
+        Math.hypot(camara.painel.x - x, camara.painel.y - y)
+            <= camara.painel.raioDeClique
+    )) || null;
+}
+
+function estaPertoDosPaineisDeContencao(x, y) {
+    const configuracao = CONFIG.laboratorioAbandonado.contencao;
+    return faseAtualUsaLaboratorioAbandonado()
+        && configuracao.camaras.some(camara => (
+            Math.hypot(camara.painel.x - x, camara.painel.y - y)
+                < configuracao.distanciaMinimaDasTorres
+        ));
+}
+
+function waveEstaAtivaParaContencao() {
+    return inimigosParaCriar > 0 || inimigos.some(inimigo => inimigo.vida > 0);
+}
+
+function formatarSegundosDaContencao(duracaoEmMilissegundos) {
+    return (Math.max(0, duracaoEmMilissegundos) / 1000).toLocaleString(
+        idiomaAtual,
+        { minimumFractionDigits: 1, maximumFractionDigits: 1 }
+    );
+}
+
+function ativarProtocoloDeContencao(idDaCamara, agora = Date.now()) {
+    const camara = obterCamaraDeContencao(idDaCamara);
+
+    if (!faseAtualUsaLaboratorioAbandonado() || !camara || partidaEncerrada) {
+        return false;
+    }
+
+    if (jogoPausado) {
+        mostrarAviso(localizar(
+            "O Protocolo de Contenção não pode ser ativado com a partida pausada."
+        ));
+        return false;
+    }
+
+    if (contencaoLaboratorioUsadaNaWave) {
+        mostrarAviso(localizar("O Protocolo de Contenção já foi usado nesta wave."));
+        return false;
+    }
+
+    if (!waveEstaAtivaParaContencao()) {
+        mostrarAviso(localizar("Escolha uma câmara durante uma wave ativa."));
+        return false;
+    }
+
+    const configuracao = CONFIG.laboratorioAbandonado.contencao;
+    contencaoLaboratorioUsadaNaWave = true;
+    idDaCamaraDeContencaoSelecionada = camara.id;
+    contencaoLaboratorioFechaEm = agora + configuracao.atrasoDoFechamento;
+    contencaoLaboratorioExpiraEm = contencaoLaboratorioFechaEm
+        + configuracao.duracaoDoFechamento;
+    contencaoLaboratorioAtivada = false;
+    numeroDaAtivacaoDaContencao++;
+    mostrarAviso(localizar(
+        "Câmara {camara} selecionada · fechamento em {segundos}s.",
+        {
+            camara: camara.rotuloDaCamara,
+            segundos: formatarSegundosDaContencao(configuracao.atrasoDoFechamento)
+        }
+    ));
+    return true;
+}
+
+function atualizarProtocoloDeContencao(agora = Date.now()) {
+    if (
+        !faseAtualUsaLaboratorioAbandonado()
+        || !idDaCamaraDeContencaoSelecionada
+        || !contencaoLaboratorioUsadaNaWave
+    ) {
+        return false;
+    }
+
+    if (
+        !contencaoLaboratorioAtivada
+        && agora >= contencaoLaboratorioFechaEm
+        && agora < contencaoLaboratorioExpiraEm
+    ) {
+        const camara = obterCamaraDeContencao(idDaCamaraDeContencaoSelecionada);
+        contencaoLaboratorioAtivada = true;
+        mostrarAviso(localizar(
+            "Protocolo de Contenção ativado na Câmara {camara}!",
+            { camara: camara.rotuloDaCamara }
+        ));
+    }
+
+    if (agora >= contencaoLaboratorioExpiraEm) {
+        contencaoLaboratorioAtivada = false;
+    }
+
+    return contencaoLaboratorioAtivada;
+}
+
+function contencaoLaboratorioEstaFechada(agora = Date.now()) {
+    return faseAtualUsaLaboratorioAbandonado()
+        && contencaoLaboratorioAtivada
+        && agora >= contencaoLaboratorioFechaEm
+        && agora < contencaoLaboratorioExpiraEm;
+}
+
+function inimigoEstaDentroDaCamaraDeContencao(inimigo, camara) {
+    return inimigo.x >= camara.area.x
+        && inimigo.x <= camara.area.x + camara.area.largura
+        && inimigo.y >= camara.area.y
+        && inimigo.y <= camara.area.y + camara.area.altura;
+}
+
+function inimigoEstaRetidoPelaContencao(inimigo, agora = Date.now()) {
+    if (!contencaoLaboratorioEstaFechada(agora)) {
+        return false;
+    }
+
+    const camara = obterCamaraDeContencao(idDaCamaraDeContencaoSelecionada);
+    if (!camara || !inimigoEstaDentroDaCamaraDeContencao(inimigo, camara)) {
+        return false;
+    }
+
+    if (!tipoEhBoss(inimigo.tipo)) {
+        return true;
+    }
+
+    if (inimigo.numeroDaAtivacaoDaContencao !== numeroDaAtivacaoDaContencao) {
+        inimigo.numeroDaAtivacaoDaContencao = numeroDaAtivacaoDaContencao;
+        inimigo.contencaoLaboratorioExpiraEm = Math.min(
+            contencaoLaboratorioExpiraEm,
+            agora + CONFIG.laboratorioAbandonado.contencao
+                .duracaoDoFechamentoParaBosses
+        );
+    }
+
+    return agora < (inimigo.contencaoLaboratorioExpiraEm || 0);
+}
+
+function terminalLaboratorioEstaNaPosicao(x, y) {
+    const terminal = CONFIG.laboratorioAbandonado.terminal;
+    return faseAtualUsaLaboratorioAbandonado()
+        && terminalLaboratorioDisponivel
+        && Math.hypot(terminal.x - x, terminal.y - y) <= terminal.raioDeClique;
+}
+
+function estaPertoDoTerminalLaboratorio(x, y) {
+    const terminal = CONFIG.laboratorioAbandonado.terminal;
+    return faseAtualUsaLaboratorioAbandonado()
+        && Math.hypot(terminal.x - x, terminal.y - y)
+            < terminal.distanciaMinimaDasTorres;
+}
+
+function disponibilizarTerminalLaboratorio() {
+    if (
+        !faseAtualUsaLaboratorioAbandonado()
+        || wave < CONFIG.laboratorioAbandonado.terminal.waveDeAtivacao
+        || terminalLaboratorioDisponivel
+    ) {
+        return false;
+    }
+
+    terminalLaboratorioDisponivel = true;
+    mostrarAviso(localizar("Terminal do Projeto Relógio encontrado!"));
+    return true;
+}
+
+function faseAtualUsaFuturoDespedacado() {
+    return faseSelecionada === CONFIG.futuroDespedacado.numeroDaFase;
+}
+
+function transmissorFuturoDespedacadoEstaNaPosicao(x, y) {
+    const transmissor = CONFIG.futuroDespedacado.transmissor;
+    return faseAtualUsaFuturoDespedacado()
+        && transmissorFuturoDespedacadoDisponivel
+        && Math.hypot(transmissor.x - x, transmissor.y - y)
+            <= transmissor.raioDeClique;
+}
+
+function estaPertoDoTransmissorFuturoDespedacado(x, y) {
+    const transmissor = CONFIG.futuroDespedacado.transmissor;
+    return faseAtualUsaFuturoDespedacado()
+        && Math.hypot(transmissor.x - x, transmissor.y - y)
+            < transmissor.distanciaMinimaDasTorres;
+}
+
+function disponibilizarTransmissorFuturoDespedacado() {
+    if (
+        !faseAtualUsaFuturoDespedacado()
+        || wave < CONFIG.futuroDespedacado.transmissor.waveDeAtivacao
+        || transmissorFuturoDespedacadoDisponivel
+    ) {
+        return false;
+    }
+
+    transmissorFuturoDespedacadoDisponivel = true;
+    mostrarAviso(localizar("Transmissão fragmentada encontrada!"));
+    return true;
+}
+
+function faseAtualUsaPontoZero() {
+    return faseSelecionada === CONFIG.pontoZero.numeroDaFase;
+}
+
+function obterTipoDoSetorPontoZero(setor, waveAtual = wave) {
+    const waveEfetiva = Math.max(1, waveAtual);
+    const setorAEstavel = waveEfetiva % 2 === 1;
+    const setorEstavel = setor.id === "a" ? setorAEstavel : !setorAEstavel;
+    return setorEstavel ? "estavel" : "ruptura";
+}
+
+function obterSetorDoPontoZeroParaInimigo(inimigo) {
+    if (!faseAtualUsaPontoZero()) {
+        return null;
+    }
+
+    const progresso = calcularProgressoDoInimigo(inimigo);
+    return CONFIG.pontoZero.oscilacaoTemporal.setores.find(setor => (
+        progresso >= setor.inicioProgresso
+        && progresso <= setor.fimProgresso
+    )) || null;
+}
+
+function obterMultiplicadorDoPontoZeroParaInimigo(inimigo) {
+    const setor = obterSetorDoPontoZeroParaInimigo(inimigo);
+    if (!setor) {
+        return 1;
+    }
+
+    const configuracao = CONFIG.pontoZero.oscilacaoTemporal;
+    return obterTipoDoSetorPontoZero(setor) === "estavel"
+        ? configuracao.multiplicadorDoSetorEstavel
+        : configuracao.multiplicadorDoSetorDeRuptura;
+}
+
+function avisarOscilacaoDoPontoZero() {
+    if (!faseAtualUsaPontoZero()) {
+        return false;
+    }
+
+    const setorEstavel = CONFIG.pontoZero.oscilacaoTemporal.setores.find(
+        setor => obterTipoDoSetorPontoZero(setor) === "estavel"
+    );
+    const setorDeRuptura = CONFIG.pontoZero.oscilacaoTemporal.setores.find(
+        setor => obterTipoDoSetorPontoZero(setor) === "ruptura"
+    );
+    mostrarAviso(localizar(
+        "Oscilação temporal · Setor {estavel} estável · Setor {ruptura} acelerado.",
+        {
+            estavel: setorEstavel.id.toUpperCase(),
+            ruptura: setorDeRuptura.id.toUpperCase()
+        }
+    ));
+    return true;
+}
+
+function obterRegistrosPontoZeroDisponiveis() {
+    if (!faseAtualUsaPontoZero()) {
+        return [];
+    }
+
+    return CONFIG.pontoZero.registros.filter(registro => wave >= registro.waveDeAtivacao);
+}
+
+function obterRegistroPontoZeroNaPosicao(x, y) {
+    return obterRegistrosPontoZeroDisponiveis().find(registro => (
+        Math.hypot(registro.x - x, registro.y - y) <= registro.raioDeClique
+    )) || null;
+}
+
+function estaPertoDosRegistrosPontoZero(x, y) {
+    return faseAtualUsaPontoZero()
+        && CONFIG.pontoZero.registros.some(registro => (
+            Math.hypot(registro.x - x, registro.y - y)
+                < CONFIG.pontoZero.distanciaMinimaDosRegistrosParaTorres
+        ));
+}
+
+function disponibilizarRegistrosPontoZero() {
+    const novosRegistros = obterRegistrosPontoZeroDisponiveis().filter(
+        registro => !registrosPontoZeroAnunciados.has(registro.id)
+    );
+
+    for (const registro of novosRegistros) {
+        registrosPontoZeroAnunciados.add(registro.id);
+        mostrarAviso(localizar("Registro {numero} do Ponto Zero recuperado!", {
+            numero: registro.numero
+        }));
+    }
+
+    return novosRegistros.length;
+}
+
 function atualizarTemaDoLobby() {
     const temaAtual = obterFaseAtual().tema;
     menuPrincipal.classList.remove(
@@ -7545,10 +14690,17 @@ function atualizarTemaDoLobby() {
         "tema-pantano",
         "tema-primordial",
         "tema-futurista",
+        "tema-laboratorio",
+        "tema-futuroDespedacado",
+        "tema-pontoZero",
+        "tema-linhaTemporal",
+        "tema-eraApagada",
+        "tema-intervaloPerdido",
         "tema-glitch"
     );
     menuPrincipal.classList.add(`tema-${temaAtual}`);
     atualizarPortalFaseSecreta();
+    atualizarRelogioQuebradoDoIntervalo();
 }
 
 function atualizarPortalFaseSecreta() {
@@ -7566,8 +14718,7 @@ function atualizarPortalFaseSecreta() {
         !entradaLiberada
     );
     portalFaseSecreta.disabled = teleporteGlitchEmAndamento
-        || labirintoAmareloAtivo
-        || !entradaLiberada;
+        || labirintoAmareloAtivo;
     portalFaseSecreta.querySelector("span").textContent = faseSecretaDescoberta ? "◇" : "?";
     portalFaseSecreta.setAttribute(
         "aria-label",
@@ -7590,6 +14741,7 @@ function interagirComPortalSecreto() {
     }
 
     if (!podeEntrarNaFaseSecreta()) {
+        mostrarConversaSecretaBloqueada();
         return;
     }
 
@@ -7600,6 +14752,52 @@ function interagirComPortalSecreto() {
     }
 
     iniciarTransicaoDoPortalGlitch();
+}
+
+function mostrarConversaSecretaBloqueada() {
+    conversaDoPortalSecretoBloqueadoAtiva = true;
+    fecharConversaDoPortal();
+    fecharConteudoMenu();
+    camadaConversaPortal.classList.add("camada-conversa-senhor-tempo");
+    camadaConversaPortal.dataset.tipoConversa = "portal-bloqueado";
+    camadaConversaPortal.hidden = false;
+    camadaConversaPortal.innerHTML = `
+        <section class="balao-conversa-portal balao-senhor-do-tempo" role="document">
+            ${criarRetratoDoSenhorDoTempo(true)}
+            <div class="conversa-portal-conteudo">
+                <small>${localizar("TRANSMISSÃO DESCONHECIDA")}</small>
+                <h2 id="titulo-conversa-portal">${localizar("ENTIDADE DA FALHA")}</h2>
+                <p class="conversa-portal-fala">â€œ${localizar("Ainda nÃ£o...")}â€</p>
+                <div class="conversa-portal-escolhas">
+                    <button
+                        class="botao botao-conversa-portal botao-avancar-senhor-tempo"
+                        type="button"
+                        onclick="encerrarConversaSecretaBloqueada()"
+                    >${localizar("Como assim?")}</button>
+                    <button
+                        class="botao botao-conversa-portal botao-avancar-senhor-tempo"
+                        type="button"
+                        onclick="encerrarConversaSecretaBloqueada()"
+                    >${localizar("O quÃª?")}</button>
+                    <button
+                        class="botao botao-conversa-portal botao-avancar-senhor-tempo"
+                        type="button"
+                        onclick="encerrarConversaSecretaBloqueada()"
+                    >${localizar("Quem Ã© vocÃª?")}</button>
+                </div>
+            </div>
+        </section>
+    `;
+    camadaConversaPortal.querySelector(".botao-conversa-portal")?.focus();
+}
+
+function encerrarConversaSecretaBloqueada() {
+    if (!conversaDoPortalSecretoBloqueadoAtiva) {
+        return;
+    }
+
+    conversaDoPortalSecretoBloqueadoAtiva = false;
+    fecharConversaDoPortal();
 }
 
 function iniciarTransicaoDoPortalGlitch() {
@@ -7641,6 +14839,130 @@ function ocultarTransicaoDoPortalGlitch() {
     document.body.classList.remove("teleporte-glitch-ativo");
     camadaTransicaoGlitch.hidden = true;
     atualizarPortalFaseSecreta();
+}
+
+function atualizarRelogioQuebradoDoIntervalo() {
+    if (!relogioQuebradoIntervalo) {
+        return;
+    }
+
+    const entradaLiberada = podeEntrarNoIntervaloPerdido();
+    relogioQuebradoIntervalo.hidden = !entradaLiberada;
+    relogioQuebradoIntervalo.disabled = teleporteIntervaloEmAndamento;
+    relogioQuebradoIntervalo.classList.toggle(
+        "relogio-quebrado-descoberto",
+        intervaloPerdidoDescoberto
+    );
+    relogioQuebradoIntervalo.classList.toggle(
+        "relogio-quebrado-concluido",
+        capitulo3Desbloqueado
+    );
+    relogioQuebradoIntervalo.setAttribute(
+        "aria-label",
+        capitulo3Desbloqueado
+            ? localizar("Reabrir O Intervalo Perdido")
+            : localizar("Investigar o relógio quebrado na coordenada 00:00")
+    );
+    relogioQuebradoIntervalo.title = capitulo3Desbloqueado
+        ? localizar("O Intervalo Perdido foi vencido")
+        : localizar("Coordenada 00:00 · Era inexistente");
+}
+
+function interagirComRelogioQuebrado() {
+    if (jogoIniciado || teleporteIntervaloEmAndamento || !podeEntrarNoIntervaloPerdido()) {
+        return;
+    }
+
+    if (!intervaloPerdidoDescoberto) {
+        intervaloPerdidoDescoberto = true;
+        salvarIntervaloPerdidoDescoberto();
+    }
+
+    fecharConteudoMenu();
+    teleporteIntervaloEmAndamento = true;
+    atualizarRelogioQuebradoDoIntervalo();
+    selecionarTrilhaDaConversaDoPortal();
+    mostrarConversaDaArmadilhaDoIntervalo();
+}
+
+function mostrarConversaDaArmadilhaDoIntervalo(indiceDaFala = 0) {
+    const falas = CONFIG.intervaloPerdido.armadilhaDoSenhorDoTempo;
+    const ultimoIndice = falas.length - 1;
+    indiceDaFalaDaArmadilhaDoIntervalo = Math.max(
+        0,
+        Math.min(indiceDaFala, ultimoIndice)
+    );
+    const falaAtual = falas[indiceDaFalaDaArmadilhaDoIntervalo];
+    conversaDaArmadilhaDoIntervaloAtiva = true;
+    camadaConversaPortal.classList.add("camada-conversa-senhor-tempo");
+    camadaConversaPortal.dataset.tipoConversa = "armadilha-intervalo";
+    camadaConversaPortal.dataset.etapaConversa = falaAtual.id;
+    camadaConversaPortal.hidden = false;
+    camadaConversaPortal.innerHTML = `
+        <section class="balao-conversa-portal balao-senhor-do-tempo" role="document">
+            ${criarRetratoDoSenhorDoTempo(true)}
+            <div class="conversa-portal-conteudo">
+                <small>${localizar("CONDENAÇÃO TEMPORAL")} · ${indiceDaFalaDaArmadilhaDoIntervalo + 1}/${falas.length}</small>
+                <h2 id="titulo-conversa-portal">${localizar("Senhor do Tempo")}</h2>
+                <p class="conversa-portal-fala">“${localizar(falaAtual.texto)}”</p>
+                <button
+                    class="botao botao-conversa-portal botao-avancar-armadilha-intervalo"
+                    type="button"
+                    onclick="avancarConversaDaArmadilhaDoIntervalo()"
+                >${localizar(falaAtual.textoDoBotao)}</button>
+            </div>
+        </section>
+    `;
+    camadaConversaPortal.querySelector(".botao-avancar-armadilha-intervalo")?.focus();
+}
+
+function avancarConversaDaArmadilhaDoIntervalo() {
+    if (!conversaDaArmadilhaDoIntervaloAtiva) {
+        return;
+    }
+
+    const ultimoIndice = CONFIG.intervaloPerdido.armadilhaDoSenhorDoTempo.length - 1;
+    if (indiceDaFalaDaArmadilhaDoIntervalo < ultimoIndice) {
+        mostrarConversaDaArmadilhaDoIntervalo(indiceDaFalaDaArmadilhaDoIntervalo + 1);
+        return;
+    }
+
+    conversaDaArmadilhaDoIntervaloAtiva = false;
+    ocultarConversaNoPortal();
+    iniciarTransicaoDoIntervalo();
+}
+
+function ocultarConversaNoPortal() {
+    camadaConversaPortal.classList.remove("camada-conversa-senhor-tempo");
+    camadaConversaPortal.removeAttribute("data-tipo-conversa");
+    camadaConversaPortal.removeAttribute("data-etapa-conversa");
+    camadaConversaPortal.hidden = true;
+    camadaConversaPortal.innerHTML = "";
+    conversaDoPortalSecretoBloqueadoAtiva = false;
+}
+
+function iniciarTransicaoDoIntervalo() {
+    teleporteIntervaloEmAndamento = true;
+    camadaTransicaoIntervalo.hidden = false;
+    void camadaTransicaoIntervalo.offsetWidth;
+    camadaTransicaoIntervalo.classList.add("transicao-intervalo-ativa");
+    temporizadorDoTeleporteIntervalo = setTimeout(() => {
+        temporizadorDoTeleporteIntervalo = null;
+        ocultarTransicaoDoIntervalo();
+        iniciarIntervaloPerdido();
+    }, CONFIG.intervaloPerdido.duracaoDaTransicaoMs);
+}
+
+function ocultarTransicaoDoIntervalo() {
+    if (temporizadorDoTeleporteIntervalo !== null) {
+        clearTimeout(temporizadorDoTeleporteIntervalo);
+        temporizadorDoTeleporteIntervalo = null;
+    }
+
+    teleporteIntervaloEmAndamento = false;
+    camadaTransicaoIntervalo.hidden = true;
+    camadaTransicaoIntervalo.classList.remove("transicao-intervalo-ativa");
+    atualizarRelogioQuebradoDoIntervalo();
 }
 
 function deveEntrarNosCorredoresAmarelos(valorAleatorio = Math.random()) {
@@ -7848,13 +15170,18 @@ function concluirCorredoresAmarelos() {
 }
 
 function fecharConversaDoPortalAoClicarFora(evento) {
-    if (!conversaDoSenhorDoTempoAtiva && evento.target === camadaConversaPortal) {
+    if (
+        !conversaDoSenhorDoTempoAtiva
+        && !conversaDaArmadilhaDoIntervaloAtiva
+        && evento.target === camadaConversaPortal
+    ) {
         fecharConteudoMenu();
     }
 }
 
-function criarRetratoDoSenhorDoTempo() {
-    const formaHumanaAtiva = CONFIG.faseSecreta.senhorDoTempo.formaHumanaFutura.ativa;
+function criarRetratoDoSenhorDoTempo(forcarFormaHumana = false) {
+    const formaHumanaAtiva = forcarFormaHumana
+        || CONFIG.faseSecreta.senhorDoTempo.formaHumanaFutura.ativa;
     const classeDaFormaHumana = formaHumanaAtiva ? "senhor-tempo-forma-humana" : "";
     const detalhesDoCorpoHumano = formaHumanaAtiva
         ? `
@@ -7967,10 +15294,7 @@ function encerrarConversaDoSenhorDoTempo() {
 
     const conversaDeVitoria = tipoDaConversaDoSenhorDoTempo === "vitoria";
     conversaDoSenhorDoTempoAtiva = false;
-    camadaConversaPortal.classList.remove("camada-conversa-senhor-tempo");
-    camadaConversaPortal.removeAttribute("data-tipo-conversa");
-    camadaConversaPortal.hidden = true;
-    camadaConversaPortal.innerHTML = "";
+    ocultarConversaNoPortal();
 
     if (conversaDeVitoria) {
         mostrarCutsceneDoCapitulo2();
@@ -8033,19 +15357,29 @@ function deveMostrarTransmissaoProjetoRelogioAposVitoria() {
         && !transmissaoProjetoRelogioVista;
 }
 
-function mostrarTransmissaoProjetoRelogio(retomarPartida = false) {
-    const configuracao = CONFIG.metropoleNeon.radio;
-    transmissaoProjetoRelogioVista = true;
-    salvarTransmissaoProjetoRelogioVista();
+function exibirConteudoDaCutscene({
+    tipo,
+    titulo,
+    texto,
+    assinatura,
+    textoDoBotao,
+    retomarPartida = false,
+    etapa = null
+}) {
     cutsceneDaCartaAtiva = true;
     cutsceneDaTransmissaoRetomaPartida = Boolean(retomarPartida && !partidaEncerrada);
     if (camadaCutsceneCarta.dataset) {
-        camadaCutsceneCarta.dataset.tipoCarta = "transmissao";
+        camadaCutsceneCarta.dataset.tipoCarta = tipo;
+        if (etapa) {
+            camadaCutsceneCarta.dataset.etapaCena = etapa;
+        } else {
+            delete camadaCutsceneCarta.dataset.etapaCena;
+        }
     }
-    tituloCutsceneCarta.textContent = localizar(configuracao.titulo);
-    textoCutsceneCarta.textContent = localizar(configuracao.texto);
-    assinaturaCutsceneCarta.textContent = localizar(configuracao.assinatura);
-    botaoContinuarCutsceneCarta.textContent = localizar("Desligar rádio");
+    tituloCutsceneCarta.textContent = localizar(titulo);
+    textoCutsceneCarta.textContent = localizar(texto);
+    assinaturaCutsceneCarta.textContent = localizar(assinatura);
+    botaoContinuarCutsceneCarta.textContent = localizar(textoDoBotao);
     camadaCutsceneCarta.classList.remove("cutscene-carta-em-exibicao");
     camadaCutsceneCarta.hidden = false;
     void camadaCutsceneCarta.offsetWidth;
@@ -8056,12 +15390,399 @@ function mostrarTransmissaoProjetoRelogio(retomarPartida = false) {
     botaoContinuarCutsceneCarta.focus();
 }
 
+function mostrarTransmissaoProjetoRelogio(retomarPartida = false) {
+    const configuracao = CONFIG.metropoleNeon.radio;
+    transmissaoProjetoRelogioVista = true;
+    salvarTransmissaoProjetoRelogioVista();
+    exibirConteudoDaCutscene({
+        tipo: "transmissao",
+        titulo: configuracao.titulo,
+        texto: configuracao.texto,
+        assinatura: configuracao.assinatura,
+        textoDoBotao: "Desligar rádio",
+        retomarPartida
+    });
+}
+
+function deveMostrarRegistroLaboratorioAposVitoria() {
+    return faseSelecionada === CONFIG.laboratorioAbandonado.numeroDaFase
+        && !registroLaboratorioVisto;
+}
+
+function mostrarRegistroDoLaboratorio(retomarPartida = false) {
+    const configuracao = CONFIG.laboratorioAbandonado.terminal;
+    registroLaboratorioVisto = true;
+    salvarRegistroLaboratorioVisto();
+    exibirConteudoDaCutscene({
+        tipo: "registro",
+        titulo: configuracao.titulo,
+        texto: configuracao.texto,
+        assinatura: configuracao.assinatura,
+        textoDoBotao: "Fechar registro",
+        retomarPartida
+    });
+}
+
+function deveMostrarCenaFinalLaboratorioAposVitoria() {
+    return faseSelecionada === CONFIG.laboratorioAbandonado.numeroDaFase
+        && !cenaFinalLaboratorioVista;
+}
+
+function mostrarCenaFinalDoLaboratorio(indiceDaEtapa = 0) {
+    const etapas = CONFIG.laboratorioAbandonado.cenaFinal.etapas;
+    indiceDaCenaFinalLaboratorio = Math.max(
+        0,
+        Math.min(indiceDaEtapa, etapas.length - 1)
+    );
+    const etapa = etapas[indiceDaCenaFinalLaboratorio];
+    exibirConteudoDaCutscene({
+        tipo: "cena-final-laboratorio",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarCenaFinalDoLaboratorio() {
+    const ultimoIndice = CONFIG.laboratorioAbandonado.cenaFinal.etapas.length - 1;
+    if (indiceDaCenaFinalLaboratorio < ultimoIndice) {
+        mostrarCenaFinalDoLaboratorio(indiceDaCenaFinalLaboratorio + 1);
+        return;
+    }
+
+    cenaFinalLaboratorioVista = true;
+    salvarCenaFinalLaboratorioVista();
+    ocultarCutsceneDaCarta();
+    mostrarPainelDeResultado(true);
+}
+
+function deveMostrarTransmissaoFuturoDespedacadoAposVitoria() {
+    return faseSelecionada === CONFIG.futuroDespedacado.numeroDaFase
+        && !transmissaoFuturoDespedacadoVista;
+}
+
+function mostrarTransmissaoFuturoDespedacado(retomarPartida = false) {
+    const configuracao = CONFIG.futuroDespedacado.transmissor;
+    transmissaoFuturoDespedacadoVista = true;
+    salvarTransmissaoFuturoDespedacadoVista();
+    exibirConteudoDaCutscene({
+        tipo: "transmissao-futuro-despedacado",
+        titulo: configuracao.titulo,
+        texto: configuracao.texto,
+        assinatura: configuracao.assinatura,
+        textoDoBotao: "Encerrar transmissão",
+        retomarPartida
+    });
+}
+
+function deveMostrarCenaFinalFuturoDespedacadoAposVitoria() {
+    return faseSelecionada === CONFIG.futuroDespedacado.numeroDaFase
+        && !cenaFinalFuturoDespedacadoVista;
+}
+
+function mostrarCenaFinalDoFuturoDespedacado(indiceDaEtapa = 0) {
+    const etapas = CONFIG.futuroDespedacado.cenaFinal.etapas;
+    indiceDaCenaFinalFuturoDespedacado = Math.max(
+        0,
+        Math.min(indiceDaEtapa, etapas.length - 1)
+    );
+    const etapa = etapas[indiceDaCenaFinalFuturoDespedacado];
+    exibirConteudoDaCutscene({
+        tipo: "cena-final-futuro-despedacado",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarCenaFinalDoFuturoDespedacado() {
+    const ultimoIndice = CONFIG.futuroDespedacado.cenaFinal.etapas.length - 1;
+    if (indiceDaCenaFinalFuturoDespedacado < ultimoIndice) {
+        mostrarCenaFinalDoFuturoDespedacado(
+            indiceDaCenaFinalFuturoDespedacado + 1
+        );
+        return;
+    }
+
+    cenaFinalFuturoDespedacadoVista = true;
+    salvarCenaFinalFuturoDespedacadoVista();
+    ocultarCutsceneDaCarta();
+    mostrarPainelDeResultado(true);
+}
+
+function mostrarRegistroDoPontoZero(idDoRegistro, retomarPartida = false) {
+    const registro = CONFIG.pontoZero.registros.find(
+        item => item.id === idDoRegistro
+    );
+    if (!registro || wave < registro.waveDeAtivacao) {
+        return false;
+    }
+
+    registrosPontoZeroLidos.add(registro.id);
+    exibirConteudoDaCutscene({
+        tipo: "registro-ponto-zero",
+        titulo: registro.titulo,
+        texto: registro.texto,
+        assinatura: registro.assinatura,
+        textoDoBotao: "Fechar registro",
+        retomarPartida,
+        etapa: registro.id
+    });
+    return true;
+}
+
+function deveMostrarCenaFinalPontoZeroAposVitoria() {
+    return faseSelecionada === CONFIG.pontoZero.numeroDaFase
+        && !cenaFinalPontoZeroVista;
+}
+
+function mostrarCenaFinalDoPontoZero(indiceDaEtapa = 0) {
+    const etapas = CONFIG.pontoZero.cenaFinal.etapas;
+    indiceDaCenaFinalPontoZero = Math.max(
+        0,
+        Math.min(indiceDaEtapa, etapas.length - 1)
+    );
+    const etapa = etapas[indiceDaCenaFinalPontoZero];
+    exibirConteudoDaCutscene({
+        tipo: "cena-final-ponto-zero",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarCenaFinalDoPontoZero() {
+    const ultimoIndice = CONFIG.pontoZero.cenaFinal.etapas.length - 1;
+    if (indiceDaCenaFinalPontoZero < ultimoIndice) {
+        mostrarCenaFinalDoPontoZero(indiceDaCenaFinalPontoZero + 1);
+        return;
+    }
+
+    cenaFinalPontoZeroVista = true;
+    salvarCenaFinalPontoZeroVista();
+    ocultarCutsceneDaCarta();
+    mostrarPainelDeResultado(true);
+}
+
+function deveMostrarCenaFinalIntervaloPerdidoAposVitoria() {
+    return faseAtualEhIntervaloPerdido()
+        && (!cenaFinalIntervaloPerdidoVista || !capitulo3Desbloqueado);
+}
+
+function mostrarIntroducaoDoIntervaloPerdido(indiceDaEtapa = 0) {
+    const etapas = CONFIG.intervaloPerdido.introducao;
+    indiceDaIntroducaoIntervaloPerdido = Math.max(
+        0,
+        Math.min(indiceDaEtapa, etapas.length - 1)
+    );
+    const etapa = etapas[indiceDaIntroducaoIntervaloPerdido];
+    exibirConteudoDaCutscene({
+        tipo: "introducao-intervalo-perdido",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarIntroducaoDoIntervaloPerdido() {
+    const ultimoIndice = CONFIG.intervaloPerdido.introducao.length - 1;
+    if (indiceDaIntroducaoIntervaloPerdido < ultimoIndice) {
+        mostrarIntroducaoDoIntervaloPerdido(indiceDaIntroducaoIntervaloPerdido + 1);
+        return;
+    }
+
+    cutsceneDaTransmissaoRetomaPartida = false;
+    ocultarCutsceneDaCarta();
+    definirJogoPausado(false);
+    mostrarAviso(localizar("Os Relógios de Ruptura serão ativados nas waves 3, 6 e 9."));
+    botaoMenuPartida.focus();
+}
+
+function mostrarCenaFinalDoIntervaloPerdido(indiceDaEtapa = 0) {
+    const etapas = CONFIG.intervaloPerdido.cenaFinal.etapas;
+    indiceDaCenaFinalIntervaloPerdido = Math.max(
+        0,
+        Math.min(indiceDaEtapa, etapas.length - 1)
+    );
+    const etapa = etapas[indiceDaCenaFinalIntervaloPerdido];
+    exibirConteudoDaCutscene({
+        tipo: "cena-final-intervalo-perdido",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarCenaFinalDoIntervaloPerdido() {
+    const ultimoIndice = CONFIG.intervaloPerdido.cenaFinal.etapas.length - 1;
+    if (indiceDaCenaFinalIntervaloPerdido < ultimoIndice) {
+        mostrarCenaFinalDoIntervaloPerdido(indiceDaCenaFinalIntervaloPerdido + 1);
+        return;
+    }
+
+    cenaFinalIntervaloPerdidoVista = true;
+    salvarCenaFinalIntervaloPerdidoVista();
+    ocultarCutsceneDaCarta();
+    mostrarCutsceneDoCapitulo3();
+}
+
+function deveMostrarIntroducaoFase13() {
+    return faseSelecionada === CONFIG.linhaDeFrenteTemporal.numeroDaFase
+        && !modoWavesInfinitas
+        && !introducaoFase13Vista;
+}
+
+function mostrarIntroducaoDaFase13(indiceDaEtapa = 0) {
+    const etapas = CONFIG.linhaDeFrenteTemporal.introducao;
+    indiceDaIntroducaoFase13 = Math.max(0, Math.min(indiceDaEtapa, etapas.length - 1));
+    const etapa = etapas[indiceDaIntroducaoFase13];
+    definirJogoPausado(true);
+    desenharCenaPausadaDoTutorial();
+    exibirConteudoDaCutscene({
+        tipo: "introducao-fase-13",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarIntroducaoDaFase13() {
+    const ultimoIndice = CONFIG.linhaDeFrenteTemporal.introducao.length - 1;
+    if (indiceDaIntroducaoFase13 < ultimoIndice) {
+        mostrarIntroducaoDaFase13(indiceDaIntroducaoFase13 + 1);
+        return;
+    }
+
+    introducaoFase13Vista = true;
+    salvarIntroducaoFase13Vista();
+    cutsceneDaTransmissaoRetomaPartida = false;
+    ocultarCutsceneDaCarta();
+    definirJogoPausado(false);
+    mostrarAviso(localizar("Frentes Temporais serão abertas nas waves 2, 5, 8, 11, 14, 17 e 20."));
+    botaoMenuPartida.focus();
+}
+
+function deveMostrarCenaFinalFase13AposVitoria() {
+    return faseSelecionada === CONFIG.linhaDeFrenteTemporal.numeroDaFase
+        && !cenaFinalFase13Vista;
+}
+
+function mostrarCenaFinalDaFase13(indiceDaEtapa = 0) {
+    const etapas = CONFIG.linhaDeFrenteTemporal.cenaFinal.etapas;
+    indiceDaCenaFinalFase13 = Math.max(0, Math.min(indiceDaEtapa, etapas.length - 1));
+    const etapa = etapas[indiceDaCenaFinalFase13];
+    exibirConteudoDaCutscene({
+        tipo: "cena-final-fase-13",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarCenaFinalDaFase13() {
+    const ultimoIndice = CONFIG.linhaDeFrenteTemporal.cenaFinal.etapas.length - 1;
+    if (indiceDaCenaFinalFase13 < ultimoIndice) {
+        mostrarCenaFinalDaFase13(indiceDaCenaFinalFase13 + 1);
+        return;
+    }
+
+    cenaFinalFase13Vista = true;
+    salvarCenaFinalFase13Vista();
+    ocultarCutsceneDaCarta();
+    mostrarPainelDeResultado(true);
+}
+
+function deveMostrarIntroducaoFase14() {
+    return faseSelecionada === CONFIG.eraApagada.numeroDaFase
+        && !modoWavesInfinitas
+        && !introducaoFase14Vista;
+}
+
+function mostrarIntroducaoDaFase14(indiceDaEtapa = 0) {
+    const etapas = CONFIG.eraApagada.introducao;
+    indiceDaIntroducaoFase14 = Math.max(0, Math.min(indiceDaEtapa, etapas.length - 1));
+    const etapa = etapas[indiceDaIntroducaoFase14];
+    definirJogoPausado(true);
+    desenharCenaPausadaDoTutorial();
+    exibirConteudoDaCutscene({
+        tipo: "introducao-fase-14",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarIntroducaoDaFase14() {
+    const ultimoIndice = CONFIG.eraApagada.introducao.length - 1;
+    if (indiceDaIntroducaoFase14 < ultimoIndice) {
+        mostrarIntroducaoDaFase14(indiceDaIntroducaoFase14 + 1);
+        return;
+    }
+
+    introducaoFase14Vista = true;
+    salvarIntroducaoFase14Vista();
+    cutsceneDaTransmissaoRetomaPartida = false;
+    ocultarCutsceneDaCarta();
+    definirJogoPausado(false);
+    mostrarAviso(localizar("A Reescrita Temporal atingirá as waves 3, 6, 9, 12, 15 e 18."));
+    botaoMenuPartida.focus();
+}
+
+function deveMostrarCenaFinalFase14AposVitoria() {
+    return faseSelecionada === CONFIG.eraApagada.numeroDaFase
+        && !cenaFinalFase14Vista;
+}
+
+function mostrarCenaFinalDaFase14(indiceDaEtapa = 0) {
+    const etapas = CONFIG.eraApagada.cenaFinal.etapas;
+    indiceDaCenaFinalFase14 = Math.max(0, Math.min(indiceDaEtapa, etapas.length - 1));
+    const etapa = etapas[indiceDaCenaFinalFase14];
+    exibirConteudoDaCutscene({
+        tipo: "cena-final-fase-14",
+        titulo: etapa.titulo,
+        texto: etapa.texto,
+        assinatura: etapa.assinatura,
+        textoDoBotao: etapa.textoDoBotao,
+        etapa: etapa.id
+    });
+}
+
+function avancarCenaFinalDaFase14() {
+    const ultimoIndice = CONFIG.eraApagada.cenaFinal.etapas.length - 1;
+    if (indiceDaCenaFinalFase14 < ultimoIndice) {
+        mostrarCenaFinalDaFase14(indiceDaCenaFinalFase14 + 1);
+        return;
+    }
+
+    cenaFinalFase14Vista = true;
+    salvarCenaFinalFase14Vista();
+    ocultarCutsceneDaCarta();
+    mostrarPainelDeResultado(true);
+}
+
 function ocultarCutsceneDaCarta() {
     cutsceneDaCartaAtiva = false;
     camadaCutsceneCarta.hidden = true;
     camadaCutsceneCarta.classList.remove("cutscene-carta-em-exibicao");
     if (typeof camadaCutsceneCarta.removeAttribute === "function") {
         camadaCutsceneCarta.removeAttribute("data-tipo-carta");
+        camadaCutsceneCarta.removeAttribute("data-etapa-cena");
     }
 }
 
@@ -8071,8 +15792,62 @@ function concluirCutsceneDaCarta() {
     }
 
     const deveRetomarPartida = cutsceneDaTransmissaoRetomaPartida;
+    const tipoDaCutscene = camadaCutsceneCarta.dataset?.tipoCarta;
+    if (tipoDaCutscene === "cena-final-laboratorio") {
+        avancarCenaFinalDoLaboratorio();
+        return;
+    }
+
+    if (tipoDaCutscene === "cena-final-futuro-despedacado") {
+        avancarCenaFinalDoFuturoDespedacado();
+        return;
+    }
+
+    if (tipoDaCutscene === "cena-final-ponto-zero") {
+        avancarCenaFinalDoPontoZero();
+        return;
+    }
+
+    if (tipoDaCutscene === "introducao-intervalo-perdido") {
+        avancarIntroducaoDoIntervaloPerdido();
+        return;
+    }
+
+    if (tipoDaCutscene === "cena-final-intervalo-perdido") {
+        avancarCenaFinalDoIntervaloPerdido();
+        return;
+    }
+
+    if (tipoDaCutscene === "introducao-fase-13") {
+        avancarIntroducaoDaFase13();
+        return;
+    }
+
+    if (tipoDaCutscene === "cena-final-fase-13") {
+        avancarCenaFinalDaFase13();
+        return;
+    }
+
+    if (tipoDaCutscene === "introducao-fase-14") {
+        avancarIntroducaoDaFase14();
+        return;
+    }
+
+    if (tipoDaCutscene === "cena-final-fase-14") {
+        avancarCenaFinalDaFase14();
+        return;
+    }
+
+    const concluiuTransmissaoProjetoRelogio = tipoDaCutscene === "transmissao";
+    const concluiuRegistroLaboratorio = tipoDaCutscene === "registro";
+    const concluiuTransmissaoFuturoDespedacado = tipoDaCutscene
+        === "transmissao-futuro-despedacado";
     cutsceneDaTransmissaoRetomaPartida = false;
     ocultarCutsceneDaCarta();
+
+    if (concluiuTransmissaoProjetoRelogio) {
+        registrarTransmissaoProjetoRelogioParaConquistas();
+    }
 
     if (deveRetomarPartida) {
         definirJogoPausado(false);
@@ -8080,18 +15855,45 @@ function concluirCutsceneDaCarta() {
         return;
     }
 
+    if (concluiuRegistroLaboratorio && deveMostrarCenaFinalLaboratorioAposVitoria()) {
+        mostrarCenaFinalDoLaboratorio();
+        return;
+    }
+
+    if (
+        concluiuTransmissaoFuturoDespedacado
+        && deveMostrarCenaFinalFuturoDespedacadoAposVitoria()
+    ) {
+        mostrarCenaFinalDoFuturoDespedacado();
+        return;
+    }
+
     mostrarPainelDeResultado(true);
 }
 
-function mostrarCutsceneDoCapitulo2() {
-    capitulo2Desbloqueado = true;
-    salvarDesbloqueioDoCapitulo2();
+function mostrarCutsceneDeDesbloqueioDoCapitulo(numeroDoCapitulo) {
+    if (numeroDoCapitulo === 3) {
+        capitulo3Desbloqueado = true;
+        salvarDesbloqueioDoCapitulo3();
+        atualizarRelogioQuebradoDoIntervalo();
+    } else {
+        capitulo2Desbloqueado = true;
+        salvarDesbloqueioDoCapitulo2();
+    }
+
     cutsceneDoCapitulo2Ativa = true;
     rotuloCutsceneCapitulo2.textContent = localizar("CAMINHO LIBERADO");
-    tituloCutsceneCapitulo2.textContent = localizar("Capítulo 2").toUpperCase();
-    descricaoCutsceneCapitulo2.textContent = localizar("Fases 7 a 12");
+    tituloCutsceneCapitulo2.textContent = localizar(`Capítulo ${numeroDoCapitulo}`).toUpperCase();
+    descricaoCutsceneCapitulo2.textContent = numeroDoCapitulo === 3
+        ? localizar("Fases 13 a 18")
+        : localizar("Fases 7 a 12");
     mensagemCutsceneCapitulo2.textContent = localizar("NOVO CAPÍTULO DESBLOQUEADO");
     botaoContinuarCutsceneCapitulo2.textContent = localizar("Continuar");
+    const selo = camadaCutsceneCapitulo2.querySelector(".cutscene-capitulo-selo strong");
+    if (selo) {
+        selo.textContent = numeroDoCapitulo === 3 ? "III" : "II";
+    }
+    camadaCutsceneCapitulo2.dataset.capitulo = numeroDoCapitulo.toString();
     camadaCutsceneCapitulo2.classList.remove("cutscene-capitulo-em-exibicao");
     camadaCutsceneCapitulo2.hidden = false;
     void camadaCutsceneCapitulo2.offsetWidth;
@@ -8099,10 +15901,19 @@ function mostrarCutsceneDoCapitulo2() {
     botaoContinuarCutsceneCapitulo2.focus();
 }
 
+function mostrarCutsceneDoCapitulo2() {
+    mostrarCutsceneDeDesbloqueioDoCapitulo(2);
+}
+
+function mostrarCutsceneDoCapitulo3() {
+    mostrarCutsceneDeDesbloqueioDoCapitulo(3);
+}
+
 function ocultarCutsceneDoCapitulo2() {
     cutsceneDoCapitulo2Ativa = false;
     camadaCutsceneCapitulo2.hidden = true;
     camadaCutsceneCapitulo2.classList.remove("cutscene-capitulo-em-exibicao");
+    camadaCutsceneCapitulo2.removeAttribute("data-capitulo");
 }
 
 function concluirCutsceneDoCapitulo2() {
@@ -8125,6 +15936,355 @@ function iniciarFaseSecreta() {
     iniciarPartida(false);
     definirJogoPausado(true);
     mostrarConversaDoSenhorDoTempo(0, "entrada");
+}
+
+function iniciarIntervaloPerdido() {
+    if (jogoIniciado) {
+        return;
+    }
+
+    faseSelecionada = CONFIG.intervaloPerdido.numeroInterno;
+    modoWavesInfinitas = false;
+    atualizarIndicadorFaseSelecionada();
+    iniciarPartida(false);
+    definirJogoPausado(true);
+    mostrarIntroducaoDoIntervaloPerdido();
+}
+
+function sortearSequenciaDosRelogiosDoIntervalo() {
+    const indices = CONFIG.intervaloPerdido.relogiosDeRuptura.posicoes
+        .map((_, indice) => indice);
+    for (let indice = indices.length - 1; indice > 0; indice--) {
+        const indiceSorteado = Math.floor(Math.random() * (indice + 1));
+        [indices[indice], indices[indiceSorteado]] = [
+            indices[indiceSorteado],
+            indices[indice]
+        ];
+    }
+    return indices;
+}
+
+function iniciarDesafioDosRelogiosDoIntervalo(agora = Date.now()) {
+    const configuracao = CONFIG.intervaloPerdido.relogiosDeRuptura;
+    if (
+        !faseAtualEhIntervaloPerdido()
+        || !configuracao.wavesDeAtivacao.includes(wave)
+    ) {
+        return false;
+    }
+
+    desafioDosRelogiosDoIntervalo = {
+        estado: "mostrando",
+        sequencia: sortearSequenciaDosRelogiosDoIntervalo(),
+        indiceDaResposta: 0,
+        iniciadoEm: agora,
+        terminaEm: 0
+    };
+    mostrarAviso(localizar("Relógios de Ruptura: memorize a sequência!"));
+    return true;
+}
+
+function atualizarDesafioDosRelogiosDoIntervalo(agora = Date.now()) {
+    const desafio = desafioDosRelogiosDoIntervalo;
+    if (!desafio) {
+        return;
+    }
+
+    const configuracao = CONFIG.intervaloPerdido.relogiosDeRuptura;
+    if (desafio.estado === "mostrando") {
+        const duracaoDaExibicao = desafio.sequencia.length
+            * configuracao.intervaloDeExibicaoMs;
+        if (agora - desafio.iniciadoEm >= duracaoDaExibicao) {
+            desafio.estado = "respondendo";
+            desafio.terminaEm = agora + configuracao.tempoDeRespostaMs;
+            mostrarAviso(localizar("Repita a sequência clicando nos três relógios!"));
+        }
+        return;
+    }
+
+    if (agora >= desafio.terminaEm) {
+        concluirDesafioDosRelogiosDoIntervalo(false, agora);
+    }
+}
+
+function concluirDesafioDosRelogiosDoIntervalo(acertou, agora = Date.now()) {
+    if (!desafioDosRelogiosDoIntervalo) {
+        return false;
+    }
+
+    const configuracao = CONFIG.intervaloPerdido.relogiosDeRuptura;
+    desafioDosRelogiosDoIntervalo = null;
+    if (acertou) {
+        lentidaoDosRelogiosDoIntervaloExpiraEm = agora
+            + configuracao.duracaoDaLentidaoMs;
+        mostrarAviso(localizar("Sequência correta! Os inimigos ficaram mais lentos por 4 segundos."));
+        return true;
+    }
+
+    for (let indice = 0; indice < configuracao.ecosTemporaisPorFalha; indice++) {
+        criarInimigo("ecoTemporal");
+    }
+    mostrarAviso(localizar("Sequência incorreta! Dois Ecos Temporais atravessaram a ruptura."));
+    return false;
+}
+
+function obterRelogioDoIntervaloNaPosicao(x, y) {
+    if (!faseAtualEhIntervaloPerdido()) {
+        return null;
+    }
+
+    const configuracao = CONFIG.intervaloPerdido.relogiosDeRuptura;
+    return configuracao.posicoes.find((relogio) => (
+        Math.hypot(relogio.x - x, relogio.y - y) <= configuracao.raioDeClique
+    )) || null;
+}
+
+function estaPertoDosRelogiosDoIntervalo(x, y) {
+    if (!faseAtualEhIntervaloPerdido()) {
+        return false;
+    }
+
+    const configuracao = CONFIG.intervaloPerdido.relogiosDeRuptura;
+    return configuracao.posicoes.some((relogio) => (
+        Math.hypot(relogio.x - x, relogio.y - y)
+            < configuracao.distanciaMinimaDasTorres
+    ));
+}
+
+function interagirComRelogioDoIntervalo(relogio, agora = Date.now()) {
+    const desafio = desafioDosRelogiosDoIntervalo;
+    if (!relogio || !desafio) {
+        mostrarAviso(localizar("O relógio está parado em 00:00."));
+        return true;
+    }
+
+    if (desafio.estado !== "respondendo") {
+        mostrarAviso(localizar("Observe a sequência antes de responder."));
+        return true;
+    }
+
+    const posicoes = CONFIG.intervaloPerdido.relogiosDeRuptura.posicoes;
+    const indiceClicado = posicoes.findIndex(item => item.id === relogio.id);
+    if (indiceClicado !== desafio.sequencia[desafio.indiceDaResposta]) {
+        concluirDesafioDosRelogiosDoIntervalo(false, agora);
+        return true;
+    }
+
+    desafio.indiceDaResposta++;
+    if (desafio.indiceDaResposta >= desafio.sequencia.length) {
+        concluirDesafioDosRelogiosDoIntervalo(true, agora);
+    } else {
+        mostrarAviso(localizar("Relógio {atual} de {total} correto.", {
+            atual: desafio.indiceDaResposta,
+            total: desafio.sequencia.length
+        }));
+    }
+    return true;
+}
+
+function faseAtualUsaLinhaDeFrenteTemporal() {
+    return faseSelecionada === CONFIG.linhaDeFrenteTemporal.numeroDaFase;
+}
+
+function obterEntradaDaFrenteTemporal(indice) {
+    const entradas = CONFIG.linhaDeFrenteTemporal.frentesTemporais.entradas;
+    return entradas[((indice % entradas.length) + entradas.length) % entradas.length];
+}
+
+function criarInimigoNaFrenteTemporal(tipo, entrada) {
+    criarInimigo(tipo);
+    const inimigo = inimigos[inimigos.length - 1];
+    const caminho = obterCaminhoDoInimigo(inimigo);
+    const indiceDoPonto = Math.max(
+        0,
+        Math.min(entrada.indiceDoPontoNoCaminho, caminho.length - 2)
+    );
+    inimigo.x = caminho[indiceDoPonto].x;
+    inimigo.y = caminho[indiceDoPonto].y;
+    inimigo.alvo = indiceDoPonto + 1;
+    inimigo.entrouPelaFrenteTemporal = entrada.id;
+    return inimigo;
+}
+
+function iniciarFrenteTemporalDaWave(agora = Date.now()) {
+    if (!faseAtualUsaLinhaDeFrenteTemporal()) {
+        return false;
+    }
+
+    const configuracao = CONFIG.linhaDeFrenteTemporal.frentesTemporais;
+    const indiceDaAtivacao = configuracao.wavesDeAtivacao.indexOf(wave);
+    if (indiceDaAtivacao < 0) {
+        return false;
+    }
+
+    indiceDaUltimaFrenteTemporal = indiceDaAtivacao % configuracao.entradas.length;
+    const entrada = obterEntradaDaFrenteTemporal(indiceDaUltimaFrenteTemporal);
+    frenteTemporalAtiva = {
+        entrada,
+        estado: "aviso",
+        ativaEm: agora + configuracao.duracaoDoAvisoMs,
+        terminaEm: 0
+    };
+    mostrarAviso(localizar("FRENTE {era}: uma entrada de reforços está se abrindo!", {
+        era: localizar(entrada.nome)
+    }));
+    return true;
+}
+
+function atualizarFrenteTemporal(agora = Date.now()) {
+    if (!faseAtualUsaLinhaDeFrenteTemporal() || !frenteTemporalAtiva) {
+        return false;
+    }
+
+    const configuracao = CONFIG.linhaDeFrenteTemporal.frentesTemporais;
+    if (frenteTemporalAtiva.estado === "aviso" && agora >= frenteTemporalAtiva.ativaEm) {
+        frenteTemporalAtiva.estado = "ativa";
+        frenteTemporalAtiva.terminaEm = agora + configuracao.duracaoAtivaMs;
+        for (let indice = 0; indice < configuracao.reforcosPorAbertura; indice++) {
+            criarInimigoNaFrenteTemporal(
+                frenteTemporalAtiva.entrada.tipoDoReforco,
+                frenteTemporalAtiva.entrada
+            );
+        }
+        mostrarAviso(localizar("FRENTE {era} ABERTA: reforço atravessou a linha temporal!", {
+            era: localizar(frenteTemporalAtiva.entrada.nome)
+        }));
+        return true;
+    }
+
+    if (
+        frenteTemporalAtiva.estado === "ativa"
+        && agora >= frenteTemporalAtiva.terminaEm
+    ) {
+        frenteTemporalAtiva = null;
+    }
+    return false;
+}
+
+function trocarFrenteTemporalPeloExecutor(agora = Date.now()) {
+    if (!faseAtualUsaLinhaDeFrenteTemporal()) {
+        return null;
+    }
+
+    const configuracao = CONFIG.linhaDeFrenteTemporal.frentesTemporais;
+    indiceDaUltimaFrenteTemporal = (indiceDaUltimaFrenteTemporal + 1)
+        % configuracao.entradas.length;
+    const entrada = obterEntradaDaFrenteTemporal(indiceDaUltimaFrenteTemporal);
+    frenteTemporalAtiva = {
+        entrada,
+        estado: "ativa",
+        ativaEm: agora,
+        terminaEm: agora + configuracao.duracaoAtivaMs
+    };
+    mostrarAviso(localizar("O Executor deslocou a frente ativa para {era}!", {
+        era: localizar(entrada.nome)
+    }));
+    return entrada.id;
+}
+
+function ativarInterferenciaDoSenhorDoTempo(agora = Date.now()) {
+    if (faseSelecionada !== CONFIG.linhaDeFrenteTemporal.numeroDaFase) {
+        return false;
+    }
+
+    const configuracao = CONFIG.linhaDeFrenteTemporal.interferencia;
+    const indiceDaInterferencia = configuracao.wavesDeAtivacao.indexOf(wave);
+    if (indiceDaInterferencia < 0) {
+        return false;
+    }
+
+    const tipo = indiceDaInterferencia % 2 === 0 ? "aceleracao" : "estase";
+    if (tipo === "aceleracao") {
+        aceleracaoDaInterferenciaTemporalExpiraEm = agora
+            + configuracao.duracaoDaAceleracaoMs;
+        interferenciaVisualDoSenhorDoTempoExpiraEm = agora
+            + configuracao.duracaoDaAceleracaoMs;
+        mostrarAviso(localizar("Senhor do Tempo: {fala} Inimigos acelerados por 6 segundos.", {
+            fala: localizar(configuracao.falas[0])
+        }));
+        return true;
+    }
+
+    const torresDeCombate = torres
+        .filter(torre => !obterConfiguracaoDaTorre(torre.tipo).naoAtira)
+        .slice()
+        .sort(() => Math.random() - 0.5)
+        .slice(0, configuracao.quantidadeDeTorresEmEstase);
+    for (const torre of torresDeCombate) {
+        torre.estaseTemporalExpiraEm = Math.max(
+            torre.estaseTemporalExpiraEm || 0,
+            agora + configuracao.duracaoDaEstaseMs
+        );
+        torre.alvoAtual = null;
+    }
+    interferenciaVisualDoSenhorDoTempoExpiraEm = agora
+        + configuracao.duracaoDaEstaseMs;
+    mostrarAviso(localizar("Senhor do Tempo: {fala} {quantidade} torres entraram em estase.", {
+        fala: localizar(configuracao.falas[1]),
+        quantidade: torresDeCombate.length
+    }));
+    return true;
+}
+
+function faseAtualUsaEraApagada() {
+    return faseSelecionada === CONFIG.eraApagada.numeroDaFase;
+}
+
+function pontoEstaNaRegiaoDaReescrita(x, y, regiao) {
+    return x >= regiao.x
+        && x <= regiao.x + regiao.largura
+        && y >= regiao.y
+        && y <= regiao.y + regiao.altura;
+}
+
+function iniciarReescritaTemporalDaEraApagada(agora = Date.now()) {
+    const configuracao = CONFIG.eraApagada.reescritaTemporal;
+    const indiceDaAtivacao = configuracao.wavesDeAtivacao.indexOf(wave);
+    if (!faseAtualUsaEraApagada() || indiceDaAtivacao < 0) {
+        return false;
+    }
+
+    reescritaTemporalDaEraApagada = {
+        estado: "aviso",
+        regiao: configuracao.regioes[indiceDaAtivacao % configuracao.regioes.length],
+        ativaEm: agora + configuracao.duracaoDoAvisoMs,
+        terminaEm: 0
+    };
+    mostrarAviso(localizar("REESCRITA TEMPORAL: uma área do mapa será apagada!"));
+    return true;
+}
+
+function atualizarReescritaTemporalDaEraApagada(agora = Date.now()) {
+    const reescrita = reescritaTemporalDaEraApagada;
+    if (!reescrita) {
+        return;
+    }
+
+    if (reescrita.estado === "aviso" && agora >= reescrita.ativaEm) {
+        const configuracao = CONFIG.eraApagada.reescritaTemporal;
+        const torresAfetadas = torres.filter((torre) => (
+            !obterConfiguracaoDaTorre(torre.tipo).naoAtira
+            && pontoEstaNaRegiaoDaReescrita(torre.x, torre.y, reescrita.regiao)
+        ));
+        reescrita.estado = "ativa";
+        reescrita.terminaEm = agora + configuracao.duracaoDaEstaseMs;
+        for (const torre of torresAfetadas) {
+            torre.estaseTemporalExpiraEm = Math.max(
+                torre.estaseTemporalExpiraEm || 0,
+                reescrita.terminaEm
+            );
+            torre.alvoAtual = null;
+        }
+        mostrarAviso(localizar("Área apagada: {quantidade} torres de combate entraram em estase.", {
+            quantidade: torresAfetadas.length
+        }));
+        return;
+    }
+
+    if (reescrita.estado === "ativa" && agora >= reescrita.terminaEm) {
+        reescritaTemporalDaEraApagada = null;
+        mostrarAviso(localizar("A área apagada voltou à linha temporal."));
+    }
 }
 
 function obterConfiguracaoDaTorre(tipoDaTorre = tipoDeTorreParaConstruir) {
@@ -8190,22 +16350,132 @@ function obterDetalheDaQueimadura(configuracao) {
     });
 }
 
-function obterResumoDaConfiguracaoDaTorre(configuracao) {
+function obterConfiguracaoDoElemento(elemento) {
+    return CONFIG.elementos.tipos[elemento] || null;
+}
+
+function obterCaracteristicasElementaisDoInimigo(tipoDoInimigo) {
+    return Object.entries(CONFIG.elementos.caracteristicasDosInimigos)
+        .filter(([, tipos]) => tipos.includes(tipoDoInimigo))
+        .map(([caracteristica]) => caracteristica);
+}
+
+function obterVantagemElementalDoAtaque(elemento, tipoDoInimigo) {
+    const configuracaoDoElemento = obterConfiguracaoDoElemento(elemento);
+    if (!configuracaoDoElemento) {
+        return null;
+    }
+
+    const caracteristicasDoInimigo = obterCaracteristicasElementaisDoInimigo(
+        tipoDoInimigo
+    );
+    return configuracaoDoElemento.vantagensContra.some((caracteristica) => (
+        caracteristicasDoInimigo.includes(caracteristica)
+    ))
+        ? configuracaoDoElemento
+        : null;
+}
+
+function obterFormaDoCarcereiroDoIntervalo(inimigo) {
+    if (!inimigo || inimigo.tipo !== "carcereiroDoIntervalo") {
+        return null;
+    }
+
+    const percentualDeVida = inimigo.vida / inimigo.vidaMaxima;
+    const configuracao = CONFIG.inimigo.carcereiroDoIntervalo;
+    if (percentualDeVida > configuracao.percentualDaFormaPassado) {
+        return "passado";
+    }
+    if (percentualDeVida > configuracao.percentualDaFormaFuturo) {
+        return "futuro";
+    }
+    return "intervalo";
+}
+
+function obterVantagemElementalContraInimigo(elemento, inimigo) {
+    const formaDoCarcereiro = obterFormaDoCarcereiroDoIntervalo(inimigo);
+    if (formaDoCarcereiro === "passado" && elemento === "sismico") {
+        return obterConfiguracaoDoElemento("sismico");
+    }
+    if (formaDoCarcereiro === "futuro" && elemento === "eletrico") {
+        return obterConfiguracaoDoElemento("eletrico");
+    }
+    if (formaDoCarcereiro === "intervalo") {
+        return null;
+    }
+    return obterVantagemElementalDoAtaque(elemento, inimigo.tipo);
+}
+
+function obterFraquezasElementaisDoInimigo(tipoDoInimigo) {
+    return Object.entries(CONFIG.elementos.tipos)
+        .filter(([elemento]) => obterVantagemElementalDoAtaque(elemento, tipoDoInimigo))
+        .map(([elemento, configuracao]) => ({ elemento, configuracao }));
+}
+
+function obterTextoDoElemento(configuracao) {
+    const configuracaoDoElemento = obterConfiguracaoDoElemento(configuracao?.elemento);
+    return configuracaoDoElemento
+        ? localizar("Elemento: {elemento}", {
+            elemento: localizar(configuracaoDoElemento.nome)
+        })
+        : "";
+}
+
+function obterResumoDasFraquezasElementais(tipoDoInimigo) {
+    return obterFraquezasElementaisDoInimigo(tipoDoInimigo)
+        .map(({ configuracao }) => localizar("{elemento} +{percentual}%", {
+            elemento: localizar(configuracao.nome),
+            percentual: obterPercentualInteiro(configuracao.multiplicadorDeVantagem - 1)
+        }))
+        .join(", ");
+}
+
+function obterTextoDasFraquezasElementais(tipoDoInimigo) {
+    const fraquezas = obterResumoDasFraquezasElementais(tipoDoInimigo);
+    return fraquezas
+        ? localizar("Fraqueza: {fraquezas}", { fraquezas })
+        : "";
+}
+
+function obterResumoBaseDaConfiguracaoDaTorre(configuracao) {
     if (configuracao.tipoDeItem === "mina") {
+        const detalheCorrosivo = configuracao.efeitoCorrosivo
+            ? localizar(" · Corrosão +{percentual}% por {segundos}s", {
+                percentual: obterPercentualInteiro(
+                    configuracao.efeitoCorrosivo.percentualDanoAdicional
+                ),
+                segundos: configuracao.efeitoCorrosivo.duracao / 1000
+            })
+            : "";
         const detalheGlacial = configuracao.efeitoGlacial
             ? localizar(" · Lentidão {percentual}%", {
                 percentual: obterPercentualInteiro(configuracao.efeitoGlacial.percentualLentidao)
             })
             : "";
+        const detalheDoPulso = configuracao.efeitoDePulso
+            ? localizar(" · Empurra {distancia} px", {
+                distancia: configuracao.efeitoDePulso.distanciaDoEmpurrao
+            })
+            : "";
         return localizar("Dano {dano} em {raio} px", {
             dano: configuracao.dano,
             raio: configuracao.raioExplosao
-        }) + detalheGlacial + localizar(" · Limite {limite} armadas", {
+        }) + detalheCorrosivo + detalheGlacial + detalheDoPulso
+            + localizar(" · Limite {limite} armadas", {
             limite: configuracao.limitePorPartida
         });
     }
 
     if (configuracao.tipoDeItem === "bomba") {
+        if (configuracao.efeitoDeFragmentacao) {
+            return localizar("Dano {dano} + {quantidade} fragmentos de {danoFragmento} · Clique para detonar · Limite {limite}", {
+                dano: configuracao.dano,
+                quantidade: configuracao.efeitoDeFragmentacao.quantidadeDeFragmentos,
+                danoFragmento: configuracao.efeitoDeFragmentacao.danoDeCadaFragmento,
+                limite: configuracao.limitePorPartida
+            });
+        }
+
         return localizar("Dano {dano} em {raio} px · Clique para detonar · Limite {limite}", {
             dano: configuracao.dano,
             raio: configuracao.raioExplosao,
@@ -8218,6 +16488,13 @@ function obterResumoDaConfiguracaoDaTorre(configuracao) {
             cargas: configuracao.efeitoSismico.cargasNecessarias,
             distancia: configuracao.efeitoSismico.distanciaDoEmpurrao,
             limite: configuracao.limitePorPartida
+        });
+    }
+
+    if (configuracao.detectaCamuflados) {
+        return localizar("Dano {dano} · Detecta camuflados · Alcance {alcance}", {
+            dano: configuracao.dano,
+            alcance: configuracao.alcance
         });
     }
 
@@ -8253,6 +16530,55 @@ function obterResumoDaConfiguracaoDaTorre(configuracao) {
         });
     }
 
+    if (configuracao.efeitoPerfurante) {
+        return localizar("Dano {dano} · Perfura uma faixa de {largura} px · Alcance {alcance}", {
+            dano: configuracao.dano,
+            largura: configuracao.efeitoPerfurante.larguraDoFeixe,
+            alcance: configuracao.alcance
+        });
+    }
+
+    if (configuracao.efeitoDeMarca) {
+        return localizar("Dano {dano} · Marca +{percentual}% de dano · Alcance {alcance}", {
+            dano: configuracao.dano,
+            percentual: obterPercentualInteiro(configuracao.efeitoDeMarca.percentualDanoAdicional),
+            alcance: configuracao.alcance
+        });
+    }
+
+    if (configuracao.efeitoDeDrones) {
+        return localizar("{quantidade} drones de {dano} de dano · Alcance {alcance}", {
+            quantidade: configuracao.efeitoDeDrones.quantidade,
+            dano: configuracao.dano,
+            alcance: configuracao.alcance
+        });
+    }
+
+    if (configuracao.efeitoDeCorrente) {
+        return localizar("Dano {dano} · Corrente {percentual}% · Alcance {alcance}", {
+            dano: configuracao.dano,
+            percentual: obterPercentualInteiro(
+                configuracao.efeitoDeCorrente.multiplicadorDanoSegundoAlvo
+            ),
+            alcance: configuracao.alcance
+        });
+    }
+
+    if (configuracao.efeitoDeSucata) {
+        return localizar("Dano {dano} · Até {pecas} peças de sucata · Alcance {alcance}", {
+            dano: configuracao.dano,
+            pecas: configuracao.efeitoDeSucata.maximoDePecas,
+            alcance: configuracao.alcance
+        });
+    }
+
+    if (configuracao.efeitoPrismatico) {
+        return localizar("Dano {dano} · Alterna vermelho, azul e amarelo · Alcance {alcance}", {
+            dano: configuracao.dano,
+            alcance: configuracao.alcance
+        });
+    }
+
     if (configuracao.quantidadeDeLasers) {
         return localizar("{quantidade} lasers de {dano} de dano · Alcance {alcance}", {
             quantidade: configuracao.quantidadeDeLasers,
@@ -8282,13 +16608,22 @@ function obterResumoDaConfiguracaoDaTorre(configuracao) {
     });
 }
 
+function obterResumoDaConfiguracaoDaTorre(configuracao) {
+    const resumo = obterResumoBaseDaConfiguracaoDaTorre(configuracao);
+    const textoDoElemento = obterTextoDoElemento(configuracao);
+    return textoDoElemento ? `${resumo} · ${textoDoElemento}` : resumo;
+}
+
 function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
     const desbloqueada = torreEstaDesbloqueada(tipo);
     const selecionada = selecaoDeDefesasEmEdicao.has(tipo);
     const ordem = [...selecaoDeDefesasEmEdicao].indexOf(tipo) + 1;
-    const obrigatoriaNoTutorial = !selecaoDeDefesasParaModoInfinito
+    const obrigatoriaNoTutorial = !mapaPersonalizadoAtivo
+        && !selecaoDeDefesasParaModoInfinito
         && !tutorialConcluido
         && tipo === "padrao";
+    const obrigatoriaNaFase14 = faseAtualExigeTorreDeVarredura()
+        && tipo === "torreDeVarredura";
     const estado = desbloqueada
         ? selecionada
             ? localizar("Selecionada")
@@ -8325,7 +16660,11 @@ function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
                 <em>${obterResumoDaConfiguracaoDaTorre(configuracao)}</em>
             </span>
             <span class="selecao-defesa-estado">
-                ${obrigatoriaNoTutorial ? localizar("Obrigatória no tutorial") : estado}
+                ${obrigatoriaNoTutorial
+                    ? localizar("Obrigatória no tutorial")
+                    : obrigatoriaNaFase14
+                        ? localizar("Obrigatória na Fase 14")
+                        : estado}
             </span>
         </button>
     `;
@@ -8363,13 +16702,20 @@ function mostrarSelecaoDeDefesas() {
 
     const quantidadeSelecionada = selecaoDeDefesasEmEdicao.size;
     const limite = CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas;
-    const titulo = selecaoDeDefesasParaModoInfinito
-        ? localizar("Defesas para Waves infinitas")
-        : localizar("Escolha suas defesas");
-    const textoDoBotao = selecaoDeDefesasParaModoInfinito
-        ? localizar("Iniciar Waves infinitas")
-        : localizar("Começar partida");
-    const avisoDoTutorial = !selecaoDeDefesasParaModoInfinito && !tutorialConcluido
+    const titulo = mapaPersonalizadoAtivo
+        ? traduzir("editor.defesasTitulo", {
+            mapa: escaparTextoDoEditor(mapaPersonalizadoAtivo.nome)
+        })
+        : selecaoDeDefesasParaModoInfinito
+            ? localizar("Defesas para Waves infinitas")
+            : localizar("Escolha suas defesas");
+    const textoDoBotao = mapaPersonalizadoAtivo
+        ? traduzir("editor.jogar")
+        : selecaoDeDefesasParaModoInfinito
+            ? localizar("Iniciar Waves infinitas")
+            : localizar("Começar partida");
+    const avisoDoTutorial = !mapaPersonalizadoAtivo
+        && !selecaoDeDefesasParaModoInfinito && !tutorialConcluido
         ? `<p class="selecao-defesas-tutorial">${localizar("A Torre padrão é obrigatória na primeira partida para concluir o tutorial.")}</p>`
         : "";
     const cartoes = Object.entries(CONFIG.torre.tipos)
@@ -8423,6 +16769,11 @@ function abrirSelecaoDeDefesas(wavesInfinitas = false) {
     selecaoDeDefesasEmEdicao = normalizarSelecaoDeDefesas(
         defesasSelecionadasParaPartida
     );
+    if (faseAtualExigeTorreDeVarredura()) {
+        selecaoDeDefesasEmEdicao = incluirTorreDeVarreduraNaSelecao(
+            selecaoDeDefesasEmEdicao
+        );
+    }
     mensagemDaSelecaoDeDefesas = "";
     mostrarSelecaoDeDefesas();
 }
@@ -8433,11 +16784,18 @@ function alternarDefesaDaSelecao(tipoDaDefesa) {
     }
 
     if (selecaoDeDefesasEmEdicao.has(tipoDaDefesa)) {
-        const padraoEhObrigatoria = !selecaoDeDefesasParaModoInfinito
+        const padraoEhObrigatoria = !mapaPersonalizadoAtivo
+            && !selecaoDeDefesasParaModoInfinito
             && !tutorialConcluido
             && tipoDaDefesa === "padrao";
+        const varreduraEhObrigatoria = faseAtualExigeTorreDeVarredura()
+            && tipoDaDefesa === "torreDeVarredura";
 
-        if (padraoEhObrigatoria) {
+        if (varreduraEhObrigatoria) {
+            mensagemDaSelecaoDeDefesas = localizar(
+                "A Torre de Varredura precisa ficar na equipe para detectar os inimigos camuflados da Fase 14."
+            );
+        } else if (padraoEhObrigatoria) {
             mensagemDaSelecaoDeDefesas = localizar(
                 "A Torre padrão precisa ficar na equipe durante o tutorial."
             );
@@ -8469,13 +16827,19 @@ function confirmarSelecaoDeDefesas() {
         return;
     }
 
+    if (faseAtualExigeTorreDeVarredura()) {
+        selecaoDeDefesasEmEdicao = incluirTorreDeVarreduraNaSelecao(
+            selecaoDeDefesasEmEdicao
+        );
+    }
+
     defesasSelecionadasParaPartida = normalizarSelecaoDeDefesas(
         selecaoDeDefesasEmEdicao,
         false
     );
     salvarSelecaoDeDefesas();
     const iniciarNoModoInfinito = selecaoDeDefesasParaModoInfinito;
-    fecharConteudoMenu();
+    fecharConteudoMenu(true);
     iniciarPartida(iniciarNoModoInfinito);
 }
 
@@ -8488,14 +16852,24 @@ function obterBotoesDeConstrucao() {
         { tipo: "torreEsporos", elemento: botaoTorreEsporos },
         { tipo: "obliterador", elemento: botaoObliterador },
         { tipo: "torreSismica", elemento: botaoTorreSismica },
+        { tipo: "torreDeVarredura", elemento: botaoTorreVarredura },
         { tipo: "iscaBlindada", elemento: botaoIscaBlindada },
         { tipo: "amplificadorPixel", elemento: botaoAmplificadorPixel },
         { tipo: "geradorDeCreditos", elemento: botaoGeradorCreditos },
         { tipo: "torreDeRaios", elemento: botaoTorreRaios },
         { tipo: "lancaChamas", elemento: botaoLancaChamas },
+        { tipo: "torrePerfuradora", elemento: botaoTorrePerfuradora },
+        { tipo: "torreMarcadora", elemento: botaoTorreMarcadora },
+        { tipo: "torreDrones", elemento: botaoTorreDrones },
+        { tipo: "torreCorrentes", elemento: botaoTorreCorrentes },
+        { tipo: "torreSucata", elemento: botaoTorreSucata },
+        { tipo: "canhaoPrismatico", elemento: botaoCanhaoPrismatico },
         { tipo: "minaTerrestre", elemento: botaoMinaTerrestre },
         { tipo: "minaCongelante", elemento: botaoMinaCongelante },
-        { tipo: "bombaPesada", elemento: botaoBombaPesada }
+        { tipo: "minaDePulso", elemento: botaoMinaPulso },
+        { tipo: "minaCorrosiva", elemento: botaoMinaCorrosiva },
+        { tipo: "bombaPesada", elemento: botaoBombaPesada },
+        { tipo: "bombaDeFragmentacao", elemento: botaoBombaFragmentacao }
     ];
 }
 
@@ -8732,7 +17106,8 @@ function iniciarPartida(wavesInfinitas = false) {
 
     modoWavesInfinitas = Boolean(wavesInfinitas);
     const deveIniciarTutorial = !modoWavesInfinitas
-        && !faseAtualEhSecreta()
+        && !mapaPersonalizadoAtivo
+        && !faseAtualEhAlgumaFaseSecreta()
         && (tutorialSolicitado || !tutorialConcluido);
     prepararSelecaoDeDefesasParaPartida(deveIniciarTutorial);
     tutorialSolicitado = false;
@@ -8794,6 +17169,25 @@ function prepararNovaPartida() {
     inimigosDronesCacadoresParaCriar = 0;
     inimigosRobosReparadoresParaCriar = 0;
     inimigosSentinelasDeEscudoParaCriar = 0;
+    inimigosAutomatosDeCobreParaCriar = 0;
+    inimigosCobaiasInstaveisParaCriar = 0;
+    inimigosGuardasDeContencaoParaCriar = 0;
+    inimigosDronesDoFuturoDespedacadoParaCriar = 0;
+    inimigosAndarilhosDeSucataParaCriar = 0;
+    inimigosEcosTemporaisParaCriar = 0;
+    inimigosSentinelasCronologicasParaCriar = 0;
+    inimigosResiduosTemporaisParaCriar = 0;
+    inimigosArquivistasCorrompidosParaCriar = 0;
+    inimigosVigiasDoPontoZeroParaCriar = 0;
+    inimigosSoldadosCronaisParaCriar = 0;
+    inimigosPortadoresDaFendaParaCriar = 0;
+    inimigosInfiltradoresCamufladosParaCriar = 0;
+    inimigosRascunhosVivosParaCriar = 0;
+    inimigosSentinelasIncompletasParaCriar = 0;
+    inimigosSombrasCongeladasParaCriar = 0;
+    fragmentosDeSegundoParaCriar = 0;
+    ponteirosErrantesParaCriar = 0;
+    paradoxosBlindadosParaCriar = 0;
     pixelsCorrompidosParaCriar = 0;
     errosVelozesParaCriar = 0;
     blocosInstaveisParaCriar = 0;
@@ -8809,11 +17203,13 @@ function prepararNovaPartida() {
     partidaVencida = false;
     novaFaseDesbloqueada = false;
     fragmentosRecebidosNoResultado = 0;
+    experienciaRecebidaNaPartida = 0;
+    filaDeInimigosDoMapaPersonalizado = [];
     tipoDeTorreParaConstruir = obterPrimeiraDefesaDisponivelParaPartida();
     posicaoCursorNoMapa = null;
     ultimaWaveComBonusOferecido = 0;
     opcoesDeBonusAtuais = [];
-    bonusPosBossEscolhidos = [];
+    tiposDeDefesaConstruidosNaPartida = new Set();
     multiplicadorDeDanoDasTorres = 1;
     multiplicadorDeAlcanceDasTorres = 1;
     multiplicadorDeCadenciaDasTorres = 1;
@@ -8825,27 +17221,54 @@ function prepararNovaPartida() {
     proximaWaveDoPulsoTemporal = 1;
     pulsoTemporalNormalExpiraEm = 0;
     pulsoTemporalBossExpiraEm = 0;
+    desafioDosRelogiosDoIntervalo = null;
+    lentidaoDosRelogiosDoIntervaloExpiraEm = 0;
+    aceleracaoDaInterferenciaTemporalExpiraEm = 0;
+    interferenciaVisualDoSenhorDoTempoExpiraEm = 0;
+    frenteTemporalAtiva = null;
+    indiceDaUltimaFrenteTemporal = -1;
+    fendasDosPortadores = [];
+    reescritaTemporalDaEraApagada = null;
+    inimigosDerrotadosRecentementeNaEraApagada = [];
     pulsoTemporalAcabouDeSerDesbloqueado = false;
     radioProjetoRelogioDisponivel = false;
+    terminalLaboratorioDisponivel = false;
+    transmissorFuturoDespedacadoDisponivel = false;
+    registrosPontoZeroAnunciados = new Set();
+    registrosPontoZeroLidos = new Set();
+    recarregarProtocoloDeContencao();
+    numeroDaAtivacaoDaContencao = 0;
     canvas.classList.remove("inimigo-sob-cursor");
     canvas.classList.remove("fliperama-sob-cursor");
     canvas.classList.remove("radio-sob-cursor");
+    canvas.classList.remove("terminal-sob-cursor");
+    canvas.classList.remove("transmissor-sob-cursor");
+    canvas.classList.remove("contencao-sob-cursor");
+    canvas.classList.remove("registro-ponto-zero-sob-cursor");
+    canvas.classList.remove("relogio-intervalo-sob-cursor");
+    limparCursoresEspeciaisDoMapa();
     jogoPausado = false;
     pausaIniciadaEm = 0;
     pausaAutomaticaPorOcultacao = false;
     reiniciarRelogioDaSimulacao();
 
     ocultarMinigameFliperama();
+    ocultarMinigameDeTreinamentoNoFliperama();
     ocultarPainelBonusPosBoss();
     ocultarConfirmacaoDeDesistencia();
     ocultarPainelDeResultado();
     menuPartida.classList.remove("oculto");
-    atualizarPainelDeBoosts();
-    atualizarPulsoTemporalNoPosto();
+    atualizarPulsoTemporalNoControle();
     atualizarDisponibilidadeDaDesistencia();
     atualizarBotoesDeConstrucao();
     atualizarBotoesDaTorre();
     iniciarProximaWave();
+
+    if (deveMostrarIntroducaoFase13()) {
+        mostrarIntroducaoDaFase13();
+    } else if (deveMostrarIntroducaoFase14()) {
+        mostrarIntroducaoDaFase14();
+    }
 }
 
 function sortearOpcoesDeBonusPosBoss() {
@@ -8901,146 +17324,6 @@ function ocultarPainelBonusPosBoss() {
     opcoesBonusPosBoss.innerHTML = "";
 }
 
-function formatarPercentualDoBonus(valor) {
-    const percentual = Math.round(valor * 1000) / 10;
-    return Number.isInteger(percentual)
-        ? percentual.toString()
-        : percentual.toFixed(1).replace(".", ",");
-}
-
-function obterResumoDoBonusNoPosto(tipoDoBonus, quantidade) {
-    const configuracao = CONFIG.bonusPosBoss.tipos[tipoDoBonus];
-
-    if (tipoDoBonus === "cadencia") {
-        const percentualAcumulado = 1 - Math.pow(1 - configuracao.percentual, quantidade);
-        return localizar("-{percentual}% intervalo", {
-            percentual: formatarPercentualDoBonus(percentualAcumulado)
-        });
-    }
-
-    if (tipoDoBonus === "creditos") {
-        return localizar("+{creditos} créditos", {
-            creditos: configuracao.valor * quantidade
-        });
-    }
-
-    const percentualAcumulado = Math.pow(1 + configuracao.percentual, quantidade) - 1;
-    const atributo = tipoDoBonus === "dano" ? localizar("dano") : localizar("alcance");
-    return "+" + formatarPercentualDoBonus(percentualAcumulado) + "% " + atributo;
-}
-
-function criarItemDeBonusNoPosto(tipoDoBonus, quantidade) {
-    const configuracao = CONFIG.bonusPosBoss.tipos[tipoDoBonus];
-    const item = document.createElement("div");
-    const icone = document.createElement("span");
-    const texto = document.createElement("span");
-    const nome = document.createElement("strong");
-    const resumo = document.createElement("small");
-    const contador = document.createElement("b");
-
-    item.className = "posto-boost-item";
-    item.dataset.tipo = tipoDoBonus;
-    icone.className = "posto-boost-icone";
-    icone.setAttribute("aria-hidden", "true");
-    icone.textContent = configuracao.icone;
-    texto.className = "posto-boost-texto";
-    nome.textContent = obterNomeLocalizado(configuracao);
-    resumo.textContent = obterResumoDoBonusNoPosto(tipoDoBonus, quantidade);
-    contador.className = "posto-boost-contador";
-    contador.textContent = "x" + quantidade;
-    texto.append(nome, resumo);
-    item.append(icone, texto, contador);
-
-    return item;
-}
-
-function atualizarBonusPosBossNoPosto() {
-    const quantidades = bonusPosBossEscolhidos.reduce((acumulado, tipoDoBonus) => {
-        acumulado[tipoDoBonus] = (acumulado[tipoDoBonus] || 0) + 1;
-        return acumulado;
-    }, {});
-    const bonusAgrupados = Object.entries(quantidades);
-
-    listaBonusPosBossNoPosto.replaceChildren();
-
-    if (bonusAgrupados.length === 0) {
-        const mensagem = document.createElement("p");
-        mensagem.className = "posto-boosts-vazio";
-        mensagem.textContent = localizar("Derrote um Boss para escolher seu primeiro boost.");
-        listaBonusPosBossNoPosto.append(mensagem);
-        return;
-    }
-
-    for (const [tipoDoBonus, quantidade] of bonusAgrupados) {
-        listaBonusPosBossNoPosto.append(
-            criarItemDeBonusNoPosto(tipoDoBonus, quantidade)
-        );
-    }
-}
-
-function calcularPercentualDoBoostTemporario(ativo, expiraEm, agora) {
-    if (!ativo) {
-        return 0;
-    }
-
-    return Math.min(
-        100,
-        Math.round(
-            Math.max(0, expiraEm - agora)
-            / CONFIG.fliperama.boost.duracao
-            * 100
-        )
-    );
-}
-
-function atualizarBoostFliperamaNoPosto(agora = Date.now()) {
-    const cadenciaAtiva = boostFliperamaAtivo && agora < boostFliperamaExpiraEm;
-    const danoAtivo = boostDanoFliperamaAtivo && agora < boostDanoFliperamaExpiraEm;
-    const efeitosAtivos = [];
-
-    boostFliperamaNoPosto.dataset.estado =
-        cadenciaAtiva || danoAtivo ? "ativo" : "inativo";
-    barraBoostFliperamaNoPosto.style.width = calcularPercentualDoBoostTemporario(
-        cadenciaAtiva,
-        boostFliperamaExpiraEm,
-        agora
-    ) + "%";
-    barraBoostDanoFliperamaNoPosto.style.width = calcularPercentualDoBoostTemporario(
-        danoAtivo,
-        boostDanoFliperamaExpiraEm,
-        agora
-    ) + "%";
-
-    if (cadenciaAtiva) {
-        efeitosAtivos.push(
-            "CAD +"
-            + Math.round(CONFIG.fliperama.boost.percentualDeCadencia * 100)
-            + "% "
-            + Math.ceil((boostFliperamaExpiraEm - agora) / 1000)
-            + "s"
-        );
-    }
-
-    if (danoAtivo) {
-        efeitosAtivos.push(
-            "DANO +"
-            + Math.round(CONFIG.fliperama.boost.percentualDeDano * 100)
-            + "% "
-            + Math.ceil((boostDanoFliperamaExpiraEm - agora) / 1000)
-            + "s"
-        );
-    }
-
-    estadoBoostFliperamaNoPosto.textContent = efeitosAtivos.length > 0
-        ? efeitosAtivos.join(" · ")
-        : localizar("Aguardando evento");
-}
-
-function atualizarPainelDeBoosts(agora = Date.now()) {
-    atualizarBonusPosBossNoPosto();
-    atualizarBoostFliperamaNoPosto(agora);
-}
-
 function pulsoTemporalEstaDesbloqueado() {
     return maiorFaseConcluida >= CONFIG.pulsoTemporal.faseConcluidaParaDesbloqueio;
 }
@@ -9060,13 +17343,13 @@ function pulsoTemporalPodeSerAtivado() {
         && !pulsoTemporalEstaAtivo();
 }
 
-function atualizarPulsoTemporalNoPosto(agora = Date.now()) {
-    if (!postoPulsoTemporal || !botaoPulsoTemporal || !estadoPulsoTemporal) {
+function atualizarPulsoTemporalNoControle(agora = Date.now()) {
+    if (!botaoPulsoTemporal || !estadoPulsoTemporal) {
         return;
     }
 
     const deveMostrar = jogoIniciado && pulsoTemporalEstaDesbloqueado();
-    postoPulsoTemporal.hidden = !deveMostrar;
+    botaoPulsoTemporal.hidden = !deveMostrar;
 
     if (!deveMostrar) {
         return;
@@ -9097,7 +17380,7 @@ function atualizarPulsoTemporalNoPosto(agora = Date.now()) {
 
 function ativarPulsoTemporal(agora = Date.now()) {
     if (!pulsoTemporalPodeSerAtivado()) {
-        atualizarPulsoTemporalNoPosto(agora);
+        atualizarPulsoTemporalNoControle(agora);
         return false;
     }
 
@@ -9107,8 +17390,9 @@ function ativarPulsoTemporal(agora = Date.now()) {
         + CONFIG.pulsoTemporal.duracaoBosses;
     proximaWaveDoPulsoTemporal = wave
         + CONFIG.pulsoTemporal.wavesParaRecarregar;
+    registrarUsoDoPulsoTemporalParaConquistas();
     mostrarAviso(localizar("Pulso Temporal ativado!"));
-    atualizarPulsoTemporalNoPosto(agora);
+    atualizarPulsoTemporalNoControle(agora);
     return true;
 }
 
@@ -9128,9 +17412,6 @@ function aplicarBonusPosBoss(tipoDoBonus) {
     for (const torre of torres) {
         atualizarAtributosDaTorreComBonus(torre);
     }
-
-    bonusPosBossEscolhidos.push(tipoDoBonus);
-    atualizarBonusPosBossNoPosto();
 }
 
 function escolherBonusPosBoss(tipoDoBonus) {
@@ -9146,14 +17427,16 @@ function escolherBonusPosBoss(tipoDoBonus) {
     opcoesDeBonusAtuais = [];
     ocultarPainelBonusPosBoss();
     atualizarBotoesDaTorre();
-    mostrarAviso(localizar("Bônus escolhido: {nome}.", {
-        nome: obterNomeLocalizado(configuracao)
+    mostrarAviso(localizar("Bônus escolhido: {nome}. {descricao}", {
+        nome: obterNomeLocalizado(configuracao),
+        descricao: localizar(configuracao.descricao)
     }));
     definirJogoPausado(false);
 }
 
 function deveOferecerBonusPosBoss() {
-    return CONFIG.bonusPosBoss.wavesComBonus.includes(wave)
+    return !mapaPersonalizadoAtivo
+        && CONFIG.bonusPosBoss.wavesComBonus.includes(wave)
         && ultimaWaveComBonusOferecido !== wave;
 }
 
@@ -9207,8 +17490,13 @@ function sortearPosicaoDoFliperama() {
     return null;
 }
 
+function waveDeveExibirFliperama(numeroDaWave) {
+    return numeroDaWave > 0
+        && numeroDaWave % CONFIG.fliperama.intervaloDeAparicao === 0;
+}
+
 function tentarExibirFliperamaNaWaveAtual() {
-    if (!CONFIG.fliperama.wavesDeAparicao.includes(wave)) {
+    if (mapaPersonalizadoAtivo || !waveDeveExibirFliperama(wave)) {
         return;
     }
 
@@ -9382,12 +17670,39 @@ function obterModeloDoLabirintoFliperama() {
         || CONFIG.fliperama.minigame.labirinto.modelos[0];
 }
 
-function configurarInterfaceDoMinigameFliperama() {
-    const labirintoAtivo = tipoMinigameFliperamaAtivo === "labirinto";
-    canvasMinigameFliperama.dataset.tipo = tipoMinigameFliperamaAtivo;
-    controlesToqueLabirinto.hidden = !labirintoAtivo;
+function configurarControlesDeToqueDoMinigame() {
+    const usaDirecional = ["labirinto", "coleta"]
+        .includes(tipoMinigameFliperamaAtivo);
+    const usaMovimentoVertical = tipoMinigameFliperamaAtivo === "labirinto";
 
-    if (labirintoAtivo) {
+    controlesToqueLabirinto.hidden = !usaDirecional;
+    controlesToqueLabirinto.dataset.tipo = tipoMinigameFliperamaAtivo;
+    controlesToqueLabirinto.setAttribute(
+        "aria-label",
+        localizar(
+            usaMovimentoVertical
+                ? "Controles de movimento do labirinto"
+                : "Controles de movimento do coletor"
+        )
+    );
+
+    for (const botao of botoesDirecaoLabirinto) {
+        const movimentoVertical = ["arrowup", "arrowdown"]
+            .includes(botao.dataset.direcaoLabirinto);
+        botao.hidden = usaDirecional && !usaMovimentoVertical && movimentoVertical;
+    }
+}
+
+function configurarInterfaceDoMinigameFliperama() {
+    canvasMinigameFliperama.dataset.tipo = tipoMinigameFliperamaAtivo;
+    configurarControlesDeToqueDoMinigame();
+    seloMinigameFliperama.textContent = minigameFliperamaEmTreinamento
+        ? traduzir("treinamento.modoTreino")
+        : localizar("Evento especial");
+    botaoSairMinigameFliperamaTreinamento.hidden = !minigameFliperamaEmTreinamento;
+    botaoSairMinigameFliperamaTreinamento.textContent = `← ${traduzir("treinamento.voltar")}`;
+
+    if (tipoMinigameFliperamaAtivo === "labirinto") {
         const modelo = obterModeloDoLabirintoFliperama();
         const nomeDoModelo = obterNomeLocalizado(modelo);
         tituloMinigameFliperama.textContent = localizar("Labirinto Pixel");
@@ -9407,13 +17722,73 @@ function configurarInterfaceDoMinigameFliperama() {
         return;
     }
 
+    if (tipoMinigameFliperamaAtivo === "voo") {
+        tituloMinigameFliperama.textContent = localizar("Voo Pixel");
+        descricaoMinigameFliperama.textContent = localizar(
+            "Atravesse {portais} portais sem tocar nos obstáculos.",
+            { portais: CONFIG.fliperama.minigame.voo.portaisNecessarios }
+        );
+        rotuloPontosMinigameFliperama.textContent = localizar("Portais");
+        pontosMinigameFliperama.textContent = (
+            "0/" + CONFIG.fliperama.minigame.voo.portaisNecessarios
+        );
+        instrucaoMinigameFliperama.textContent = localizar(
+            "Clique, toque ou use Espaço, W ou seta para cima para voar."
+        );
+        canvasMinigameFliperama.setAttribute(
+            "aria-label",
+            localizar("Área do Voo Pixel com portais em movimento")
+        );
+        return;
+    }
+
+    if (tipoMinigameFliperamaAtivo === "coleta") {
+        tituloMinigameFliperama.textContent = localizar("Chuva de Pixels");
+        descricaoMinigameFliperama.textContent = localizar(
+            "Colete {pixels} pixels amarelos e evite os pixels corrompidos.",
+            { pixels: CONFIG.fliperama.minigame.coleta.pixelsNecessarios }
+        );
+        rotuloPontosMinigameFliperama.textContent = localizar("Coletados");
+        pontosMinigameFliperama.textContent = (
+            "0/" + CONFIG.fliperama.minigame.coleta.pixelsNecessarios
+        );
+        instrucaoMinigameFliperama.textContent = localizar(
+            "Use A, D, as setas ou os botões da tela. Pixels vermelhos retiram um ponto."
+        );
+        canvasMinigameFliperama.setAttribute(
+            "aria-label",
+            localizar("Área da Chuva de Pixels com coletor móvel")
+        );
+        return;
+    }
+
+    if (tipoMinigameFliperamaAtivo === "sequencia") {
+        tituloMinigameFliperama.textContent = localizar("Sequência Neon");
+        descricaoMinigameFliperama.textContent = localizar(
+            "Observe os {sinais} sinais e repita a sequência.",
+            { sinais: CONFIG.fliperama.minigame.sequencia.quantidadeDeSinais }
+        );
+        rotuloPontosMinigameFliperama.textContent = localizar("Progresso");
+        pontosMinigameFliperama.textContent = localizar("Observe");
+        instrucaoMinigameFliperama.textContent = localizar(
+            "Espere a demonstração terminar e clique ou toque nos painéis na mesma ordem."
+        );
+        canvasMinigameFliperama.setAttribute(
+            "aria-label",
+            localizar("Quatro painéis da Sequência Neon")
+        );
+        return;
+    }
+
     tituloMinigameFliperama.textContent = localizar("Tiro ao alvo");
     descricaoMinigameFliperama.textContent = localizar(
         "Acerte o alvo móvel {alvos} vezes antes que o tempo termine.",
         { alvos: CONFIG.fliperama.minigame.alvosNecessarios }
     );
     rotuloPontosMinigameFliperama.textContent = localizar("Acertos");
-    pontosMinigameFliperama.textContent = "0/10";
+    pontosMinigameFliperama.textContent = (
+        "0/" + CONFIG.fliperama.minigame.alvosNecessarios
+    );
     instrucaoMinigameFliperama.textContent = localizar(
         "Acompanhe o alvo: ele se move livremente e rebate nas bordas."
     );
@@ -9585,8 +17960,501 @@ function desenharLabirintoDoFliperama() {
     ctxMinigameFliperama.fillRect(x - 5, y + 4, 10, 3);
 }
 
+function iniciarEstadoDoVooPixel(agora = Date.now()) {
+    const configuracao = CONFIG.fliperama.minigame.voo;
+    estadoVooPixel = {
+        x: configuracao.xDoRobo,
+        y: configuracao.yInicialDoRobo,
+        velocidadeY: 0,
+        pontos: 0,
+        atualizadoEm: agora,
+        portais: configuracao.centrosDosVaos.map((centroDoVao, indice) => ({
+            x: configuracao.distanciaInicial
+                + indice * configuracao.espacamentoDosPortais,
+            centroDoVao,
+            contabilizado: false
+        }))
+    };
+}
+
+function impulsionarRoboDoVooPixel() {
+    if (!estadoVooPixel || tipoMinigameFliperamaAtivo !== "voo") {
+        return false;
+    }
+
+    estadoVooPixel.velocidadeY = CONFIG.fliperama.minigame.voo.impulso;
+    return true;
+}
+
+function roboDoVooTocaPortal(portal) {
+    const configuracao = CONFIG.fliperama.minigame.voo;
+    const topoDoVao = portal.centroDoVao - configuracao.alturaDoVao / 2;
+    const baseDoVao = portal.centroDoVao + configuracao.alturaDoVao / 2;
+    const dentroDaFaixaHorizontal = (
+        estadoVooPixel.x + configuracao.raioDoRobo > portal.x
+        && estadoVooPixel.x - configuracao.raioDoRobo
+            < portal.x + configuracao.larguraDoPortal
+    );
+
+    return dentroDaFaixaHorizontal && (
+        estadoVooPixel.y - configuracao.raioDoRobo < topoDoVao
+        || estadoVooPixel.y + configuracao.raioDoRobo > baseDoVao
+    );
+}
+
+function atualizarVooPixel(agora = Date.now()) {
+    if (!estadoVooPixel) {
+        iniciarEstadoDoVooPixel(agora);
+    }
+
+    const configuracao = CONFIG.fliperama.minigame.voo;
+    const tempoDecorrido = Math.min(
+        0.05,
+        Math.max(0, (agora - estadoVooPixel.atualizadoEm) / 1000)
+    );
+    estadoVooPixel.atualizadoEm = agora;
+    estadoVooPixel.velocidadeY += configuracao.gravidade * tempoDecorrido;
+    estadoVooPixel.y += estadoVooPixel.velocidadeY * tempoDecorrido;
+
+    for (const portal of estadoVooPixel.portais) {
+        portal.x -= configuracao.velocidadeDosPortais * tempoDecorrido;
+
+        if (roboDoVooTocaPortal(portal)) {
+            finalizarMinigameFliperama(false, "colisao");
+            return;
+        }
+
+        if (
+            !portal.contabilizado
+            && portal.x + configuracao.larguraDoPortal < estadoVooPixel.x
+        ) {
+            portal.contabilizado = true;
+            estadoVooPixel.pontos++;
+
+            if (estadoVooPixel.pontos >= configuracao.portaisNecessarios) {
+                finalizarMinigameFliperama(true);
+                return;
+            }
+        }
+    }
+
+    if (
+        estadoVooPixel.y - configuracao.raioDoRobo <= 0
+        || estadoVooPixel.y + configuracao.raioDoRobo
+            >= canvasMinigameFliperama.height
+    ) {
+        finalizarMinigameFliperama(false, "colisao");
+    }
+}
+
+function desenharVooPixel() {
+    if (!estadoVooPixel) {
+        return;
+    }
+
+    const configuracao = CONFIG.fliperama.minigame.voo;
+    ctxMinigameFliperama.fillStyle = "#071d31";
+    ctxMinigameFliperama.fillRect(
+        0,
+        0,
+        canvasMinigameFliperama.width,
+        canvasMinigameFliperama.height
+    );
+
+    ctxMinigameFliperama.fillStyle = "#123d5a";
+    for (let x = 16; x < canvasMinigameFliperama.width; x += 72) {
+        const altura = 24 + (x % 5) * 11;
+        ctxMinigameFliperama.fillRect(x, canvasMinigameFliperama.height - altura, 44, altura);
+    }
+
+    for (const portal of estadoVooPixel.portais) {
+        const topoDoVao = portal.centroDoVao - configuracao.alturaDoVao / 2;
+        const baseDoVao = portal.centroDoVao + configuracao.alturaDoVao / 2;
+        ctxMinigameFliperama.fillStyle = "#07120c";
+        ctxMinigameFliperama.fillRect(
+            portal.x - 5,
+            0,
+            configuracao.larguraDoPortal + 10,
+            topoDoVao
+        );
+        ctxMinigameFliperama.fillRect(
+            portal.x - 5,
+            baseDoVao,
+            configuracao.larguraDoPortal + 10,
+            canvasMinigameFliperama.height - baseDoVao
+        );
+        ctxMinigameFliperama.fillStyle = "#42d68a";
+        ctxMinigameFliperama.fillRect(
+            portal.x,
+            0,
+            configuracao.larguraDoPortal,
+            topoDoVao
+        );
+        ctxMinigameFliperama.fillRect(
+            portal.x,
+            baseDoVao,
+            configuracao.larguraDoPortal,
+            canvasMinigameFliperama.height - baseDoVao
+        );
+        ctxMinigameFliperama.fillStyle = "#9dffb4";
+        ctxMinigameFliperama.fillRect(
+            portal.x - 7,
+            topoDoVao - 14,
+            configuracao.larguraDoPortal + 14,
+            14
+        );
+        ctxMinigameFliperama.fillRect(
+            portal.x - 7,
+            baseDoVao,
+            configuracao.larguraDoPortal + 14,
+            14
+        );
+    }
+
+    const x = Math.round(estadoVooPixel.x);
+    const y = Math.round(estadoVooPixel.y);
+    ctxMinigameFliperama.fillStyle = "#020704";
+    ctxMinigameFliperama.fillRect(x - 18, y - 15, 36, 30);
+    ctxMinigameFliperama.fillStyle = "#71ddff";
+    ctxMinigameFliperama.fillRect(x - 14, y - 11, 28, 22);
+    ctxMinigameFliperama.fillStyle = "#fff36a";
+    ctxMinigameFliperama.fillRect(x + 4, y - 6, 6, 6);
+    ctxMinigameFliperama.fillStyle = "#ff8e4f";
+    ctxMinigameFliperama.fillRect(x - 23, y - 6, 9, 12);
+}
+
+function retangulosSeSobrepoem(primeiro, segundo) {
+    return primeiro.x < segundo.x + segundo.largura
+        && primeiro.x + primeiro.largura > segundo.x
+        && primeiro.y < segundo.y + segundo.altura
+        && primeiro.y + primeiro.altura > segundo.y;
+}
+
+function iniciarEstadoDaChuvaDePixels(agora = Date.now()) {
+    estadoChuvaDePixels = {
+        xDoColetor: canvasMinigameFliperama.width / 2,
+        pixels: [],
+        coletados: 0,
+        proximoIndice: 0,
+        atualizadoEm: agora,
+        ultimoPixelEm: agora - CONFIG.fliperama.minigame.coleta.intervaloEntrePixels
+    };
+    teclasPressionadasNoLabirinto.clear();
+}
+
+function criarPixelDaChuva(agora = Date.now()) {
+    const configuracao = CONFIG.fliperama.minigame.coleta;
+    const indice = estadoChuvaDePixels.proximoIndice;
+    const posicoes = configuracao.posicoesDeSurgimento;
+    estadoChuvaDePixels.pixels.push({
+        x: posicoes[indice % posicoes.length],
+        y: -configuracao.tamanhoDoPixel,
+        corrompido: (indice + 1) % configuracao.frequenciaDePixelCorrompido === 0
+    });
+    estadoChuvaDePixels.proximoIndice++;
+    estadoChuvaDePixels.ultimoPixelEm = agora;
+}
+
+function atualizarChuvaDePixels(agora = Date.now()) {
+    if (!estadoChuvaDePixels) {
+        iniciarEstadoDaChuvaDePixels(agora);
+    }
+
+    const configuracao = CONFIG.fliperama.minigame.coleta;
+    const tempoDecorrido = Math.min(
+        0.05,
+        Math.max(0, (agora - estadoChuvaDePixels.atualizadoEm) / 1000)
+    );
+    estadoChuvaDePixels.atualizadoEm = agora;
+
+    const direcao = obterDirecaoPelasTeclas(teclasPressionadasNoLabirinto);
+    const metadeDoColetor = configuracao.larguraDoColetor / 2;
+    estadoChuvaDePixels.xDoColetor = Math.max(
+        metadeDoColetor,
+        Math.min(
+            canvasMinigameFliperama.width - metadeDoColetor,
+            estadoChuvaDePixels.xDoColetor
+                + direcao.x * configuracao.velocidadeDoColetor * tempoDecorrido
+        )
+    );
+
+    if (agora - estadoChuvaDePixels.ultimoPixelEm >= configuracao.intervaloEntrePixels) {
+        criarPixelDaChuva(agora);
+    }
+
+    const coletor = {
+        x: estadoChuvaDePixels.xDoColetor - metadeDoColetor,
+        y: configuracao.yDoColetor,
+        largura: configuracao.larguraDoColetor,
+        altura: configuracao.alturaDoColetor
+    };
+
+    for (let indice = estadoChuvaDePixels.pixels.length - 1; indice >= 0; indice--) {
+        const pixel = estadoChuvaDePixels.pixels[indice];
+        pixel.y += configuracao.velocidadeDosPixels * tempoDecorrido;
+        const retanguloDoPixel = {
+            x: pixel.x - configuracao.tamanhoDoPixel / 2,
+            y: pixel.y - configuracao.tamanhoDoPixel / 2,
+            largura: configuracao.tamanhoDoPixel,
+            altura: configuracao.tamanhoDoPixel
+        };
+
+        if (retangulosSeSobrepoem(retanguloDoPixel, coletor)) {
+            estadoChuvaDePixels.coletados = pixel.corrompido
+                ? Math.max(0, estadoChuvaDePixels.coletados - 1)
+                : estadoChuvaDePixels.coletados + 1;
+            estadoChuvaDePixels.pixels.splice(indice, 1);
+
+            if (estadoChuvaDePixels.coletados >= configuracao.pixelsNecessarios) {
+                finalizarMinigameFliperama(true);
+                return;
+            }
+        } else if (pixel.y - configuracao.tamanhoDoPixel > canvasMinigameFliperama.height) {
+            estadoChuvaDePixels.pixels.splice(indice, 1);
+        }
+    }
+}
+
+function desenharChuvaDePixels() {
+    if (!estadoChuvaDePixels) {
+        return;
+    }
+
+    const configuracao = CONFIG.fliperama.minigame.coleta;
+    ctxMinigameFliperama.fillStyle = "#11101f";
+    ctxMinigameFliperama.fillRect(
+        0,
+        0,
+        canvasMinigameFliperama.width,
+        canvasMinigameFliperama.height
+    );
+
+    ctxMinigameFliperama.fillStyle = "#2d2850";
+    for (let x = 0; x < canvasMinigameFliperama.width; x += 48) {
+        ctxMinigameFliperama.fillRect(x, 0, 3, canvasMinigameFliperama.height);
+    }
+
+    for (const pixel of estadoChuvaDePixels.pixels) {
+        const tamanho = configuracao.tamanhoDoPixel;
+        ctxMinigameFliperama.fillStyle = "#020704";
+        ctxMinigameFliperama.fillRect(
+            pixel.x - tamanho / 2 - 4,
+            pixel.y - tamanho / 2 - 4,
+            tamanho + 8,
+            tamanho + 8
+        );
+        ctxMinigameFliperama.fillStyle = pixel.corrompido ? "#ff4d68" : "#fff36a";
+        ctxMinigameFliperama.fillRect(
+            pixel.x - tamanho / 2,
+            pixel.y - tamanho / 2,
+            tamanho,
+            tamanho
+        );
+        ctxMinigameFliperama.fillStyle = pixel.corrompido ? "#78162a" : "#fff9ad";
+        ctxMinigameFliperama.fillRect(pixel.x - 4, pixel.y - 4, 8, 8);
+    }
+
+    const x = Math.round(estadoChuvaDePixels.xDoColetor);
+    const y = configuracao.yDoColetor;
+    ctxMinigameFliperama.fillStyle = "#020704";
+    ctxMinigameFliperama.fillRect(
+        x - configuracao.larguraDoColetor / 2 - 5,
+        y - 5,
+        configuracao.larguraDoColetor + 10,
+        configuracao.alturaDoColetor + 10
+    );
+    ctxMinigameFliperama.fillStyle = "#71ddff";
+    ctxMinigameFliperama.fillRect(
+        x - configuracao.larguraDoColetor / 2,
+        y,
+        configuracao.larguraDoColetor,
+        configuracao.alturaDoColetor
+    );
+    ctxMinigameFliperama.fillStyle = "#d9f7ff";
+    ctxMinigameFliperama.fillRect(x - 24, y + 6, 48, 6);
+}
+
+function obterPaineisDaSequenciaNeon() {
+    return [
+        { x: 95, y: 55, largura: 250, altura: 135, cor: "#ff4d68", tecla: "1" },
+        { x: 375, y: 55, largura: 250, altura: 135, cor: "#71ddff", tecla: "2" },
+        { x: 95, y: 230, largura: 250, altura: 135, cor: "#fff36a", tecla: "3" },
+        { x: 375, y: 230, largura: 250, altura: 135, cor: "#77ec8a", tecla: "4" }
+    ];
+}
+
+function iniciarEstadoDaSequenciaNeon(agora = Date.now()) {
+    const configuracao = CONFIG.fliperama.minigame.sequencia;
+    estadoSequenciaNeon = {
+        sinais: Array.from(
+            { length: configuracao.quantidadeDeSinais },
+            () => Math.floor(Math.random() * 4)
+        ),
+        indiceExibido: -1,
+        indiceDoJogador: 0,
+        exibindo: true,
+        sinalAtivo: null,
+        proximaMudancaEm: agora + configuracao.atrasoInicial,
+        sinalAtivoAte: agora,
+        erroAte: 0
+    };
+}
+
+function atualizarSequenciaNeon(agora = Date.now()) {
+    if (!estadoSequenciaNeon) {
+        iniciarEstadoDaSequenciaNeon(agora);
+    }
+
+    const configuracao = CONFIG.fliperama.minigame.sequencia;
+
+    if (estadoSequenciaNeon.exibindo && agora >= estadoSequenciaNeon.proximaMudancaEm) {
+        estadoSequenciaNeon.indiceExibido++;
+
+        if (estadoSequenciaNeon.indiceExibido < estadoSequenciaNeon.sinais.length) {
+            estadoSequenciaNeon.sinalAtivo = estadoSequenciaNeon.sinais[
+                estadoSequenciaNeon.indiceExibido
+            ];
+            estadoSequenciaNeon.sinalAtivoAte = agora + configuracao.duracaoDoSinal;
+            estadoSequenciaNeon.proximaMudancaEm = agora
+                + configuracao.intervaloEntreSinais;
+        } else {
+            estadoSequenciaNeon.exibindo = false;
+            estadoSequenciaNeon.sinalAtivo = null;
+        }
+    }
+
+    if (agora >= estadoSequenciaNeon.sinalAtivoAte) {
+        estadoSequenciaNeon.sinalAtivo = null;
+    }
+}
+
+function registrarSinalDaSequenciaNeon(indiceDoPainel, agora = Date.now()) {
+    if (!estadoSequenciaNeon || estadoSequenciaNeon.exibindo) {
+        return false;
+    }
+
+    const configuracao = CONFIG.fliperama.minigame.sequencia;
+    estadoSequenciaNeon.sinalAtivo = indiceDoPainel;
+    estadoSequenciaNeon.sinalAtivoAte = agora + configuracao.duracaoDoRetorno;
+
+    if (estadoSequenciaNeon.sinais[estadoSequenciaNeon.indiceDoJogador] !== indiceDoPainel) {
+        estadoSequenciaNeon.indiceDoJogador = 0;
+        estadoSequenciaNeon.erroAte = agora + configuracao.duracaoDoRetorno;
+        return false;
+    }
+
+    estadoSequenciaNeon.indiceDoJogador++;
+
+    if (estadoSequenciaNeon.indiceDoJogador >= estadoSequenciaNeon.sinais.length) {
+        finalizarMinigameFliperama(true);
+    }
+
+    return true;
+}
+
+function desenharSequenciaNeon(agora = Date.now()) {
+    if (!estadoSequenciaNeon) {
+        return;
+    }
+
+    ctxMinigameFliperama.fillStyle = agora < estadoSequenciaNeon.erroAte
+        ? "#32101a"
+        : "#120b1f";
+    ctxMinigameFliperama.fillRect(
+        0,
+        0,
+        canvasMinigameFliperama.width,
+        canvasMinigameFliperama.height
+    );
+
+    const paineis = obterPaineisDaSequenciaNeon();
+    paineis.forEach((painel, indice) => {
+        const ativo = estadoSequenciaNeon.sinalAtivo === indice;
+        ctxMinigameFliperama.fillStyle = "#020704";
+        ctxMinigameFliperama.fillRect(
+            painel.x - 7,
+            painel.y - 7,
+            painel.largura + 14,
+            painel.altura + 14
+        );
+        ctxMinigameFliperama.fillStyle = ativo ? painel.cor : "#302544";
+        ctxMinigameFliperama.fillRect(
+            painel.x,
+            painel.y,
+            painel.largura,
+            painel.altura
+        );
+        ctxMinigameFliperama.fillStyle = ativo ? "#ffffff" : "#9a83ad";
+        ctxMinigameFliperama.font = "bold 34px Courier New";
+        ctxMinigameFliperama.textAlign = "center";
+        ctxMinigameFliperama.textBaseline = "middle";
+        ctxMinigameFliperama.fillText(
+            painel.tecla,
+            painel.x + painel.largura / 2,
+            painel.y + painel.altura / 2
+        );
+    });
+    ctxMinigameFliperama.textAlign = "start";
+    ctxMinigameFliperama.textBaseline = "alphabetic";
+}
+
+function minigamePodeReceberEntrada(agora = Date.now()) {
+    return minigameFliperamaAtivo && agora >= minigameFliperamaComecaEm;
+}
+
+function obterNumeroDaContagemRegressiva(agora = Date.now()) {
+    return Math.max(
+        1,
+        Math.ceil((minigameFliperamaComecaEm - agora) / 1000)
+    );
+}
+
+function desenharEstadoAtualDoMinigameFliperama(agora = Date.now()) {
+    if (tipoMinigameFliperamaAtivo === "labirinto") {
+        desenharLabirintoDoFliperama();
+    } else if (tipoMinigameFliperamaAtivo === "alvo") {
+        desenharCenarioDoMinigameFliperama();
+        desenharAlvoDoMinigameFliperama();
+    } else if (tipoMinigameFliperamaAtivo === "voo") {
+        desenharVooPixel();
+    } else if (tipoMinigameFliperamaAtivo === "coleta") {
+        desenharChuvaDePixels();
+    } else if (tipoMinigameFliperamaAtivo === "sequencia") {
+        desenharSequenciaNeon(agora);
+    }
+}
+
+function desenharContagemRegressivaDoMinigame(agora = Date.now()) {
+    const numero = obterNumeroDaContagemRegressiva(agora);
+    const centroX = canvasMinigameFliperama.width / 2;
+    const centroY = canvasMinigameFliperama.height / 2;
+
+    ctxMinigameFliperama.save();
+    ctxMinigameFliperama.fillStyle = "rgba(2, 7, 4, 0.78)";
+    ctxMinigameFliperama.fillRect(
+        0,
+        0,
+        canvasMinigameFliperama.width,
+        canvasMinigameFliperama.height
+    );
+    ctxMinigameFliperama.textAlign = "center";
+    ctxMinigameFliperama.textBaseline = "middle";
+    ctxMinigameFliperama.fillStyle = "#d58aff";
+    ctxMinigameFliperama.font = "bold 24px Courier New";
+    ctxMinigameFliperama.fillText(localizar("Prepare-se!"), centroX, centroY - 82);
+    ctxMinigameFliperama.fillStyle = "#020704";
+    ctxMinigameFliperama.font = "bold 152px Courier New";
+    ctxMinigameFliperama.fillText(String(numero), centroX + 8, centroY + 18);
+    ctxMinigameFliperama.fillStyle = "#fff36a";
+    ctxMinigameFliperama.fillText(String(numero), centroX, centroY + 10);
+    ctxMinigameFliperama.restore();
+}
+
 function atualizarPainelDoMinigameFliperama(agora = Date.now()) {
-    const tempoRestante = Math.max(0, minigameFliperamaTerminaEm - agora);
+    const contagemRegressivaAtiva = agora < minigameFliperamaComecaEm;
+    const tempoRestante = contagemRegressivaAtiva
+        ? CONFIG.fliperama.minigame.duracao
+        : Math.max(0, minigameFliperamaTerminaEm - agora);
 
     if (tipoMinigameFliperamaAtivo === "alvo") {
         pontosMinigameFliperama.textContent = (
@@ -9594,9 +18462,32 @@ function atualizarPainelDoMinigameFliperama(agora = Date.now()) {
             + "/"
             + CONFIG.fliperama.minigame.alvosNecessarios
         );
+    } else if (tipoMinigameFliperamaAtivo === "voo" && estadoVooPixel) {
+        pontosMinigameFliperama.textContent = (
+            estadoVooPixel.pontos
+            + "/"
+            + CONFIG.fliperama.minigame.voo.portaisNecessarios
+        );
+    } else if (tipoMinigameFliperamaAtivo === "coleta" && estadoChuvaDePixels) {
+        pontosMinigameFliperama.textContent = (
+            estadoChuvaDePixels.coletados
+            + "/"
+            + CONFIG.fliperama.minigame.coleta.pixelsNecessarios
+        );
+    } else if (tipoMinigameFliperamaAtivo === "sequencia" && estadoSequenciaNeon) {
+        pontosMinigameFliperama.textContent = estadoSequenciaNeon.exibindo
+            ? localizar("Observe")
+            : estadoSequenciaNeon.indiceDoJogador
+                + "/"
+                + CONFIG.fliperama.minigame.sequencia.quantidadeDeSinais;
     }
 
-    tempoMinigameFliperama.textContent = Math.ceil(tempoRestante / 1000) + "s";
+    rotuloTempoMinigameFliperama.textContent = localizar(
+        contagemRegressivaAtiva ? "Começa em" : "Tempo"
+    );
+    tempoMinigameFliperama.textContent = contagemRegressivaAtiva
+        ? String(obterNumeroDaContagemRegressiva(agora))
+        : Math.ceil(tempoRestante / 1000) + "s";
 }
 
 function atualizarMinigameFliperama() {
@@ -9605,6 +18496,14 @@ function atualizarMinigameFliperama() {
     }
 
     const agora = Date.now();
+
+    if (agora < minigameFliperamaComecaEm) {
+        desenharEstadoAtualDoMinigameFliperama(agora);
+        desenharContagemRegressivaDoMinigame(agora);
+        atualizarPainelDoMinigameFliperama(agora);
+        animacaoDoMinigameFliperama = requestAnimationFrame(atualizarMinigameFliperama);
+        return;
+    }
 
     if (agora >= minigameFliperamaTerminaEm) {
         finalizarMinigameFliperama(false);
@@ -9617,26 +18516,42 @@ function atualizarMinigameFliperama() {
         if (!minigameFliperamaAtivo) {
             return;
         }
-
-        desenharLabirintoDoFliperama();
-    } else {
+    } else if (tipoMinigameFliperamaAtivo === "alvo") {
         if (!alvoDoMinigameFliperama) {
             criarAlvoMovelDoMinigame(agora);
         }
 
         atualizarMovimentoDoAlvoDoMinigame(agora);
-        desenharCenarioDoMinigameFliperama();
-        desenharAlvoDoMinigameFliperama();
+    } else if (tipoMinigameFliperamaAtivo === "voo") {
+        atualizarVooPixel(agora);
+
+        if (!minigameFliperamaAtivo) {
+            return;
+        }
+    } else if (tipoMinigameFliperamaAtivo === "coleta") {
+        atualizarChuvaDePixels(agora);
+
+        if (!minigameFliperamaAtivo) {
+            return;
+        }
+    } else if (tipoMinigameFliperamaAtivo === "sequencia") {
+        atualizarSequenciaNeon(agora);
     }
 
+    desenharEstadoAtualDoMinigameFliperama(agora);
     atualizarPainelDoMinigameFliperama(agora);
     animacaoDoMinigameFliperama = requestAnimationFrame(atualizarMinigameFliperama);
 }
 
 function ocultarMinigameFliperama() {
     minigameFliperamaAtivo = false;
+    minigameFliperamaComecaEm = 0;
+    minigameFliperamaTerminaEm = 0;
     alvoDoMinigameFliperama = null;
     roboDoLabirintoFliperama = null;
+    estadoVooPixel = null;
+    estadoChuvaDePixels = null;
+    estadoSequenciaNeon = null;
     modeloLabirintoFliperamaAtivo = null;
     teclasPressionadasNoLabirinto.clear();
     botoesDirecaoLabirinto.forEach(botao => (
@@ -9644,7 +18559,12 @@ function ocultarMinigameFliperama() {
     ));
     camadaMinigameFliperama.hidden = true;
     controlesToqueLabirinto.hidden = true;
+    delete controlesToqueLabirinto.dataset.tipo;
+    botoesDirecaoLabirinto.forEach(botao => {
+        botao.hidden = false;
+    });
     delete canvasMinigameFliperama.dataset.tipo;
+    minigameFliperamaEmTreinamento = false;
 
     if (animacaoDoMinigameFliperama !== null) {
         cancelAnimationFrame(animacaoDoMinigameFliperama);
@@ -9652,31 +18572,60 @@ function ocultarMinigameFliperama() {
     }
 }
 
-function iniciarMinigameFliperama() {
-    if (!fliperamaNoMapa || minigameFliperamaAtivo) {
+function iniciarMinigameFliperama(tipoForcado = null, emTreinamento = false) {
+    const tipoDeTreinamentoValido = emTreinamento
+        && CONFIG.fliperama.minigame.tiposNoCanvas.includes(tipoForcado);
+    if (
+        minigameFliperamaAtivo
+        || desafioDeTreinamentoAtivo?.origem === "fliperama"
+        || (emTreinamento && !tipoDeTreinamentoValido)
+        || (!emTreinamento && !fliperamaNoMapa)
+    ) {
         return;
     }
 
-    fliperamaNoMapa = null;
-    canvas.classList.remove("fliperama-sob-cursor");
-    definirJogoPausado(true);
+    if (!emTreinamento) {
+        fliperamaNoMapa = null;
+        canvas.classList.remove("fliperama-sob-cursor");
+        definirJogoPausado(true);
+    }
+
+    const agora = Date.now();
+    tipoMinigameFliperamaAtivo = tipoDeTreinamentoValido
+        ? tipoForcado
+        : sortearTipoDeMinigameFliperama();
+    if (!CONFIG.fliperama.minigame.tiposNoCanvas.includes(tipoMinigameFliperamaAtivo)) {
+        iniciarMinigameDeTreinamento(tipoMinigameFliperamaAtivo, "fliperama");
+        return;
+    }
+
+    minigameFliperamaEmTreinamento = Boolean(emTreinamento);
     minigameFliperamaAtivo = true;
-    tipoMinigameFliperamaAtivo = sortearTipoDeMinigameFliperama();
     modeloLabirintoFliperamaAtivo = tipoMinigameFliperamaAtivo === "labirinto"
         ? sortearModeloDoLabirintoFliperama()
         : null;
     acertosNoMinigameFliperama = 0;
-    minigameFliperamaTerminaEm = Date.now() + CONFIG.fliperama.minigame.duracao;
+    minigameFliperamaComecaEm = agora
+        + CONFIG.fliperama.minigame.duracaoDaContagemRegressiva;
+    minigameFliperamaTerminaEm = minigameFliperamaComecaEm
+        + CONFIG.fliperama.minigame.duracao;
     camadaMinigameFliperama.hidden = false;
     configurarInterfaceDoMinigameFliperama();
 
     if (tipoMinigameFliperamaAtivo === "labirinto") {
-        iniciarEstadoDoLabirintoFliperama();
-    } else {
-        criarAlvoMovelDoMinigame();
+        iniciarEstadoDoLabirintoFliperama(minigameFliperamaComecaEm);
+    } else if (tipoMinigameFliperamaAtivo === "alvo") {
+        criarAlvoMovelDoMinigame(minigameFliperamaComecaEm);
+    } else if (tipoMinigameFliperamaAtivo === "voo") {
+        iniciarEstadoDoVooPixel(minigameFliperamaComecaEm);
+    } else if (tipoMinigameFliperamaAtivo === "coleta") {
+        iniciarEstadoDaChuvaDePixels(minigameFliperamaComecaEm);
+    } else if (tipoMinigameFliperamaAtivo === "sequencia") {
+        iniciarEstadoDaSequenciaNeon(minigameFliperamaComecaEm);
     }
 
-    atualizarPainelDoMinigameFliperama();
+    atualizarPainelDoMinigameFliperama(agora);
+    canvasMinigameFliperama.focus?.({ preventScroll: true });
     atualizarMinigameFliperama();
 }
 
@@ -9689,8 +18638,6 @@ function aplicarBoostDeCadenciaDoFliperama() {
     for (const torre of torres) {
         atualizarAtributosDaTorreComBonus(torre);
     }
-
-    atualizarBoostFliperamaNoPosto(agora);
 }
 
 function aplicarBoostDeDanoDoFliperama() {
@@ -9702,39 +18649,81 @@ function aplicarBoostDeDanoDoFliperama() {
     for (const torre of torres) {
         atualizarAtributosDaTorreComBonus(torre);
     }
-
-    atualizarBoostFliperamaNoPosto(agora);
 }
 
-function finalizarMinigameFliperama(vitoria) {
+function finalizarMinigameFliperama(vitoria, motivoDaFalha = "tempo") {
     if (!minigameFliperamaAtivo) {
         return;
     }
 
     const tipoConcluido = tipoMinigameFliperamaAtivo;
+    const eraTreinamento = minigameFliperamaEmTreinamento;
+    const duracaoDaTentativa = Math.max(1, Date.now() - minigameFliperamaComecaEm);
     ocultarMinigameFliperama();
+
+    if (eraTreinamento) {
+        const novoRecorde = registrarResultadoDoCentroDeTreinamento(
+            tipoConcluido,
+            vitoria,
+            duracaoDaTentativa
+        );
+        desafioDeTreinamentoAtivo = {
+            tipo: tipoConcluido,
+            origem: "central",
+            estado: "resultado",
+            vitoria: Boolean(vitoria),
+            valorDoResultado: duracaoDaTentativa,
+            novoRecorde
+        };
+        mostrarCentroDeTreinamento();
+        return;
+    }
+
     definirJogoPausado(false);
 
     if (vitoria) {
-        if (tipoConcluido === "labirinto") {
+        if (["labirinto", "coleta"].includes(tipoConcluido)) {
             aplicarBoostDeDanoDoFliperama();
-            mostrarAviso(localizar(
-                "Labirinto concluído! Torres com +{percentual}% de dano por {segundos} segundos.",
-                {
-                    percentual: obterPercentualInteiro(CONFIG.fliperama.boost.percentualDeDano),
-                    segundos: CONFIG.fliperama.boost.duracao / 1000
-                }
-            ));
-        } else {
+            const mensagem = tipoConcluido === "labirinto"
+                ? "Labirinto concluído! Torres com +{percentual}% de dano por {segundos} segundos."
+                : "Chuva de Pixels concluída! Torres com +{percentual}% de dano por {segundos} segundos.";
+            mostrarAviso(localizar(mensagem, {
+                percentual: obterPercentualInteiro(CONFIG.fliperama.boost.percentualDeDano),
+                segundos: CONFIG.fliperama.boost.duracao / 1000
+            }));
+        } else if (["alvo", "voo"].includes(tipoConcluido)) {
             aplicarBoostDeCadenciaDoFliperama();
+            const mensagem = tipoConcluido === "alvo"
+                ? "Tiro ao alvo concluído! Torres aceleradas por {segundos} segundos."
+                : "Voo Pixel concluído! Torres aceleradas por {segundos} segundos.";
+            mostrarAviso(localizar(mensagem, {
+                segundos: CONFIG.fliperama.boost.duracao / 1000
+            }));
+        } else if (tipoConcluido === "sequencia") {
+            const recompensa = CONFIG.fliperama.minigame.sequencia.recompensaEmCreditos;
+            dinheiro += recompensa;
+            atualizarBotoesDaTorre();
             mostrarAviso(localizar(
-                "Tiro ao alvo concluído! Torres aceleradas por {segundos} segundos.",
-                { segundos: CONFIG.fliperama.boost.duracao / 1000 }
+                "Sequência Neon concluída! Você recebeu {creditos} créditos.",
+                { creditos: recompensa }
             ));
         }
+
+        registrarMinigameFliperamaConcluidoParaConquistas(tipoConcluido);
+    } else if (motivoDaFalha === "colisao") {
+        mostrarAviso(localizar("O robô colidiu. Tente novamente no próximo fliperama."));
     } else {
         mostrarAviso(localizar("Tempo esgotado no fliperama."));
     }
+}
+
+function abandonarMinigameDoFliperamaEmTreinamento() {
+    if (!minigameFliperamaAtivo || !minigameFliperamaEmTreinamento) {
+        return;
+    }
+    ocultarMinigameFliperama();
+    desafioDeTreinamentoAtivo = null;
+    mostrarCentroDeTreinamento();
 }
 
 function atualizarEstadoDoBoostFliperama(agora = Date.now()) {
@@ -9759,33 +18748,64 @@ function atualizarEstadoDoBoostFliperama(agora = Date.now()) {
         atualizarAtributosDaTorreComBonus(torre);
     }
 
-    atualizarBoostFliperamaNoPosto(agora);
     mostrarAviso(localizar("O boost do fliperama terminou."));
 }
 
+function obterPosicaoDoEventoNoCanvasDoMinigame(evento) {
+    const retangulo = canvasMinigameFliperama.getBoundingClientRect();
+    return {
+        x: (evento.clientX - retangulo.left)
+            * (canvasMinigameFliperama.width / retangulo.width),
+        y: (evento.clientY - retangulo.top)
+            * (canvasMinigameFliperama.height / retangulo.height)
+    };
+}
+
 canvasMinigameFliperama.addEventListener("click", (evento) => {
-    if (
-        !minigameFliperamaAtivo
-        || tipoMinigameFliperamaAtivo !== "alvo"
-        || !alvoDoMinigameFliperama
-    ) {
+    if (!minigameFliperamaAtivo) {
         return;
     }
 
+    canvasMinigameFliperama.focus?.({ preventScroll: true });
     const agora = Date.now();
+
+    if (!minigamePodeReceberEntrada(agora)) {
+        return;
+    }
+
+    if (tipoMinigameFliperamaAtivo === "voo") {
+        impulsionarRoboDoVooPixel();
+        return;
+    }
+
+    const posicao = obterPosicaoDoEventoNoCanvasDoMinigame(evento);
+
+    if (tipoMinigameFliperamaAtivo === "sequencia") {
+        const indiceDoPainel = obterPaineisDaSequenciaNeon().findIndex(painel => (
+            posicao.x >= painel.x
+            && posicao.x <= painel.x + painel.largura
+            && posicao.y >= painel.y
+            && posicao.y <= painel.y + painel.altura
+        ));
+
+        if (indiceDoPainel >= 0) {
+            registrarSinalDaSequenciaNeon(indiceDoPainel);
+            atualizarPainelDoMinigameFliperama();
+        }
+        return;
+    }
+
+    if (tipoMinigameFliperamaAtivo !== "alvo" || !alvoDoMinigameFliperama) {
+        return;
+    }
 
     if (agora < alvoDoMinigameFliperama.podeSerAtingidoEm) {
         return;
     }
 
-    const retangulo = canvasMinigameFliperama.getBoundingClientRect();
-    const x = (evento.clientX - retangulo.left)
-        * (canvasMinigameFliperama.width / retangulo.width);
-    const y = (evento.clientY - retangulo.top)
-        * (canvasMinigameFliperama.height / retangulo.height);
     const distancia = Math.hypot(
-        alvoDoMinigameFliperama.x - x,
-        alvoDoMinigameFliperama.y - y
+        alvoDoMinigameFliperama.x - posicao.x,
+        alvoDoMinigameFliperama.y - posicao.y
     );
 
     if (distancia > CONFIG.fliperama.minigame.raioDoAlvo) {
@@ -9855,11 +18875,55 @@ function alterarDirecaoDosCorredores(tecla, pressionada) {
 }
 
 function controlarTeclaDoLabirinto(evento) {
-    if (!minigameFliperamaAtivo || tipoMinigameFliperamaAtivo !== "labirinto") {
+    if (!minigameFliperamaAtivo) {
         return;
     }
 
     const tecla = evento.key.toLowerCase();
+
+    if (!minigamePodeReceberEntrada()) {
+        if (
+            TECLAS_DE_MOVIMENTO_DO_LABIRINTO.includes(tecla)
+            || [" ", "spacebar", "1", "2", "3", "4"].includes(tecla)
+        ) {
+            evento.preventDefault();
+        }
+        return;
+    }
+
+    if (
+        tipoMinigameFliperamaAtivo === "voo"
+        && evento.type === "keydown"
+        && !evento.repeat
+        && [" ", "spacebar", "w", "arrowup"].includes(tecla)
+    ) {
+        impulsionarRoboDoVooPixel();
+        evento.preventDefault();
+        return;
+    }
+
+    if (
+        tipoMinigameFliperamaAtivo === "sequencia"
+        && evento.type === "keydown"
+        && !evento.repeat
+        && ["1", "2", "3", "4"].includes(tecla)
+    ) {
+        registrarSinalDaSequenciaNeon(Number(tecla) - 1);
+        atualizarPainelDoMinigameFliperama();
+        evento.preventDefault();
+        return;
+    }
+
+    if (!["labirinto", "coleta"].includes(tipoMinigameFliperamaAtivo)) {
+        return;
+    }
+
+    if (
+        tipoMinigameFliperamaAtivo === "coleta"
+        && !["a", "d", "arrowleft", "arrowright"].includes(tecla)
+    ) {
+        return;
+    }
 
     if (alterarDirecaoDoLabirinto(tecla, evento.type === "keydown")) {
         evento.preventDefault();
@@ -9884,7 +18948,12 @@ function controlarToqueDoLabirinto(evento, pressionada) {
 
     if (
         !minigameFliperamaAtivo
-        || tipoMinigameFliperamaAtivo !== "labirinto"
+        || !minigamePodeReceberEntrada()
+        || !["labirinto", "coleta"].includes(tipoMinigameFliperamaAtivo)
+        || (
+            tipoMinigameFliperamaAtivo === "coleta"
+            && !["arrowleft", "arrowright"].includes(direcao)
+        )
         || !alterarDirecaoDoLabirinto(direcao, pressionada)
     ) {
         return;
@@ -9967,26 +19036,39 @@ function finalizarPartidaComVitoria() {
 
     partidaEncerrada = true;
     partidaVencida = true;
+    const vitoriaNoMapaPersonalizado = Boolean(mapaPersonalizadoAtivo);
     const vitoriaNaFaseSecreta = faseAtualEhSecreta();
+    const vitoriaNoIntervaloPerdido = faseAtualEhIntervaloPerdido();
+    const vitoriaEmFaseSecreta = vitoriaNaFaseSecreta || vitoriaNoIntervaloPerdido;
     const deveDesbloquearCapitulo2 = vitoriaNaFaseSecreta
         && !capitulo2Desbloqueado;
     const pulsoTemporalEstavaBloqueado = !pulsoTemporalEstaDesbloqueado();
-    novaFaseDesbloqueada = vitoriaNaFaseSecreta
+    novaFaseDesbloqueada = vitoriaNoMapaPersonalizado || vitoriaEmFaseSecreta
         ? false
         : registrarConclusaoDaFase();
-    pulsoTemporalAcabouDeSerDesbloqueado = !vitoriaNaFaseSecreta
+    pulsoTemporalAcabouDeSerDesbloqueado = !vitoriaNoMapaPersonalizado
+        && !vitoriaEmFaseSecreta
         && pulsoTemporalEstavaBloqueado
         && pulsoTemporalEstaDesbloqueado();
-    registrarFaseConcluidaParaMissoes();
-    registrarFaseConcluidaParaConquistas();
+    if (!vitoriaNoMapaPersonalizado) {
+        registrarFaseConcluidaParaMissoes();
+        registrarFaseConcluidaParaConquistas();
+        registrarExperienciaDaPartida(
+            CONFIG.progressaoDeNivel.experienciaPorFaseConcluida
+        );
+    }
     if (vitoriaNaFaseSecreta) {
         desbloquearConquista("aindaEstaEsperando");
     }
-    fragmentosRecebidosNoResultado = concederFragmentosPelasWavesAlcancadas();
+    fragmentosRecebidosNoResultado = vitoriaNoMapaPersonalizado
+        ? 0
+        : concederFragmentosPelasWavesAlcancadas();
     tiros = [];
     tirosDosInimigos = [];
     tocarEfeitoVitoria();
-    if (deveDesbloquearCapitulo2) {
+    if (vitoriaNoMapaPersonalizado) {
+        mostrarPainelDeResultado(true);
+    } else if (deveDesbloquearCapitulo2) {
         mostrarConversaDoSenhorDoTempo(0, "vitoria");
     } else if (deveMostrarCartaDaMaquinaDoTempoAposVitoria()) {
         mostrarCutsceneDaCarta("maquinaDoTempo");
@@ -9994,14 +19076,35 @@ function finalizarPartidaComVitoria() {
         mostrarCutsceneDaCarta();
     } else if (deveMostrarTransmissaoProjetoRelogioAposVitoria()) {
         mostrarTransmissaoProjetoRelogio(false);
+    } else if (deveMostrarRegistroLaboratorioAposVitoria()) {
+        mostrarRegistroDoLaboratorio(false);
+    } else if (deveMostrarCenaFinalLaboratorioAposVitoria()) {
+        mostrarCenaFinalDoLaboratorio();
+    } else if (deveMostrarTransmissaoFuturoDespedacadoAposVitoria()) {
+        mostrarTransmissaoFuturoDespedacado(false);
+    } else if (deveMostrarCenaFinalFuturoDespedacadoAposVitoria()) {
+        mostrarCenaFinalDoFuturoDespedacado();
+    } else if (deveMostrarCenaFinalPontoZeroAposVitoria()) {
+        mostrarCenaFinalDoPontoZero();
+    } else if (deveMostrarCenaFinalIntervaloPerdidoAposVitoria()) {
+        mostrarCenaFinalDoIntervaloPerdido();
+    } else if (deveMostrarCenaFinalFase13AposVitoria()) {
+        mostrarCenaFinalDaFase13();
+    } else if (deveMostrarCenaFinalFase14AposVitoria()) {
+        mostrarCenaFinalDaFase14();
     } else {
         mostrarPainelDeResultado(true);
     }
 }
 
 function mostrarPainelDeResultado(vitoria) {
+    const mapaPersonalizado = mapaPersonalizadoAtivo;
     const faseSecreta = faseAtualEhSecreta();
-    const existeProximaFase = !faseSecreta
+    const intervaloPerdido = faseAtualEhIntervaloPerdido();
+    const faseOculta = faseSecreta || intervaloPerdido;
+    const ultimaWaveDaFase = obterUltimaWaveDaFase();
+    const existeProximaFase = !mapaPersonalizado
+        && !faseOculta
         && faseSelecionada < CONFIG.fases.length
         && faseEstaDesbloqueada(faseSelecionada + 1);
 
@@ -10009,21 +19112,31 @@ function mostrarPainelDeResultado(vitoria) {
     menuPartida.classList.add("oculto");
     camadaResultado.dataset.estado = vitoria ? "vitoria" : "derrota";
     seloResultado.textContent = vitoria
-        ? faseSecreta
+        ? mapaPersonalizado
+            ? traduzir("editor.mapaPersonalizado", { waves: ultimaWaveDaFase })
+            : faseSecreta
             ? localizar("FASE SECRETA · {waves} WAVES CONCLUÍDAS", {
-                waves: CONFIG.wave.ultimaWave
+                waves: ultimaWaveDaFase
             })
+            : intervaloPerdido
+                ? localizar("INTERVALO PERDIDO · {waves} WAVES CONCLUÍDAS", {
+                    waves: ultimaWaveDaFase
+                })
             : localizar("FASE {fase} · {waves} WAVES CONCLUÍDAS", {
                 fase: faseSelecionada,
-                waves: CONFIG.wave.ultimaWave
+                waves: ultimaWaveDaFase
             })
         : localizar("SUA BASE FOI INVADIDA");
     tituloResultado.textContent = vitoria ? localizar("VITÓRIA") : "GAME OVER";
     descricaoResultado.textContent = vitoria
-        ? faseSecreta
+        ? mapaPersonalizado
+            ? traduzir("editor.vitoria", { criador: mapaPersonalizado.criador })
+            : faseSecreta
             ? localizar("A falha foi contida e o caminho para o Capítulo 2 está aberto.")
+            : intervaloPerdido
+                ? localizar("O Intervalo foi atravessado e o caminho para o Capítulo 3 está aberto.")
             : pulsoTemporalAcabouDeSerDesbloqueado
-                ? localizar("Pulso Temporal desbloqueado! Ele estará disponível no posto lateral das próximas partidas.")
+                ? localizar("Pulso Temporal desbloqueado! Ele estará disponível na barra inferior das próximas partidas.")
             : novaFaseDesbloqueada
             ? localizar("A Fase {fase} foi desbloqueada. Escolha seu próximo destino.", {
                 fase: faseSelecionada + 1
@@ -10031,8 +19144,10 @@ function mostrarPainelDeResultado(vitoria) {
             : faseSelecionada === CONFIG.fases.length
                 ? localizar("Todas as fases disponíveis foram concluídas.")
                 : localizar("Fase concluída. Você pode repeti-la ou seguir em frente.")
-        : faseSecreta
-            ? localizar("A derrota não abriu a saída. O Senhor do Tempo exige uma vitória.")
+        : faseOculta
+            ? intervaloPerdido
+                ? localizar("O relógio voltou a 00:00. Vença para escapar do Intervalo.")
+                : localizar("A derrota não abriu a saída. O Senhor do Tempo exige uma vitória.")
             : localizar("Um inimigo alcançou sua base. Reorganize sua defesa e tente novamente.");
     if (fragmentosRecebidosNoResultado > 0) {
         const nomeDaMoeda = fragmentosRecebidosNoResultado === 1
@@ -10046,11 +19161,16 @@ function mostrarPainelDeResultado(vitoria) {
             }
         );
     }
+    if (experienciaRecebidaNaPartida > 0) {
+        descricaoResultado.textContent += traduzir("nivel.xpPartida", {
+            quantidade: experienciaRecebidaNaPartida
+        });
+    }
     botaoRepetirResultado.textContent = vitoria
         ? localizar("Repetir fase")
         : localizar("Recomeçar fase");
-    botaoVoltarLobbyResultado.hidden = faseSecreta && !vitoria;
-    botaoProximaFaseResultado.hidden = !vitoria || faseSecreta;
+    botaoVoltarLobbyResultado.hidden = faseOculta && !vitoria;
+    botaoProximaFaseResultado.hidden = !vitoria || faseOculta || Boolean(mapaPersonalizado);
     botaoProximaFaseResultado.disabled = !existeProximaFase;
     botaoProximaFaseResultado.setAttribute("aria-disabled", (!existeProximaFase).toString());
     camadaResultado.hidden = false;
@@ -10068,13 +19188,17 @@ function repetirFaseDoResultado() {
     }
 
     prepararNovaPartida();
-    mostrarAviso(faseAtualEhSecreta()
-        ? localizar("Dimensão Glitch reiniciada.")
+    mostrarAviso(mapaPersonalizadoAtivo
+        ? traduzir("editor.reiniciado")
+        : faseAtualEhIntervaloPerdido()
+        ? localizar("Intervalo Perdido reiniciado.")
+        : faseAtualEhSecreta()
+            ? localizar("Dimensão Glitch reiniciada.")
         : localizar("Fase {fase} reiniciada.", { fase: faseSelecionada }));
 }
 
 function voltarAoLobbyDoResultado() {
-    if (!partidaEncerrada || (faseAtualEhSecreta() && !partidaVencida)) {
+    if (!partidaEncerrada || (faseAtualEhAlgumaFaseSecreta() && !partidaVencida)) {
         return;
     }
 
@@ -10104,8 +19228,13 @@ function iniciarProximaFaseDoResultado() {
 }
 
 function voltarAoLobby(comVinheta = false) {
+    const partidaEraPersonalizada = Boolean(mapaPersonalizadoAtivo);
+    const abaDoEditorDaPartida = origemDoMapaPersonalizadoAtivo;
     const partidaEraSecreta = faseAtualEhSecreta();
-    const exibirSeletorDeFases = partidaVencida && !partidaEraSecreta;
+    const partidaEraIntervaloPerdido = faseAtualEhIntervaloPerdido();
+    const exibirSeletorDeFases = !partidaEraPersonalizada
+        && partidaVencida
+        && (!partidaEraSecreta || partidaEraIntervaloPerdido);
     const exibirMaquinaDoTempoRecemConcedida = maquinaDoTempoAcabouDeSerConcedida;
     maquinaDoTempoAcabouDeSerConcedida = false;
     const capituloDaPartida = obterCapituloDaFase(faseSelecionada);
@@ -10125,18 +19254,25 @@ function voltarAoLobby(comVinheta = false) {
     modoWavesInfinitas = false;
     torreSelecionada = null;
     conversaDoSenhorDoTempoAtiva = false;
+    conversaDoPortalSecretoBloqueadoAtiva = false;
     tipoDaConversaDoSenhorDoTempo = "entrada";
-    camadaConversaPortal.classList.remove("camada-conversa-senhor-tempo");
-    camadaConversaPortal.removeAttribute("data-tipo-conversa");
-    camadaConversaPortal.hidden = true;
-    camadaConversaPortal.innerHTML = "";
+    ocultarConversaNoPortal();
     ocultarCutsceneDaCarta();
     ocultarCutsceneDoCapitulo2();
     ocultarTransicaoDoPortalGlitch();
-    if (partidaEraSecreta) {
+    ocultarTransicaoDoIntervalo();
+    if (partidaEraPersonalizada) {
+        mapaPersonalizadoAtivo = null;
+        filaDeInimigosDoMapaPersonalizado = [];
+        faseSelecionada = faseSelecionadaAntesDoMapaPersonalizado;
+    } else if (partidaEraSecreta) {
         faseSelecionada = 1;
+    } else if (partidaEraIntervaloPerdido) {
+        faseSelecionada = 12;
+        capituloSelecionado = 3;
     }
     ocultarMinigameFliperama();
+    ocultarMinigameDeTreinamentoNoFliperama();
     ocultarPainelBonusPosBoss();
     ocultarPainelDeResultado();
     fecharConfiguracoes();
@@ -10156,9 +19292,13 @@ function voltarAoLobby(comVinheta = false) {
     atualizarIndicadorFaseSelecionada();
     atualizarTemaDoLobby();
     atualizarDisponibilidadeDaDesistencia();
-    atualizarPulsoTemporalNoPosto();
+    atualizarPulsoTemporalNoControle();
 
-    if (exibirSeletorDeFases) {
+    if (partidaEraPersonalizada) {
+        mostrarEditorDeFases(abaDoEditorDaPartida);
+    } else if (partidaEraIntervaloPerdido && exibirSeletorDeFases) {
+        mostrarCapitulos();
+    } else if (exibirSeletorDeFases) {
         if (capituloFoiConcluido || exibirMaquinaDoTempoRecemConcedida) {
             mostrarCapitulos();
         } else {
@@ -10176,8 +19316,10 @@ function abrirConfirmacaoDeDesistencia() {
         return;
     }
 
-    if (faseAtualEhSecreta()) {
-        mostrarAviso(localizar("O Senhor do Tempo só abrirá a saída depois da vitória."));
+    if (faseAtualEhAlgumaFaseSecreta()) {
+        mostrarAviso(faseAtualEhIntervaloPerdido()
+            ? localizar("A saída do Intervalo só aparece depois da vitória.")
+            : localizar("O Senhor do Tempo só abrirá a saída depois da vitória."));
         return;
     }
 
@@ -10231,19 +19373,25 @@ function confirmarDesistencia() {
 function reiniciarFasePeloMenu() {
     fecharMenuDaPartida();
     prepararNovaPartida();
-    mostrarAviso(faseAtualEhSecreta()
-        ? localizar("Dimensão Glitch reiniciada.")
+    mostrarAviso(mapaPersonalizadoAtivo
+        ? traduzir("editor.reiniciado")
+        : faseAtualEhIntervaloPerdido()
+        ? localizar("Intervalo Perdido reiniciado.")
+        : faseAtualEhSecreta()
+            ? localizar("Dimensão Glitch reiniciada.")
         : localizar("Fase {fase} reiniciada.", { fase: faseSelecionada }));
 }
 
 function atualizarDisponibilidadeDaDesistencia() {
-    const saidaBloqueada = jogoIniciado && faseAtualEhSecreta();
+    const saidaBloqueada = jogoIniciado && faseAtualEhAlgumaFaseSecreta();
     const rotulo = botaoDesistirMenu.querySelector("span");
 
     botaoDesistirMenu.disabled = saidaBloqueada;
     botaoDesistirMenu.setAttribute("aria-disabled", saidaBloqueada.toString());
     botaoDesistirMenu.title = saidaBloqueada
-        ? localizar("O Senhor do Tempo só abrirá a saída depois da vitória.")
+        ? faseAtualEhIntervaloPerdido()
+            ? localizar("A saída do Intervalo só aparece depois da vitória.")
+            : localizar("O Senhor do Tempo só abrirá a saída depois da vitória.")
         : "";
 
     if (rotulo) {
@@ -10441,7 +19589,7 @@ function atualizarResumoDasMissoesNoMenu() {
     resumoMissoesMenu.textContent = traduzir(chave, { quantidade });
 }
 
-function formatarProximaRenovacaoDasMissoes() {
+function formatarProximaRenovacaoSemanal() {
     return obterDataDaProximaRenovacaoSemanal().toLocaleDateString(idiomaAtual, {
         weekday: "long",
         day: "2-digit",
@@ -10570,7 +19718,7 @@ function mostrarMissoes() {
                 })}</strong>
             </div>
             <p>${localizar("Renova {data} à 0h", {
-                data: formatarProximaRenovacaoDasMissoes()
+                data: formatarProximaRenovacaoSemanal()
             })}</p>
         </section>
         <section class="missoes-grade" aria-label="${localizar("Missões semanais")}">
@@ -10988,8 +20136,15 @@ function obterEstadoDaConquista(idDaConquista, conquista) {
         const itensAtuaisDaLoja = obterItensDaLoja();
         progresso = itensAtuaisDaLoja.filter(([idDoItem]) => comprasDaLoja.has(idDoItem)).length;
         objetivo = itensAtuaisDaLoja.length;
+    } else if (conquista.tipoDeCriterio === "colecao") {
+        const itensConquistados = estatisticasDasConquistas[conquista.propriedade];
+        progresso = Array.isArray(itensConquistados)
+            ? Array.isArray(conquista.itensObrigatorios)
+                ? conquista.itensObrigatorios.filter(item => itensConquistados.includes(item)).length
+                : itensConquistados.length
+            : 0;
     } else if (conquista.tipoDeCriterio === "especial") {
-        progresso = conquistaEstaDesbloqueada(idDaConquista) ? 1 : 0;
+        progresso = conquistaEstaDesbloqueada(idDaConquista) ? objetivo : 0;
     }
 
     return {
@@ -11031,6 +20186,34 @@ function verificarConquistasAutomaticas() {
     }
 }
 
+function revalidarConquistaQueDeixouDeCumprir(idDaConquista) {
+    const conquista = CONFIG.conquistas[idDaConquista];
+
+    if (
+        !conquistaEstaDesbloqueada(idDaConquista)
+        || obterEstadoDaConquista(idDaConquista, conquista).concluida
+    ) {
+        return false;
+    }
+
+    const indiceDaConquista = recompensasPermanentesDasMissoes
+        .conquistasDesbloqueadas.indexOf(idDaConquista);
+    recompensasPermanentesDasMissoes.conquistasDesbloqueadas.splice(
+        indiceDaConquista,
+        1
+    );
+    salvarRecompensasPermanentesDasMissoes();
+    return true;
+}
+
+function revalidarConquistaMestreDoArsenal() {
+    return revalidarConquistaQueDeixouDeCumprir("mestreDoArsenal");
+}
+
+function revalidarConquistaMestreDoFliperama() {
+    return revalidarConquistaQueDeixouDeCumprir("mestreDoFliperama");
+}
+
 function registrarEstatisticaDeConquista(propriedade, valor, usarMaiorValor = false) {
     const valorAtual = estatisticasDasConquistas[propriedade] || 0;
     const novoValor = usarMaiorValor
@@ -11062,6 +20245,71 @@ function registrarWaveInfinitaParaConquistas(numeroDaWave) {
     }
 }
 
+function registrarDefesaConstruidaParaConquistas(tipoDaDefesa) {
+    if (!CONFIG.torre.tipos[tipoDaDefesa]) {
+        return false;
+    }
+
+    tiposDeDefesaConstruidosNaPartida.add(tipoDaDefesa);
+    const objetivo = CONFIG.conquistas.osSeisGuardioes.objetivo;
+
+    if (tiposDeDefesaConstruidosNaPartida.size < objetivo) {
+        return false;
+    }
+
+    return desbloquearConquista("osSeisGuardioes");
+}
+
+function registrarMinigameFliperamaConcluidoParaConquistas(tipoDoMinigame) {
+    const tiposValidos = CONFIG.fliperama.minigame.tiposDisponiveis;
+
+    if (!tiposValidos.includes(tipoDoMinigame)) {
+        return false;
+    }
+
+    const minigamesConcluidos = estatisticasDasConquistas
+        .minigamesFliperamaConcluidos;
+
+    if (minigamesConcluidos.includes(tipoDoMinigame)) {
+        return false;
+    }
+
+    minigamesConcluidos.push(tipoDoMinigame);
+    salvarEstatisticasDasConquistas();
+    verificarConquistasAutomaticas();
+    return true;
+}
+
+function registrarUsoDoPulsoTemporalParaConquistas() {
+    const configuracao = CONFIG.conquistas.pareORelogio;
+    const inimigosVivos = inimigos.filter(inimigo => inimigo.vida > 0);
+    const possuiBoss = inimigosVivos.some(inimigo => tipoEhBoss(inimigo.tipo));
+    const quantidadeDeInimigosComuns = inimigosVivos.filter(
+        inimigo => !tipoEhBoss(inimigo.tipo)
+    ).length;
+
+    if (
+        !possuiBoss
+        || quantidadeDeInimigosComuns < configuracao.quantidadeMinimaDeInimigosComuns
+    ) {
+        return false;
+    }
+
+    return desbloquearConquista("pareORelogio");
+}
+
+function registrarEliminacoesDaBombaPesadaParaConquistas(quantidadeEliminada) {
+    if (quantidadeEliminada < CONFIG.conquistas.demolicaoEmMassa.objetivo) {
+        return false;
+    }
+
+    return desbloquearConquista("demolicaoEmMassa");
+}
+
+function registrarTransmissaoProjetoRelogioParaConquistas() {
+    return desbloquearConquista("frequencia09");
+}
+
 function atualizarResumoDasConquistasNoMenu() {
     if (!resumoConquistasMenu) {
         return;
@@ -11079,6 +20327,7 @@ function atualizarResumoDasConquistasNoMenu() {
 
 function criarCartaoDeConquista([idDaConquista, conquista]) {
     const desbloqueada = conquistaEstaDesbloqueada(idDaConquista);
+    const conteudoOculto = conquista.secreta && !desbloqueada;
     const estado = obterEstadoDaConquista(idDaConquista, conquista);
     const percentual = Math.min(
         100,
@@ -11087,19 +20336,27 @@ function criarCartaoDeConquista([idDaConquista, conquista]) {
     const rotuloDoTipo = conquista.tipoDeCriterio === "especial"
         ? localizar("CONQUISTA ESPECIAL")
         : localizar("MARCO PERMANENTE");
-    const nomeDaConquista = obterNomeLocalizado(conquista);
+    const nomeDaConquista = conteudoOculto
+        ? localizar(conquista.nomeBloqueado)
+        : obterNomeLocalizado(conquista);
+    const descricaoDaConquista = conteudoOculto
+        ? localizar(conquista.descricaoBloqueada)
+        : localizar(conquista.descricao);
+    const iconeDaConquista = conteudoOculto
+        ? conquista.iconeBloqueado
+        : conquista.icone;
 
     return `
-        <article class="conquista-cartao ${desbloqueada ? "conquista-desbloqueada" : "conquista-bloqueada"}">
+        <article class="conquista-cartao ${desbloqueada ? "conquista-desbloqueada" : "conquista-bloqueada"} ${conquista.secreta ? "conquista-secreta" : ""}">
             <header class="conquista-cartao-topo">
-                <span class="conquista-icone" aria-hidden="true">${conquista.icone}</span>
+                <span class="conquista-icone" aria-hidden="true">${iconeDaConquista}</span>
                 <span class="conquista-estado">${desbloqueada
                     ? localizar("Desbloqueada")
                     : localizar("Bloqueada")}</span>
             </header>
             <small>${rotuloDoTipo}</small>
             <h3>${nomeDaConquista}</h3>
-            <p>${localizar(conquista.descricao)}</p>
+            <p>${descricaoDaConquista}</p>
             <div
                 class="conquista-progresso"
                 role="progressbar"
@@ -11259,6 +20516,9 @@ function mostrarCapitulos() {
         const aguardaVitoriaNaFaseSecreta = capitulo.requerVitoriaNaFaseSecreta
             && capituloEstaConcluido(capitulo.numero - 1)
             && !capitulo2Desbloqueado;
+        const aguardaVitoriaNoIntervaloPerdido = capitulo.requerVitoriaNoIntervaloPerdido
+            && capituloEstaConcluido(capitulo.numero - 1)
+            && !capitulo3Desbloqueado;
         const descricao = desbloqueado
             ? localizar("{concluidas} de {total} fases concluídas", {
                 concluidas: progresso.fasesConcluidas,
@@ -11266,6 +20526,8 @@ function mostrarCapitulos() {
             })
             : aguardaVitoriaNaFaseSecreta
                 ? localizar("Vença a Dimensão Glitch para desbloquear")
+                : aguardaVitoriaNoIntervaloPerdido
+                    ? localizar("Vença O Intervalo Perdido para desbloquear")
                 : localizar("Conclua o Capítulo {capitulo} para desbloquear", {
                 capitulo: capitulo.numero - 1
             });
@@ -11468,59 +20730,378 @@ function selecionarFase(numeroDaFase) {
     mostrarFases();
 }
 
+function obterDescricaoDoItemDaLoja(configuracao) {
+    if (configuracao.tipoDeItem === "melhoria") {
+        return localizar(configuracao.descricao);
+    }
+
+    if (configuracao.efeitoDeQueimadura) {
+        return localizar("Dispara bolas de fogo e incendeia o alvo: {dano} de dano por segundo durante {segundos} segundos. Novos acertos renovam a duração.", {
+            dano: configuracao.efeitoDeQueimadura.danoPorIntervalo,
+            segundos: obterDuracaoDaQueimaduraEmSegundos(configuracao.efeitoDeQueimadura)
+        });
+    }
+
+    if (configuracao.efeitoDeRaio) {
+        return localizar("Dispara uma carga que salta entre até {quantidade} inimigos próximos e perde dano a cada salto.", {
+            quantidade: configuracao.efeitoDeRaio.quantidadeMaximaDeAlvos
+        });
+    }
+
+    if (configuracao.efeitoPerfurante) {
+        return localizar("Perfura todos os inimigos em uma faixa de {largura} px até o limite do alcance.", {
+            largura: configuracao.efeitoPerfurante.larguraDoFeixe
+        });
+    }
+
+    if (configuracao.efeitoDeMarca) {
+        return localizar("Marca o alvo por {segundos} segundos e faz com que ele receba {percentual}% mais dano de todas as defesas.", {
+            segundos: configuracao.efeitoDeMarca.duracao / 1000,
+            percentual: obterPercentualInteiro(
+                configuracao.efeitoDeMarca.percentualDanoAdicional
+            )
+        });
+    }
+
+    if (configuracao.efeitoDeDrones) {
+        return localizar("Lança {quantidade} drones por ataque e divide os disparos entre alvos diferentes quando possível.", {
+            quantidade: configuracao.efeitoDeDrones.quantidade
+        });
+    }
+
+    if (configuracao.efeitoDeCorrente) {
+        return localizar("A corrente alcança um segundo inimigo a até {alcance} px e causa {percentual}% do dano original.", {
+            alcance: configuracao.efeitoDeCorrente.alcanceDoSegundoAlvo,
+            percentual: obterPercentualInteiro(
+                configuracao.efeitoDeCorrente.multiplicadorDanoSegundoAlvo
+            )
+        });
+    }
+
+    if (configuracao.efeitoDeSucata) {
+        return localizar("Coleta até {pecas} peças de inimigos derrotados próximos; cada peça aumenta seu dano em {percentual}%.", {
+            pecas: configuracao.efeitoDeSucata.maximoDePecas,
+            percentual: obterPercentualInteiro(
+                configuracao.efeitoDeSucata.percentualDanoPorPeca
+            )
+        });
+    }
+
+    if (configuracao.efeitoPrismatico) {
+        return localizar("Alterna disparos: vermelho causa mais dano, azul desacelera e amarelo ignora reduções de dano.");
+    }
+
+    if (configuracao.tipoDeItem === "mina") {
+        if (configuracao.efeitoCorrosivo) {
+            return localizar("Explode por contato, causa {dano} de dano em {raio} px e faz os inimigos receberem {percentual}% mais dano por {segundos} segundos.", {
+                dano: configuracao.dano,
+                raio: configuracao.raioExplosao,
+                percentual: obterPercentualInteiro(
+                    configuracao.efeitoCorrosivo.percentualDanoAdicional
+                ),
+                segundos: configuracao.efeitoCorrosivo.duracao / 1000
+            });
+        }
+
+        if (configuracao.efeitoDePulso) {
+            return localizar("Explode por contato, causa {dano} de dano em {raio} px e empurra inimigos comuns {distancia} px.", {
+                dano: configuracao.dano,
+                raio: configuracao.raioExplosao,
+                distancia: configuracao.efeitoDePulso.distanciaDoEmpurrao
+            });
+        }
+
+        if (configuracao.efeitoGlacial) {
+            return localizar("Explode por contato, causa {dano} de dano em {raio} px e desacelera inimigos em {percentual}%.", {
+                dano: configuracao.dano,
+                raio: configuracao.raioExplosao,
+                percentual: obterPercentualInteiro(
+                    configuracao.efeitoGlacial.percentualLentidao
+                )
+            });
+        }
+
+        return localizar("Explode somente quando um inimigo encosta nela e causa {dano} de dano em uma área de {raio} px.", {
+            dano: configuracao.dano,
+            raio: configuracao.raioExplosao
+        });
+    }
+
+    if (configuracao.tipoDeItem === "bomba") {
+        if (configuracao.efeitoDeFragmentacao) {
+            return localizar("Clique para acender o pavio. A explosão principal causa {dano} de dano e lança {quantidade} fragmentos explosivos ao redor.", {
+                dano: configuracao.dano,
+                quantidade: configuracao.efeitoDeFragmentacao.quantidadeDeFragmentos
+            });
+        }
+
+        return localizar("Clique na Bomba para acender o pavio. Após {segundos} segundo, ela causa {dano} de dano em uma área de {raio} px.", {
+            segundos: configuracao.tempoDoPavio / 1000,
+            dano: configuracao.dano,
+            raio: configuracao.raioExplosao
+        });
+    }
+
+    if (configuracao.percentualBonusCadencia) {
+        return localizar("Aumenta em {percentual}% a velocidade de ataque das torres dentro de {alcance} px. O bônus não acumula.", {
+            percentual: obterPercentualInteiro(configuracao.percentualBonusCadencia),
+            alcance: configuracao.alcance
+        });
+    }
+
+    if (configuracao.creditosPorWave) {
+        return localizar("Produz {creditos} créditos ao concluir uma wave inteira. Precisa sobreviver até o fim para pagar.", {
+            creditos: configuracao.creditosPorWave
+        });
+    }
+
+    if (configuracao.atraiInimigosAtiradores) {
+        return localizar("Atrai Sabotadores, Macacos e Corujas dentro do alcance deles. Aguenta {tiros} tiros e não atira.", {
+            tiros: configuracao.resistenciaATiros
+        });
+    }
+
+    return localizar("Torre de combate com {dano} de dano e {alcance} px de alcance.", {
+        dano: configuracao.dano,
+        alcance: configuracao.alcance
+    });
+}
+
+function criarCartaoDeRecompensaDeNivel(recompensa, nivelAtual) {
+    const desbloqueada = nivelAtual >= recompensa.nivel;
+    const skinEquipada = recompensa.tipo === "skin"
+        && recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === recompensa.idDoItem;
+    const acaoDaSkin = recompensa.tipo === "skin" && desbloqueada
+        ? `
+            <button
+                class="botao nivel-recompensa-acao"
+                type="button"
+                onclick="alternarSkinDeNivel('${recompensa.idDoItem}')"
+            >${skinEquipada
+                ? traduzir("nivel.usarOriginal")
+                : traduzir("nivel.equiparSkin")}</button>
+        `
+        : "";
+
+    return `
+        <article class="nivel-recompensa ${desbloqueada ? "nivel-recompensa-desbloqueada" : "nivel-recompensa-bloqueada"}">
+            <span class="nivel-recompensa-icone nivel-recompensa-${recompensa.tipo}" aria-hidden="true">${recompensa.icone}</span>
+            <div class="nivel-recompensa-dados">
+                <small>${traduzir("nivel.rotulo", { nivel: recompensa.nivel })}</small>
+                <strong>${obterNomeLocalizado(recompensa)}</strong>
+                <p>${localizar(recompensa.descricao)}</p>
+                <em>${desbloqueada
+                    ? traduzir("nivel.desbloqueada")
+                    : traduzir("nivel.bloqueada", { nivel: recompensa.nivel })}</em>
+            </div>
+            ${acaoDaSkin}
+        </article>
+    `;
+}
+
+function lerDadoJsonDoSalvo(registro, chave, valorPadrao) {
+    try {
+        const valor = JSON.parse(registro?.dados?.[chave] ?? "null");
+        return valor ?? valorPadrao;
+    } catch {
+        return valorPadrao;
+    }
+}
+
+function obterResumoDoSalvo(registro) {
+    const experiencia = lerDadoJsonDoSalvo(
+        registro,
+        CHAVE_PROGRESSAO_NIVEL,
+        {}
+    ).experienciaTotal;
+    const experienciaSegura = Number.isInteger(experiencia) && experiencia >= 0
+        ? experiencia
+        : 0;
+    const maiorFaseSalva = Number(registro?.dados?.[CHAVE_PROGRESSO_FASES]);
+    const maiorFaseSegura = Number.isInteger(maiorFaseSalva) && maiorFaseSalva > 0
+        ? Math.min(maiorFaseSalva, CONFIG.fases.length)
+        : 0;
+    const fragmentosSalvos = Number(registro?.dados?.[CHAVE_FRAGMENTOS_PIXEL]);
+    const fragmentosSeguros = Number.isInteger(fragmentosSalvos) && fragmentosSalvos > 0
+        ? fragmentosSalvos
+        : 0;
+    const comprasSalvas = lerDadoJsonDoSalvo(registro, CHAVE_COMPRAS_LOJA, []);
+
+    return {
+        nivel: obterDadosDoNivel(experienciaSegura).nivel,
+        proximaFase: maiorFaseSegura < CONFIG.fases.length ? maiorFaseSegura + 1 : null,
+        fragmentos: fragmentosSeguros,
+        itensComprados: Array.isArray(comprasSalvas)
+            ? new Set(comprasSalvas.filter(item => typeof item === "string")).size
+            : 0
+    };
+}
+
+function criarCartaoDoSalvo(registro, indice) {
+    const numero = indice + 1;
+    const ativo = indice === sistemaDeSalvos.indiceAtivo;
+    const vazio = !registro;
+    const resumo = vazio ? null : obterResumoDoSalvo(registro);
+    const estado = vazio
+        ? traduzir("salvos.vazio")
+        : ativo
+            ? traduzir("salvos.ativo")
+            : traduzir("salvos.preenchido");
+    const rotuloDoBotao = ativo
+        ? traduzir("salvos.emUso")
+        : vazio
+            ? traduzir("salvos.novo")
+            : traduzir("salvos.carregar");
+
+    return `
+        <article class="salvo-cartao ${ativo ? "salvo-cartao-ativo" : ""} ${vazio ? "salvo-cartao-vazio" : ""}" data-numero-salvo="${numero}">
+            <header>
+                <span class="salvo-numero" aria-hidden="true">${numero}</span>
+                <div>
+                    <small>${traduzir("salvos.save", { numero })}</small>
+                    <strong>${estado}</strong>
+                </div>
+            </header>
+            ${vazio ? `
+                <div class="salvo-vazio-conteudo">
+                    <span aria-hidden="true">+</span>
+                    <p>${traduzir("salvos.espacoDisponivel")}</p>
+                </div>
+            ` : `
+                <p class="salvo-origem">${traduzir(
+                    ativo ? "salvos.progressoAtual" : "salvos.progressoGuardado"
+                )}</p>
+                <ul class="salvo-resumo">
+                    <li><span aria-hidden="true">★</span><strong>${traduzir("salvos.nivel", { nivel: resumo.nivel })}</strong></li>
+                    <li><span aria-hidden="true">▶</span><strong>${resumo.proximaFase
+                        ? traduzir("salvos.faseDisponivel", { fase: resumo.proximaFase })
+                        : traduzir("salvos.campanhaConcluida")}</strong></li>
+                    <li><span aria-hidden="true">◆</span><strong>${traduzir("salvos.fragmentos", { quantidade: resumo.fragmentos })}</strong></li>
+                    <li><span aria-hidden="true">▦</span><strong>${traduzir("salvos.itens", { quantidade: resumo.itensComprados })}</strong></li>
+                </ul>
+            `}
+            <button class="botao salvo-acao" type="button" onclick="trocarSalvoAtivo(${numero})" ${ativo ? "disabled" : ""}>${rotuloDoBotao}</button>
+        </article>
+    `;
+}
+
+function mostrarSalvos() {
+    atualizarSalvoAtivo();
+    definirTelaDoMenuAberta("salvos");
+    tentarIniciarMusicaDoLobby();
+
+    conteudoMenu.innerHTML = `
+        ${criarCabecalhoConteudoMenu(
+            traduzir("salvos.titulo"),
+            traduzir("salvos.descricao")
+        )}
+        <section class="salvos-aviso">
+            <span aria-hidden="true">▣</span>
+            <div>
+                <strong>${traduzir("salvos.avisoTitulo")}</strong>
+                <p>${traduzir("salvos.aviso")}</p>
+            </div>
+        </section>
+        <section class="salvos-grade">
+            ${sistemaDeSalvos.espacos.map(criarCartaoDoSalvo).join("")}
+        </section>
+    `;
+}
+
+function mostrarNiveis() {
+    definirTelaDoMenuAberta("niveis");
+    tentarIniciarMusicaDoLobby();
+    const dados = obterDadosDoNivel();
+    const recompensas = CONFIG.progressaoDeNivel.recompensas
+        .map(recompensa => criarCartaoDeRecompensaDeNivel(recompensa, dados.nivel))
+        .join("");
+
+    conteudoMenu.innerHTML = `
+        ${criarCabecalhoConteudoMenu(
+            traduzir("nivel.titulo"),
+            traduzir("nivel.descricao")
+        )}
+        <section class="nivel-progresso-hero">
+            <span class="nivel-progresso-selo">
+                <small>${traduzir("lobby.nivel")}</small>
+                <strong>${dados.nivel}</strong>
+            </span>
+            <div class="nivel-progresso-dados">
+                <header>
+                    <div>
+                        <small>${traduzir("nivel.proximo")}</small>
+                        <strong>${traduzir("nivel.xpAtual", {
+                            atual: dados.experienciaNoNivel,
+                            necessaria: dados.experienciaParaProximoNivel
+                        })}</strong>
+                    </div>
+                    <em>${traduzir("nivel.xpTotal", {
+                        quantidade: progressaoDeNivel.experienciaTotal
+                    })}</em>
+                </header>
+                <div
+                    class="nivel-progresso-barra"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="${dados.experienciaParaProximoNivel}"
+                    aria-valuenow="${dados.experienciaNoNivel}"
+                ><span style="width: ${dados.percentual}%"></span></div>
+                <p>+${CONFIG.progressaoDeNivel.experienciaPorInimigo} XP ${traduzir("nivel.porInimigo")}
+                    · +${CONFIG.progressaoDeNivel.experienciaPorBoss} XP ${traduzir("nivel.porBoss")}
+                    · +${CONFIG.progressaoDeNivel.experienciaPorFaseConcluida} XP ${traduzir("nivel.porFase")}</p>
+            </div>
+        </section>
+        <section class="nivel-recompensas">
+            <header><small>${traduzir("nivel.recompensas")}</small></header>
+            <div class="nivel-recompensas-grade">${recompensas}</div>
+        </section>
+    `;
+}
+
+function alternarSkinDeNivel(idDaSkin) {
+    if (
+        !CONFIG.progressaoDeNivel.skins[idDaSkin]
+        || !recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkin)
+    ) {
+        return;
+    }
+
+    const vaiEquipar = recompensasPermanentesDasMissoes.skinTorrePadraoEquipada !== idDaSkin;
+    recompensasPermanentesDasMissoes.skinTorrePadraoEquipada = vaiEquipar ? idDaSkin : null;
+
+    if (vaiEquipar && pacoteApoiador.skinEquipada) {
+        pacoteApoiador.skinEquipada = false;
+        salvarPacoteApoiador();
+    }
+
+    salvarRecompensasPermanentesDasMissoes();
+    mostrarNiveis();
+}
+
 function mostrarLoja() {
     definirTelaDoMenuAberta("loja");
     tentarIniciarMusicaDoLobby();
 
     const categoriaAtual = obterCategoriaDaLoja();
-    const itensDaLoja = obterItensDaLoja()
-        .filter(([, configuracao]) =>
-            (configuracao.categoriaLoja || "torres") === categoriaAtual.id
-        )
+    const ofertasSemanais = obterOfertasSemanaisDaLoja();
+    const ofertasSemanaisPorItem = new Map(
+        ofertasSemanais.map(oferta => [oferta.idDoItem, oferta])
+    );
+    const catalogoDaLoja = obterItensDaLoja();
+    const obterItensDaCategoria = categoria => catalogoDaLoja.filter(
+        ([idDoItem, configuracao]) => categoria.id === "ofertas"
+            ? ofertasSemanaisPorItem.has(idDoItem)
+            : (configuracao.categoriaLoja || "torres") === categoria.id
+    );
+    const itensDaLoja = obterItensDaCategoria(categoriaAtual)
         .map(([idDoItem, configuracao]) => {
             const comprada = comprasDaLoja.has(idDoItem);
+            const ofertaSemanal = ofertasSemanaisPorItem.get(idDoItem) || null;
+            const precoAtual = ofertaSemanal?.precoComDesconto
+                ?? configuracao.custoNaLoja;
             const saldoSuficiente = podeComprarItemDaLoja(idDoItem);
             const itemEhMelhoria = configuracao.tipoDeItem === "melhoria";
-            const descricaoDoItem = itemEhMelhoria
-                ? localizar(configuracao.descricao)
-                : configuracao.efeitoDeQueimadura
-                    ? localizar("Dispara bolas de fogo e incendeia o alvo: {dano} de dano por segundo durante {segundos} segundos. Novos acertos renovam a duração.", {
-                        dano: configuracao.efeitoDeQueimadura.danoPorIntervalo,
-                        segundos: obterDuracaoDaQueimaduraEmSegundos(configuracao.efeitoDeQueimadura)
-                    })
-                : configuracao.efeitoDeRaio
-                    ? localizar("Dispara uma carga que salta entre até {quantidade} inimigos próximos e perde dano a cada salto.", {
-                        quantidade: configuracao.efeitoDeRaio.quantidadeMaximaDeAlvos
-                    })
-                : configuracao.tipoDeItem === "mina"
-                ? configuracao.efeitoGlacial
-                    ? localizar("Explode por contato, causa {dano} de dano em {raio} px e desacelera inimigos em {percentual}%.", {
-                        dano: configuracao.dano,
-                        raio: configuracao.raioExplosao,
-                        percentual: obterPercentualInteiro(configuracao.efeitoGlacial.percentualLentidao)
-                    })
-                    : localizar("Explode somente quando um inimigo encosta nela e causa {dano} de dano em uma área de {raio} px.", {
-                        dano: configuracao.dano,
-                        raio: configuracao.raioExplosao
-                    })
-                : configuracao.tipoDeItem === "bomba"
-                    ? localizar("Clique na Bomba para acender o pavio. Após {segundos} segundo, ela causa {dano} de dano em uma área de {raio} px.", {
-                        segundos: configuracao.tempoDoPavio / 1000,
-                        dano: configuracao.dano,
-                        raio: configuracao.raioExplosao
-                    })
-                : configuracao.percentualBonusCadencia
-                    ? localizar("Aumenta em {percentual}% a velocidade de ataque das torres dentro de {alcance} px. O bônus não acumula.", {
-                        percentual: obterPercentualInteiro(configuracao.percentualBonusCadencia),
-                        alcance: configuracao.alcance
-                    })
-                : configuracao.creditosPorWave
-                    ? localizar("Produz {creditos} créditos ao concluir uma wave inteira. Precisa sobreviver até o fim para pagar.", {
-                        creditos: configuracao.creditosPorWave
-                    })
-                    : localizar("Atrai Sabotadores, Macacos e Corujas dentro do alcance deles. Aguenta {tiros} tiros e não atira.", {
-                        tiros: configuracao.resistenciaATiros
-                    });
+            const descricaoDoItem = obterDescricaoDoItemDaLoja(configuracao);
             const detalheDoItem = itemEhMelhoria
                 ? localizar(configuracao.detalhe)
                 : configuracaoEhExplosivoConsumivel(configuracao)
@@ -11528,17 +21109,39 @@ function mostrarLoja() {
                         custo: configuracao.custo,
                         limite: configuracao.limitePorPartida
                     })
-                    : localizar("Custa ${custo} na partida · máximo de {limite} por partida", {
-                        custo: configuracao.custo,
-                        limite: configuracao.limitePorPartida
-                    });
+                    : configuracao.limitePorPartida
+                        ? localizar("Custa ${custo} na partida · máximo de {limite} por partida", {
+                            custo: configuracao.custo,
+                            limite: configuracao.limitePorPartida
+                        })
+                        : localizar("Custa ${custo} na partida · usa o limite geral de torres", {
+                            custo: configuracao.custo
+                        });
             const textoDoBotao = comprada
                 ? localizar("Comprada")
                 : saldoSuficiente
-                    ? localizar("Comprar por {preco}◆", { preco: configuracao.custoNaLoja })
+                    ? localizar("Comprar por {preco}◆", { preco: precoAtual })
                     : localizar("Faltam {preco}◆", {
-                        preco: configuracao.custoNaLoja - fragmentosPixel
+                        preco: precoAtual - fragmentosPixel
                     });
+            const precoDoItem = ofertaSemanal
+                ? `
+                    <div class="loja-precos loja-precos-em-oferta">
+                        <span class="loja-selo-desconto">-${ofertaSemanal.percentualDeDesconto}%</span>
+                        <span
+                            class="loja-preco loja-preco-em-oferta"
+                            aria-label="${traduzir("loja.precoComDesconto", {
+                                precoOriginal: configuracao.custoNaLoja,
+                                precoAtual,
+                                percentual: ofertaSemanal.percentualDeDesconto
+                            })}"
+                        >
+                            <del aria-hidden="true">${configuracao.custoNaLoja}◆</del>
+                            <strong aria-hidden="true">${precoAtual}◆</strong>
+                        </span>
+                    </div>
+                `
+                : `<span class="loja-preco">${configuracao.custoNaLoja}◆</span>`;
             const miniaturaDoItem = itemEhMelhoria
                 ? `<span class="loja-item-miniatura loja-item-miniatura-melhoria ${configuracao.classeVisual}" aria-hidden="true">${configuracao.rotuloVisual}</span>`
                 : `<canvas
@@ -11551,12 +21154,12 @@ function mostrarLoja() {
                     ></canvas>`;
 
             return `
-                <article class="loja-item ${comprada ? "loja-item-comprado" : ""}">
+                <article class="loja-item ${comprada ? "loja-item-comprado" : ""} ${ofertaSemanal ? "loja-item-em-oferta" : ""}">
                     ${miniaturaDoItem}
                     <div class="loja-item-dados">
                         <div class="loja-item-topo">
                             <h3>${obterNomeLocalizado(configuracao)}</h3>
-                            <span class="loja-preco">${configuracao.custoNaLoja}◆</span>
+                            ${precoDoItem}
                         </div>
                         <p>${descricaoDoItem}</p>
                         <small>${detalheDoItem}</small>
@@ -11573,15 +21176,14 @@ function mostrarLoja() {
         }).join("");
     const abasDaLoja = CONFIG.loja.categorias.map(categoria => {
         const ativa = categoria.id === categoriaAtual.id;
-        const quantidadeDeItens = obterItensDaLoja()
-            .filter(([, configuracao]) =>
-                (configuracao.categoriaLoja || "torres") === categoria.id
-            ).length;
+        const quantidadeDeItens = obterItensDaCategoria(categoria).length;
         const resumo = quantidadeDeItens
             ? quantidadeDeItens === 1
                 ? localizar("{quantidade} item", { quantidade: quantidadeDeItens })
                 : localizar("{quantidade} itens", { quantidade: quantidadeDeItens })
-            : localizar("Em breve");
+            : categoria.id === "ofertas"
+                ? localizar("{quantidade} itens", { quantidade: 0 })
+                : localizar("Em breve");
 
         return `
             <button
@@ -11601,12 +21203,37 @@ function mostrarLoja() {
         <div class="loja-vazia">
             <span class="loja-vazia-icone" aria-hidden="true">${criarIconeDaCategoria(categoriaAtual)}</span>
             <div>
-                <small>${localizar("EM BREVE")}</small>
+                <small>${categoriaAtual.id === "ofertas"
+                    ? traduzir("loja.semOfertas")
+                    : localizar("EM BREVE")}</small>
                 <h3>${obterNomeLocalizado(categoriaAtual)}</h3>
                 <p>${localizar(categoriaAtual.mensagemVazia)}</p>
             </div>
         </div>
     `;
+    const cabecalhoDaCategoria = categoriaAtual.id === "ofertas"
+        ? `
+            <section class="loja-oferta-semanal" aria-label="${traduzir("loja.ofertaSemanal")}">
+                <header>
+                    <div>
+                        <small>${traduzir("loja.ofertaSemanal")}</small>
+                        <strong>${traduzir("loja.ofertaDescricao")}</strong>
+                    </div>
+                    <p>${traduzir("loja.renovacaoOferta", {
+                        data: formatarProximaRenovacaoSemanal()
+                    })}</p>
+                </header>
+            </section>
+        `
+        : `
+            <header class="loja-categoria-cabecalho">
+                <div>
+                    <small>${localizar("SEÇÃO ATUAL")}</small>
+                    <h3>${obterNomeLocalizado(categoriaAtual)}</h3>
+                </div>
+                <p>${localizar(categoriaAtual.descricao)}</p>
+            </header>
+        `;
 
     conteudoMenu.innerHTML = `
         ${criarCabecalhoConteudoMenu(
@@ -11622,13 +21249,7 @@ function mostrarLoja() {
         <nav class="loja-abas" role="tablist" aria-label="${localizar("Categorias da Loja")}">
             ${abasDaLoja}
         </nav>
-        <header class="loja-categoria-cabecalho">
-            <div>
-                <small>${localizar("SEÇÃO ATUAL")}</small>
-                <h3>${obterNomeLocalizado(categoriaAtual)}</h3>
-            </div>
-            <p>${localizar(categoriaAtual.descricao)}</p>
-        </header>
+        ${cabecalhoDaCategoria}
         <section class="loja-grade" role="tabpanel" aria-label="${obterNomeLocalizado(categoriaAtual)}">
             ${conteudoDaCategoria}
         </section>
@@ -11690,6 +21311,7 @@ function comprarItemDaLoja(idDoItem) {
     }
 
     idDaCompraPendente = idDoItem;
+    precoDaCompraPendente = obterPrecoAtualDoItemDaLoja(idDoItem);
     elementoDeOrigemDaCompra = document.activeElement;
     atualizarConfirmacaoDaCompraDaLoja();
     camadaConfirmacaoCompraLoja.hidden = false;
@@ -11703,10 +21325,12 @@ function atualizarConfirmacaoDaCompraDaLoja() {
         return;
     }
 
-    const saldoDepoisDaCompra = fragmentosPixel - configuracao.custoNaLoja;
+    const precoAtual = obterPrecoAtualDoItemDaLoja(idDaCompraPendente);
+    precoDaCompraPendente = precoAtual;
+    const saldoDepoisDaCompra = fragmentosPixel - precoAtual;
     descricaoConfirmacaoCompraLoja.textContent = traduzir("loja.confirmacaoCompra", {
         item: obterNomeLocalizado(configuracao),
-        preco: configuracao.custoNaLoja,
+        preco: precoAtual,
         saldo: Math.max(0, saldoDepoisDaCompra)
     });
     botaoConfirmarCompraLoja.disabled = !podeComprarItemDaLoja(idDaCompraPendente);
@@ -11715,6 +21339,7 @@ function atualizarConfirmacaoDaCompraDaLoja() {
 function fecharConfirmacaoDaCompraDaLoja(restaurarFoco = true) {
     camadaConfirmacaoCompraLoja.hidden = true;
     idDaCompraPendente = null;
+    precoDaCompraPendente = null;
 
     if (restaurarFoco && elementoDeOrigemDaCompra?.isConnected) {
         elementoDeOrigemDaCompra.focus();
@@ -11735,6 +21360,13 @@ function fecharConfirmacaoDeCompraAoClicarFora(evento) {
 
 function confirmarCompraDaLoja() {
     const idDoItem = idDaCompraPendente;
+    const precoAtual = obterPrecoAtualDoItemDaLoja(idDoItem);
+
+    if (precoDaCompraPendente !== precoAtual) {
+        atualizarConfirmacaoDaCompraDaLoja();
+        return;
+    }
+
     fecharConfirmacaoDaCompraDaLoja(false);
     concluirCompraDaLoja(idDoItem);
 }
@@ -11753,7 +21385,8 @@ function concluirCompraDaLoja(idDoItem) {
         return;
     }
 
-    const novoSaldo = fragmentosPixel - configuracao.custoNaLoja;
+    const precoAtual = obterPrecoAtualDoItemDaLoja(idDoItem);
+    const novoSaldo = fragmentosPixel - precoAtual;
 
     if (!Number.isInteger(novoSaldo) || novoSaldo < 0) {
         return;
@@ -11814,10 +21447,35 @@ function obterDetalheDoInimigoNoAlbum(tipo, configuracao) {
         besouroDeAmbar: localizar("Exclusivo da Fase 8 | Reduz 20% do dano recebido"),
         triceratopo: localizar("Exclusivo da Fase 8 | Muita vida"),
         bossPrimordial: localizar("Exclusivo da Fase 8 | Invoca 2 Raptors com 60% e 30% de vida"),
-        droneCacador: localizar("Exclusivo da Fase 9 | Muito rápido e ainda mais veloz nos trilhos"),
+        droneCacador: localizar("Fases 9 e 11 | Muito rápido; não usa Fendas Temporais"),
         roboReparador: localizar("Exclusivo da Fase 9 | Restaura 45 de vida de um aliado próximo"),
         sentinelaDeEscudo: localizar("Exclusivo da Fase 9 | Reduz 25% do dano recebido por aliados próximos"),
         protocoloZero: localizar("Exclusivo da Fase 9 | Rebobina o caminho e recupera vida duas vezes"),
+        automatoDeCobre: localizar("Exclusivo da Fase 10 | Muito rápido"),
+        cobaiaInstavel: localizar("Exclusiva da Fase 10 | Acelera 55% depois de alcançar 50% da vida"),
+        guardaDeContencao: localizar("Exclusivo da Fase 10 | Reduz 25% do dano recebido"),
+        prototipoAlfa: localizar("Exclusivo da Fase 10 | Paralisa até 3 torres com 70% e 35% de vida"),
+        andarilhoDeSucata: localizar("Exclusivo da Fase 11 | Resistente e capaz de usar Fendas Temporais"),
+        ecoTemporal: localizar("Exclusivo da Fase 11 | Retorna uma vez com metade da vida"),
+        sentinelaCronologica: localizar("Exclusiva da Fase 11 | Reduz 30% do dano perto das fendas"),
+        sentinelaDoAmanha: localizar("Exclusiva da Fase 11 | Recua sem recuperar vida aos 70% e 35%"),
+        residuoTemporal: localizar("Exclusivo da Fase 12 | Muito rápido"),
+        arquivistaCorrompido: localizar("Exclusivo da Fase 12 | Libera 2 Fragmentos de Arquivo com 50% da vida"),
+        fragmentoDeArquivo: localizar("Criado pelo Arquivista Corrompido"),
+        vigiaDoPontoZero: localizar("Exclusivo da Fase 12 | Reduz 25% do dano no setor de ruptura"),
+        guardiaoDoPontoZero: localizar("Exclusivo da Fase 12 | Aos 70% e 35%, invoca Resíduos e ativa um escudo"),
+        fragmentoDeSegundo: localizar("Exclusivo do Intervalo Perdido | Unidade básica presa entre segundos"),
+        ponteiroErrante: localizar("Exclusivo do Intervalo Perdido | Muito rápido"),
+        paradoxoBlindado: localizar("Exclusivo do Intervalo Perdido | Blindado; recebe 18% menos dano"),
+        carcereiroDoIntervalo: localizar("Boss do Intervalo Perdido | Passado: Sísmico +25% | Futuro: Elétrico +30% | Intervalo: sem fraqueza e mais rápido"),
+        soldadoCronal: localizar("Exclusivo da Fase 13 | Alterna entre Passado resistente e Futuro veloz"),
+        portadorDaFenda: localizar("Exclusivo da Fase 13 | Ao morrer, deixa uma fenda que transporta o próximo inimigo"),
+        executorCronal: localizar("Exclusivo da Fase 13 | Convoca duas eras e muda a frente ativa com 60% e 30% de vida"),
+        infiltradorCamuflado: localizar("Exclusivo da Fase 14 | Somente a Torre de Varredura consegue detectá-lo"),
+        rascunhoVivo: localizar("Exclusivo da Fase 14 | Muito rápido e parcialmente apagado"),
+        sentinelaIncompleta: localizar("Exclusiva da Fase 14 | Blindada; recebe 18% menos dano"),
+        sombraCongelada: localizar("Exclusiva da Fase 14 | Uma pessoa preservada como sombra temporal"),
+        curadorDoVazio: localizar("Exclusivo da Fase 14 | Aos 50% de vida, restaura até 2 inimigos derrotados nos últimos 5 segundos"),
         pixelCorrompido: localizar("Encontrado na fase secreta | Textura quebrada"),
         erroVeloz: localizar("Encontrado na fase secreta | Muito rápido"),
         blocoInstavel: localizar("Encontrado na fase secreta | Muita vida"),
@@ -11856,6 +21514,8 @@ function criarCartoesDosInimigosDoAlbum(tipos) {
 function obterSkinsDoAlbum() {
     const idDaSkinDeMissao = "sentinelaDourada";
     const skinDeMissao = CONFIG.missoes.skins[idDaSkinDeMissao];
+    const idDaSkinDeNivel = "vanguardaEsmeralda";
+    const skinDeNivel = CONFIG.progressaoDeNivel.skins[idDaSkinDeNivel];
     const skinDoApoiador = CONFIG.pacoteApoiador.skin;
     const skinEquipada = obterSkinEquipadaDaTorrePadrao();
 
@@ -11875,6 +21535,14 @@ function obterSkinsDoAlbum() {
             origem: "Obtida em missão semanal.",
             desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkinDeMissao),
             equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === idDaSkinDeMissao
+        },
+        {
+            id: idDaSkinDeNivel,
+            nome: obterNomeLocalizado(skinDeNivel),
+            descricao: skinDeNivel.descricao,
+            origem: traduzir("nivel.origemSkin"),
+            desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkinDeNivel),
+            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === idDaSkinDeNivel
         },
         {
             id: skinDoApoiador.id,
@@ -11905,7 +21573,15 @@ function obterDadosDasCategoriasDoAlbum() {
         "mosquitoDoBrejo", "sapoVenenoso", "guardiaoDeLodo",
         "raptorAncestral", "besouroDeAmbar", "triceratopo",
         "droneCacador", "roboReparador", "sentinelaDeEscudo",
-        "boss", "bossDeserto", "bossArtico", "bossSelva", "bossTemperado", "bossVulcanico", "bossPantano", "bossPrimordial", "protocoloZero",
+        "automatoDeCobre", "cobaiaInstavel", "guardaDeContencao",
+        "andarilhoDeSucata", "ecoTemporal", "sentinelaCronologica",
+        "residuoTemporal", "arquivistaCorrompido", "fragmentoDeArquivo", "vigiaDoPontoZero",
+        "soldadoCronal", "portadorDaFenda",
+        "infiltradorCamuflado", "rascunhoVivo", "sentinelaIncompleta", "sombraCongelada",
+        "boss", "bossDeserto", "bossArtico", "bossSelva", "bossTemperado", "bossVulcanico", "bossPantano", "bossPrimordial", "protocoloZero", "prototipoAlfa", "sentinelaDoAmanha", "guardiaoDoPontoZero", "executorCronal", "curadorDoVazio",
+        ...(intervaloPerdidoDescoberto
+            ? ["fragmentoDeSegundo", "ponteiroErrante", "paradoxoBlindado", "carcereiroDoIntervalo"]
+            : []),
         ...(faseSecretaDescoberta
             ? ["pixelCorrompido", "erroVeloz", "blocoInstavel", "bossGlitch"]
             : [])
@@ -11982,6 +21658,8 @@ function criarEstadoVazioDoAlbum(idDaCategoria) {
 function mostrarAlbum() {
     definirTelaDoMenuAberta("album");
     tentarIniciarMusicaDoLobby();
+    elementoDeOrigemDosDetalhesDoAlbum = null;
+    document.body.classList.remove("album-detalhes-abertos");
 
     const categoriaAtual = obterCategoriaDoAlbum();
     const dadosDasCategorias = obterDadosDasCategoriasDoAlbum();
@@ -12069,7 +21747,21 @@ function criarCartoesDaTorre(tipo, configuracao) {
         })
         : "";
     const detalheDeQueimadura = obterDetalheDaQueimadura(configuracao);
-    const descricaoDoNivelBase = configuracaoEhExplosivoConsumivel(configuracao)
+    const detalheDoExplosivo = configuracao.efeitoCorrosivo
+        ? localizar(" | Corrosão: +{percentual}% de dano por {segundos}s", {
+            percentual: obterPercentualInteiro(
+                configuracao.efeitoCorrosivo.percentualDanoAdicional
+            ),
+            segundos: configuracao.efeitoCorrosivo.duracao / 1000
+        })
+        : configuracao.efeitoDeFragmentacao
+            ? localizar(" | Fragmentos: {quantidade} de {dano} de dano em {raio} px", {
+                quantidade: configuracao.efeitoDeFragmentacao.quantidadeDeFragmentos,
+                dano: configuracao.efeitoDeFragmentacao.danoDeCadaFragmento,
+                raio: configuracao.efeitoDeFragmentacao.raioDeCadaFragmento
+            })
+            : "";
+    const descricaoBaseDoNivelBase = configuracaoEhExplosivoConsumivel(configuracao)
         ? localizar("Custo: {custo} | Dano em área: {dano} | Raio: {raio} px | Limite: {limite}", {
             custo: configuracao.custo,
             dano: configuracao.dano,
@@ -12077,7 +21769,8 @@ function criarCartoesDaTorre(tipo, configuracao) {
             limite: configuracao.limitePorPartida
         }) + (configuracao.tipoDeItem === "bomba"
             ? localizar(" | Detonação manual")
-            : localizar(" | Detonação por contato")) + detalheDeDesbloqueio
+            : localizar(" | Detonação por contato")) + detalheDoExplosivo
+                + detalheDeDesbloqueio
         : configuracao.efeitoSismico
             ? localizar("Custo: {custo} | Carga: {cargas} inimigos | Empurrão: {distancia} px | Limite: {limite}", {
                 custo: configuracao.custo,
@@ -12110,6 +21803,9 @@ function criarCartoesDaTorre(tipo, configuracao) {
                     alcance: configuracao.alcance
                 }) + detalheDeAtaqueEmArea + detalheDeLasers + detalheDeQueimadura
                     + detalheDeDesbloqueio;
+    const textoDoElemento = obterTextoDoElemento(configuracao);
+    const detalheDoElemento = textoDoElemento ? ` | ${textoDoElemento}` : "";
+    const descricaoDoNivelBase = descricaoBaseDoNivelBase + detalheDoElemento;
     const nomeDaTorre = obterNomeLocalizado(configuracao);
     const nomeDoNivelBase = configuracaoEhExplosivoConsumivel(configuracao)
         || !configuracaoPossuiMelhorias(configuracao)
@@ -12168,7 +21864,7 @@ function criarCartoesDaTorre(tipo, configuracao) {
                     nome: nomeDaTorre,
                     nivel: indice + 1
                 }),
-                descricaoDaMelhoria
+                descricaoDaMelhoria + detalheDoElemento
             );
         })
     ].join("");
@@ -12222,6 +21918,12 @@ function atualizarConteudoMenuAberto() {
         missoes: mostrarMissoes,
         pacoteApoiador: mostrarPacoteApoiador,
         conquistas: mostrarConquistas,
+        niveis: mostrarNiveis,
+        salvos: mostrarSalvos,
+        editor: () => rascunhoDoMapaNoEditor
+            ? mostrarFormularioDoEditor()
+            : mostrarEditorDeFases(),
+        treinamento: mostrarCentroDeTreinamento,
         capitulos: mostrarCapitulos,
         fases: mostrarFases,
         loja: mostrarLoja,
@@ -12233,8 +21935,8 @@ function atualizarConteudoMenuAberto() {
     renderizadores[telaDoMenuAberta]?.();
 }
 
-function fecharConteudoMenu() {
-    if (conversaDoSenhorDoTempoAtiva) {
+function fecharConteudoMenu(preservarMapaPersonalizado = false) {
+    if (conversaDoSenhorDoTempoAtiva || conversaDaArmadilhaDoIntervaloAtiva) {
         return;
     }
 
@@ -12248,10 +21950,23 @@ function fecharConteudoMenu() {
     }
 
     const elementoParaRestaurarFoco = elementoDeOrigemDoConteudoMenu;
+    if (telaDoMenuAberta === "treinamento") {
+        limparCentroDeTreinamento();
+    }
+    const fechandoSelecaoDoMapaPersonalizado = telaDoMenuAberta === "selecaoDefesas"
+        && Boolean(mapaPersonalizadoAtivo)
+        && !jogoIniciado
+        && !preservarMapaPersonalizado;
 
     definirTelaDoMenuAberta(null);
     conteudoMenu.innerHTML = "";
     elementoDeOrigemDoConteudoMenu = null;
+    elementoDeOrigemDosDetalhesDoAlbum = null;
+    document.body.classList.remove("album-detalhes-abertos");
+
+    if (fechandoSelecaoDoMapaPersonalizado) {
+        desativarMapaPersonalizado();
+    }
 
     if (elementoParaRestaurarFoco?.isConnected) {
         elementoParaRestaurarFoco.focus();
@@ -12260,7 +21975,12 @@ function fecharConteudoMenu() {
 
 function criarCartaoDeTorre(tipo, nivel, nome, descricao) {
     return `
-        <article class="album-cartao album-cartao-torre">
+        <button
+            class="album-cartao album-cartao-torre"
+            type="button"
+            aria-label="${localizar("Abrir detalhes de {nome}", { nome })}"
+            onclick="abrirDetalhesDaFigurinhaDoAlbum('torre', '${tipo}', ${nivel})"
+        >
             <canvas
                 class="miniatura-torre-album"
                 width="84"
@@ -12273,16 +21993,25 @@ function criarCartaoDeTorre(tipo, nivel, nome, descricao) {
                 <strong>${nome}</strong>
                 <p>${descricao}</p>
             </div>
-        </article>
+        </button>
     `;
 }
 
 function criarCartaoDeInimigo(tipo, nome, configuracao, detalheAdicional = "") {
     const vida = configuracao.vida.toLocaleString(idiomaAtual);
     const velocidade = configuracao.velocidade.toLocaleString(idiomaAtual);
-    const detalhe = detalheAdicional ? ` | ${detalheAdicional}` : "";
+    const detalhes = [
+        detalheAdicional,
+        obterTextoDasFraquezasElementais(tipo)
+    ].filter(Boolean);
+    const detalhe = detalhes.length > 0 ? ` | ${detalhes.join(" | ")}` : "";
     return `
-        <article class="album-cartao album-cartao-inimigo">
+        <button
+            class="album-cartao album-cartao-inimigo"
+            type="button"
+            aria-label="${localizar("Abrir detalhes de {nome}", { nome })}"
+            onclick="abrirDetalhesDaFigurinhaDoAlbum('inimigo', '${tipo}')"
+        >
             <canvas
                 class="miniatura-inimigo-album"
                 width="84"
@@ -12297,13 +22026,19 @@ function criarCartaoDeInimigo(tipo, nome, configuracao, detalheAdicional = "") {
                     velocidade
                 })}${detalhe}</p>
             </div>
-        </article>
+        </button>
     `;
 }
 
 function criarCartaoDaFormaHumanaDoSenhorDoTempo(configuracao) {
+    const nome = localizar(configuracao.nome);
     return `
-        <article class="album-cartao album-cartao-inimigo album-cartao-conceito">
+        <button
+            class="album-cartao album-cartao-inimigo album-cartao-conceito"
+            type="button"
+            aria-label="${localizar("Abrir detalhes de {nome}", { nome })}"
+            onclick="abrirDetalhesDaFigurinhaDoAlbum('conceito', '${configuracao.id}')"
+        >
             <canvas
                 class="miniatura-inimigo-album"
                 width="84"
@@ -12313,11 +22048,11 @@ function criarCartaoDaFormaHumanaDoSenhorDoTempo(configuracao) {
             ></canvas>
             <div class="album-inimigo-dados">
                 <div class="album-conceito-topo">
-                    <strong>${localizar(configuracao.nome)}</strong>
+                    <strong>${nome}</strong>
                 </div>
                 <p>${localizar(configuracao.descricao)}</p>
             </div>
-        </article>
+        </button>
     `;
 }
 
@@ -12329,7 +22064,14 @@ function criarCartaoDeSkin(skin) {
             : localizar("Bloqueada");
 
     return `
-        <article class="album-cartao album-cartao-skin ${skin.desbloqueada ? "" : "album-cartao-skin-bloqueada"}">
+        <button
+            class="album-cartao album-cartao-skin ${skin.desbloqueada ? "" : "album-cartao-skin-bloqueada"}"
+            type="button"
+            aria-label="${localizar("Abrir detalhes de {nome}", {
+                nome: localizar(skin.nome)
+            })}"
+            onclick="abrirDetalhesDaFigurinhaDoAlbum('skin', '${skin.id}')"
+        >
             <canvas
                 class="miniatura-skin-album"
                 width="84"
@@ -12345,8 +22087,431 @@ function criarCartaoDeSkin(skin) {
                 <p>${localizar(skin.descricao)}</p>
                 <small>${localizar(skin.origem)}</small>
             </div>
-        </article>
+        </button>
     `;
+}
+
+function criarAtributoDosDetalhesDoAlbum(rotulo, valor, destaque = false) {
+    if (valor === "" || valor === null || valor === undefined) {
+        return "";
+    }
+
+    return `
+        <div class="album-detalhes-atributo ${destaque ? "album-detalhes-atributo-destaque" : ""}">
+            <span>${rotulo}</span>
+            <strong>${valor}</strong>
+        </div>
+    `;
+}
+
+function obterNomeDaCaracteristicaElemental(caracteristica) {
+    const nomes = {
+        fogo: "Fogo",
+        gelo: "Gelo",
+        mecanico: "Mecânico",
+        pedra: "Pedra",
+        blindado: "Blindado",
+        organico: "Orgânico"
+    };
+    return localizar(nomes[caracteristica] || caracteristica);
+}
+
+function obterResumoDaVantagemDoElemento(elemento) {
+    const configuracao = obterConfiguracaoDoElemento(elemento);
+    if (!configuracao) {
+        return localizar("Sem vantagem elemental");
+    }
+
+    const alvos = configuracao.vantagensContra
+        .map(obterNomeDaCaracteristicaElemental)
+        .join(", ");
+    return localizar("{alvos} (+{percentual}% de dano)", {
+        alvos,
+        percentual: obterPercentualInteiro(configuracao.multiplicadorDeVantagem - 1)
+    });
+}
+
+function obterResumoDasCaracteristicasElementais(tipoDoInimigo) {
+    const caracteristicas = obterCaracteristicasElementaisDoInimigo(tipoDoInimigo);
+    return caracteristicas.length > 0
+        ? caracteristicas.map(obterNomeDaCaracteristicaElemental).join(", ")
+        : localizar("Sem característica elemental");
+}
+
+function obterConfiguracaoDaTorreNoNivel(configuracao, nivel) {
+    if (nivel === 0) {
+        return configuracao;
+    }
+
+    const melhoria = configuracao.melhorias?.[nivel - 1];
+    return melhoria ? { ...configuracao, ...melhoria } : null;
+}
+
+function obterCategoriaDaDefesaNosDetalhes(configuracao) {
+    if (configuracao.tipoDeItem === "mina") {
+        return localizar("Mina");
+    }
+    if (configuracao.tipoDeItem === "bomba") {
+        return localizar("Bomba");
+    }
+    if (configuracao.efeitoSismico) {
+        return localizar("Torre de controle");
+    }
+    if (
+        configuracao.percentualBonusCadencia
+        || configuracao.creditosPorWave
+        || configuracao.atraiInimigosAtiradores
+    ) {
+        return localizar("Suporte");
+    }
+    return localizar("Torre de combate");
+}
+
+function criarMiniaturaDaTorreNosDetalhes(tipo, nivel) {
+    return `
+        <canvas
+            class="miniatura-torre-album album-detalhes-miniatura"
+            width="180"
+            height="180"
+            data-tipo-torre="${tipo}"
+            data-nivel-torre="${nivel}"
+            aria-hidden="true"
+        ></canvas>
+    `;
+}
+
+function criarMiniaturaDoInimigoNosDetalhes(tipo) {
+    return `
+        <canvas
+            class="miniatura-inimigo-album album-detalhes-miniatura"
+            width="180"
+            height="180"
+            data-tipo-inimigo="${tipo}"
+            aria-hidden="true"
+        ></canvas>
+    `;
+}
+
+function criarMiniaturaDaSkinNosDetalhes(idDaSkin) {
+    return `
+        <canvas
+            class="miniatura-skin-album album-detalhes-miniatura"
+            width="180"
+            height="180"
+            data-id-skin="${idDaSkin}"
+            aria-hidden="true"
+        ></canvas>
+    `;
+}
+
+function criarDadosDosDetalhesDaTorre(tipo, nivel) {
+    const configuracao = CONFIG.torre.tipos[tipo];
+    const nivelValido = Number.isInteger(nivel)
+        && nivel >= 0
+        && nivel <= (configuracao?.melhorias?.length || 0);
+    if (!configuracao || !nivelValido || !torreEstaDesbloqueada(tipo)) {
+        return null;
+    }
+
+    const configuracaoAtual = obterConfiguracaoDaTorreNoNivel(configuracao, nivel);
+    const configuracaoDoElemento = obterConfiguracaoDoElemento(configuracao.elemento);
+    const possuiNiveis = (configuracao.melhorias?.length || 0) > 0;
+    const ehExplosivo = configuracaoEhExplosivoConsumivel(configuracao);
+    const tempoDeAtaque = configuracaoAtual.velocidadeAtaque > 0
+        ? localizar("{segundos} s", {
+            segundos: (configuracaoAtual.velocidadeAtaque / 1000)
+                .toLocaleString(idiomaAtual, { maximumFractionDigits: 2 })
+        })
+        : localizar("Não ataca");
+    const atributos = [
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Categoria"),
+            obterCategoriaDaDefesaNosDetalhes(configuracao)
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Nível"),
+            possuiNiveis ? nivel : localizar("Nível único")
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Força (dano)"),
+            configuracaoAtual.dano > 0
+                ? configuracaoAtual.dano.toLocaleString(idiomaAtual)
+                : localizar("Sem dano direto"),
+            configuracaoAtual.dano > 0
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Tempo para atacar"),
+            tempoDeAtaque
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Alcance"),
+            localizar("{alcance} px", {
+                alcance: configuracaoAtual.alcance.toLocaleString(idiomaAtual)
+            })
+        ),
+        configuracaoAtual.raioExplosao || configuracaoAtual.raioDanoEmArea
+            ? criarAtributoDosDetalhesDoAlbum(
+                localizar("Área de dano"),
+                localizar("{raio} px", {
+                    raio: configuracaoAtual.raioExplosao
+                        || configuracaoAtual.raioDanoEmArea
+                })
+            )
+            : "",
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Elemento"),
+            configuracaoDoElemento
+                ? localizar(configuracaoDoElemento.nome)
+                : localizar("Neutro")
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Melhor contra"),
+            obterResumoDaVantagemDoElemento(configuracao.elemento),
+            Boolean(configuracaoDoElemento)
+        ),
+        configuracao.detectaCamuflados
+            ? criarAtributoDosDetalhesDoAlbum(
+                localizar("Detecção"),
+                localizar("Inimigos camuflados"),
+                true
+            )
+            : "",
+        criarAtributoDosDetalhesDoAlbum(
+            nivel === 0 ? localizar("Custo") : localizar("Custo da melhoria"),
+            localizar("{custo} créditos", {
+                custo: configuracaoAtual.custo.toLocaleString(idiomaAtual)
+            })
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Limite por partida"),
+            configuracao.limitePorPartida
+                ? localizar("{limite} unidades", {
+                    limite: configuracao.limitePorPartida
+                })
+                : localizar("Limite geral da fase")
+        )
+    ].join("");
+
+    return {
+        nome: possuiNiveis
+            ? localizar("{nome} · nível {nivel}", {
+                nome: obterNomeLocalizado(configuracao),
+                nivel
+            })
+            : obterNomeLocalizado(configuracao),
+        categoria: obterCategoriaDaDefesaNosDetalhes(configuracao),
+        miniatura: criarMiniaturaDaTorreNosDetalhes(tipo, nivel),
+        atributos,
+        descricao: obterResumoBaseDaConfiguracaoDaTorre(configuracaoAtual),
+        observacao: configuracaoDoElemento
+            ? localizar("Contra o mesmo elemento, o dano permanece normal.")
+            : ehExplosivo
+                ? localizar("Esta defesa não possui vantagem elemental.")
+                : localizar("Ataques neutros causam o dano normal em todos os tipos.")
+    };
+}
+
+function criarDadosDosDetalhesDoInimigo(tipo) {
+    const configuracao = CONFIG.inimigo[tipo];
+    if (!configuracao || !inimigosDerrotadosNoAlbum.has(tipo)) {
+        return null;
+    }
+
+    const ehBoss = tipoEhBoss(tipo);
+    const fraquezas = obterResumoDasFraquezasElementais(tipo)
+        || localizar("Nenhuma fraqueza elemental");
+    const atributos = [
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Categoria"),
+            ehBoss ? localizar("Boss") : localizar("Inimigo comum")
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Vida base"),
+            configuracao.vida.toLocaleString(idiomaAtual),
+            true
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Velocidade"),
+            localizar("{velocidade} px por quadro", {
+                velocidade: configuracao.velocidade.toLocaleString(idiomaAtual)
+            })
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Tamanho"),
+            localizar("{tamanho} px", { tamanho: configuracao.tamanho })
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Características"),
+            obterResumoDasCaracteristicasElementais(tipo)
+        ),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Fraquezas"),
+            fraquezas,
+            fraquezas !== localizar("Nenhuma fraqueza elemental")
+        ),
+        configuracao.incrementoVidaPorAparicao > 0
+            ? criarAtributoDosDetalhesDoAlbum(
+                localizar("Aumento por aparição"),
+                localizar("+{vida} de vida", {
+                    vida: configuracao.incrementoVidaPorAparicao.toLocaleString(idiomaAtual)
+                })
+            )
+            : ""
+    ].join("");
+
+    return {
+        nome: obterNomeLocalizado(configuracao),
+        categoria: ehBoss ? localizar("Boss") : localizar("Inimigo comum"),
+        miniatura: criarMiniaturaDoInimigoNosDetalhes(tipo),
+        atributos,
+        descricao: obterDetalheDoInimigoNoAlbum(tipo, configuracao)
+            || localizar("Sem habilidade especial."),
+        observacao: fraquezas === localizar("Nenhuma fraqueza elemental")
+            ? localizar("Armas elementais sem vantagem causam dano normal.")
+            : localizar("Use os elementos indicados para causar o dano adicional mostrado.")
+    };
+}
+
+function criarDadosDosDetalhesDaSkin(idDaSkin) {
+    const skin = obterSkinsDoAlbum().find((item) => item.id === idDaSkin);
+    if (!skin?.desbloqueada) {
+        return null;
+    }
+
+    const estado = skin.equipada ? localizar("Equipada") : localizar("Desbloqueada");
+    const atributos = [
+        criarAtributoDosDetalhesDoAlbum(localizar("Categoria"), localizar("Skin")),
+        criarAtributoDosDetalhesDoAlbum(localizar("Estado"), estado, skin.equipada),
+        criarAtributoDosDetalhesDoAlbum(localizar("Uso"), localizar("Torre padrão")),
+        criarAtributoDosDetalhesDoAlbum(
+            localizar("Bônus de combate"),
+            localizar("Nenhum; esta skin é somente cosmética.")
+        )
+    ].join("");
+
+    return {
+        nome: localizar(skin.nome),
+        categoria: localizar("Skin"),
+        miniatura: criarMiniaturaDaSkinNosDetalhes(idDaSkin),
+        atributos,
+        descricao: localizar(skin.descricao),
+        observacao: localizar(skin.origem)
+    };
+}
+
+function criarDadosDosDetalhesDoConceito(idDoConceito) {
+    const configuracao = CONFIG.faseSecreta.senhorDoTempo.formaHumanaFutura;
+    if (
+        idDoConceito !== configuracao.id
+        || !faseSecretaDescoberta
+        || !configuracao.ativa
+    ) {
+        return null;
+    }
+
+    return {
+        nome: localizar(configuracao.nome),
+        categoria: localizar("Conceito"),
+        miniatura: criarMiniaturaDoInimigoNosDetalhes(idDoConceito),
+        atributos: criarAtributoDosDetalhesDoAlbum(
+            localizar("Categoria"),
+            localizar("Registro de personagem")
+        ),
+        descricao: localizar(configuracao.descricao),
+        observacao: localizar("Esta figurinha não representa uma unidade de combate.")
+    };
+}
+
+function criarPainelDosDetalhesDoAlbum(dados) {
+    return `
+        <div
+            class="album-detalhes-camada"
+            onclick="fecharDetalhesDaFigurinhaDoAlbumAoClicarFora(event)"
+        >
+            <section
+                class="album-detalhes-painel"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="album-detalhes-titulo"
+            >
+                <header class="album-detalhes-cabecalho">
+                    <div>
+                        <small>${localizar("DETALHES DA FIGURINHA")}</small>
+                        <span>${dados.categoria}</span>
+                    </div>
+                    <button
+                        class="album-detalhes-fechar"
+                        type="button"
+          aria-label="${localizar("Fechar detalhes")}"
+                        onclick="fecharDetalhesDaFigurinhaDoAlbum()"
+                    >×</button>
+                </header>
+                <div class="album-detalhes-retrato">
+                    ${dados.miniatura}
+                    <h2 id="album-detalhes-titulo">${dados.nome}</h2>
+                </div>
+                <div class="album-detalhes-atributos">
+                    ${dados.atributos}
+                </div>
+                <section class="album-detalhes-texto">
+                    <h3>${localizar("Funcionamento")}</h3>
+                    <p>${dados.descricao}</p>
+                </section>
+                <p class="album-detalhes-observacao">${dados.observacao}</p>
+            </section>
+        </div>
+    `;
+}
+
+function abrirDetalhesDaFigurinhaDoAlbum(categoria, id, nivel = 0) {
+    if (telaDoMenuAberta !== "album") {
+        return false;
+    }
+
+    const criadores = {
+        torre: () => criarDadosDosDetalhesDaTorre(id, Number(nivel)),
+        inimigo: () => criarDadosDosDetalhesDoInimigo(id),
+        skin: () => criarDadosDosDetalhesDaSkin(id),
+        conceito: () => criarDadosDosDetalhesDoConceito(id)
+    };
+    const dados = criadores[categoria]?.();
+    if (!dados) {
+        return false;
+    }
+
+    fecharDetalhesDaFigurinhaDoAlbum(false);
+    elementoDeOrigemDosDetalhesDoAlbum = document.activeElement?.closest(
+        ".album-cartao"
+    ) || null;
+    conteudoMenu.insertAdjacentHTML("beforeend", criarPainelDosDetalhesDoAlbum(dados));
+    document.body.classList.add("album-detalhes-abertos");
+    desenharMiniaturasDasTorresDoAlbum();
+    desenharMiniaturasDosInimigosDoAlbum();
+    desenharMiniaturasDasSkinsDoAlbum();
+    conteudoMenu.querySelector(".album-detalhes-fechar")?.focus();
+    return true;
+}
+
+function fecharDetalhesDaFigurinhaDoAlbum(restaurarFoco = true) {
+    const camada = conteudoMenu.querySelector(".album-detalhes-camada");
+    document.body.classList.remove("album-detalhes-abertos");
+    if (!camada) {
+        return false;
+    }
+
+    camada.remove();
+    const elementoParaRestaurar = elementoDeOrigemDosDetalhesDoAlbum;
+    elementoDeOrigemDosDetalhesDoAlbum = null;
+    if (restaurarFoco && elementoParaRestaurar?.isConnected) {
+        elementoParaRestaurar.focus();
+    }
+    return true;
+}
+
+function fecharDetalhesDaFigurinhaDoAlbumAoClicarFora(evento) {
+    if (evento.target === evento.currentTarget) {
+        fecharDetalhesDaFigurinhaDoAlbum();
+    }
 }
 
 function copiarDesenhoParaMiniaturaDoAlbum(miniatura, desenhar) {
@@ -12604,7 +22769,7 @@ function obterEstiloDaSkinDoAlbum(idDaSkin) {
 
     const skin = idDaSkin === CONFIG.pacoteApoiador.skin.id
         ? CONFIG.pacoteApoiador.skin
-        : CONFIG.missoes.skins[idDaSkin];
+        : obterSkinConquistavel(idDaSkin);
     const coresDoNivelBase = skin?.coresPorNivel[0];
 
     return coresDoNivelBase ? { ...estiloOriginal, ...coresDoNivelBase } : null;
@@ -12689,6 +22854,7 @@ function criarInimigo(tipo) {
         vida,
         vidaMaxima: vida,
         cor: configuracao.cor,
+        camuflado: Boolean(configuracao.camuflado),
         ultimoTiro: 0,
         proximaArrancadaEm: tipo === "javaliFurioso"
             ? agora + configuracao.intervaloEntreArrancadas
@@ -12710,8 +22876,43 @@ function criarInimigo(tipo) {
         reparoExpiraEm: 0,
         reparadoExpiraEm: 0,
         reversoesTemporaisRealizadas: 0,
-        reversaoTemporalExpiraEm: 0
+        reversaoTemporalExpiraEm: 0,
+        pulsosDeEstaseRealizados: 0,
+        estaseExpiraEm: 0,
+        retornosDoEcoRealizados: 0,
+        retornoDoEcoExpiraEm: 0,
+        recuosDaSentinelaRealizados: 0,
+        recuoDaSentinelaExpiraEm: 0,
+        fragmentosDeArquivoLiberados: false,
+        rupturasDoPontoZeroRealizadas: 0,
+        escudoPontoZeroExpiraEm: 0,
+        rupturaPontoZeroExpiraEm: 0,
+        ordensCronaisRealizadas: 0,
+        ordemCronalExpiraEm: 0,
+        formaCronal: tipo === "soldadoCronal" ? "passado" : null,
+        proximaTrocaDeFormaCronalEm: tipo === "soldadoCronal"
+            ? agora + configuracao.duracaoDeCadaFormaMs
+            : 0,
+        restauracaoDoVazioRealizada: false,
+        restauracaoDoVazioExpiraEm: 0,
+        fendaTemporalAtiva: null,
+        fendaTemporalTeleportaEm: 0,
+        fendaTemporalSaidaExpiraEm: 0,
+        fendasTemporaisUsadas: [],
+        numeroDaAtivacaoDaContencao: 0,
+        contencaoLaboratorioExpiraEm: 0,
+        avisoSuperEfetivoExpiraEm: 0,
+        corDoAvisoSuperEfetivo: null,
+        elementoDaQueimadura: null
     });
+
+    if (tipo === "sentinelaDoAmanha") {
+        mostrarAviso(localizar(CONFIG.inimigo.sentinelaDoAmanha.falas[0]));
+    }
+
+    if (tipo === "guardiaoDoPontoZero") {
+        mostrarAviso(localizar(CONFIG.inimigo.guardiaoDoPontoZero.falas[0]));
+    }
 }
 
 function tipoEhBoss(tipoDoInimigo) {
@@ -12725,15 +22926,37 @@ function tipoEhBoss(tipoDoInimigo) {
         "bossPantano",
         "bossPrimordial",
         "protocoloZero",
+        "prototipoAlfa",
+        "sentinelaDoAmanha",
+        "guardiaoDoPontoZero",
+        "carcereiroDoIntervalo",
+        "executorCronal",
+        "curadorDoVazio",
         "bossGlitch"
     ].includes(tipoDoInimigo);
 }
 
 function obterTipoDeBossDaFase() {
+    if (mapaPersonalizadoAtivo) {
+        return "boss";
+    }
+
     const tema = obterFaseAtual().tema;
 
     if (tema === "glitch") {
         return "bossGlitch";
+    }
+
+    if (tema === "intervaloPerdido") {
+        return "carcereiroDoIntervalo";
+    }
+
+    if (tema === "linhaTemporal") {
+        return "executorCronal";
+    }
+
+    if (tema === "eraApagada") {
+        return "curadorDoVazio";
     }
 
     if (tema === "deserto") {
@@ -12768,6 +22991,18 @@ function obterTipoDeBossDaFase() {
         return "protocoloZero";
     }
 
+    if (tema === "laboratorio") {
+        return "prototipoAlfa";
+    }
+
+    if (tema === "futuroDespedacado") {
+        return "sentinelaDoAmanha";
+    }
+
+    if (tema === "pontoZero") {
+        return "guardiaoDoPontoZero";
+    }
+
     return "boss";
 }
 
@@ -12797,6 +23032,7 @@ function calcularQuantidadeDeFragmentosDoTita(waveAtual = wave) {
 function criarInimigoInvocado(tipo, invocador, deslocamentoVertical = 0) {
     const configuracao = CONFIG.inimigo[tipo];
     const caminhoAtual = obterCaminhoDoInimigo(invocador);
+    const agora = Date.now();
     inimigos.push({
         tipo,
         indiceDoCaminho: invocador.indiceDoCaminho,
@@ -12808,6 +23044,7 @@ function criarInimigoInvocado(tipo, invocador, deslocamentoVertical = 0) {
         vida: configuracao.vida,
         vidaMaxima: configuracao.vida,
         cor: configuracao.cor,
+        camuflado: Boolean(configuracao.camuflado),
         ultimoTiro: 0,
         proximaArrancadaEm: 0,
         arrancadaExpiraEm: 0,
@@ -12820,12 +23057,39 @@ function criarInimigoInvocado(tipo, invocador, deslocamentoVertical = 0) {
         chamadosPrimordiaisRealizados: 0,
         chamadoPrimordialExpiraEm: 0,
         proximoReparoEm: tipo === "roboReparador"
-            ? Date.now() + configuracao.intervaloEntreReparos
+            ? agora + configuracao.intervaloEntreReparos
             : 0,
         reparoExpiraEm: 0,
         reparadoExpiraEm: 0,
         reversoesTemporaisRealizadas: 0,
-        reversaoTemporalExpiraEm: 0
+        reversaoTemporalExpiraEm: 0,
+        pulsosDeEstaseRealizados: 0,
+        estaseExpiraEm: 0,
+        retornosDoEcoRealizados: 0,
+        retornoDoEcoExpiraEm: 0,
+        recuosDaSentinelaRealizados: 0,
+        recuoDaSentinelaExpiraEm: 0,
+        fragmentosDeArquivoLiberados: false,
+        rupturasDoPontoZeroRealizadas: 0,
+        escudoPontoZeroExpiraEm: 0,
+        rupturaPontoZeroExpiraEm: 0,
+        ordensCronaisRealizadas: 0,
+        ordemCronalExpiraEm: 0,
+        formaCronal: tipo === "soldadoCronal" ? "passado" : null,
+        proximaTrocaDeFormaCronalEm: tipo === "soldadoCronal"
+            ? agora + configuracao.duracaoDeCadaFormaMs
+            : 0,
+        restauracaoDoVazioRealizada: false,
+        restauracaoDoVazioExpiraEm: 0,
+        fendaTemporalAtiva: null,
+        fendaTemporalTeleportaEm: 0,
+        fendaTemporalSaidaExpiraEm: 0,
+        fendasTemporaisUsadas: [],
+        numeroDaAtivacaoDaContencao: 0,
+        contencaoLaboratorioExpiraEm: 0,
+        avisoSuperEfetivoExpiraEm: 0,
+        corDoAvisoSuperEfetivo: null,
+        elementoDaQueimadura: null
     });
 }
 
@@ -12929,7 +23193,309 @@ function ativarReversaoDeEmergencia(protocolo, agora = Date.now()) {
     return reversoesRealizadasAgora;
 }
 
-function aplicarDanoAoInimigo(inimigo, dano, agora = Date.now()) {
+function ativarPulsoDeEstase(prototipo, agora = Date.now()) {
+    if (prototipo.tipo !== "prototipoAlfa" || prototipo.vida <= 0) {
+        return 0;
+    }
+
+    const configuracao = CONFIG.inimigo.prototipoAlfa;
+    let pulsosRealizadosAgora = 0;
+
+    while (
+        prototipo.pulsosDeEstaseRealizados
+            < configuracao.percentuaisDeVidaParaEstase.length
+        && prototipo.vida <= prototipo.vidaMaxima
+            * configuracao.percentuaisDeVidaParaEstase[
+                prototipo.pulsosDeEstaseRealizados
+            ]
+    ) {
+        prototipo.pulsosDeEstaseRealizados++;
+        pulsosRealizadosAgora++;
+    }
+
+    if (pulsosRealizadosAgora === 0) {
+        return 0;
+    }
+
+    const torresDeCombateMaisProximas = torres
+        .filter(torre => !obterConfiguracaoDaTorre(torre.tipo).naoAtira)
+        .sort((torreA, torreB) => (
+            Math.hypot(torreA.x - prototipo.x, torreA.y - prototipo.y)
+            - Math.hypot(torreB.x - prototipo.x, torreB.y - prototipo.y)
+        ))
+        .slice(0, configuracao.quantidadeDeTorresParalisadas);
+
+    for (const torre of torresDeCombateMaisProximas) {
+        torre.estaseTemporalExpiraEm = Math.max(
+            torre.estaseTemporalExpiraEm || 0,
+            agora + configuracao.duracaoDaEstase
+        );
+        torre.alvoAtual = null;
+    }
+
+    prototipo.estaseExpiraEm = agora + configuracao.duracaoVisualDaEstase;
+    mostrarAviso(localizar("Pulso de Estase ativado!"));
+    return torresDeCombateMaisProximas.length;
+}
+
+function obterPosicoesDasFendasTemporais() {
+    if (!faseAtualUsaFuturoDespedacado()) {
+        return [];
+    }
+
+    return CONFIG.futuroDespedacado.fendasTemporais.pares.flatMap((fenda) => [
+        obterPosicaoNoCaminhoPeloProgresso(fenda.entradaProgresso),
+        obterPosicaoNoCaminhoPeloProgresso(fenda.saidaProgresso)
+    ]);
+}
+
+function obterReducaoCronologicaDoInimigo(inimigo) {
+    if (
+        inimigo.tipo !== "sentinelaCronologica"
+        || !faseAtualUsaFuturoDespedacado()
+    ) {
+        return 0;
+    }
+
+    const configuracao = CONFIG.inimigo.sentinelaCronologica;
+    const pertoDeUmaFenda = obterPosicoesDasFendasTemporais().some((posicao) => (
+        Math.hypot(inimigo.x - posicao.x, inimigo.y - posicao.y)
+            <= configuracao.raioDeProtecaoDaFenda
+    ));
+    return pertoDeUmaFenda ? configuracao.reducaoDeDanoPertoDaFenda : 0;
+}
+
+function ativarRetornoDoEco(inimigo, agora = Date.now()) {
+    if (
+        inimigo.tipo !== "ecoTemporal"
+        || inimigo.retornosDoEcoRealizados > 0
+        || inimigo.vida > 0
+    ) {
+        return false;
+    }
+
+    const configuracao = CONFIG.inimigo.ecoTemporal;
+    inimigo.retornosDoEcoRealizados = 1;
+    inimigo.vida = inimigo.vidaMaxima * configuracao.percentualDeVidaNoRetorno;
+    recuarInimigoNoCaminho(inimigo, configuracao.distanciaDoRetorno);
+    inimigo.retornoDoEcoExpiraEm = agora + configuracao.duracaoVisualDoRetorno;
+    mostrarAviso(localizar("O Eco Temporal retornou pelo caminho!"));
+    return true;
+}
+
+function ativarRecuoDaSentinelaDoAmanha(sentinela, agora = Date.now()) {
+    if (sentinela.tipo !== "sentinelaDoAmanha" || sentinela.vida <= 0) {
+        return 0;
+    }
+
+    const configuracao = CONFIG.inimigo.sentinelaDoAmanha;
+    let recuosRealizadosAgora = 0;
+    while (
+        sentinela.recuosDaSentinelaRealizados
+            < configuracao.percentuaisDeVidaParaRecuo.length
+        && sentinela.vida <= sentinela.vidaMaxima
+            * configuracao.percentuaisDeVidaParaRecuo[
+                sentinela.recuosDaSentinelaRealizados
+            ]
+    ) {
+        recuarInimigoNoCaminho(sentinela, configuracao.distanciaDoRecuo);
+        sentinela.recuosDaSentinelaRealizados++;
+        recuosRealizadosAgora++;
+        mostrarAviso(localizar(
+            configuracao.falas[sentinela.recuosDaSentinelaRealizados]
+        ));
+    }
+
+    if (recuosRealizadosAgora > 0) {
+        sentinela.recuoDaSentinelaExpiraEm = agora
+            + configuracao.duracaoVisualDoRecuo;
+    }
+    return recuosRealizadosAgora;
+}
+
+function ativarFragmentacaoDoArquivista(arquivista, agora = Date.now()) {
+    if (
+        arquivista.tipo !== "arquivistaCorrompido"
+        || arquivista.fragmentosDeArquivoLiberados
+        || arquivista.vida > arquivista.vidaMaxima
+            * CONFIG.inimigo.arquivistaCorrompido.percentualDeVidaParaFragmentar
+    ) {
+        return 0;
+    }
+
+    const configuracao = CONFIG.inimigo.arquivistaCorrompido;
+    arquivista.fragmentosDeArquivoLiberados = true;
+    for (let indice = 0; indice < configuracao.fragmentosLiberados; indice++) {
+        const deslocamento = (indice - (configuracao.fragmentosLiberados - 1) / 2) * 16;
+        criarInimigoInvocado("fragmentoDeArquivo", arquivista, deslocamento);
+    }
+    arquivista.rupturaPontoZeroExpiraEm = agora + 600;
+    mostrarAviso(localizar("O Arquivista liberou Fragmentos de Arquivo!"));
+    return configuracao.fragmentosLiberados;
+}
+
+function ativarRupturaDoGuardiaoDoPontoZero(guardiao, agora = Date.now()) {
+    if (guardiao.tipo !== "guardiaoDoPontoZero" || guardiao.vida <= 0) {
+        return 0;
+    }
+
+    const configuracao = CONFIG.inimigo.guardiaoDoPontoZero;
+    let rupturasRealizadasAgora = 0;
+    while (
+        guardiao.rupturasDoPontoZeroRealizadas
+            < configuracao.percentuaisDeVidaParaRuptura.length
+        && guardiao.vida <= guardiao.vidaMaxima
+            * configuracao.percentuaisDeVidaParaRuptura[
+                guardiao.rupturasDoPontoZeroRealizadas
+            ]
+    ) {
+        for (let indice = 0; indice < configuracao.residuosPorRuptura; indice++) {
+            const deslocamento = (indice - (configuracao.residuosPorRuptura - 1) / 2) * 20;
+            criarInimigoInvocado("residuoTemporal", guardiao, deslocamento);
+        }
+        guardiao.rupturasDoPontoZeroRealizadas++;
+        rupturasRealizadasAgora++;
+        mostrarAviso(localizar(
+            configuracao.falas[guardiao.rupturasDoPontoZeroRealizadas]
+        ));
+    }
+
+    if (rupturasRealizadasAgora > 0) {
+        guardiao.escudoPontoZeroExpiraEm = agora + configuracao.duracaoDoEscudo;
+        guardiao.rupturaPontoZeroExpiraEm = agora
+            + configuracao.duracaoVisualDaRuptura;
+    }
+    return rupturasRealizadasAgora;
+}
+
+function ativarOrdemDoExecutorCronal(executor, agora = Date.now()) {
+    if (executor.tipo !== "executorCronal" || executor.vida <= 0) {
+        return 0;
+    }
+
+    const configuracao = CONFIG.inimigo.executorCronal;
+    let ordensRealizadasAgora = 0;
+    while (
+        executor.ordensCronaisRealizadas < configuracao.percentuaisDeVidaParaOrdem.length
+        && executor.vida <= executor.vidaMaxima
+            * configuracao.percentuaisDeVidaParaOrdem[executor.ordensCronaisRealizadas]
+    ) {
+        criarInimigoInvocado("raptorAncestral", executor, -12);
+        criarInimigoInvocado("droneCacador", executor, 12);
+        if (typeof trocarFrenteTemporalPeloExecutor === "function") {
+            trocarFrenteTemporalPeloExecutor(agora);
+        }
+        executor.ordensCronaisRealizadas++;
+        ordensRealizadasAgora++;
+    }
+
+    if (ordensRealizadasAgora > 0) {
+        executor.ordemCronalExpiraEm = agora + configuracao.duracaoVisualDaOrdem;
+        mostrarAviso(localizar("O Executor Cronal convocou reforços de duas eras!"));
+    }
+    return ordensRealizadasAgora;
+}
+
+function registrarInimigoDerrotadoNaEraApagada(inimigo, agora = Date.now()) {
+    if (
+        !faseAtualUsaEraApagada()
+        || tipoEhBoss(inimigo.tipo)
+        || inimigo.restauradoPeloCurador
+    ) {
+        return false;
+    }
+
+    const janela = CONFIG.inimigo.curadorDoVazio.janelaDeRestauracaoMs;
+    inimigosDerrotadosRecentementeNaEraApagada = inimigosDerrotadosRecentementeNaEraApagada
+        .filter(registro => agora - registro.eliminadoEm <= janela);
+    inimigosDerrotadosRecentementeNaEraApagada.push({
+        tipo: inimigo.tipo,
+        indiceDoCaminho: inimigo.indiceDoCaminho,
+        x: inimigo.x,
+        y: inimigo.y,
+        alvo: inimigo.alvo,
+        eliminadoEm: agora
+    });
+    return true;
+}
+
+function restaurarInimigoPeloCurador(registro, curador, agora = Date.now()) {
+    criarInimigoInvocado(registro.tipo, curador);
+    const restaurado = inimigos[inimigos.length - 1];
+    const caminho = obterCaminhoDoInimigo(restaurado);
+    restaurado.indiceDoCaminho = registro.indiceDoCaminho;
+    restaurado.x = registro.x;
+    restaurado.y = registro.y;
+    restaurado.alvo = Math.max(1, Math.min(registro.alvo, caminho.length - 1));
+    restaurado.vida = Math.max(
+        1,
+        Math.round(
+            restaurado.vidaMaxima
+            * CONFIG.inimigo.curadorDoVazio.percentualDeVidaRestaurada
+        )
+    );
+    restaurado.restauradoPeloCurador = true;
+    restaurado.restauradoPeloVazioExpiraEm = agora
+        + CONFIG.inimigo.curadorDoVazio.duracaoVisualDaRestauracaoMs;
+    return restaurado;
+}
+
+function ativarRestauracaoDoCuradorDoVazio(curador, agora = Date.now()) {
+    const configuracao = CONFIG.inimigo.curadorDoVazio;
+    if (
+        curador.tipo !== "curadorDoVazio"
+        || curador.vida <= 0
+        || curador.restauracaoDoVazioRealizada
+        || curador.vida > curador.vidaMaxima * configuracao.percentualDeVidaParaRestauracao
+    ) {
+        return 0;
+    }
+
+    const registros = inimigosDerrotadosRecentementeNaEraApagada
+        .filter(registro => agora - registro.eliminadoEm <= configuracao.janelaDeRestauracaoMs)
+        .slice(-configuracao.quantidadeMaximaDeInimigosRestaurados);
+    if (registros.length === 0) {
+        return 0;
+    }
+
+    for (const registro of registros) {
+        restaurarInimigoPeloCurador(registro, curador, agora);
+    }
+    curador.restauracaoDoVazioRealizada = true;
+    curador.restauracaoDoVazioExpiraEm = agora + configuracao.duracaoVisualDaRestauracaoMs;
+    inimigosDerrotadosRecentementeNaEraApagada = [];
+    mostrarAviso(localizar("O Curador do Vazio restaurou {quantidade} inimigos apagados!", {
+        quantidade: registros.length
+    }));
+    return registros.length;
+}
+
+function obterReducaoDoPontoZeroNoInimigo(inimigo, agora = Date.now()) {
+    if (!faseAtualUsaPontoZero()) {
+        return 0;
+    }
+
+    if (
+        inimigo.tipo === "guardiaoDoPontoZero"
+        && agora < (inimigo.escudoPontoZeroExpiraEm || 0)
+    ) {
+        return CONFIG.inimigo.guardiaoDoPontoZero.reducaoDeDanoDoEscudo;
+    }
+
+    const setor = inimigo.tipo === "vigiaDoPontoZero"
+        ? obterSetorDoPontoZeroParaInimigo(inimigo)
+        : null;
+    return setor && obterTipoDoSetorPontoZero(setor) === "ruptura"
+        ? CONFIG.inimigo.vigiaDoPontoZero.reducaoDeDanoNoSetorDeRuptura
+        : 0;
+}
+
+function aplicarDanoAoInimigo(
+    inimigo,
+    dano,
+    agora = Date.now(),
+    { ignorarReducoes = false, elemento = null } = {}
+) {
     if (!inimigo || inimigo.vida <= 0 || dano <= 0) {
         return 0;
     }
@@ -12939,18 +23505,72 @@ function aplicarDanoAoInimigo(inimigo, dano, agora = Date.now()) {
     const multiplicadorDeVulnerabilidade = vulnerabilidadeAtiva
         ? 1 + (inimigo.percentualDeVulnerabilidadeSismica || 0)
         : 1;
+    const marcaAtiva = agora < (inimigo.marcaExpiraEm || 0);
+    const multiplicadorDaMarca = marcaAtiva
+        ? 1 + (inimigo.percentualDeDanoAdicionalDaMarca || 0)
+        : 1;
+    const corrosaoAtiva = agora < (inimigo.corrosaoExpiraEm || 0);
+    const multiplicadorDaCorrosao = corrosaoAtiva
+        ? 1 + (inimigo.percentualDeDanoAdicionalDaCorrosao || 0)
+        : 1;
+    const vantagemElemental = typeof obterVantagemElementalContraInimigo === "function"
+        ? obterVantagemElementalContraInimigo(elemento, inimigo)
+        : null;
+    const multiplicadorElemental = vantagemElemental
+        ? vantagemElemental.multiplicadorDeVantagem
+        : 1;
     const reducaoDeDanoBase = CONFIG.inimigo[inimigo.tipo]?.reducaoDeDano || 0;
     const reducaoDoEscudo = typeof obterReducaoDoEscudoParaInimigo === "function"
         ? obterReducaoDoEscudoParaInimigo(inimigo)
         : 0;
-    const reducaoDeDano = 1
-        - (1 - reducaoDeDanoBase) * (1 - reducaoDoEscudo);
+    const reducaoCronologica = typeof obterReducaoCronologicaDoInimigo === "function"
+        ? obterReducaoCronologicaDoInimigo(inimigo)
+        : 0;
+    const reducaoDoPontoZero = typeof obterReducaoDoPontoZeroNoInimigo === "function"
+        ? obterReducaoDoPontoZeroNoInimigo(inimigo, agora)
+        : 0;
+    const reducaoDoCarcereiro = typeof obterFormaDoCarcereiroDoIntervalo === "function"
+        && obterFormaDoCarcereiroDoIntervalo(inimigo) === "passado"
+        ? CONFIG.inimigo.carcereiroDoIntervalo.reducaoDeDanoNoPassado
+        : 0;
+    const reducaoDoSoldadoCronal = typeof atualizarFormaDoSoldadoCronal === "function"
+        && atualizarFormaDoSoldadoCronal(inimigo, agora) === "passado"
+        ? CONFIG.inimigo.soldadoCronal.reducaoDeDanoNoPassado
+        : 0;
+    const reducaoDeDano = ignorarReducoes
+        ? 0
+        : 1
+            - (1 - reducaoDeDanoBase)
+                * (1 - reducaoDoEscudo)
+                * (1 - reducaoCronologica)
+                * (1 - reducaoDoPontoZero)
+                * (1 - reducaoDoCarcereiro)
+                * (1 - reducaoDoSoldadoCronal);
     const danoEfetivo = Math.round(
-        dano * multiplicadorDeVulnerabilidade * (1 - reducaoDeDano)
+        dano
+        * multiplicadorDeVulnerabilidade
+        * multiplicadorDaMarca
+        * multiplicadorDaCorrosao
+        * multiplicadorElemental
+        * (1 - reducaoDeDano)
     );
+
+    if (vantagemElemental) {
+        inimigo.avisoSuperEfetivoExpiraEm = agora
+            + CONFIG.elementos.duracaoDoAvisoSuperEfetivoMs;
+        inimigo.corDoAvisoSuperEfetivo = vantagemElemental.cor;
+    }
 
     if (!vulnerabilidadeAtiva) {
         inimigo.percentualDeVulnerabilidadeSismica = 0;
+    }
+
+    if (!marcaAtiva) {
+        inimigo.percentualDeDanoAdicionalDaMarca = 0;
+    }
+
+    if (!corrosaoAtiva) {
+        inimigo.percentualDeDanoAdicionalDaCorrosao = 0;
     }
 
     if (inimigo.tipo === "bossVulcanico" && !inimigo.formaDeErupcao) {
@@ -12986,7 +23606,37 @@ function aplicarDanoAoInimigo(inimigo, dano, agora = Date.now()) {
         ativarReversaoDeEmergencia(inimigo, agora);
     }
 
-    return vidaAnterior - inimigo.vida;
+    if (inimigo.tipo === "prototipoAlfa") {
+        ativarPulsoDeEstase(inimigo, agora);
+    }
+
+    if (inimigo.tipo === "sentinelaDoAmanha") {
+        if (typeof ativarRecuoDaSentinelaDoAmanha === "function") {
+            ativarRecuoDaSentinelaDoAmanha(inimigo, agora);
+        }
+    }
+
+    if (inimigo.tipo === "arquivistaCorrompido") {
+        ativarFragmentacaoDoArquivista(inimigo, agora);
+    }
+
+    if (inimigo.tipo === "guardiaoDoPontoZero") {
+        ativarRupturaDoGuardiaoDoPontoZero(inimigo, agora);
+    }
+
+    if (inimigo.tipo === "executorCronal") {
+        ativarOrdemDoExecutorCronal(inimigo, agora);
+    }
+
+    if (inimigo.tipo === "curadorDoVazio") {
+        ativarRestauracaoDoCuradorDoVazio(inimigo, agora);
+    }
+
+    const ecoRetornou = typeof ativarRetornoDoEco === "function"
+        ? ativarRetornoDoEco(inimigo, agora)
+        : false;
+
+    return ecoRetornou ? vidaAnterior : vidaAnterior - inimigo.vida;
 }
 
 function atualizarRegeneracaoDaHidra(inimigo, multiplicadorDeMovimento = 1) {
@@ -13042,7 +23692,12 @@ function atualizarReparoDoRobo(inimigo, agora = Date.now()) {
     return alvo.vida - vidaAnterior;
 }
 
-function aplicarEfeitoDeQueimadura(inimigo, efeitoDeQueimadura, agora = Date.now()) {
+function aplicarEfeitoDeQueimadura(
+    inimigo,
+    efeitoDeQueimadura,
+    agora = Date.now(),
+    elemento = null
+) {
     if (!inimigo || inimigo.vida <= 0 || !efeitoDeQueimadura) {
         return false;
     }
@@ -13051,6 +23706,7 @@ function aplicarEfeitoDeQueimadura(inimigo, efeitoDeQueimadura, agora = Date.now
     inimigo.danoDaQueimadura = efeitoDeQueimadura.danoPorIntervalo;
     inimigo.intervaloDaQueimadura = efeitoDeQueimadura.intervaloEntreDanos;
     inimigo.queimaduraExpiraEm = agora + efeitoDeQueimadura.duracao;
+    inimigo.elementoDaQueimadura = elemento;
 
     if (!queimaduraJaEstavaAtiva) {
         inimigo.proximoDanoDeQueimaduraEm = agora
@@ -13083,7 +23739,8 @@ function atualizarDanoDaQueimaduraNoInimigo(inimigo, agora = Date.now()) {
         danoAplicado += aplicarDanoAoInimigo(
             inimigo,
             inimigo.danoDaQueimadura,
-            inimigo.proximoDanoDeQueimaduraEm
+            inimigo.proximoDanoDeQueimaduraEm,
+            { elemento: inimigo.elementoDaQueimadura }
         );
         inimigo.proximoDanoDeQueimaduraEm += inimigo.intervaloDaQueimadura;
     }
@@ -13123,14 +23780,45 @@ function configurarComposicaoDaWaveSecreta() {
     proximaWaveEm = 0;
 }
 
+function configurarComposicaoDaWaveDoIntervaloPerdido() {
+    const configuracao = CONFIG.intervaloPerdido.waves;
+    fragmentosDeSegundoParaCriar = configuracao.quantidadeBaseDeFragmentosDeSegundo
+        + wave * configuracao.fragmentosDeSegundoPorWave;
+    ponteirosErrantesParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        true,
+        configuracao.primeiraWavePonteiroErrante,
+        configuracao.wavesPorNovoPonteiroErrante
+    );
+    paradoxosBlindadosParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        true,
+        configuracao.primeiraWaveParadoxoBlindado,
+        configuracao.wavesPorNovoParadoxoBlindado
+    );
+    inimigosChefesParaCriar = wave % CONFIG.wave.intervaloDeBoss === 0 ? 1 : 0;
+    inimigosParaCriar = fragmentosDeSegundoParaCriar
+        + ponteirosErrantesParaCriar
+        + paradoxosBlindadosParaCriar
+        + inimigosChefesParaCriar;
+    avisoBossExpiraEm = inimigosChefesParaCriar > 0 ? Date.now() + 2500 : 0;
+    proximoInimigoEm = Date.now();
+    proximaWaveEm = 0;
+    iniciarDesafioDosRelogiosDoIntervalo();
+}
+
 function iniciarProximaWave() {
-    if (!modoWavesInfinitas && wave >= CONFIG.wave.ultimaWave) {
+    if (!modoWavesInfinitas && wave >= obterUltimaWaveDaFase()) {
         return;
     }
 
     wave++;
+    recarregarProtocoloDeContencao();
     registrarWaveInfinitaParaMissoes(wave);
     registrarWaveInfinitaParaConquistas(wave);
+
+    if (mapaPersonalizadoAtivo) {
+        configurarComposicaoDaWavePersonalizada();
+        return;
+    }
 
     if (faseAtualUsaCaminhoVivo() && wave === 1) {
         mostrarAviso(localizar("O {caminho} está ativo.", {
@@ -13140,6 +23828,12 @@ function iniciarProximaWave() {
 
     if (faseAtualEhSecreta()) {
         configurarComposicaoDaWaveSecreta();
+        tentarExibirFliperamaNaWaveAtual();
+        return;
+    }
+
+    if (faseAtualEhIntervaloPerdido()) {
+        configurarComposicaoDaWaveDoIntervaloPerdido();
         tentarExibirFliperamaNaWaveAtual();
         return;
     }
@@ -13166,6 +23860,11 @@ function iniciarProximaWave() {
     const faseDoPantano = temaDaFase === "pantano";
     const fasePrimordial = temaDaFase === "primordial";
     const faseFuturista = temaDaFase === "futurista";
+    const faseDoLaboratorio = temaDaFase === "laboratorio";
+    const faseDoFuturoDespedacado = temaDaFase === "futuroDespedacado";
+    const faseDoPontoZero = temaDaFase === "pontoZero";
+    const faseDaLinhaTemporal = temaDaFase === "linhaTemporal";
+    const faseDaEraApagada = temaDaFase === "eraApagada";
     inimigosEscorpioesParaCriar = calcularQuantidadeDeInimigoExclusivo(
         faseDoDeserto,
         CONFIG.wave.primeiraWaveEscorpiao,
@@ -13217,9 +23916,13 @@ function iniciarProximaWave() {
         CONFIG.wave.wavesPorNovaCorujaSombria
     );
     inimigosMorcegosDeFogoParaCriar = calcularQuantidadeDeInimigoExclusivo(
-        faseVulcanica,
-        CONFIG.wave.primeiraWaveMorcegoDeFogo,
-        CONFIG.wave.wavesPorNovoMorcegoDeFogo
+        faseVulcanica || faseDaLinhaTemporal,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.primeiraWaveMorcegoDeFogo
+            : CONFIG.wave.primeiraWaveMorcegoDeFogo,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.wavesPorNovoMorcegoDeFogo
+            : CONFIG.wave.wavesPorNovoMorcegoDeFogo
     );
     inimigosLagartosVulcanicosParaCriar = calcularQuantidadeDeInimigoExclusivo(
         faseVulcanica,
@@ -13247,9 +23950,13 @@ function iniciarProximaWave() {
         CONFIG.wave.wavesPorNovoGuardiaoDeLodo
     );
     inimigosRaptorsAncestraisParaCriar = calcularQuantidadeDeInimigoExclusivo(
-        fasePrimordial,
-        CONFIG.wave.primeiraWaveRaptorAncestral,
-        CONFIG.wave.wavesPorNovoRaptorAncestral
+        fasePrimordial || faseDaLinhaTemporal,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.primeiraWaveRaptor
+            : CONFIG.wave.primeiraWaveRaptorAncestral,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.wavesPorNovoRaptor
+            : CONFIG.wave.wavesPorNovoRaptorAncestral
     );
     inimigosBesourosDeAmbarParaCriar = calcularQuantidadeDeInimigoExclusivo(
         fasePrimordial,
@@ -13262,9 +23969,13 @@ function iniciarProximaWave() {
         CONFIG.wave.wavesPorNovoTriceratopo
     );
     inimigosDronesCacadoresParaCriar = calcularQuantidadeDeInimigoExclusivo(
-        faseFuturista,
-        CONFIG.wave.primeiraWaveDroneCacador,
-        CONFIG.wave.wavesPorNovoDroneCacador
+        faseFuturista || faseDaLinhaTemporal,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.primeiraWaveDrone
+            : CONFIG.wave.primeiraWaveDroneCacador,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.wavesPorNovoDrone
+            : CONFIG.wave.wavesPorNovoDroneCacador
     );
     inimigosRobosReparadoresParaCriar = calcularQuantidadeDeInimigoExclusivo(
         faseFuturista,
@@ -13275,6 +23986,90 @@ function iniciarProximaWave() {
         faseFuturista,
         CONFIG.wave.primeiraWaveSentinelaDeEscudo,
         CONFIG.wave.wavesPorNovaSentinelaDeEscudo
+    );
+    inimigosAutomatosDeCobreParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoLaboratorio,
+        CONFIG.wave.primeiraWaveAutomatoDeCobre,
+        CONFIG.wave.wavesPorNovoAutomatoDeCobre
+    );
+    inimigosCobaiasInstaveisParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoLaboratorio,
+        CONFIG.wave.primeiraWaveCobaiaInstavel,
+        CONFIG.wave.wavesPorNovaCobaiaInstavel
+    );
+    inimigosGuardasDeContencaoParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoLaboratorio,
+        CONFIG.wave.primeiraWaveGuardaDeContencao,
+        CONFIG.wave.wavesPorNovoGuardaDeContencao
+    );
+    inimigosDronesDoFuturoDespedacadoParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoFuturoDespedacado,
+        CONFIG.wave.primeiraWaveDroneCacadorNoFuturoDespedacado,
+        CONFIG.wave.wavesPorNovoDroneCacadorNoFuturoDespedacado
+    );
+    inimigosAndarilhosDeSucataParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoFuturoDespedacado,
+        CONFIG.wave.primeiraWaveAndarilhoDeSucata,
+        CONFIG.wave.wavesPorNovoAndarilhoDeSucata
+    );
+    inimigosEcosTemporaisParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoFuturoDespedacado || faseDaLinhaTemporal,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.primeiraWaveEcoTemporal
+            : CONFIG.wave.primeiraWaveEcoTemporal,
+        faseDaLinhaTemporal
+            ? CONFIG.linhaDeFrenteTemporal.waves.wavesPorNovoEcoTemporal
+            : CONFIG.wave.wavesPorNovoEcoTemporal
+    );
+    inimigosSentinelasCronologicasParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoFuturoDespedacado,
+        CONFIG.wave.primeiraWaveSentinelaCronologica,
+        CONFIG.wave.wavesPorNovaSentinelaCronologica
+    );
+    inimigosResiduosTemporaisParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoPontoZero,
+        CONFIG.wave.primeiraWaveResiduoTemporal,
+        CONFIG.wave.wavesPorNovoResiduoTemporal
+    );
+    inimigosArquivistasCorrompidosParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoPontoZero,
+        CONFIG.wave.primeiraWaveArquivistaCorrompido,
+        CONFIG.wave.wavesPorNovoArquivistaCorrompido
+    );
+    inimigosVigiasDoPontoZeroParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDoPontoZero,
+        CONFIG.wave.primeiraWaveVigiaDoPontoZero,
+        CONFIG.wave.wavesPorNovoVigiaDoPontoZero
+    );
+    inimigosSoldadosCronaisParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDaLinhaTemporal,
+        CONFIG.linhaDeFrenteTemporal.waves.primeiraWaveSoldadoCronal,
+        CONFIG.linhaDeFrenteTemporal.waves.wavesPorNovoSoldadoCronal
+    );
+    inimigosPortadoresDaFendaParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDaLinhaTemporal,
+        CONFIG.linhaDeFrenteTemporal.waves.primeiraWavePortadorDaFenda,
+        CONFIG.linhaDeFrenteTemporal.waves.wavesPorNovoPortadorDaFenda
+    );
+    inimigosInfiltradoresCamufladosParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDaEraApagada,
+        CONFIG.eraApagada.waves.primeiraWaveInfiltradorCamuflado,
+        CONFIG.eraApagada.waves.wavesPorNovoInfiltradorCamuflado
+    );
+    inimigosRascunhosVivosParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDaEraApagada,
+        CONFIG.eraApagada.waves.primeiraWaveRascunhoVivo,
+        CONFIG.eraApagada.waves.wavesPorNovoRascunhoVivo
+    );
+    inimigosSentinelasIncompletasParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDaEraApagada,
+        CONFIG.eraApagada.waves.primeiraWaveSentinelaIncompleta,
+        CONFIG.eraApagada.waves.wavesPorNovaSentinelaIncompleta
+    );
+    inimigosSombrasCongeladasParaCriar = calcularQuantidadeDeInimigoExclusivo(
+        faseDaEraApagada,
+        CONFIG.eraApagada.waves.primeiraWaveSombraCongelada,
+        CONFIG.eraApagada.waves.wavesPorNovaSombraCongelada
     );
     inimigosSabotadoresParaCriar = wave >= CONFIG.wave.primeiraWaveSabotador
         ? 1 + Math.floor(
@@ -13310,11 +24105,31 @@ function iniciarProximaWave() {
         + inimigosDronesCacadoresParaCriar
         + inimigosRobosReparadoresParaCriar
         + inimigosSentinelasDeEscudoParaCriar
+        + inimigosAutomatosDeCobreParaCriar
+        + inimigosCobaiasInstaveisParaCriar
+        + inimigosGuardasDeContencaoParaCriar
+        + inimigosDronesDoFuturoDespedacadoParaCriar
+        + inimigosAndarilhosDeSucataParaCriar
+        + inimigosEcosTemporaisParaCriar
+        + inimigosSentinelasCronologicasParaCriar
+        + inimigosResiduosTemporaisParaCriar
+        + inimigosArquivistasCorrompidosParaCriar
+        + inimigosVigiasDoPontoZeroParaCriar
+        + inimigosSoldadosCronaisParaCriar
+        + inimigosPortadoresDaFendaParaCriar
+        + inimigosInfiltradoresCamufladosParaCriar
+        + inimigosRascunhosVivosParaCriar
+        + inimigosSentinelasIncompletasParaCriar
+        + inimigosSombrasCongeladasParaCriar
         + inimigosChefesParaCriar;
     proximoInimigoEm = Date.now();
     proximaWaveEm = 0;
     tentarExibirFliperamaNaWaveAtual();
-    atualizarPulsoTemporalNoPosto();
+    atualizarPulsoTemporalNoControle();
+    avisarOscilacaoDoPontoZero();
+    ativarInterferenciaDoSenhorDoTempo();
+    iniciarFrenteTemporalDaWave();
+    iniciarReescritaTemporalDaEraApagada();
 }
 
 function concederCreditosDosGeradoresAposWave(waveConcluida = wave) {
@@ -13370,14 +24185,56 @@ function atualizarWaves() {
             criarInimigo(tipoDoInimigo);
             inimigosParaCriar--;
 
-            if (tipoEhBoss(tipoDoInimigo)) {
+            if (mapaPersonalizadoAtivo) {
+                // A fila personalizada já removeu este inimigo ao escolhê-lo.
+            } else if (tipoEhBoss(tipoDoInimigo)) {
                 inimigosChefesParaCriar--;
+            } else if (tipoDoInimigo === "portadorDaFenda") {
+                inimigosPortadoresDaFendaParaCriar--;
+            } else if (tipoDoInimigo === "soldadoCronal") {
+                inimigosSoldadosCronaisParaCriar--;
+            } else if (tipoDoInimigo === "infiltradorCamuflado") {
+                inimigosInfiltradoresCamufladosParaCriar--;
+            } else if (tipoDoInimigo === "sombraCongelada") {
+                inimigosSombrasCongeladasParaCriar--;
+            } else if (tipoDoInimigo === "sentinelaIncompleta") {
+                inimigosSentinelasIncompletasParaCriar--;
+            } else if (tipoDoInimigo === "rascunhoVivo") {
+                inimigosRascunhosVivosParaCriar--;
+            } else if (tipoDoInimigo === "paradoxoBlindado") {
+                paradoxosBlindadosParaCriar--;
+            } else if (tipoDoInimigo === "ponteiroErrante") {
+                ponteirosErrantesParaCriar--;
+            } else if (tipoDoInimigo === "fragmentoDeSegundo") {
+                fragmentosDeSegundoParaCriar--;
+            } else if (tipoDoInimigo === "vigiaDoPontoZero") {
+                inimigosVigiasDoPontoZeroParaCriar--;
+            } else if (tipoDoInimigo === "arquivistaCorrompido") {
+                inimigosArquivistasCorrompidosParaCriar--;
+            } else if (tipoDoInimigo === "residuoTemporal") {
+                inimigosResiduosTemporaisParaCriar--;
+            } else if (tipoDoInimigo === "sentinelaCronologica") {
+                inimigosSentinelasCronologicasParaCriar--;
+            } else if (tipoDoInimigo === "ecoTemporal") {
+                inimigosEcosTemporaisParaCriar--;
+            } else if (tipoDoInimigo === "andarilhoDeSucata") {
+                inimigosAndarilhosDeSucataParaCriar--;
+            } else if (tipoDoInimigo === "guardaDeContencao") {
+                inimigosGuardasDeContencaoParaCriar--;
+            } else if (tipoDoInimigo === "cobaiaInstavel") {
+                inimigosCobaiasInstaveisParaCriar--;
+            } else if (tipoDoInimigo === "automatoDeCobre") {
+                inimigosAutomatosDeCobreParaCriar--;
             } else if (tipoDoInimigo === "sentinelaDeEscudo") {
                 inimigosSentinelasDeEscudoParaCriar--;
             } else if (tipoDoInimigo === "roboReparador") {
                 inimigosRobosReparadoresParaCriar--;
             } else if (tipoDoInimigo === "droneCacador") {
-                inimigosDronesCacadoresParaCriar--;
+                if (faseAtualUsaFuturoDespedacado()) {
+                    inimigosDronesDoFuturoDespedacadoParaCriar--;
+                } else {
+                    inimigosDronesCacadoresParaCriar--;
+                }
             } else if (tipoDoInimigo === "triceratopo") {
                 inimigosTriceratoposParaCriar--;
             } else if (tipoDoInimigo === "besouroDeAmbar") {
@@ -13441,8 +24298,11 @@ function atualizarWaves() {
     if (inimigos.length === 0) {
         concederCreditosDosGeradoresAposWave(wave);
         disponibilizarRadioProjetoRelogio();
+        disponibilizarTerminalLaboratorio();
+        disponibilizarTransmissorFuturoDespedacado();
+        disponibilizarRegistrosPontoZero();
 
-        if (!modoWavesInfinitas && wave >= CONFIG.wave.ultimaWave) {
+        if (!modoWavesInfinitas && wave >= obterUltimaWaveDaFase()) {
             finalizarPartidaComVitoria();
             return;
         }
@@ -13462,8 +24322,60 @@ function atualizarWaves() {
 }
 
 function obterProximoTipoDeInimigo() {
+    if (mapaPersonalizadoAtivo) {
+        return filaDeInimigosDoMapaPersonalizado.shift() || "normal";
+    }
+
     if (inimigosChefesParaCriar > 0) {
         return obterTipoDeBossDaFase();
+    }
+
+    if (inimigosPortadoresDaFendaParaCriar > 0) {
+        return "portadorDaFenda";
+    }
+
+    if (inimigosSoldadosCronaisParaCriar > 0) {
+        return "soldadoCronal";
+    }
+
+    if (inimigosInfiltradoresCamufladosParaCriar > 0) {
+        return "infiltradorCamuflado";
+    }
+
+    if (inimigosSombrasCongeladasParaCriar > 0) {
+        return "sombraCongelada";
+    }
+
+    if (inimigosSentinelasIncompletasParaCriar > 0) {
+        return "sentinelaIncompleta";
+    }
+
+    if (inimigosRascunhosVivosParaCriar > 0) {
+        return "rascunhoVivo";
+    }
+
+    if (paradoxosBlindadosParaCriar > 0) {
+        return "paradoxoBlindado";
+    }
+
+    if (ponteirosErrantesParaCriar > 0) {
+        return "ponteiroErrante";
+    }
+
+    if (fragmentosDeSegundoParaCriar > 0) {
+        return "fragmentoDeSegundo";
+    }
+
+    if (inimigosVigiasDoPontoZeroParaCriar > 0) {
+        return "vigiaDoPontoZero";
+    }
+
+    if (inimigosArquivistasCorrompidosParaCriar > 0) {
+        return "arquivistaCorrompido";
+    }
+
+    if (inimigosResiduosTemporaisParaCriar > 0) {
+        return "residuoTemporal";
     }
 
     if (blocosInstaveisParaCriar > 0) {
@@ -13476,6 +24388,34 @@ function obterProximoTipoDeInimigo() {
 
     if (pixelsCorrompidosParaCriar > 0) {
         return "pixelCorrompido";
+    }
+
+    if (inimigosSentinelasCronologicasParaCriar > 0) {
+        return "sentinelaCronologica";
+    }
+
+    if (inimigosEcosTemporaisParaCriar > 0) {
+        return "ecoTemporal";
+    }
+
+    if (inimigosAndarilhosDeSucataParaCriar > 0) {
+        return "andarilhoDeSucata";
+    }
+
+    if (inimigosDronesDoFuturoDespedacadoParaCriar > 0) {
+        return "droneCacador";
+    }
+
+    if (inimigosGuardasDeContencaoParaCriar > 0) {
+        return "guardaDeContencao";
+    }
+
+    if (inimigosCobaiasInstaveisParaCriar > 0) {
+        return "cobaiaInstavel";
+    }
+
+    if (inimigosAutomatosDeCobreParaCriar > 0) {
+        return "automatoDeCobre";
     }
 
     if (inimigosSentinelasDeEscudoParaCriar > 0) {
@@ -13615,10 +24555,35 @@ function obterMultiplicadorDaArrancadaDoJavali(inimigo, agora) {
         : 1;
 }
 
+function atualizarFormaDoSoldadoCronal(inimigo, agora = Date.now()) {
+    if (!inimigo || inimigo.tipo !== "soldadoCronal") {
+        return null;
+    }
+
+    const duracao = CONFIG.inimigo.soldadoCronal.duracaoDeCadaFormaMs;
+    if (!inimigo.formaCronal) {
+        inimigo.formaCronal = "passado";
+    }
+    if (!(inimigo.proximaTrocaDeFormaCronalEm > 0)) {
+        inimigo.proximaTrocaDeFormaCronalEm = agora + duracao;
+    }
+    while (agora >= inimigo.proximaTrocaDeFormaCronalEm) {
+        inimigo.formaCronal = inimigo.formaCronal === "passado"
+            ? "futuro"
+            : "passado";
+        inimigo.proximaTrocaDeFormaCronalEm += duracao;
+    }
+    return inimigo.formaCronal;
+}
+
 function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
     if (
         agora < (inimigo.congeladoAte || 0)
         || agora < (inimigo.atordoadoPelaTorreSismicaAte || 0)
+        || (
+            typeof inimigoEstaRetidoPelaContencao === "function"
+            && inimigoEstaRetidoPelaContencao(inimigo, agora)
+        )
     ) {
         return 0;
     }
@@ -13642,12 +24607,47 @@ function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
         && inimigoEstaEmTrilhoDeImpulso(inimigo)
         ? CONFIG.metropoleNeon.multiplicadorVelocidadeNosTrilhos
         : 1;
+    const multiplicadorDoColapso = inimigo.tipo === "cobaiaInstavel"
+        && inimigo.vida <= inimigo.vidaMaxima
+            * CONFIG.inimigo.cobaiaInstavel.percentualVidaParaColapso
+        ? CONFIG.inimigo.cobaiaInstavel.multiplicadorVelocidadeNoColapso
+        : 1;
+    const multiplicadorDoPontoZero = typeof obterMultiplicadorDoPontoZeroParaInimigo
+        === "function"
+        ? obterMultiplicadorDoPontoZeroParaInimigo(inimigo)
+        : 1;
+    const multiplicadorDosRelogios = typeof faseAtualEhIntervaloPerdido === "function"
+        && faseAtualEhIntervaloPerdido()
+        && agora < lentidaoDosRelogiosDoIntervaloExpiraEm
+        ? 1 - CONFIG.intervaloPerdido.relogiosDeRuptura.percentualDeLentidao
+        : 1;
+    const multiplicadorDaInterferencia = typeof faseSelecionada !== "undefined"
+        && CONFIG.linhaDeFrenteTemporal
+        && faseSelecionada === CONFIG.linhaDeFrenteTemporal.numeroDaFase
+        && agora < aceleracaoDaInterferenciaTemporalExpiraEm
+        ? CONFIG.linhaDeFrenteTemporal.interferencia.multiplicadorDeVelocidade
+        : 1;
+    const multiplicadorDaFormaDoCarcereiro = typeof obterFormaDoCarcereiroDoIntervalo
+        === "function"
+        && obterFormaDoCarcereiroDoIntervalo(inimigo) === "intervalo"
+        ? CONFIG.inimigo.carcereiroDoIntervalo.multiplicadorDeVelocidadeNoIntervalo
+        : 1;
+    const multiplicadorDaFormaDoSoldado = typeof atualizarFormaDoSoldadoCronal === "function"
+        && atualizarFormaDoSoldadoCronal(inimigo, agora) === "futuro"
+        ? CONFIG.inimigo.soldadoCronal.multiplicadorDeVelocidadeNoFuturo
+        : 1;
     const velocidadeComHabilidades = inimigo.velocidade
         * multiplicadorDeDisparada
         * multiplicadorDaArrancada
         * multiplicadorDaErupcao
         * multiplicadorDoPulsoTemporal
-        * multiplicadorDoTrilho;
+        * multiplicadorDoTrilho
+        * multiplicadorDoColapso
+        * multiplicadorDoPontoZero
+        * multiplicadorDosRelogios
+        * multiplicadorDaInterferencia
+        * multiplicadorDaFormaDoCarcereiro
+        * multiplicadorDaFormaDoSoldado;
 
     if (agora < (inimigo.lentidaoExpiraEm || 0)) {
         return velocidadeComHabilidades * (1 - (inimigo.percentualLentidao || 0));
@@ -13657,8 +24657,116 @@ function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
     return velocidadeComHabilidades;
 }
 
+function inimigoPodeUsarFendasTemporais(inimigo) {
+    return faseAtualUsaFuturoDespedacado()
+        && Boolean(CONFIG.inimigo[inimigo.tipo]?.usaFendasTemporais);
+}
+
+function atualizarFendaTemporalDoInimigo(inimigo, agora = Date.now()) {
+    if (!inimigoPodeUsarFendasTemporais(inimigo)) {
+        return false;
+    }
+
+    const configuracao = CONFIG.futuroDespedacado.fendasTemporais;
+    if (inimigo.fendaTemporalAtiva) {
+        if (agora < inimigo.fendaTemporalTeleportaEm) {
+            return true;
+        }
+
+        const fenda = configuracao.pares.find(
+            par => par.id === inimigo.fendaTemporalAtiva
+        );
+        if (fenda) {
+            posicionarInimigoNoProgressoDoCaminho(
+                inimigo,
+                fenda.saidaProgresso
+            );
+            inimigo.fendasTemporaisUsadas.push(fenda.id);
+            inimigo.fendaTemporalSaidaExpiraEm = agora + 450;
+        }
+        inimigo.fendaTemporalAtiva = null;
+        inimigo.fendaTemporalTeleportaEm = 0;
+        return false;
+    }
+
+    const progresso = calcularProgressoDoInimigo(inimigo);
+    const proximaFenda = configuracao.pares.find((fenda) => (
+        progresso >= fenda.entradaProgresso
+        && progresso < fenda.saidaProgresso
+        && !inimigo.fendasTemporaisUsadas.includes(fenda.id)
+    ));
+    if (!proximaFenda) {
+        return false;
+    }
+
+    inimigo.fendaTemporalAtiva = proximaFenda.id;
+    inimigo.fendaTemporalTeleportaEm = agora + configuracao.duracaoDaContagem;
+    return true;
+}
+
+function coletarSucataParaTorresProximas(inimigo, agora = Date.now()) {
+    for (const torre of torres) {
+        const efeitoDeSucata = obterConfiguracaoAtualDaTorre(torre).efeitoDeSucata;
+        if (
+            !efeitoDeSucata
+            || Math.hypot(torre.x - inimigo.x, torre.y - inimigo.y)
+                > efeitoDeSucata.raioDeColeta
+        ) {
+            continue;
+        }
+
+        if (agora >= (torre.sucataExpiraEm || 0)) {
+            torre.pecasDeSucata = 0;
+        }
+        torre.pecasDeSucata = Math.min(
+            efeitoDeSucata.maximoDePecas,
+            (torre.pecasDeSucata || 0) + 1
+        );
+        torre.sucataExpiraEm = agora + efeitoDeSucata.duracao;
+    }
+}
+
+function criarFendaDoPortadorDerrotado(inimigo, agora = Date.now()) {
+    if (!faseAtualUsaLinhaDeFrenteTemporal() || inimigo.tipo !== "portadorDaFenda") {
+        return null;
+    }
+
+    const configuracao = CONFIG.inimigo.portadorDaFenda;
+    const fenda = {
+        x: inimigo.x,
+        y: inimigo.y,
+        indiceDoCaminho: inimigo.indiceDoCaminho,
+        expiraEm: agora + configuracao.duracaoDaFendaMs
+    };
+    fendasDosPortadores.push(fenda);
+    mostrarAviso(localizar("Uma Fenda Residual foi aberta no caminho!"));
+    return fenda;
+}
+
+function tentarTransportarInimigoPelaFendaDoPortador(inimigo, agora = Date.now()) {
+    if (tipoEhBoss(inimigo.tipo) || inimigo.vida <= 0) {
+        return false;
+    }
+
+    const configuracao = CONFIG.inimigo.portadorDaFenda;
+    const indiceDaFenda = fendasDosPortadores.findIndex((fenda) => (
+        agora < fenda.expiraEm
+        && fenda.indiceDoCaminho === inimigo.indiceDoCaminho
+        && Math.hypot(inimigo.x - fenda.x, inimigo.y - fenda.y) <= configuracao.raioDaFenda
+    ));
+    if (indiceDaFenda < 0) {
+        return false;
+    }
+
+    fendasDosPortadores.splice(indiceDaFenda, 1);
+    avancarInimigoNoCaminho(inimigo, configuracao.distanciaDoTeleporte);
+    mostrarAviso(localizar("A Fenda Residual transportou um inimigo 140 px adiante!"));
+    return true;
+}
+
 function moverInimigos(multiplicadorDeMovimento = 1) {
     const agora = Date.now();
+    fendasDosPortadores = fendasDosPortadores.filter(fenda => agora < fenda.expiraEm);
 
     for (let i = inimigos.length - 1; i >= 0; i--) {
         const inimigo = inimigos[i];
@@ -13668,9 +24776,21 @@ function moverInimigos(multiplicadorDeMovimento = 1) {
         atualizarReparoDoRobo(inimigo, agora);
 
         if (inimigo.vida <= 0) {
-            registrarInimigoEliminadoParaMissoes();
-            registrarInimigoEliminadoParaConquistas();
-            registrarInimigoDerrotadoNoAlbum(inimigo.tipo);
+            registrarInimigoDerrotadoNaEraApagada(inimigo, agora);
+            criarFendaDoPortadorDerrotado(inimigo, agora);
+            if (!inimigo.restauradoPeloCurador) {
+                coletarSucataParaTorresProximas(inimigo, agora);
+                if (!mapaPersonalizadoAtivo) {
+                    registrarInimigoEliminadoParaMissoes();
+                    registrarInimigoEliminadoParaConquistas();
+                    registrarExperienciaDaPartida(tipoEhBoss(inimigo.tipo)
+                        ? CONFIG.progressaoDeNivel.experienciaPorBoss
+                        : CONFIG.progressaoDeNivel.experienciaPorInimigo);
+                }
+            }
+            if (!mapaPersonalizadoAtivo) {
+                registrarInimigoDerrotadoNoAlbum(inimigo.tipo);
+            }
             inimigos.splice(i, 1);
             continue;
         }
@@ -13683,6 +24803,14 @@ function moverInimigos(multiplicadorDeMovimento = 1) {
         if (inimigo.alvo >= caminhoAtual.length) {
             finalizarPartida();
             return;
+        }
+
+        if (atualizarFendaTemporalDoInimigo(inimigo, agora)) {
+            continue;
+        }
+
+        if (tentarTransportarInimigoPelaFendaDoPortador(inimigo, agora)) {
+            continue;
         }
 
         const destino = caminhoAtual[inimigo.alvo];
@@ -13712,48 +24840,173 @@ function moverInimigos(multiplicadorDeMovimento = 1) {
     }
 }
 
-function aplicarDanoEmArea(x, y, raio, dano) {
-    const inimigosPresentesAntesDoImpacto = [...inimigos];
-
-    for (const inimigo of inimigosPresentesAntesDoImpacto) {
-        if (
-            inimigo.vida > 0
-            && Math.hypot(inimigo.x - x, inimigo.y - y) <= raio
-        ) {
-            aplicarDanoAoInimigo(inimigo, dano);
-        }
+function tipoDeDefesaPodeDetectarInimigo(tipoDaDefesa, inimigo) {
+    if (!inimigo?.camuflado) {
+        return true;
     }
+
+    return Boolean(CONFIG.torre.tipos[tipoDaDefesa]?.detectaCamuflados);
 }
 
-function detonarExplosivo(explosivo, configuracao) {
-    aplicarDanoEmArea(
+function torrePodeDetectarInimigo(torre, inimigo) {
+    return tipoDeDefesaPodeDetectarInimigo(torre?.tipo, inimigo);
+}
+
+function obterInimigosVivosNaArea(
+    x,
+    y,
+    raio,
+    listaDeInimigos = inimigos,
+    tipoDaDefesa = null
+) {
+    return listaDeInimigos.filter((inimigo) => (
+        inimigo.vida > 0
+        && (
+            typeof tipoDeDefesaPodeDetectarInimigo !== "function"
+            || tipoDeDefesaPodeDetectarInimigo(tipoDaDefesa, inimigo)
+        )
+        && Math.hypot(inimigo.x - x, inimigo.y - y) <= raio
+    ));
+}
+
+function aplicarDanoEmArea(
+    x,
+    y,
+    raio,
+    dano,
+    elemento = null,
+    agora = Date.now(),
+    tipoDaDefesa = null
+) {
+    const inimigosPresentesAntesDoImpacto = obterInimigosVivosNaArea(
+        x,
+        y,
+        raio,
+        [...inimigos],
+        tipoDaDefesa
+    );
+    let quantidadeEliminada = 0;
+
+    for (const inimigo of inimigosPresentesAntesDoImpacto) {
+        aplicarDanoAoInimigo(inimigo, dano, agora, { elemento });
+
+        if (inimigo.vida <= 0) {
+            quantidadeEliminada++;
+        }
+    }
+
+    return quantidadeEliminada;
+}
+
+function registrarExplosaoVisual(x, y, raio, duracao, tipoVisual, cor) {
+    explosoesDosExplosivos.push({
+        x,
+        y,
+        raio,
+        quadrosRestantes: duracao,
+        totalDeQuadros: duracao,
+        tipoVisual,
+        cor
+    });
+}
+
+function detonarFragmentos(explosivo, configuracao, agora = Date.now()) {
+    const efeito = configuracao.efeitoDeFragmentacao;
+
+    if (!efeito) {
+        return 0;
+    }
+
+    let eliminacoes = 0;
+    for (let indice = 0; indice < efeito.quantidadeDeFragmentos; indice++) {
+        const angulo = -Math.PI / 4
+            + indice * (Math.PI * 2 / efeito.quantidadeDeFragmentos);
+        const x = explosivo.x + Math.cos(angulo) * efeito.distanciaDoCentro;
+        const y = explosivo.y + Math.sin(angulo) * efeito.distanciaDoCentro;
+        eliminacoes += aplicarDanoEmArea(
+            x,
+            y,
+            efeito.raioDeCadaFragmento,
+            efeito.danoDeCadaFragmento,
+            configuracao.elemento,
+            agora,
+            explosivo.tipo
+        );
+        registrarExplosaoVisual(
+            x,
+            y,
+            efeito.raioDeCadaFragmento,
+            configuracao.duracaoExplosaoEmQuadros,
+            "fragmento",
+            configuracao.visualBase.corDetalhe
+        );
+    }
+    return eliminacoes;
+}
+
+function detonarExplosivo(explosivo, configuracao, agora = Date.now()) {
+    const quantidadeEliminada = aplicarDanoEmArea(
         explosivo.x,
         explosivo.y,
         configuracao.raioExplosao,
-        configuracao.dano
+        configuracao.dano,
+        configuracao.elemento,
+        agora,
+        explosivo.tipo
     );
 
+    if (explosivo.tipo === "bombaPesada") {
+        registrarEliminacoesDaBombaPesadaParaConquistas(quantidadeEliminada);
+    }
+
     if (configuracao.efeitoGlacial) {
-        for (const inimigo of inimigos) {
-            if (
-                inimigo.vida > 0
-                && Math.hypot(inimigo.x - explosivo.x, inimigo.y - explosivo.y)
-                    <= configuracao.raioExplosao
-            ) {
-                aplicarEfeitoGlacial(inimigo, configuracao.efeitoGlacial);
-            }
+        for (const inimigo of obterInimigosVivosNaArea(
+            explosivo.x,
+            explosivo.y,
+            configuracao.raioExplosao,
+            inimigos,
+            explosivo.tipo
+        )) {
+            aplicarEfeitoGlacial(inimigo, configuracao.efeitoGlacial, agora);
         }
     }
 
-    explosoesDosExplosivos.push({
-        x: explosivo.x,
-        y: explosivo.y,
-        raio: configuracao.raioExplosao,
-        quadrosRestantes: configuracao.duracaoExplosaoEmQuadros,
-        totalDeQuadros: configuracao.duracaoExplosaoEmQuadros,
-        tipoVisual: configuracao.tipoVisualDaExplosao || "explosao",
-        cor: configuracao.visualBase.corCanhao
-    });
+    if (configuracao.efeitoDePulso) {
+        for (const inimigo of obterInimigosVivosNaArea(
+            explosivo.x,
+            explosivo.y,
+            configuracao.raioExplosao,
+            inimigos,
+            explosivo.tipo
+        )) {
+            empurrarInimigoParaTrasNoCaminho(
+                inimigo,
+                configuracao.efeitoDePulso.distanciaDoEmpurrao
+            );
+        }
+    }
+
+    if (configuracao.efeitoCorrosivo) {
+        for (const inimigo of obterInimigosVivosNaArea(
+            explosivo.x,
+            explosivo.y,
+            configuracao.raioExplosao,
+            inimigos,
+            explosivo.tipo
+        )) {
+            aplicarCorrosaoAoInimigo(inimigo, configuracao.efeitoCorrosivo, agora);
+        }
+    }
+
+    detonarFragmentos(explosivo, configuracao, agora);
+    registrarExplosaoVisual(
+        explosivo.x,
+        explosivo.y,
+        configuracao.raioExplosao,
+        configuracao.duracaoExplosaoEmQuadros,
+        configuracao.tipoVisualDaExplosao || "explosao",
+        configuracao.visualBase.corCanhao
+    );
 }
 
 function atualizarMinasTerrestres() {
@@ -13762,6 +25015,10 @@ function atualizarMinasTerrestres() {
         const configuracao = obterConfiguracaoDaTorre(mina.tipo);
         const inimigoQueTocou = inimigos.find((inimigo) => (
             inimigo.vida > 0
+            && (
+                typeof tipoDeDefesaPodeDetectarInimigo !== "function"
+                || tipoDeDefesaPodeDetectarInimigo(mina.tipo, inimigo)
+            )
             && Math.hypot(inimigo.x - mina.x, inimigo.y - mina.y)
                 <= configuracao.raioDeContato + inimigo.tamanho
         ));
@@ -13784,7 +25041,7 @@ function atualizarBombasPesadas(agora = Date.now()) {
         }
 
         bombasPesadas.splice(indice, 1);
-        detonarExplosivo(bomba, obterConfiguracaoDaTorre(bomba.tipo));
+        detonarExplosivo(bomba, obterConfiguracaoDaTorre(bomba.tipo), agora);
     }
 }
 
@@ -13823,6 +25080,10 @@ function encontrarInimigoNaPosicao(x, y) {
         const inimigo = inimigos[indice];
         const raioDeInteracao = inimigo.tamanho + 8;
 
+        if (inimigo.camuflado && !inimigoEstaReveladoPelaVarredura(inimigo)) {
+            continue;
+        }
+
         if (Math.hypot(inimigo.x - x, inimigo.y - y) <= raioDeInteracao) {
             return inimigo;
         }
@@ -13831,36 +25092,131 @@ function encontrarInimigoNaPosicao(x, y) {
     return null;
 }
 
+const classesDosCursoresEspeciaisDoMapa = Object.freeze([
+    "inimigo-sob-cursor",
+    "fliperama-sob-cursor",
+    "radio-sob-cursor",
+    "terminal-sob-cursor",
+    "transmissor-sob-cursor",
+    "contencao-sob-cursor",
+    "registro-ponto-zero-sob-cursor",
+    "relogio-intervalo-sob-cursor",
+    "objeto-interativo-sob-cursor",
+    "construcao-sob-cursor",
+    "explosivo-sob-cursor",
+    "posicao-invalida-sob-cursor"
+]);
+
+function limparCursoresEspeciaisDoMapa() {
+    canvas.classList.remove(...classesDosCursoresEspeciaisDoMapa);
+}
+
+function posicaoEhInvalidaParaCursorDeConstrucao(x, y) {
+    const configuracao = obterConfiguracaoDaTorre();
+    const ehMina = configuracao.tipoDeItem === "mina";
+    const ehBomba = configuracao.tipoDeItem === "bomba";
+    const exigeCaminho = configuracao.exigeCaminho === true;
+    const posicaoNoCaminho = ehMina || ehBomba
+        ? obterPosicaoMaisProximaNoCaminho(x, y)
+        : null;
+    const xDaConstrucao = posicaoNoCaminho?.x ?? x;
+    const yDaConstrucao = posicaoNoCaminho?.y ?? y;
+
+    return (exigeCaminho && !estaNoCaminho(x, y))
+        || (!exigeCaminho && estaNoCaminho(x, y))
+        || Boolean(fliperamaNoMapa && Math.hypot(
+            fliperamaNoMapa.x - xDaConstrucao,
+            fliperamaNoMapa.y - yDaConstrucao
+        ) < CONFIG.fliperama.distanciaMinimaDasTorres)
+        || estaPertoDoRadioProjetoRelogio(xDaConstrucao, yDaConstrucao)
+        || estaPertoDoTerminalLaboratorio(xDaConstrucao, yDaConstrucao)
+        || estaPertoDoTransmissorFuturoDespedacado(xDaConstrucao, yDaConstrucao)
+        || estaPertoDosRegistrosPontoZero(xDaConstrucao, yDaConstrucao)
+        || estaPertoDosRelogiosDoIntervalo(xDaConstrucao, yDaConstrucao)
+        || estaPertoDosPaineisDeContencao(xDaConstrucao, yDaConstrucao)
+        || !torreEstaDesbloqueada(tipoDeTorreParaConstruir)
+        || atingiuLimiteDoTipoDeTorre(tipoDeTorreParaConstruir)
+        || dinheiro < configuracao.custo
+        || (
+            !configuracao.naoContaNoLimiteDeTorres
+            && torres.length >= obterLimiteDeTorres()
+        )
+        || (
+            ehMina
+            && estaPertoDeOutraMina(
+                xDaConstrucao,
+                yDaConstrucao,
+                configuracao.distanciaMinimaEntreMinas
+            )
+        )
+        || (
+            ehBomba
+            && estaPertoDeOutraDefesaConsumivel(
+                bombasPesadas,
+                xDaConstrucao,
+                yDaConstrucao,
+                configuracao.distanciaMinimaEntreBombas
+            )
+        )
+        || (!ehMina && estaPertoDeOutraTorreOuBomba(xDaConstrucao, yDaConstrucao));
+}
+
+function atualizarCursorEspecialDoMapa(x, y) {
+    limparCursoresEspeciaisDoMapa();
+    const inimigo = encontrarInimigoNaPosicao(x, y);
+    if (inimigo) {
+        canvas.classList.add("inimigo-sob-cursor");
+        return;
+    }
+
+    const interacoesEspeciais = [
+        ["fliperama-sob-cursor", fliperamaEstaNaPosicao(x, y)],
+        ["radio-sob-cursor", radioProjetoRelogioEstaNaPosicao(x, y)],
+        ["terminal-sob-cursor", terminalLaboratorioEstaNaPosicao(x, y)],
+        ["transmissor-sob-cursor", transmissorFuturoDespedacadoEstaNaPosicao(x, y)],
+        ["contencao-sob-cursor", Boolean(obterPainelDeContencaoNaPosicao(x, y))],
+        ["registro-ponto-zero-sob-cursor", Boolean(obterRegistroPontoZeroNaPosicao(x, y))],
+        ["relogio-intervalo-sob-cursor", Boolean(obterRelogioDoIntervaloNaPosicao(x, y))]
+    ];
+    for (const [classe, ativa] of interacoesEspeciais) {
+        canvas.classList.toggle(classe, ativa);
+    }
+    const possuiInteracaoEspecial = interacoesEspeciais.some(([, ativa]) => ativa)
+        || Boolean(encontrarTorreNaPosicao(x, y))
+        || Boolean(encontrarMinaNaPosicao(x, y))
+        || Boolean(encontrarBombaNaPosicao(x, y));
+    if (possuiInteracaoEspecial) {
+        canvas.classList.add("objeto-interativo-sob-cursor");
+        return;
+    }
+
+    if (posicaoEhInvalidaParaCursorDeConstrucao(x, y)) {
+        canvas.classList.add("posicao-invalida-sob-cursor");
+        return;
+    }
+
+    const configuracao = obterConfiguracaoDaTorre();
+    canvas.classList.add(
+        configuracao.tipoDeItem === "mina" || configuracao.tipoDeItem === "bomba"
+            ? "explosivo-sob-cursor"
+            : "construcao-sob-cursor"
+    );
+}
+
 canvas.addEventListener("mousemove", (evento) => {
     if (!jogoIniciado || partidaEncerrada) {
         posicaoCursorNoMapa = null;
-        canvas.classList.remove("inimigo-sob-cursor");
-        canvas.classList.remove("fliperama-sob-cursor");
-        canvas.classList.remove("radio-sob-cursor");
+        limparCursoresEspeciaisDoMapa();
         return;
     }
 
     posicaoCursorNoMapa = obterPosicaoNoMapaPeloEvento(evento);
-    const inimigoSobCursor = encontrarInimigoNaPosicao(
-        posicaoCursorNoMapa.x,
-        posicaoCursorNoMapa.y
-    );
-    canvas.classList.toggle("inimigo-sob-cursor", Boolean(inimigoSobCursor));
-    canvas.classList.toggle(
-        "fliperama-sob-cursor",
-        fliperamaEstaNaPosicao(posicaoCursorNoMapa.x, posicaoCursorNoMapa.y)
-    );
-    canvas.classList.toggle(
-        "radio-sob-cursor",
-        radioProjetoRelogioEstaNaPosicao(posicaoCursorNoMapa.x, posicaoCursorNoMapa.y)
-    );
+    atualizarCursorEspecialDoMapa(posicaoCursorNoMapa.x, posicaoCursorNoMapa.y);
 });
 
 canvas.addEventListener("mouseleave", () => {
     posicaoCursorNoMapa = null;
-    canvas.classList.remove("inimigo-sob-cursor");
-    canvas.classList.remove("fliperama-sob-cursor");
-    canvas.classList.remove("radio-sob-cursor");
+    limparCursoresEspeciaisDoMapa();
 });
 
 // Torres
@@ -13875,6 +25231,34 @@ canvas.addEventListener("click", (evento) => {
     }
 
     const { x, y } = obterPosicaoNoMapaPeloEvento(evento);
+    const relogioDoIntervalo = obterRelogioDoIntervaloNaPosicao(x, y);
+    if (relogioDoIntervalo) {
+        interagirComRelogioDoIntervalo(relogioDoIntervalo);
+        return;
+    }
+
+    const painelDeContencao = obterPainelDeContencaoNaPosicao(x, y);
+    if (painelDeContencao) {
+        ativarProtocoloDeContencao(painelDeContencao.id);
+        return;
+    }
+
+    if (terminalLaboratorioEstaNaPosicao(x, y)) {
+        mostrarRegistroDoLaboratorio(true);
+        return;
+    }
+
+    if (transmissorFuturoDespedacadoEstaNaPosicao(x, y)) {
+        mostrarTransmissaoFuturoDespedacado(true);
+        return;
+    }
+
+    const registroPontoZero = obterRegistroPontoZeroNaPosicao(x, y);
+    if (registroPontoZero) {
+        mostrarRegistroDoPontoZero(registroPontoZero.id, true);
+        return;
+    }
+
     if (radioProjetoRelogioEstaNaPosicao(x, y)) {
         mostrarTransmissaoProjetoRelogio(true);
         return;
@@ -13888,9 +25272,15 @@ canvas.addEventListener("click", (evento) => {
     const configuracaoDaConstrucao = obterConfiguracaoDaTorre();
     const construcaoEhMina = configuracaoDaConstrucao.tipoDeItem === "mina";
     const construcaoEhBomba = configuracaoDaConstrucao.tipoDeItem === "bomba";
+    const construcaoExigeCaminho = configuracaoDaConstrucao.exigeCaminho === true;
     const posicaoDaMina = construcaoEhMina
         ? obterPosicaoMaisProximaNoCaminho(x, y)
         : null;
+    const posicaoDaBomba = construcaoEhBomba
+        ? obterPosicaoMaisProximaNoCaminho(x, y)
+        : null;
+    const xDaConstrucao = posicaoDaBomba?.x ?? x;
+    const yDaConstrucao = posicaoDaBomba?.y ?? y;
     const torreClicada = encontrarTorreNaPosicao(x, y);
     const minaClicada = encontrarMinaNaPosicao(x, y);
     const bombaClicada = encontrarBombaNaPosicao(x, y);
@@ -13926,28 +25316,39 @@ canvas.addEventListener("click", (evento) => {
         } else {
             bombaClicada.ativada = true;
             bombaClicada.explodeEm = Date.now() + configuracaoDaBomba.tempoDoPavio;
-            mostrarAviso(localizar(
-                "Pavio aceso! A Bomba Pesada explode em {segundos} segundo.",
-                {
-                    segundos: (configuracaoDaBomba.tempoDoPavio / 1000)
-                        .toLocaleString(idiomaAtual)
-                }
-            ));
+            mostrarAviso(localizar("Pavio aceso! {nome} explode em {segundos} segundo.", {
+                nome: obterNomeLocalizado(configuracaoDaBomba),
+                segundos: (configuracaoDaBomba.tempoDoPavio / 1000)
+                    .toLocaleString(idiomaAtual)
+            }));
         }
-    } else if (construcaoEhMina && !estaNoCaminho(x, y)) {
+    } else if (construcaoExigeCaminho && !estaNoCaminho(x, y)) {
         mostrarAviso(localizar("A {nome} só pode ser colocada no caminho.", {
             nome: obterNomeLocalizado(configuracaoDaConstrucao)
         }));
-    } else if (!construcaoEhMina && estaNoCaminho(x, y)) {
+    } else if (!construcaoExigeCaminho && estaNoCaminho(x, y)) {
         mostrarAviso(localizar("Não é possível colocar torres no caminho."));
     } else if (
         fliperamaNoMapa
-        && Math.hypot(fliperamaNoMapa.x - x, fliperamaNoMapa.y - y)
+        && Math.hypot(
+            fliperamaNoMapa.x - xDaConstrucao,
+            fliperamaNoMapa.y - yDaConstrucao
+        )
             < CONFIG.fliperama.distanciaMinimaDasTorres
     ) {
         mostrarAviso(localizar("Deixe espaço livre ao redor do fliperama."));
-    } else if (estaPertoDoRadioProjetoRelogio(x, y)) {
+    } else if (estaPertoDoRadioProjetoRelogio(xDaConstrucao, yDaConstrucao)) {
         mostrarAviso(localizar("Deixe espaço livre ao redor do rádio."));
+    } else if (estaPertoDoTerminalLaboratorio(xDaConstrucao, yDaConstrucao)) {
+        mostrarAviso(localizar("Deixe espaço livre ao redor do terminal."));
+    } else if (estaPertoDoTransmissorFuturoDespedacado(xDaConstrucao, yDaConstrucao)) {
+        mostrarAviso(localizar("Deixe espaço livre ao redor do transmissor."));
+    } else if (estaPertoDosRegistrosPontoZero(xDaConstrucao, yDaConstrucao)) {
+        mostrarAviso(localizar("Deixe espaço livre ao redor dos registros."));
+    } else if (estaPertoDosRelogiosDoIntervalo(xDaConstrucao, yDaConstrucao)) {
+        mostrarAviso(localizar("Deixe espaço livre ao redor dos Relógios de Ruptura."));
+    } else if (estaPertoDosPaineisDeContencao(xDaConstrucao, yDaConstrucao)) {
+        mostrarAviso(localizar("Deixe espaço livre ao redor do painel de contenção."));
     } else if (!torreEstaDesbloqueada(tipoDeTorreParaConstruir)) {
         const configuracaoBloqueada = obterConfiguracaoDaTorre(tipoDeTorreParaConstruir);
         tipoDeTorreParaConstruir = obterPrimeiraDefesaDisponivelParaPartida();
@@ -13980,27 +25381,31 @@ canvas.addEventListener("click", (evento) => {
         construcaoEhBomba
         && estaPertoDeOutraDefesaConsumivel(
             bombasPesadas,
-            x,
-            y,
+            xDaConstrucao,
+            yDaConstrucao,
             configuracaoDaConstrucao.distanciaMinimaEntreBombas
         )
     ) {
-        mostrarAviso(localizar("Não coloque Bombas Pesadas muito perto umas das outras."));
-    } else if (!construcaoEhMina && estaPertoDeOutraTorreOuBomba(x, y)) {
-        mostrarAviso(localizar("Não coloque esta defesa muito perto de torres ou Bombas Pesadas."));
+        mostrarAviso(localizar("Não coloque bombas muito perto umas das outras."));
+    } else if (
+        !construcaoEhMina
+        && estaPertoDeOutraTorreOuBomba(xDaConstrucao, yDaConstrucao)
+    ) {
+        mostrarAviso(localizar("Não coloque esta defesa muito perto de torres ou bombas."));
     } else if (construcaoEhBomba) {
         bombasPesadas.push({
-            x,
-            y,
+            x: xDaConstrucao,
+            y: yDaConstrucao,
             tipo: tipoDeTorreParaConstruir,
             ativada: false,
             explodeEm: 0
         });
         dinheiro -= configuracaoDaConstrucao.custo;
+        registrarDefesaConstruidaParaConquistas(tipoDeTorreParaConstruir);
         mostrarAviso(localizar(
             "Bomba posicionada · clique nela para acender o pavio · {quantidade}/{limite} no mapa.",
             {
-                quantidade: bombasPesadas.length,
+                quantidade: obterQuantidadeConstruidaDoTipo(tipoDeTorreParaConstruir),
                 limite: configuracaoDaConstrucao.limitePorPartida
             }
         ));
@@ -14011,8 +25416,9 @@ canvas.addEventListener("click", (evento) => {
             tipo: tipoDeTorreParaConstruir
         });
         dinheiro -= configuracaoDaConstrucao.custo;
+        registrarDefesaConstruidaParaConquistas(tipoDeTorreParaConstruir);
         mostrarAviso(localizar("Mina armada · {quantidade}/{limite} no mapa.", {
-            quantidade: minasTerrestres.length,
+            quantidade: obterQuantidadeConstruidaDoTipo(tipoDeTorreParaConstruir),
             limite: configuracaoDaConstrucao.limitePorPartida
         }));
     } else {
@@ -14028,6 +25434,10 @@ canvas.addEventListener("click", (evento) => {
             valorInvestido: configuracaoDaConstrucao.custo,
             ultimoTiro: 0,
             tirosRecebidos: 0,
+            estaseTemporalExpiraEm: 0,
+            pecasDeSucata: 0,
+            sucataExpiraEm: 0,
+            indicePrismatico: 0,
             ...(configuracaoDaConstrucao.creditosPorWave
                 ? {
                     primeiraWaveParaGerarCreditos: wave + 1,
@@ -14046,6 +25456,7 @@ canvas.addEventListener("click", (evento) => {
         torres.push(novaTorre);
 
         dinheiro -= configuracaoDaConstrucao.custo;
+        registrarDefesaConstruidaParaConquistas(tipoDeTorreParaConstruir);
 
         if (
             tutorialAtivo
@@ -14150,44 +25561,52 @@ function venderTorreSelecionada() {
 }
 
 function calcularValorDeVenda(torre) {
-    return Math.floor(torre.valorInvestido * CONFIG.torre.percentualDeVenda);
+    const percentualDeVenda = CONFIG.torre.percentualDeVenda
+        + obterBonusPermanenteDaLoja("bonusPercentualDeVenda");
+    return Math.floor(torre.valorInvestido * percentualDeVenda);
 }
 
 function obterDescricaoDaTorreSelecionada(torre, configuracao, configuracaoAtual) {
     const nomeDaTorre = obterNomeLocalizado(configuracao);
+    const textoDoElemento = typeof obterTextoDoElemento === "function"
+        ? obterTextoDoElemento(configuracao)
+        : "";
+    const finalizarDescricao = (descricao) => (
+        textoDoElemento ? `${descricao} · ${textoDoElemento}` : descricao
+    );
 
     if (configuracao.efeitoSismico) {
-        return localizar("{nome} · Nível {nivel} · Carga {atual}/{total} · Empurra {distancia} px", {
+        return finalizarDescricao(localizar("{nome} · Nível {nivel} · Carga {atual}/{total} · Empurra {distancia} px", {
             nome: nomeDaTorre,
             nivel: torre.nivel,
             atual: torre.cargaSismica || 0,
             total: configuracaoAtual.efeitoSismico.cargasNecessarias,
             distancia: configuracaoAtual.efeitoSismico.distanciaDoEmpurrao
-        });
+        }));
     }
 
     if (configuracao.creditosPorWave) {
-        return localizar("{nome} · Nível {nivel} · Produção {creditos} créditos por wave", {
+        return finalizarDescricao(localizar("{nome} · Nível {nivel} · Produção {creditos} créditos por wave", {
             nome: nomeDaTorre,
             nivel: torre.nivel,
             creditos: configuracaoAtual.creditosPorWave
-        });
+        }));
     }
 
     if (configuracao.percentualBonusCadencia) {
-        return localizar("{nome} · Cadência próxima +{percentual}% · Alcance {alcance}", {
+        return finalizarDescricao(localizar("{nome} · Cadência próxima +{percentual}% · Alcance {alcance}", {
             nome: nomeDaTorre,
             percentual: obterPercentualInteiro(configuracao.percentualBonusCadencia),
             alcance: torre.alcance
-        });
+        }));
     }
 
     if (configuracao.naoAtira) {
-        return localizar("{nome} · Resistência {atual}/{total} tiros", {
+        return finalizarDescricao(localizar("{nome} · Resistência {atual}/{total} tiros", {
             nome: nomeDaTorre,
             atual: obterResistenciaDaTorre(torre) - (torre.tirosRecebidos || 0),
             total: obterResistenciaDaTorre(torre)
-        });
+        }));
     }
 
     const parametros = {
@@ -14199,14 +25618,14 @@ function obterDescricaoDaTorreSelecionada(torre, configuracao, configuracaoAtual
     };
 
     if (configuracaoAtual.raioDanoEmArea) {
-        return configuracaoPossuiMelhorias(configuracao)
+        return finalizarDescricao(configuracaoPossuiMelhorias(configuracao)
             ? localizar("{nome} · Nível {nivel} · Dano {dano} em {raio} px · Alcance {alcance}", parametros)
-            : localizar("{nome} · Dano {dano} em {raio} px · Alcance {alcance}", parametros);
+            : localizar("{nome} · Dano {dano} em {raio} px · Alcance {alcance}", parametros));
     }
 
-    return configuracaoPossuiMelhorias(configuracao)
+    return finalizarDescricao(configuracaoPossuiMelhorias(configuracao)
         ? localizar("{nome} · Nível {nivel} · Dano {dano} · Alcance {alcance}", parametros)
-        : localizar("{nome} · Dano {dano} · Alcance {alcance}", parametros);
+        : localizar("{nome} · Dano {dano} · Alcance {alcance}", parametros));
 }
 
 function atualizarBotoesDaTorre() {
@@ -14335,7 +25754,7 @@ function obterSkinEquipadaDaTorrePadrao() {
     }
 
     const idDaSkinDeMissao = recompensasPermanentesDasMissoes.skinTorrePadraoEquipada;
-    return CONFIG.missoes.skins[idDaSkinDeMissao] || null;
+    return obterSkinConquistavel(idDaSkinDeMissao);
 }
 
 function obterEstiloDaTorre(torre) {
@@ -14382,8 +25801,13 @@ function atualizarAtributosDaTorreComBonus(torre) {
         configuracaoAtual.dano
         * multiplicadorDeDanoDasTorres
         * multiplicadorDeDanoDoFliperama
+        * obterMultiplicadorPermanenteDaLoja("bonusPercentualDanoDasTorres")
     );
-    torre.alcance = Math.round(configuracaoAtual.alcance * multiplicadorDeAlcanceDasTorres);
+    torre.alcance = Math.round(
+        configuracaoAtual.alcance
+        * multiplicadorDeAlcanceDasTorres
+        * obterMultiplicadorPermanenteDaLoja("bonusPercentualAlcanceDasTorres")
+    );
     torre.velocidadeTiro = configuracaoAtual.velocidadeTiro
         || obterConfiguracaoDaTorre(torre.tipo).velocidadeTiro
         || CONFIG.tiro.velocidade;
@@ -14427,14 +25851,19 @@ function atingiuLimiteDoTipoDeTorre(tipoDaTorre) {
         return false;
     }
 
-    const construcoesDoTipo = configuracao.tipoDeItem === "mina"
+    return obterQuantidadeConstruidaDoTipo(tipoDaTorre) >= limitePorPartida;
+}
+
+function obterQuantidadeConstruidaDoTipo(tipoDaTorre) {
+    const configuracao = obterConfiguracaoDaTorre(tipoDaTorre);
+    const construcoes = configuracao.tipoDeItem === "mina"
         ? minasTerrestres
         : configuracao.tipoDeItem === "bomba"
             ? bombasPesadas
             : torres;
-    return construcoesDoTipo.filter((construcao) => (
+    return construcoes.filter((construcao) => (
         construcao.tipo === tipoDaTorre
-    )).length >= limitePorPartida;
+    )).length;
 }
 
 function obterIntervaloDeAtaqueAtualDaTorre(torre, agora = Date.now()) {
@@ -14482,14 +25911,58 @@ function torreEstaAtordoadaPeloUrso(torre, agora = Date.now()) {
     return agora < (torre.atordoadaPeloUrsoAte || 0);
 }
 
+function torreEstaEmEstaseTemporal(torre, agora = Date.now()) {
+    return agora < (torre.estaseTemporalExpiraEm || 0);
+}
+
+function obterAlvosDosDrones(torre, alvoPrincipal, quantidade) {
+    const candidatos = obterInimigosNoAlcanceDaTorre(torre)
+        .filter((inimigo) => inimigo.vida > 0 && inimigo !== alvoPrincipal)
+        .sort((a, b) => (
+            Math.hypot(a.x - alvoPrincipal.x, a.y - alvoPrincipal.y)
+            - Math.hypot(b.x - alvoPrincipal.x, b.y - alvoPrincipal.y)
+        ));
+    const alvos = [alvoPrincipal, ...candidatos].slice(0, quantidade);
+
+    while (alvos.length < quantidade) {
+        alvos.push(alvoPrincipal);
+    }
+    return alvos;
+}
+
+function obterDanoAtualDaTorreDeSucata(torre, efeitoDeSucata, agora = Date.now()) {
+    if (!efeitoDeSucata) {
+        return torre.dano;
+    }
+    if (agora >= (torre.sucataExpiraEm || 0)) {
+        torre.pecasDeSucata = 0;
+    }
+    const pecasAtivas = Math.min(
+        efeitoDeSucata.maximoDePecas,
+        torre.pecasDeSucata || 0
+    );
+    return Math.round(
+        torre.dano * (1 + pecasAtivas * efeitoDeSucata.percentualDanoPorPeca)
+    );
+}
+
+function obterModoDoProximoDisparoPrismatico(torre) {
+    const modos = ["vermelho", "azul", "amarelo"];
+    return modos[(torre.indicePrismatico || 0) % modos.length];
+}
+
 function atacarComTorres(agora = Date.now()) {
     for (const torre of torres) {
-        if (obterConfiguracaoDaTorre(torre.tipo).naoAtira) {
+        const configuracaoBase = obterConfiguracaoDaTorre(torre.tipo);
+        if (configuracaoBase.naoAtira) {
             torre.alvoAtual = null;
             continue;
         }
 
-        if (torreEstaAtordoadaPeloUrso(torre, agora)) {
+        if (
+            torreEstaAtordoadaPeloUrso(torre, agora)
+            || torreEstaEmEstaseTemporal(torre, agora)
+        ) {
             torre.alvoAtual = null;
             continue;
         }
@@ -14514,7 +25987,20 @@ function atacarComTorres(agora = Date.now()) {
         }
 
         const configuracaoAtual = obterConfiguracaoAtualDaTorre(torre);
-        const quantidadeDeTiros = configuracaoAtual.quantidadeDeLasers || 1;
+        const quantidadeDeTiros = configuracaoAtual.efeitoDeDrones?.quantidade
+            || configuracaoAtual.quantidadeDeLasers
+            || 1;
+        const alvosDosTiros = configuracaoAtual.efeitoDeDrones
+            ? obterAlvosDosDrones(torre, alvo, quantidadeDeTiros)
+            : Array.from({ length: quantidadeDeTiros }, () => alvo);
+        const modoPrismatico = configuracaoAtual.efeitoPrismatico
+            ? obterModoDoProximoDisparoPrismatico(torre)
+            : null;
+        const danoDoAtaque = obterDanoAtualDaTorreDeSucata(
+            torre,
+            configuracaoAtual.efeitoDeSucata,
+            agora
+        );
         const perpendicularX = -Math.sin(torre.anguloDaMira);
         const perpendicularY = Math.cos(torre.anguloDaMira);
 
@@ -14523,18 +26009,32 @@ function atacarComTorres(agora = Date.now()) {
             tiros.push({
                 x: torre.x + perpendicularX * deslocamento,
                 y: torre.y + perpendicularY * deslocamento,
-                alvo,
+                alvo: alvosDosTiros[indiceDoTiro],
+                origemX: torre.x,
+                origemY: torre.y,
+                alcanceOriginal: obterAlcanceAtualDaTorre(torre, agora),
                 velocidade: torre.velocidadeTiro || CONFIG.tiro.velocidade,
-                dano: torre.dano,
+                dano: danoDoAtaque,
                 tipoDaTorre: torre.tipo,
+                elemento: configuracaoBase.elemento || null,
                 indiceDoTiro,
                 efeitoGlacial: configuracaoAtual.efeitoGlacial || null,
                 efeitoDeQueimadura: configuracaoAtual.efeitoDeQueimadura || null,
                 efeitoDeRaio: configuracaoAtual.efeitoDeRaio || null,
+                efeitoPerfurante: configuracaoAtual.efeitoPerfurante || null,
+                efeitoDeMarca: configuracaoAtual.efeitoDeMarca || null,
+                efeitoDeCorrente: configuracaoAtual.efeitoDeCorrente || null,
+                efeitoDeSucata: configuracaoAtual.efeitoDeSucata || null,
+                efeitoPrismatico: configuracaoAtual.efeitoPrismatico || null,
+                modoPrismatico,
                 raioDanoEmArea: configuracaoAtual.raioDanoEmArea || 0,
                 duracaoExplosaoEmQuadros: configuracaoAtual.duracaoExplosaoEmQuadros || 0,
                 corEsporos: obterEstiloDaTorre(torre).corEsporos || null
             });
+        }
+
+        if (configuracaoAtual.efeitoPrismatico) {
+            torre.indicePrismatico = ((torre.indicePrismatico || 0) + 1) % 3;
         }
 
         torre.ultimoTiro = agora;
@@ -14545,7 +26045,9 @@ function atacarComTorres(agora = Date.now()) {
 function obterInimigosNoAlcanceDaTorre(torre) {
     const alcanceAtual = obterAlcanceAtualDaTorre(torre);
     return inimigos.filter((inimigo) => (
-        Math.hypot(torre.x - inimigo.x, torre.y - inimigo.y) <= alcanceAtual
+        (typeof torrePodeDetectarInimigo !== "function"
+            || torrePodeDetectarInimigo(torre, inimigo))
+        && Math.hypot(torre.x - inimigo.x, torre.y - inimigo.y) <= alcanceAtual
     ));
 }
 
@@ -14579,8 +26081,10 @@ function calcularProgressoDoInimigo(inimigo) {
     return progresso + Math.sqrt(comprimentoAoQuadrado) * fracaoDoTrecho;
 }
 
-function posicionarInimigoNoProgressoDoCaminho(inimigo, progressoAlvo) {
-    const caminhoAtual = obterCaminhoDoInimigo(inimigo);
+function obterPosicaoNoCaminhoPeloProgresso(
+    progressoAlvo,
+    caminhoAtual = obterCaminhoAtual()
+) {
     let distanciaRestante = Math.max(0, progressoAlvo);
 
     for (let indice = 1; indice < caminhoAtual.length; indice++) {
@@ -14590,19 +26094,32 @@ function posicionarInimigoNoProgressoDoCaminho(inimigo, progressoAlvo) {
 
         if (distanciaRestante <= comprimento) {
             const fracao = comprimento === 0 ? 0 : distanciaRestante / comprimento;
-            inimigo.x = inicio.x + (fim.x - inicio.x) * fracao;
-            inimigo.y = inicio.y + (fim.y - inicio.y) * fracao;
-            inimigo.alvo = indice;
-            return;
+            return {
+                x: inicio.x + (fim.x - inicio.x) * fracao,
+                y: inicio.y + (fim.y - inicio.y) * fracao,
+                alvo: indice
+            };
         }
 
         distanciaRestante -= comprimento;
     }
 
     const fimDoCaminho = caminhoAtual[caminhoAtual.length - 1];
-    inimigo.x = fimDoCaminho.x;
-    inimigo.y = fimDoCaminho.y;
-    inimigo.alvo = caminhoAtual.length - 1;
+    return {
+        x: fimDoCaminho.x,
+        y: fimDoCaminho.y,
+        alvo: caminhoAtual.length - 1
+    };
+}
+
+function posicionarInimigoNoProgressoDoCaminho(inimigo, progressoAlvo) {
+    const posicao = obterPosicaoNoCaminhoPeloProgresso(
+        progressoAlvo,
+        obterCaminhoDoInimigo(inimigo)
+    );
+    inimigo.x = posicao.x;
+    inimigo.y = posicao.y;
+    inimigo.alvo = posicao.alvo;
 }
 
 function recuarInimigoNoCaminho(inimigo, distancia) {
@@ -14614,6 +26131,16 @@ function recuarInimigoNoCaminho(inimigo, distancia) {
     const novoProgresso = Math.max(0, progressoAnterior - distancia);
     posicionarInimigoNoProgressoDoCaminho(inimigo, novoProgresso);
     return progressoAnterior - novoProgresso;
+}
+
+function avancarInimigoNoCaminho(inimigo, distancia) {
+    if (!inimigo || distancia <= 0) {
+        return 0;
+    }
+
+    const progressoAnterior = calcularProgressoDoInimigo(inimigo);
+    posicionarInimigoNoProgressoDoCaminho(inimigo, progressoAnterior + distancia);
+    return calcularProgressoDoInimigo(inimigo) - progressoAnterior;
 }
 
 function empurrarInimigoParaTrasNoCaminho(inimigo, distancia) {
@@ -14932,7 +26459,7 @@ function aplicarEfeitoGlacial(inimigo, efeitoGlacial, agora = Date.now()) {
     }
 }
 
-function detonarTiroDeEsporos(tiro) {
+function detonarTiroDeEsporos(tiro, agora = Date.now()) {
     const xDoImpacto = tiro.alvo.x;
     const yDoImpacto = tiro.alvo.y;
 
@@ -14940,7 +26467,10 @@ function detonarTiroDeEsporos(tiro) {
         xDoImpacto,
         yDoImpacto,
         tiro.raioDanoEmArea,
-        tiro.dano
+        tiro.dano,
+        tiro.elemento,
+        agora,
+        tiro.tipoDaTorre
     );
 
     explosoesDosExplosivos.push({
@@ -14956,6 +26486,7 @@ function detonarTiroDeEsporos(tiro) {
 
 function aplicarRaioEncadeado(tiro) {
     const configuracao = tiro.efeitoDeRaio;
+    const agora = typeof Date === "function" ? Date.now() : undefined;
     const atingidos = [];
     const segmentos = [];
     const alvosPresentesAntesDoImpacto = [...inimigos];
@@ -14969,13 +26500,20 @@ function aplicarRaioEncadeado(tiro) {
         const danoDoSalto = Math.max(1, Math.round(
             tiro.dano * Math.pow(configuracao.multiplicadorDeDanoPorSalto, salto)
         ));
-        aplicarDanoAoInimigo(alvoAtual, danoDoSalto);
+        aplicarDanoAoInimigo(alvoAtual, danoDoSalto, agora, {
+            elemento: tiro.elemento
+        });
         atingidos.push(alvoAtual);
 
         const proximoAlvo = encontrarAlvoMaisProximo(
             alvoAtual,
             alvosPresentesAntesDoImpacto.filter((inimigo) => (
-                inimigo.vida > 0 && !atingidos.includes(inimigo)
+                inimigo.vida > 0
+                && !atingidos.includes(inimigo)
+                && (
+                    typeof tipoDeDefesaPodeDetectarInimigo !== "function"
+                    || tipoDeDefesaPodeDetectarInimigo(tiro.tipoDaTorre, inimigo)
+                )
             )),
             configuracao.alcanceEncadeamento
         );
@@ -15003,6 +26541,178 @@ function aplicarRaioEncadeado(tiro) {
     });
 }
 
+function aplicarMarcaAoInimigo(inimigo, efeitoDeMarca, agora = Date.now()) {
+    if (!efeitoDeMarca || !inimigo || inimigo.vida <= 0) {
+        return false;
+    }
+
+    inimigo.percentualDeDanoAdicionalDaMarca = Math.max(
+        inimigo.percentualDeDanoAdicionalDaMarca || 0,
+        efeitoDeMarca.percentualDanoAdicional
+    );
+    inimigo.marcaExpiraEm = Math.max(
+        inimigo.marcaExpiraEm || 0,
+        agora + efeitoDeMarca.duracao
+    );
+    return true;
+}
+
+function aplicarCorrosaoAoInimigo(inimigo, efeitoCorrosivo, agora = Date.now()) {
+    if (!efeitoCorrosivo || !inimigo || inimigo.vida <= 0) {
+        return false;
+    }
+
+    inimigo.percentualDeDanoAdicionalDaCorrosao = Math.max(
+        inimigo.percentualDeDanoAdicionalDaCorrosao || 0,
+        efeitoCorrosivo.percentualDanoAdicional
+    );
+    inimigo.corrosaoExpiraEm = Math.max(
+        inimigo.corrosaoExpiraEm || 0,
+        agora + efeitoCorrosivo.duracao
+    );
+    return true;
+}
+
+function aplicarTiroPerfurante(tiro, agora = Date.now()) {
+    const dx = tiro.alvo.x - tiro.origemX;
+    const dy = tiro.alvo.y - tiro.origemY;
+    const comprimento = Math.hypot(dx, dy);
+    if (comprimento === 0) {
+        return 0;
+    }
+
+    const direcaoX = dx / comprimento;
+    const direcaoY = dy / comprimento;
+    const metadeDaLargura = tiro.efeitoPerfurante.larguraDoFeixe / 2;
+    let quantidadeAtingida = 0;
+
+    for (const inimigo of inimigos) {
+        if (
+            inimigo.vida <= 0
+            || (
+                typeof tipoDeDefesaPodeDetectarInimigo === "function"
+                && !tipoDeDefesaPodeDetectarInimigo(tiro.tipoDaTorre, inimigo)
+            )
+        ) {
+            continue;
+        }
+        const relativoX = inimigo.x - tiro.origemX;
+        const relativoY = inimigo.y - tiro.origemY;
+        const projecao = relativoX * direcaoX + relativoY * direcaoY;
+        const distanciaLateral = Math.abs(relativoX * direcaoY - relativoY * direcaoX);
+
+        if (
+            projecao >= 0
+            && projecao <= tiro.alcanceOriginal
+            && distanciaLateral <= metadeDaLargura
+        ) {
+            aplicarDanoAoInimigo(inimigo, tiro.dano, agora, {
+                elemento: tiro.elemento
+            });
+            quantidadeAtingida++;
+        }
+    }
+
+    explosoesDosExplosivos.push({
+        x: tiro.origemX,
+        y: tiro.origemY,
+        raio: tiro.alcanceOriginal,
+        quadrosRestantes: 10,
+        totalDeQuadros: 10,
+        tipoVisual: "perfurante",
+        segmentos: [{
+            inicioX: tiro.origemX,
+            inicioY: tiro.origemY,
+            fimX: tiro.origemX + direcaoX * tiro.alcanceOriginal,
+            fimY: tiro.origemY + direcaoY * tiro.alcanceOriginal
+        }]
+    });
+    return quantidadeAtingida;
+}
+
+function aplicarTiroDeCorrente(tiro, agora = Date.now()) {
+    aplicarDanoAoInimigo(tiro.alvo, tiro.dano, agora, {
+        elemento: tiro.elemento
+    });
+    const segundoAlvo = encontrarAlvoMaisProximo(
+        tiro.alvo,
+        inimigos.filter((inimigo) => (
+            inimigo !== tiro.alvo
+            && inimigo.vida > 0
+            && (
+                typeof tipoDeDefesaPodeDetectarInimigo !== "function"
+                || tipoDeDefesaPodeDetectarInimigo(tiro.tipoDaTorre, inimigo)
+            )
+        )),
+        tiro.efeitoDeCorrente.alcanceDoSegundoAlvo
+    );
+    const segmentos = [];
+
+    if (segundoAlvo) {
+        aplicarDanoAoInimigo(
+            segundoAlvo,
+            tiro.dano * tiro.efeitoDeCorrente.multiplicadorDanoSegundoAlvo,
+            agora,
+            { elemento: tiro.elemento }
+        );
+        segmentos.push({
+            inicioX: tiro.alvo.x,
+            inicioY: tiro.alvo.y,
+            fimX: segundoAlvo.x,
+            fimY: segundoAlvo.y
+        });
+    }
+
+    explosoesDosExplosivos.push({
+        x: tiro.alvo.x,
+        y: tiro.alvo.y,
+        raio: tiro.efeitoDeCorrente.alcanceDoSegundoAlvo,
+        quadrosRestantes: 12,
+        totalDeQuadros: 12,
+        tipoVisual: "correntes",
+        cor: "#d39448",
+        segmentos
+    });
+}
+
+function aplicarDisparoPrismatico(tiro, agora = Date.now()) {
+    const efeito = tiro.efeitoPrismatico;
+
+    if (tiro.modoPrismatico === "vermelho") {
+        return aplicarDanoAoInimigo(
+            tiro.alvo,
+            tiro.dano * efeito.multiplicadorVermelho,
+            agora,
+            { elemento: tiro.elemento }
+        );
+    }
+
+    if (tiro.modoPrismatico === "azul") {
+        const danoAplicado = aplicarDanoAoInimigo(
+            tiro.alvo,
+            tiro.dano * efeito.multiplicadorAzul,
+            agora,
+            { elemento: tiro.elemento }
+        );
+        if (tiro.alvo.vida > 0) {
+            tiro.alvo.percentualLentidao = Math.max(
+                tiro.alvo.percentualLentidao || 0,
+                efeito.percentualLentidaoAzul
+            );
+            tiro.alvo.lentidaoExpiraEm = Math.max(
+                tiro.alvo.lentidaoExpiraEm || 0,
+                agora + efeito.duracaoLentidaoAzul
+            );
+        }
+        return danoAplicado;
+    }
+
+    return aplicarDanoAoInimigo(tiro.alvo, tiro.dano, agora, {
+        ignorarReducoes: true,
+        elemento: tiro.elemento
+    });
+}
+
 function moverTiros(multiplicadorDeMovimento = 1) {
     for (let i = tiros.length - 1; i >= 0; i--) {
         const tiro = tiros[i];
@@ -15018,14 +26728,29 @@ function moverTiros(multiplicadorDeMovimento = 1) {
         const deslocamento = tiro.velocidade * multiplicadorDeMovimento;
 
         if (distancia <= deslocamento) {
+            const agora = Date.now();
             if (tiro.efeitoDeRaio) {
-                aplicarRaioEncadeado(tiro);
+                aplicarRaioEncadeado(tiro, agora);
+            } else if (tiro.efeitoPerfurante) {
+                aplicarTiroPerfurante(tiro, agora);
+            } else if (tiro.efeitoDeCorrente) {
+                aplicarTiroDeCorrente(tiro, agora);
+            } else if (tiro.efeitoPrismatico) {
+                aplicarDisparoPrismatico(tiro, agora);
             } else if (tiro.raioDanoEmArea) {
                 detonarTiroDeEsporos(tiro);
             } else {
-                aplicarDanoAoInimigo(tiro.alvo, tiro.dano);
-                aplicarEfeitoGlacial(tiro.alvo, tiro.efeitoGlacial);
-                aplicarEfeitoDeQueimadura(tiro.alvo, tiro.efeitoDeQueimadura);
+                aplicarDanoAoInimigo(tiro.alvo, tiro.dano, agora, {
+                    elemento: tiro.elemento
+                });
+                aplicarEfeitoGlacial(tiro.alvo, tiro.efeitoGlacial, agora);
+                aplicarEfeitoDeQueimadura(
+                    tiro.alvo,
+                    tiro.efeitoDeQueimadura,
+                    agora,
+                    tiro.elemento
+                );
+                aplicarMarcaAoInimigo(tiro.alvo, tiro.efeitoDeMarca, agora);
             }
             tiros.splice(i, 1);
         } else {
@@ -15229,22 +26954,34 @@ function desenharMapa() {
     const faseAtual = obterFaseAtual();
     const caminhosAtuais = obterCaminhosAtuais();
     const tema = temasDoMapa[faseAtual.tema] || temasDoMapa.campo;
+    const mapaEhLimbo = faseAtual.tema === "intervaloPerdido";
+    const mapaEhLinhaTemporal = faseAtual.tema === "linhaTemporal";
 
-    ctx.fillStyle = tema.terrenoBase;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (mapaEhLimbo) {
+        desenharFundoDoLimbo(tema);
+    } else if (mapaEhLinhaTemporal) {
+        desenharFundoDasFrentesTemporais();
+    } else {
+        ctx.fillStyle = tema.terrenoBase;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const tamanhoBloco = 48;
-    for (let y = 0; y < canvas.height; y += tamanhoBloco) {
-        for (let x = 0; x < canvas.width; x += tamanhoBloco) {
-            ctx.fillStyle = (x / tamanhoBloco + y / tamanhoBloco) % 2 === 0
-                ? tema.terrenoClaro
-                : tema.terrenoEscuro;
-            ctx.fillRect(x, y, tamanhoBloco, tamanhoBloco);
+        const tamanhoBloco = 48;
+        for (let y = 0; y < canvas.height; y += tamanhoBloco) {
+            for (let x = 0; x < canvas.width; x += tamanhoBloco) {
+                ctx.fillStyle = (x / tamanhoBloco + y / tamanhoBloco) % 2 === 0
+                    ? tema.terrenoClaro
+                    : tema.terrenoEscuro;
+                ctx.fillRect(x, y, tamanhoBloco, tamanhoBloco);
+            }
         }
     }
 
     if (faseAtual.tema === "glitch") {
         desenharFalhasDoMapa();
+    }
+
+    if (faseAtual.tema === "intervaloPerdido") {
+        desenharMarcasDoIntervaloPerdido();
     }
 
     desenharDecoracoesDoMapa(faseAtual.tema);
@@ -15258,6 +26995,10 @@ function desenharMapa() {
     }
 
     desenharTrilhosDeImpulso();
+    desenharCamarasDeContencaoDoLaboratorio();
+    desenharFendasTemporais();
+    desenharSetoresDoPontoZero();
+    desenharEntradaDaFrenteTemporal();
 
     const entradasDesenhadas = new Set();
     for (const caminhoAtual of caminhosAtuais) {
@@ -15275,6 +27016,516 @@ function desenharMapa() {
     const torreFinal = obterPosicaoDaTorreFinal(caminhosAtuais[0]);
     desenharTorreFinal(torreFinal.x, torreFinal.y, tema);
     desenharRadioProjetoRelogio();
+    desenharTerminalLaboratorio();
+    desenharTransmissorFuturoDespedacado();
+    desenharRegistrosPontoZero();
+    desenharRelogiosDeRuptura();
+}
+
+function desenharFundoDasFrentesTemporais() {
+    const larguraDaEra = canvas.width / 3;
+    const eras = [
+        { nome: "PASSADO", base: "#3f3527", claro: "#59462f", escuro: "#29291f", corDoDestaque: "#efb653" },
+        { nome: "PRESENTE", base: "#282039", claro: "#3c2a4b", escuro: "#191827", corDoDestaque: "#d95ee5" },
+        { nome: "FUTURO", base: "#14283b", claro: "#1b4050", escuro: "#0d1728", corDoDestaque: "#60e3d4" }
+    ];
+
+    ctx.save();
+    for (let indice = 0; indice < eras.length; indice++) {
+        const era = eras[indice];
+        const inicioX = Math.floor(indice * larguraDaEra);
+        const fimX = indice === eras.length - 1
+            ? canvas.width
+            : Math.ceil((indice + 1) * larguraDaEra);
+        ctx.fillStyle = era.base;
+        ctx.fillRect(inicioX, 0, fimX - inicioX, canvas.height);
+        for (let y = 0; y < canvas.height; y += 48) {
+            for (let x = inicioX; x < fimX; x += 48) {
+                ctx.fillStyle = ((x - inicioX) / 48 + y / 48) % 2 === 0
+                    ? era.claro
+                    : era.escuro;
+                ctx.fillRect(x, y, Math.min(48, fimX - x), 48);
+            }
+        }
+        ctx.fillStyle = "rgba(5, 7, 12, 0.72)";
+        ctx.fillRect(inicioX + 18, 18, 122, 30);
+        ctx.strokeStyle = era.corDoDestaque;
+        ctx.lineWidth = 3;
+        ctx.strokeRect(inicioX + 18, 18, 122, 30);
+        ctx.fillStyle = era.corDoDestaque;
+        ctx.font = "900 14px 'Courier New', monospace";
+        ctx.textAlign = "center";
+        ctx.fillText(localizar(era.nome), inicioX + 79, 38);
+    }
+
+    ctx.fillStyle = "rgba(4, 5, 10, 0.9)";
+    ctx.fillRect(larguraDaEra - 5, 0, 10, canvas.height);
+    ctx.fillRect(larguraDaEra * 2 - 5, 0, 10, canvas.height);
+    ctx.fillStyle = "rgba(239, 182, 83, 0.72)";
+    for (let y = 12; y < canvas.height; y += 36) {
+        ctx.fillRect(larguraDaEra - 8, y, 6, 18);
+    }
+    ctx.fillStyle = "rgba(96, 227, 212, 0.72)";
+    for (let y = 30; y < canvas.height; y += 36) {
+        ctx.fillRect(larguraDaEra * 2 + 2, y, 6, 18);
+    }
+    ctx.restore();
+}
+
+function desenharEntradaDaFrenteTemporal(agora = Date.now()) {
+    if (!faseAtualUsaLinhaDeFrenteTemporal() || !frenteTemporalAtiva) {
+        return;
+    }
+
+    const entrada = frenteTemporalAtiva.entrada;
+    const caminho = obterCaminhoAtual();
+    const ponto = caminho[entrada.indiceDoPontoNoCaminho];
+    const emAviso = frenteTemporalAtiva.estado === "aviso";
+    const pulso = Math.floor(agora / 130) % 2;
+    const tamanho = emAviso ? 38 + pulso * 7 : 48 + pulso * 4;
+    ctx.save();
+    ctx.translate(ponto.x, ponto.y);
+    ctx.fillStyle = "rgba(5, 6, 12, 0.82)";
+    ctx.fillRect(-tamanho / 2 - 6, -tamanho / 2 - 6, tamanho + 12, tamanho + 12);
+    ctx.strokeStyle = entrada.cor;
+    ctx.lineWidth = emAviso ? 4 : 7;
+    ctx.setLineDash(emAviso ? [8, 6] : []);
+    ctx.strokeRect(-tamanho / 2, -tamanho / 2, tamanho, tamanho);
+    ctx.setLineDash([]);
+    ctx.fillStyle = entrada.cor;
+    ctx.fillRect(-4, -tamanho / 2 - 11, 8, tamanho + 22);
+    ctx.fillRect(-tamanho / 2 - 11, -4, tamanho + 22, 8);
+    const rotulo = emAviso
+        ? localizar("FRENTE {era} · ABRINDO", { era: localizar(entrada.nome) })
+        : localizar("FRENTE {era} · ATIVA", { era: localizar(entrada.nome) });
+    ctx.font = "900 13px 'Courier New', monospace";
+    ctx.textAlign = "center";
+    const larguraDoRotulo = Math.max(190, ctx.measureText(rotulo).width + 24);
+    ctx.fillStyle = "rgba(5, 6, 12, 0.92)";
+    ctx.fillRect(-larguraDoRotulo / 2, -tamanho / 2 - 49, larguraDoRotulo, 27);
+    ctx.fillStyle = entrada.cor;
+    ctx.fillText(rotulo, 0, -tamanho / 2 - 31);
+    ctx.restore();
+}
+
+function desenharFendasDosPortadores(agora = Date.now()) {
+    if (!faseAtualUsaLinhaDeFrenteTemporal()) {
+        return;
+    }
+
+    for (const fenda of fendasDosPortadores) {
+        if (agora >= fenda.expiraEm) {
+            continue;
+        }
+        const pulso = Math.floor(agora / 110) % 3;
+        ctx.save();
+        ctx.translate(fenda.x, fenda.y);
+        ctx.fillStyle = "rgba(12, 6, 20, 0.78)";
+        ctx.fillRect(-24 - pulso, -10, 48 + pulso * 2, 20);
+        ctx.fillStyle = "#d95ee5";
+        ctx.fillRect(-18, -5 - pulso, 36, 10 + pulso * 2);
+        ctx.fillStyle = "#60e3d4";
+        ctx.fillRect(-8 - pulso, -14, 16 + pulso * 2, 28);
+        ctx.fillStyle = "#fff06c";
+        ctx.fillRect(-3, -3, 6, 6);
+        ctx.restore();
+    }
+}
+
+function desenharFundoDoLimbo(tema) {
+    ctx.fillStyle = tema.terrenoBase;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    ctx.globalAlpha = 0.58;
+    ctx.fillStyle = tema.terrenoClaro;
+    ctx.fillRect(0, 0, canvas.width, 165);
+    ctx.fillRect(0, 535, canvas.width, canvas.height - 535);
+    ctx.fillStyle = tema.terrenoEscuro;
+    ctx.fillRect(0, 164, canvas.width, 3);
+    ctx.fillRect(0, 534, canvas.width, 3);
+    ctx.restore();
+}
+
+function desenharMarcasDoIntervaloPerdido() {
+    const pulso = (Date.now() % 1600) / 1600;
+    const centros = [
+        { x: 165, y: 555, raio: 88 },
+        { x: 625, y: 118, raio: 112 },
+        { x: 1055, y: 570, raio: 96 }
+    ];
+
+    ctx.save();
+    ctx.globalAlpha = 0.25;
+    ctx.strokeStyle = "#70aeb0";
+    ctx.lineWidth = 3;
+    ctx.setLineDash([14, 10]);
+    for (const centro of centros) {
+        ctx.beginPath();
+        ctx.arc(centro.x, centro.y, centro.raio + pulso * 8, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.strokeStyle = "#b88745";
+        ctx.beginPath();
+        ctx.arc(centro.x, centro.y, centro.raio * 0.58, -Math.PI * 0.2, Math.PI * 1.25);
+        ctx.stroke();
+        ctx.strokeStyle = "#70aeb0";
+    }
+
+    ctx.setLineDash([]);
+    ctx.fillStyle = "rgba(74, 126, 132, 0.2)";
+    ctx.fillRect(80, 170, 430, 4);
+    ctx.fillRect(720, 535, 390, 4);
+    ctx.fillStyle = "rgba(160, 116, 59, 0.2)";
+    ctx.fillRect(390, 95, 4, 125);
+    ctx.fillRect(925, 470, 4, 150);
+    ctx.font = "900 30px 'Courier New', monospace";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "rgba(93, 104, 116, 0.2)";
+    ctx.fillText("00:00", canvas.width / 2, canvas.height - 34);
+    ctx.restore();
+}
+
+function desenharRelogiosDeRuptura(agora = Date.now()) {
+    if (!faseAtualEhIntervaloPerdido()) {
+        return;
+    }
+
+    const configuracao = CONFIG.intervaloPerdido.relogiosDeRuptura;
+    const desafio = desafioDosRelogiosDoIntervalo;
+    let indiceIluminado = -1;
+    if (desafio?.estado === "mostrando") {
+        const passo = Math.floor(
+            (agora - desafio.iniciadoEm) / configuracao.intervaloDeExibicaoMs
+        );
+        indiceIluminado = desafio.sequencia[passo] ?? -1;
+    }
+
+    for (let indice = 0; indice < configuracao.posicoes.length; indice++) {
+        const relogio = configuracao.posicoes[indice];
+        const iluminado = indice === indiceIluminado;
+        const respondendo = desafio?.estado === "respondendo";
+        const pulso = Math.floor(agora / 140) % 2;
+        ctx.save();
+        ctx.translate(relogio.x, relogio.y);
+        ctx.fillStyle = "rgba(107, 116, 126, 0.2)";
+        ctx.fillRect(-32, -29, 72, 72);
+        ctx.fillStyle = "rgba(255, 255, 251, 0.94)";
+        ctx.fillRect(-37, -37, 74, 74);
+        ctx.strokeStyle = iluminado ? "#f0a83d" : respondendo ? "#31898c" : "#697782";
+        ctx.lineWidth = iluminado ? 7 : 4;
+        ctx.beginPath();
+        ctx.arc(0, 0, 28 + (iluminado ? pulso * 3 : 0), 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.strokeStyle = "#9b6e36";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -18);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(15, 0);
+        ctx.stroke();
+        ctx.fillStyle = "#46535e";
+        ctx.fillRect(-3, -3, 6, 6);
+        ctx.fillStyle = iluminado ? "#9a5a16" : "#4f5c66";
+        ctx.font = "900 12px 'Courier New', monospace";
+        ctx.textAlign = "center";
+        ctx.fillText(relogio.id.toUpperCase(), 0, 52);
+        ctx.restore();
+    }
+
+    if (desafio) {
+        const texto = desafio.estado === "mostrando"
+            ? localizar("MEMORIZE A SEQUÊNCIA")
+            : localizar("REPITA A SEQUÊNCIA · {segundos}s", {
+                segundos: Math.max(1, Math.ceil((desafio.terminaEm - agora) / 1000))
+            });
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.font = "900 15px 'Courier New', monospace";
+        ctx.fillStyle = "rgba(255, 255, 251, 0.94)";
+        ctx.fillRect(canvas.width / 2 - 190, 18, 380, 34);
+        ctx.strokeStyle = "#9b6e36";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(canvas.width / 2 - 190, 18, 380, 34);
+        ctx.fillStyle = "#384650";
+        ctx.fillText(texto, canvas.width / 2, 40);
+        ctx.restore();
+    }
+}
+
+function desenharMarcadorDaFendaTemporal(posicao, fenda, tipo, pulso) {
+    const raio = CONFIG.futuroDespedacado.fendasTemporais.raioVisual;
+    const cor = tipo === "entrada" ? "#bc5cff" : "#54e8dc";
+    const posicaoDoRotulo = posicao.y < 190 ? 44 : -55;
+    ctx.save();
+    ctx.translate(posicao.x, posicao.y);
+    ctx.globalAlpha = 0.24 + pulso * 0.08;
+    ctx.fillStyle = cor;
+    ctx.beginPath();
+    ctx.arc(0, 0, raio + pulso * 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = "#080a12";
+    ctx.lineWidth = 9;
+    ctx.beginPath();
+    ctx.arc(0, 0, raio - 5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = cor;
+    ctx.lineWidth = 4;
+    ctx.setLineDash([8, 5]);
+    ctx.lineDashOffset = tipo === "entrada" ? -pulso * 4 : pulso * 4;
+    ctx.beginPath();
+    ctx.arc(0, 0, raio - 5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = "#080a12";
+    ctx.fillRect(-60, posicaoDoRotulo, 120, 18);
+    ctx.strokeStyle = cor;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-60, posicaoDoRotulo, 120, 18);
+    ctx.fillStyle = "#f5f5ff";
+    ctx.textAlign = "center";
+    ctx.font = "900 9px 'Courier New', monospace";
+    ctx.fillText(
+        localizar("FENDA {fenda} · {tipo}", {
+            fenda: fenda.id.toUpperCase(),
+            tipo: localizar(tipo === "entrada" ? "ENTRADA" : "SAÍDA")
+        }),
+        0,
+        posicaoDoRotulo + 12
+    );
+    ctx.restore();
+}
+
+function desenharFendasTemporais() {
+    if (!faseAtualUsaFuturoDespedacado()) {
+        return;
+    }
+
+    const pulso = Math.floor(Date.now() / 160) % 4;
+    for (const fenda of CONFIG.futuroDespedacado.fendasTemporais.pares) {
+        desenharMarcadorDaFendaTemporal(
+            obterPosicaoNoCaminhoPeloProgresso(fenda.entradaProgresso),
+            fenda,
+            "entrada",
+            pulso
+        );
+        desenharMarcadorDaFendaTemporal(
+            obterPosicaoNoCaminhoPeloProgresso(fenda.saidaProgresso),
+            fenda,
+            "saida",
+            pulso
+        );
+    }
+}
+
+function desenharSetoresDoPontoZero() {
+    if (!faseAtualUsaPontoZero()) {
+        return;
+    }
+
+    const pulso = Math.floor(Date.now() / 180) % 3;
+    ctx.save();
+    ctx.lineCap = "square";
+    for (const setor of CONFIG.pontoZero.oscilacaoTemporal.setores) {
+        const inicio = obterPosicaoNoCaminhoPeloProgresso(setor.inicioProgresso);
+        const fim = obterPosicaoNoCaminhoPeloProgresso(setor.fimProgresso);
+        const tipo = obterTipoDoSetorPontoZero(setor);
+        const estavel = tipo === "estavel";
+        const cor = estavel ? "#67e5db" : "#f0bd62";
+        const centroX = (inicio.x + fim.x) / 2;
+        const centroY = (inicio.y + fim.y) / 2;
+        const deslocamentoDoRotulo = centroX < 300 ? -76 : -58;
+
+        ctx.globalAlpha = 0.13 + pulso * 0.025;
+        ctx.strokeStyle = cor;
+        ctx.lineWidth = 62;
+        ctx.beginPath();
+        ctx.moveTo(inicio.x, inicio.y);
+        ctx.lineTo(fim.x, fim.y);
+        ctx.stroke();
+        ctx.globalAlpha = 0.92;
+        ctx.lineWidth = 4;
+        ctx.setLineDash(estavel ? [12, 8] : [5, 7]);
+        ctx.beginPath();
+        ctx.moveTo(inicio.x, inicio.y);
+        ctx.lineTo(fim.x, fim.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const texto = localizar(
+            estavel ? "SETOR {setor} · ESTÁVEL −25%" : "SETOR {setor} · RUPTURA +30%",
+            { setor: setor.id.toUpperCase() }
+        );
+        ctx.font = "900 9px 'Courier New', monospace";
+        const largura = Math.max(132, ctx.measureText(texto).width + 14);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "rgba(7, 9, 14, .92)";
+        ctx.fillRect(
+            centroX + deslocamentoDoRotulo - largura / 2,
+            centroY - 10,
+            largura,
+            20
+        );
+        ctx.strokeStyle = cor;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(
+            centroX + deslocamentoDoRotulo - largura / 2,
+            centroY - 10,
+            largura,
+            20
+        );
+        ctx.fillStyle = "#f8fbff";
+        ctx.textAlign = "center";
+        ctx.fillText(texto, centroX + deslocamentoDoRotulo, centroY + 3);
+    }
+    ctx.restore();
+}
+
+function obterEstadoVisualDaCamaraDeContencao(camara, agora = Date.now()) {
+    const selecionada = camara.id === idDaCamaraDeContencaoSelecionada;
+
+    if (
+        selecionada
+        && contencaoLaboratorioUsadaNaWave
+        && agora < contencaoLaboratorioFechaEm
+    ) {
+        return {
+            id: "contagem",
+            cor: "#f0c776",
+            texto: localizar("AGUARDE {segundos}s", {
+                segundos: formatarSegundosDaContencao(
+                    contencaoLaboratorioFechaEm - agora
+                )
+            })
+        };
+    }
+
+    if (selecionada && contencaoLaboratorioEstaFechada(agora)) {
+        return {
+            id: "fechada",
+            cor: "#ef6a4c",
+            texto: localizar("FECHADA {segundos}s", {
+                segundos: formatarSegundosDaContencao(
+                    contencaoLaboratorioExpiraEm - agora
+                )
+            })
+        };
+    }
+
+    if (contencaoLaboratorioUsadaNaWave) {
+        return { id: "usada", cor: "#817970", texto: localizar("USADO") };
+    }
+
+    return { id: "pronta", cor: "#69e2cf", texto: localizar("PRONTO") };
+}
+
+function desenharPortasDaCamaraDeContencao(camara, estado) {
+    const area = camara.area;
+    const espessura = estado.id === "fechada" ? 10 : 4;
+    const recuo = estado.id === "fechada" ? 3 : 10;
+    ctx.fillStyle = estado.cor;
+    ctx.fillRect(
+        area.x - espessura / 2,
+        area.y + recuo,
+        espessura,
+        area.altura - recuo * 2
+    );
+    ctx.fillRect(
+        area.x + area.largura - espessura / 2,
+        area.y + recuo,
+        espessura,
+        area.altura - recuo * 2
+    );
+
+    if (estado.id === "fechada") {
+        ctx.fillStyle = "#2b211e";
+        for (let y = area.y + 12; y < area.y + area.altura - 8; y += 14) {
+            ctx.fillRect(area.x - 5, y, 10, 5);
+            ctx.fillRect(area.x + area.largura - 5, y, 10, 5);
+        }
+    }
+}
+
+function desenharPainelDaCamaraDeContencao(camara, estado) {
+    const painel = camara.painel;
+    ctx.fillStyle = "rgba(0, 0, 0, .38)";
+    ctx.fillRect(painel.x - 28, painel.y - 20, 62, 50);
+    ctx.fillStyle = "#24211f";
+    ctx.fillRect(painel.x - 31, painel.y - 24, 62, 48);
+    ctx.fillStyle = "#5f574e";
+    ctx.fillRect(painel.x - 25, painel.y - 18, 50, 36);
+    ctx.fillStyle = "#171d1b";
+    ctx.fillRect(painel.x - 18, painel.y - 12, 36, 19);
+    ctx.strokeStyle = estado.cor;
+    ctx.lineWidth = 3;
+    ctx.strokeRect(painel.x - 18, painel.y - 12, 36, 19);
+    ctx.fillStyle = estado.cor;
+    ctx.fillRect(painel.x - 19, painel.y + 12, 9, 5);
+    ctx.fillRect(painel.x - 4, painel.y + 12, 9, 5);
+    ctx.fillRect(painel.x + 11, painel.y + 12, 9, 5);
+    ctx.fillStyle = "#f7f3df";
+    ctx.textAlign = "center";
+    ctx.font = "900 13px 'Courier New', monospace";
+    ctx.fillText(camara.rotuloDaCamara, painel.x, painel.y + 3);
+
+    const larguraDoEstado = Math.max(74, ctx.measureText(estado.texto).width + 16);
+    ctx.fillStyle = "rgba(23, 21, 19, .94)";
+    ctx.fillRect(painel.x - larguraDoEstado / 2, painel.y - 48, larguraDoEstado, 18);
+    ctx.strokeStyle = estado.cor;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(painel.x - larguraDoEstado / 2, painel.y - 48, larguraDoEstado, 18);
+    ctx.fillStyle = estado.cor;
+    ctx.font = "900 9px 'Courier New', monospace";
+    ctx.fillText(estado.texto, painel.x, painel.y - 35);
+}
+
+function desenharCamarasDeContencaoDoLaboratorio() {
+    if (!faseAtualUsaLaboratorioAbandonado()) {
+        return;
+    }
+
+    const agora = Date.now();
+    const configuracao = CONFIG.laboratorioAbandonado.contencao;
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+
+    for (const camara of configuracao.camaras) {
+        const estado = obterEstadoVisualDaCamaraDeContencao(camara, agora);
+        const area = camara.area;
+        ctx.fillStyle = estado.id === "fechada"
+            ? "rgba(239, 106, 76, .18)"
+            : estado.id === "contagem"
+                ? "rgba(240, 199, 118, .14)"
+                : "rgba(105, 226, 207, .07)";
+        ctx.fillRect(area.x, area.y, area.largura, area.altura);
+        ctx.strokeStyle = estado.cor;
+        ctx.lineWidth = 2;
+        ctx.setLineDash(estado.id === "pronta" ? [7, 5] : []);
+        ctx.strokeRect(area.x, area.y, area.largura, area.altura);
+        ctx.setLineDash([]);
+        ctx.fillStyle = estado.cor;
+        ctx.textAlign = "center";
+        ctx.font = "900 8px 'Courier New', monospace";
+        ctx.fillText(
+            localizar("CÂMARA {camara}", { camara: camara.rotuloDaCamara }),
+            area.x + area.largura / 2,
+            area.y + area.altura - 7
+        );
+        desenharPortasDaCamaraDeContencao(camara, estado);
+        desenharPainelDaCamaraDeContencao(camara, estado);
+    }
+
+    ctx.fillStyle = "rgba(23, 21, 19, .92)";
+    ctx.fillRect(430, 15, 340, 25);
+    ctx.strokeStyle = contencaoLaboratorioUsadaNaWave ? "#817970" : "#69e2cf";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(430, 15, 340, 25);
+    ctx.fillStyle = contencaoLaboratorioUsadaNaWave ? "#aaa198" : "#8bf1df";
+    ctx.textAlign = "center";
+    ctx.font = "900 11px 'Courier New', monospace";
+    ctx.fillText(localizar("PROTOCOLO DE CONTENÇÃO"), 600, 32);
+    ctx.restore();
 }
 
 function desenharTrilhosDeImpulso() {
@@ -15394,6 +27645,154 @@ function desenharRadioProjetoRelogio() {
     ctx.restore();
 }
 
+function desenharTerminalLaboratorio() {
+    if (!faseAtualUsaLaboratorioAbandonado() || !terminalLaboratorioDisponivel) {
+        return;
+    }
+
+    const terminal = CONFIG.laboratorioAbandonado.terminal;
+    const pulso = Math.floor(Date.now() / 220) % 2;
+    ctx.save();
+    ctx.translate(terminal.x, terminal.y);
+    ctx.imageSmoothingEnabled = false;
+
+    ctx.fillStyle = `rgba(105, 226, 207, ${pulso ? 0.18 : 0.1})`;
+    ctx.fillRect(-55 - pulso * 3, -54 - pulso * 3, 110 + pulso * 6, 108 + pulso * 6);
+    ctx.fillStyle = "rgba(0, 0, 0, .42)";
+    ctx.fillRect(-45, -32, 96, 78);
+    ctx.fillStyle = "#272523";
+    ctx.fillRect(-49, -38, 96, 76);
+    ctx.fillStyle = "#6d6253";
+    ctx.fillRect(-42, -31, 82, 62);
+    ctx.fillStyle = "#161d1b";
+    ctx.fillRect(-34, -24, 66, 39);
+    ctx.strokeStyle = "#69e2cf";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(-34, -24, 66, 39);
+    ctx.fillStyle = "#69e2cf";
+    ctx.fillRect(-27, -15, 38, 4);
+    ctx.fillRect(-27, -6, 52, 4);
+    ctx.fillRect(-27, 3, 29, 4);
+    ctx.fillStyle = "#c69a51";
+    ctx.fillRect(-31, 21, 16, 7);
+    ctx.fillRect(-9, 21, 16, 7);
+    ctx.fillRect(13, 21, 16, 7);
+    ctx.fillStyle = "#302b27";
+    ctx.fillRect(-55, 37, 108, 10);
+    ctx.fillRect(-35, 47, 68, 12);
+
+    ctx.fillStyle = "#171b19";
+    ctx.fillRect(-91, 63, 182, 21);
+    ctx.strokeStyle = "#c69a51";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-91, 63, 182, 21);
+    ctx.fillStyle = "#eef7e9";
+    ctx.textAlign = "center";
+    ctx.font = "900 10px 'Courier New', monospace";
+    ctx.fillText(localizar("LER · REGISTRO 00"), 0, 77);
+    ctx.restore();
+}
+
+function desenharTransmissorFuturoDespedacado() {
+    if (
+        !faseAtualUsaFuturoDespedacado()
+        || !transmissorFuturoDespedacadoDisponivel
+    ) {
+        return;
+    }
+
+    const transmissor = CONFIG.futuroDespedacado.transmissor;
+    const pulso = Math.floor(Date.now() / 200) % 3;
+    ctx.save();
+    ctx.translate(transmissor.x, transmissor.y);
+    ctx.imageSmoothingEnabled = false;
+    ctx.fillStyle = `rgba(188, 92, 255, ${0.1 + pulso * 0.05})`;
+    ctx.fillRect(-58 - pulso * 2, -52 - pulso * 2, 116 + pulso * 4, 104 + pulso * 4);
+    ctx.fillStyle = "rgba(0, 0, 0, .45)";
+    ctx.fillRect(-48, -33, 100, 78);
+    ctx.fillStyle = "#151a24";
+    ctx.fillRect(-52, -39, 100, 76);
+    ctx.fillStyle = "#343b4b";
+    ctx.fillRect(-44, -31, 84, 60);
+    ctx.fillStyle = "#090d16";
+    ctx.fillRect(-35, -23, 66, 34);
+    ctx.strokeStyle = "#bc5cff";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(-35, -23, 66, 34);
+    ctx.fillStyle = "#54e8dc";
+    ctx.fillRect(-27, -15, 44, 4);
+    ctx.fillRect(-27, -6, 54, 4);
+    ctx.fillStyle = "#bc5cff";
+    ctx.fillRect(-27, 3, 31, 4);
+    ctx.strokeStyle = "#727c91";
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(29, -38);
+    ctx.lineTo(50, -72);
+    ctx.stroke();
+    ctx.fillStyle = pulso === 2 ? "#ff526e" : "#70263a";
+    ctx.fillRect(44, -78, 14, 14);
+    ctx.fillStyle = "#080b12";
+    ctx.fillRect(-100, 58, 200, 21);
+    ctx.strokeStyle = "#bc5cff";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-100, 58, 200, 21);
+    ctx.fillStyle = "#f6edff";
+    ctx.textAlign = "center";
+    ctx.font = "900 10px 'Courier New', monospace";
+    ctx.fillText(localizar("OUVIR · TRANSMISSÃO 11"), 0, 72);
+    ctx.restore();
+}
+
+function desenharRegistrosPontoZero() {
+    const registros = obterRegistrosPontoZeroDisponiveis();
+    if (registros.length === 0) {
+        return;
+    }
+
+    const pulso = Math.floor(Date.now() / 220) % 2;
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    for (const registro of registros) {
+        const lido = registrosPontoZeroLidos.has(registro.id);
+        ctx.translate(registro.x, registro.y);
+        ctx.fillStyle = `rgba(103, 229, 219, ${lido ? 0.07 : 0.12 + pulso * 0.06})`;
+        ctx.fillRect(-41 - pulso * 2, -39 - pulso * 2, 82 + pulso * 4, 78 + pulso * 4);
+        ctx.fillStyle = "rgba(0, 0, 0, .42)";
+        ctx.fillRect(-33, -24, 72, 57);
+        ctx.fillStyle = "#252938";
+        ctx.fillRect(-37, -29, 72, 56);
+        ctx.fillStyle = "#4d5365";
+        ctx.fillRect(-31, -23, 60, 43);
+        ctx.fillStyle = "#0b1218";
+        ctx.fillRect(-24, -17, 46, 25);
+        ctx.strokeStyle = lido ? "#697080" : "#67e5db";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(-24, -17, 46, 25);
+        ctx.fillStyle = lido ? "#697080" : "#f0bd62";
+        ctx.fillRect(-17, -10, 27, 4);
+        ctx.fillRect(-17, -2, 34, 4);
+        ctx.fillStyle = "#171922";
+        ctx.fillRect(-41, 26, 82, 8);
+
+        const rotulo = lido
+            ? localizar("REGISTRO {numero} · LIDO", { numero: registro.numero })
+            : localizar("LER · REGISTRO {numero}", { numero: registro.numero });
+        ctx.font = "900 9px 'Courier New', monospace";
+        const largura = Math.max(112, ctx.measureText(rotulo).width + 14);
+        ctx.fillStyle = "rgba(7, 9, 14, .94)";
+        ctx.fillRect(-largura / 2, 42, largura, 19);
+        ctx.strokeStyle = lido ? "#697080" : "#f0bd62";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(-largura / 2, 42, largura, 19);
+        ctx.fillStyle = "#f8fbff";
+        ctx.textAlign = "center";
+        ctx.fillText(rotulo, 0, 55);
+        ctx.translate(-registro.x, -registro.y);
+    }
+    ctx.restore();
+}
+
 function desenharFalhasDoMapa() {
     const blocos = [
         [72, 88, 84, 12, "#e84cff"],
@@ -15495,14 +27894,141 @@ function desenharFliperamaNoMapa() {
 
 function desenharDecoracoesDoMapa(temaDaFase) {
     const decoracoes = decoracoesDoMapa[temaDaFase] || decoracoesDoMapa.campo;
+    const percentual = mapaPersonalizadoAtivo
+        ? CONFIG.editorDeFases.percentuaisDeDecoracoes[
+            mapaPersonalizadoAtivo.nivelDeDecoracoes
+        ] ?? 0
+        : 1;
+    const decoracoesVisiveis = decoracoes.slice(
+        0,
+        Math.round(decoracoes.length * percentual)
+    );
 
-    for (const decoracao of decoracoes) {
+    for (const decoracao of decoracoesVisiveis) {
         const desenharDecoracao = desenhadoresDeDecoracao[decoracao.tipo];
 
         if (desenharDecoracao) {
             desenharDecoracao(decoracao);
         }
     }
+}
+
+function desenharPredioApagado({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "rgba(72, 73, 82, 0.24)";
+    ctx.fillRect(-34, -52, 78, 108);
+    ctx.fillStyle = "#666872";
+    ctx.fillRect(-40, -58, 68, 108);
+    ctx.fillStyle = "#a5a5aa";
+    ctx.fillRect(-31, -49, 50, 90);
+    ctx.fillStyle = "#f7f7f3";
+    ctx.fillRect(-31, -49, 50, 24);
+    ctx.fillRect(-31, 6, 50, 35);
+    ctx.fillStyle = "#494a52";
+    ctx.fillRect(-22, -17, 12, 14);
+    ctx.fillRect(4, -17, 12, 14);
+    ctx.fillStyle = "#d8cf94";
+    ctx.fillRect(-22, -17, 12, 5);
+    ctx.fillRect(4, -17, 12, 5);
+    ctx.restore();
+}
+
+function desenharSilhuetaCongelada({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.globalAlpha = 0.64;
+    ctx.fillStyle = "#53545d";
+    ctx.fillRect(-11, -35, 22, 22);
+    ctx.fillRect(-16, -13, 32, 38);
+    ctx.fillRect(-23, -7, 9, 31);
+    ctx.fillRect(14, -7, 9, 31);
+    ctx.fillRect(-14, 25, 10, 29);
+    ctx.fillRect(4, 25, 10, 29);
+    ctx.fillStyle = "#f6f6f2";
+    ctx.fillRect(-11, -35, 22, 9);
+    ctx.fillRect(-16, 6, 32, 8);
+    ctx.restore();
+}
+
+function desenharFragmentoApagado({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "#f8f8f4";
+    ctx.fillRect(-46, -18, 92, 36);
+    ctx.fillRect(-29, -31, 58, 62);
+    ctx.fillStyle = "#a9a9b0";
+    ctx.fillRect(-35, -11, 18, 8);
+    ctx.fillRect(8, 3, 26, 9);
+    ctx.fillRect(-7, 18, 14, 8);
+    ctx.strokeStyle = "#62636c";
+    ctx.lineWidth = 3;
+    ctx.setLineDash([7, 6]);
+    ctx.strokeRect(-43, -15, 86, 30);
+    ctx.restore();
+}
+
+function desenharIlhaDoLimbo({ x, y, escala, origem }) {
+    const aparencias = {
+        campo: { topo: "#5f9b60", borda: "#31533d", base: "#88928c", detalhe: desenharArvore },
+        deserto: { topo: "#d5a45e", borda: "#8f6136", base: "#a29282", detalhe: desenharPiramide },
+        artico: { topo: "#c9e8f2", borda: "#6d9fb2", base: "#9daab0", detalhe: desenharIglu },
+        selva: { topo: "#3f7847", borda: "#24522e", base: "#808e83", detalhe: desenharRuinaDaSelva },
+        vulcanica: { topo: "#75403a", borda: "#3b282b", base: "#7c7d82", detalhe: desenharVulcao },
+        futurista: { topo: "#315d78", borda: "#17334a", base: "#8b98a4", detalhe: desenharPredioNeon },
+        pontoZero: { topo: "#666b78", borda: "#353a48", base: "#969ba3", detalhe: desenharBobinaTemporal }
+    };
+    const aparencia = aparencias[origem] || aparencias.campo;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = "rgba(120, 126, 134, 0.18)";
+    ctx.fillRect(-64, 35, 136, 14);
+    ctx.fillStyle = aparencia.base;
+    ctx.fillRect(-54, 18, 108, 20);
+    ctx.fillRect(-38, 38, 76, 10);
+    ctx.fillRect(-18, 48, 36, 8);
+    ctx.fillStyle = aparencia.borda;
+    ctx.fillRect(-72, 4, 144, 19);
+    ctx.fillRect(-58, -5, 116, 29);
+    ctx.fillStyle = aparencia.topo;
+    ctx.fillRect(-64, 1, 128, 16);
+    ctx.fillRect(-48, -10, 96, 27);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.28)";
+    ctx.fillRect(-41, -7, 43, 5);
+    aparencia.detalhe({ x: 0, y: -31, escala: 0.42 });
+    ctx.restore();
+}
+
+function desenharRelogioFlutuanteDoLimbo({ x, y, escala, angulo = 0 }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angulo);
+    ctx.scale(escala, escala);
+    ctx.globalAlpha = 0.72;
+    ctx.fillStyle = "rgba(105, 116, 128, 0.2)";
+    ctx.fillRect(-35, -28, 78, 72);
+    ctx.fillStyle = "#65717c";
+    ctx.fillRect(-34, -34, 68, 68);
+    ctx.fillStyle = "#fffffb";
+    ctx.fillRect(-27, -27, 54, 54);
+    ctx.strokeStyle = "#b88745";
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(0, 0, 20, 0, Math.PI * 1.72);
+    ctx.stroke();
+    ctx.fillStyle = "#46535e";
+    ctx.fillRect(-3, -19, 6, 21);
+    ctx.fillRect(0, -3, 17, 6);
+    ctx.fillRect(-4, -4, 8, 8);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(20, -30, 12, 12);
+    ctx.restore();
 }
 
 function desenharLago({ x, y, escala }) {
@@ -16256,6 +28782,169 @@ function desenharPlacaNeon({ x, y, escala }) {
     ctx.restore();
 }
 
+function desenharBobinaTemporal({ x, y, escala }) {
+    const pulso = Math.floor(Date.now() / 220) % 2;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "#171918";
+    ctx.fillRect(-34, 24, 68, 12);
+    ctx.fillStyle = "#66533b";
+    ctx.fillRect(-26, 14, 52, 14);
+    ctx.fillStyle = "#b47a34";
+    ctx.fillRect(-22, -24, 9, 42);
+    ctx.fillRect(13, -24, 9, 42);
+    ctx.fillStyle = "#d4a64c";
+    ctx.fillRect(-28, -30, 21, 8);
+    ctx.fillRect(7, -30, 21, 8);
+    ctx.strokeStyle = pulso ? "#8bf2df" : "#4da99d";
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(0, -4, 18 + pulso * 3, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "#e7fff8";
+    ctx.fillRect(-3, -7, 6, 6);
+    ctx.restore();
+}
+
+function desenharTerminalAntigo({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "#171918";
+    ctx.fillRect(-34, -30, 68, 65);
+    ctx.fillStyle = "#5c5549";
+    ctx.fillRect(-28, -24, 56, 53);
+    ctx.fillStyle = "#152a27";
+    ctx.fillRect(-21, -17, 42, 25);
+    ctx.fillStyle = "#71d8c7";
+    ctx.fillRect(-17, -13, 30, 4);
+    ctx.fillRect(-17, -5, 22, 4);
+    ctx.fillStyle = "#d1a14b";
+    ctx.fillRect(-19, 14, 8, 8);
+    ctx.fillRect(-6, 14, 8, 8);
+    ctx.fillRect(7, 14, 8, 8);
+    ctx.fillStyle = "#302a23";
+    ctx.fillRect(-24, 35, 11, 20);
+    ctx.fillRect(13, 35, 11, 20);
+    ctx.restore();
+}
+
+function desenharTuboDeContencao({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "#171918";
+    ctx.fillRect(-28, -45, 56, 90);
+    ctx.fillStyle = "#6c675c";
+    ctx.fillRect(-22, -39, 44, 78);
+    ctx.fillStyle = "rgba(102, 210, 191, .42)";
+    ctx.fillRect(-16, -31, 32, 62);
+    ctx.fillStyle = "#b8eadf";
+    ctx.fillRect(-11, -25, 5, 41);
+    ctx.fillStyle = "#405b54";
+    ctx.fillRect(2, -16, 8, 30);
+    ctx.fillRect(-5, 10, 18, 8);
+    ctx.fillStyle = "#bb873a";
+    ctx.fillRect(-27, -41, 54, 8);
+    ctx.fillRect(-27, 33, 54, 8);
+    ctx.restore();
+}
+
+function desenharDocumentosDoLaboratorio({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "#191a18";
+    ctx.fillRect(-32, 13, 68, 7);
+    ctx.fillStyle = "#d8ca9c";
+    ctx.fillRect(-29, -8, 38, 23);
+    ctx.fillRect(1, -14, 34, 22);
+    ctx.fillStyle = "#765c3d";
+    ctx.fillRect(-23, -2, 25, 3);
+    ctx.fillRect(-23, 5, 18, 3);
+    ctx.fillRect(7, -8, 21, 3);
+    ctx.fillStyle = "#8f2f2f";
+    ctx.fillRect(20, 2, 8, 8);
+    ctx.restore();
+}
+
+function desenharPredioDestruido({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "#070a10";
+    ctx.fillRect(-39, 31, 82, 11);
+    ctx.fillStyle = "#222a36";
+    ctx.beginPath();
+    ctx.moveTo(-34, 34);
+    ctx.lineTo(-34, -42);
+    ctx.lineTo(-14, -55);
+    ctx.lineTo(0, -34);
+    ctx.lineTo(18, -62);
+    ctx.lineTo(34, -45);
+    ctx.lineTo(34, 34);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "#3a4655";
+    ctx.fillRect(-25, -31, 13, 55);
+    ctx.fillRect(6, -26, 17, 50);
+    ctx.fillStyle = "#704d82";
+    ctx.fillRect(-21, -23, 7, 7);
+    ctx.fillRect(10, -17, 9, 7);
+    ctx.fillStyle = "#4dc2bf";
+    ctx.fillRect(-21, 3, 7, 7);
+    ctx.restore();
+}
+
+function desenharRelogioParado({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.fillStyle = "#090c13";
+    ctx.fillRect(-5, 23, 10, 23);
+    ctx.fillRect(-27, 42, 54, 8);
+    ctx.fillStyle = "#313a48";
+    ctx.fillRect(-31, -31, 62, 62);
+    ctx.fillStyle = "#c3b987";
+    ctx.fillRect(-25, -25, 50, 50);
+    ctx.fillStyle = "#1a202b";
+    ctx.fillRect(-3, -22, 6, 8);
+    ctx.fillRect(-3, 14, 6, 8);
+    ctx.fillRect(-22, -3, 8, 6);
+    ctx.fillRect(14, -3, 8, 6);
+    ctx.fillRect(-3, -2, 6, 5);
+    ctx.fillRect(-3, -18, 5, 19);
+    ctx.save();
+    ctx.rotate(Math.PI * 0.57);
+    ctx.fillRect(-2, -2, 4, 18);
+    ctx.restore();
+    ctx.fillStyle = "#5a273d";
+    ctx.fillRect(-25, 26, 50, 4);
+    ctx.restore();
+}
+
+function desenharSimboloGuardians({ x, y, escala }) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(escala, escala);
+    ctx.rotate(-0.08);
+    ctx.fillStyle = "#090c12";
+    ctx.fillRect(-45, -30, 90, 60);
+    ctx.fillStyle = "#303946";
+    ctx.fillRect(-39, -24, 78, 48);
+    ctx.fillStyle = "#65d8d2";
+    ctx.fillRect(-27, -13, 12, 26);
+    ctx.fillRect(-11, -20, 12, 40);
+    ctx.fillRect(5, -13, 12, 26);
+    ctx.fillRect(21, -20, 7, 40);
+    ctx.fillStyle = "#8b5aa6";
+    ctx.fillRect(-39, 17, 78, 7);
+    ctx.fillStyle = "#171c25";
+    ctx.fillRect(-13, -24, 12, 9);
+    ctx.restore();
+}
+
 function desenharPortao(x, y, cor, rotulo, inverter) {
     const posicaoX = inverter ? x - 20 : x;
     const textoX = inverter ? x - 30 : x + 30;
@@ -16435,8 +29124,12 @@ function desenharInterface() {
     const configuracaoDaConstrucao = obterConfiguracaoDaTorre();
 
     desenharPainelDoHud(16, 16, 440, 104);
-    const rotuloDaWave = faseAtualEhSecreta()
-        ? localizar("FASE SECRETA · WAVE")
+    const rotuloDaWave = mapaPersonalizadoAtivo
+        ? traduzir("editor.hud")
+        : faseAtualEhIntervaloPerdido()
+        ? localizar("INTERVALO · WAVE")
+        : faseAtualEhSecreta()
+            ? localizar("FASE SECRETA · WAVE")
         : modoWavesInfinitas
             ? localizar("FASE {fase} · INFINITO", { fase: faseSelecionada })
             : localizar("FASE {fase} · WAVE", { fase: faseSelecionada });
@@ -16624,18 +29317,57 @@ function obterEscalaVisualDoInimigo(tipo, tamanhoPadrao) {
     return Number.isFinite(escalaConfigurada) ? escalaConfigurada : tamanhoPadrao;
 }
 
+function inimigoEstaReveladoPelaVarredura(inimigo) {
+    if (!inimigo?.camuflado) {
+        return true;
+    }
+
+    return torres.some((torre) => (
+        obterConfiguracaoDaTorre(torre.tipo).detectaCamuflados
+        && Math.hypot(torre.x - inimigo.x, torre.y - inimigo.y)
+            <= obterAlcanceAtualDaTorre(torre)
+    ));
+}
+
+function desenharEfeitoDeCamuflagem(inimigo, x, y, tamanho, revelado) {
+    const falha = Math.floor(Date.now() / 90) % 4;
+    ctx.save();
+    ctx.globalAlpha = revelado ? 0.92 : 0.32;
+    ctx.strokeStyle = revelado ? "#79eee2" : "#f4ffff";
+    ctx.lineWidth = revelado ? 3 : 2;
+    ctx.setLineDash(revelado ? [8, 4] : [3, 8]);
+    ctx.strokeRect(x - 5 - falha, y - 5, tamanho + 10 + falha * 2, tamanho + 10);
+    ctx.setLineDash([]);
+    ctx.fillStyle = revelado ? "#fff17a" : "#79eee2";
+    ctx.fillRect(x - 11 + falha * 3, y + 5 + falha * 6, 8, 3);
+    ctx.fillRect(x + tamanho + 3 - falha * 2, y + tamanho - 9 - falha * 4, 9, 3);
+    ctx.restore();
+}
+
 function desenharInimigos() {
     for (const inimigo of inimigos) {
         const escalaVisual = obterEscalaVisualDoInimigo(inimigo.tipo, inimigo.tamanho);
         const tamanho = escalaVisual * 2;
         const x = Math.round(inimigo.x - escalaVisual);
         const y = Math.round(inimigo.y - escalaVisual);
+        const revelado = inimigoEstaReveladoPelaVarredura(inimigo);
+
+        ctx.save();
+        if (inimigo.camuflado) {
+            ctx.globalAlpha = revelado ? 0.95 : 0.2;
+        }
 
         desenharCorpoDoInimigo(inimigo, x, y, tamanho);
+        desenharEfeitoDaRestauracaoDoVazio(inimigo, x, y, tamanho);
         desenharEfeitoGlacialNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitoDeQueimaduraNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitoSismicoNoInimigo(inimigo, x, y, tamanho);
+        desenharEfeitoDaMarcaNoInimigo(inimigo, x, y, tamanho);
+        desenharEfeitoCorrosivoNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitosFuturistasNoInimigo(inimigo, x, y, tamanho);
+        desenharEfeitosDoFuturoDespedacadoNoInimigo(inimigo, x, y, tamanho);
+        desenharEfeitosDoPontoZeroNoInimigo(inimigo, x, y, tamanho);
+        desenharEfeitoDeContencaoNoInimigo(inimigo, x, y, tamanho);
 
         const larguraBarra = Math.max(42, inimigo.tamanho * 1.8);
         const xBarra = inimigo.x - larguraBarra / 2;
@@ -16646,7 +29378,71 @@ function desenharInimigos() {
         ctx.fillRect(xBarra, yBarra, larguraBarra, 8);
         ctx.fillStyle = percentualVida > 0.35 ? "#68df89" : "#ff6b6b";
         ctx.fillRect(xBarra + 2, yBarra + 2, (larguraBarra - 4) * percentualVida, 4);
+        desenharAvisoSuperEfetivo(inimigo, yBarra);
+        ctx.restore();
+
+        if (inimigo.camuflado) {
+            desenharEfeitoDeCamuflagem(inimigo, x, y, tamanho, revelado);
+        }
     }
+}
+
+function desenharAvisoSuperEfetivo(inimigo, yDaBarraDeVida, agora = Date.now()) {
+    const expiraEm = inimigo.avisoSuperEfetivoExpiraEm || 0;
+    if (agora >= expiraEm) {
+        return;
+    }
+
+    const duracao = CONFIG.elementos.duracaoDoAvisoSuperEfetivoMs;
+    const progresso = Math.max(0, Math.min(1, (expiraEm - agora) / duracao));
+    const texto = localizar("SUPER EFETIVO!");
+    const y = Math.max(18, yDaBarraDeVida - 9 - (1 - progresso) * 8);
+
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, progresso * 2.5);
+    ctx.textAlign = "center";
+    ctx.font = "900 12px 'Courier New', monospace";
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "rgba(3, 10, 8, 0.92)";
+    ctx.strokeText(texto, inimigo.x, y);
+    ctx.fillStyle = inimigo.corDoAvisoSuperEfetivo || "#fff36a";
+    ctx.fillText(texto, inimigo.x, y);
+    ctx.restore();
+}
+
+function desenharEfeitoDaMarcaNoInimigo(inimigo, x, y, tamanho) {
+    if (Date.now() >= (inimigo.marcaExpiraEm || 0)) {
+        return;
+    }
+
+    const margem = 7 + (Math.floor(Date.now() / 120) % 2) * 3;
+    ctx.save();
+    ctx.strokeStyle = "#cf71ff";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x - margem, y - margem, tamanho + margem * 2, tamanho + margem * 2);
+    ctx.fillStyle = "#76f5ff";
+    ctx.fillRect(inimigo.x - 2, y - margem - 9, 4, 12);
+    ctx.fillRect(inimigo.x - 6, y - margem - 5, 12, 4);
+    ctx.restore();
+}
+
+function desenharEfeitoCorrosivoNoInimigo(inimigo, x, y, tamanho) {
+    if (Date.now() >= (inimigo.corrosaoExpiraEm || 0)) {
+        return;
+    }
+
+    const pulso = Math.floor(Date.now() / 140) % 2;
+    const unidade = Math.max(3, Math.round(tamanho / 10));
+    ctx.save();
+    ctx.globalAlpha = pulso ? 0.95 : 0.65;
+    ctx.fillStyle = "#a8ef55";
+    ctx.fillRect(x - unidade, y + unidade * 2, unidade * 2, unidade);
+    ctx.fillRect(x + tamanho - unidade, y + tamanho - unidade * 3, unidade * 2, unidade);
+    ctx.fillRect(x + tamanho / 2 - unidade / 2, y - unidade, unidade, unidade * 2);
+    ctx.strokeStyle = "#d7ff84";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x - 4, y - 4, tamanho + 8, tamanho + 8);
+    ctx.restore();
 }
 
 function desenharEfeitoSismicoNoInimigo(inimigo, x, y, tamanho) {
@@ -16716,6 +29512,120 @@ function desenharEfeitosFuturistasNoInimigo(inimigo, x, y, tamanho) {
         ctx.strokeRect(x - margem - 7, y - margem - 7, tamanho + (margem + 7) * 2, tamanho + (margem + 7) * 2);
     }
 
+    ctx.restore();
+}
+
+function desenharEfeitosDoFuturoDespedacadoNoInimigo(inimigo, x, y, tamanho) {
+    if (!faseAtualUsaFuturoDespedacado()) {
+        return;
+    }
+
+    const agora = Date.now();
+    ctx.save();
+    if (inimigo.tipo === "sentinelaCronologica"
+        && obterReducaoCronologicaDoInimigo(inimigo) > 0) {
+        ctx.strokeStyle = "rgba(84, 232, 220, .72)";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(inimigo.x, inimigo.y, inimigo.tamanho + 10, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    if (inimigo.fendaTemporalAtiva && agora < inimigo.fendaTemporalTeleportaEm) {
+        const restante = inimigo.fendaTemporalTeleportaEm - agora;
+        const duracao = CONFIG.futuroDespedacado.fendasTemporais.duracaoDaContagem;
+        const contagem = Math.max(1, Math.ceil(restante / duracao * 3));
+        const margem = 8 + (Math.floor(agora / 90) % 2) * 4;
+        ctx.strokeStyle = "#bc5cff";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(x - margem, y - margem, tamanho + margem * 2, tamanho + margem * 2);
+        ctx.fillStyle = "#090c14";
+        ctx.fillRect(inimigo.x - 13, y - 28, 26, 22);
+        ctx.fillStyle = "#fff3ff";
+        ctx.font = "900 16px 'Courier New', monospace";
+        ctx.textAlign = "center";
+        ctx.fillText(contagem.toString(), inimigo.x, y - 11);
+    }
+
+    if (
+        agora < (inimigo.fendaTemporalSaidaExpiraEm || 0)
+        || agora < (inimigo.retornoDoEcoExpiraEm || 0)
+        || agora < (inimigo.recuoDaSentinelaExpiraEm || 0)
+    ) {
+        const margem = 10 + (Math.floor(agora / 80) % 3) * 4;
+        ctx.strokeStyle = agora < (inimigo.retornoDoEcoExpiraEm || 0)
+            ? "#a96cf2"
+            : "#54e8dc";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(x - margem, y - margem, tamanho + margem * 2, tamanho + margem * 2);
+    }
+    ctx.restore();
+}
+
+function desenharEfeitosDoPontoZeroNoInimigo(inimigo, x, y, tamanho) {
+    if (!faseAtualUsaPontoZero()) {
+        return;
+    }
+
+    const agora = Date.now();
+    const setor = obterSetorDoPontoZeroParaInimigo(inimigo);
+    const tipoDoSetor = setor ? obterTipoDoSetorPontoZero(setor) : null;
+    ctx.save();
+
+    if (tipoDoSetor) {
+        const cor = tipoDoSetor === "estavel" ? "#67e5db" : "#8f5fb5";
+        ctx.strokeStyle = cor;
+        ctx.lineWidth = 3;
+        ctx.strokeRect(x - 4, y - 4, tamanho + 8, tamanho + 8);
+        ctx.globalAlpha = 0.62;
+        ctx.fillStyle = cor;
+        const deslocamento = tipoDoSetor === "estavel" ? 8 : 14;
+        ctx.fillRect(x - deslocamento, inimigo.y - 3, deslocamento - 2, 6);
+        ctx.globalAlpha = 1;
+    }
+
+    if (inimigo.tipo === "vigiaDoPontoZero"
+        && obterReducaoDoPontoZeroNoInimigo(inimigo) > 0) {
+        ctx.strokeStyle = "rgba(240, 189, 98, .78)";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(inimigo.x, inimigo.y, inimigo.tamanho + 11, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    if (agora < (inimigo.escudoPontoZeroExpiraEm || 0)) {
+        const pulso = Math.floor(agora / 100) % 3;
+        ctx.strokeStyle = "#f0bd62";
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.arc(inimigo.x, inimigo.y, inimigo.tamanho + 10 + pulso * 3, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    if (agora < (inimigo.rupturaPontoZeroExpiraEm || 0)) {
+        const margem = 9 + (Math.floor(agora / 80) % 3) * 5;
+        ctx.strokeStyle = "#8f5fb5";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(x - margem, y - margem, tamanho + margem * 2, tamanho + margem * 2);
+    }
+
+    ctx.restore();
+}
+
+function desenharEfeitoDeContencaoNoInimigo(inimigo, x, y, tamanho) {
+    if (!inimigoEstaRetidoPelaContencao(inimigo)) {
+        return;
+    }
+
+    const pulso = Math.floor(Date.now() / 90) % 2;
+    const margem = 7 + pulso * 3;
+    ctx.save();
+    ctx.strokeStyle = "#ef6a4c";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x - margem, y - margem, tamanho + margem * 2, tamanho + margem * 2);
+    ctx.fillStyle = "rgba(239, 106, 76, .58)";
+    ctx.fillRect(x - margem - 3, y, 5, tamanho);
+    ctx.fillRect(x + tamanho + margem - 2, y, 5, tamanho);
     ctx.restore();
 }
 
@@ -16827,6 +29737,131 @@ function desenharEfeitoGlacialNoInimigo(inimigo, x, y, tamanho) {
 }
 
 function desenharCorpoDoInimigo(inimigo, x, y, tamanho) {
+    if (inimigo.tipo === "curadorDoVazio") {
+        desenharCuradorDoVazio(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "infiltradorCamuflado") {
+        desenharInfiltradorCamuflado(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "sombraCongelada") {
+        desenharSombraCongelada(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "sentinelaIncompleta") {
+        desenharSentinelaIncompleta(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "rascunhoVivo") {
+        desenharRascunhoVivo(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "fragmentoDeSegundo") {
+        desenharFragmentoDeSegundo(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "ponteiroErrante") {
+        desenharPonteiroErrante(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "paradoxoBlindado") {
+        desenharParadoxoBlindado(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "carcereiroDoIntervalo") {
+        desenharCarcereiroDoIntervalo(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "soldadoCronal") {
+        desenharSoldadoCronal(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "portadorDaFenda") {
+        desenharPortadorDaFenda(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "executorCronal") {
+        desenharExecutorCronal(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "guardiaoDoPontoZero") {
+        desenharGuardiaoDoPontoZero(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "vigiaDoPontoZero") {
+        desenharVigiaDoPontoZero(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "arquivistaCorrompido") {
+        desenharArquivistaCorrompido(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "fragmentoDeArquivo") {
+        desenharFragmentoDeArquivo(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "residuoTemporal") {
+        desenharResiduoTemporal(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "sentinelaDoAmanha") {
+        desenharSentinelaDoAmanha(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "sentinelaCronologica") {
+        desenharSentinelaCronologica(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "ecoTemporal") {
+        desenharEcoTemporal(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "andarilhoDeSucata") {
+        desenharAndarilhoDeSucata(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "prototipoAlfa") {
+        desenharPrototipoAlfa(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "guardaDeContencao") {
+        desenharGuardaDeContencao(x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "cobaiaInstavel") {
+        desenharCobaiaInstavel(inimigo, x, y, tamanho);
+        return;
+    }
+
+    if (inimigo.tipo === "automatoDeCobre") {
+        desenharAutomatoDeCobre(x, y, tamanho);
+        return;
+    }
+
     if (inimigo.tipo === "protocoloZero") {
         desenharProtocoloZero(inimigo, x, y, tamanho);
         return;
@@ -17028,6 +30063,514 @@ function desenharCorpoDoInimigo(inimigo, x, y, tamanho) {
     }
 
     desenharInimigoBasico(inimigo, x, y, tamanho);
+}
+
+function desenharFragmentoDeSegundo(x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 10));
+    ctx.save();
+    ctx.fillStyle = "#050811";
+    ctx.fillRect(x + u, y, tamanho - u * 2, u * 2);
+    ctx.fillRect(x + u, y + tamanho - u * 2, tamanho - u * 2, u * 2);
+    ctx.fillStyle = CONFIG.inimigo.fragmentoDeSegundo.cor;
+    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, u * 2);
+    ctx.fillRect(x + u * 3, y + u * 4, tamanho - u * 6, u * 2);
+    ctx.fillRect(x + u * 2, y + u * 6, tamanho - u * 4, u * 2);
+    ctx.fillStyle = "#f0b95f";
+    ctx.fillRect(x + tamanho / 2 - u / 2, y + u * 3, u, tamanho - u * 6);
+    ctx.restore();
+}
+
+function desenharPonteiroErrante(x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 11));
+    const centroX = x + tamanho / 2;
+    const centroY = y + tamanho / 2;
+    ctx.save();
+    ctx.translate(centroX, centroY);
+    ctx.rotate(Math.PI / 4);
+    ctx.fillStyle = "#080710";
+    ctx.fillRect(-u * 2, -tamanho / 2, u * 4, tamanho);
+    ctx.fillStyle = CONFIG.inimigo.ponteiroErrante.cor;
+    ctx.fillRect(-u, -tamanho / 2 + u, u * 2, tamanho - u * 2);
+    ctx.fillStyle = "#fff2a3";
+    ctx.fillRect(-u * 2, -u * 2, u * 4, u * 4);
+    ctx.fillStyle = "#62e4d6";
+    ctx.fillRect(-u, -u, u * 2, u * 2);
+    ctx.restore();
+}
+
+function desenharParadoxoBlindado(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 12));
+    ctx.save();
+    ctx.fillStyle = "#07050d";
+    ctx.fillRect(x - u, y + u * 2, tamanho + u * 2, tamanho - u * 4);
+    ctx.fillRect(x + u * 2, y - u, tamanho - u * 4, tamanho + u * 2);
+    ctx.fillStyle = CONFIG.inimigo.paradoxoBlindado.cor;
+    ctx.fillRect(x, y, tamanho, tamanho);
+    ctx.strokeStyle = "#cf75e1";
+    ctx.lineWidth = u;
+    ctx.strokeRect(x + u, y + u, tamanho - u * 2, tamanho - u * 2);
+    ctx.strokeStyle = "#62e4d6";
+    ctx.lineWidth = Math.max(2, u - 1);
+    ctx.beginPath();
+    ctx.arc(x + tamanho * 0.42, y + tamanho * 0.48, tamanho * 0.23, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = "#f0b95f";
+    ctx.beginPath();
+    ctx.arc(x + tamanho * 0.62, y + tamanho * 0.55, tamanho * 0.23, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "#fff2a3";
+    ctx.fillRect(x + tamanho / 2 - u / 2, y + tamanho / 2 - u / 2, u, u);
+    ctx.restore();
+}
+
+function desenharCarcereiroDoIntervalo(inimigo, x, y, tamanho) {
+    const forma = obterFormaDoCarcereiroDoIntervalo(inimigo);
+    const cores = {
+        passado: { corpo: "#6a503d", corDetalhe: "#d79b57", brilho: "#f6df9a" },
+        futuro: { corpo: "#263f5b", corDetalhe: "#58dfd2", brilho: "#e9ffff" },
+        intervalo: { corpo: "#4a285e", corDetalhe: "#db55e8", brilho: "#fff06c" }
+    }[forma] || { corpo: "#392250", corDetalhe: "#62e4d6", brilho: "#f0b95f" };
+    const u = Math.max(4, Math.floor(tamanho / 13));
+    ctx.save();
+    ctx.fillStyle = "#050409";
+    ctx.fillRect(x - u, y + u * 2, tamanho + u * 2, tamanho - u * 4);
+    ctx.fillRect(x + u * 2, y - u, tamanho - u * 4, tamanho + u * 2);
+    ctx.fillStyle = cores.corpo;
+    ctx.fillRect(x, y, tamanho, tamanho);
+    ctx.fillStyle = cores.corDetalhe;
+    ctx.fillRect(x + u, y + u, tamanho - u * 2, u * 2);
+    ctx.fillRect(x + u, y + tamanho - u * 3, tamanho - u * 2, u * 2);
+    ctx.strokeStyle = cores.brilho;
+    ctx.lineWidth = u;
+    ctx.beginPath();
+    ctx.arc(x + tamanho / 2, y + tamanho / 2, tamanho * 0.27, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = cores.brilho;
+    ctx.fillRect(x + tamanho / 2 - u / 2, y + tamanho * 0.23, u, tamanho * 0.27);
+    ctx.fillRect(x + tamanho / 2, y + tamanho / 2 - u / 2, tamanho * 0.19, u);
+    ctx.restore();
+}
+
+function desenharExecutorCronal(inimigo, x, y, tamanho) {
+    const u = Math.max(4, Math.floor(tamanho / 14));
+    const ordemAtiva = Date.now() < (inimigo.ordemCronalExpiraEm || 0);
+    ctx.save();
+    ctx.fillStyle = "#070911";
+    ctx.fillRect(x - u, y + u * 3, tamanho + u * 2, tamanho - u * 5);
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillStyle = CONFIG.inimigo.executorCronal.cor;
+    ctx.fillRect(x, y + u, tamanho, tamanho - u * 2);
+    ctx.fillStyle = ordemAtiva ? "#fff06c" : "#60e3d4";
+    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, u * 2);
+    ctx.fillRect(x + u * 3, y + tamanho - u * 4, tamanho - u * 6, u * 2);
+    ctx.fillStyle = "#efb653";
+    ctx.fillRect(x + u * 3, y + u * 6, u * 2, u * 2);
+    ctx.fillRect(x + tamanho - u * 5, y + u * 6, u * 2, u * 2);
+    ctx.strokeStyle = ordemAtiva ? "#e55ee8" : "#8d6ca8";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x - u * 2, y - u * 2, tamanho + u * 4, tamanho + u * 4);
+    ctx.restore();
+}
+
+function desenharSoldadoCronal(inimigo, x, y, tamanho) {
+    const forma = atualizarFormaDoSoldadoCronal(inimigo);
+    const u = Math.max(3, Math.floor(tamanho / 13));
+    const formaPassado = forma === "passado";
+    ctx.save();
+    if (!formaPassado) {
+        ctx.globalAlpha = 0.28;
+        ctx.fillStyle = "#60e3d4";
+        ctx.fillRect(x - u * 3, y + u * 2, tamanho, tamanho - u * 4);
+        ctx.globalAlpha = 1;
+    }
+    ctx.fillStyle = "#090812";
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillRect(x, y + u * 3, tamanho, tamanho - u * 6);
+    ctx.fillStyle = formaPassado ? "#765536" : "#244f62";
+    ctx.fillRect(x + u, y + u * 2, tamanho - u * 2, tamanho - u * 4);
+    ctx.fillStyle = formaPassado ? "#efb653" : "#60e3d4";
+    ctx.fillRect(x + u * 3, y + u * 3, tamanho - u * 6, u * 2);
+    ctx.fillRect(x + u * 3, y + tamanho - u * 5, tamanho - u * 6, u * 2);
+    if (formaPassado) {
+        ctx.strokeStyle = "#f6dda2";
+        ctx.lineWidth = u;
+        ctx.strokeRect(x - u, y - u, tamanho + u * 2, tamanho + u * 2);
+    } else {
+        ctx.fillStyle = "#e8ffff";
+        ctx.fillRect(x + tamanho - u * 4, y + u * 5, u * 2, u * 2);
+        ctx.fillRect(x + tamanho, y + u * 2, u * 3, u);
+        ctx.fillRect(x + tamanho + u, y + tamanho - u * 3, u * 4, u);
+    }
+    ctx.restore();
+}
+
+function desenharPortadorDaFenda(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 14));
+    const pulso = Math.floor(Date.now() / 120) % 2;
+    ctx.save();
+    ctx.fillStyle = "#080610";
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillRect(x, y + u * 3, tamanho, tamanho - u * 6);
+    ctx.fillStyle = CONFIG.inimigo.portadorDaFenda.cor;
+    ctx.fillRect(x + u, y + u * 2, tamanho - u * 2, tamanho - u * 4);
+    ctx.fillStyle = "#d95ee5";
+    ctx.fillRect(x + u * (3 - pulso), y + u * 3, tamanho - u * (6 - pulso * 2), u * 2);
+    ctx.fillRect(x + u * 3, y + tamanho - u * 5, tamanho - u * 6, u * 2);
+    ctx.fillStyle = "#60e3d4";
+    ctx.fillRect(x + tamanho / 2 - u, y + u * 5, u * 2, tamanho - u * 10);
+    ctx.fillRect(x + u * 5, y + tamanho / 2 - u, tamanho - u * 10, u * 2);
+    ctx.strokeStyle = "#fff06c";
+    ctx.lineWidth = 2 + pulso;
+    ctx.strokeRect(x - u * 2, y - u, tamanho + u * 4, tamanho + u * 2);
+    ctx.restore();
+}
+
+function desenharRascunhoVivo(x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 11));
+    const falha = Math.floor(Date.now() / 120) % 3;
+    ctx.save();
+    ctx.globalAlpha = 0.72;
+    ctx.fillStyle = "#5b5c64";
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillRect(x, y + u * 3, tamanho, tamanho - u * 6);
+    ctx.fillStyle = CONFIG.inimigo.rascunhoVivo.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillStyle = "#fffbed";
+    ctx.fillRect(x + u * (2 - falha), y + u * 3, u * 4, u * 2);
+    ctx.fillRect(x + tamanho - u * (4 - falha), y + u * 7, u * 4, u * 2);
+    ctx.restore();
+}
+
+function desenharInfiltradorCamuflado(x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 12));
+    const falha = Math.floor(Date.now() / 110) % 3;
+    ctx.save();
+    ctx.fillStyle = "#0b171b";
+    ctx.fillRect(x + u * 3, y, tamanho - u * 6, tamanho);
+    ctx.fillRect(x + u, y + u * 3, tamanho - u * 2, tamanho - u * 5);
+    ctx.fillStyle = CONFIG.inimigo.infiltradorCamuflado.cor;
+    ctx.fillRect(x + u * 2, y + u * (2 + falha), tamanho - u * 4, u * 3);
+    ctx.fillRect(x + u * 3, y + u * 6, tamanho - u * 6, tamanho - u * 8);
+    ctx.fillStyle = "#efffff";
+    ctx.fillRect(x + u * 3, y + u * 4, u * 2, u);
+    ctx.fillRect(x + tamanho - u * 5, y + u * 4, u * 2, u);
+    ctx.fillStyle = "#fff17a";
+    ctx.fillRect(x - u * (1 + falha), y + u * 7, u * 3, u);
+    ctx.fillRect(x + tamanho - u, y + u * (3 + falha), u * 3, u);
+    ctx.restore();
+}
+
+function desenharSentinelaIncompleta(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 13));
+    ctx.save();
+    ctx.fillStyle = "#3c3d46";
+    ctx.fillRect(x, y + u * 3, tamanho, tamanho - u * 6);
+    ctx.fillRect(x + u * 3, y, tamanho - u * 6, tamanho);
+    ctx.fillStyle = CONFIG.inimigo.sentinelaIncompleta.cor;
+    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, tamanho - u * 4);
+    ctx.fillStyle = "#f5f5f0";
+    ctx.fillRect(x + tamanho / 2, y + u * 2, tamanho / 2 - u * 2, tamanho - u * 4);
+    ctx.fillStyle = "#ece6a7";
+    ctx.fillRect(x + u * 3, y + u * 4, tamanho - u * 6, u * 2);
+    ctx.strokeStyle = "#8de0da";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x - u, y - u, tamanho + u * 2, tamanho + u * 2);
+    ctx.restore();
+}
+
+function desenharSombraCongelada(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 12));
+    ctx.save();
+    ctx.globalAlpha = 0.78;
+    ctx.fillStyle = "#303039";
+    ctx.fillRect(x + u * 3, y, tamanho - u * 6, tamanho);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 7);
+    ctx.fillStyle = CONFIG.inimigo.sombraCongelada.cor;
+    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, tamanho - u * 3);
+    ctx.fillStyle = "#d9d8dc";
+    ctx.fillRect(x + u * 3, y + u * 4, u * 2, u * 2);
+    ctx.fillRect(x + tamanho - u * 5, y + u * 4, u * 2, u * 2);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(x + u, y + tamanho - u * 3, tamanho - u * 2, u * 2);
+    ctx.restore();
+}
+
+function desenharCuradorDoVazio(inimigo, x, y, tamanho) {
+    const u = Math.max(4, Math.floor(tamanho / 14));
+    const restaurando = Date.now() < (inimigo.restauracaoDoVazioExpiraEm || 0);
+    ctx.save();
+    ctx.fillStyle = "#15161c";
+    ctx.fillRect(x - u, y + u * 3, tamanho + u * 2, tamanho - u * 6);
+    ctx.fillRect(x + u * 3, y - u, tamanho - u * 6, tamanho + u * 2);
+    ctx.fillStyle = CONFIG.inimigo.curadorDoVazio.cor;
+    ctx.fillRect(x, y, tamanho, tamanho);
+    ctx.fillStyle = "#efefeb";
+    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, u * 3);
+    ctx.fillRect(x + u * 3, y + tamanho - u * 5, tamanho - u * 6, u * 3);
+    ctx.fillStyle = restaurando ? "#fff09a" : "#8de0da";
+    ctx.fillRect(x + tamanho / 2 - u, y + u * 5, u * 2, tamanho - u * 10);
+    ctx.fillRect(x + u * 4, y + tamanho / 2 - u, tamanho - u * 8, u * 2);
+    ctx.strokeStyle = restaurando ? "#fff4b5" : "#7e758f";
+    ctx.lineWidth = restaurando ? 5 : 3;
+    ctx.strokeRect(x - u * 2, y - u * 2, tamanho + u * 4, tamanho + u * 4);
+    ctx.restore();
+}
+
+function desenharEfeitoDaRestauracaoDoVazio(inimigo, x, y, tamanho) {
+    if (Date.now() >= (inimigo.restauradoPeloVazioExpiraEm || 0)) {
+        return;
+    }
+
+    const margem = 9 + (Math.floor(Date.now() / 90) % 3) * 3;
+    ctx.save();
+    ctx.strokeStyle = "#fff5b0";
+    ctx.lineWidth = 4;
+    ctx.setLineDash([5, 4]);
+    ctx.strokeRect(x - margem, y - margem, tamanho + margem * 2, tamanho + margem * 2);
+    ctx.restore();
+}
+
+function desenharResiduoTemporal(x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 12));
+    const falha = Math.floor(Date.now() / 110) % 2;
+    ctx.save();
+    ctx.globalAlpha = 0.82;
+    ctx.fillStyle = "#2d2537";
+    ctx.fillRect(x + u * 3, y, tamanho - u * 6, tamanho);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 8);
+    ctx.fillStyle = CONFIG.inimigo.residuoTemporal.cor;
+    ctx.fillRect(x + u * 2, y + u * (2 + falha), tamanho - u * 4, u * 3);
+    ctx.fillRect(x + u * 4, y + u * 6, tamanho - u * 8, u * 4);
+    ctx.fillStyle = "#67e5db";
+    ctx.fillRect(x - u * (1 + falha), y + u * 3, u * 3, u * 2);
+    ctx.fillRect(x + tamanho - u, y + u * 8, u * 3, u * 2);
+    ctx.restore();
+}
+
+function desenharFragmentoDeArquivo(x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 10));
+    ctx.fillStyle = "#101820";
+    ctx.fillRect(x + u, y, tamanho - u * 2, tamanho);
+    ctx.fillRect(x, y + u, tamanho, tamanho - u * 2);
+    ctx.fillStyle = CONFIG.inimigo.fragmentoDeArquivo.cor;
+    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, tamanho - u * 4);
+    ctx.fillStyle = "#f0bd62";
+    ctx.fillRect(x + u * 3, y + u * 3, tamanho - u * 6, u);
+    ctx.fillRect(x + u * 3, y + u * 5, tamanho - u * 7, u);
+}
+
+function desenharArquivistaCorrompido(inimigo, x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 13));
+    const pertoDaRuptura = inimigo.vida <= inimigo.vidaMaxima
+        * CONFIG.inimigo.arquivistaCorrompido.percentualDeVidaParaFragmentar;
+    ctx.fillStyle = "#171322";
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 7);
+    ctx.fillStyle = CONFIG.inimigo.arquivistaCorrompido.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillStyle = "#efe4bc";
+    ctx.fillRect(x + u * 4, y + u * 3, tamanho - u * 8, u * 2);
+    ctx.fillStyle = pertoDaRuptura ? "#f0bd62" : "#67e5db";
+    ctx.fillRect(x + u * 3, y + u * 7, tamanho - u * 6, u * 3);
+    ctx.fillStyle = "#080a0f";
+    ctx.fillRect(x + u * 5, y + u * 8, tamanho - u * 10, u);
+}
+
+function desenharVigiaDoPontoZero(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 14));
+    ctx.fillStyle = "#0b0f17";
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 8);
+    ctx.fillStyle = CONFIG.inimigo.vigiaDoPontoZero.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillStyle = "#f0bd62";
+    ctx.fillRect(x + u * 4, y + u * 4, tamanho - u * 8, u * 2);
+    ctx.strokeStyle = "#67e5db";
+    ctx.lineWidth = u;
+    ctx.beginPath();
+    ctx.arc(x + tamanho / 2, y + tamanho / 2 + u * 2, u * 4, 0, Math.PI * 2);
+    ctx.stroke();
+}
+
+function desenharGuardiaoDoPontoZero(inimigo, x, y, tamanho) {
+    const u = Math.max(4, Math.floor(tamanho / 16));
+    ctx.fillStyle = "#05070c";
+    ctx.fillRect(x + u * 3, y, tamanho - u * 6, tamanho);
+    ctx.fillRect(x, y + u * 5, tamanho, tamanho - u * 10);
+    ctx.fillStyle = CONFIG.inimigo.guardiaoDoPontoZero.cor;
+    ctx.fillRect(x + u * 4, y + u * 2, tamanho - u * 8, tamanho - u * 4);
+    ctx.fillStyle = "#f0bd62";
+    ctx.fillRect(x + u * 5, y + u * 4, tamanho - u * 10, u * 3);
+    ctx.fillStyle = "#67e5db";
+    ctx.fillRect(x + u * 5, y + tamanho - u * 7, tamanho - u * 10, u * 2);
+    ctx.strokeStyle = "#8f5fb5";
+    ctx.lineWidth = u;
+    ctx.beginPath();
+    ctx.arc(x + tamanho / 2, y + tamanho / 2, u * 5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "#f0bd62";
+    ctx.fillRect(x + tamanho / 2 - u, y + tamanho / 2 - u * 4, u * 2, u * 5);
+    ctx.fillRect(x + tamanho / 2, y + tamanho / 2, u * 4, u * 2);
+}
+
+function desenharAndarilhoDeSucata(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 13));
+    ctx.fillStyle = "#25252a";
+    ctx.fillRect(x + u * 2, y + u, tamanho - u * 4, tamanho - u * 2);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 8);
+    ctx.fillStyle = CONFIG.inimigo.andarilhoDeSucata.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 5);
+    ctx.fillRect(x + u, y + u * 6, tamanho - u * 2, tamanho - u * 10);
+    ctx.fillStyle = "#bd9c72";
+    ctx.fillRect(x + u * 4, y + u * 3, u * 2, u * 2);
+    ctx.fillRect(x + tamanho - u * 6, y + u * 3, u * 2, u * 2);
+    ctx.fillStyle = "#54e8dc";
+    ctx.fillRect(x + u * 5, y + u * 7, tamanho - u * 10, u * 2);
+    ctx.fillStyle = "#161820";
+    ctx.fillRect(x + u * 2, y + tamanho - u * 2, u * 3, u * 2);
+    ctx.fillRect(x + tamanho - u * 5, y + tamanho - u * 2, u * 3, u * 2);
+}
+
+function desenharEcoTemporal(inimigo, x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 12));
+    const oscilacao = Math.floor(Date.now() / 100) % 2;
+    ctx.save();
+    ctx.globalAlpha = 0.72;
+    ctx.fillStyle = "#291c3e";
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 7);
+    ctx.fillStyle = CONFIG.inimigo.ecoTemporal.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 5);
+    ctx.fillStyle = "#f4e9ff";
+    ctx.fillRect(x + u * 4, y + u * 3, u * 2, u * 2);
+    ctx.fillRect(x + tamanho - u * 6, y + u * 3, u * 2, u * 2);
+    ctx.fillStyle = "#54e8dc";
+    ctx.fillRect(x - u * (2 + oscilacao), y + u * 4, u * 2, u * 2);
+    ctx.fillRect(x + tamanho, y + u * 7, u * (2 + oscilacao), u * 2);
+    ctx.restore();
+}
+
+function desenharSentinelaCronologica(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 14));
+    ctx.fillStyle = "#101620";
+    ctx.fillRect(x + u, y + u * 2, tamanho - u * 2, tamanho - u * 4);
+    ctx.fillRect(x + u * 3, y, tamanho - u * 6, tamanho);
+    ctx.fillStyle = CONFIG.inimigo.sentinelaCronologica.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillStyle = "#99e8e1";
+    ctx.fillRect(x + u * 4, y + u * 4, tamanho - u * 8, u * 2);
+    ctx.fillStyle = "#bc5cff";
+    ctx.fillRect(x + tamanho / 2 - u, y + tamanho / 2, u * 2, u * 5);
+    ctx.fillStyle = "#080b11";
+    ctx.fillRect(x + u * 2, y + tamanho - u * 3, u * 3, u * 3);
+    ctx.fillRect(x + tamanho - u * 5, y + tamanho - u * 3, u * 3, u * 3);
+}
+
+function desenharSentinelaDoAmanha(inimigo, x, y, tamanho) {
+    const u = Math.max(4, Math.floor(tamanho / 15));
+    ctx.fillStyle = "#080b12";
+    ctx.fillRect(x + u * 2, y + u, tamanho - u * 4, tamanho - u * 2);
+    ctx.fillRect(x, y + u * 5, tamanho, tamanho - u * 9);
+    ctx.fillStyle = CONFIG.inimigo.sentinelaDoAmanha.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillStyle = "#53647c";
+    ctx.fillRect(x + u * 4, y + u * 3, tamanho - u * 8, u * 4);
+    ctx.fillStyle = "#54e8dc";
+    ctx.fillRect(x + u * 5, y + u * 4, tamanho - u * 10, u * 2);
+    ctx.fillStyle = "#bc5cff";
+    ctx.fillRect(x + tamanho / 2 - u, y + u * 8, u * 2, u * 4);
+    ctx.strokeStyle = "#d7c477";
+    ctx.lineWidth = u;
+    ctx.beginPath();
+    ctx.arc(x + tamanho / 2, y + tamanho / 2, u * 4, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "#d7c477";
+    ctx.fillRect(x + tamanho / 2 - 1, y + tamanho / 2 - u * 3, 3, u * 4);
+    ctx.fillRect(x + tamanho / 2, y + tamanho / 2, u * 3, 3);
+}
+
+function desenharAutomatoDeCobre(x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 11));
+    ctx.fillStyle = "#34251b";
+    ctx.fillRect(x + u * 2, y + u, tamanho - u * 4, tamanho - u * 2);
+    ctx.fillRect(x, y + u * 4, tamanho, u * 3);
+    ctx.fillStyle = CONFIG.inimigo.automatoDeCobre.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillRect(x + u, y + u * 5, tamanho - u * 2, u * 2);
+    ctx.fillStyle = "#e3b56f";
+    ctx.fillRect(x + u * 4, y + u * 3, tamanho - u * 8, u * 2);
+    ctx.fillStyle = "#5de2cf";
+    ctx.fillRect(x + u * 5, y + u * 4, u, u);
+}
+
+function desenharCobaiaInstavel(inimigo, x, y, tamanho) {
+    const u = Math.max(2, Math.floor(tamanho / 12));
+    const emColapso = inimigo.vida <= inimigo.vidaMaxima
+        * CONFIG.inimigo.cobaiaInstavel.percentualVidaParaColapso;
+    ctx.fillStyle = "#26352f";
+    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 7);
+    ctx.fillStyle = CONFIG.inimigo.cobaiaInstavel.cor;
+    ctx.fillRect(x + u * 3, y + u, tamanho - u * 6, tamanho - u * 2);
+    ctx.fillRect(x + u, y + u * 5, tamanho - u * 2, tamanho - u * 9);
+    ctx.fillStyle = emColapso ? "#ffe176" : "#bff6e7";
+    ctx.fillRect(x + u * 4, y + u * 3, u * 2, u * 2);
+    ctx.fillRect(x + tamanho - u * 6, y + u * 3, u * 2, u * 2);
+    ctx.fillStyle = emColapso ? "#c45145" : "#46796c";
+    ctx.fillRect(x + u * 5, y + u * 7, tamanho - u * 10, u * 3);
+
+    if (emColapso) {
+        ctx.strokeStyle = "#e3b56f";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x - 3, y - 3, tamanho + 6, tamanho + 6);
+    }
+}
+
+function desenharGuardaDeContencao(x, y, tamanho) {
+    const u = Math.max(3, Math.floor(tamanho / 13));
+    ctx.fillStyle = "#302a25";
+    ctx.fillRect(x + u * 2, y + u, tamanho - u * 4, tamanho - u * 2);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 7);
+    ctx.fillStyle = CONFIG.inimigo.guardaDeContencao.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillStyle = "#c69a51";
+    ctx.fillRect(x + u, y + u * 5, u * 3, tamanho - u * 9);
+    ctx.fillRect(x + tamanho - u * 4, y + u * 5, u * 3, tamanho - u * 9);
+    ctx.fillStyle = "#69e2cf";
+    ctx.fillRect(x + u * 4, y + u * 4, tamanho - u * 8, u * 2);
+    ctx.fillStyle = "#19221f";
+    ctx.fillRect(x + u * 5, y + u * 8, tamanho - u * 10, u * 3);
+}
+
+function desenharPrototipoAlfa(inimigo, x, y, tamanho) {
+    const u = Math.max(4, Math.floor(tamanho / 15));
+    ctx.fillStyle = "#282522";
+    ctx.fillRect(x + u * 2, y + u, tamanho - u * 4, tamanho - u * 2);
+    ctx.fillRect(x, y + u * 4, tamanho, tamanho - u * 8);
+    ctx.fillStyle = CONFIG.inimigo.prototipoAlfa.cor;
+    ctx.fillRect(x + u * 3, y + u * 2, tamanho - u * 6, tamanho - u * 4);
+    ctx.fillRect(x + u, y + u * 5, tamanho - u * 2, tamanho - u * 10);
+    ctx.fillStyle = "#c69a51";
+    ctx.fillRect(x + u * 4, y + u * 3, tamanho - u * 8, u * 2);
+    ctx.fillRect(x + u * 4, y + tamanho - u * 5, tamanho - u * 8, u * 2);
+    ctx.fillStyle = "#69e2cf";
+    ctx.fillRect(x + tamanho / 2 - u * 3, y + u * 6, u * 6, u * 6);
+    ctx.fillStyle = "#15201d";
+    ctx.fillRect(x + tamanho / 2 - u, y + u * 7, u * 2, u * 4);
+    ctx.fillStyle = "#f0c776";
+    ctx.fillRect(x + tamanho / 2 - u, y + u * 8, u * 2, u * 2);
+
+    if (Date.now() < (inimigo.estaseExpiraEm || 0)) {
+        const pulso = Math.floor(Date.now() / 85) % 3;
+        ctx.strokeStyle = "#69e2cf";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(
+            x - 9 - pulso * 5,
+            y - 9 - pulso * 5,
+            tamanho + 18 + pulso * 10,
+            tamanho + 18 + pulso * 10
+        );
+    }
 }
 
 function desenharDroneCacador(x, y, tamanho) {
@@ -18343,8 +31886,36 @@ function desenharExplosoesDosExplosivos() {
             continue;
         }
 
+        if (explosao.tipoVisual === "correntes") {
+            desenharRaiosEncadeados(explosao, progresso);
+            continue;
+        }
+
+        if (explosao.tipoVisual === "perfurante") {
+            desenharFeixePerfurante(explosao, progresso);
+            continue;
+        }
+
         if (explosao.tipoVisual === "gelo") {
             desenharExplosaoCongelante(explosao, progresso, raioAtual);
+            continue;
+        }
+
+        if (explosao.tipoVisual === "pulso") {
+            desenharExplosaoDePulso(explosao, progresso, raioAtual);
+            continue;
+        }
+
+        if (explosao.tipoVisual === "corrosao") {
+            desenharExplosaoCorrosiva(explosao, progresso, raioAtual);
+            continue;
+        }
+
+        if (
+            explosao.tipoVisual === "fragmentacao"
+            || explosao.tipoVisual === "fragmento"
+        ) {
+            desenharExplosaoDeFragmentacao(explosao, progresso, raioAtual);
             continue;
         }
 
@@ -18376,7 +31947,7 @@ function desenharExplosoesDosExplosivos() {
 function desenharRaiosEncadeados(explosao, progresso) {
     ctx.save();
     ctx.globalAlpha = Math.max(0, 1 - progresso);
-    ctx.fillStyle = "#8ff7ff";
+    ctx.fillStyle = explosao.cor || "#8ff7ff";
 
     for (const segmento of explosao.segmentos) {
         const dx = segmento.fimX - segmento.inicioX;
@@ -18400,6 +31971,26 @@ function desenharRaiosEncadeados(explosao, progresso) {
     ctx.restore();
 }
 
+function desenharFeixePerfurante(explosao, progresso) {
+    const segmento = explosao.segmentos[0];
+    if (!segmento) {
+        return;
+    }
+
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, 1 - progresso);
+    ctx.strokeStyle = "#69e5da";
+    ctx.lineWidth = 9 - progresso * 5;
+    ctx.beginPath();
+    ctx.moveTo(segmento.inicioX, segmento.inicioY);
+    ctx.lineTo(segmento.fimX, segmento.fimY);
+    ctx.stroke();
+    ctx.strokeStyle = "#e1fffb";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.restore();
+}
+
 function desenharExplosaoCongelante(explosao, progresso, raioAtual) {
     ctx.save();
     ctx.translate(Math.round(explosao.x), Math.round(explosao.y));
@@ -18412,6 +32003,72 @@ function desenharExplosaoCongelante(explosao, progresso, raioAtual) {
     ctx.fillRect(-5, -raioAtual, 10, raioAtual * 2);
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(-8, -8, 16, 16);
+    ctx.restore();
+}
+
+function desenharExplosaoCorrosiva(explosao, progresso, raioAtual) {
+    ctx.save();
+    ctx.translate(Math.round(explosao.x), Math.round(explosao.y));
+    ctx.globalAlpha = Math.max(0, 1 - progresso);
+    ctx.strokeStyle = explosao.cor || "#a8ef55";
+    ctx.lineWidth = 6 - progresso * 2;
+    ctx.strokeRect(-raioAtual, -raioAtual, raioAtual * 2, raioAtual * 2);
+    ctx.fillStyle = "rgba(168, 239, 85, 0.32)";
+    for (let indice = 0; indice < 8; indice++) {
+        const angulo = indice * Math.PI / 4;
+        const distancia = raioAtual * (0.35 + (indice % 3) * 0.18);
+        const tamanho = 8 + (indice % 2) * 5;
+        ctx.fillRect(
+            Math.round(Math.cos(angulo) * distancia) - tamanho / 2,
+            Math.round(Math.sin(angulo) * distancia) - tamanho / 2,
+            tamanho,
+            tamanho
+        );
+    }
+    ctx.fillStyle = "#efffb5";
+    ctx.fillRect(-7, -7, 14, 14);
+    ctx.restore();
+}
+
+function desenharExplosaoDeFragmentacao(explosao, progresso, raioAtual) {
+    ctx.save();
+    ctx.translate(Math.round(explosao.x), Math.round(explosao.y));
+    ctx.globalAlpha = Math.max(0, 1 - progresso);
+    ctx.strokeStyle = explosao.cor || "#ff7048";
+    ctx.lineWidth = 5 - progresso * 2;
+    ctx.strokeRect(-raioAtual, -raioAtual, raioAtual * 2, raioAtual * 2);
+    ctx.fillStyle = "#ffbc55";
+    for (const [direcaoX, direcaoY] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+        const distancia = raioAtual * 0.55;
+        const tamanho = Math.max(4, Math.round(10 * (1 - progresso)));
+        ctx.fillRect(
+            Math.round(direcaoX * distancia) - tamanho / 2,
+            Math.round(direcaoY * distancia) - tamanho / 2,
+            tamanho,
+            tamanho
+        );
+    }
+    ctx.fillStyle = "#fff1a8";
+    ctx.fillRect(-6, -6, 12, 12);
+    ctx.restore();
+}
+
+function desenharExplosaoDePulso(explosao, progresso, raioAtual) {
+    ctx.save();
+    ctx.translate(Math.round(explosao.x), Math.round(explosao.y));
+    ctx.globalAlpha = Math.max(0, 1 - progresso);
+    ctx.strokeStyle = explosao.cor || "#61edf2";
+    ctx.lineWidth = 7 - progresso * 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, raioAtual, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = "#bd78ff";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, Math.max(8, raioAtual * 0.62), 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(-6, -6, 12, 12);
     ctx.restore();
 }
 
@@ -18636,6 +32293,120 @@ function desenharTorreSismica(x, y, estilo) {
     ctx.restore();
 }
 
+function desenharIndicadoresDeNivelDaNovaTorre(estilo) {
+    const nivel = estilo.nivelVisual || 0;
+    ctx.fillStyle = estilo.corDetalhe;
+    for (let indice = 0; indice < nivel; indice++) {
+        ctx.fillRect(-13 + indice * 10, -20, 7, 5);
+    }
+}
+
+function desenharArmamentoDaPerfuradora(estilo) {
+    ctx.fillStyle = "#102c33";
+    ctx.fillRect(-13, -27, 26, 17);
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-9, -59, 7, 38);
+    ctx.fillRect(2, -59, 7, 38);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-11, -63, 22, 7);
+    ctx.fillRect(-3, -58, 6, 30);
+    desenharIndicadoresDeNivelDaNovaTorre(estilo);
+}
+
+function desenharArmamentoDaMarcadora(estilo) {
+    ctx.fillStyle = "#241833";
+    ctx.fillRect(-7, -48, 14, 35);
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-19, -48, 38, 7);
+    ctx.fillRect(-14, -55, 28, 7);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-5, -65, 10, 13);
+    ctx.fillRect(-3, -69, 6, 6);
+    desenharIndicadoresDeNivelDaNovaTorre(estilo);
+}
+
+function desenharArmamentoDosDrones(estilo) {
+    ctx.fillStyle = "#17273c";
+    ctx.fillRect(-21, -37, 42, 24);
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-25, -34, 13, 13);
+    ctx.fillRect(12, -34, 13, 13);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-20, -30, 8, 5);
+    ctx.fillRect(12, -30, 8, 5);
+    ctx.fillRect(-5, -48, 10, 30);
+    desenharIndicadoresDeNivelDaNovaTorre(estilo);
+}
+
+function desenharArmamentoDasCorrentes(estilo) {
+    ctx.fillStyle = "#2d221b";
+    ctx.fillRect(-9, -51, 18, 38);
+    ctx.fillStyle = estilo.corCanhao;
+    for (let indice = 0; indice < 4; indice++) {
+        const y = -58 + indice * 11;
+        ctx.strokeStyle = indice % 2 === 0 ? estilo.corCanhao : estilo.corDetalhe;
+        ctx.lineWidth = 5;
+        ctx.strokeRect(-10, y, 20, 9);
+    }
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-13, -63, 26, 7);
+    desenharIndicadoresDeNivelDaNovaTorre(estilo);
+}
+
+function desenharArmamentoDaSucata(estilo) {
+    ctx.fillStyle = "#282e2c";
+    ctx.fillRect(-15, -34, 30, 21);
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-8, -56, 16, 30);
+    ctx.fillRect(-12, -61, 24, 8);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-21, -39, 10, 10);
+    ctx.fillRect(11, -31, 9, 9);
+    ctx.fillRect(-4, -48, 8, 8);
+    desenharIndicadoresDeNivelDaNovaTorre(estilo);
+}
+
+function desenharArmamentoPrismatico(estilo) {
+    ctx.fillStyle = "#1a2038";
+    ctx.fillRect(-10, -35, 20, 22);
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.beginPath();
+    ctx.moveTo(0, -66);
+    ctx.lineTo(17, -44);
+    ctx.lineTo(8, -24);
+    ctx.lineTo(-8, -24);
+    ctx.lineTo(-17, -44);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "#ff5e75";
+    ctx.fillRect(-10, -45, 6, 12);
+    ctx.fillStyle = "#61c9ff";
+    ctx.fillRect(-3, -55, 6, 16);
+    ctx.fillStyle = "#ffe15c";
+    ctx.fillRect(4, -45, 6, 12);
+    desenharIndicadoresDeNivelDaNovaTorre(estilo);
+}
+
+function desenharArmamentoDaVarredura(estilo) {
+    const pulso = Math.floor(Date.now() / 160) % 3;
+    ctx.fillStyle = "#13242b";
+    ctx.fillRect(-7, -44, 14, 31);
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-15, -50, 30, 9);
+    ctx.fillRect(-20, -57, 40, 7);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-3, -67, 6, 13);
+    ctx.fillRect(-22 + pulso * 4, -61, 8, 4);
+    ctx.strokeStyle = estilo.corDetalhe;
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(0, -48, 23, Math.PI * 1.12, Math.PI * 1.88);
+    ctx.stroke();
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(-2, -70, 4, 4);
+    desenharIndicadoresDeNivelDaNovaTorre(estilo);
+}
+
 function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
     if (estilo.tipoVisual === "mina") {
         desenharMinaTerrestre(x, y, estilo);
@@ -18708,6 +32479,20 @@ function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
         desenharArmamentoDoAmplificador(estilo);
     } else if (estilo.tipoVisual === "lancaChamas") {
         desenharArmamentoDoLancaChamas(estilo);
+    } else if (estilo.tipoVisual === "perfuradora") {
+        desenharArmamentoDaPerfuradora(estilo);
+    } else if (estilo.tipoVisual === "marcadora") {
+        desenharArmamentoDaMarcadora(estilo);
+    } else if (estilo.tipoVisual === "drones") {
+        desenharArmamentoDosDrones(estilo);
+    } else if (estilo.tipoVisual === "correntes") {
+        desenharArmamentoDasCorrentes(estilo);
+    } else if (estilo.tipoVisual === "sucata") {
+        desenharArmamentoDaSucata(estilo);
+    } else if (estilo.tipoVisual === "prismatico") {
+        desenharArmamentoPrismatico(estilo);
+    } else if (estilo.tipoVisual === "varredura") {
+        desenharArmamentoDaVarredura(estilo);
     } else {
         const larguraCanhao = estilo.larguraCanhao || 12;
         const comprimentoCanhao = estilo.comprimentoCanhao || 34;
@@ -18768,6 +32553,7 @@ function desenharTorres() {
             torre.anguloDaMira ?? -Math.PI / 2
         );
         desenharCargaDaTorreSismica(torre, estilo);
+        desenharCargaDeSucata(torre, estilo);
 
         if (torre === torreSelecionada) {
             ctx.strokeStyle = "#ffffff";
@@ -18781,6 +32567,30 @@ function desenharTorres() {
         desenharEfeitoDeLentidaoDoMacaco(torre, estilo);
         desenharEfeitoDeReducaoDaCoruja(torre, estilo);
         desenharEfeitoDeAtordoamentoDoUrso(torre, estilo);
+        desenharEfeitoDeEstaseTemporalNaTorre(torre, estilo);
+    }
+}
+
+function desenharCargaDeSucata(torre, estilo) {
+    const efeitoDeSucata = obterConfiguracaoAtualDaTorre(torre).efeitoDeSucata;
+    if (!efeitoDeSucata) {
+        return;
+    }
+    if (Date.now() >= (torre.sucataExpiraEm || 0)) {
+        torre.pecasDeSucata = 0;
+    }
+
+    const total = efeitoDeSucata.maximoDePecas;
+    const atual = Math.min(total, torre.pecasDeSucata || 0);
+    const larguraBloco = 6;
+    const espaco = 2;
+    const larguraTotal = total * larguraBloco + (total - 1) * espaco;
+    const x = torre.x - larguraTotal / 2;
+    const y = torre.y - estilo.raioBase - 18;
+
+    for (let indice = 0; indice < total; indice++) {
+        ctx.fillStyle = indice < atual ? "#f0bd62" : "#343b39";
+        ctx.fillRect(x + indice * (larguraBloco + espaco), y, larguraBloco, 7);
     }
 }
 
@@ -18885,6 +32695,30 @@ function desenharEfeitoDeAtordoamentoDoUrso(torre, estilo) {
     ctx.strokeRect(torre.x - raio, torre.y - raio, raio * 2, raio * 2);
 }
 
+function desenharEfeitoDeEstaseTemporalNaTorre(torre, estilo) {
+    if (!torreEstaEmEstaseTemporal(torre)) {
+        return;
+    }
+
+    const pulso = Math.floor(Date.now() / 120) % 2;
+    const raio = estilo.raioBase + 16 + pulso * 4;
+    ctx.save();
+    ctx.fillStyle = "rgba(73, 224, 205, 0.16)";
+    ctx.fillRect(torre.x - raio, torre.y - raio, raio * 2, raio * 2);
+    ctx.strokeStyle = "#69e2cf";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(torre.x - raio, torre.y - raio, raio * 2, raio * 2);
+    ctx.strokeStyle = "#c69a51";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(
+        torre.x - raio + 7,
+        torre.y - raio + 7,
+        raio * 2 - 14,
+        raio * 2 - 14
+    );
+    ctx.restore();
+}
+
 function desenharResistenciaDaTorre(torre, estilo) {
     const tirosRecebidos = torre.tirosRecebidos || 0;
 
@@ -18905,36 +32739,58 @@ function desenharResistenciaDaTorre(torre, estilo) {
     }
 }
 
-function desenharEstilhacoGlacial(tiro) {
+function obterAnguloVisualDoTiro(tiro) {
+    const alvo = tiro.alvo;
+    const possuiPosicaoDoAlvo = Number.isFinite(alvo?.x) && Number.isFinite(alvo?.y);
+
+    if (possuiPosicaoDoAlvo) {
+        const dx = alvo.x - tiro.x;
+        const dy = alvo.y - tiro.y;
+
+        if (dx !== 0 || dy !== 0) {
+            return Math.atan2(dy, dx);
+        }
+    }
+
+    return Number.isFinite(tiro.anguloVisual) ? tiro.anguloVisual : 0;
+}
+
+function desenharProjetilOrientado(tiro, desenharForma, ajusteDoDesenho = 0) {
     ctx.save();
     ctx.translate(Math.round(tiro.x), Math.round(tiro.y));
-    ctx.shadowColor = "#8fefff";
-    ctx.shadowBlur = 8;
-    ctx.fillStyle = "#dffbff";
-    ctx.beginPath();
-    ctx.moveTo(0, -9);
-    ctx.lineTo(7, 0);
-    ctx.lineTo(0, 9);
-    ctx.lineTo(-7, 0);
-    ctx.closePath();
-    ctx.fill();
-    ctx.fillStyle = "#5dbbd2";
-    ctx.fillRect(-3, -5, 4, 10);
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(-2, -5, 3, 4);
+    ctx.rotate(obterAnguloVisualDoTiro(tiro) + ajusteDoDesenho);
+    desenharForma();
     ctx.restore();
 }
 
+function desenharEstilhacoGlacial(tiro) {
+    desenharProjetilOrientado(tiro, () => {
+        ctx.shadowColor = "#8fefff";
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = "#dffbff";
+        ctx.beginPath();
+        ctx.moveTo(0, -9);
+        ctx.lineTo(7, 0);
+        ctx.lineTo(0, 9);
+        ctx.lineTo(-7, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = "#5dbbd2";
+        ctx.fillRect(-3, -5, 4, 10);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(-2, -5, 3, 4);
+    }, Math.PI / 2);
+}
+
 function desenharViroteDaBesta(tiro) {
-    ctx.save();
-    ctx.translate(Math.round(tiro.x), Math.round(tiro.y));
-    ctx.fillStyle = "#e7d9ad";
-    ctx.fillRect(-8, -2, 16, 4);
-    ctx.fillStyle = "#69442a";
-    ctx.fillRect(-10, -4, 4, 8);
-    ctx.fillStyle = "#b7c7aa";
-    ctx.fillRect(6, -3, 5, 6);
-    ctx.restore();
+    desenharProjetilOrientado(tiro, () => {
+        ctx.fillStyle = "#e7d9ad";
+        ctx.fillRect(-8, -2, 16, 4);
+        ctx.fillStyle = "#69442a";
+        ctx.fillRect(-10, -4, 4, 8);
+        ctx.fillStyle = "#b7c7aa";
+        ctx.fillRect(6, -3, 5, 6);
+    });
 }
 
 function desenharOrbeDeEsporos(tiro) {
@@ -18963,16 +32819,14 @@ function desenharCargaDeRaios(tiro) {
 }
 
 function desenharLaserDoObliterador(tiro) {
-    const x = Math.round(tiro.x);
-    const y = Math.round(tiro.y);
-    ctx.save();
-    ctx.shadowColor = "#ff3f36";
-    ctx.shadowBlur = 11;
-    ctx.fillStyle = "#ff3f36";
-    ctx.fillRect(x - 8, y - 3, 16, 6);
-    ctx.fillStyle = "#ffe5b8";
-    ctx.fillRect(x - 5, y - 1, 10, 2);
-    ctx.restore();
+    desenharProjetilOrientado(tiro, () => {
+        ctx.shadowColor = "#ff3f36";
+        ctx.shadowBlur = 11;
+        ctx.fillStyle = "#ff3f36";
+        ctx.fillRect(-8, -3, 16, 6);
+        ctx.fillStyle = "#ffe5b8";
+        ctx.fillRect(-5, -1, 10, 2);
+    });
 }
 
 function desenharBolaDeCanhao(tiro) {
@@ -19013,6 +32867,83 @@ function desenharBolaDeFogo(tiro) {
     ctx.restore();
 }
 
+function desenharProjetilDaNovaTorre(tiro) {
+    const x = Math.round(tiro.x);
+    const y = Math.round(tiro.y);
+
+    if (tiro.tipoDaTorre === "torrePerfuradora") {
+        desenharProjetilOrientado(tiro, () => {
+            ctx.shadowColor = "#69e5da";
+            ctx.shadowBlur = 9;
+            ctx.fillStyle = "#d4fffa";
+            ctx.fillRect(-10, -2, 20, 4);
+            ctx.fillStyle = "#69e5da";
+            ctx.fillRect(-6, -4, 12, 8);
+        });
+        return;
+    } else if (tiro.tipoDaTorre === "torreMarcadora") {
+        ctx.save();
+        ctx.fillStyle = "#cf71ff";
+        ctx.fillRect(x - 6, y - 6, 12, 12);
+        ctx.fillStyle = "#76f5ff";
+        ctx.fillRect(x - 2, y - 9, 4, 18);
+        ctx.fillRect(x - 9, y - 2, 18, 4);
+        ctx.restore();
+    } else if (tiro.tipoDaTorre === "torreDrones") {
+        desenharProjetilOrientado(tiro, () => {
+            ctx.fillStyle = "#203a5a";
+            ctx.fillRect(-10, -4, 20, 9);
+            ctx.fillStyle = "#ff9e3d";
+            ctx.fillRect(-13, -7, 7, 7);
+            ctx.fillRect(6, -7, 7, 7);
+            ctx.fillStyle = "#8fe8ff";
+            ctx.fillRect(-2, -2, 4, 4);
+        });
+        return;
+    } else if (tiro.tipoDaTorre === "torreCorrentes") {
+        desenharProjetilOrientado(tiro, () => {
+            ctx.strokeStyle = "#d39448";
+            ctx.lineWidth = 4;
+            ctx.strokeRect(-7, -5, 14, 10);
+            ctx.fillStyle = "#f3d184";
+            ctx.fillRect(-2, -2, 4, 4);
+        });
+        return;
+    } else if (tiro.tipoDaTorre === "torreSucata") {
+        ctx.save();
+        ctx.fillStyle = "#a86e43";
+        ctx.fillRect(x - 7, y - 7, 14, 14);
+        ctx.fillStyle = "#d6ba72";
+        ctx.fillRect(x - 2, y - 9, 4, 18);
+        ctx.fillRect(x - 9, y - 2, 18, 4);
+        ctx.fillStyle = "#343b39";
+        ctx.fillRect(x - 3, y - 3, 6, 6);
+        ctx.restore();
+    } else {
+        const cores = {
+            vermelho: "#ff5e75",
+            azul: "#61c9ff",
+            amarelo: "#ffe15c"
+        };
+        const cor = cores[tiro.modoPrismatico] || "#ffffff";
+        desenharProjetilOrientado(tiro, () => {
+            ctx.shadowColor = cor;
+            ctx.shadowBlur = 12;
+            ctx.fillStyle = cor;
+            ctx.beginPath();
+            ctx.moveTo(0, -9);
+            ctx.lineTo(7, 0);
+            ctx.lineTo(0, 9);
+            ctx.lineTo(-7, 0);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(-2, -3, 3, 6);
+        }, Math.PI / 2);
+        return;
+    }
+}
+
 function desenharTiros() {
     for (const tiro of tiros) {
         if (tiro.tipoDaTorre === "canhaoPesado") {
@@ -19047,6 +32978,18 @@ function desenharTiros() {
 
         if (tiro.tipoDaTorre === "obliterador") {
             desenharLaserDoObliterador(tiro);
+            continue;
+        }
+
+        if (
+            tiro.tipoDaTorre === "torrePerfuradora"
+            || tiro.tipoDaTorre === "torreMarcadora"
+            || tiro.tipoDaTorre === "torreDrones"
+            || tiro.tipoDaTorre === "torreCorrentes"
+            || tiro.tipoDaTorre === "torreSucata"
+            || tiro.tipoDaTorre === "canhaoPrismatico"
+        ) {
+            desenharProjetilDaNovaTorre(tiro);
             continue;
         }
 
@@ -19116,6 +33059,108 @@ function desenharEfeitoDoPulsoTemporal(agora = Date.now()) {
     ctx.restore();
 }
 
+function desenharSilhuetaDoSenhorDoTempoNoMapa(agora = Date.now()) {
+    const x = canvas.width - 170;
+    const y = 82;
+    const pulso = Math.floor(agora / 120) % 3;
+    ctx.save();
+    ctx.globalAlpha = 0.82;
+    ctx.fillStyle = "#080812";
+    ctx.fillRect(x - 10, y + 27, 20, 13);
+    ctx.fillRect(x - 39, y + 39, 78, 24);
+    ctx.fillRect(x - 29, y + 55, 58, 71);
+    ctx.fillRect(x - 47, y + 48, 18, 70);
+    ctx.fillRect(x + 29, y + 48, 18, 70);
+    ctx.fillRect(x - 27, y + 118, 21, 38);
+    ctx.fillRect(x + 6, y + 118, 21, 38);
+    ctx.fillStyle = "#171326";
+    ctx.fillRect(x - 23, y + 48, 46, 72);
+    ctx.fillRect(x - 41, y + 57, 12, 54);
+    ctx.fillRect(x + 29, y + 57, 12, 54);
+    ctx.fillStyle = "#d95ee5";
+    ctx.fillRect(x - 4, y + 46, 8, 61);
+    ctx.fillStyle = "#05060c";
+    ctx.fillRect(x - 31, y - 30, 62, 62);
+    ctx.fillStyle = "#d7c98f";
+    ctx.fillRect(x - 24, y - 23, 48, 48);
+    ctx.fillStyle = "#17212a";
+    ctx.fillRect(x - 18, y - 17, 36, 36);
+    ctx.fillStyle = "#60e3d4";
+    ctx.fillRect(x - 3, y - 14, 6, 18);
+    ctx.fillRect(x, y + 1, 13, 6);
+    ctx.fillStyle = "#fff06c";
+    ctx.fillRect(x - 4, y - 3, 8, 8);
+    ctx.fillStyle = pulso === 0 ? "#60e3d4" : "#d95ee5";
+    ctx.fillRect(x - 68 - pulso * 4, y + 18, 30, 7);
+    ctx.fillRect(x + 38, y + 94 + pulso * 5, 42, 7);
+    ctx.fillRect(x - 57, y + 136 - pulso * 4, 36, 6);
+    ctx.strokeStyle = "rgba(255, 240, 108, 0.8)";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x - 35, y - 34, 70, 70);
+    ctx.restore();
+}
+
+function desenharInterferenciaTemporalDoSenhorDoTempo(agora = Date.now()) {
+    if (
+        faseSelecionada !== CONFIG.linhaDeFrenteTemporal.numeroDaFase
+        || agora >= interferenciaVisualDoSenhorDoTempoExpiraEm
+    ) {
+        return;
+    }
+
+    const deslocamento = Math.floor(agora / 80) % 28;
+    ctx.save();
+    ctx.fillStyle = "rgba(126, 62, 164, 0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(96, 227, 212, 0.16)";
+    for (let y = -deslocamento; y < canvas.height; y += 28) {
+        ctx.fillRect(0, y, canvas.width, 3);
+    }
+    ctx.strokeStyle = "rgba(240, 182, 83, 0.7)";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(9, 9, canvas.width - 18, canvas.height - 18);
+    desenharSilhuetaDoSenhorDoTempoNoMapa(agora);
+    ctx.restore();
+}
+
+function desenharReescritaTemporalDaEraApagada(agora = Date.now()) {
+    const reescrita = reescritaTemporalDaEraApagada;
+    if (!faseAtualUsaEraApagada() || !reescrita) {
+        return;
+    }
+
+    const { x, y, largura, altura } = reescrita.regiao;
+    const ativa = reescrita.estado === "ativa";
+    const pulso = Math.floor(agora / 130) % 2;
+    const texto = ativa
+        ? localizar("ÁREA APAGADA · TORRES EM ESTASE")
+        : localizar("REESCRITA IMINENTE");
+    ctx.save();
+    ctx.fillStyle = ativa
+        ? "rgba(255, 255, 252, 0.78)"
+        : `rgba(246, 240, 194, ${0.12 + pulso * 0.08})`;
+    ctx.fillRect(x, y, largura, altura);
+    ctx.strokeStyle = ativa ? "#555762" : "#f4e69b";
+    ctx.lineWidth = ativa ? 5 : 4;
+    ctx.setLineDash(ativa ? [5, 8] : [16, 9]);
+    ctx.strokeRect(x, y, largura, altura);
+    ctx.setLineDash([]);
+    if (ativa) {
+        ctx.fillStyle = "rgba(91, 92, 101, 0.22)";
+        for (let linha = y + 14; linha < y + altura; linha += 24) {
+            ctx.fillRect(x + 8, linha, largura - 16, 3);
+        }
+    }
+    ctx.font = "900 13px 'Courier New', monospace";
+    ctx.textAlign = "center";
+    const larguraDoRotulo = Math.max(230, ctx.measureText(texto).width + 24);
+    ctx.fillStyle = ativa ? "#4a4b55" : "#393328";
+    ctx.fillRect(x + largura / 2 - larguraDoRotulo / 2, y + 10, larguraDoRotulo, 28);
+    ctx.fillStyle = ativa ? "#ffffff" : "#fff4b9";
+    ctx.fillText(texto, x + largura / 2, y + 29);
+    ctx.restore();
+}
+
 function desenharAvisoBoss() {
     if (Date.now() >= avisoBossExpiraEm) {
         return;
@@ -19124,7 +33169,28 @@ function desenharAvisoBoss() {
     ctx.save();
     ctx.textAlign = "center";
     const tipoDoBoss = obterTipoDeBossDaFase();
-    const aparenciaDoAviso = tipoDoBoss === "bossGlitch"
+    const aparenciaDoAviso = tipoDoBoss === "carcereiroDoIntervalo"
+        ? {
+            fundo: "rgba(5, 4, 10, 0.97)",
+            borda: "rgba(240, 185, 95, 0.9)",
+            destaque: "#62e4d6",
+            titulo: localizar("CARCEREIRO")
+        }
+        : tipoDoBoss === "executorCronal"
+        ? {
+            fundo: "rgba(10, 10, 20, 0.97)",
+            borda: "rgba(96, 227, 212, 0.9)",
+            destaque: "#efb653",
+            titulo: localizar("EXECUTOR CRONAL")
+        }
+        : tipoDoBoss === "curadorDoVazio"
+        ? {
+            fundo: "rgba(28, 28, 33, 0.97)",
+            borda: "rgba(239, 239, 235, 0.92)",
+            destaque: "#8de0da",
+            titulo: localizar("CURADOR DO VAZIO")
+        }
+        : tipoDoBoss === "bossGlitch"
         ? {
             fundo: "rgba(18, 8, 31, 0.96)",
             borda: "rgba(69, 241, 214, 0.84)",
@@ -19137,6 +33203,27 @@ function desenharAvisoBoss() {
             borda: "rgba(83, 245, 255, 0.88)",
             destaque: "#ec57df",
             titulo: localizar("PROTOCOLO ZERO")
+        }
+        : tipoDoBoss === "guardiaoDoPontoZero"
+        ? {
+            fundo: "rgba(7, 9, 14, 0.97)",
+            borda: "rgba(240, 189, 98, 0.9)",
+            destaque: "#67e5db",
+            titulo: localizar("GUARDIÃO DO PONTO ZERO")
+        }
+        : tipoDoBoss === "sentinelaDoAmanha"
+        ? {
+            fundo: "rgba(8, 12, 22, 0.96)",
+            borda: "rgba(84, 232, 220, 0.88)",
+            destaque: "#bc5cff",
+            titulo: localizar("SENTINELA DO AMANHÃ")
+        }
+        : tipoDoBoss === "prototipoAlfa"
+        ? {
+            fundo: "rgba(40, 36, 32, 0.96)",
+            borda: "rgba(198, 154, 81, 0.9)",
+            destaque: "#69e2cf",
+            titulo: localizar("PROTÓTIPO ALFA")
         }
         : tipoDoBoss === "bossPrimordial"
         ? {
@@ -19229,16 +33316,20 @@ function atualizar(instanteDoQuadro) {
         desenharExplosoesDosExplosivos();
         desenharEfeitoDoPulsoTemporal();
         desenharIluminacaoDoMapa();
-        atualizarPulsoTemporalNoPosto();
+        atualizarPulsoTemporalNoControle();
 
         requestAnimationFrame(atualizar);
         return;
     }
 
     const multiplicadorDeMovimento = calcularMultiplicadorDeMovimento(instanteDoQuadro);
+    atualizarDesafioDosRelogiosDoIntervalo();
     atualizarFliperamaNoMapa();
     atualizarEstadoDoBoostFliperama();
     atualizarWaves();
+    atualizarFrenteTemporal();
+    atualizarProtocoloDeContencao();
+    atualizarReescritaTemporalDaEraApagada();
     atualizarMinasTerrestres();
     atualizarBombasPesadas();
     atualizarExplosoesDosExplosivos(multiplicadorDeMovimento);
@@ -19250,6 +33341,8 @@ function atualizar(instanteDoQuadro) {
     moverTiros(multiplicadorDeMovimento);
     moverTirosDosInimigos(multiplicadorDeMovimento);
     desenharMapa();
+    desenharFendasDosPortadores();
+    desenharReescritaTemporalDaEraApagada();
     desenharFliperamaNoMapa();
     desenharMinasTerrestres();
     desenharBombasPesadas();
@@ -19259,10 +33352,10 @@ function atualizar(instanteDoQuadro) {
     desenharTiros();
     desenharExplosoesDosExplosivos();
     desenharEfeitoDoPulsoTemporal();
+    desenharInterferenciaTemporalDoSenhorDoTempo();
     desenharIluminacaoDoMapa();
     desenharInterface();
-    atualizarBoostFliperamaNoPosto();
-    atualizarPulsoTemporalNoPosto();
+    atualizarPulsoTemporalNoControle();
     desenharInformacoesDoInimigoSobCursor();
     desenharAvisoBoss();
     requestAnimationFrame(atualizar);

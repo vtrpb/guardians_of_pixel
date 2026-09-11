@@ -169,3 +169,207 @@
 [0828/200051.783:WARNING:services\audio\sync_reader.cc:175] SyncReader::Read timed out, audio glitch count=70
 [0828/200052.096:WARNING:services\audio\sync_reader.cc:175] SyncReader::Read timed out, audio glitch count=80
 [0828/200052.408:WARNING:services\audio\sync_reader.cc:175] SyncReader::Read timed out, audio glitch count=90
+[0904/011437.123:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/011607.808:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011610.458:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011627.268:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011630.459:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011633.917:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/011643.669:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/011657.989:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011657.989:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011702.248:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011702.248:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/011702.348:WARNING:services\audio\sync_reader.cc:175] SyncReader::Read timed out, audio glitch count=10
+[0904/022706.160:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/022750.781:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/022751.060:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/022754.011:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/022757.197:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/022823.692:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/022919.993:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/023023.667:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/023031.704:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/023108.192:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/023108.203:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/024126.989:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/024126.989:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/024142.707:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/024144.659:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/024150.738:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/024152.011:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/025641.365:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/025714.521:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/025730.540:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/025738.792:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0904/025804.131:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/025807.110:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/025807.130:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/025817.161:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0904/101120.093:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/190701.037:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/225916.048:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/225945.486:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/225953.401:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/230008.369:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/230022.707:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/230025.888:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/230432.401:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/230437.406:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/230437.406:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/230440.560:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/230454.953:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/230512.985:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234058.881:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/234203.675:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234252.566:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234252.856:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234332.638:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234332.638:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234336.317:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234336.338:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234346.478:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234348.428:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234446.790:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234506.580:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234506.580:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234506.890:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234506.890:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234509.970:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234509.970:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234513.537:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0908/234546.621:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0908/234550.062:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/000946.211:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/000946.222:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/001002.461:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/001004.262:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/001007.483:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/001010.707:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/001043.433:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/001043.433:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/001046.713:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/181039.883:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/181039.893:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/181108.823:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/181108.823:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/181213.747:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/183014.800:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/183018.150:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/183021.749:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/183039.982:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/191141.560:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/191325.410:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/191325.419:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/191342.040:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/191350.222:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/191407.018:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/191422.288:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/191438.581:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/192545.955:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/192744.258:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/193018.935:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/202201.295:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/202236.982:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/202238.338:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/202254.561:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/202308.746:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/202312.034:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/202312.046:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/202344.996:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/212108.169:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/212116.379:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/212117.642:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/212132.736:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/212151.383:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/212151.383:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/212210.535:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220414.809:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220434.069:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220434.339:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220437.449:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220441.058:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/220442.525:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/220458.940:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/220514.379:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220518.069:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220535.469:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220652.969:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220748.626:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/220750.619:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220750.619:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220757.666:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/220816.549:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/220831.959:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/220852.909:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/224512.181:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/224517.111:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/224535.642:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/224535.882:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/224542.417:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/224543.810:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/224600.387:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/224614.601:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/224614.936:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/224626.884:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232708.541:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232711.361:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232719.502:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232811.692:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232812.012:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232815.302:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232815.302:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232819.124:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/232821.203:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/232935.263:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232939.214:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232939.982:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/232950.884:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/233512.783:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/233835.961:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/233941.342:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/234111.432:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/234421.330:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/234423.304:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/234423.572:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/234426.673:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/234430.180:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/234431.516:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/234449.208:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0909/234504.503:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/234507.915:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0909/234508.523:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003512.159:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003528.835:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/003530.801:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003534.121:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003537.656:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/003539.081:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/003613.531:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003613.531:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003616.919:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003631.971:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003631.980:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/003729.130:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/144320.082:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/144320.312:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/144404.257:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/144407.797:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/144425.665:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/144426.685:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/153514.363:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/153530.358:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/153538.494:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/153539.832:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/153625.148:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/153633.518:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/173059.830:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/173117.474:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/173122.720:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/173126.282:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/173127.642:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0910/173201.519:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/173204.818:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/173219.728:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/173222.459:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)
+[0910/180009.789:WARNING:services\audio\sync_reader.cc:154] ASR: No room in socket buffer.: O pipe está sendo fechado. (0xE8)

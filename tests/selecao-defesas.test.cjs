@@ -12,7 +12,7 @@ assert.ok(html.includes('onclick="abrirSelecaoDeDefesas(true)"'));
 [
     'const CHAVE_SELECAO_DE_DEFESAS = "guardians-of-pixel-selecao-defesas-v1"',
     "quantidadeMaximaDeDefesasSelecionadas: 6",
-    "5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 99: 12",
+    "5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 10: 15, 11: 15, 12: 15, 13: 15, 14: 15, 99: 12, 100: 12",
     "function carregarSelecaoDeDefesas()",
     "function salvarSelecaoDeDefesas()",
     "function normalizarSelecaoDeDefesas(selecao, preencherSeVazia = true)",

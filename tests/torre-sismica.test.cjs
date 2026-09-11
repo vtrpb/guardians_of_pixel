@@ -20,11 +20,12 @@ const especificacao = fs.readFileSync(
     "alcance: 170",
     "limitePorPartida: 2",
     "cargasNecessarias: 3",
-    "distanciaDoEmpurrao: 120",
-    "duracaoDoAtordoamentoDoBoss: 1000",
-    "percentualDeVulnerabilidade: 0.2",
+    "distanciaDoEmpurrao: 110",
+    "duracaoDoAtordoamentoDoBoss: 900",
+    "percentualDeVulnerabilidade: 0.15",
     "duracaoDaVulnerabilidade: 3000",
-    "atrasoDoSegundoImpacto: 600",
+    "atrasoDoSegundoImpacto: 700",
+    "multiplicadorDoSegundoImpacto: 0.55",
     "function empurrarInimigoParaTrasNoCaminho(inimigo, distancia)",
     "function ativarImpactoSismico(",
     "function atualizarTorresSismicas(agora = Date.now())",
@@ -38,12 +39,15 @@ assert.ok(html.includes("selecionarTipoDeTorre('torreSismica')"));
 assert.ok(css.includes(".botao-construcao-sismica"));
 assert.ok(especificacao.includes("### Mudança: Torre Sísmica"));
 assert.ok(especificacao.includes("desbloqueada ao concluir a Fase 6"));
+assert.ok(especificacao.includes("#### Ajuste de balanceamento: Obliterador e Torre Sísmica"));
+assert.ok(especificacao.includes("38/52/70/96** para **34/47/63/86"));
+assert.ok(especificacao.includes("empurrão de **120 para 110 px**"));
 
 const caminho = [{ x: 0, y: 0 }, { x: 200, y: 0 }, { x: 200, y: 200 }];
 const efeitoBase = {
     cargasNecessarias: 3,
-    distanciaDoEmpurrao: 120,
-    duracaoDoAtordoamentoDoBoss: 1000,
+    distanciaDoEmpurrao: 110,
+    duracaoDoAtordoamentoDoBoss: 900,
     percentualDeVulnerabilidade: 0,
     duracaoDaVulnerabilidade: 0,
     atrasoDoSegundoImpacto: 0,
@@ -81,9 +85,9 @@ vm.runInContext(codigo.slice(inicioDasFuncoes, fimDasFuncoes), contexto);
 
 const inimigo = { tipo: "normal", vida: 100, x: 200, y: 50, alvo: 2 };
 assert.strictEqual(contexto.calcularProgressoDoInimigo(inimigo), 250);
-assert.strictEqual(contexto.empurrarInimigoParaTrasNoCaminho(inimigo, 120), 120);
-assert.strictEqual(contexto.calcularProgressoDoInimigo(inimigo), 130);
-assert.strictEqual(inimigo.x, 130);
+assert.strictEqual(contexto.empurrarInimigoParaTrasNoCaminho(inimigo, 110), 110);
+assert.strictEqual(contexto.calcularProgressoDoInimigo(inimigo), 140);
+assert.strictEqual(inimigo.x, 140);
 assert.strictEqual(inimigo.y, 0);
 
 const torre = {
@@ -112,7 +116,7 @@ contexto.atualizarTorresSismicas(1000);
 assert.strictEqual(torre.cargaSismica, 0, "Três entradas devem ativar o impacto imediatamente");
 assert.strictEqual(contexto.explosoesDosExplosivos.length, 1);
 assert.strictEqual(boss.x, 140, "Boss não deve ser empurrado");
-assert.strictEqual(boss.atordoadoPelaTorreSismicaAte, 2000);
+assert.strictEqual(boss.atordoadoPelaTorreSismicaAte, 1900);
 
 const torresSobrepostas = Array.from({ length: 2 }, () => ({
     tipo: "torreSismica",
@@ -146,22 +150,22 @@ assert.strictEqual(contexto.explosoesDosExplosivos.length, 2);
 assert.strictEqual(
     progressoAntesDosDoisImpactos
         - contexto.calcularProgressoDoInimigo(inimigoEntreDuasTorres),
-    240,
+    220,
     "Os empurrões de duas torres devem se somar"
 );
 assert.strictEqual(
     bossEntreDuasTorres.atordoadoPelaTorreSismicaAte,
-    6000,
+    5800,
     "Dois impactos devem prolongar o atordoamento do Boss"
 );
 
 const efeitoAvancado = {
     ...efeitoBase,
     cargasNecessarias: 2,
-    percentualDeVulnerabilidade: 0.2,
+    percentualDeVulnerabilidade: 0.15,
     duracaoDaVulnerabilidade: 3000,
-    atrasoDoSegundoImpacto: 600,
-    multiplicadorDoSegundoImpacto: 0.65
+    atrasoDoSegundoImpacto: 700,
+    multiplicadorDoSegundoImpacto: 0.55
 };
 const configuracaoAvancada = {
     efeitoSismico: efeitoAvancado,
@@ -171,10 +175,10 @@ contexto.obterConfiguracaoAtualDaTorre = () => configuracaoAvancada;
 contexto.inimigos = [boss];
 contexto.torres = [torre];
 contexto.ativarImpactoSismico(torre, efeitoAvancado, 2000);
-assert.strictEqual(torre.impactoSismicoSecundarioEm, 2600);
-assert.strictEqual(boss.percentualDeVulnerabilidadeSismica, 0.2);
+assert.strictEqual(torre.impactoSismicoSecundarioEm, 2700);
+assert.strictEqual(boss.percentualDeVulnerabilidadeSismica, 0.15);
 assert.strictEqual(boss.vulnerabilidadeSismicaExpiraEm, 5000);
-contexto.atualizarTorresSismicas(2600);
+contexto.atualizarTorresSismicas(2700);
 assert.strictEqual(torre.impactoSismicoSecundarioEm, 0);
 assert.ok(contexto.explosoesDosExplosivos.length >= 3);
 
@@ -194,10 +198,10 @@ const alvoVulneravel = {
     tipo: "normal",
     vida: 500,
     vidaMaxima: 500,
-    percentualDeVulnerabilidadeSismica: 0.2,
+    percentualDeVulnerabilidadeSismica: 0.15,
     vulnerabilidadeSismicaExpiraEm: 5000
 };
-assert.strictEqual(contextoDano.aplicarDanoAoInimigo(alvoVulneravel, 100, 2000), 120);
-assert.strictEqual(alvoVulneravel.vida, 380);
+assert.strictEqual(contextoDano.aplicarDanoAoInimigo(alvoVulneravel, 100, 2000), 115);
+assert.strictEqual(alvoVulneravel.vida, 385);
 
 console.log("Torre Sísmica: carga, empurrão, Boss, vulnerabilidade e segundo impacto validados.");

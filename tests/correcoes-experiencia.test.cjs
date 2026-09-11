@@ -112,12 +112,20 @@ assert.strictEqual(contextoDaVisibilidade.focoRestaurado, true);
 
 const contextoDoMinigamePausado = {
     minigameFliperamaAtivo: true,
+    minigameFliperamaComecaEm: 3000,
     minigameFliperamaTerminaEm: 15000,
     alvoDoMinigameFliperama: {
         atualizadoEm: 1000,
         podeSerAtingidoEm: 1100
     },
-    roboDoLabirintoFliperama: { atualizadoEm: 1200 }
+    roboDoLabirintoFliperama: { atualizadoEm: 1200 },
+    estadoVooPixel: { atualizadoEm: 1300 },
+    estadoChuvaDePixels: { atualizadoEm: 1400, ultimoPixelEm: 1500 },
+    estadoSequenciaNeon: {
+        proximaMudancaEm: 1600,
+        sinalAtivoAte: 1700,
+        erroAte: 1800
+    }
 };
 vm.createContext(contextoDoMinigamePausado);
 vm.runInContext(
@@ -125,10 +133,15 @@ vm.runInContext(
     contextoDoMinigamePausado
 );
 vm.runInContext("compensarMinigameAposOcultarPagina(3000)", contextoDoMinigamePausado);
+assert.strictEqual(contextoDoMinigamePausado.minigameFliperamaComecaEm, 6000);
 assert.strictEqual(contextoDoMinigamePausado.minigameFliperamaTerminaEm, 18000);
 assert.strictEqual(contextoDoMinigamePausado.alvoDoMinigameFliperama.atualizadoEm, 4000);
 assert.strictEqual(contextoDoMinigamePausado.alvoDoMinigameFliperama.podeSerAtingidoEm, 4100);
 assert.strictEqual(contextoDoMinigamePausado.roboDoLabirintoFliperama.atualizadoEm, 4200);
+assert.strictEqual(contextoDoMinigamePausado.estadoVooPixel.atualizadoEm, 4300);
+assert.strictEqual(contextoDoMinigamePausado.estadoChuvaDePixels.atualizadoEm, 4400);
+assert.strictEqual(contextoDoMinigamePausado.estadoChuvaDePixels.ultimoPixelEm, 4500);
+assert.strictEqual(contextoDoMinigamePausado.estadoSequenciaNeon.proximaMudancaEm, 4600);
 
 [
     "function controlarVisibilidadeDaPagina()",
@@ -157,7 +170,9 @@ assert.strictEqual(contextoDoMinigamePausado.roboDoLabirintoFliperama.atualizado
     "function controlarToqueDoLabirinto(evento, pressionada)",
     'botao.addEventListener("pointerdown"',
     'botao.addEventListener("pointerup"',
-    "controlesToqueLabirinto.hidden = !labirintoAtivo"
+    "function configurarControlesDeToqueDoMinigame()",
+    'includes(tipoMinigameFliperamaAtivo)',
+    "botao.hidden = usaDirecional && !usaMovimentoVertical && movimentoVertical"
 ].forEach((trecho) => assert.ok(codigo.includes(trecho), `Toque ausente: ${trecho}`));
 
 [

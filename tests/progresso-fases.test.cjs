@@ -41,10 +41,10 @@ function criarContexto(valoresIniciais) {
 const progressoIncorreto = criarContexto({
     "tower-defense-2-progresso-fases-v2": "14"
 });
-assert.strictEqual(progressoIncorreto.contexto.carregarMaiorFaseConcluida(), 12);
+assert.strictEqual(progressoIncorreto.contexto.carregarMaiorFaseConcluida(), 14);
 assert.strictEqual(
     progressoIncorreto.armazenamento.get("tower-defense-2-progresso-fases-v2"),
-    "12"
+    "14"
 );
 assert.strictEqual(
     progressoIncorreto.armazenamento.get(
@@ -69,7 +69,7 @@ assert.strictEqual(
     "14"
 );
 
-assert.match(especificacao, /correção única limita a campanha existente à Fase 12/);
-assert.match(especificacao, /Valores salvos acima da quantidade atual de fases são normalizados/);
+assert.match(especificacao, /preserva a maior fase válida já salva/);
+assert.match(especificacao, /Valores continuam limitados às fases existentes/);
 
-console.log("Progresso das fases: correção única e normalização validadas.");
+console.log("Progresso das fases: preservação do save e normalização validadas.");

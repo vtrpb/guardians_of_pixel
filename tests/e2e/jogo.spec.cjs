@@ -1917,17 +1917,14 @@ test("atravessa o Intervalo Perdido e inicia a Fase 13", async ({ page }, testIn
         finalizarPartidaComVitoria();
     `));
     await expect(cena).toHaveAttribute("data-tipo-carta", "cena-final-intervalo-perdido");
-    await expect(cena).toHaveAttribute("data-etapa-cena", "registro");
-    await expect(page.locator("#texto-cutscene-carta")).toContainText("tentando mantê-lo fechado");
+    await expect(cena).toHaveAttribute("data-etapa-cena", "aproximacao");
     await page.locator("#botao-continuar-cutscene-carta").click();
-    await expect(cena).toHaveAttribute("data-etapa-cena", "alerta");
-    await page.locator("#botao-continuar-cutscene-carta").click();
-    await expect(cena).toHaveAttribute("data-etapa-cena", "voz");
-    await expect(page.locator("#texto-cutscene-carta")).toContainText("abriu o intervalo");
-    await page.locator("#botao-continuar-cutscene-carta").click();
-    await expect(cena).toHaveAttribute("data-etapa-cena", "senhorDoTempo");
-    await expect(page.locator("#texto-cutscene-carta")).toContainText("não conseguia observar");
-    await page.locator("#botao-continuar-cutscene-carta").click();
+    await expect(cena).toHaveAttribute("data-etapa-cena", "pergunta");
+    await page.locator("#escolha-limbo-verdade").click();
+    for (const etapa of ["resposta", "desobediencia", "consequencias", "poderes", "autoridade", "barreira", "selado", "retorno"]) {
+        await expect(cena).toHaveAttribute("data-etapa-cena", etapa);
+        await page.locator("#botao-continuar-cutscene-carta").click();
+    }
 
     const cutsceneCapitulo = page.locator("#camada-cutscene-capitulo-2");
     await expect(cutsceneCapitulo).toBeVisible();
@@ -2106,7 +2103,7 @@ test("atravessa o Intervalo Perdido e inicia a Fase 13", async ({ page }, testIn
     await expect(page.locator("#camada-resultado")).toBeVisible();
 });
 
-test("corrige conclusões indevidas das Fases 13 e 14 sem apagar o restante do perfil", async ({ page }) => {
+test("preserva progresso legítimo sem marca de migração e o restante do perfil", async ({ page }) => {
     await page.addInitScript(() => {
         localStorage.setItem("tower-defense-2-progresso-fases-v2", "14");
         localStorage.setItem("guardians-of-pixel-capitulo-3-desbloqueado-v1", "true");
@@ -2123,7 +2120,7 @@ test("corrige conclusões indevidas das Fases 13 e 14 sem apagar o restante do p
         ),
         fragmentos: localStorage.getItem("guardians-of-pixel-fragmentos-v2")
     }))).toEqual({
-        progresso: "12",
+        progresso: "14",
         correcao: "true",
         fragmentos: "777"
     });
@@ -2132,10 +2129,10 @@ test("corrige conclusões indevidas das Fases 13 e 14 sem apagar o restante do p
     await page.locator('[data-numero-capitulo="3"] .botao-capitulo-acao').click();
     const fase13 = page.locator(".fase-tema-linhaTemporal");
     const fase14 = page.locator(".fase-tema-eraApagada");
-    await expect(fase13.locator(".fase-estado")).toHaveText("Disponível");
+    await expect(fase13.locator(".fase-estado")).toHaveText("Concluída");
     await expect(fase13.locator(".botao-fase-acao")).toBeEnabled();
-    await expect(fase14.locator(".fase-estado")).toHaveText("Bloqueada");
-    await expect(fase14.locator(".botao-fase-acao")).toBeDisabled();
+    await expect(fase14.locator(".fase-estado")).toHaveText("Concluída");
+    await expect(fase14.locator(".botao-fase-acao")).toBeEnabled();
 });
 
 test("entra na Era Apagada, enfrenta a Reescrita e conclui a Fase 14", async ({ page }, testInfo) => {
@@ -3191,6 +3188,9 @@ test("compra, constrói e melhora o Gerador de Créditos", async ({ page }, test
 
     await page.evaluate(() => eval("dinheiro = 3000"));
     const botaoDeConstrucao = page.locator("#botao-gerador-creditos");
+    while (await page.locator('#camada-cutscene-carta').isVisible()) {
+        await page.locator('#botao-continuar-cutscene-carta').click();
+    }
     await expect(botaoDeConstrucao).toBeEnabled();
     await expect(botaoDeConstrucao).toContainText("300");
     await botaoDeConstrucao.click();
@@ -3401,7 +3401,7 @@ test("avisa quando uma missão é concluída", async ({ page }) => {
     const aviso = page.locator('.notificacao-progresso[data-tipo="missao"]');
     await expect(aviso).toBeVisible();
     await expect(aviso).toContainText("Missão concluída");
-    await expect(aviso).toContainText("Caçador de Pixels");
+    await expect(aviso).toContainText("Pequena limpeza");
 });
 
 test("avisa quando uma conquista é desbloqueada", async ({ page }) => {
@@ -3636,18 +3636,23 @@ test("oferece os três desafios da central no fliperama com recompensas", async 
     ))).toBeNull();
 });
 
-test("esconde e revela a conquista Frequência 09", async ({ page }) => {
+test("esconde e revela a conquista Frequência 09", async ({ page }, testInfo) => {
     await page.goto("/");
     await page.locator(".botao-lobby-conquistas").click();
 
     const cartoes = page.locator(".conquista-cartao");
-    const conquistaSecreta = page.locator(".conquista-secreta");
-    await expect(cartoes).toHaveCount(13);
-    await expect(conquistaSecreta.locator(".conquista-icone")).toHaveText("?");
-    await expect(conquistaSecreta).toContainText(
-        "O futuro guarda uma frequência esquecida."
-    );
-    await expect(conquistaSecreta).toContainText("Frequência 09");
+    const comuns = await page.evaluate(() => Object.values(CONFIG.conquistas).filter(c => !c.secreta).length);
+    await expect(cartoes).toHaveCount(comuns);
+    await expect(page.locator('.conquista-secreta')).toHaveCount(0);
+    await expect(page.locator('[data-categoria-conquistas="comuns"]')).toHaveAttribute('aria-pressed','true');
+    await page.locator('[data-categoria-conquistas="ocultas"]').click();
+    await expect(cartoes).toHaveCount(12);
+    await expect(page.locator('.conquista-secreta h3')).toHaveText(Array(12).fill('???'));
+    await expect(page.locator('.conquista-secreta [role="progressbar"]')).toHaveCount(0);
+    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText('0/12');
+    await page.setViewportSize({width:390,height:844});
+    await page.locator('#conteudo-menu').screenshot({path:testInfo.outputPath('conquistas-ocultas-celular.png')});
+    const conquistaSecreta = page.locator('.conquista-secreta').filter({hasText:'Frequência 09'});
 
     await page.evaluate(() => {
         registrarTransmissaoProjetoRelogioParaConquistas();
@@ -3657,10 +3662,16 @@ test("esconde e revela a conquista Frequência 09", async ({ page }) => {
     await expect(conquistaSecreta).toContainText(
         "Encontre e escute até o fim a transmissão do Projeto ???."
     );
+    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText('1/12');
+    await page.evaluate(()=>selecionarIdioma('en'));
+    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText('Hidden achievements');
+    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toHaveAttribute('aria-pressed','true');
+    await page.evaluate(()=>selecionarIdioma('pt-BR'));
 
     await page.reload();
     await page.locator(".botao-lobby-conquistas").click();
-    await expect(page.locator(".conquista-secreta")).toContainText("Frequência 09");
+    await page.locator('[data-categoria-conquistas="ocultas"]').click();
+    await expect(conquistaSecreta).toContainText("Frequência 09");
 });
 
 test("aplica vantagens elementais e mantém dano normal no mesmo elemento", async ({ page }) => {

@@ -66,10 +66,12 @@ assert.strictEqual(intervalo.relogiosDeRuptura.raioDeClique, 42);
 assert.strictEqual(intervalo.relogiosDeRuptura.distanciaMinimaDasTorres, 70);
 assert.deepStrictEqual(
     Array.from(intervalo.cenaFinal.etapas, etapa => etapa.id),
-    ["registro", "alerta", "voz", "senhorDoTempo"]
+    ["aproximacao", "pergunta"]
 );
-assert.ok(intervalo.cenaFinal.etapas[2].texto.includes("abriu o intervalo"));
-assert.ok(intervalo.cenaFinal.etapas[3].texto.includes("não conseguia observar"));
+assert.ok(intervalo.cenaFinal.verdade.some(etapa => etapa.id === "selado"));
+assert.strictEqual(intervalo.cenaFinal.verdade.at(-1).id, "retorno");
+assert.strictEqual(intervalo.cenaFinal.silencio.at(-1).id, "castelo");
+assert.strictEqual(intervalo.cenaFinal.etapas[1].titulo, "???");
 
 assert.strictEqual(capitulo3.requerVitoriaNoIntervaloPerdido, true);
 assert.strictEqual(fase13.tema, "linhaTemporal");

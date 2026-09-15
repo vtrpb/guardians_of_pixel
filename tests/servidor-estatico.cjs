@@ -3,14 +3,15 @@ const http = require("http");
 const path = require("path");
 
 const raiz = path.resolve(__dirname, "..");
-const porta = 4173;
+const porta = Number(process.env.PORTA_TESTES || 4173);
 const tipos = {
     ".css": "text/css; charset=utf-8",
     ".htm": "text/html; charset=utf-8",
     ".html": "text/html; charset=utf-8",
     ".js": "text/javascript; charset=utf-8",
     ".mp3": "audio/mpeg",
-    ".png": "image/png"
+    ".png": "image/png",
+    ".svg": "image/svg+xml"
 };
 
 http.createServer((requisicao, resposta) => {

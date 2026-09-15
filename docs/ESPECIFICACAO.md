@@ -2,6 +2,19 @@
 
 ## Identidade
 
+### Remakes visuais de inimigos e Bosses
+
+- Gorila da Selva: ombros largos, braços compridos, punhos apoiados e rosto destacado.
+- Escorpião do Deserto: carapaça segmentada, patas laterais, duas pinças e cauda curvada com ferrão; sem características de roedor.
+- Colosso da Selva: corpo rochoso simples, olhos claros e blocos de vegetação na cabeça e nos braços.
+- Hidra do Pântano: três cabeças separadas, pescoços compridos e ventre claro, sem escamas individuais.
+- Tirano Primordial: silhueta reptiliana de perfil, mandíbula com dentes, cauda e pernas robustas.
+- Executor Cronal: armadura metálica, visor luminoso e núcleo em forma de ampulheta.
+- Curador do Vazio: figura encapuzada, máscara clara, manto fragmentado e detalhes luminosos.
+- Os sete usam uma grade pixelada compartilhada, desenhada com retângulos inteiros no canvas, inclusive no Álbum. Não são necessárias novas imagens externas.
+- A versão simplificada usa grades de 12 × 12 e no máximo quatro cores por sprite, com blocos maiores, sem texturas ou sombreamento fino. Preserva as novas silhuetas e combina com a simplicidade dos demais inimigos; não aumenta o detalhamento do restante do jogo.
+- Preservar atributos, colisões, movimentação, ataques, recompensas e condições das habilidades. Manter o efeito de regeneração da Hidra e o chamado do Tirano; Executor e Curador mudam a cor de seus detalhes durante suas habilidades existentes.
+
 - O nome oficial do jogo é **Guardians of Pixel**.
 - A sigla visual usada nos emblemas do lobby e da partida é **GP**.
 - **Pixel tower defense** permanece como descrição do gênero, sem fazer parte do nome oficial.
@@ -10,7 +23,82 @@
 
 Defender a torre-base no fim do caminho usando torres enquanto os inimigos avançam pelas waves.
 
+## História: entidade coroada do Limbo
+
+### Apresentação compartilhada das conversas
+
+- Revisão visual: caixas e botões usam fundo roxo escuro `#241b38`, bordas douradas `#cba66b` e texto creme `#f6edda`, mantendo o formato pixelado. Nas falas do jogador, ocultar o retrato e remover a coluna reservada à imagem; mostrar somente **Você** (localizado) e a fala, preservando os controles. Demais personagens continuam com seus retratos coloridos e aparências existentes.
+- Transmissões de áudio, rádio, registros escritos e gravações sem vídeo não mostram pessoas, mesmo quando o nome do autor é conhecido. Inclui os registros de Lina, a gravação do antigo defensor, transmissões interceptadas e a voz do portal bloqueado. Usar toda a largura para texto, sem coluna vazia. Retratos de outros personagens aparecem em conversa presencial ou vídeo; falas do jogador continuam sem imagem. `meioComunicacao` permite indicar `audio`, `video` ou `presencial` explicitamente; fontes antigas são classificadas pelos metadados originais, antes da tradução.
+
+- Conversas da campanha, do portal e do castelo usam caixa roxa com borda dourada, texto claro e retrato à esquerda quando a fala admite imagem. A referência `references/Captura de tela 2026-09-13 133112.png` orienta somente a disposição visual; retratos e código são originais, sem personagens ou imagens de Undertale.
+- `dialogos.js` centraliza retratos de 12 × 12 e identificação dos falantes; `dialogos.css` centraliza o formato. Retratos: jogador, Lina Varela, Senhor do Tempo com cabeça de relógio, entidade coroada do Limbo e guardas. Falantes cuja identidade ainda é desconhecida usam silhueta com interrogação; o antigo defensor não recebe o rosto do jogador. A forma humana futura do Senhor do Tempo continua desativada.
+- A apresentação é atualizada a cada fala: respostas do jogador e transmissões de áudio removem a imagem. A escolha usa o nome original ou o autor da fala, preservando português, inglês e espanhol. Registros de Lina e narração não exibem retratos; somente vídeo ou presença do personagem permitem sua imagem.
+- A referência orienta o formato da caixa, não uma conversão para preto e branco. Retratos mantêm cores: pele e roupas do jogador, jaleco de Lina, coroa dourada e manto roxo da entidade, armadura dos guardas. O Senhor do Tempo reutiliza o desenho anterior em `criarRetratoDoSenhorDoTempo`, com cores, cabeça de relógio e detalhes ciano/magenta. Na Dimensão Glitch permanece a forma geométrica original; a armadilha do Intervalo mantém a forma que já usava nessa cena. Não substituir esses desenhos pelo novo busto genérico.
+- Preservar textos completos, ordem, botões, escolhas, pausa, progresso, recompensas e bloqueio de Escape/clique no fundo. Não adicionar digitação gradual ou exigir um clique extra para revelar texto. Retratos são decorativos; nome e fala mantêm seus elementos acessíveis.
+- Caixa da campanha fica na parte inferior da tela, com altura ajustada ao texto e rolagem para conteúdo excepcionalmente longo. Em celular, reduzir o retrato para 64 px e manter botões acessíveis. Portal e castelo usam o mesmo formato; a imagem examinada do casal permanece uma ilustração separada do retrato de quem fala.
+- A carta encontrada após a Fase 6 permanece como documento, com apresentação própria. Cenas de aproximação da entidade e revelação de capítulo preservam seus cenários e controles.
+
+### Abertura da Fase 1: memória perdida
+
+- Ao iniciar a Fase 1 pela campanha, antes dos inimigos avançarem e antes do tutorial, mostrar três pensamentos com o título **VOCÊ**: “Como eu vim parar aqui? Não consigo lembrar…”, “Essas criaturas… Por que elas querem me atacar?” e “Preciso defender este lugar… Depois tento entender.”.
+- **Continuar** avança os pensamentos; **Começar defesa** encerra a abertura e inicia o tutorial quando necessário, ou retoma o combate. Escape e clique no fundo não pulam a cena.
+- A abertura pode ser relida ao iniciar novamente pelo lobby; reiniciar a batalha diretamente não a repete. Não aparece no modo infinito nem no editor. Textos em português, inglês e espanhol.
+- A falta de memória diz respeito à chegada ao mundo do jogo. A Fase 18 revela que o Senhor do Tempo trouxe o jogador e apagou suas lembranças; as distorções das passagens atraem as criaturas.
+
+- O atalho temporário **Encontrar entidade (teste)** foi removido. O acesso normal pelo relógio permanece inalterado.
+- Após vencer as dez waves do Intervalo Perdido (Limbo), uma entidade vem de longe e pergunta quem trouxe o jogador. Seu nome permanece **???**; não é o Senhor do Tempo.
+- O visual segue `references/Captura de tela 2026-09-09 202522.png`: rosto negro sem feições, coroa dourada com rubi e manto roxo com faixa clara, detalhes vermelhos e bordas douradas. Poucos detalhes extras, mantendo pixel art; aproximação em passos e opção de movimento reduzido.
+- A pergunta oferece **Permanecer calado** e **Foi o Senhor do Tempo**. Não é possível pular a escolha pelo botão de continuar, Escape ou clique no fundo.
+- No silêncio, a entidade diz: “Enfim… Ninguém entra sem minha permissão. E ninguém sai sem que eu permita. Siga-me.” O jogador chega diante do castelo e escolhe **Entrar no castelo**, iniciando exploração livre.
+- O silêncio, por si só, não libera o Capítulo 3 nem marca o desfecho principal como visto: é preciso concluir a arena e a conversa. Não remove capítulos já liberados; as recompensas da vitória são mantidas. É possível repetir o Limbo e escolher novamente.
+- Ao falar sobre o Senhor do Tempo, a entidade revela que ele trouxe outras pessoas, desobedeceu seus avisos e já perdeu poderes que nunca recuperará. O jogador pergunta “Que consequências?”. A entidade afirma que nenhuma entidade da dimensão do jogador tem autoridade ali.
+- A entidade explica que o Senhor do Tempo acessa o Limbo distorcendo o tempo. A barreira é ativada **durante esta cena**, impedindo novas entradas dele por esse meio; não impede o jogador de repetir a fase pelo relógio existente.
+- A entidade devolve o jogador à sua dimensão. Esse caminho mantém a liberação do Capítulo 3 e a tela de vitória existentes, sem conceder recompensas uma segunda vez.
+- A cena substitui o antigo registro final e aparece a cada vitória no Limbo, inclusive em saves antigos, permitindo rever a escolha. Não aparece em derrota, modo infinito ou mapas do editor.
+
+### Castelo, arena e promessa de ajuda
+
+- Continuidade e diálogos: `docs/HISTORIA_LIMBO_E_FINAIS.md`. A Fase 18 implementa o confronto e os dois finais; roteiro executável em `fase18.js`.
+- Entrar no castelo suspende a interface de tower defense da campanha. Andar com WASD/setas ou direcional de toque; interagir com E ou botão. Diálogos interrompem o movimento; soltar tecla/toque, perder foco ou ocultar a página não mantém o personagem andando.
+- Térreo: mesa comprida com colisão, escada e arsenal bloqueado por dois guardas. Segundo andar: entidade, varanda para o vazio, quarto real e quarto de hóspedes com cama. É necessário ouvir o desafio antes de dormir.
+- Depois de dormir, a entidade entra no quarto; o jogador volta ao térreo e sai para a arena. A arena é um desafio PvE de tower defense separado, não uma fase numerada da campanha.
+- Arena: cinco waves, 12 pontos de base, 300 créditos iniciais, seis torres no máximo, flechas (60), canhão (100), gelo (80), melhoria única de 60 créditos por torre (+55% de dano). Ganhar 12 créditos por inimigo e 70 entre waves; créditos exclusivos da arena.
+- A última wave inclui **???**, com 1.400 de vida. A cada nove segundos enquanto está em campo, sela uma torre por 2,5 segundos e convoca um gladiador. Se alcançar a base, causa 12 de dano. Concluir todas as waves com a base viva é vitória.
+- Valores de combate centralizados em `CONFIG.casteloDoLimbo.arena`. A arena não altera balanceamento, inventário, XP, fragmentos ou missões da campanha.
+- Derrota permite tentar novamente. Sair durante a arena guarda o checkpoint anterior à luta; retomá-la reinicia créditos, base e waves. Diálogos pós-vitória podem ser retomados sem repetir a batalha.
+- **Salvar e voltar ao lobby** e **Continuar no Limbo** permitem retomar. O save `guardians-of-pixel-jornada-limbo-v1` participa do sistema de três slots existente. Guarda sala, posição, desafio, manhã, arena e promessa; não salva um combate pela metade.
+- **Continuar no Limbo** aparece acima do relógio quebrado, fora da linha principal do lobby, com coroa, fundo roxo e moldura dourada pixelada. Mantém o checkpoint e as condições de visibilidade existentes; fica oculto enquanto uma página do menu está aberta.
+- **Continuar no Limbo** fica oculto e desativado quando não existe jornada salva ou ela já foi concluída. Seu atributo `hidden` deve prevalecer sobre o estilo dos botões do lobby. A primeira entrada permanece pelo caminho do silêncio após vencer o Limbo; o botão não libera acesso antecipado.
+- Ao vencer e terminar o pedido de ajuda, salvar `promessaDeAjuda: true` e liberar o Capítulo 3. Repetir o Limbo ou escolher a saída direta não revoga uma promessa conquistada. Não duplicar a recompensa da vitória original no Limbo.
+
+#### Revisão visual e novos cômodos do castelo
+
+- A ampliação do retrato respeita `hidden` mesmo com o estilo global de canvas. Nas demais conversas, inclusive mesa e sacada antes ou depois de examinar o retrato, não exibe imagem nem reserva espaço vazio no balão.
+- O retrato do casal fica pequeno sobre o criado junto à cabeceira da cama real. Examinar abre no diálogo uma ampliação pixelada com foto, moldura e suporte traseiro/pé; Continuar fecha a imagem. Preservar a dúvida sobre a identidade da mulher. Portas laterais ganham visão oblíqua de cima e espessura; portas frontais ganham profundidade no topo do batente. Destinos, alcance e colisões das portas permanecem iguais.
+- Sofá e poltronas usam encosto alto, assentos separados, braços elevados e pés visíveis para distinguir sua silhueta de molduras. A lareira tem chaminé estreita, cornija, abertura escura escalonada, pilares de pedra, toras e três chamas pixeladas. Preservar posições, dimensões de colisão e circulação; o desenho compartilhado atualiza também as poltronas dos demais cômodos.
+- Remover palavras desenhadas no canvas sobre a mesa, portas, varanda e arena. Manter somente o cabeçalho da interface e o botão contextual de interação para orientação.
+- Acrescentar sala de estar (sofá, poltrona, lareira e mesa baixa), biblioteca (estantes, escrivaninha, livros e globo) e galeria (retratos, armaduras e banco). Sala de estar e biblioteca acessadas pelo lado esquerdo do salão; galeria pelo segundo andar. Todas permitem retornar.
+- Quartos ganham cabeceiras, criados-mudos, quadros, tapetes e móveis; salão e corredor recebem aparadores, vasos e estandartes. Desenho e colisão dos móveis compartilham os mesmos dados em `limbo-visual.js`.
+- O quarto real possui um retrato interativo da entidade com uma mulher coroada. O jogador se pergunta se é sua esposa, mas não revela nomes nem confirma uma história para ela.
+- As passagens usam portas de madeira com moldura, ferragens e maçaneta. Os dois acessos da escada mostram degraus e corrimãos. Paredes recebem alvenaria, pilares e tochas. A varanda continua mostrando apenas o vazio, sem paisagem ou rótulo.
+- Jogador recebe cabelo, rosto, roupa, cinto e botas, com quatro quadros de caminhada e direção. A animação só avança com deslocamento real; colisão, diálogo e pausa não deixam os pés andando no lugar. Guardas e gladiadores recebem elmo, visor, armadura e lança; gladiadores animam os passos durante seu deslocamento.
+- Torres da arena ganham bases de pedra e silhuetas distintas de arco, canhão e cristal. Plateia e arquibancadas ficam no fundo, fora do caminho. Não alterar custos, dano, waves, construção, recompensas ou habilidades.
+- Os novos cômodos participam do checkpoint. Ao retomar um save com posição ocupada por decoração nova, reposicionar no espaço livre mais próximo, sem apagar o progresso.
+
 ## Menu inicial
+
+### Mudança: fichas clicáveis do Álbum
+
+- Clicar em uma figurinha abre sua ficha vertical com atributos, **Melhor contra** e fraquezas elementais; quando não há fraqueza, mostra **Nenhuma fraqueza elemental**.
+- Fechar a ficha ou pressionar Escape retorna à coleção. As fichas são consultas e não alteram os atributos dos itens.
+
+### Correções: progresso, portal e preparação
+
+- Carregar um save sem a marca da antiga correção de progresso preserva a maior fase válida já salva; não rebaixa automaticamente o jogador à Fase 12. Valores continuam limitados às fases existentes. Não se concede progresso adicional nem se recupera por suposição progresso já perdido.
+- A conversa do portal bloqueado não fecha ao clicar no fundo. Encerrar a conversa limpa seu estado; fechamentos programáticos também limpam esse estado, evitando que Escape permaneça bloqueado no lobby.
+- A Torre de Varredura é incluída obrigatoriamente nas equipes das Fases 14 e 15, tanto na campanha quanto no modo infinito, respeitando o limite de seis defesas.
+- A prévia do editor escala suas coordenadas pelas dimensões reais do canvas da partida (1.200 × 700).
+- Os testes do portal verificam o clique antes da Fase 6, a resposta e o encerramento, em vez de exigir um botão desativado.
 
 - A partida inicia somente ao clicar em **Começar partida**.
 - O menu oferece dez ações: **Começar partida**, **Capítulos**, **Álbum**, **Como jogar**, **Loja**, **Pacote Apoiador**, **Missões**, **Conquistas**, **Waves infinitas** e **Configurações**.
@@ -21,7 +109,7 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 - **Configurações** abre o painel compartilhado de música, efeitos sonoros, iluminação e idioma sem iniciar uma partida.
 - **Loja** abre o catálogo de defesas especiais e mostra o saldo de Fragmentos de Pixel.
 - **Pacote Apoiador** abre uma oferta cosmética opcional que não altera atributos ou progressão.
-- **Missões** abre o painel de objetivos semanais, progresso e recompensas disponíveis.
+- **Missões** abre o painel de 100 objetivos permanentes, progresso e recompensas disponíveis.
 - **Conquistas** abre a coleção permanente de desafios concluídos e ainda bloqueados.
 - **Waves infinitas** abre a escolha de defesas para a fase selecionada e, depois da confirmação, inicia um modo sem vitória na wave 20; a partida termina somente quando a base é invadida.
 - O lobby não possui um botão separado de música; tocar, pausar e ajustar o volume ficam centralizados em **Configurações**.
@@ -129,35 +217,61 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 - Reiniciar, repetir ou avançar diretamente para outra fase reutiliza a equipe da partida atual; a Dimensão Glitch reutiliza a última equipe salva para preservar a entrada direta pelo portal.
 - Seleção de equipe e limite de construção também valem no modo Waves infinitas, sem alterar sua progressão ou recompensa.
 
-### Mudança: missões semanais
+### Mudança: 100 missões permanentes
 
-**Objetivo:** oferecer metas recorrentes que recompensem diferentes formas de jogar durante a semana.
-**Alterar:** adicionar **Missões** ao lobby e registrar três objetivos semanais persistentes, renovados toda segunda-feira à 0h no horário local do jogador.
-**Não alterar:** composição ou dificuldade das waves, recompensas normais de partida, custos da Loja, desbloqueio das fases, dano, créditos, torres ou regras do modo infinito.
+- Ao concluir as 100 missões, liberar **Resgatar prêmio final**: duas skins exclusivas da Torre padrão (**Guardião Solar**, laranja/ciano, e **Sentinela Cósmica**, roxo/prata), **1.250 XP** e a conquista especial **Lenda das 100 Missões**. Não concede Fragmentos diretamente. XP segue a progressão normal de níveis.
+- Basta cumprir os 100 objetivos, sem exigir os 100 resgates individuais. O prêmio final é separado dos cartões e pode ser resgatado uma única vez por slot; persistir `premioFinalResgatado`. Mostrar o prêmio no painel de Missões, incluir nos prêmios prontos e no **!** de Todas. Salvos antigos com os objetivos concluídos também podem resgatar.
+- As duas skins possuem paletas para os quatro níveis, aparecem no Álbum após o desbloqueio e podem ser equipadas no painel de Missões. São cosméticas, preservam o formato da Torre padrão e não alteram atributos. Resgatar não troca automaticamente a skin equipada. Textos em português, inglês e espanhol.
+
+- Prêmios definidos individualmente pela dificuldade: missões fáceis concedem 3–5 Fragmentos, médias 10–20 e difíceis 20–25. A primeira vitória concede 5, construir a primeira torre concede 3 e derrotar o primeiro Boss concede 5. Nenhum prêmio em Fragmentos passa de 25. Preservar a skin da missão 61 e a conquista da 83, com alternativas de 15 e 25 Fragmentos. O catálogo completo registra cada valor. Prêmios pendentes usam o novo valor; saldos e rótulos de prêmios já resgatados permanecem intactos. Não adicionar novos boosts ou alterar os atuais nesta revisão de valores.
+
+- Os botões das categorias exibem **!** ao lado do nome quando há pelo menos uma missão concluída com prêmio não resgatado naquela categoria. **Todas** mostra o mesmo indicador quando qualquer prêmio está disponível. Ao resgatar, atualizar os indicadores: só remover quando não restarem prêmios pendentes. O aviso acessível acompanha o idioma; missões incompletas e já resgatadas não ativam o indicador.
+
+**Objetivo:** substituir as três missões semanais por 100 objetivos fixos, sem renovação ou prazo.
+**Alterar:** catálogo em CONFIG.missoes.permanentes, progresso em guardians-of-pixel-missoes-permanentes-v1 e interface com dez categorias, filtro Todas, total concluído e cartões secretos. Catálogo completo e recompensas: docs/MISSOES_PERMANENTES.md.
+**Não alterar:** combate, Loja e suas ofertas semanais, trilhas, finais da Fase 18, recompensas normais de partida ou cosméticos já conquistados.
 **Aceitação:**
-- O botão **Missões** aparece entre **Loja** e **Waves infinitas** e informa quantas recompensas estão prontas para resgate.
-- O painel mostra a semana atual, a data da próxima renovação e três cartões com nome, descrição, progresso, objetivo e recompensa.
-- **Caçador de Pixels** exige eliminar 50 inimigos em qualquer modo e recompensa 10 Fragmentos de Pixel; inimigos comuns, especiais e Bosses contam uma vez quando são derrotados.
-- **Guardião da Campanha** exige concluir 3 partidas de campanha normal e desbloqueia a skin exclusiva **Sentinela Dourada** para a Torre padrão; derrotas, desistências e partidas infinitas não contam.
-- **Além do Limite** exige alcançar a wave 40 no modo infinito e desbloqueia a conquista permanente **Além do Limite**; o progresso registra a maior wave alcançada na semana, sem somar waves de partidas diferentes.
-- O progresso é salvo depois de cada eliminação, conclusão de fase ou novo recorde semanal do modo infinito e permanece após atualizar a página.
-- Ao atingir o objetivo pela primeira vez na semana, um aviso informa que a missão foi concluída e que o prêmio deve ser resgatado no painel de Missões.
-- Uma missão concluída libera o botão **Resgatar**; a recompensa só é adicionada ao saldo quando o jogador clica nele.
-- Cada recompensa pode ser resgatada uma única vez e o estado de resgate permanece salvo durante a semana.
-- A primeira obtenção da skin ou da conquista é permanente; em semanas futuras, resgatar novamente a missão correspondente concede respectivamente 15 ou 25 Fragmentos como recompensa alternativa.
-- Ao desbloquear **Sentinela Dourada**, a skin é equipada automaticamente e altera somente as cores da Torre padrão em todos os níveis; o painel permite alternar entre a skin e o visual original sem alterar atributos.
-- A conquista **Além do Limite** aparece permanentemente no painel **Conquistas** depois de resgatada.
-- Quando a semana muda, progresso e resgates anteriores são substituídos por uma nova lista zerada; recompensas antigas não resgatadas expiram.
-- Os valores de objetivo e recompensa ficam centralizados em `CONFIG.missoes`, permitindo adicionar categorias diárias e mensais futuramente.
+- Metas acumuladas somam entre partidas e não expiram. Metas que compartilham um contador são concluídas juntas ao atingir cada limite; nenhum reset ao resgatar.
+- Cada prêmio é resgatado uma vez por slot. A missão 61 (três vitórias) concede Sentinela Dourada e a 83 (wave 40 completa no infinito) concede Além do Limite. Se já obtidos, conceder respectivamente 15 ou 25 Fragmentos. As demais recompensas exatas constam no catálogo.
+- Migrar os contadores antigos disponíveis, mesmo de semana anterior, e mapear os resgates das três missões para 11, 61 e 83. Manter cosméticos, conquistas e saldo. Recorde antigo não resgatado perde uma unidade ao migrar, pois contava wave iniciada. Dados novos nunca dependem do calendário.
+- Salvar contadores, coleções de tipos/fases, vitórias por fase e resgates por slot. Dados ausentes ou inválidos usam valores seguros. Sem armazenamento disponível, manter o progresso da sessão.
+- Aproveitar marcos confirmados pelo save (capítulos, carta, portal, máquina, transmissão, nível e maior fase efetivamente salva). Não inferir quantidades de eliminações por defesa, construções ou vitórias de fases intermediárias sem registros. Cenas finais 15/16 precisam ser concluídas após a atualização quando não houver registro próprio.
+- Waves contam ao terminar todos os inimigos, uma única vez por wave. Reiniciar ou desistir não concede a wave incompleta. Eliminações restauradas pelo Curador não contam novamente.
+- Campanha e infinito contam, conforme o objetivo. Editor, castelo e arena opcional do Limbo não geram progresso. Contadores da tentativa zeram em toda nova partida.
+- Registrar torres construídas durante toda a tentativa: vender não burla o limite de construção, tipos usados, ausência de vendas, melhorias ou explosivos. Torre máxima deve possuir melhorias. Eliminações por defesa usam o golpe final; revelações contam uma vez por inimigo. Feixe exige atingir o limite real de pulsos.
+- Segredos 91–100 exibem ??? e texto neutro até a conclusão. Categoria, nomes, descrições e controles têm português, inglês e espanhol.
+- Atualizar avisos e recompensas prontas ao completar metas; a coleção permite continuar equipando a skin anterior. Não criar nova moeda ou desbloqueios de combate como prêmio.
 
 ### Mudança: painel de conquistas
+
+- Cada uma das 36 conquistas possui uma imagem pixelada original em `assets/conquistas/<id>.svg`, desenhada em grade de 32 × 32 e exibida com escala nítida. O script `scripts/gerar-icones-conquistas.cjs` guarda as formas originais e permite regenerar os arquivos. A referência de explosões em `references/Captura de tela 2026-09-13 124632.png` foi consultada apenas como orientação; nenhum recorte ou pixel dela é incorporado ao jogo.
+- Os cartões comuns exibem o ícone temático mesmo bloqueados, mantendo o estilo de bloqueio existente. Ocultas bloqueadas continuam com **?**, sem carregar a imagem específica. Ao desbloquear, o cartão e a notificação usam a mesma imagem. Imagens decorativas têm texto alternativo vazio; nome e descrição permanecem acessíveis no cartão e aviso. Não alterar critérios, recompensas, progresso nem persistência.
+- Exemplos: Demolição em Massa recebe uma explosão original; Frequência 09, um rádio; Mestre do Fliperama, uma máquina; Pare o Relógio!, relógio e pausa. As demais possuem composições individuais relacionadas ao feito, incluindo castelo, retrato, promessa, caminhos, escudos, torres e coroa.
+
+- A tela separa o catálogo existente em **Conquistas comuns** e **Conquistas ocultas**, cada aba com seu contador de desbloqueadas/total. O primeiro acesso abre Comuns; trocar abas ou idioma mantém a seleção durante a sessão.
+- Comuns mostram nome, requisito e progresso desde o início. Ocultas usam `secreta: true` em CONFIG; antes do desbloqueio, mostrar somente **???**, ícone **?** e **Explore o jogo para descobrir.**, sem progresso ou dicas que revelem o objetivo. Depois, mostrar nome e descrição originais e progresso completo, mantendo a conquista na aba Ocultas.
+- **Frequência 09**, a conquista da vitória na Dimensão Glitch e as dez novas conquistas de exploração pertencem às ocultas. O nome original **???** da conquista da Dimensão Glitch permanece também após o desbloqueio, conforme a identidade já definida; sua descrição é revelada.
+- Preservar critérios, saves, desbloqueios e recompensas. Contadores e textos em português, inglês e espanhol; botões acessíveis por teclado e legíveis no celular.
+
+#### Vinte conquistas adicionais
+
+- O catálogo passa a 36 conquistas: 22 comuns e 14 ocultas. Nomes e requisitos das vinte anteriores estão em `docs/CONQUISTAS_NOVAS.md`; configuração incorporada em `CONFIG.conquistas`. Textos nas três línguas do jogo. Nenhuma das novas concede XP, Fragmentos, skins ou bônus de combate.
+- Duas conquistas ocultas adicionais dos finais da Fase 18: **Esse é o fim?**, ao concluir a cena em que o Senhor do Tempo mata o jogador; **Finalmente em casa**, ao concluir a cena em que a entidade intercepta a lâmina e protege o jogador. Não são concedidas por derrota comum, promessa ou início do diálogo. Cada uma tem ícone pixelado original próprio; nome, descrição e imagem permanecem ocultos até o desbloqueio. Persistem por slot e rever o final não duplica desbloqueios.
+- `CONFIG.desafiosDeConquistas` concentra os limites: 90% do caminho para fim, 50% para metade, três efeitos simultâneos, três partidas encerradas por sessão e oito cômodos acessíveis.
+- As dez de combate contam na campanha e no infinito conforme houver vitória; editor e arena independente não contam. Desistências não contam como partidas terminadas. Reiniciar consome a oportunidade de revanche; somente a tentativa imediatamente seguinte na mesma fase e modo pode concedê-la. Recarregar preserva a última derrota, mas zera o contador de partidas da sessão.
+- Considerar o caminho real do Boss. Para posição de torre, projetar no trecho mais próximo entre todos os caminhos e comparar com metade do comprimento daquele caminho. Todas as construções da tentativa contam mesmo se vendidas ou destruídas; usar explosivos invalida Última linha de defesa.
+- Na última hora acompanha a torre de origem do golpe final, inclusive projéteis e Feixe. A torre precisa ter sido construída quando aquele inimigo já estava nos últimos 10%; o último golpe da batalha deve ser dela. Pausas não alteram esse critério.
+- Controle absoluto considera congelamento, lentidão, queimadura, marca, corrosão, vulnerabilidade sísmica e estase: três tipos ainda ativos no golpe fatal. Retorno do Eco não conta como eliminação; inimigos restaurados pelo Curador não repetem esses feitos. Vender torre não equivale a perdê-la para um inimigo.
+- Sem pressa usa a velocidade normal que a simulação atual oferece, com pausas permitidas; não acrescenta controle de velocidade.
+- Salas visitadas, rotas concluídas e última derrota são salvas por slot em `guardians-of-pixel-historico-conquistas-v1`. Desbloqueios usam o armazenamento de conquistas existente. Históricos antigos não comprovados precisam ser jogados novamente; retomar uma vitória da arena ou uma promessa já salva permite reconhecer esses marcos.
+- Na exploração, entrada, retrato e guardas contam na interação real; arena começa a contar ao iniciar a primeira wave, vitória antes da conversa e promessa só depois do último diálogo. Duas respostas exige terminar a conversa da verdade e entrar no castelo pela rota do silêncio no mesmo slot. Sem recompensas extras e sem mudanças nos finais planejados da Fase 18.
 
 **Objetivo:** registrar marcos permanentes do jogador e mostrar claramente quais desafios ainda faltam completar.
 **Alterar:** adicionar **Conquistas** ao lobby, salvar estatísticas permanentes e exibir oito conquistas com nome, descrição, progresso e estado de desbloqueio.
 **Não alterar:** recompensas das missões, saldo de Fragmentos, compras, progressão das fases, balanceamento, composição das waves ou regras de vitória e derrota.
 **Aceitação:**
 - O botão **Conquistas** aparece entre **Missões** e **Waves infinitas** e informa quantas das oito conquistas foram desbloqueadas.
-- O painel mostra todas as conquistas desde o início; cartões bloqueados ficam mais escuros e totalmente em preto e branco, enquanto cartões desbloqueados recuperam as cores e exibem **Desbloqueada**.
+- O painel mostra as conquistas da aba selecionada; cartões bloqueados ficam mais escuros e totalmente em preto e branco, enquanto cartões desbloqueados recuperam as cores e exibem **Desbloqueada**. Conteúdo das ocultas segue as regras de sigilo acima.
 - **Primeira Vigília** é desbloqueada ao concluir 1 partida da campanha normal.
 - **Guardião dos Cinco Reinos** é desbloqueada ao concluir as cinco primeiras fases da campanha; a sexta fase não remove a conquista já obtida.
 - **Guardião de Todos os Reinos** é desbloqueada ao concluir as oito fases disponíveis da campanha normal.
@@ -210,7 +324,7 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 
 **Objetivo:** ampliar o espaço vertical disponível para o mapa e manter somente informações úteis durante a defesa.
 **Alterar:** remover da tela da partida o cabeçalho com **GP**, **Guardians of Pixel**, **Comando de defesa** e **Zona sob proteção**; reorganizar a aplicação em uma linha flexível para o mapa e outra para os controles inferiores.
-**Não alterar:** título e identidade visual do lobby, mapa interno de 1.200 × 700 px, HUD, seletor de defesas, posto de boosts, menu de pausa ou barra inferior.
+**Não alterar:** título e identidade visual do lobby, mapa interno de 1.200 × 700 px, HUD, seletor de defesas, menu de pausa ou barra inferior.
 **Aceitação:**
 - Ao iniciar qualquer fase ou o modo infinito, não existe faixa de marca acima do mapa.
 - Em telas acima de 760 px, a aplicação ocupa exatamente a altura visível do navegador e o mapa reserva somente 116 px para margens, espaçamento e controles inferiores, em vez dos 170 px anteriores.
@@ -279,21 +393,32 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 
 ## Áudio
 
-- O lobby usa uma composição procedural exclusiva, calma e pixelada, com ganho relativo de 125%, melodia em onda quadrada, harmonia, baixo e percussão sintetizados pelo navegador; essa composição não toca durante nenhuma fase.
+- Acompanhamento de **Festa na Praça Pixel**: bumbo nos tempos fortes, caixa nos tempos 2 e 4, chimbal em todas as colcheias e percussão complementar com virada no fim da frase. O sequenciador aceita instrumentos simultâneos por passo; padrões antigos continuam iguais. Volume-base da bateria do lobby: 0,266. Acordes curtos em contratempo, onda triangular, volume 0,063 por nota e duração de 0,45 passo. Bateria e acordes receberam 40% de ganho adicional para destacar o acompanhamento. Preservar melodia, baixo, andamento, ganho geral, controles e cópia da música calma anterior.
+
+- Extensão das trilhas curtas: a camada procedural da Fase 1, Fases 2, 3, 5, 12/16, 13, 14, Dimensão Glitch, Intervalo Perdido e castelo do Limbo passam a ter forma A–B–A–C. A é o tema original; B e C são frases novas, não cópias transpostas. Preservar síntese, andamento, ganho, arquivo MP3 da Fase 1 e controles. Fase 6, lobby, conversa do portal e as sete partituras recentemente refeitas permanecem inalterados.
+- Ciclos completos: Fase 1 23,04 s; Fase 2 17,28 s; Fase 3 25,60 s; Fase 5 21,12 s; Fases 12/16 16,32 s; Fase 13 17,92 s; Fase 14 23,04 s; Glitch 19,84 s; Limbo/arena 30,72 s; melodia do castelo 38,40 s. Acompanhamentos curtos podem repetir dentro das seções; a melodia completa só retorna ao início ao terminar o arranjo.
+- Revisão das fases 4, 7, 8, 9, 10, 11 e 15: partituras originais próprias em `CONFIG.audio.partiturasPorFase`, com três frases distintas por música e arranjos de quatro ou seis seções. Notas em MIDI, silêncios, sustentações, baixos, contracantos e padrões de bateria independentes; não são transposições da mesma melodia. Reutilizar somente o sintetizador/sequenciador.
+- Fase 4: **Chamados entre as Ruínas**, passos de 220 ms, ganho 165%, frases de 16 passos, chamadas pentatônicas e percussão sincopada. Fase 7: **Águas que Sussurram**, 390 ms, 320%, frases de 12 passos, notas sustentadas e pausas com gotas esparsas. Fase 8: **Passos do Primeiro Titã**, 285 ms, 190%, frases de 16 passos, bordões graves e tambores pesados.
+- Fase 9: **Corrida no Circuito Neon**, 150 ms, 180%, frases de 16 passos em seis seções, baixo pulsante, contracanto rápido e bateria eletrônica. Fase 10: **Protocolo sem Resposta**, 260 ms, 190%, frases assimétricas de 14 passos e sinais agudos espaçados. Fase 11: **Amanhã em Fragmentos**, 315 ms, 185%, frases de 20 passos com sustentações e interrupções. Fase 15: **Páginas sob Suspeita**, 245 ms, 190%, frases de 12 passos com acompanhamento ternário de investigação, independente da fase 10.
+- A Fase 6 mantém exatamente sua composição, ritmo, instrumentos e ganho anteriores. Não alterar lobby, castelo, fases secretas, Fases 1–3, 5, 12–14 e 16. Mapas do editor mantêm as trilhas anteriores por tema. Modo infinito das sete fases usa as novas partituras. Ao trocar de fase, reiniciar o sequenciador compartilhado para aplicar o andamento correto. Volume, silêncio, retomada e alternativa sem Web Audio continuam funcionando.
+- Ao entrar ou retomar a exploração do castelo do Limbo, toca a composição procedural original **Salões do Vazio**: arpejos suaves semelhantes a alaúde, melodia de flauta e ecos lentos de **Ecos do Limbo** ao fundo. A atmosfera é medieval e vazia, sem reproduzir a melodia de Dialtone.
+- A trilha do castelo usa passos de 400 ms, ganho relativo de 400% e os controles compartilhados de volume/silêncio. O ganho recebeu mais 25% sobre os 320% anteriores para melhorar a audibilidade, preservando instrumentos, notas e a proporção dos ecos ao fundo. Continua entre cômodos, diálogos e descanso, sem reiniciar; substitui a música anterior. Na arena toca **Ecos do Limbo** e, ao sair para o lobby, retorna a música do lobby. Não altera as trilhas das fases da campanha.
+- O lobby volta a usar a música calma anterior, preservada em `CONFIG.audio.musicaAnteriorDoLobby`, com sua síntese original, passos de 430 ms e ganho de 125%. `CONFIG.audio.usarMusicaAnteriorDoLobby` passa a ser `true` por padrão. Preservar controles, autoplay, transições e todas as músicas das fases.
+- **Festa na Praça Pixel** fica guardada em `CONFIG.audio.musicaDoLobby`: composição animada em chiptune, passos de 240 ms, ganho de 125%, quatro frases de 16 passos na ordem A–B–A–C–A–D e ciclo de 23,04 segundos, com seu acompanhamento completo. Para voltar a ela, mudar `CONFIG.audio.usarMusicaAnteriorDoLobby` para `false` e recarregar.
 - A reprodução da música exclusiva é tentada automaticamente assim que o carregamento da página termina, sem exigir o clique em um botão do menu.
 - Se a política de autoplay do navegador bloquear áudio audível, o jogo tenta liberá-lo na primeira interação em qualquer lugar da página e remove essa escuta assim que a música começa.
-- A Fase 1 usa `background_music.mp3` durante a partida e acrescenta uma camada procedural chiptune contínua, com melodia em tonalidade menor, baixo grave e percussão abafada, preservando o clima defensivo da composição original.
-- A camada pixelada da Fase 1 toca em passos de 360 ms com ganho relativo de 125%, enquanto `background_music.mp3` fica em 65% do volume escolhido durante essa fase; a parte chiptune recebe um leve destaque sem encobrir a composição original.
-- O controle de volume e o botão de silenciar ajustam as duas partes em conjunto; ao voltar ao lobby ou entrar em outra fase, a camada pixelada é encerrada e `background_music.mp3` recupera 100% do volume escolhido.
+- A Fase 1 toca somente sua composição procedural pixelada existente, com melodia em tonalidade menor, baixo grave e percussão abafada. `background_music.mp3` permanece pausado nessa trilha, inclusive ao reativar a música; sem Web Audio, ela fica sem música em vez de reproduzir a parte normal.
+- A música pixelada da Fase 1 mantém notas, instrumentos, arranjo, passos de 360 ms e ganho relativo de 125%. A remoção da parte normal vale também no modo infinito e onde essa mesma trilha é usada no editor.
+- Volume e silenciar controlam a composição pixelada e indicam corretamente seu estado. Ao voltar ao lobby ou entrar em outra fase, ela é encerrada. Preservar todas as outras trilhas e seus usos de `background_music.mp3`.
 - A Fase 2 substitui essa música por uma composição procedural retrô inspirada em sonoridade egípcia, baseada em escala frígia dominante, com melodia, bordão grave e percussão sintetizados pelo navegador.
 - A Fase 3 substitui o arquivo de fundo por uma composição procedural exclusiva do Ártico, com melodia cristalina, sinos agudos, baixo suave e vento sintetizados pelo navegador.
 - A Fase 4 substitui o arquivo de fundo por uma composição procedural exclusiva de selva, com melodia sombria pixelada, baixo grave, tambores sintetizados e pequenas chamadas agudas.
 - A Fase 5 substitui o arquivo de fundo por uma composição procedural exclusiva do Bosque do Crepúsculo, com melodia misteriosa, harmonia pixelada, baixo suave e ruído de folhas sintetizados pelo navegador.
 - A Fase 6 substitui o arquivo de fundo por uma composição procedural exclusiva da Forja Vulcânica, com melodia grave, ondas serrilhadas, baixo distorcido e percussão sintetizada.
 - A Fase 7 substitui o arquivo de fundo por uma composição procedural exclusiva do Pântano Tóxico, com melodia úmida e misteriosa, baixo profundo, gotas e percussão abafada sintetizados.
-- A Fase 8 usa uma variação procedural exclusiva da Selva Primordial, mais grave e ancestral, com melodia, baixo e percussão próprios sem criar um segundo sistema de áudio.
+- A Fase 8 usa **Passos do Primeiro Titã**, uma composição própria, grave e ancestral, não uma variação da melodia da Fase 4.
 - A Dimensão Glitch substitui o arquivo de fundo por uma composição procedural misteriosa e corrompida, com melodia desafinada, baixo grave, cortes digitais e ruídos curtos sintetizados.
-- A trilha da selva toca em passos de 260 ms e usa ganho relativo de 145%, equilibrado com as demais músicas da campanha.
+- A trilha atual da Fase 4 toca em passos de 220 ms e usa ganho relativo de 165%; a versão anterior de 260 ms/145% permanece como alternativa por tema no editor.
 - A trilha da Fase 2 usa ganho relativo de 165%, além de melodia, baixo e percussão reforçados, para compensar a diferença de volume percebido em relação ao arquivo de música da Fase 1.
 - Ao sair de qualquer fase, todas as trilhas da partida são encerradas antes de a música exclusiva do lobby começar; ao iniciar qualquer fase, a música do lobby é encerrada antes da trilha da partida.
 - A música pode ser silenciada ou ativada no painel de configurações compartilhado entre lobby e partida.
@@ -302,7 +427,7 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 - A trilha da Fase 3 toca em passos de 400 ms com ganho relativo de 155% e usa `background_music.mp3` como alternativa quando Web Audio não está disponível.
 - A trilha da Fase 5 toca em passos de 330 ms com ganho relativo de 165% e usa `background_music.mp3` como alternativa quando Web Audio não está disponível.
 - A trilha da Fase 6 toca em passos de 240 ms com ganho relativo de 155% e usa `background_music.mp3` como alternativa quando Web Audio não está disponível.
-- A trilha da Fase 7 toca em passos de 300 ms com ganho relativo de 320% e usa `background_music.mp3` como alternativa quando Web Audio não está disponível.
+- A trilha atual da Fase 7 toca em passos de 390 ms com ganho relativo de 320% e usa `background_music.mp3` como alternativa quando Web Audio não está disponível; a composição anterior de 300 ms permanece no editor.
 - O jogo possui efeitos sintetizados distintos para torre destruída pelo Sabotador, Game Over e vitória.
 - O Rugido Ancestral usa o arquivo gravado sons/rugido-urso-ancestral.ogg, toca somente quando a habilidade do Urso Ancestral acerta ao menos uma torre e obedece ao volume e ao botão dos efeitos sonoros.
 - A gravação “Bear growl”, de Shizhao, é usada sem alterações sob CC BY 3.0, com crédito e fonte registrados em sons/CREDITOS.md.
@@ -811,7 +936,7 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 - Nos três mapas, o robô é movido continuamente por **WASD** ou pelas setas; encostar em qualquer parede devolve o robô à posição inicial daquele mapa.
 - Alcançar a saída do **Labirinto Pixel** aumenta em 15% o dano de todas as torres por 30 segundos.
 - Os boosts afetam torres atuais, futuras e melhoradas, combinam de forma multiplicativa com os bônus pós-Boss correspondentes e não perdem duração enquanto a partida estiver pausada.
-- A seção **Temporário** do posto possui somente uma entrada chamada **Fliperama**. Ela mostra o efeito de cadência, o efeito de dano ou ambos, com uma barra de duração para cada efeito ativo; **Labirinto** não aparece como boost separado.
+- Os boosts do fliperama continuam ativos sem exigir um painel permanente ou barras de duração sobre o mapa.
 - Concluir novamente o mesmo minigame enquanto seu boost ainda está ativo acrescenta mais 30 segundos à duração correspondente.
 
 #### Mudança: novo sprite do fliperama
@@ -851,30 +976,28 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 - Encostar em uma das paredes reinicia somente a posição do robô; o cronômetro continua.
 - Chegar à saída antes do fim dos 15 segundos fecha o painel, retoma a batalha e aplica +15% de dano durante 30 segundos.
 - Falhar retoma a batalha sem bônus e sem penalidade adicional.
-- O boost de dano aparece dentro da única entrada **Fliperama** do posto lateral, congela durante pausas e é removido ao reiniciar ou abandonar a fase.
+- A duração do boost de dano congela durante pausas; o efeito é removido ao reiniciar ou abandonar a fase.
 
-### Posto de boosts
+### Avisos de boosts
 
-- O antigo posto de controle decorativo do lado esquerdo é o painel de boosts da partida.
-- Antes da primeira escolha pós-Boss, o painel informa que ainda não há bônus.
-- Cada bônus pós-Boss aparece com ícone, nome, efeito acumulado e quantidade de vezes escolhida.
-- Bônus repetidos ocupam uma única linha e incrementam seu contador.
-- O boost do fliperama fica separado dos bônus permanentes porque possui duração limitada.
-- O posto não cria uma linha própria para cada minigame: **Tiro ao alvo** e **Labirinto Pixel** compartilham a única entrada temporária **Fliperama**.
-- Quando cadência e dano estiverem ativos ao mesmo tempo, a entrada **Fliperama** mostra os dois tempos e duas barras internas.
-- Quando o boost do fliperama está inativo, sua área permanece visível com o estado **Aguardando evento**.
-- Reiniciar a fase limpa a lista de bônus e restaura o estado inativo do fliperama.
+- O quadro lateral de boosts foi removido para liberar a área do mapa.
+- Nenhum quadro de bônus permanentes ou temporários fica sobre o canvas.
+- O painel de escolha pós-Boss continua oferecendo as três opções normalmente.
+- Escolher um bônus aplica seu efeito, fecha o painel de escolha e mostra um aviso temporário com o nome e a descrição: **Bônus escolhido: {nome}. {descricao}**.
+- Não há lista permanente de efeitos, contadores de escolhas ou barras de duração dos boosts.
+- O botão **Pulso Temporal** permanece na barra inferior de ações.
+- Valores, duração, acumulação, pausa dos temporizadores e momento de oferta dos bônus permanecem inalterados.
+- Reiniciar ou abandonar a fase continua removendo os bônus daquela partida.
 
-#### Mudança: painel lateral de efeitos
+#### Mudança: remoção do quadro lateral de efeitos
 
-**Objetivo:** usar o espaço esquerdo do mapa para manter as recompensas da partida visíveis.
-**Alterar:** substituir a decoração do posto de controle por uma lista dinâmica de bônus permanentes e temporários.
-**Não alterar:** valores, duração, acumulação ou momento de oferta dos bônus.
+**Objetivo:** manter o mapa livre do quadro de boosts sem remover suas recompensas.
+**Alterar:** substituir a confirmação no quadro por um aviso temporário após a escolha pós-Boss.
+**Não alterar:** mecânicas dos bônus ou do fliperama.
 **Aceitação:**
-- Escolher um bônus pós-Boss atualiza o posto imediatamente.
-- Escolhas repetidas exibem a quantidade e o efeito acumulado correto.
-- O temporizador do fliperama não diminui visualmente enquanto a partida está pausada.
-- O antigo indicador do fliperama deixa de ocupar a parte inferior do mapa.
+- Não existe quadro lateral de bônus no HTML, nos estilos ou na atualização da interface.
+- Escolher um bônus pós-Boss aplica o efeito e confirma seu nome e descrição em um aviso temporário.
+- O Pulso Temporal continua acessível na barra inferior de ações.
 
 ### Inimigos exclusivos da Fase 2
 
@@ -1182,7 +1305,7 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 ### Mudança: Fase 8 Selva Primordial e Pulso Temporal
 
 **Objetivo:** transformar a primeira passagem no Passado em uma fase completa e recompensar sua conclusão com uma habilidade que muda o ritmo da batalha.
-**Alterar:** conteúdo jogável da Fase 8, destino Passado da Máquina do Tempo, álbum, trilha, resultado da vitória e posto lateral da partida.
+**Alterar:** conteúdo jogável da Fase 8, destino Passado da Máquina do Tempo, álbum, trilha, resultado da vitória e barra inferior de ações da partida.
 **Não alterar:** conteúdo ou balanceamento das Fases 1 a 7, acesso à Dimensão Glitch, condição de obtenção da Máquina do Tempo, seleção de seis defesas ou limite geral de torres.
 
 - A Fase 8 recebe o nome **Selva Primordial**, pertence ao **Passado**, tem 20 waves, Boss nas waves 5, 10, 15 e 20 e limite base de 15 torres, ampliável para 16 pela Licença de Construção.
@@ -1198,7 +1321,7 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 - Cada Tirano usa **Chamado da Matilha** uma vez ao cruzar 60% da vida e outra vez ao cruzar 30%, invocando dois Raptors Ancestrais no ponto atual do caminho em cada chamado. Se um golpe atravessar os dois limites, os dois chamados acontecem.
 - A trilha da Selva Primordial reutiliza o motor procedural da selva, mas seleciona melodia grave, baixo, percussão, intervalo de 230 ms e ganho relativo de 170% próprios da Fase 8.
 - Na primeira vitória da Fase 8, o resultado informa que o **Pulso Temporal** foi desbloqueado. O desbloqueio deriva do progresso salvo da campanha e não cria uma chave de conta separada.
-- Em partidas iniciadas depois desse desbloqueio, o posto lateral mostra o botão **Pulso Temporal**. Ele fica disponível a partir da wave 1, para todos os modos e fases.
+- Em partidas iniciadas depois desse desbloqueio, a barra inferior de ações mostra o botão **Pulso Temporal**. Ele fica disponível a partir da wave 1, para todos os modos e fases.
 - Ao ativar o Pulso Temporal, inimigos comuns ficam completamente parados por 4 segundos e Bosses ficam 50% mais lentos por 3 segundos. Novos inimigos criados enquanto o pulso está ativo recebem o mesmo efeito global restante.
 - O Pulso Temporal recarrega por waves: depois de usado, só pode ser ativado novamente quando o contador alcançar 5 waves além da wave da ativação. Reiniciar ou começar outra partida deixa o primeiro uso pronto novamente na wave 1.
 - Pausar a partida também pausa a duração restante do Pulso Temporal. O botão informa quando está pronto, quanto tempo resta ou em qual wave recarrega, e não pode ser ativado com a partida pausada ou encerrada.
@@ -1306,7 +1429,7 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 ## Melhorias de torre
 
 - Clique em uma torre para selecioná-la e use o botão **Melhorar torre**.
-- A Torre padrão, o Canhão pesado, a Torre Glacial, a Torre Besta, a Torre de Esporos, o Obliterador, a Torre Sísmica e o Gerador de Créditos podem receber no máximo 3 melhorias; a Isca Blindada e o Amplificador Pixel não possuem melhorias.
+- Torres que disparam usam cinco melhorias distribuídas entre dano, velocidade de ataque e alcance, conforme a revisão abaixo. Torre Sísmica e Gerador conservam suas três melhorias próprias; Isca e Amplificador permanecem sem melhorias.
 - O Canhão pesado possui dano base 20, superior ao dano 15 da Torre padrão nível 1.
 - Mesmo no nível 3, o alcance 140 do Canhão pesado permanece abaixo do alcance 150 da Torre padrão nível 0.
 
@@ -1322,6 +1445,8 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 - A regra acompanha português, inglês e espanhol.
 
 ### Torre padrão
+
+As tabelas antigas de níveis das torres de tiro abaixo ficam como referência do balanceamento anterior e dos visuais. A compra de pacotes que aumentavam vários atributos foi substituída pela seção **Melhorias por atributo**; tabelas de suporte, como Gerador e Sísmica, continuam vigentes.
 
 | Nível | Custo | Dano | Alcance | Ataque | Visual |
 | --- | --- | --- | --- | --- | --- |
@@ -1675,15 +1800,17 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 
 ### Mudança: partida compacta em celulares pequenos
 
+- Revisão de toque: lobby quebra a linha de botões extras; seleção de defesas usa equipe antes do catálogo, cabeçalho não fixo e altura dinâmica do navegador, permitindo alcançar Começar partida também na horizontal. Em celulares horizontais, reduzir margens e manter seletor lateral e ações compactas com alvos de 44 px.
+- **Ampliar mapa** amplia somente o canvas para pelo menos 720 px em dispositivos de toque/telas estreitas. O jogador arrasta para percorrer o tabuleiro e usa **Ver mapa inteiro** para restaurar a visão; não modifica coordenadas internas, custos, alcance ou tamanho real das torres. Zoom de acessibilidade do navegador permanece permitido.
 **Objetivo:** preservar uma área útil do mapa e manter os controles legíveis em telas de até 480 px.
-**Alterar:** empilhar mapa, posto de boosts e seletor de defesas; transformar o seletor em uma lista horizontal rolável e aumentar os menores rótulos da partida.
+**Alterar:** empilhar mapa e seletor de defesas; transformar o seletor em uma lista horizontal rolável e aumentar os menores rótulos da partida.
 **Não alterar:** tamanho interno de 1.200 × 700 px do mapa, posições do caminho, áreas de clique, quantidade de defesas, ordem dos botões ou layout do lobby.
 **Aceitação:**
 - Em telas de até 480 px, o seletor de defesas deixa de consumir uma coluna ao lado do mapa e aparece abaixo dele.
-- O mapa usa toda a largura disponível antes do posto de boosts e do seletor horizontal.
-- O posto de boosts deixa de cobrir o mapa e organiza bônus permanentes e temporários em uma faixa abaixo dele.
+- O mapa usa toda a largura disponível antes do seletor horizontal.
+- O quadro de boosts permanece removido também em telas pequenas.
 - Todos os tipos de defesa continuam acessíveis por rolagem horizontal e mantêm alvos de toque com pelo menos 54 px de altura.
-- Textos essenciais do seletor, boosts e ações permanecem legíveis sem modificar o layout de telas maiores.
+- Textos essenciais do seletor e das ações permanecem legíveis sem modificar o layout de telas maiores.
 
 ### Mudança: carta misteriosa após a Fase 6
 
@@ -1707,7 +1834,9 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 **Não alterar:** maior fase concluída, atributos das torres, preços, recompensas por disparo, intervalo de Boss ou quantidade padrão de 20 waves.
 **Aceitação:**
 - O portal existe somente no cenário de lobby da Fase 1, fica visualmente atrás da primeira árvore e permanece aceso com brilho preto, roxo e ciano.
-- Antes da conclusão da Fase 6, o portal permanece visível e aceso, mas selado. Ao clicar, abre uma conversa curta da entidade do portal com **Ainda não...** e 3 opções de resposta (**Como assim?**, **O quê?**, **Quem é você?**). A conversa não inicia teleporte e fecha ao escolher qualquer opção.
+- Antes da conclusão da Fase 6, o portal permanece visível e aceso, mas selado. Ao clicar, abre uma conversa curta da entidade do portal com **Ainda não...** e 3 opções de resposta (**Como assim?**, **O quê?**, **Quem é você?**). Cada opção recebe uma resposta própria; a conversa não inicia teleporte e fecha somente pelo botão **Encerrar conversa**.
+- O clique no portal bloqueado deve abrir essa conversa mesmo quando o conteúdo do lobby já foi fechado ou atualizado; a camada da conversa é limpa antes de ser preenchida novamente, sem lançar erro de função inexistente.
+- A conversa bloqueada usa o retrato pixelado do portal, mantém **???** como nome da entidade e exibe acentos corretamente em **Ainda não...**, **O quê?** e **Quem é você?**; **Como assim?** recebe **Volte quando você estiver pronto.**, **O quê?** recebe **Ainda não...** e **Quem é você?** recebe **...**. Só o botão **Encerrar conversa** fecha a conversa, sem iniciar o teleporte.
 - Depois da conclusão da Fase 6, clicar no portal registra imediatamente a descoberta em armazenamento local e impede cliques repetidos durante o teleporte.
 - Com a fase concluída, o portal é a única entrada e inicia diretamente uma transição de 1.600 ms.
 - Durante a transição, toda a interface sofre deslocamentos, inversões de cor, separação dos canais ciano e magenta, cortes horizontais e uma camada de ruído com as mensagens **SINAL CORROMPIDO** e **A realidade está falhando...**.
@@ -1768,6 +1897,64 @@ Defender a torre-base no fim do caminho usando torres enquanto os inimigos avan�
 
 ## Critérios de aceitação
 
+### Mudança: Fase 15 — Arquivo Proibido
+
+**Objetivo:** continuar a investigação da Fase 14 com uma pista de Lina Varela sobre os camuflados.
+**Alterar:** adicionar a Fase 15 ao Capítulo 3, liberada após vencer a 14 e com o capítulo desbloqueado.
+**Não alterar:** desenhos dos inimigos, atributos das defesas, recompensas e cenas das fases anteriores.
+**Aceitação:**
+- A fase usa 20 waves, 15 vagas de torre (16 com a Licença) e um trajeto próprio entre estantes pixeladas de arquivos. Usa a paleta do laboratório e a trilha própria **Páginas sob Suspeita**.
+- O elenco é exclusivo: Rasuradores (`3 + wave`), Censores Velados (wave 2, +1 a cada 4) e Sentinelas de Índice (wave 5, +1 a cada 4), substituindo todos os inimigos reaproveitados. Intercalar os tipos na fila; o Boss chega por último. Vale também no modo infinito. Editor e fases anteriores preservam seus elencos.
+- **Rasurador:** 280 de vida, velocidade 1,5, tamanho 23; carrega páginas rasuradas, sem habilidade adicional.
+- **Censor Velado:** 480 de vida, velocidade 1,15, tamanho 27, camuflado. Usa as regras existentes de detecção da Torre de Varredura, inclusive contra ataques em área. Substitui o Infiltrador nesta fase; o Infiltrador original continua na 14.
+- **Sentinela de Índice:** 900 de vida, velocidade 0,8, tamanho 33; capas blindadas reduzem o dano em 25%, respeitando ataques que ignoram reduções.
+- **Bibliotecário Mudo:** Boss nas waves 5, 10, 15 e 20 com 6.200, 6.950, 7.700 e 8.450 de vida, velocidade 0,65 e tamanho 64. Aos 65% e 30% da vida, ainda vivo, convoca dois Censores Velados na própria posição e segmento do caminho, uma vez por limiar. O Boss não é camuflado. Golpe letal não convoca. Não há câmaras de contenção nem terminal interativo da Fase 10 nesta fase.
+- Sprites próprios de 12 × 12 para os quatro: portador de páginas, censor encapuzado, sentinela entre capas e bibliotecário com livro aberto. Nomes, habilidades e avisos em português, inglês e espanhol; figurinhas e fichas no Álbum após derrotar cada tipo. Reforços também precisam ser derrotados para completar a wave e seguem as recompensas existentes.
+- A seleção inclui a Torre de Varredura obrigatoriamente na campanha, respeitando as seis vagas, como na Fase 14.
+- Antes do primeiro inimigo avançar, três telas apresentam a descoberta do registro, a frase **Os inimigos camuflados já existiam antes. Alguém está apagando os registros.**, assinada por **Dra. Lina Varela**, e a dúvida do defensor sobre a afirmação do Senhor do Tempo.
+- Após vencer, o jogador preserva uma cópia e o Senhor do Tempo diz **Você veio defender sua torre. Não investigar o passado.** O botão **Ver resultado** abre o resultado já calculado, sem duplicar XP, recompensas ou conclusão.
+- As cenas podem ser relidas em novas tentativas da campanha; não aparecem em mapas do editor ou no modo infinito. A entrada pausa a simulação e o último botão a retoma. Escape não pula as cenas.
+- A vitória salva a Fase 15 normalmente e libera a Fase 16. Os textos têm versões em português, inglês e espanhol.
+
+### Mudança: Fase 16 — Câmara das Memórias
+
+- Após a transmissão final, exibir **TORRE DESBLOQUEADA**, apresentar a **Torre de Feixe Contínuo**, e o defensor dizer: “Acho que esta é a última defesa que vou encontrar nesta jornada.”. A torre é liberada permanentemente pela vitória da Fase 16, incluindo saves que já a venceram; repetir a cena não concede moedas extras.
+- Feixe Contínuo: custo 400, alcance 230, pulsos a cada 500 ms, dano 5 × sequência de 1 a 10 (5, 10, 15… 50). Manter laser visível e o mesmo alvo enquanto vivo, detectável e no alcance; perda do alvo ou atordoamento/estase zera a sequência. Pausa não acumula pulsos. Não cria projéteis; aplica as reduções e bônus normais de dano e concede a recompensa normal por ataque apenas por pulso, nunca por quadro. Prioridade escolhe o próximo alvo sem interromper o foco atual. Não detecta camuflados por conta própria.
+- Melhorias do Feixe (custo/dano inicial/alcance): 350/7/250, 550/9/270, 800/12/290. Intervalo de 500 ms e limite de 10 pulsos mantidos; bônus normais de dano/cadência continuam aplicáveis.
+- **Torre de Longo Alcance** é recompensa exclusiva do nível de experiência 12 (7.700 XP acumulados), disponível também para jogadores já acima dele, não vendida na Loja. Custo de construção 250, dano 6, alcance 1.100, intervalo 1.200 ms e projétil com velocidade 24. Melhorias (custo/dano/alcance/intervalo): 250/9/1.150/1.150 ms, 400/12/1.200/1.100 ms, 600/16/1.250/1.000 ms. Não detecta camuflados sozinha.
+- Ambas entram na seleção normal de até seis defesas, construção, melhorias, venda e Álbum de níveis 0–3. Usam desenhos pixelados próprios: emissor de duas hastes com núcleo luminoso e canhão longo com mira. Preservar demais torres e recompensas.
+- Liberada após vencer a Fase 15 e desbloquear o Capítulo 3. Possui 20 waves, 15 vagas de torre (16 com Licença), caminho próprio, arquivos suspensos e relógios quebrados pixelados. Preserva a paleta e a música de Ponto Zero, sem seus registros interativos ou setores oscilantes; inimigos e Boss agora são exclusivos.
+- Elenco: Fragmentos Mnésicos (`3 + wave`), Lembranças Blindadas (wave 3, +1 a cada 4) e Ecos da Memória (wave 5, +1 a cada 5). Intercalar os tipos e colocar o Boss no fim da fila, também no infinito. Editor e fases anteriores preservados.
+- **Fragmento Mnésico:** 320 de vida, velocidade 1,6, tamanho 22; cristal de memória sem habilidade adicional.
+- **Lembrança Blindada:** 1.050 de vida, velocidade 0,75, tamanho 34; redução de dano de 25%, integrada às regras normais de dano.
+- **Eco da Memória:** 650 de vida, velocidade 1,25, tamanho 28. Na primeira eliminação, recompõe-se com 35% da vida máxima e recua 180 px (limitado ao início do caminho), uma única vez. O efeito visual dura 700 ms. A primeira queda não conta como morte; é preciso eliminá-lo novamente para registrar derrota, Álbum e missões. Reutilizar a regra de retorno dos Ecos sem alterar o Eco Temporal das fases anteriores.
+- **Devorador de Memórias:** Boss nas waves 5, 10, 15 e 20 com 6.800, 7.600, 8.400 e 9.200 de vida, velocidade 0,6, tamanho 66. Aos 70% e 35% da vida, ainda vivo, restaura 25% da vida máxima dos aliados vivos não Bosses num raio de 220 px, limitado à vida máxima, e convoca dois Fragmentos Mnésicos na própria posição e segmento. Não ressuscita mortos, não cura Bosses nem a si mesmo. Cada limiar ocorre uma vez; um golpe não letal que cruza ambos ativa ambos. Golpe letal não ativa a habilidade.
+- Os quatro possuem sprites próprios de 12 × 12, compartilhados com o Álbum: fragmento cristalino, guardião de cristal, silhueta espectral e criatura com grande boca. Nomes, habilidades e avisos em português, inglês e espanhol. Reforços seguem as recompensas existentes e impedem concluir a wave enquanto vivos. Conservar todos os diálogos, desbloqueios e a recompensa do Feixe Contínuo.
+- A base representa narrativamente o núcleo das memórias: os inimigos percorrem o caminho para destruí-lo. Preservar vida, combate, recompensas e regras normais de defesa; não adicionar objetivos secundários destrutíveis.
+- Entrada em três telas: passagem encontrada no arquivo; aviso gravado de Lina sobre os registros oficiais; descoberta de que outras pessoas também eram chamadas de defensores. O último botão inicia o combate.
+- Vitória em cinco telas: gravação recuperada; antigo defensor conta que recebeu a promessa de voltar para casa; Senhor do Tempo ordena fechar o arquivo; jogador pergunta quantas pessoas vieram antes; resposta “Prepare suas defesas.”. Não revelar ainda o destino do antigo defensor ou antecipar a ajuda da entidade do Limbo.
+- Cenas em português, inglês e espanhol, reutilizando o fluxo de histórias do arquivo. Entrada pausa a simulação; Escape não pula diálogos; vitória abre o resultado já calculado sem duplicar XP ou fragmentos. Replays mostram a história novamente; editor e modo infinito não exibem as cenas.
+- Vitória persiste a Fase 16 e libera a Fase 17, com o Capítulo 3 desbloqueado. Não alterar Limbo, Fase 18, atributos de inimigos ou demais fases.
+
+### Mudança: Fase 17 — Limiar do Tempo
+
+**Objetivo:** seguir o rastro da transmissão da Câmara das Memórias até a passagem para o Senhor do Tempo, preparando o confronto da Fase 18.
+**Alterar:** adicionar a Fase 17 ao Capítulo 3, disponível após concluir a 16. Saves existentes com a 16 concluída recebem acesso normalmente.
+**Não alterar:** finais planejados, promessa do Limbo, origem da amnésia, destino do antigo defensor, atributos das defesas e recompensas existentes.
+**Aceitação:**
+- 20 waves, 15 vagas de torre (16 com Licença), caminho próprio entre engrenagens e pilares pixelados. Reutiliza a paleta e a música de Futuro Despedaçado.
+- Elenco exclusivo, substituindo todos os inimigos reaproveitados nesta fase: Batedores de Instantes (`3 + wave`), Couraçados de Ampulheta (wave 3, +1 a cada 4) e Tecelões de Segundos (wave 6, +1 a cada 5). Intercalar os três tipos e colocar o Boss no fim da fila. A mesma composição vale no modo infinito; editor e fases anteriores preservam seus elencos.
+- **Batedor de Instantes:** 340 de vida, velocidade 1,7, tamanho 23. Com 50% da vida ou menos, velocidade multiplicada por 1,6; gelo, lentidão e Pulso Temporal continuam aplicáveis.
+- **Couraçado de Ampulheta:** 1.100 de vida, velocidade 0,75, tamanho 34; redução de dano de 30%, integrada às regras normais de dano e ataques que ignoram reduções.
+- **Tecelão de Segundos:** 950 de vida, velocidade 1, tamanho 29. Ao atingir 50% da vida ainda vivo, convoca dois Batedores uma única vez, na mesma posição e segmento do caminho. Golpe letal não convoca.
+- **Arconte do Limiar:** Boss exclusivo nas waves 5, 10, 15 e 20, com 7.200, 8.050, 8.900 e 9.750 de vida, velocidade 0,62, tamanho 66. Aos 70% e 35% da vida, ainda vivo, convoca um Couraçado na própria posição e sela as duas torres de combate mais próximas por 2.000 ms. Não seleciona geradores; com menos torres, sela as disponíveis. Interrompe foco e sequência do Feixe. O selo usa a estase existente, respeitando pausa e expiração. Cada limiar ocorre uma vez; atravessar ambos num golpe não letal convoca dois reforços sem somar a duração dos selos. Golpe letal não ativa habilidades.
+- Os reforços precisam ser derrotados para terminar a wave e seguem as regras normais de recompensas e registro no Álbum. Não há transmissor interativo nem fendas da Fase 11.
+- Os quatro possuem sprites pixelados próprios de 12 × 12, compartilhados pelo combate e Álbum: batedor leve com ponteiro, couraçado com núcleo de ampulheta, tecelão de manto e Arconte de armadura com hastes. Nomes e descrições das habilidades em português, inglês e espanhol. Figurinhas aparecem após derrotar cada tipo; o Arconte pertence à categoria Bosses.
+- Entrada em quatro telas: rastro da transmissão, pensamento sobre a memória perdida e os ataques, ordem do Senhor do Tempo para se afastar, decisão de proteger a passagem e cobrar respostas pessoalmente.
+- Vitória em seis telas: passagem preservada, questionamento sobre Lina e o antigo defensor, resposta evasiva do Senhor do Tempo, exigência de uma conversa presencial, convite para atravessar a porta e preparação do confronto.
+- Cenas em português, inglês e espanhol. Entrada pausa a simulação até **Defender a passagem**; Escape não pula os diálogos. Vitória abre o resultado calculado sem duplicar recompensas. Replays da campanha permitem reler a história; editor e modo infinito não mostram as cenas.
+- Vitória salva a Fase 17 e libera a Fase 18. Não iniciar finais nem conceder nova torre ou recompensa narrativa na Fase 17.
+
 Uma alteração de mecânica deve declarar:
 
 1. Qual regra atual será modificada.
@@ -1786,3 +1973,109 @@ Uma alteração de mecânica deve declarar:
 **Aceitação:**
 - Dado <estado>, quando <ação>, então <resultado>.
 ```
+
+### Melhorias por atributo e ritmo das waves finais
+
+- Manter integralmente a renda por tiro (20 créditos mais bônus comprados), inclusive no Feixe Contínuo. Não converter para renda por eliminação nem alterar compras permanentes, fragmentos, XP ou produção dos geradores.
+- Toda torre de tiro com dano e intervalo positivos recebe **5 melhorias totais por unidade**, distribuídas livremente entre dano, velocidade e alcance. Não são cinco por atributo. Inclui defesas de tiro da Loja que antes não tinham melhorias. Minas, bombas, iscas, amplificadores, Gerador e Sísmica preservam suas regras próprias.
+- Cada ponto de dano acrescenta 50% do dano base; cada ponto de alcance acrescenta 15% do alcance base; cada ponto de velocidade acrescenta 20% à cadência base, calculando o intervalo como `intervaloBase / (1 + 0,2 × pontos)`. Valores arredondados; depois aplicar os bônus existentes. O piso de 100 ms permanece. Melhorar um atributo não melhora os outros nem modifica efeitos especiais, área de explosão, congelamento, quantidade de lasers ou duração de efeitos.
+- Custo-base: máximo entre 200 e o preço da primeira melhoria antiga; sem melhoria antiga, usar 80% do custo de construção, respeitando o mínimo 200 para essa referência. Multiplicar sucessivamente por **0,5; 1; 2; 5; 8** e arredondar para cima a múltiplos de 10. A ordem dos atributos não muda o preço. Para a Torre padrão: **100, 200, 400, 1.000 e 1.600**, total 3.300, além dos 150 de construção. A revisão reduz as três primeiras compras em todas as torres de tiro e mantém as duas últimas, sem alterar renda ou atributos.
+- O botão **Melhorias (N/5)** ou E abre as três opções, com contagem por atributo, valor anterior, próximo valor e custo. A prévia incorpora os bônus atuais aplicados à torre. Velocidade é apresentada como intervalo em ms (menor é mais rápido). Sem créditos ou após cinco compras, impedir a compra. Atualizar disponibilidade quando o saldo aumenta. Não gastar dinheiro só por abrir o painel. Distribuição definitiva naquela torre; vender mantém o percentual atual sobre o investimento efetivamente pago.
+- O painel abre como uma sobreposição acima dos controles, fora do fluxo do layout, com botão **Fechar** e rolagem interna em telas baixas. Abrir, comprar ou fechar não altera posição, tamanho, proporção ou coordenadas de clique do mapa, nem a altura dos controles. A partida mantém seu estado de pausa atual.
+- Atributos em `CONFIG.melhoriasEscolhidas`; distribuição em `torre.melhoriasEscolhidas`, nível como total aplicado. Usar visuais antigos até o terceiro estágio, mantendo o último nos níveis 4 e 5 e preservando skins. Não alterar a arena independente do Limbo. Missões de torres máximas exigem cinco escolhas nas torres de tiro; suportes mantêm seus limites.
+- Álbum mostra a torre base e explica as cinco escolhas, sem oferecer figurinhas de pacotes antigos de dano/alcance/velocidade. As defesas de suporte continuam com seus níveis próprios.
+- Nas fases **17 e 18**, acrescentar reforços às composições existentes, intercalados na fila: wave 8, +8 Batedores; wave 12, +4 Couraçados; wave 16, +4 Tecelões e +2 Couraçados; wave 19, +10 Batedores, +3 Couraçados e +3 Tecelões. Preservar vida e habilidades dos inimigos, os bosses e seus intervalos. Exibir aviso temático no intervalo anterior e na entrada da wave. Fases 1–16 e editor preservam suas composições; as waves correspondentes do infinito em 17/18 recebem os mesmos reforços.
+- As mudanças substituem a antiga progressão de pacotes para prolongar investimentos e variar ameaças após a wave 7. Não impõem uma wave mínima para comprar; o ritmo depende das escolhas e do rendimento real do jogador.
+
+### Fase 18 — O Último Relógio
+
+- Revisão dos retratos: o Senhor do Tempo usa por padrão o corpo de terno já existente no retrato de referência, com braços, camisa clara, gravata e cabeça de relógio. Aplica-se às caixas de fala da campanha, portal e floresta. Na cena de ameaça, a lâmina tem cabo, guarda, ponta e brilho metálico, presa à mão; o jogador caído reutiliza o sprite completo do castelo, deitado de lado, com cabelo, roupas, braços e pernas reconhecíveis. Alteração somente visual.
+
+- Após concluir a Fase 18, o lobby oferece **Rever diálogo após a Fase 18**. Abre diretamente a cena posterior ao combate, com a rota escolhida pela promessa do save ativo; não inicia waves, concede recompensas ou registra outra vitória. Com ajuda, continua a floresta salva em vez de apagar um checkpoint. Sem ajuda, mantém as opções do final trágico. Disponível em português, inglês e espanhol.
+
+- Disponível no Capítulo 3 após concluir a Fase 17, inclusive em saves existentes. Caminho próprio na sala do relógio, paleta e música temporal existentes, 20 waves e 15 vagas de torre (16 com Licença). Sem nova defesa ou moeda.
+- Elenco: Batedores (`4 + wave`), Couraçados a partir da wave 2 (+1 a cada 3) e Tecelões a partir da wave 5 (+1 a cada 4). Arconte nas waves 5, 10 e 15; Senhor do Tempo na wave 20. No infinito, o Senhor do Tempo segue nos múltiplos de 5 após a 20; sem cenas narrativas. Editor preserva suas regras.
+- Senhor do Tempo: 15.000 de vida, velocidade 0,55, tamanho 72, sem incremento de vida por aparição. Aos 75%, 50% e 25%, ainda vivo, convoca um Couraçado na própria posição e sela as duas torres de combate mais próximas por 2.500 ms. Cada limiar ocorre uma vez, golpe letal não convoca, selos não somam duração e respeitam pausa. Usa as regras existentes de dano, lentidão, Pulso e recompensas. Boss com desenho pixelado de cabeça de relógio e terno escuro, camisa clara e gravata vermelha, compartilhado pelo combate, cenas finais e Álbum.
+- Entrada: oito falas revelam que o Senhor do Tempo trouxe o jogador e apagou suas memórias. As torres protegem passagens que sustentam seu poder; as distorções atraem criaturas. Lina e o antigo defensor permanecem com destinos desconhecidos.
+- Vitória real exige concluir as waves e eliminar os inimigos e reforços. Depois começa a derrota narrativa: o relógio se rompe, o jogador avança e o Senhor do Tempo o surpreende com uma lâmina de luz. Uma derrota normal abre somente o resultado normal, nunca um final narrativo.
+- Com `jornadaDoLimbo.promessaDeAjuda === true`, a entidade enfrenta o Senhor do Tempo e manda o jogador correr. Ele foge **a pé**, pelo corredor atrás da sala do relógio e pelas ruínas, até a floresta. Não há portal nessa fuga inicial. A volta para casa só acontece depois do capítulo secreto abaixo. Sem promessa, a lâmina avança e a tela fica preta, sem gore.
+- Ao terminar qualquer final, oferecer **Voltar ao menu** e **Revisitar o Limbo**. A segunda opção inicia novamente o Intervalo Perdido, permitindo buscar a rota da arena. Preservar compras, coleção, progresso, promessa e slots. Replays permitem rever o final; nenhuma recompensa extra por avançar diálogos. Recarregar durante a cena preserva a conclusão da fase e permite rejogá-la.
+- Textos em português, inglês e espanhol. Cenas pausam a simulação; Escape não pula falas. Jogador sem retrato, entidade com desenho original e Senhor do Tempo com seu retrato existente. Balanceamento acessível por `CONFIG.confrontoFinal` e `CONFIG.inimigo.senhorDoTempo`; roteiro e desenhos em `fase18.js`, estilos em `dialogos.css`.
+
+### Capítulo secreto — Floresta dos Ecos
+
+- Revisão de interface: remover os atalhos independentes **Capítulo secreto: Floresta dos Ecos** e **Continuar história: tempo parado** do lobby. Manter somente **Rever diálogo após a Fase 18** entre esses três botões. Após os diálogos, esse atalho retoma a floresta salva ou, se a fuga já terminou, a continuação na casa. Não recriar os dois botões ao salvar, trocar idioma ou voltar ao lobby.
+- Área de exploração ampliada até 1100 px no computador. Na floresta em celulares de até 600 px de largura, a janela interna tem 320 px de largura e altura adaptada ao espaço da tela (260–460 px), ampliando personagens e obstáculos sem esticar o desenho. A câmera continua limitada ao mundo, com o jogador acompanhado nos dois eixos. Controles ficam abaixo do mapa; diálogo pode usar rolagem. Casa e oficina mantêm a janela original de 640 × 384. Redimensionar ou girar o aparelho não altera posições ou saves.
+
+- O jogador usa exatamente o desenho do castelo, por meio de `desenharPessoaDoCastelo` com contexto de canvas explícito: mesmas roupas, cabelo, proporções, braços e pernas. Caminhada em quatro passos `[0, 2, 0, -2]` a cada 0,12 s e direção preservada; parar quando imóvel, bloqueado, em conversa ou em pausa.
+- Referência do Senhor do Tempo: `references/Captura de tela 2026-09-13 174434.png`. Corpo humano com terno escuro, camisa clara, gravata vermelha e cabeça de relógio redonda com aro magenta/ciano. O desenho compartilhado aparece na floresta, no combate da Fase 18, nas cenas finais e no Álbum; o retrato de conversa existente permanece.
+
+- Liberado com a Fase 18 concluída e a promessa de ajuda conquistada. Começa automaticamente após **Corra! Eu cuido dele!**. O atalho dos diálogos da Fase 18 permite retomar o capítulo, inclusive em saves antigos com esses requisitos. O final trágico permanece igual.
+- Uma única floresta contínua de 2560 × 1344 px (80 × 42 células), com janela de 640 × 384 px. Substitui as três áreas repetidas. Câmera acompanha nos dois eixos, limitada às bordas, e controles permanecem fixos. Há percurso principal irregular, oito desvios com laços e becos, 14 pedras, sete árvores no caminho, 12 armadilhas e cinco abrigos. As mesmas colisões valem para jogador e perseguidor; todos os trechos e o arco são alcançáveis. WASD/setas/toque para andar, E para interagir.
+- A sombra é o próprio perseguidor, com posição física e busca de caminhos, não um desenho oscilando. Antes da revelação, anda a 138 px/s, segue quando distante e patrulha passagens próximas num raio de 260 px do jogador. A partir de x=760 passa a se aproximar; a conversa ocorre a menos de 120 px. Ao revelar a identidade, conserva exatamente sua posição, recebe 3 s de folga para o jogador e continua a perseguição dali. Ele deixou uma cópia temporal sendo derrotada para escapar da entidade e seguir o jogador.
+- Se o jogador alcançar o arco antes do encontro, exibir aviso dos passos se aproximando e aguardar a chegada física da sombra. Não revelar sua identidade à distância nem teleportá-la para forçar a conversa.
+- Parâmetros em `CONFIG.florestaSecreta`: jogador 140 px/s, perseguidor 146 px/s (cerca de 4% mais rápido), raio de colisão do jogador 9 px, captura a menos de 18 px, interação a menos de 55 px. Movimento diagonal normalizado e perseguidor busca caminhos livres, sem atravessar árvores ou pedras. Espera inicial de 2 s, ou 3 s perto do checkpoint; ao sair do abrigo, 1 s de folga. Abrigos de folhas ocultam o jogador enquanto ele permanece parado; E permite sair.
+- Armadilhas de urso visíveis no chão disparam a menos de 15 px, uma vez cada: prendem o jogador por 0,65 s ou o perseguidor por 2 s. Não causam dano nem perda de recursos. É possível contorná-las e deixá-las abertas para atrasar o perseguidor. Armadilhas fechadas ficam salvas; pausa e conversas também suspendem o tempo de imobilização.
+- Quatro checkpoints ao longo do mesmo mapa salvam a passagem automaticamente; não trocam nem recarregam a floresta. Captura devolve ao último checkpoint, conservando identidade e recursos. **Salvar e voltar ao lobby** preserva a posição de ambos. Pausa, diálogos, janela sem foco e aba oculta interrompem movimento e perseguição. Limpar teclas ao pausar e ao soltar/cancelar o toque.
+- O arco na última clareira começa apagado. Ao interagir, aparece a marca da coroa e a passagem se acende; a entidade fala por áudio, sem retrato: **Encontrei você. Atravesse. Eu não consigo mantê-la aberta por muito tempo.** A conversa pausa a perseguição, sem cronômetro oculto. O jogador atravessa para casa e recupera a primeira lembrança. A chegada continua com sete falas: reconhecimento da casa, silêncio estranho, relógio e pêndulo imóveis, rua com carro e pedestre congelados e chuva suspensa. O jogador percebe que só ele se move e que a fuga ainda não terminou. Cenas pixeladas da sala e da vista pela janela reutilizam seu sprite; avanço manual, sem temporizador. Ao terminar, iniciar a exploração jogável da casa descrita abaixo. Textos em português, inglês e espanhol.
+- Persistência em `guardians-of-pixel-floresta-v1`, versão interna 3: sala única, checkpoint, posição do jogador e perseguidor, revelação, conclusão e armadilhas fechadas. Saves das antigas áreas 0/1/2 migram para os checkpoints 0/1/2, preservando história e conclusão. Posições inválidas voltam ao checkpoint. Ao retomar saves novos, conservar a posição válida do perseguidor; ao morrer, recriá-lo no checkpoint com folga. Sem recompensas extras ou alterações na jornada do Limbo.
+- Implementação em `floresta.js`, estilos em `floresta.css`, markup em `index.htm`. Português, inglês e espanhol. Retratos e regras de áudio/jogador reutilizam `dialogos.js`; visual pixelado original desenhado em canvas. Trilha existente do castelo acompanha a exploração.
+
+### Continuação jogável — O tempo parado
+
+- Continuação no **Arquivo sem horas**: depois das pistas externas, o objetivo pede examinar novamente o projeto da oficina. A interação revela uma passagem na parede, disponível também para saves antigos que já terminaram a primeira parte. Sem novo botão no lobby.
+- A passagem leva a uma sala explorável de 640 × 384, com inscrição, três pedestais e caderno protegido. A inscrição indica **LUZ → PONTE → PORTA**. Ativar fora da ordem apaga os símbolos e permite tentar novamente, sem dano, custo ou limite de tempo. Ativações corretas iluminam os símbolos; após os três, o caderno fica acessível. Selecionar sempre o objeto interativo mais próximo.
+- O caderno dispara quatro falas com cena pixelada de lembrança: o jogador reconhece a oficina antes do desaparecimento, lembra que estudava desenhos das torres para manter uma passagem de volta aberta e que deixou pistas caso suas memórias fossem apagadas. Não criou as torres nem recupera toda a memória. A lembrança termina antes de mostrar quem entra pela porta; o caderno aponta para o observatório.
+- Voltar à pessoa na luz conclui o trecho do arquivo e libera o observatório na rua. Os mistérios se resolvem no desfecho abaixo.
+- `memoria.js` compartilha os controles, a arte e os diálogos da casa. Save da casa ganha `passagemAberta`, `selosAtivos` (0–3), `memoriaRecuperada` e `memoriaConcluida`, validados ao carregar. Saves antigos preservam pistas; progresso do enigma é salvo a cada interação. A memória só é marcada ao terminar as falas, podendo ser revista se interrompida. Sem XP, fragmentos ou itens extras. Textos em português, inglês e espanhol.
+
+- Revisão visual: não escrever nomes permanentemente sobre objetos da casa, rua e oficina; mostrar apenas E perto de uma interação. Portas com moldura, painéis, soleira e maçaneta; janela com cortinas; telefone com disco, fone e fio; mesas com pés, papéis e lápis; fotografia rasgada preservada. Casa decorada com tapete, quadro, plantas e prateleira; oficina com tapete de montagem, livros, ferramentas e parafusos; rua com postes e floreiras. Elementos decorativos ficam nas paredes ou no piso, preservando as colisões e o acesso às pistas.
+- Revisão das referências de 14/09: portas externas apoiadas na calçada (base y=156), sem vão de porta duplicado atrás das entradas da casa e oficina. Floreiras sob as janelas, fora dos acessos. Oficina recebe bancada com gavetas e ferramentas, armário de peças, caixa de madeira, bobinas e desenhos na parede. Bancada, armário e caixa têm colisão coerente com a base; conservar acesso às pistas, portas e passagem secreta. Saves em posições agora ocupadas usam a entrada segura já existente.
+- Pessoa na luz tem sprite próprio: cabelo grisalho, óculos, casaco marrom e cachecol azul acinzentado, em um passo congelado. Não reutilizar o sprite do jogador. Preservar diálogos, localização, interação e identidade ainda desconhecida.
+- Diálogos da camada `camada-cutscene-carta.conversa-pixelada` usam fundo opaco `#241b38`, da mesma cor da caixa. O lobby não aparece atrás. O final trágico conserva o fundo preto já existente.
+
+- Depois das sete falas de chegada em casa, iniciar exploração livre. Quem já concluiu a floresta pode retomá-la pelo atalho dos diálogos da Fase 18, que segue para a casa salva após a cena da ajuda. Não exige refazer a fuga nem acrescenta outro botão no lobby.
+- Implementação em `casa.js`, reutilizando canvas, controles de teclado/toque, caminhada do castelo, colisões com raio, diálogos, pausa e saída da floresta. Casa e oficina medem 640 × 384; rua mede 1280 × 384 e a câmera acompanha o jogador. Mobília e carro impedem passagem; objetos próximos exibem E.
+- Investigar relógio, desenhos de torres com data anterior ao desaparecimento e janela. Após as três pistas, o telefone sinaliza uma chamada. A voz anônima, por áudio e sem retrato, diz **Não ligue o relógio** e aponta para a oficina. Só então liberar a porta para a rua.
+- Na rua congelada, investigar a pessoa dentro da luz: ela reconhece o jogador e pergunta se conseguiu consertar, antes de congelar novamente. Na oficina, examinar foto rasgada com o jogador ao lado de alguém de terno e o projeto que liga torres ao relógio, com a anotação **A memória é a chave**. Não confirmar a identidade da pessoa na foto nem revelar o motivo da amnésia. Após as três pistas externas, orientar a examinar novamente o projeto para abrir a passagem ao Arquivo sem horas, mantendo exploração e retorno ao lobby disponíveis.
+- Save independente `guardians-of-pixel-casa-parada-v1`, incluído nos slots: local, posição, pistas e conclusão. Validar posições e locais; salvar nas interações, portas, pausa/saída. Repetir interações não duplica pistas nem concede recursos. Português, inglês e espanhol.
+
+### Desfecho — O tempo é seu
+
+- Após o pensamento na cama, oferecer **Reiniciar a história**, **Voltar à Fase 12** e **Voltar ao lobby**. Reiniciar define zero fases concluídas e bloqueia os Capítulos 2 e 3 para rejogar toda a campanha. Voltar à Fase 12 preserva as fases concluídas até a 12 e bloqueia o Capítulo 3; as Fases 13–18 precisam ser concluídas novamente. Ambos limpam a narrativa correspondente, jornada do Limbo/promessa e floresta/casa para permitir outras escolhas. Preservar torres e demais equipamentos liberados, seleção de defesas, Máquina do Tempo, Pulso Temporal, nível/XP, recursos, compras, skins, coleção, estatísticas, missões e resgates, conquistas, mapas criados e preferências. Registrar o maior progresso prévio para desbloqueios de equipamentos em guardians-of-pixel-progresso-equipamentos-v1, independente das fases atuais e persistente por slot. Essa marca não libera fases. Guardar os dados afetados em guardians-of-pixel-historia-antes-do-reinicio-v1 antes de alterar; somente o slot ativo muda. Voltar ao lobby conserva todos os dados. As mesmas regras valem nos botões do final trágico.
+
+- A janela da casa fica mais alta, na parede (centro y=40). Cama com colchão, travesseiro e cobertor, com colisão, disponível na casa durante toda a exploração; dormir só após `historiaConcluida`. Antes disso, o jogador diz que precisa terminar o que começou. Após o final, interagir mostra o jogador deitado e uma fala de descanso. Avançar escurece toda a tela e mostra, sem retrato ou cenário: **Será que tudo teria sido diferente se eu tivesse contado à entidade sobre o Senhor do Tempo… naquele primeiro encontro?** O título FIM aparece nessa tela preta, somente depois de deitar; manter o pensamento e os três botões de destino. Sem desbloquear outro capítulo. Português, inglês e espanhol.
+
+- `desfecho.js` encerra a rota da promessa. Após a conversa do arquivo, liberar uma porta sob uma cúpula na rua, entre a pessoa e a oficina, para um observatório explorável de 640 × 384. Saves anteriores retomam desta etapa pelo atalho existente, sem novo botão no lobby ou nova recompensa.
+- Três registros revelam: o Senhor do Tempo roubou a primeira hora da cidade para alimentar suas passagens; destruir o grande relógio deixou um vínculo que congelou a cidade. A proteção da entidade na passagem de volta permite ao jogador se mover. A cópia inteira da fotografia mostra o Senhor do Tempo: prometeu viagens entre mundos, mas levou o jogador e apagou sua memória após ele descobrir as prisões e preparar um retorno.
+- Lina fala pelo rádio, sem retrato: estava presa entre passagens. A pessoa grisalha é o antigo defensor, que voltou antes e ajudou Lina na ligação telefônica. A saída permite resgatar Lina e os demais; a entidade mantém a passagem segura pelo outro lado.
+- Após ler os três registros, operar painéis na ordem **saída → corrente → sol**. Ordem incorreta só informa a pista, sem dano, reinício ou custo. A saída liberta os prisioneiros. A corrente dispara três falas: projeção em vídeo do Senhor do Tempo, resposta do jogador e corte definitivo do vínculo. Sem horas roubadas ou passagens, ele fica isolado em seu domínio; suas cópias também não podem atravessar. O sol devolve as horas e inicia o epílogo.
+- Epílogo de seis falas: chuva e carro voltam a se mover, Lina preserva os registros, o antigo defensor pode seguir a vida e a entidade retorna ao Limbo com a promessa cumprida. O jogador volta para casa com a memória recuperada e liberdade para viver. O epílogo termina sem exibir FIM. O objetivo passa a **Você finalmente está em paz. Descanse em sua cama.** O título FIM fica reservado ao descanso na cama. Fundo da caixa opaco, jogador sem retrato e vozes de rádio sem imagem. Arte compartilhada da rua aceita tempo de animação apenas para o epílogo; cenas anteriores permanecem congeladas.
+- Save da casa ganha `registrosFinais`, `circuitosFinais` (0–3) e `historiaConcluida`, validados com pré-requisitos. Salvar cada registro/circuito; marcar conclusão só ao terminar o epílogo. Se interrompido, o painel do sol retoma o final. Depois de concluir, o mesmo painel permite rever a cena, sem recursos extras. Retorno ao lobby e exploração continuam disponíveis. Final trágico da Fase 18 e demais progressos preservados. Português, inglês e espanhol.
+
+### Revisão do Álbum e personagens do castelo
+
+- O Álbum ordena os inimigos e bosses pela sequência das fases, incluindo 15, 16 e 17 depois da fase 14, independentemente da ordem em que foram derrotados. Preserva a coleção salva.
+- A entidade usa o mesmo desenho no castelo e nos retratos: coroa dourada com rubi, rosto escuro e manto roxo com faixa clara e detalhes vermelhos.
+- Guardas usam armadura medieval de placas, elmo fechado com viseira, ombreiras, escudo e lança. O desenho é compartilhado pelo mapa e pelo retrato, sem alterar combate ou colisões.
+
+### Pensamento e escolhas do final trágico
+
+- Antes da morte, mostrar: **Você se pergunta: O que teria acontecido se eu tivesse ficado calado no primeiro encontro com a entidade?** Avançar mostra **Pouco depois, você sente a lâmina afiada perfurar seu corpo. Tudo fica escuro.**, com fundo preto e sem gore. Textos em português, inglês e espanhol.
+- Ao concluir essa cena, conceder a conquista do final trágico e mostrar **Reiniciar a história**, **Voltar à Fase 12** e **Voltar ao lobby**, usando as mesmas regras de progresso da cama. Reiniciar e voltar à Fase 12 conservam todos os equipamentos e bens; apenas a progressão da campanha e a narrativa correspondente voltam atrás. Lobby conserva o save. Substituem os dois botões antigos do final trágico.
+
+### Remoção do atalho de teste da Fase 18
+
+- Com os finais concluídos, remover do lobby o botão **Rever diálogo após a Fase 18**, inclusive em saves que já venceram a campanha. Esta regra substitui as menções anteriores de manter esse atalho. As cenas continuam pelo fluxo normal da Fase 18; os três botões dos finais e os dados salvos permanecem. Ao sair da floresta, devolver o foco ao botão de jogar do lobby.
+
+### Partidas salvas no lobby
+
+- Renomear Salvos para **Partidas salvas**, inclusive no título do painel; inglês Saved games e espanhol Partidas guardadas. O botão usa um ícone original pixelado de bloco de notas azul, folhas claras pautadas, espiral e pequena seta de atalho, inspirado no atalho do Bloco de Notas do Windows. Manter os três espaços e as regras de salvamento existentes.
+
+- O atalho de Partidas salvas fica acima do perfil GP / DEFENSOR / PRONTO PARA JOGAR, fora da grade de botões extras. Formato quadrado de 60 px, somente ícone visível; nome acessível traduzido e foco de teclado. O título Partidas salvas aparece ao abrir o painel.
+
+### Modo clássico: botão e apresentação
+
+- Nesta etapa, adicionar somente o botão **Modo clássico** no lobby e uma apresentação com selo **Em breve**. Não alterar modo de partida, balanceamento, mapas, recompensas ou defesas.
+- Na primeira abertura por slot, explicar: **No Modo clássico, você poderá escolher qualquer mapa e jogar nas dificuldades Fácil, Médio e Difícil. Ganhe recompensas, conquistas e novas defesas. Você sempre poderá voltar ao Modo história.**
+- **Voltar ao Modo história** fecha a apresentação, devolve foco ao atalho e salva a leitura em guardians-of-pixel-apresentacao-classico-v1. Próximas aberturas mostram um resumo. Fechar sem confirmar permite reler a apresentação. Textos em português, inglês e espanhol.

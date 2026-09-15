@@ -1,0 +1,46 @@
+#floresta-secreta[hidden], #floresta-dialogo[hidden] { display: none; }
+#floresta-secreta { position: fixed; inset: 0; z-index: 1500; overflow: auto; background: #080e12; color: #f6edda; padding: 18px; font-family: 'Courier New', monospace; }
+.floresta-painel { width: min(1100px,100%); margin: auto; }
+.floresta-painel header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.floresta-painel h2 { color: #dac28c; font-size: 1.1rem; }
+.floresta-painel button { background: #243c38; color: #f6edda; border: 3px solid #8fa58a; padding: 12px; font: bold .8rem 'Courier New',monospace; min-height: 44px; cursor: pointer; }
+.floresta-painel button:focus-visible { outline: 3px solid #ffe291; outline-offset: 3px; }
+#floresta-canvas { width: 100%; display: block; image-rendering: pixelated; border: 4px solid #ad9862; background: #142b26; }
+#floresta-objetivo, #floresta-aviso { min-height: 1.5em; font-size: .85rem; line-height: 1.5; }
+#floresta-aviso { color: #cbe6d4; }
+#floresta-controles { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+#floresta-controles[hidden] { display: none; }
+.floresta-direcional { display: grid; grid-template-columns: repeat(3,44px); gap: 4px; }
+.floresta-direcional button { padding: 8px; touch-action: none; user-select: none; }
+.floresta-direcional button:first-child { grid-column: 2; }
+.floresta-direcional button:nth-child(2) { grid-column: 1; }
+#floresta-dialogo { display: grid; grid-template-columns: 80px 1fr; gap: 12px; margin: 16px 0; padding: 14px; background: #241b38; border: 4px solid #cba66b; }
+#floresta-dialogo .retrato-dialogo { width: 80px; grid-row: 1 / span 3; }
+#floresta-dialogo > :not(.retrato-dialogo) { grid-column: 2; }
+#floresta-dialogo[data-sem-retrato="true"] { grid-template-columns: 1fr; }
+#floresta-dialogo[data-sem-retrato="true"] > :not(.retrato-dialogo) { grid-column: 1; }
+#floresta-fala { line-height: 1.65; margin: 0; }
+#botao-floresta { display: block; margin: 12px auto; padding: 14px; background: #243c38; border: 3px solid #ad9862; color: #f6edda; font: bold 1rem 'Courier New',monospace; cursor: pointer; }
+#botao-floresta[hidden] { display: none; }
+.botao-continuacao-casa { display:block; margin:12px auto; padding:14px; background:#263745; border:3px solid #d2ba86; color:#f6edda; font:bold 1rem 'Courier New',monospace; cursor:pointer; }
+.botao-continuacao-casa[hidden] { display:none; }
+#floresta-secreta.pensamento-ao-dormir { background:#000; }
+#descanso-fim { margin:0 0 24px; text-align:center; color:#e9d294; font:bold 38px monospace; }
+.pensamento-ao-dormir .floresta-painel > :not(#floresta-dialogo) { display:none !important; }
+.pensamento-ao-dormir #floresta-dialogo { margin:25dvh auto 0; max-width:700px; background:#000; border:0; color:#e8e5df; }
+.pensamento-ao-dormir #floresta-falante { display:none; }
+.pensamento-ao-dormir #floresta-continuar { background:#000; border-color:#777; }
+#escolhas-descanso { display:grid; gap:12px; margin-top:18px; }
+#escolhas-descanso[hidden], #floresta-continuar[hidden] { display:none; }
+#escolhas-descanso button { background:#000; border-color:#777; width:100%; }
+#botao-rever-final18 { display: block; margin: 12px auto; padding: 14px; background: #241b38; border: 3px solid #cba66b; color: #f6edda; font: bold 1rem 'Courier New',monospace; cursor: pointer; }
+#botao-rever-final18[hidden] { display: none; }
+@media(max-width:600px) { #floresta-secreta { padding: 10px; } .floresta-painel header { align-items: start; } .floresta-painel h2 { font-size: .85rem; } #floresta-dialogo { grid-template-columns: 64px 1fr; } #floresta-dialogo .retrato-dialogo { width: 64px; } }
+@media(max-width:600px) {
+    #floresta-secreta { padding:6px; }
+    #floresta-canvas { box-sizing:border-box; height:auto; }
+    #floresta-objetivo, #floresta-aviso { font-size:.75rem; margin:6px 0; }
+    .floresta-painel header button { padding:8px; max-width:52%; }
+    #floresta-controles { gap:4px; }
+    #floresta-controles > button { padding:8px; }
+}

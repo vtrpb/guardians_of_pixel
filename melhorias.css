@@ -1,0 +1,11 @@
+#painel-melhorias-escolhidas[hidden] { display: none; }
+.controles { position: relative; }
+#painel-melhorias-escolhidas { position: absolute; bottom: calc(100% + 8px); left: 0; z-index: 30; width: 100%; max-height: min(360px,60dvh); overflow-y: auto; padding: 12px; border: 2px solid #9cbb80; background: #10271c; color: #f6edda; box-shadow: 0 4px 16px #0009; }
+.cabecalho-melhorias { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+#fechar-melhorias { flex-shrink: 0; padding: 8px 12px; min-height: 44px; color: #f6edda; background: #294337; border: 2px solid #a9bb87; cursor: pointer; }
+#resumo-melhorias-escolhidas { margin: 0 0 10px; font-size: .85rem; line-height: 1.5; }
+.opcoes-melhorias { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+.opcoes-melhorias button { padding: 12px 8px; min-height: 48px; font: inherit; color: #f6edda; background: #294337; border: 2px solid #a9bb87; cursor: pointer; }
+.opcoes-melhorias button:disabled { opacity: .55; cursor: default; }
+.opcoes-melhorias button:focus-visible { outline: 3px solid #ffe17c; }
+@media(max-width:600px) { .opcoes-melhorias { grid-template-columns: 1fr; } }

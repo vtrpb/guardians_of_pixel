@@ -1,0 +1,87 @@
+/* Apresentação compartilhada; a lógica e os botões de cada conversa permanecem próprios. */
+.retrato-dialogo { width: 96px; align-self: start; margin-top: 5px; }
+.retrato-dialogo[hidden] { display: none; }
+.retrato-dialogo svg { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.retrato-dialogo > .portal-retrato-conversa {
+    position: relative; display: grid; top: auto; right: auto; bottom: auto; left: auto;
+    width: 100%; height: 120px; margin: 0; border-width: 4px;
+}
+
+#camada-cutscene-carta.conversa-pixelada { padding: 16px; background: #241b38; overflow-y: auto; }
+#camada-cutscene-carta.conversa-pixelada:not([hidden]) { display: flex; align-items: flex-end; justify-content: center; }
+#camada-cutscene-carta.conversa-pixelada .cutscene-carta-cenario { background: transparent; height: auto; min-height: 0; max-height: calc(100dvh - 32px); overflow-y: auto; display: block; padding: 4px; }
+#camada-cutscene-carta.conversa-pixelada .cutscene-carta-painel { width: min(920px,100%); padding: 0; text-align: left; }
+#camada-cutscene-carta.conversa-pixelada .cutscene-carta-pedra { display: none; }
+#camada-cutscene-carta.conversa-pixelada #titulo-cutscene-carta { color: #f6edda; animation: none; opacity: 1; margin: 0; padding: 12px 20px; background: #241b38; border: 4px solid #cba66b; border-bottom: 0; font-size: .8rem; }
+#camada-cutscene-carta.conversa-pixelada .carta-misteriosa,
+#camada-conversa-portal .balao-conversa-portal.dialogo-pixelado,
+#limbo-dialogo.dialogo-pixelado {
+    display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 14px 22px;
+    width: 100%; min-height: 0; margin: 0; padding: 20px;
+    color: #f6edda; background: #241b38; border: 4px solid #cba66b; border-radius: 0;
+    box-shadow: 0 0 0 4px #100d1b; outline: none;
+    font-family: "Courier New", monospace; text-align: left;
+    transform: none; animation: none; opacity: 1;
+}
+#camada-cutscene-carta.conversa-pixelada .carta-misteriosa::after,
+#camada-cutscene-carta.conversa-pixelada .carta-misteriosa > :is(.carta-misteriosa-selo,.radio-transmissao,.terminal-registro,.maquina-tempo-cena-final,.transmissao-futuro-visual,.senhor-tempo-revelado),
+#camada-conversa-portal .dialogo-pixelado > :is(.portal-retrato-conversa,.senhor-tempo-retrato) { display: none; }
+#camada-cutscene-carta.conversa-pixelada .cenario-entidade-limbo { grid-column: 1 / -1; }
+#camada-cutscene-carta.conversa-pixelada .retrato-dialogo { grid-column: 1; grid-row: auto / span 2; }
+#camada-cutscene-carta.conversa-pixelada[data-tipo-carta="cena-final-intervalo-perdido"] .cenario-entidade-limbo { grid-row: 1; }
+#camada-cutscene-carta.conversa-pixelada[data-tipo-carta="cena-final-intervalo-perdido"] .retrato-dialogo { grid-row: 2 / span 2; }
+#camada-cutscene-carta.conversa-pixelada[data-tipo-carta="cena-final-intervalo-perdido"] #texto-cutscene-carta { grid-row: 2; grid-column: 2; }
+#camada-cutscene-carta.conversa-pixelada[data-tipo-carta="cena-final-intervalo-perdido"] #assinatura-cutscene-carta { grid-row: 3; grid-column: 2; }
+#camada-cutscene-carta.conversa-pixelada[data-tipo-carta="cena-final-intervalo-perdido"] [data-sem-retrato="true"] :is(#texto-cutscene-carta,#assinatura-cutscene-carta) { grid-column: 1; }
+#camada-cutscene-carta.conversa-pixelada #texto-cutscene-carta,
+#camada-conversa-portal .dialogo-pixelado .conversa-portal-fala,
+#limbo-dialogo.dialogo-pixelado #limbo-fala {
+    margin: 0; padding: 0; color: #f6edda; font-size: clamp(.95rem,2.1vw,1.3rem);
+    line-height: 1.65; text-align: left; letter-spacing: 0; overflow-wrap: anywhere;
+}
+#camada-cutscene-carta.conversa-pixelada #texto-cutscene-carta::before,
+#camada-conversa-portal .dialogo-pixelado .conversa-portal-fala::before,
+#limbo-dialogo.dialogo-pixelado #limbo-fala::before { content: "* "; }
+#camada-cutscene-carta.conversa-pixelada #assinatura-cutscene-carta { color: #bfcbd4; font-size: .68rem; text-align: left; margin: 0; }
+#camada-cutscene-carta.conversa-pixelada .dialogo-pixelado[data-sem-retrato="true"] { grid-template-columns: minmax(0,1fr); }
+#camada-cutscene-carta.conversa-pixelada .botao,
+#camada-conversa-portal .dialogo-pixelado .botao,
+#limbo-dialogo.dialogo-pixelado .botao { background: #241b38; border: 2px solid #cba66b; color: #f6edda; box-shadow: none; min-height: 44px; }
+#camada-cutscene-carta.conversa-pixelada .botao:hover,
+#camada-conversa-portal .dialogo-pixelado .botao:hover,
+#limbo-dialogo.dialogo-pixelado .botao:hover { color: #fff36a; border-color: #fff36a; }
+#camada-cutscene-carta.conversa-pixelada .botao:focus-visible,
+#camada-conversa-portal .dialogo-pixelado .botao:focus-visible,
+#limbo-dialogo.dialogo-pixelado .botao:focus-visible { outline: 3px solid #fff36a; outline-offset: 3px; }
+#camada-cutscene-carta.conversa-pixelada #botao-continuar-cutscene-carta { margin-top: 14px; }
+#camada-conversa-portal .dialogo-pixelado .conversa-portal-conteudo { min-width: 0; }
+#camada-conversa-portal .balao-conversa-portal.dialogo-pixelado[data-sem-retrato="true"] { grid-template-columns: minmax(0,1fr); }
+#camada-conversa-portal .dialogo-pixelado h2 { color: #f6edda; font-size: .9rem; text-shadow: none; }
+#camada-conversa-portal .dialogo-pixelado small { color: #bfcbd4; }
+#camada-conversa-portal .dialogo-pixelado > :not(.retrato-dialogo):not(.conversa-portal-conteudo) { display: none; }
+#limbo-dialogo.dialogo-pixelado[hidden] { display: none; }
+#limbo-dialogo.dialogo-pixelado .retrato-dialogo { grid-column: 1; grid-row: 1 / span 3; }
+#limbo-dialogo.dialogo-pixelado :is(#limbo-falante,#limbo-fala,#limbo-continuar) { grid-column: 2; }
+#limbo-dialogo.dialogo-pixelado #limbo-falante { color: #f6edda; font-size: .8rem; }
+#limbo-dialogo.dialogo-pixelado #limbo-retrato-ampliado { grid-column: 1 / -1; grid-row: 4; justify-self: center; }
+#limbo-dialogo.dialogo-pixelado[data-sem-retrato="true"] { grid-template-columns: minmax(0,1fr); }
+#limbo-dialogo.dialogo-pixelado[data-sem-retrato="true"] :is(#limbo-falante,#limbo-fala,#limbo-continuar) { grid-column: 1; }
+@media (max-width: 600px) {
+    .retrato-dialogo { width: 64px; }
+    .retrato-dialogo > .portal-retrato-conversa { height: 80px; }
+    #camada-cutscene-carta.conversa-pixelada { padding: 10px; }
+    #camada-cutscene-carta.conversa-pixelada .carta-misteriosa,
+    #camada-conversa-portal .balao-conversa-portal.dialogo-pixelado,
+    #limbo-dialogo.dialogo-pixelado { grid-template-columns: 64px minmax(0,1fr); gap: 12px; padding: 14px; }
+    #camada-cutscene-carta.conversa-pixelada #assinatura-cutscene-carta { grid-column: 1 / -1; }
+    #camada-conversa-portal .dialogo-pixelado .conversa-portal-escolhas { display: grid; grid-template-columns: 1fr; }
+}
+
+.retrato-dialogo canvas { width: 100%; height: auto; image-rendering: pixelated; }
+
+.cena-confronto { grid-column: 1 / -1; width: 100%; max-height: 160px; object-fit: contain; image-rendering: pixelated; }
+.cena-confronto[hidden] { display: none; }
+#acoes-final-campanha { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+#acoes-final-campanha button { flex: 1; padding: 12px; background: #241b38; border: 3px solid #cba66b; color: #f6edda; font: inherit; cursor: pointer; }
+.final-campanha-escuro { background: #000 !important; }
+.final-campanha-escuro .carta-misteriosa { background: #000 !important; }

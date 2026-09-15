@@ -285,6 +285,10 @@ vm.runInContext([
     extrairFuncao("podeEntrarNaFaseSecreta"),
     extrairFuncao("atualizarPortalFaseSecreta"),
     extrairFuncao("interagirComPortalSecreto"),
+    extrairFuncao("mostrarConversaSecretaBloqueada"),
+    extrairFuncao("responderConversaSecretaBloqueada"),
+    extrairFuncao("encerrarConversaSecretaBloqueada"),
+    extrairFuncao("ocultarConversaNoPortal"),
     extrairFuncao("iniciarTransicaoDoPortalGlitch"),
     extrairFuncao("ocultarTransicaoDoPortalGlitch"),
     extrairFuncao("deveEntrarNosCorredoresAmarelos"),
@@ -303,10 +307,17 @@ assert.strictEqual(contextoDoPortal.deveEntrarNosCorredoresAmarelos(0.1), false)
 assert.strictEqual(contextoDoPortal.deveEntrarNosCorredoresAmarelos(0.9), false);
 
 contextoDoPortal.atualizarPortalFaseSecreta();
-assert.strictEqual(contextoDoPortal.portalFaseSecreta.disabled, true);
+assert.strictEqual(contextoDoPortal.portalFaseSecreta.disabled, false);
 assert.ok(classesDoPortal.has("portal-fase-secreta-bloqueado"));
 contextoDoPortal.interagirComPortalSecreto();
 assert.strictEqual(contextoDoPortal.camadaTransicaoGlitch.hidden, true);
+assert.strictEqual(contextoDoPortal.camadaConversaPortal.hidden, false);
+assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, /Ainda não/);
+contextoDoPortal.responderConversaSecretaBloqueada('como-assim');
+assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, /Volte quando você estiver pronto/);
+contextoDoPortal.encerrarConversaSecretaBloqueada();
+assert.strictEqual(contextoDoPortal.conversaDoPortalSecretoBloqueadoAtiva, false);
+assert.strictEqual(contextoDoPortal.camadaConversaPortal.hidden, true);
 
 contextoDoPortal.maiorFaseConcluida = 6;
 contextoDoPortal.atualizarPortalFaseSecreta();

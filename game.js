@@ -146,6 +146,7 @@ const CHAVE_COMPRAS_LOJA = "guardians-of-pixel-compras-v2";
 const CHAVE_OFERTA_SEMANAL_LOJA = "guardians-of-pixel-oferta-semanal-v1";
 const CHAVE_TUTORIAL_CONCLUIDO = "guardians-of-pixel-tutorial-concluido-v1";
 const CHAVE_MISSOES_SEMANAIS = "guardians-of-pixel-missoes-semanais-v1";
+const CHAVE_MISSOES_PERMANENTES = "guardians-of-pixel-missoes-permanentes-v1";
 const CHAVE_RECOMPENSAS_MISSOES = "guardians-of-pixel-recompensas-missoes-v1";
 const CHAVE_ESTATISTICAS_CONQUISTAS = "guardians-of-pixel-estatisticas-conquistas-v1";
 const CHAVE_PROGRESSAO_NIVEL = "guardians-of-pixel-progressao-nivel-v1";
@@ -266,9 +267,9 @@ const TRADUCOES = Object.freeze({
         "nivel.xpPartida": " Você recebeu {quantidade} XP nesta partida.",
         "lobby.editor": "Editor",
         "lobby.crieSuaFase": "Crie sua própria fase",
-        "lobby.salvos": "Salvos",
+        "lobby.salvos": "Partidas salvas",
         "lobby.espacosDeProgresso": "3 espaços de progresso",
-        "salvos.titulo": "Salvos",
+        "salvos.titulo": "Partidas salvas",
         "salvos.descricao": "Use espaços separados para jogar e testar sem misturar o progresso.",
         "salvos.avisoTitulo": "PROGRESSO PROTEGIDO",
         "salvos.aviso": "Cada save guarda campanha, XP, Fragmentos, compras, coleção, missões, mapas e recordes. Idioma, áudio e iluminação são compartilhados.",
@@ -530,9 +531,9 @@ const TRADUCOES = Object.freeze({
         "nivel.xpPartida": " You earned {quantidade} XP in this match.",
         "lobby.editor": "Editor",
         "lobby.crieSuaFase": "Create your own stage",
-        "lobby.salvos": "Saves",
+        "lobby.salvos": "Saved games",
         "lobby.espacosDeProgresso": "3 progress slots",
-        "salvos.titulo": "Saves",
+        "salvos.titulo": "Saved games",
         "salvos.descricao": "Use separate slots to play and test without mixing progress.",
         "salvos.avisoTitulo": "PROGRESS PROTECTED",
         "salvos.aviso": "Each save stores campaign, XP, Fragments, purchases, collection, missions, maps, and records. Language, audio, and lighting are shared.",
@@ -794,7 +795,7 @@ const TRADUCOES = Object.freeze({
         "nivel.xpPartida": " Has recibido {quantidade} XP en esta partida.",
         "lobby.editor": "Editor",
         "lobby.crieSuaFase": "Crea tu propia fase",
-        "lobby.salvos": "Partidas",
+        "lobby.salvos": "Partidas guardadas",
         "lobby.espacosDeProgresso": "3 espacios de progreso",
         "salvos.titulo": "Partidas guardadas",
         "salvos.descricao": "Usa espacios separados para jugar y probar sin mezclar el progreso.",
@@ -988,10 +989,207 @@ const CHAVES_PRINCIPAIS_POR_TEXTO = Object.freeze(Object.fromEntries(
 const TEXTOS_LOCALIZADOS = Object.freeze({
     en: Object.freeze({
         "Fechar ×": "Close ×",
+        "Sala de estar": "Sitting room",
+        "Biblioteca": "Library",
+        "Galeria": "Gallery",
+        "Voltar ao salão": "Return to the hall",
+        "Examinar retrato": "Examine portrait",
+        "É um retrato da entidade ao lado de uma mulher coroada. Sua esposa? Não há nomes na moldura.": "It is a portrait of the entity beside a crowned woman. His wife? There are no names on the frame.",
+        "CASTELO DO LIMBO": "LIMBO CASTLE",
+        "Entrar no castelo": "Enter the castle",
+        "Continuar no Limbo": "Continue in Limbo",
+        "Encontrar entidade (teste)": "Meet entity (test)",
+        "Salvar e voltar ao lobby": "Save and return to lobby",
+        "WASD ou setas para andar · E para interagir": "WASD or arrows to move · E to interact",
+        "Interagir (E)": "Interact (E)",
+        "Salão de banquetes · Térreo": "Banquet hall · Ground floor",
+        "Corredor · Segundo andar": "Hallway · Upper floor",
+        "Varanda para o vazio": "Balcony over the void",
+        "Quarto da entidade": "The entity's room",
+        "Quarto de hóspedes": "Guest room",
+        "Arena do Limbo · ???": "Limbo Arena · ???",
+        "Entre. Não me faça esperar.": "Enter. Do not keep me waiting.",
+        "A entidade atravessa o salão e sobe as escadas para o segundo andar.": "The entity crosses the hall and climbs the stairs to the upper floor.",
+        "GUARDAS": "GUARDS",
+        "Você não tem permissão para entrar aqui.": "You do not have permission to enter here.",
+        "Uma mesa comprida, preparada para convidados que nunca chegam.": "A long table, set for guests who never arrive.",
+        "Aqui no Limbo, ninguém entra sem minha permissão.": "Here in Limbo, no one enters without my permission.",
+        "Eu enviaria qualquer outro intruso à arena, para enfrentar meus gladiadores. Mas há algo diferente em você…": "I would send any other intruder to the arena to face my gladiators. But there is something different about you…",
+        "Descanse. Amanhã, eu mesmo o enfrentarei.": "Rest. Tomorrow, I will face you myself.",
+        "Faz muitos anos que não entro naquela arena. Não confunda minha ausência com fraqueza. Ainda tenho muitos poderes e habilidades. Você não vencerá facilmente.": "It has been many years since I entered that arena. Do not mistake my absence for weakness. I still possess many powers and abilities. You will not win easily.",
+        "Aqui não tem nada… Afinal, aqui é o Limbo.": "There is nothing here… After all, this is Limbo.",
+        "Uma coroa antiga repousa ao lado da cama. Este quarto parece não envelhecer.": "An ancient crown rests beside the bed. This room seems untouched by age.",
+        "Antes de descansar, preciso falar com a entidade no corredor.": "Before resting, I need to speak to the entity in the hallway.",
+        "Já amanheceu. Preciso seguir a entidade até a arena.": "It is morning already. I need to follow the entity to the arena.",
+        "Vou descansar até amanhã.": "I will rest until tomorrow.",
+        "NO DIA SEGUINTE": "THE NEXT DAY",
+        "Depois de uma noite silenciosa, a porta se abre. A entidade entra no quarto.": "After a silent night, the door opens. The entity enters the room.",
+        "Amanheceu. Siga-me até a arena. Quero ver do que você é capaz.": "Morning has come. Follow me to the arena. I want to see what you can do.",
+        "Siga-me. A arena nos espera.": "Follow me. The arena awaits.",
+        "Vocês deixam o castelo. Entre as ruínas do vazio, surge um coliseu.": "You leave the castle. Among the ruins of the void, a coliseum emerges.",
+        "Então… você venceu. Conquistou meu respeito. Diga: o que deseja?": "So… you won. You have earned my respect. Tell me: what do you desire?",
+        "O Senhor do Tempo quer me eliminar… Me ajude. Ele é muito mais poderoso do que eu. É praticamente um semideus.": "The Lord of Time wants to kill me… Help me. He is far more powerful than I am. He is practically a demigod.",
+        "…Ele está tentando fazer isso?": "…He is trying to do that?",
+        "Sim. Ele já acabou com a vida de várias pessoas. Agora que descobri tudo, quer fazer o mesmo comigo.": "Yes. He has already killed several people. Now that I have discovered everything, he wants to do the same to me.",
+        "Espere aqui. Vou devolvê-lo à sua dimensão. Mas você não enfrentará isso sozinho: eu prometo ajudá-lo.": "Wait here. I will return you to your dimension. But you will not face this alone: I promise to help you.",
+        "Subir escadas": "Go upstairs",
+        "Descer escadas": "Go downstairs",
+        "Arsenal · falar com guardas": "Armory · speak to guards",
+        "Examinar mesa": "Examine table",
+        "Seguir para a arena": "Head to the arena",
+        "Portão do castelo": "Castle gate",
+        "Varanda": "Balcony",
+        "Falar com ???": "Speak to ???",
+        "Olhar para o vazio": "Look into the void",
+        "Examinar quarto real": "Examine royal room",
+        "Voltar ao corredor": "Return to hallway",
+        "Dormir": "Sleep",
+        "Torre de flechas": "Arrow tower",
+        "Canhão da arena": "Arena cannon",
+        "Torre glacial": "Frost tower",
+        "Iniciar wave": "Start wave",
+        "Melhorar ({custo})": "Upgrade ({custo})",
+        "Tentar novamente": "Try again",
+        "Wave {wave}/{total} · Base {vida} · Créditos {creditos} · Torres {torres}/{limite}": "Wave {wave}/{total} · Base {vida} · Credits {creditos} · Towers {torres}/{limite}",
+        "Volte ao corredor, desça as escadas e saia pelo portão do térreo.": "Return to the hallway, go downstairs and leave through the ground-floor gate.",
+        "Descanse no quarto de hóspedes, à direita.": "Rest in the guest room on the right.",
+        "A entidade está esperando no segundo andar.": "The entity is waiting upstairs.",
+        "Vamos. Saia pelo portão do térreo.": "Come. Leave through the ground-floor gate.",
+        "Seu quarto está à direita. Amanhã nos encontraremos na arena.": "Your room is on the right. Tomorrow we meet in the arena.",
+        "Aproxime-se de uma porta, pessoa ou objeto para interagir.": "Approach a door, person or object to interact.",
+        "Construa fora do caminho. Clique numa torre para selecioná-la e melhorá-la. A entidade lutará na última wave.": "Build off the path. Click a tower to select and upgrade it. The entity will fight in the last wave.",
+        "???: Agora, enfrente-me! Minha coroa pode selar suas torres por alguns instantes.": "???: Now, face me! My crown can seal your towers for a few moments.",
+        "Os gladiadores entraram na arena.": "The gladiators have entered the arena.",
+        "A coroa selou uma torre temporariamente!": "The crown temporarily sealed a tower!",
+        "Sua defesa caiu. A promessa ainda não foi conquistada. Você pode tentar novamente.": "Your defenses fell. You have not earned the promise yet. You can try again.",
+        "Wave vencida! Prepare suas defesas e inicie a próxima.": "Wave cleared! Prepare your defenses and start the next one.",
+        "Escolha um espaço livre, fora do caminho e longe de outra torre.": "Choose a free space, off the path and away from other towers.",
+        "Créditos insuficientes ou limite de seis torres atingido.": "Not enough credits or six-tower limit reached.",
+        "Defesa construída. Prepare suas torres e inicie a wave quando estiver pronto.": "Defense built. Prepare your towers and start the wave when ready.",
+        "Vitória! Ouça a entidade para concluir seu pedido de ajuda.": "Victory! Listen to the entity to complete your request for help.",
+        "Uma figura coroada surge ao longe. Seu manto roxo atravessa a névoa, até que ela para diante de você.": "A crowned figure appears in the distance. Its purple cloak crosses the mist until it stops before you.",
+        "Por que está aqui? É impossível chegar a este lugar sozinho. Quem o trouxe?": "Why are you here? It is impossible to reach this place alone. Who brought you?",
+        "Foi o Senhor do Tempo.": "It was the Lord of Time.",
+        "Então ele voltou a me desobedecer… Você não foi o primeiro. Eu o avisei de que haveria consequências.": "So he has disobeyed me again… You were not the first. I warned him there would be consequences.",
+        "Que consequências?": "What consequences?",
+        "Ele já foi muito mais poderoso. Ainda assim, nunca esteve acima de mim. Fui eu quem retirou os poderes que ele jamais recuperará.": "He was once far more powerful. Even then, he was never above me. I took away the powers he will never regain.",
+        "Nenhuma entidade da sua dimensão tem autoridade aqui.": "No entity from your dimension has authority here.",
+        "Ele alcança este lugar distorcendo o tempo. Preparei uma barreira para fechar essa passagem. Hoje, ela será selada.": "He reaches this place by distorting time. I prepared a barrier to seal that passage. Today, it will be sealed.",
+        "Um escudo atravessa a névoa. As fendas temporais se fecham: o Senhor do Tempo não poderá usar o tempo para entrar novamente.": "A shield sweeps through the mist. The temporal rifts close: the Lord of Time will no longer be able to use time to enter again.",
+        "Venha. Vou devolvê-lo à sua dimensão.": "Come. I will return you to your dimension.",
+        "Você permanece calado.": "You remain silent.",
+        "Enfim… Ninguém entra sem minha permissão. E ninguém sai sem que eu permita. Siga-me.": "Well… No one enters without my permission. And no one leaves unless I allow it. Follow me.",
+        "Você acompanha a entidade através da névoa. Diante de um castelo, os portões começam a se abrir. O que existe lá dentro ainda é desconhecido.": "You follow the entity through the mist. Before a castle, the gates begin to open. What lies inside is still unknown.",
+        "Permanecer calado": "Remain silent",
+        "Foi o Senhor do Tempo": "It was the Lord of Time",
+        "VOCÊ": "YOU",
+        "CONTINUA…": "TO BE CONTINUED…",
+        "Observar": "Observe",
+        "Observar a barreira": "Watch the barrier",
+        "Voltar à minha dimensão": "Return to my dimension",
+        "Seguir a entidade": "Follow the entity",
         "Selecionada": "Selected",
         "Disponível": "Available",
         "Obrigatória no tutorial": "Required in the tutorial",
         "Obrigatória na Fase 14": "Required in Stage 14",
+        "Fase 15": "Stage 15",
+        "Arquivo Proibido": "Forbidden Archive",
+        "Torre de Feixe Contínuo": "Continuous Beam Tower",
+        "Feixe {minimo}–{maximo} por pulso · Alcance {alcance}": "Beam {minimo}–{maximo} per pulse · Range {alcance}",
+        "TORRE DE FEIXE CONTÍNUO": "CONTINUOUS BEAM TOWER",
+        "Torre de Longo Alcance": "Long-Range Tower",
+        "Recompensa do nível {nivel}": "Level {nivel} reward",
+        "Pouco dano, mas alcance de quase todo o mapa. Recompensa exclusiva do nível 12.": "Low damage, but covers almost the entire map. Exclusive level 12 reward.",
+        "TORRE DESBLOQUEADA": "TOWER UNLOCKED",
+        "NOVA DEFESA DISPONÍVEL": "NEW DEFENSE AVAILABLE",
+        "Torre de Feixe Contínuo: mantém um laser no mesmo inimigo e aumenta o dano enquanto sustenta o foco.": "Continuous Beam Tower: keeps a laser on the same enemy and increases its damage while maintaining focus.",
+        "Acho que esta é a última defesa que vou encontrar nesta jornada.": "I think this is the last defense I will find on this journey.",
+        "Ampliar mapa": "Enlarge map",
+        "Ver mapa inteiro": "Show entire map",
+        "Câmara das Memórias": "Chamber of Memories",
+        "Limiar do Tempo": "Threshold of Time",
+        "Rasurador": "Redactor",
+        "Censor Velado": "Veiled Censor",
+        "Sentinela de Índice": "Index Sentinel",
+        "Bibliotecário Mudo": "Silent Librarian",
+        "BIBLIOTECÁRIO MUDO": "SILENT LIBRARIAN",
+        "Fragmento Mnésico": "Memory Shard",
+        "Lembrança Blindada": "Armored Memory",
+        "Eco da Memória": "Memory Echo",
+        "Devorador de Memórias": "Memory Devourer",
+        "DEVORADOR DE MEMÓRIAS": "MEMORY DEVOURER",
+        "Exclusivo da Fase 15 | Avança carregando páginas rasuradas": "Stage 15 only | Advances carrying redacted pages",
+        "Exclusivo da Fase 15 | Camuflado: precisa ser detectado pela Varredura": "Stage 15 only | Camouflaged: requires Sweep detection",
+        "Exclusiva da Fase 15 | Capas blindadas reduzem o dano em 25%": "Stage 15 only | Armored covers reduce damage by 25%",
+        "Exclusivo da Fase 15 | Aos 65% e 30% de vida, convoca dois Censores Velados": "Stage 15 only | At 65% and 30% health, summons two Veiled Censors",
+        "Exclusivo da Fase 16 | Lembrança fragmentada que avança rapidamente": "Stage 16 only | A fragmented memory that moves quickly",
+        "Exclusiva da Fase 16 | Memória cristalizada reduz o dano em 25%": "Stage 16 only | Crystallized memory reduces damage by 25%",
+        "Exclusivo da Fase 16 | Retorna uma vez com 35% da vida e recua 180 px": "Stage 16 only | Returns once with 35% health and retreats 180 px",
+        "Exclusivo da Fase 16 | Aos 70% e 35% de vida, restaura 25% da vida de aliados a 220 px e convoca dois Fragmentos": "Stage 16 only | At 70% and 35% health, restores 25% health to allies within 220 px and summons two Shards",
+        "O Bibliotecário convocou Censores Velados!": "The Librarian summoned Veiled Censors!",
+        "O Devorador restaurou as memórias ao redor!": "The Devourer restored the surrounding memories!",
+        "O Eco da Memória se recompôs!": "The Memory Echo reformed!",
+        "Batedor de Instantes": "Instant Scout",
+        "Couraçado de Ampulheta": "Hourglass Bulwark",
+        "Tecelão de Segundos": "Second Weaver",
+        "Arconte do Limiar": "Threshold Archon",
+        "ARCONTE DO LIMIAR": "THRESHOLD ARCHON",
+        "Exclusivo da Fase 17 | Acelera 60% com metade da vida": "Stage 17 only | Moves 60% faster at half health",
+        "Exclusivo da Fase 17 | Armadura reduz o dano em 30%": "Stage 17 only | Armor reduces damage by 30%",
+        "Exclusivo da Fase 17 | Convoca dois Batedores com metade da vida": "Stage 17 only | Summons two Scouts at half health",
+        "Exclusivo da Fase 17 | Aos 70% e 35% de vida, sela duas torres por 2s e convoca um Couraçado": "Stage 17 only | At 70% and 35% health, seals two towers for 2s and summons a Bulwark",
+        "O Arconte selou suas defesas!": "The Archon sealed your defenses!",
+        "O Tecelão convocou reforços!": "The Weaver summoned reinforcements!",
+        "LIMIAR DO TEMPO": "THRESHOLD OF TIME",
+        "A transmissão deixou um rastro. Você o segue até uma passagem cercada por engrenagens imóveis. Do outro lado está o Senhor do Tempo.": "The transmission left a trail. You follow it to a passage surrounded by motionless gears. Beyond it waits the Lord of Time.",
+        "Eu ainda não lembro como cheguei aqui. Ele manda que eu defenda as torres, mas nunca explica por que essas criaturas me atacam.": "I still cannot remember how I got here. He tells me to defend the towers, but never explains why these creatures attack me.",
+        "As perguntas não vão proteger você. Afaste-se dessa passagem.": "Questions will not protect you. Step away from that passage.",
+        "Não vou abandonar os registros. Vou proteger esta passagem e ouvir suas respostas pessoalmente.": "I will not abandon the records. I will defend this passage and hear your answers in person.",
+        "Defender a passagem": "Defend the passage",
+        "PASSAGEM PRESERVADA": "PASSAGE SECURED",
+        "O último guardião cai. As engrenagens voltam a girar, revelando uma porta. Você mantém os registros da câmara consigo.": "The last guardian falls. The gears turn again, revealing a door. You keep the chamber records with you.",
+        "Lina deixou um aviso. Outro defensor recebeu uma promessa. E eu nem consigo lembrar de onde vim. O que você está escondendo?": "Lina left a warning. Another defender was given a promise. And I cannot even remember where I came from. What are you hiding?",
+        "Eu lhe dei um caminho para continuar. Você escolheu seguir vozes que nem conhece.": "I gave you a path forward. You chose to follow voices you do not even know.",
+        "Então olhe para mim e responda. Desta vez, sem encerrar a transmissão.": "Then look at me and answer. This time, without ending the transmission.",
+        "Atravesse a porta. Vamos terminar esta conversa frente a frente.": "Walk through the door. We will finish this conversation face to face.",
+        "O CONFRONTO SE APROXIMA": "THE CONFRONTATION DRAWS NEAR",
+        "Além da porta, o Senhor do Tempo espera. As respostas ficaram perto demais para voltar atrás.": "Beyond the door, the Lord of Time waits. The answers are too close to turn back now.",
+        "CÂMARA DAS MEMÓRIAS": "CHAMBER OF MEMORIES",
+        "A cópia do arquivo revela uma passagem oculta. Além dela, lembranças flutuam entre relógios quebrados. Uma gravação de Lina Varela começa a tocar.": "The archive copy reveals a hidden passage. Beyond it, memories float among broken clocks. A recording by Lina Varela begins to play.",
+        "ARQUIVO DE MEMÓRIAS": "MEMORY ARCHIVE",
+        "Ouvir gravação": "Play recording",
+        "Se você encontrou este lugar, não confie nos registros oficiais. Ele só preserva a versão em que parece inocente.": "If you found this place, do not trust the official records. He only preserves the version in which he looks innocent.",
+        "GRAVAÇÃO PRESERVADA": "PRESERVED RECORDING",
+        "Estas pessoas também eram chamadas de defensores... Os inimigos estão vindo apagar as memórias. Preciso proteger o núcleo até recuperar a gravação.": "These people were called defenders too... The enemies are coming to erase the memories. I must protect the core until I recover the recording.",
+        "DEFENDA O NÚCLEO DAS MEMÓRIAS": "DEFEND THE MEMORY CORE",
+        "Proteger as memórias": "Protect the memories",
+        "MEMÓRIA RECUPERADA": "MEMORY RECOVERED",
+        "Com o núcleo a salvo, você recupera uma gravação incompleta. A voz pertence a alguém que enfrentou o Senhor do Tempo antes de você.": "With the core safe, you recover an incomplete recording. The voice belongs to someone who faced the Lord of Time before you.",
+        "REGISTRO DE UM ANTIGO DEFENSOR": "RECORD OF A FORMER DEFENDER",
+        "ANTIGO DEFENSOR": "FORMER DEFENDER",
+        "Ele prometeu que eu voltaria para casa se vencesse. Mas agora…": "He promised I would go home if I won. But now…",
+        "GRAVAÇÃO INTERROMPIDA": "RECORDING INTERRUPTED",
+        "Você veio longe demais. Feche esse arquivo.": "You have come too far. Close that archive.",
+        "Quantas pessoas você trouxe antes de mim?": "How many people did you bring before me?",
+        "SEM RESPOSTA": "NO ANSWER",
+        "Prepare suas defesas.": "Prepare your defenses.",
+        "FIM DA TRANSMISSÃO": "END OF TRANSMISSION",
+        "ARQUIVO PROIBIDO": "FORBIDDEN ARCHIVE",
+        "Seguindo a gravação da era apagada, você encontra um arquivo antigo. Entre as páginas, um nome conhecido: Dra. Lina Varela.": "Following the recording from the erased era, you find an old archive. Among its pages is a familiar name: Dr. Lina Varela.",
+        "REGISTRO DE PESQUISA · DRA. LINA VARELA": "RESEARCH RECORD · DR. LINA VARELA",
+        "Ler registro": "Read record",
+        "REGISTRO RECUPERADO": "RECOVERED RECORD",
+        "Os inimigos camuflados já existiam antes. Alguém está apagando os registros.": "Camouflaged enemies already existed. Someone is erasing the records.",
+        "DRA. LINA VARELA · TRECHO PRESERVADO": "DR. LINA VARELA · PRESERVED EXCERPT",
+        "Mas ele disse que os criou... Preciso proteger este arquivo. A torre de varredura vai ser necessária de novo.": "But he said he created them... I need to protect this archive. I will need the Sweep Tower again.",
+        "SISTEMAS DE DEFESA DO ARQUIVO ATIVADOS": "ARCHIVE DEFENSE SYSTEMS ACTIVATED",
+        "Defender o arquivo": "Defend the archive",
+        "ARQUIVO PRESERVADO": "ARCHIVE PRESERVED",
+        "Você guarda uma cópia do registro de Lina Varela. Ainda não sabe quem está apagando a história, mas agora tem uma pista.": "You keep a copy of Lina Varela's record. You still do not know who is erasing history, but now you have a clue.",
+        "CÓPIA RECUPERADA": "COPY RECOVERED",
+        "Você veio defender sua torre. Não investigar o passado.": "You came to defend your tower. Not to investigate the past.",
+        "TRANSMISSÃO INTERCEPTADA": "INTERCEPTED TRANSMISSION",
+        "Obrigatória nesta fase": "Required in this stage",
         "{custo} créditos": "{custo} credits",
         "Vaga livre": "Empty slot",
         "Defesas para Waves infinitas": "Defenses for Endless Waves",
@@ -1018,7 +1216,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Alcance a wave 40 em uma partida de Waves infinitas.": "Reach wave 40 in an Endless Waves game.",
         "Conquista Além do Limite": "Beyond the Limit Achievement",
         "Sentinela Dourada": "Golden Sentinel",
-        "Uma pintura dourada exclusiva das missões semanais.": "An exclusive golden paint from weekly missions.",
+        "Uma pintura dourada exclusiva das missões permanentes.": "An exclusive golden paint from permanent missions.",
         "Pacote Coração de Pixel": "Pixel Heart Pack",
         "Aurora Pixel": "Pixel Aurora",
         "Uma pintura neon exclusiva para a Torre padrão.": "An exclusive neon paint for the Standard Tower.",
@@ -1042,7 +1240,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Alcance a wave 100 no modo infinito.": "Reach wave 100 in endless mode.",
         "Caçador de Pixels Supremo": "Supreme Pixel Hunter",
         "Elimine 500 inimigos em qualquer modo.": "Defeat 500 enemies in any mode.",
-        "Resgate a missão semanal da wave 40 infinita.": "Claim the weekly endless wave 40 mission.",
+        "Resgate a missão permanente da wave 40 infinita.": "Claim the permanent endless wave 40 mission.",
         "Os Seis Guardiões": "The Six Guardians",
         "Construa as seis defesas escolhidas para a equipe na mesma partida.": "Build all six defenses selected for the team in the same game.",
         "Mestre do Fliperama": "Arcade Master",
@@ -1055,6 +1253,22 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Encontre e escute até o fim a transmissão do Projeto ???.": "Find and listen to the Project ??? transmission to the end.",
         "O futuro guarda uma frequência esquecida.": "The future holds a forgotten frequency.",
         "Fase 1": "Stage 1",
+        "Conquistas comuns": "Regular achievements",
+        "Conquistas ocultas": "Hidden achievements",
+        "Categorias de conquistas": "Achievement categories",
+        "Explore o jogo para descobrir.": "Explore the game to find out.",
+        "Guardião Solar": "Solar Guardian",
+        "Sentinela Cósmica": "Cosmic Sentinel",
+        "Lenda das 100 Missões": "Legend of the 100 Missions",
+        "Conclua as 100 missões permanentes e resgate o prêmio final.": "Complete all 100 permanent missions and claim the final reward.",
+        "Prêmio por concluir as 100 missões.": "Reward for completing all 100 missions.",
+        "Prêmio final das 100 missões": "Final reward for the 100 missions",
+        "Duas skins exclusivas e uma conquista": "Two exclusive skins and an achievement",
+        "Resgatar prêmio final": "Claim final reward",
+        "VOCÊ": "YOU",
+        "Como eu vim parar aqui? Não consigo lembrar…": "How did I end up here? I can't remember…",
+        "Essas criaturas… Por que elas querem me atacar?": "These creatures… Why do they want to attack me?",
+        "Preciso defender este lugar… Depois tento entender.": "I need to defend this place… I'll try to make sense of it later.",
         "Fase 2": "Stage 2",
         "Fase 3": "Stage 3",
         "Fase 4": "Stage 4",
@@ -1208,7 +1422,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Conclua ou pule o tutorial antes de usar este comando.": "Finish or skip the tutorial before using this command.",
         "Resgatada": "Claimed",
         "Resgatar prêmio": "Claim reward",
-        "MISSÃO SEMANAL": "WEEKLY MISSION",
+        "MISSÃO PERMANENTE": "PERMANENT MISSION",
         "Progresso de {nome}": "Progress for {nome}",
         "Recompensas permanentes das missões": "Permanent mission rewards",
         "COLEÇÃO PERMANENTE": "PERMANENT COLLECTION",
@@ -1341,10 +1555,10 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Exclusivo da Fase 9 | Restaura 45 de vida de um aliado próximo": "Exclusive to Stage 9 | Restores 45 health to a nearby ally",
         "Exclusivo da Fase 9 | Reduz 25% do dano recebido por aliados próximos": "Exclusive to Stage 9 | Reduces damage received by nearby allies by 25%",
         "Exclusivo da Fase 9 | Rebobina o caminho e recupera vida duas vezes": "Exclusive to Stage 9 | Rewinds the path and recovers health twice",
-        "Exclusivo da Fase 10 | Muito rápido": "Exclusive to Stage 10 | Very fast",
-        "Exclusiva da Fase 10 | Acelera 55% depois de alcançar 50% da vida": "Exclusive to Stage 10 | Speeds up by 55% after reaching 50% health",
-        "Exclusivo da Fase 10 | Reduz 25% do dano recebido": "Exclusive to Stage 10 | Reduces incoming damage by 25%",
-        "Exclusivo da Fase 10 | Paralisa até 3 torres com 70% e 35% de vida": "Exclusive to Stage 10 | Paralyzes up to 3 towers at 70% and 35% health",
+        "Fases 10 e 15 | Muito rápido": "Stages 10 and 15 | Very fast",
+        "Fases 10 e 15 | Acelera 55% depois de alcançar 50% da vida": "Stages 10 and 15 | Speeds up by 55% after reaching 50% health",
+        "Fases 10 e 15 | Reduz 25% do dano recebido": "Stages 10 and 15 | Reduces incoming damage by 25%",
+        "Fases 10 e 15 | Paralisa até 3 torres com 70% e 35% de vida": "Stages 10 and 15 | Paralyzes up to 3 towers at 70% and 35% health",
         "Exclusivo da Fase 11 | Resistente e capaz de usar Fendas Temporais": "Exclusive to Stage 11 | Tough and able to use Temporal Rifts",
         "Exclusivo da Fase 11 | Retorna uma vez com metade da vida": "Exclusive to Stage 11 | Returns once with half health",
         "Exclusiva da Fase 11 | Reduz 30% do dano perto das fendas": "Exclusive to Stage 11 | Reduces damage by 30% near rifts",
@@ -1501,7 +1715,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Visual original": "Original look",
         "Aparência padrão disponível para todos.": "The default look available to everyone.",
         "Disponível desde o início.": "Available from the beginning.",
-        "Obtida em missão semanal.": "Earned from a weekly mission.",
+        "Obtida em missão permanente.": "Earned from a permanent mission.",
         "Obtida no Pacote Apoiador.": "Included in the Supporter Pack.",
         "Equipada": "Equipped",
         " | Loja: {custo} fragmentos": " | Shop: {custo} fragments",
@@ -2041,7 +2255,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Sombra Congelada": "Frozen Shadow",
         "Curador do Vazio": "Void Curator",
         "Exclusivo da Fase 14 | Muito rápido e parcialmente apagado": "Exclusive to Stage 14 | Very fast and partially erased",
-        "Exclusivo da Fase 14 | Somente a Torre de Varredura consegue detectá-lo": "Exclusive to Stage 14 | Only the Sweep Tower can detect it",
+        "Fase 14 | Somente a Torre de Varredura consegue detectá-lo": "Stage 14 | Only the Sweep Tower can detect it",
         "Exclusiva da Fase 14 | Blindada; recebe 18% menos dano": "Exclusive to Stage 14 | Armored; takes 18% less damage",
         "Exclusiva da Fase 14 | Uma pessoa preservada como sombra temporal": "Exclusive to Stage 14 | A person preserved as a temporal shadow",
         "Exclusivo da Fase 14 | Aos 50% de vida, restaura até 2 inimigos derrotados nos últimos 5 segundos": "Exclusive to Stage 14 | At 50% health, restores up to 2 enemies defeated in the last 5 seconds",
@@ -2079,10 +2293,207 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
     }),
     es: Object.freeze({
         "Fechar ×": "Cerrar ×",
+        "Sala de estar": "Sala de estar",
+        "Biblioteca": "Biblioteca",
+        "Galeria": "Galería",
+        "Voltar ao salão": "Volver al salón",
+        "Examinar retrato": "Examinar retrato",
+        "É um retrato da entidade ao lado de uma mulher coroada. Sua esposa? Não há nomes na moldura.": "Es un retrato de la entidad junto a una mujer coronada. ¿Su esposa? No hay nombres en el marco.",
+        "CASTELO DO LIMBO": "CASTILLO DEL LIMBO",
+        "Entrar no castelo": "Entrar en el castillo",
+        "Continuar no Limbo": "Continuar en el Limbo",
+        "Encontrar entidade (teste)": "Encontrar entidad (prueba)",
+        "Salvar e voltar ao lobby": "Guardar y volver al lobby",
+        "WASD ou setas para andar · E para interagir": "WASD o flechas para moverte · E para interactuar",
+        "Interagir (E)": "Interactuar (E)",
+        "Salão de banquetes · Térreo": "Salón de banquetes · Planta baja",
+        "Corredor · Segundo andar": "Pasillo · Segundo piso",
+        "Varanda para o vazio": "Balcón hacia el vacío",
+        "Quarto da entidade": "Habitación de la entidad",
+        "Quarto de hóspedes": "Habitación de huéspedes",
+        "Arena do Limbo · ???": "Arena del Limbo · ???",
+        "Entre. Não me faça esperar.": "Entra. No me hagas esperar.",
+        "A entidade atravessa o salão e sobe as escadas para o segundo andar.": "La entidad cruza el salón y sube las escaleras al segundo piso.",
+        "GUARDAS": "GUARDIAS",
+        "Você não tem permissão para entrar aqui.": "No tienes permiso para entrar aquí.",
+        "Uma mesa comprida, preparada para convidados que nunca chegam.": "Una mesa larga, preparada para invitados que nunca llegan.",
+        "Aqui no Limbo, ninguém entra sem minha permissão.": "Aquí en el Limbo, nadie entra sin mi permiso.",
+        "Eu enviaria qualquer outro intruso à arena, para enfrentar meus gladiadores. Mas há algo diferente em você…": "Enviaría a cualquier otro intruso a la arena para enfrentar a mis gladiadores. Pero hay algo diferente en ti…",
+        "Descanse. Amanhã, eu mesmo o enfrentarei.": "Descansa. Mañana, yo mismo te enfrentaré.",
+        "Faz muitos anos que não entro naquela arena. Não confunda minha ausência com fraqueza. Ainda tenho muitos poderes e habilidades. Você não vencerá facilmente.": "Hace muchos años que no entro en esa arena. No confundas mi ausencia con debilidad. Aún tengo muchos poderes y habilidades. No ganarás fácilmente.",
+        "Aqui não tem nada… Afinal, aqui é o Limbo.": "Aquí no hay nada… Al fin y al cabo, esto es el Limbo.",
+        "Uma coroa antiga repousa ao lado da cama. Este quarto parece não envelhecer.": "Una corona antigua descansa junto a la cama. Esta habitación parece no envejecer.",
+        "Antes de descansar, preciso falar com a entidade no corredor.": "Antes de descansar, debo hablar con la entidad en el pasillo.",
+        "Já amanheceu. Preciso seguir a entidade até a arena.": "Ya amaneció. Debo seguir a la entidad hasta la arena.",
+        "Vou descansar até amanhã.": "Descansaré hasta mañana.",
+        "NO DIA SEGUINTE": "AL DÍA SIGUIENTE",
+        "Depois de uma noite silenciosa, a porta se abre. A entidade entra no quarto.": "Tras una noche silenciosa, la puerta se abre. La entidad entra en la habitación.",
+        "Amanheceu. Siga-me até a arena. Quero ver do que você é capaz.": "Ya amaneció. Sígueme hasta la arena. Quiero ver de qué eres capaz.",
+        "Siga-me. A arena nos espera.": "Sígueme. La arena nos espera.",
+        "Vocês deixam o castelo. Entre as ruínas do vazio, surge um coliseu.": "Dejan el castillo. Entre las ruinas del vacío, surge un coliseo.",
+        "Então… você venceu. Conquistou meu respeito. Diga: o que deseja?": "Entonces… ganaste. Te has ganado mi respeto. Dime: ¿qué deseas?",
+        "O Senhor do Tempo quer me eliminar… Me ajude. Ele é muito mais poderoso do que eu. É praticamente um semideus.": "El Señor del Tiempo quiere eliminarme… Ayúdame. Es mucho más poderoso que yo. Es prácticamente un semidiós.",
+        "…Ele está tentando fazer isso?": "…¿Está intentando hacer eso?",
+        "Sim. Ele já acabou com a vida de várias pessoas. Agora que descobri tudo, quer fazer o mesmo comigo.": "Sí. Ya ha acabado con la vida de varias personas. Ahora que lo descubrí todo, quiere hacer lo mismo conmigo.",
+        "Espere aqui. Vou devolvê-lo à sua dimensão. Mas você não enfrentará isso sozinho: eu prometo ajudá-lo.": "Espera aquí. Te devolveré a tu dimensión. Pero no enfrentarás esto solo: prometo ayudarte.",
+        "Subir escadas": "Subir escaleras",
+        "Descer escadas": "Bajar escaleras",
+        "Arsenal · falar com guardas": "Arsenal · hablar con guardias",
+        "Examinar mesa": "Examinar mesa",
+        "Seguir para a arena": "Ir a la arena",
+        "Portão do castelo": "Puerta del castillo",
+        "Varanda": "Balcón",
+        "Falar com ???": "Hablar con ???",
+        "Olhar para o vazio": "Mirar al vacío",
+        "Examinar quarto real": "Examinar habitación real",
+        "Voltar ao corredor": "Volver al pasillo",
+        "Dormir": "Dormir",
+        "Torre de flechas": "Torre de flechas",
+        "Canhão da arena": "Cañón de la arena",
+        "Torre glacial": "Torre glacial",
+        "Iniciar wave": "Iniciar oleada",
+        "Melhorar ({custo})": "Mejorar ({custo})",
+        "Tentar novamente": "Intentar de nuevo",
+        "Wave {wave}/{total} · Base {vida} · Créditos {creditos} · Torres {torres}/{limite}": "Oleada {wave}/{total} · Base {vida} · Créditos {creditos} · Torres {torres}/{limite}",
+        "Volte ao corredor, desça as escadas e saia pelo portão do térreo.": "Vuelve al pasillo, baja las escaleras y sal por la puerta de la planta baja.",
+        "Descanse no quarto de hóspedes, à direita.": "Descansa en la habitación de huéspedes, a la derecha.",
+        "A entidade está esperando no segundo andar.": "La entidad espera en el segundo piso.",
+        "Vamos. Saia pelo portão do térreo.": "Vamos. Sal por la puerta de la planta baja.",
+        "Seu quarto está à direita. Amanhã nos encontraremos na arena.": "Tu habitación está a la derecha. Mañana nos veremos en la arena.",
+        "Aproxime-se de uma porta, pessoa ou objeto para interagir.": "Acércate a una puerta, persona u objeto para interactuar.",
+        "Construa fora do caminho. Clique numa torre para selecioná-la e melhorá-la. A entidade lutará na última wave.": "Construye fuera del camino. Haz clic en una torre para seleccionarla y mejorarla. La entidad luchará en la última oleada.",
+        "???: Agora, enfrente-me! Minha coroa pode selar suas torres por alguns instantes.": "???: ¡Ahora, enfréntame! Mi corona puede sellar tus torres por unos instantes.",
+        "Os gladiadores entraram na arena.": "Los gladiadores entraron en la arena.",
+        "A coroa selou uma torre temporariamente!": "¡La corona selló una torre temporalmente!",
+        "Sua defesa caiu. A promessa ainda não foi conquistada. Você pode tentar novamente.": "Tus defensas cayeron. Aún no has conseguido la promesa. Puedes intentarlo de nuevo.",
+        "Wave vencida! Prepare suas defesas e inicie a próxima.": "¡Oleada superada! Prepara tus defensas e inicia la siguiente.",
+        "Escolha um espaço livre, fora do caminho e longe de outra torre.": "Elige un espacio libre, fuera del camino y lejos de otra torre.",
+        "Créditos insuficientes ou limite de seis torres atingido.": "Créditos insuficientes o límite de seis torres alcanzado.",
+        "Defesa construída. Prepare suas torres e inicie a wave quando estiver pronto.": "Defensa construida. Prepara tus torres e inicia la oleada cuando estés listo.",
+        "Vitória! Ouça a entidade para concluir seu pedido de ajuda.": "¡Victoria! Escucha a la entidad para completar tu petición de ayuda.",
+        "Uma figura coroada surge ao longe. Seu manto roxo atravessa a névoa, até que ela para diante de você.": "Una figura coronada aparece a lo lejos. Su manto morado atraviesa la niebla hasta detenerse ante ti.",
+        "Por que está aqui? É impossível chegar a este lugar sozinho. Quem o trouxe?": "¿Por qué estás aquí? Es imposible llegar a este lugar sin ayuda. ¿Quién te trajo?",
+        "Foi o Senhor do Tempo.": "Fue el Señor del Tiempo.",
+        "Então ele voltou a me desobedecer… Você não foi o primeiro. Eu o avisei de que haveria consequências.": "Así que ha vuelto a desobedecerme… No fuiste el primero. Le advertí que habría consecuencias.",
+        "Que consequências?": "¿Qué consecuencias?",
+        "Ele já foi muito mais poderoso. Ainda assim, nunca esteve acima de mim. Fui eu quem retirou os poderes que ele jamais recuperará.": "Antes era mucho más poderoso. Aun así, nunca estuvo por encima de mí. Fui yo quien le quitó los poderes que jamás recuperará.",
+        "Nenhuma entidade da sua dimensão tem autoridade aqui.": "Ninguna entidad de tu dimensión tiene autoridad aquí.",
+        "Ele alcança este lugar distorcendo o tempo. Preparei uma barreira para fechar essa passagem. Hoje, ela será selada.": "Llega a este lugar distorsionando el tiempo. Preparé una barrera para cerrar ese paso. Hoy quedará sellado.",
+        "Um escudo atravessa a névoa. As fendas temporais se fecham: o Senhor do Tempo não poderá usar o tempo para entrar novamente.": "Un escudo atraviesa la niebla. Las grietas temporales se cierran: el Señor del Tiempo ya no podrá usar el tiempo para volver a entrar.",
+        "Venha. Vou devolvê-lo à sua dimensão.": "Ven. Te devolveré a tu dimensión.",
+        "Você permanece calado.": "Permaneces en silencio.",
+        "Enfim… Ninguém entra sem minha permissão. E ninguém sai sem que eu permita. Siga-me.": "En fin… Nadie entra sin mi permiso. Y nadie sale sin que yo lo permita. Sígueme.",
+        "Você acompanha a entidade através da névoa. Diante de um castelo, os portões começam a se abrir. O que existe lá dentro ainda é desconhecido.": "Sigues a la entidad a través de la niebla. Ante un castillo, las puertas comienzan a abrirse. Lo que hay dentro sigue siendo desconocido.",
+        "Permanecer calado": "Permanecer en silencio",
+        "Foi o Senhor do Tempo": "Fue el Señor del Tiempo",
+        "VOCÊ": "TÚ",
+        "CONTINUA…": "CONTINUARÁ…",
+        "Observar": "Observar",
+        "Observar a barreira": "Observar la barrera",
+        "Voltar à minha dimensão": "Volver a mi dimensión",
+        "Seguir a entidade": "Seguir a la entidad",
         "Selecionada": "Seleccionada",
         "Disponível": "Disponible",
         "Obrigatória no tutorial": "Obligatoria en el tutorial",
         "Obrigatória na Fase 14": "Obligatoria en la Fase 14",
+        "Fase 15": "Fase 15",
+        "Arquivo Proibido": "Archivo Prohibido",
+        "Torre de Feixe Contínuo": "Torre de Rayo Continuo",
+        "Feixe {minimo}–{maximo} por pulso · Alcance {alcance}": "Rayo {minimo}–{maximo} por pulso · Alcance {alcance}",
+        "TORRE DE FEIXE CONTÍNUO": "TORRE DE RAYO CONTINUO",
+        "Torre de Longo Alcance": "Torre de Largo Alcance",
+        "Recompensa do nível {nivel}": "Recompensa del nivel {nivel}",
+        "Pouco dano, mas alcance de quase todo o mapa. Recompensa exclusiva do nível 12.": "Poco daño, pero cubre casi todo el mapa. Recompensa exclusiva del nivel 12.",
+        "TORRE DESBLOQUEADA": "TORRE DESBLOQUEADA",
+        "NOVA DEFESA DISPONÍVEL": "NUEVA DEFENSA DISPONIBLE",
+        "Torre de Feixe Contínuo: mantém um laser no mesmo inimigo e aumenta o dano enquanto sustenta o foco.": "Torre de Rayo Continuo: mantiene un láser sobre el mismo enemigo y aumenta el daño mientras conserva el objetivo.",
+        "Acho que esta é a última defesa que vou encontrar nesta jornada.": "Creo que esta es la última defensa que encontraré en este viaje.",
+        "Ampliar mapa": "Ampliar mapa",
+        "Ver mapa inteiro": "Ver mapa completo",
+        "Câmara das Memórias": "Cámara de los Recuerdos",
+        "Limiar do Tempo": "Umbral del Tiempo",
+        "Rasurador": "Tachador",
+        "Censor Velado": "Censor Velado",
+        "Sentinela de Índice": "Centinela del Índice",
+        "Bibliotecário Mudo": "Bibliotecario Mudo",
+        "BIBLIOTECÁRIO MUDO": "BIBLIOTECARIO MUDO",
+        "Fragmento Mnésico": "Fragmento Mnésico",
+        "Lembrança Blindada": "Recuerdo Blindado",
+        "Eco da Memória": "Eco de la Memoria",
+        "Devorador de Memórias": "Devorador de Recuerdos",
+        "DEVORADOR DE MEMÓRIAS": "DEVORADOR DE RECUERDOS",
+        "Exclusivo da Fase 15 | Avança carregando páginas rasuradas": "Exclusivo de la Fase 15 | Avanza llevando páginas tachadas",
+        "Exclusivo da Fase 15 | Camuflado: precisa ser detectado pela Varredura": "Exclusivo de la Fase 15 | Camuflado: requiere detección del Barrido",
+        "Exclusiva da Fase 15 | Capas blindadas reduzem o dano em 25%": "Exclusiva de la Fase 15 | Las cubiertas blindadas reducen el daño un 25%",
+        "Exclusivo da Fase 15 | Aos 65% e 30% de vida, convoca dois Censores Velados": "Exclusivo de la Fase 15 | Al 65% y 30% de vida, invoca dos Censores Velados",
+        "Exclusivo da Fase 16 | Lembrança fragmentada que avança rapidamente": "Exclusivo de la Fase 16 | Un recuerdo fragmentado que avanza rápidamente",
+        "Exclusiva da Fase 16 | Memória cristalizada reduz o dano em 25%": "Exclusivo de la Fase 16 | El recuerdo cristalizado reduce el daño un 25%",
+        "Exclusivo da Fase 16 | Retorna uma vez com 35% da vida e recua 180 px": "Exclusivo de la Fase 16 | Regresa una vez con 35% de vida y retrocede 180 px",
+        "Exclusivo da Fase 16 | Aos 70% e 35% de vida, restaura 25% da vida de aliados a 220 px e convoca dois Fragmentos": "Exclusivo de la Fase 16 | Al 70% y 35% de vida, restaura 25% de vida a aliados a 220 px e invoca dos Fragmentos",
+        "O Bibliotecário convocou Censores Velados!": "¡El Bibliotecario invocó Censores Velados!",
+        "O Devorador restaurou as memórias ao redor!": "¡El Devorador restauró los recuerdos cercanos!",
+        "O Eco da Memória se recompôs!": "¡El Eco de la Memoria se recompuso!",
+        "Batedor de Instantes": "Explorador de Instantes",
+        "Couraçado de Ampulheta": "Acorazado de Arena",
+        "Tecelão de Segundos": "Tejedor de Segundos",
+        "Arconte do Limiar": "Arconte del Umbral",
+        "ARCONTE DO LIMIAR": "ARCONTE DEL UMBRAL",
+        "Exclusivo da Fase 17 | Acelera 60% com metade da vida": "Exclusivo de la Fase 17 | Acelera un 60% con la mitad de vida",
+        "Exclusivo da Fase 17 | Armadura reduz o dano em 30%": "Exclusivo de la Fase 17 | La armadura reduce el daño un 30%",
+        "Exclusivo da Fase 17 | Convoca dois Batedores com metade da vida": "Exclusivo de la Fase 17 | Invoca dos Exploradores con la mitad de vida",
+        "Exclusivo da Fase 17 | Aos 70% e 35% de vida, sela duas torres por 2s e convoca um Couraçado": "Exclusivo de la Fase 17 | Al 70% y 35% de vida, sella dos torres por 2s e invoca un Acorazado",
+        "O Arconte selou suas defesas!": "¡El Arconte selló tus defensas!",
+        "O Tecelão convocou reforços!": "¡El Tejedor invocó refuerzos!",
+        "LIMIAR DO TEMPO": "UMBRAL DEL TIEMPO",
+        "A transmissão deixou um rastro. Você o segue até uma passagem cercada por engrenagens imóveis. Do outro lado está o Senhor do Tempo.": "La transmisión dejó un rastro. Lo sigues hasta un pasaje rodeado de engranajes inmóviles. Al otro lado está el Señor del Tiempo.",
+        "Eu ainda não lembro como cheguei aqui. Ele manda que eu defenda as torres, mas nunca explica por que essas criaturas me atacam.": "Todavía no recuerdo cómo llegué aquí. Me ordena defender las torres, pero nunca explica por qué estas criaturas me atacan.",
+        "As perguntas não vão proteger você. Afaste-se dessa passagem.": "Las preguntas no van a protegerte. Aléjate de ese pasaje.",
+        "Não vou abandonar os registros. Vou proteger esta passagem e ouvir suas respostas pessoalmente.": "No voy a abandonar los registros. Defenderé este pasaje y escucharé tus respuestas en persona.",
+        "Defender a passagem": "Defender el pasaje",
+        "PASSAGEM PRESERVADA": "PASAJE A SALVO",
+        "O último guardião cai. As engrenagens voltam a girar, revelando uma porta. Você mantém os registros da câmara consigo.": "El último guardián cae. Los engranajes vuelven a girar y revelan una puerta. Conservas los registros de la cámara.",
+        "Lina deixou um aviso. Outro defensor recebeu uma promessa. E eu nem consigo lembrar de onde vim. O que você está escondendo?": "Lina dejó una advertencia. Otro defensor recibió una promesa. Y yo ni siquiera recuerdo de dónde vine. ¿Qué estás ocultando?",
+        "Eu lhe dei um caminho para continuar. Você escolheu seguir vozes que nem conhece.": "Te di un camino para continuar. Elegiste seguir voces que ni siquiera conoces.",
+        "Então olhe para mim e responda. Desta vez, sem encerrar a transmissão.": "Entonces mírame y responde. Esta vez, sin cortar la transmisión.",
+        "Atravesse a porta. Vamos terminar esta conversa frente a frente.": "Cruza la puerta. Terminaremos esta conversación cara a cara.",
+        "O CONFRONTO SE APROXIMA": "EL ENFRENTAMIENTO SE ACERCA",
+        "Além da porta, o Senhor do Tempo espera. As respostas ficaram perto demais para voltar atrás.": "Al otro lado de la puerta espera el Señor del Tiempo. Las respuestas están demasiado cerca para retroceder.",
+        "CÂMARA DAS MEMÓRIAS": "CÁMARA DE LOS RECUERDOS",
+        "A cópia do arquivo revela uma passagem oculta. Além dela, lembranças flutuam entre relógios quebrados. Uma gravação de Lina Varela começa a tocar.": "La copia del archivo revela un pasaje oculto. Más allá, los recuerdos flotan entre relojes rotos. Comienza una grabación de Lina Varela.",
+        "ARQUIVO DE MEMÓRIAS": "ARCHIVO DE RECUERDOS",
+        "Ouvir gravação": "Escuchar grabación",
+        "Se você encontrou este lugar, não confie nos registros oficiais. Ele só preserva a versão em que parece inocente.": "Si encontraste este lugar, no confíes en los registros oficiales. Él solo conserva la versión en la que parece inocente.",
+        "GRAVAÇÃO PRESERVADA": "GRABACIÓN CONSERVADA",
+        "Estas pessoas também eram chamadas de defensores... Os inimigos estão vindo apagar as memórias. Preciso proteger o núcleo até recuperar a gravação.": "Estas personas también eran llamadas defensores... Los enemigos vienen a borrar los recuerdos. Debo proteger el núcleo hasta recuperar la grabación.",
+        "DEFENDA O NÚCLEO DAS MEMÓRIAS": "DEFIENDE EL NÚCLEO DE LOS RECUERDOS",
+        "Proteger as memórias": "Proteger los recuerdos",
+        "MEMÓRIA RECUPERADA": "RECUERDO RECUPERADO",
+        "Com o núcleo a salvo, você recupera uma gravação incompleta. A voz pertence a alguém que enfrentou o Senhor do Tempo antes de você.": "Con el núcleo a salvo, recuperas una grabación incompleta. La voz pertenece a alguien que se enfrentó al Señor del Tiempo antes que tú.",
+        "REGISTRO DE UM ANTIGO DEFENSOR": "REGISTRO DE UN ANTIGUO DEFENSOR",
+        "ANTIGO DEFENSOR": "ANTIGUO DEFENSOR",
+        "Ele prometeu que eu voltaria para casa se vencesse. Mas agora…": "Prometió que volvería a casa si ganaba. Pero ahora…",
+        "GRAVAÇÃO INTERROMPIDA": "GRABACIÓN INTERRUMPIDA",
+        "Você veio longe demais. Feche esse arquivo.": "Has llegado demasiado lejos. Cierra ese archivo.",
+        "Quantas pessoas você trouxe antes de mim?": "¿A cuántas personas trajiste antes que a mí?",
+        "SEM RESPOSTA": "SIN RESPUESTA",
+        "Prepare suas defesas.": "Prepara tus defensas.",
+        "FIM DA TRANSMISSÃO": "FIN DE LA TRANSMISIÓN",
+        "ARQUIVO PROIBIDO": "ARCHIVO PROHIBIDO",
+        "Seguindo a gravação da era apagada, você encontra um arquivo antigo. Entre as páginas, um nome conhecido: Dra. Lina Varela.": "Siguiendo la grabación de la era borrada, encuentras un archivo antiguo. Entre sus páginas, un nombre conocido: Dra. Lina Varela.",
+        "REGISTRO DE PESQUISA · DRA. LINA VARELA": "REGISTRO DE INVESTIGACIÓN · DRA. LINA VARELA",
+        "Ler registro": "Leer registro",
+        "REGISTRO RECUPERADO": "REGISTRO RECUPERADO",
+        "Os inimigos camuflados já existiam antes. Alguém está apagando os registros.": "Los enemigos camuflados ya existían. Alguien está borrando los registros.",
+        "DRA. LINA VARELA · TRECHO PRESERVADO": "DRA. LINA VARELA · FRAGMENTO CONSERVADO",
+        "Mas ele disse que os criou... Preciso proteger este arquivo. A torre de varredura vai ser necessária de novo.": "Pero dijo que los creó... Debo proteger este archivo. Necesitaré otra vez la Torre de Barrido.",
+        "SISTEMAS DE DEFESA DO ARQUIVO ATIVADOS": "SISTEMAS DE DEFENSA DEL ARCHIVO ACTIVADOS",
+        "Defender o arquivo": "Defender el archivo",
+        "ARQUIVO PRESERVADO": "ARCHIVO CONSERVADO",
+        "Você guarda uma cópia do registro de Lina Varela. Ainda não sabe quem está apagando a história, mas agora tem uma pista.": "Guardas una copia del registro de Lina Varela. Aún no sabes quién está borrando la historia, pero ahora tienes una pista.",
+        "CÓPIA RECUPERADA": "COPIA RECUPERADA",
+        "Você veio defender sua torre. Não investigar o passado.": "Viniste a defender tu torre. No a investigar el pasado.",
+        "TRANSMISSÃO INTERCEPTADA": "TRANSMISIÓN INTERCEPTADA",
+        "Obrigatória nesta fase": "Obligatoria en esta fase",
         "{custo} créditos": "{custo} créditos",
         "Vaga livre": "Espacio libre",
         "Defesas para Waves infinitas": "Defensas para Oleadas infinitas",
@@ -2109,7 +2520,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Alcance a wave 40 em uma partida de Waves infinitas.": "Alcanza la oleada 40 en una partida de Oleadas infinitas.",
         "Conquista Além do Limite": "Logro Más Allá del Límite",
         "Sentinela Dourada": "Centinela Dorada",
-        "Uma pintura dourada exclusiva das missões semanais.": "Una pintura dorada exclusiva de las misiones semanales.",
+        "Uma pintura dourada exclusiva das missões permanentes.": "Una pintura dorada exclusiva de las misiones permanentes.",
         "Pacote Coração de Pixel": "Paquete Corazón de Píxel",
         "Aurora Pixel": "Aurora Píxel",
         "Uma pintura neon exclusiva para a Torre padrão.": "Una pintura neón exclusiva para la Torre estándar.",
@@ -2133,7 +2544,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Alcance a wave 100 no modo infinito.": "Alcanza la oleada 100 en el modo infinito.",
         "Caçador de Pixels Supremo": "Cazador de Píxeles Supremo",
         "Elimine 500 inimigos em qualquer modo.": "Elimina 500 enemigos en cualquier modo.",
-        "Resgate a missão semanal da wave 40 infinita.": "Reclama la misión semanal de la oleada infinita 40.",
+        "Resgate a missão permanente da wave 40 infinita.": "Reclama la misión permanente de la oleada infinita 40.",
         "Os Seis Guardiões": "Los Seis Guardianes",
         "Construa as seis defesas escolhidas para a equipe na mesma partida.": "Construye las seis defensas elegidas para el equipo en la misma partida.",
         "Mestre do Fliperama": "Maestro del Salón Recreativo",
@@ -2146,6 +2557,22 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Encontre e escute até o fim a transmissão do Projeto ???.": "Encuentra y escucha hasta el final la transmisión del Proyecto ???.",
         "O futuro guarda uma frequência esquecida.": "El futuro guarda una frecuencia olvidada.",
         "Fase 1": "Fase 1",
+        "Conquistas comuns": "Logros comunes",
+        "Conquistas ocultas": "Logros ocultos",
+        "Categorias de conquistas": "Categorías de logros",
+        "Explore o jogo para descobrir.": "Explora el juego para descubrirlo.",
+        "Guardião Solar": "Guardián Solar",
+        "Sentinela Cósmica": "Centinela Cósmica",
+        "Lenda das 100 Missões": "Leyenda de las 100 Misiones",
+        "Conclua as 100 missões permanentes e resgate o prêmio final.": "Completa las 100 misiones permanentes y reclama el premio final.",
+        "Prêmio por concluir as 100 missões.": "Premio por completar las 100 misiones.",
+        "Prêmio final das 100 missões": "Premio final de las 100 misiones",
+        "Duas skins exclusivas e uma conquista": "Dos skins exclusivas y un logro",
+        "Resgatar prêmio final": "Reclamar premio final",
+        "VOCÊ": "TÚ",
+        "Como eu vim parar aqui? Não consigo lembrar…": "¿Cómo llegué aquí? No consigo recordarlo…",
+        "Essas criaturas… Por que elas querem me atacar?": "Esas criaturas… ¿Por qué quieren atacarme?",
+        "Preciso defender este lugar… Depois tento entender.": "Tengo que defender este lugar… Después intentaré entenderlo.",
         "Fase 2": "Fase 2",
         "Fase 3": "Fase 3",
         "Fase 4": "Fase 4",
@@ -2299,7 +2726,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Conclua ou pule o tutorial antes de usar este comando.": "Completa o salta el tutorial antes de usar este comando.",
         "Resgatada": "Reclamada",
         "Resgatar prêmio": "Reclamar premio",
-        "MISSÃO SEMANAL": "MISIÓN SEMANAL",
+        "MISSÃO PERMANENTE": "MISIÓN PERMANENTE",
         "Progresso de {nome}": "Progreso de {nome}",
         "Recompensas permanentes das missões": "Recompensas permanentes de las misiones",
         "COLEÇÃO PERMANENTE": "COLECCIÓN PERMANENTE",
@@ -2432,10 +2859,10 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Exclusivo da Fase 9 | Restaura 45 de vida de um aliado próximo": "Exclusivo de la Fase 9 | Restaura 45 de vida a un aliado cercano",
         "Exclusivo da Fase 9 | Reduz 25% do dano recebido por aliados próximos": "Exclusivo de la Fase 9 | Reduce un 25% el daño recibido por aliados cercanos",
         "Exclusivo da Fase 9 | Rebobina o caminho e recupera vida duas vezes": "Exclusivo de la Fase 9 | Rebobina el camino y recupera vida dos veces",
-        "Exclusivo da Fase 10 | Muito rápido": "Exclusivo de la Fase 10 | Muy rápido",
-        "Exclusiva da Fase 10 | Acelera 55% depois de alcançar 50% da vida": "Exclusiva de la Fase 10 | Acelera un 55% después de alcanzar el 50% de vida",
-        "Exclusivo da Fase 10 | Reduz 25% do dano recebido": "Exclusivo de la Fase 10 | Reduce un 25% el daño recibido",
-        "Exclusivo da Fase 10 | Paralisa até 3 torres com 70% e 35% de vida": "Exclusivo de la Fase 10 | Paraliza hasta 3 torres con 70% y 35% de vida",
+        "Fases 10 e 15 | Muito rápido": "Fases 10 y 15 | Muy rápido",
+        "Fases 10 e 15 | Acelera 55% depois de alcançar 50% da vida": "Fases 10 y 15 | Acelera un 55% después de alcanzar el 50% de vida",
+        "Fases 10 e 15 | Reduz 25% do dano recebido": "Fases 10 y 15 | Reduce un 25% el daño recibido",
+        "Fases 10 e 15 | Paralisa até 3 torres com 70% e 35% de vida": "Fases 10 y 15 | Paraliza hasta 3 torres con 70% y 35% de vida",
         "Exclusivo da Fase 11 | Resistente e capaz de usar Fendas Temporais": "Exclusivo de la Fase 11 | Resistente y capaz de usar Grietas Temporales",
         "Exclusivo da Fase 11 | Retorna uma vez com metade da vida": "Exclusivo de la Fase 11 | Regresa una vez con la mitad de la vida",
         "Exclusiva da Fase 11 | Reduz 30% do dano perto das fendas": "Exclusiva de la Fase 11 | Reduce un 30% el daño cerca de las grietas",
@@ -2592,7 +3019,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Visual original": "Aspecto original",
         "Aparência padrão disponível para todos.": "El aspecto predeterminado disponible para todos.",
         "Disponível desde o início.": "Disponible desde el inicio.",
-        "Obtida em missão semanal.": "Obtenida en una misión semanal.",
+        "Obtida em missão permanente.": "Obtenida en una misión permanente.",
         "Obtida no Pacote Apoiador.": "Incluida en el Paquete de Apoyo.",
         "Equipada": "Equipada",
         " | Loja: {custo} fragmentos": " | Tienda: {custo} fragmentos",
@@ -3132,7 +3559,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Sombra Congelada": "Sombra Congelada",
         "Curador do Vazio": "Curador del Vacío",
         "Exclusivo da Fase 14 | Muito rápido e parcialmente apagado": "Exclusivo de la Fase 14 | Muy rápido y parcialmente borrado",
-        "Exclusivo da Fase 14 | Somente a Torre de Varredura consegue detectá-lo": "Exclusivo de la Fase 14 | Solo la Torre de Barrido puede detectarlo",
+        "Fase 14 | Somente a Torre de Varredura consegue detectá-lo": "Fase 14 | Solo la Torre de Barrido puede detectarlo",
         "Exclusiva da Fase 14 | Blindada; recebe 18% menos dano": "Exclusiva de la Fase 14 | Blindada; recibe un 18% menos de daño",
         "Exclusiva da Fase 14 | Uma pessoa preservada como sombra temporal": "Exclusiva de la Fase 14 | Una persona preservada como sombra temporal",
         "Exclusivo da Fase 14 | Aos 50% de vida, restaura até 2 inimigos derrotados nos últimos 5 segundos": "Exclusivo de la Fase 14 | Al 50% de vida, restaura hasta 2 enemigos derrotados en los últimos 5 segundos",
@@ -3181,6 +3608,7 @@ let musicaDoDesertoTocando = false;
 let trilhaDoArticoAtiva = false;
 let musicaDoArticoTocando = false;
 let trilhaDaSelvaAtiva = false;
+let temaMusicalAlternativo = null;
 let musicaDaSelvaTocando = false;
 let trilhaDoBosqueAtiva = false;
 let musicaDoBosqueTocando = false;
@@ -3346,6 +3774,9 @@ function preencherVariaveisDoTexto(texto, variaveis = {}) {
 }
 
 function localizar(textoEmPortugues, variaveis = {}) {
+    if (TRADUCOES_FASE18[idiomaAtual]?.[textoEmPortugues]) return preencherVariaveisDoTexto(TRADUCOES_FASE18[idiomaAtual][textoEmPortugues], variaveis);
+    const traducaoDaNovaConquista = TRADUCOES_NOVAS_CONQUISTAS[idiomaAtual]?.[textoEmPortugues];
+    if (traducaoDaNovaConquista) return traducaoDaNovaConquista;
     const chaveDaTraducaoPrincipal = CHAVES_PRINCIPAIS_POR_TEXTO[textoEmPortugues];
     const textoLocalizado = idiomaAtual === "pt-BR"
         ? textoEmPortugues
@@ -3435,13 +3866,11 @@ function selecionarIdioma(novoIdioma) {
     idiomaAtual = novoIdioma;
     salvarIdioma();
     aplicarIdiomaNaInterface();
+    if (typeof atualizarBotaoDaFloresta === 'function') { atualizarBotaoDaFloresta(); if (florestaAtiva) atualizarInterfaceFloresta(); }
 }
 
 function atualizarVolumeEfetivoDaMusica() {
-    const volumeRelativoDaMusicaOriginal = trilhaPixeladaDaFase1Ativa
-        ? CONFIG.audio.musicaPixeladaDaFase1.volumeRelativoDaMusicaOriginal
-        : 1;
-    musica.volume = volumeDaMusica * volumeRelativoDaMusicaOriginal;
+    musica.volume = volumeDaMusica;
 }
 
 function atualizarBotoesDaMusica() {
@@ -3463,7 +3892,7 @@ function atualizarBotoesDaMusica() {
                                 ? musicaDoPantanoTocando && volumeDaMusica > 0
                                 : trilhaDaDimensaoGlitchAtiva
                                     ? musicaDaDimensaoGlitchTocando && volumeDaMusica > 0
-                                    : !musica.paused && volumeDaMusica > 0;
+                                    : (trilhaPixeladaDaFase1Ativa ? musicaPixeladaDaFase1Tocando : !musica.paused) && volumeDaMusica > 0;
     botaoMusica.textContent = musicaTocando
         ? `🔇 ${traduzir("configuracoes.silenciarMusica")}`
         : `♪ ${traduzir("configuracoes.ativarMusica")}`;
@@ -3471,6 +3900,10 @@ function atualizarBotoesDaMusica() {
 }
 
 function reproduzirMusica() {
+    if (trilhaPixeladaDaFase1Ativa) {
+        musica.pause();
+        return;
+    }
     const tentativa = musica.play();
 
     if (tentativa) {
@@ -3527,7 +3960,7 @@ function alternarMusica() {
                                 ? musicaDoPantanoTocando && volumeDaMusica > 0
                                 : trilhaDaDimensaoGlitchAtiva
                                     ? musicaDaDimensaoGlitchTocando && volumeDaMusica > 0
-                                    : !musica.paused && volumeDaMusica > 0;
+                                    : (trilhaPixeladaDaFase1Ativa ? musicaPixeladaDaFase1Tocando : !musica.paused) && volumeDaMusica > 0;
 
     if (!musicaTocando) {
         if (volumeDaMusica === 0) {
@@ -3824,7 +4257,12 @@ function atualizarGanhoDaMusicaDaSelva() {
 }
 
 function obterConfiguracaoDaMusicaDaSelva() {
-    const tema = obterFaseAtual().tema;
+    const tema = temaMusicalAlternativo || obterFaseAtual().tema;
+
+    const partitura = obterPartituraOriginalDaFase();
+    if (partitura && faseSelecionada !== 7) return partitura;
+
+    if (tema === "casteloDoLimbo") return CONFIG.audio.musicaDoCasteloDoLimbo;
 
     if (tema === "eraApagada") {
         return CONFIG.audio.musicaDaEraApagada;
@@ -3877,12 +4315,21 @@ function atualizarGanhoDaMusicaDaForja() {
     ganhoDaMusicaDaForja.gain.setTargetAtTime(volume, contextoAudio.currentTime, 0.02);
 }
 
+function obterPartituraOriginalDaFase() {
+    if (temaMusicalAlternativo || mapaPersonalizadoAtivo) return null;
+    return CONFIG.audio.partiturasPorFase[faseSelecionada] || null;
+}
+
+function obterConfiguracaoDaMusicaDoPantano() {
+    return obterPartituraOriginalDaFase() || CONFIG.audio.musicaDoPantano;
+}
+
 function atualizarGanhoDaMusicaDoPantano() {
     if (!ganhoDaMusicaDoPantano || !contextoAudio) {
         return;
     }
 
-    const volume = volumeDaMusica * CONFIG.audio.musicaDoPantano.volumeRelativo;
+    const volume = volumeDaMusica * obterConfiguracaoDaMusicaDoPantano().volumeRelativo;
     ganhoDaMusicaDoPantano.gain.setTargetAtTime(volume, contextoAudio.currentTime, 0.02);
 }
 
@@ -3917,7 +4364,7 @@ function atualizarGanhoDaMusicaDoLobby() {
         return;
     }
 
-    const volume = volumeDaMusica * CONFIG.audio.musicaDoLobby.volumeRelativo;
+    const volume = volumeDaMusica * obterConfiguracaoDaMusicaDoLobby().volumeRelativo;
     ganhoDaMusicaDoLobby.gain.setTargetAtTime(volume, contextoAudio.currentTime, 0.02);
 }
 
@@ -4121,6 +4568,12 @@ function pararSequenciaMusical(intervalo) {
     return null;
 }
 
+function obterConfiguracaoDaMusicaDoLobby() {
+    return CONFIG.audio.usarMusicaAnteriorDoLobby
+        ? CONFIG.audio.musicaAnteriorDoLobby
+        : CONFIG.audio.musicaDoLobby;
+}
+
 function tocarPassoDaMusicaDoLobby() {
     const audio = obterContextoAudio();
 
@@ -4128,7 +4581,11 @@ function tocarPassoDaMusicaDoLobby() {
         return;
     }
 
-    const configuracao = CONFIG.audio.musicaDoLobby;
+    const configuracao = obterConfiguracaoDaMusicaDoLobby();
+    if (configuracao.frases) {
+        passoDaMusicaDoLobby = tocarPassoDaPartituraPixelada(audio, configuracao, passoDaMusicaDoLobby, ganhoDaMusicaDoLobby);
+        return;
+    }
     const nota = configuracao.melodia[passoDaMusicaDoLobby % configuracao.melodia.length];
     const agora = audio.currentTime;
     const duracaoDoPasso = configuracao.intervaloDoPasso / 1000;
@@ -4180,7 +4637,7 @@ function iniciarMusicaDoLobby() {
     atualizarGanhoDaMusicaDoLobby();
     intervaloDaMusicaDoLobby = iniciarSequenciaMusical(
         tocarPassoDaMusicaDoLobby,
-        CONFIG.audio.musicaDoLobby.intervaloDoPasso
+        obterConfiguracaoDaMusicaDoLobby().intervaloDoPasso
     );
     atualizarBotoesDaMusica();
 }
@@ -4330,6 +4787,16 @@ function tocarPassoDaMusicaDaSelva() {
 
     const configuracao = obterConfiguracaoDaMusicaDaSelva();
 
+    if (configuracao.frases) {
+        passoDaMusicaDaSelva = tocarPassoDaPartituraPixelada(audio, configuracao, passoDaMusicaDaSelva, ganhoDaMusicaDaSelva);
+        return;
+    }
+
+    if (configuracao === CONFIG.audio.musicaDoCasteloDoLimbo) {
+        tocarPassoDaMusicaDoCasteloDoLimbo(audio, configuracao);
+        return;
+    }
+
     if (configuracao === CONFIG.audio.musicaDaEraApagada) {
         tocarPassoDaMusicaDaEraApagada(audio, configuracao);
         return;
@@ -4431,6 +4898,30 @@ function tocarPassoDaMusicaDaSelva() {
         % configuracao.melodia.length;
 }
 
+function tocarPassoDaMusicaDoCasteloDoLimbo(audio, configuracao) {
+    const indice = passoDaMusicaDaSelva;
+    const agora = audio.currentTime;
+    const passo = configuracao.intervaloDoPasso / 1000;
+    const destino = ganhoDaMusicaDaSelva;
+    const acorde = configuracao.acordes[Math.floor(indice / 6) % configuracao.acordes.length];
+    const corda = acorde[indice % 3];
+    tocarNotaSintetizada(corda, agora, passo * 1.7, "triangle", configuracao.volumeAlaude, destino);
+    const nota = configuracao.melodia[indice % configuracao.melodia.length];
+    if (nota) tocarNotaSintetizada(nota, agora + 0.025, passo * 2.4, "sine", configuracao.volumeFlauta, destino);
+
+    // Os ecos da trilha do Limbo respondem lentamente, atrás dos instrumentos.
+    const vazio = CONFIG.audio.musicaDoIntervaloPerdido;
+    if (indice % 2 === 0) {
+        const eco = vazio.melodia[Math.floor(indice / 2) % vazio.melodia.length];
+        if (eco) tocarNotaSintetizada(eco / 2, agora, passo * 5, "sine", configuracao.volumeDoVazio, destino, eco / 2 * 0.997);
+    }
+    if (indice % 6 === 0) {
+        tocarNotaSintetizada(acorde[0] / 2, agora, passo * 7, "sine", configuracao.volumeDoVazio, destino);
+        tocarNotaSintetizada(acorde[0] * 2, agora + passo, passo * 6, "sine", configuracao.volumeDoVazio * 0.45, destino, acorde[0] * 1.995);
+    }
+    passoDaMusicaDaSelva = (indice + 1) % 96;
+}
+
 function tocarPassoDaMusicaDoIntervaloPerdido(audio, configuracao) {
     const indice = passoDaMusicaDaSelva % configuracao.melodia.length;
     const nota = configuracao.melodia[indice];
@@ -4473,7 +4964,7 @@ function tocarPassoDaMusicaDoIntervaloPerdido(audio, configuracao) {
     }
 
     if (indice % 4 === 3) {
-        const badalada = configuracao.badaladas[Math.floor(indice / 4)];
+        const badalada = configuracao.badaladas[Math.floor(indice / 4) % configuracao.badaladas.length];
         tocarNotaSintetizada(
             badalada,
             agora + duracaoDoPasso * 0.56,
@@ -4922,6 +5413,45 @@ function pararMusicaDaForja() {
     atualizarBotoesDaMusica();
 }
 
+// Cada partitura possui frases, silêncios, baixo, contracanto e bateria próprios.
+// Notas são MIDI; zero é silêncio e [nota, duração em passos] sustenta a nota.
+function tocarPassoDaPartituraPixelada(audio, c, passoAtual, destino) {
+    const tamanho = c.frases[0].length;
+    const secao = Math.floor(passoAtual / tamanho) % c.ordem.length;
+    const indice = passoAtual % tamanho;
+    const frase = c.ordem[secao];
+    const inicio = audio.currentTime;
+    const duracao = c.intervaloDoPasso / 1000;
+    const tocar = (evento, tipo, volume, comprimento = 0.8, atraso = 0) => {
+        if (!evento) return;
+        const nota = Array.isArray(evento) ? evento[0] : evento;
+        const sustento = Array.isArray(evento) ? evento[1] : comprimento;
+        const frequencia = 440 * 2 ** ((nota - 69) / 12);
+        tocarNotaSintetizada(frequencia, inicio + atraso * duracao, sustento * duracao, tipo, volume, destino);
+    };
+    tocar(c.frases[frase][indice], c.instrumento, c.volumeMelodia);
+    tocar(c.contracanto[indice % c.contracanto.length], c.instrumentoSecundario, c.volumeContracanto);
+    const baixo = c.baixos[frase];
+    tocar(baixo[indice % baixo.length], "triangle", c.volumeBaixo, 1.7);
+    if (indice === 0 && c.acordes[frase]) {
+        for (const nota of c.acordes[frase]) tocar([nota, c.sustentoHarmonia], "sine", c.volumeHarmonia);
+    }
+    if (c.ritmoDosAcordes?.[indice % c.ritmoDosAcordes.length]) {
+        for (const nota of c.acordes[frase] || []) {
+            tocar(nota, "triangle", c.volumeAcordesRitmados, 0.45);
+        }
+    }
+    const eventoDaBateria = c.bateria[indice % c.bateria.length];
+    const batidas = Array.isArray(eventoDaBateria) ? eventoDaBateria : [eventoDaBateria];
+    for (const batida of batidas) {
+        if (batida === 1) tocarNotaSintetizada(110, inicio, 0.13, "sine", c.volumeBateria, destino, 38);
+        if (batida === 2) tocarRuidoSintetizado(inicio, 0.09, c.volumeBateria * 0.55, 1300, destino);
+        if (batida === 3) tocarRuidoSintetizado(inicio, 0.025, c.volumeBateria * 0.25, 4300, destino);
+        if (batida === 4) tocarNotaSintetizada(420, inicio, 0.045, "triangle", c.volumeBateria * 0.6, destino, 180);
+    }
+    return (passoAtual + 1) % (tamanho * c.ordem.length);
+}
+
 function tocarPassoDaMusicaDoPantano() {
     const audio = obterContextoAudio();
 
@@ -4929,7 +5459,11 @@ function tocarPassoDaMusicaDoPantano() {
         return;
     }
 
-    const configuracao = CONFIG.audio.musicaDoPantano;
+    const configuracao = obterConfiguracaoDaMusicaDoPantano();
+    if (configuracao.frases) {
+        passoDaMusicaDoPantano = tocarPassoDaPartituraPixelada(audio, configuracao, passoDaMusicaDoPantano, ganhoDaMusicaDoPantano);
+        return;
+    }
     const indice = passoDaMusicaDoPantano % configuracao.melodia.length;
     const nota = configuracao.melodia[indice];
     const agora = audio.currentTime;
@@ -4996,7 +5530,7 @@ function iniciarMusicaDoPantano() {
     atualizarGanhoDaMusicaDoPantano();
     intervaloDaMusicaDoPantano = iniciarSequenciaMusical(
         tocarPassoDaMusicaDoPantano,
-        CONFIG.audio.musicaDoPantano.intervaloDoPasso
+        obterConfiguracaoDaMusicaDoPantano().intervaloDoPasso
     );
     atualizarBotoesDaMusica();
 }
@@ -5263,6 +5797,7 @@ function tocarPassoDaMusicaPixeladaDaFase1() {
 }
 
 function iniciarMusicaPixeladaDaFase1() {
+    if (trilhaPixeladaDaFase1Ativa) musica.pause();
     if (
         !trilhaPixeladaDaFase1Ativa
         || musicaPausadaPeloJogador
@@ -5283,6 +5818,7 @@ function iniciarMusicaPixeladaDaFase1() {
         tocarPassoDaMusicaPixeladaDaFase1,
         CONFIG.audio.musicaPixeladaDaFase1.intervaloDoPasso
     );
+    atualizarBotoesDaMusica();
 }
 
 function pararMusicaPixeladaDaFase1() {
@@ -5290,8 +5826,13 @@ function pararMusicaPixeladaDaFase1() {
     musicaPixeladaDaFase1Tocando = false;
 }
 
-function selecionarTrilhaDaPartida() {
-    const faseAtual = obterFaseAtual();
+function selecionarTrilhaDaPartida(temaAlternativo = null) {
+    // Trocas entre fases que compartilham o sequenciador também trocam o andamento.
+    pararMusicaDaSelva();
+    pararMusicaDoPantano();
+    if (temaMusicalAlternativo !== temaAlternativo) pararMusicaDaSelva();
+    temaMusicalAlternativo = temaAlternativo;
+    const faseAtual = temaAlternativo ? { tema: temaAlternativo } : obterFaseAtual();
     trilhaDoLobbyAtiva = false;
     trilhaDaConversaDoPortalAtiva = false;
     trilhaDoDesertoAtiva = faseAtual.tema === "deserto";
@@ -5305,6 +5846,7 @@ function selecionarTrilhaDaPartida() {
         "pontoZero",
         "linhaTemporal",
         "intervaloPerdido",
+        "casteloDoLimbo",
         "eraApagada"
     ].includes(faseAtual.tema);
     trilhaDoBosqueAtiva = faseAtual.tema === "temperada";
@@ -5510,6 +6052,7 @@ function selecionarTrilhaDaConversaDoPortal() {
 }
 
 function selecionarTrilhaDoLobby() {
+    temaMusicalAlternativo = null;
     trilhaDoLobbyAtiva = true;
     trilhaDaConversaDoPortalAtiva = false;
     trilhaDoDesertoAtiva = false;
@@ -6245,7 +6788,68 @@ atualizarControleDeVolume();
 atualizarBotoesDaMusica();
 
 // Configurações do jogo: altere valores aqui, sem espalhá-los pelo código.
+function ampliarComposicaoExistente(configuracao, novasFrases, campo = "melodia") {
+    const original = configuracao[campo];
+    const converter = frase => frase.map(nota => nota === 0 ? 0 : 440 * 2 ** ((nota - 69) / 12));
+    const [resposta, conclusao] = novasFrases.map(converter);
+    const ampliada = { ...configuracao };
+    // Abertura original, resposta nova, retorno ao tema e conclusão nova.
+    for (const [chave, valor] of Object.entries(configuracao)) {
+        if (Array.isArray(valor) && valor.length === original.length) {
+            ampliada[chave] = Object.freeze([...valor, ...valor, ...valor, ...valor]);
+        }
+    }
+    ampliada[campo] = Object.freeze([...original, ...resposta, ...original, ...conclusao]);
+    if (campo === "pulsoDoPresente") {
+        const passado = frase => frase.map((nota, i) => i % 2 ? 0 : nota / 2);
+        const futuro = frase => frase.map((nota, i) => i % 3 === 0 ? 0 : nota * 2);
+        ampliada.notasDoPassado = Object.freeze([...configuracao.notasDoPassado, ...passado(resposta), ...configuracao.notasDoPassado, ...passado(conclusao)]);
+        ampliada.arpejoDoFuturo = Object.freeze([...configuracao.arpejoDoFuturo, ...futuro(resposta), ...configuracao.arpejoDoFuturo, ...futuro(conclusao)]);
+    }
+    return Object.freeze(ampliada);
+}
+
 const CONFIG = Object.freeze({
+    introducaoFase1: [
+        "Como eu vim parar aqui? Não consigo lembrar…",
+        "Essas criaturas… Por que elas querem me atacar?",
+        "Preciso defender este lugar… Depois tento entender."
+    ],
+    casteloDoLimbo: Object.freeze({
+        velocidadeDoJogador: 150,
+        raioDoJogador: 9,
+        alcanceDeInteracao: 60,
+        arena: Object.freeze({
+            totalDeWaves: 5, vidaDaBase: 12, creditosIniciais: 300,
+            limiteDeTorres: 6, distanciaDoCaminho: 30, distanciaEntreTorres: 38,
+            recompensaPorInimigo: 12, recompensaPorWave: 70,
+            intervaloDeCriacao: 1.1, quantidadeBase: 5, quantidadePorWave: 2,
+            vidaBase: 40, vidaPorWave: 14, velocidade: 40,
+            vidaDaEntidade: 1400, velocidadeDaEntidade: 14,
+            intervaloDaHabilidade: 9, duracaoDoBloqueio: 2.5,
+            custoDeMelhoria: 60, multiplicadorDaMelhoria: 1.55,
+            danoNaBase: 1, danoDaEntidadeNaBase: 12,
+            defesas: Object.freeze({
+                flecha: Object.freeze({ nome: "Torre de flechas", custo: 60, dano: 16, alcance: 135, intervalo: .7, cor: "#c1aa68" }),
+                canhao: Object.freeze({ nome: "Canhão da arena", custo: 100, dano: 40, alcance: 125, intervalo: 1.5, explosao: 42, cor: "#8d919d" }),
+                gelo: Object.freeze({ nome: "Torre glacial", custo: 80, dano: 8, alcance: 125, intervalo: .8, lentidao: .55, duracaoDaLentidao: 1.8, cor: "#82d4e1" })
+            }),
+            caminho: Object.freeze([{ x: 0, y: 100 }, { x: 500, y: 100 }, { x: 500, y: 280 }, { x: 130, y: 280 }, { x: 130, y: 370 }, { x: 640, y: 370 }])
+        }),
+        desafio: Object.freeze([
+            ["???", "Aqui no Limbo, ninguém entra sem minha permissão."],
+            ["???", "Eu enviaria qualquer outro intruso à arena, para enfrentar meus gladiadores. Mas há algo diferente em você…"],
+            ["???", "Descanse. Amanhã, eu mesmo o enfrentarei."],
+            ["???", "Faz muitos anos que não entro naquela arena. Não confunda minha ausência com fraqueza. Ainda tenho muitos poderes e habilidades. Você não vencerá facilmente."]
+        ]),
+        vitoria: Object.freeze([
+            ["???", "Então… você venceu. Conquistou meu respeito. Diga: o que deseja?"],
+            ["VOCÊ", "O Senhor do Tempo quer me eliminar… Me ajude. Ele é muito mais poderoso do que eu. É praticamente um semideus."],
+            ["???", "…Ele está tentando fazer isso?"],
+            ["VOCÊ", "Sim. Ele já acabou com a vida de várias pessoas. Agora que descobri tudo, quer fazer o mesmo comigo."],
+            ["???", "Espere aqui. Vou devolvê-lo à sua dimensão. Mas você não enfrentará isso sozinho: eu prometo ajudá-lo."]
+        ])
+    }),
     simulacao: Object.freeze({
         quadrosPorSegundoDeReferencia: 60,
         deltaMaximoMs: 50
@@ -6394,7 +6998,8 @@ const CONFIG = Object.freeze({
                 descricao: "Libera permanentemente a melhoria Mira Calibrada sem custo de Fragmentos.",
                 icone: "+5%",
                 fragmentosAlternativos: 10
-            })
+            }),
+            Object.freeze({ id: "longoAlcancePorNivel", nivel: 12, tipo: "torre", idDoItem: "torreLongoAlcance", nome: "Torre de Longo Alcance", descricao: "Pouco dano, mas alcance de quase todo o mapa. Recompensa exclusiva do nível 12.", icone: "◎", fragmentosAlternativos: 0 })
         ]),
         skins: Object.freeze({
             vanguardaEsmeralda: Object.freeze({
@@ -6411,54 +7016,15 @@ const CONFIG = Object.freeze({
         })
     }),
     missoes: Object.freeze({
-        semanais: Object.freeze([
-            Object.freeze({
-                id: "cacadorDePixels",
-                nome: "Caçador de Pixels",
-                descricao: "Elimine inimigos em qualquer modo de jogo.",
-                propriedadeDoProgresso: "inimigosEliminados",
-                objetivo: 50,
-                icone: "☠",
-                recompensa: Object.freeze({
-                    tipo: "fragmentos",
-                    quantidade: 10,
-                    rotulo: "10 Fragmentos de Pixel"
-                })
-            }),
-            Object.freeze({
-                id: "guardiaoDaCampanha",
-                nome: "Guardião da Campanha",
-                descricao: "Conclua partidas da campanha normal.",
-                propriedadeDoProgresso: "fasesConcluidas",
-                objetivo: 3,
-                icone: "★",
-                recompensa: Object.freeze({
-                    tipo: "skin",
-                    id: "sentinelaDourada",
-                    rotulo: "Skin Sentinela Dourada",
-                    fragmentosAlternativos: 15
-                })
-            }),
-            Object.freeze({
-                id: "alemDoLimite",
-                nome: "Além do Limite",
-                descricao: "Alcance a wave 40 em uma partida de Waves infinitas.",
-                propriedadeDoProgresso: "maiorWaveInfinita",
-                objetivo: 40,
-                icone: "∞",
-                recompensa: Object.freeze({
-                    tipo: "conquista",
-                    id: "alemDoLimite",
-                    rotulo: "Conquista Além do Limite",
-                    fragmentosAlternativos: 25
-                })
-            })
-        ]),
+        permanentes: criarCatalogoDeMissoesPermanentes(),
+        premioFinal: Object.freeze({ experiencia: 1250, skins: Object.freeze(['guardiaoSolar', 'sentinelaCosmica']), conquista: 'lendaDasCemMissoes' }),
         skins: Object.freeze({
+            guardiaoSolar: criarSkinFinalDeMissoes('Guardião Solar', ['#bf4e21','#e77126','#ff953c','#ffbe64'], ['#4ed4f0','#72e4fa','#a5f1ff','#e1fbff']),
+            sentinelaCosmica: criarSkinFinalDeMissoes('Sentinela Cósmica', ['#493486','#6545a8','#865bca','#b581ed'], ['#a5b8d4','#c1d3e9','#e0ebf7','#ffffff']),
             sentinelaDourada: Object.freeze({
                 nome: "Sentinela Dourada",
                 tipoDeTorre: "padrao",
-                descricao: "Uma pintura dourada exclusiva das missões semanais.",
+                descricao: "Uma pintura dourada exclusiva das missões permanentes.",
                 coresPorNivel: Object.freeze([
                     Object.freeze({ corBase: "#c89528", corCanhao: "#5a431e" }),
                     Object.freeze({ corBase: "#dda931", corCanhao: "#6d5124" }),
@@ -6542,7 +7108,11 @@ const CONFIG = Object.freeze({
             })
         ])
     }),
+    desafiosDeConquistas: Object.freeze({ limiteFinal:0.9, metadeDoCaminho:0.5, efeitosSimultaneos:3, partidasNaSessao:3,
+        salasDoCastelo:Object.freeze(['salao','andar','varanda','real','hospedes','estar','biblioteca','galeria']) }),
     conquistas: Object.freeze({
+        ...criarConquistasExtras(),
+        lendaDasCemMissoes: Object.freeze({ nome: 'Lenda das 100 Missões', descricao: 'Conclua as 100 missões permanentes e resgate o prêmio final.', icone: '★', tipoDeCriterio: 'especial', objetivo: 1 }),
         primeiraVigilia: Object.freeze({
             nome: "Primeira Vigília",
             descricao: "Conclua sua primeira partida da campanha.",
@@ -6589,12 +7159,13 @@ const CONFIG = Object.freeze({
         }),
         alemDoLimite: Object.freeze({
             nome: "Além do Limite",
-            descricao: "Resgate a missão semanal da wave 40 infinita.",
+            descricao: "Resgate a missão permanente da wave 40 infinita.",
             icone: "✦",
             tipoDeCriterio: "especial",
             objetivo: 1
         }),
         aindaEstaEsperando: Object.freeze({
+            secreta: true,
             nome: "???",
             descricao: "Ainda está te esperando, sempre vai estar.",
             icone: "?",
@@ -7067,35 +7638,24 @@ const CONFIG = Object.freeze({
         }),
         cenaFinal: Object.freeze({
             etapas: Object.freeze([
-                Object.freeze({
-                    id: "registro",
-                    titulo: "REGISTRO FORA DO TEMPO",
-                    texto: "O Senhor do Tempo não criou este lugar. Ele estava tentando mantê-lo fechado.",
-                    assinatura: "ARQUIVO SEM DATA",
-                    textoDoBotao: "Continuar"
-                }),
-                Object.freeze({
-                    id: "alerta",
-                    titulo: "SINAL DESCONHECIDO",
-                    texto: "Existe alguma coisa vivendo fora da linha temporal.",
-                    assinatura: "ORIGEM: ALÉM DO INTERVALO",
-                    textoDoBotao: "Ouvir sinal"
-                }),
-                Object.freeze({
-                    id: "voz",
-                    titulo: "???",
-                    texto: "Finalmente alguém abriu o intervalo.",
-                    assinatura: "IDENTIDADE NÃO RECONHECIDA",
-                    textoDoBotao: "Continuar"
-                }),
-                Object.freeze({
-                    id: "senhorDoTempo",
-                    titulo: "SENHOR DO TEMPO",
-                    texto: "Você atravessou o único lugar que eu não conseguia observar. Agora nós dois temos um problema.",
-                    assinatura: "CANAL TEMPORAL RESTAURADO",
-                    textoDoBotao: "Revelar Capítulo 3"
-                })
-            ])
+                Object.freeze({"id":"aproximacao","titulo":"LIMBO","texto":"Uma figura coroada surge ao longe. Seu manto roxo atravessa a névoa, até que ela para diante de você.","assinatura":"???","textoDoBotao":"Observar"}),
+                Object.freeze({"id":"pergunta","titulo":"???","texto":"Por que está aqui? É impossível chegar a este lugar sozinho. Quem o trouxe?","assinatura":"???","textoDoBotao":"Continuar"})
+            ]),
+            verdade: Object.freeze([
+                Object.freeze({"id":"resposta","titulo":"VOCÊ","texto":"Foi o Senhor do Tempo.","assinatura":"VOCÊ","textoDoBotao":"Continuar"}),
+                Object.freeze({"id":"desobediencia","titulo":"???","texto":"Então ele voltou a me desobedecer… Você não foi o primeiro. Eu o avisei de que haveria consequências.","assinatura":"???","textoDoBotao":"Continuar"}),
+                Object.freeze({"id":"consequencias","titulo":"VOCÊ","texto":"Que consequências?","assinatura":"VOCÊ","textoDoBotao":"Continuar"}),
+                Object.freeze({"id":"poderes","titulo":"???","texto":"Ele já foi muito mais poderoso. Ainda assim, nunca esteve acima de mim. Fui eu quem retirou os poderes que ele jamais recuperará.","assinatura":"???","textoDoBotao":"Continuar"}),
+                Object.freeze({"id":"autoridade","titulo":"???","texto":"Nenhuma entidade da sua dimensão tem autoridade aqui.","assinatura":"???","textoDoBotao":"Continuar"}),
+                Object.freeze({"id":"barreira","titulo":"???","texto":"Ele alcança este lugar distorcendo o tempo. Preparei uma barreira para fechar essa passagem. Hoje, ela será selada.","assinatura":"???","textoDoBotao":"Observar a barreira"}),
+                Object.freeze({"id":"selado","titulo":"LIMBO","texto":"Um escudo atravessa a névoa. As fendas temporais se fecham: o Senhor do Tempo não poderá usar o tempo para entrar novamente.","assinatura":"???","textoDoBotao":"Continuar"}),
+                Object.freeze({"id":"retorno","titulo":"???","texto":"Venha. Vou devolvê-lo à sua dimensão.","assinatura":"???","textoDoBotao":"Voltar à minha dimensão"})
+            ]),
+            silencio: Object.freeze([
+                Object.freeze({"id":"silencio","titulo":"VOCÊ","texto":"Você permanece calado.","assinatura":"VOCÊ","textoDoBotao":"Continuar"}),
+                Object.freeze({"id":"permissao","titulo":"???","texto":"Enfim… Ninguém entra sem minha permissão. E ninguém sai sem que eu permita. Siga-me.","assinatura":"???","textoDoBotao":"Seguir a entidade"}),
+                Object.freeze({"id":"castelo","titulo":"CASTELO DO LIMBO","texto":"Você acompanha a entidade através da névoa. Diante de um castelo, os portões começam a se abrir. O que existe lá dentro ainda é desconhecido.","assinatura":"???","textoDoBotao":"Entrar no castelo"})
+            ]),
         })
     }),
     linhaDeFrenteTemporal: Object.freeze({
@@ -7295,6 +7855,113 @@ const CONFIG = Object.freeze({
             ])
         })
     }),
+    arquivoProibido: Object.freeze({
+        boss: "bibliotecarioMudo",
+        elenco: Object.freeze([{"tipo":"rasurador","base":3,"porWave":1},{"tipo":"censorVelado","primeiraWave":2,"wavesPorUnidade":4},{"tipo":"sentinelaDeIndice","primeiraWave":5,"wavesPorUnidade":4}]),
+        numeroDaFase: 15,
+        primeiraWaveCamuflado: 2,
+        wavesPorNovoCamuflado: 4,
+        introducao: Object.freeze([
+            Object.freeze({ titulo: "ARQUIVO PROIBIDO", texto: "Seguindo a gravação da era apagada, você encontra um arquivo antigo. Entre as páginas, um nome conhecido: Dra. Lina Varela.", assinatura: "REGISTRO DE PESQUISA · DRA. LINA VARELA", textoDoBotao: "Ler registro" }),
+            Object.freeze({ titulo: "REGISTRO RECUPERADO", texto: "Os inimigos camuflados já existiam antes. Alguém está apagando os registros.", assinatura: "DRA. LINA VARELA · TRECHO PRESERVADO", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "PENSAMENTO DO DEFENSOR", texto: "Mas ele disse que os criou... Preciso proteger este arquivo. A torre de varredura vai ser necessária de novo.", assinatura: "SISTEMAS DE DEFESA DO ARQUIVO ATIVADOS", textoDoBotao: "Defender o arquivo" })
+        ]),
+        final: Object.freeze([
+            Object.freeze({ titulo: "ARQUIVO PRESERVADO", texto: "Você guarda uma cópia do registro de Lina Varela. Ainda não sabe quem está apagando a história, mas agora tem uma pista.", assinatura: "CÓPIA RECUPERADA", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "SENHOR DO TEMPO", texto: "Você veio defender sua torre. Não investigar o passado.", assinatura: "TRANSMISSÃO INTERCEPTADA", textoDoBotao: "Ver resultado" })
+        ])
+    }),
+    camaraDasMemorias: Object.freeze({
+        boss: "devoradorDeMemorias",
+        elenco: Object.freeze([{"tipo":"fragmentoMnesico","base":3,"porWave":1},{"tipo":"lembrancaBlindada","primeiraWave":3,"wavesPorUnidade":4},{"tipo":"ecoDaMemoria","primeiraWave":5,"wavesPorUnidade":5}]),
+        numeroDaFase: 16,
+        introducao: Object.freeze([
+            Object.freeze({ titulo: "CÂMARA DAS MEMÓRIAS", texto: "A cópia do arquivo revela uma passagem oculta. Além dela, lembranças flutuam entre relógios quebrados. Uma gravação de Lina Varela começa a tocar.", assinatura: "ARQUIVO DE MEMÓRIAS", textoDoBotao: "Ouvir gravação" }),
+            Object.freeze({ titulo: "DRA. LINA VARELA", texto: "Se você encontrou este lugar, não confie nos registros oficiais. Ele só preserva a versão em que parece inocente.", assinatura: "GRAVAÇÃO PRESERVADA", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "PENSAMENTO DO DEFENSOR", texto: "Estas pessoas também eram chamadas de defensores... Os inimigos estão vindo apagar as memórias. Preciso proteger o núcleo até recuperar a gravação.", assinatura: "DEFENDA O NÚCLEO DAS MEMÓRIAS", textoDoBotao: "Proteger as memórias" })
+        ]),
+        final: Object.freeze([
+            Object.freeze({ titulo: "MEMÓRIA RECUPERADA", texto: "Com o núcleo a salvo, você recupera uma gravação incompleta. A voz pertence a alguém que enfrentou o Senhor do Tempo antes de você.", assinatura: "REGISTRO DE UM ANTIGO DEFENSOR", textoDoBotao: "Ouvir gravação" }),
+            Object.freeze({ titulo: "ANTIGO DEFENSOR", texto: "Ele prometeu que eu voltaria para casa se vencesse. Mas agora…", assinatura: "GRAVAÇÃO INTERROMPIDA", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "SENHOR DO TEMPO", texto: "Você veio longe demais. Feche esse arquivo.", assinatura: "TRANSMISSÃO INTERCEPTADA", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "DEFENSOR", texto: "Quantas pessoas você trouxe antes de mim?", assinatura: "SEM RESPOSTA", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "SENHOR DO TEMPO", texto: "Prepare suas defesas.", assinatura: "FIM DA TRANSMISSÃO", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "TORRE DESBLOQUEADA", texto: "Torre de Feixe Contínuo: mantém um laser no mesmo inimigo e aumenta o dano enquanto sustenta o foco.", assinatura: "NOVA DEFESA DISPONÍVEL", textoDoBotao: "Continuar" }),
+            Object.freeze({ titulo: "DEFENSOR", texto: "Acho que esta é a última defesa que vou encontrar nesta jornada.", assinatura: "TORRE DE FEIXE CONTÍNUO", textoDoBotao: "Ver resultado" })
+        ])
+    }),
+    florestaSecreta: Object.freeze({ velocidadeJogador: 140, velocidadePerseguidor: 146, raioJogador: 9, distanciaCaptura: 18, distanciaInteracao: 55, esperaPerseguidor: 2, esperaCheckpoint: 3, esperaSaidaAbrigo: 1, colunas: 80, linhas: 42, velocidadeSombra: 138, distanciaSombra: 260, inicioEncontro: 760, distanciaEncontro: 120, raioArmadilha: 15, prisaoJogador: .65, prisaoPerseguidor: 2 }),
+    confrontoFinal: CONFIG_CONFRONTO_FINAL,
+    limiarDoTempo: Object.freeze({
+        boss: "arconteDoLimiar",
+        elenco: Object.freeze([{"tipo":"batedorDeInstantes","base":3,"porWave":1},{"tipo":"couracadoDeAmpulheta","primeiraWave":3,"wavesPorUnidade":4},{"tipo":"tecelaoDeSegundos","primeiraWave":6,"wavesPorUnidade":5}]),
+
+    "numeroDaFase": 17,
+    "introducao": [
+        {
+            "titulo": "LIMIAR DO TEMPO",
+            "texto": "A transmissão deixou um rastro. Você o segue até uma passagem cercada por engrenagens imóveis. Do outro lado está o Senhor do Tempo.",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "DEFENSOR",
+            "texto": "Eu ainda não lembro como cheguei aqui. Ele manda que eu defenda as torres, mas nunca explica por que essas criaturas me atacam.",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "SENHOR DO TEMPO",
+            "texto": "As perguntas não vão proteger você. Afaste-se dessa passagem.",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "DEFENSOR",
+            "texto": "Não vou abandonar os registros. Vou proteger esta passagem e ouvir suas respostas pessoalmente.",
+            "assinatura": "",
+            "textoDoBotao": "Defender a passagem"
+        }
+    ],
+    "final": [
+        {
+            "titulo": "PASSAGEM PRESERVADA",
+            "texto": "O último guardião cai. As engrenagens voltam a girar, revelando uma porta. Você mantém os registros da câmara consigo.",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "DEFENSOR",
+            "texto": "Lina deixou um aviso. Outro defensor recebeu uma promessa. E eu nem consigo lembrar de onde vim. O que você está escondendo?",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "SENHOR DO TEMPO",
+            "texto": "Eu lhe dei um caminho para continuar. Você escolheu seguir vozes que nem conhece.",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "DEFENSOR",
+            "texto": "Então olhe para mim e responda. Desta vez, sem encerrar a transmissão.",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "SENHOR DO TEMPO",
+            "texto": "Atravesse a porta. Vamos terminar esta conversa frente a frente.",
+            "assinatura": "",
+            "textoDoBotao": "Continuar"
+        },
+        {
+            "titulo": "O CONFRONTO SE APROXIMA",
+            "texto": "Além da porta, o Senhor do Tempo espera. As respostas ficaram perto demais para voltar atrás.",
+            "assinatura": "",
+            "textoDoBotao": "Ver resultado"
+        }
+    ]
+}),
     pulsoTemporal: Object.freeze({
         faseConcluidaParaDesbloqueio: 8,
         duracaoInimigosComuns: 4000,
@@ -7321,7 +7988,11 @@ const CONFIG = Object.freeze({
         Object.freeze({ numero: 11, nome: "Fase 11", tema: "futuroDespedacado", descricao: "Futuro Despedaçado" }),
         Object.freeze({ numero: 12, nome: "Fase 12", tema: "pontoZero", descricao: "Ponto Zero" }),
         Object.freeze({ numero: 13, nome: "Fase 13", tema: "linhaTemporal", descricao: "Linha de Frente Temporal" }),
-        Object.freeze({ numero: 14, nome: "Fase 14", tema: "eraApagada", descricao: "A Era Apagada" })
+        Object.freeze({ numero: 14, nome: "Fase 14", tema: "eraApagada", descricao: "A Era Apagada" }),
+        Object.freeze({ numero: 15, nome: "Fase 15", tema: "laboratorio", descricao: "Arquivo Proibido" }),
+        Object.freeze({ numero: 16, nome: "Fase 16", tema: "pontoZero", descricao: "Câmara das Memórias" }),
+        Object.freeze({ numero: 17, nome: "Fase 17", tema: "futuroDespedacado", descricao: "Limiar do Tempo" }),
+        Object.freeze({ numero: 18, nome: "Fase 18", tema: "futuroDespedacado", descricao: "O Último Relógio" })
     ]),
     album: Object.freeze({
         categorias: Object.freeze([
@@ -7466,8 +8137,1202 @@ const CONFIG = Object.freeze({
         ])
     }),
     audio: Object.freeze({
+        partiturasPorFase: {
+            "4": {
+                "nomeInterno": "Chamados entre as Ruínas",
+                "intervaloDoPasso": 220,
+                "volumeRelativo": 1.65,
+                "instrumento": "triangle",
+                "instrumentoSecundario": "sine",
+                "volumeMelodia": 0.11,
+                "volumeContracanto": 0.035,
+                "volumeBaixo": 0.09,
+                "volumeHarmonia": 0.012,
+                "volumeBateria": 0.075,
+                "sustentoHarmonia": 5,
+                "ordem": [
+                    0,
+                    1,
+                    0,
+                    2
+                ],
+                "frases": [
+                    [
+                        74,
+                        0,
+                        69,
+                        72,
+                        0,
+                        74,
+                        0,
+                        0,
+                        77,
+                        74,
+                        0,
+                        72,
+                        69,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        0,
+                        69,
+                        72,
+                        0,
+                        74,
+                        0,
+                        79,
+                        77,
+                        0,
+                        74,
+                        72,
+                        0,
+                        69,
+                        67,
+                        0,
+                        0
+                    ],
+                    [
+                        81,
+                        79,
+                        77,
+                        0,
+                        74,
+                        0,
+                        72,
+                        74,
+                        0,
+                        69,
+                        0,
+                        67,
+                        69,
+                        0,
+                        0,
+                        0
+                    ]
+                ],
+                "baixos": [
+                    [
+                        38,
+                        0,
+                        0,
+                        45,
+                        0,
+                        38,
+                        0,
+                        0
+                    ],
+                    [
+                        41,
+                        0,
+                        48,
+                        0,
+                        0,
+                        41,
+                        0,
+                        48
+                    ],
+                    [
+                        43,
+                        0,
+                        0,
+                        50,
+                        43,
+                        0,
+                        38,
+                        0
+                    ]
+                ],
+                "contracanto": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    86,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    84,
+                    0,
+                    0
+                ],
+                "acordes": [
+                    [
+                        50,
+                        57
+                    ],
+                    [
+                        53,
+                        60
+                    ],
+                    [
+                        55,
+                        62
+                    ]
+                ],
+                "bateria": [
+                    1,
+                    0,
+                    4,
+                    1,
+                    0,
+                    4,
+                    0,
+                    4,
+                    1,
+                    0,
+                    4,
+                    0,
+                    1,
+                    4,
+                    0,
+                    4
+                ]
+            },
+            "7": {
+                "nomeInterno": "Águas que Sussurram",
+                "intervaloDoPasso": 390,
+                "volumeRelativo": 3.2,
+                "instrumento": "sine",
+                "instrumentoSecundario": "triangle",
+                "volumeMelodia": 0.075,
+                "volumeContracanto": 0.024,
+                "volumeBaixo": 0.05,
+                "volumeHarmonia": 0.012,
+                "volumeBateria": 0.035,
+                "sustentoHarmonia": 9,
+                "ordem": [
+                    0,
+                    0,
+                    1,
+                    2
+                ],
+                "frases": [
+                    [
+                        [
+                            65,
+                            3
+                        ],
+                        0,
+                        0,
+                        68,
+                        0,
+                        0,
+                        [
+                            62,
+                            2
+                        ],
+                        0,
+                        0,
+                        61,
+                        0,
+                        0
+                    ],
+                    [
+                        [
+                            67,
+                            2
+                        ],
+                        0,
+                        0,
+                        [
+                            65,
+                            3
+                        ],
+                        0,
+                        0,
+                        61,
+                        0,
+                        62,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        68,
+                        0,
+                        67,
+                        0,
+                        [
+                            65,
+                            2
+                        ],
+                        0,
+                        0,
+                        62,
+                        0,
+                        [
+                            58,
+                            2
+                        ],
+                        0,
+                        0
+                    ]
+                ],
+                "baixos": [
+                    [
+                        [
+                            34,
+                            5
+                        ],
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        41,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        [
+                            37,
+                            4
+                        ],
+                        0,
+                        0,
+                        0,
+                        0,
+                        44,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        [
+                            31,
+                            5
+                        ],
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        38,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                ],
+                "contracanto": [
+                    0,
+                    0,
+                    0,
+                    77,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    74,
+                    0
+                ],
+                "acordes": [
+                    [
+                        46,
+                        53
+                    ],
+                    [
+                        49,
+                        56
+                    ],
+                    [
+                        43,
+                        50
+                    ]
+                ],
+                "bateria": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    4,
+                    0,
+                    0,
+                    2,
+                    0,
+                    4,
+                    0
+                ]
+            },
+            "8": {
+                "nomeInterno": "Passos do Primeiro Titã",
+                "intervaloDoPasso": 285,
+                "volumeRelativo": 1.9,
+                "instrumento": "square",
+                "instrumentoSecundario": "triangle",
+                "volumeMelodia": 0.052,
+                "volumeContracanto": 0.045,
+                "volumeBaixo": 0.12,
+                "volumeHarmonia": 0.018,
+                "volumeBateria": 0.11,
+                "sustentoHarmonia": 6,
+                "ordem": [
+                    0,
+                    1,
+                    2,
+                    1
+                ],
+                "frases": [
+                    [
+                        [
+                            45,
+                            3
+                        ],
+                        0,
+                        0,
+                        52,
+                        0,
+                        48,
+                        0,
+                        0,
+                        [
+                            43,
+                            3
+                        ],
+                        0,
+                        0,
+                        50,
+                        0,
+                        47,
+                        0,
+                        0
+                    ],
+                    [
+                        45,
+                        45,
+                        0,
+                        0,
+                        [
+                            57,
+                            3
+                        ],
+                        0,
+                        0,
+                        52,
+                        0,
+                        48,
+                        0,
+                        45,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        [
+                            48,
+                            3
+                        ],
+                        0,
+                        0,
+                        55,
+                        0,
+                        60,
+                        0,
+                        0,
+                        [
+                            47,
+                            3
+                        ],
+                        0,
+                        0,
+                        50,
+                        0,
+                        43,
+                        0,
+                        0
+                    ]
+                ],
+                "baixos": [
+                    [
+                        33,
+                        0,
+                        33,
+                        0,
+                        0,
+                        40,
+                        0,
+                        33
+                    ],
+                    [
+                        33,
+                        0,
+                        0,
+                        40,
+                        33,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        36,
+                        0,
+                        36,
+                        0,
+                        35,
+                        0,
+                        0,
+                        31
+                    ]
+                ],
+                "contracanto": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    57,
+                    0,
+                    0,
+                    52,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "acordes": [
+                    [
+                        45,
+                        52
+                    ],
+                    [
+                        45,
+                        57
+                    ],
+                    [
+                        48,
+                        55
+                    ]
+                ],
+                "bateria": [
+                    1,
+                    0,
+                    1,
+                    0,
+                    4,
+                    0,
+                    1,
+                    4,
+                    1,
+                    0,
+                    0,
+                    4,
+                    1,
+                    4,
+                    0,
+                    0
+                ]
+            },
+            "9": {
+                "nomeInterno": "Corrida no Circuito Neon",
+                "intervaloDoPasso": 150,
+                "volumeRelativo": 1.8,
+                "instrumento": "square",
+                "instrumentoSecundario": "triangle",
+                "volumeMelodia": 0.045,
+                "volumeContracanto": 0.04,
+                "volumeBaixo": 0.09,
+                "volumeHarmonia": 0.015,
+                "volumeBateria": 0.065,
+                "sustentoHarmonia": 3,
+                "ordem": [
+                    0,
+                    1,
+                    0,
+                    2,
+                    1,
+                    2
+                ],
+                "frases": [
+                    [
+                        76,
+                        0,
+                        76,
+                        79,
+                        0,
+                        83,
+                        81,
+                        0,
+                        79,
+                        76,
+                        0,
+                        74,
+                        76,
+                        0,
+                        71,
+                        0
+                    ],
+                    [
+                        79,
+                        0,
+                        83,
+                        0,
+                        86,
+                        83,
+                        0,
+                        81,
+                        79,
+                        0,
+                        76,
+                        0,
+                        74,
+                        76,
+                        0,
+                        0
+                    ],
+                    [
+                        81,
+                        83,
+                        86,
+                        0,
+                        88,
+                        0,
+                        86,
+                        83,
+                        81,
+                        0,
+                        79,
+                        76,
+                        74,
+                        0,
+                        71,
+                        0
+                    ]
+                ],
+                "baixos": [
+                    [
+                        40,
+                        0,
+                        52,
+                        40,
+                        0,
+                        52,
+                        40,
+                        52
+                    ],
+                    [
+                        43,
+                        0,
+                        55,
+                        43,
+                        0,
+                        55,
+                        43,
+                        55
+                    ],
+                    [
+                        45,
+                        0,
+                        57,
+                        45,
+                        47,
+                        0,
+                        59,
+                        47
+                    ]
+                ],
+                "contracanto": [
+                    0,
+                    64,
+                    0,
+                    67,
+                    0,
+                    71,
+                    0,
+                    67
+                ],
+                "acordes": [
+                    [
+                        52,
+                        59
+                    ],
+                    [
+                        55,
+                        62
+                    ],
+                    [
+                        57,
+                        64
+                    ]
+                ],
+                "bateria": [
+                    1,
+                    3,
+                    0,
+                    3,
+                    2,
+                    3,
+                    0,
+                    3,
+                    1,
+                    3,
+                    1,
+                    3,
+                    2,
+                    0,
+                    3,
+                    3
+                ]
+            },
+            "10": {
+                "nomeInterno": "Protocolo sem Resposta",
+                "intervaloDoPasso": 260,
+                "volumeRelativo": 1.9,
+                "instrumento": "triangle",
+                "instrumentoSecundario": "sine",
+                "volumeMelodia": 0.085,
+                "volumeContracanto": 0.03,
+                "volumeBaixo": 0.09,
+                "volumeHarmonia": 0.013,
+                "volumeBateria": 0.048,
+                "sustentoHarmonia": 5,
+                "ordem": [
+                    0,
+                    1,
+                    2,
+                    0
+                ],
+                "frases": [
+                    [
+                        72,
+                        0,
+                        0,
+                        73,
+                        0,
+                        66,
+                        0,
+                        0,
+                        72,
+                        0,
+                        0,
+                        0,
+                        65,
+                        0
+                    ],
+                    [
+                        0,
+                        78,
+                        0,
+                        0,
+                        73,
+                        0,
+                        72,
+                        0,
+                        0,
+                        66,
+                        0,
+                        65,
+                        0,
+                        0
+                    ],
+                    [
+                        72,
+                        73,
+                        0,
+                        78,
+                        0,
+                        0,
+                        77,
+                        0,
+                        66,
+                        0,
+                        0,
+                        65,
+                        0,
+                        0
+                    ]
+                ],
+                "baixos": [
+                    [
+                        36,
+                        0,
+                        0,
+                        0,
+                        42,
+                        0,
+                        0
+                    ],
+                    [
+                        37,
+                        0,
+                        0,
+                        43,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        35,
+                        0,
+                        0,
+                        0,
+                        41,
+                        0,
+                        0
+                    ]
+                ],
+                "contracanto": [
+                    0,
+                    0,
+                    84,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    85,
+                    0,
+                    0,
+                    0
+                ],
+                "acordes": [
+                    [
+                        48,
+                        54
+                    ],
+                    [
+                        49,
+                        55
+                    ],
+                    [
+                        47,
+                        53
+                    ]
+                ],
+                "bateria": [
+                    4,
+                    0,
+                    0,
+                    3,
+                    0,
+                    0,
+                    2,
+                    0,
+                    4,
+                    0,
+                    0,
+                    3,
+                    0,
+                    0
+                ]
+            },
+            "11": {
+                "nomeInterno": "Amanhã em Fragmentos",
+                "intervaloDoPasso": 315,
+                "volumeRelativo": 1.85,
+                "instrumento": "triangle",
+                "instrumentoSecundario": "square",
+                "volumeMelodia": 0.095,
+                "volumeContracanto": 0.018,
+                "volumeBaixo": 0.085,
+                "volumeHarmonia": 0.025,
+                "volumeBateria": 0.055,
+                "sustentoHarmonia": 8,
+                "ordem": [
+                    0,
+                    1,
+                    0,
+                    2
+                ],
+                "frases": [
+                    [
+                        [
+                            71,
+                            3
+                        ],
+                        0,
+                        0,
+                        66,
+                        69,
+                        0,
+                        0,
+                        0,
+                        [
+                            74,
+                            2
+                        ],
+                        0,
+                        73,
+                        0,
+                        0,
+                        66,
+                        0,
+                        0,
+                        0,
+                        0,
+                        62,
+                        0
+                    ],
+                    [
+                        [
+                            69,
+                            2
+                        ],
+                        0,
+                        64,
+                        0,
+                        0,
+                        0,
+                        71,
+                        0,
+                        0,
+                        0,
+                        [
+                            66,
+                            4
+                        ],
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        61,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        74,
+                        0,
+                        73,
+                        71,
+                        0,
+                        0,
+                        66,
+                        0,
+                        69,
+                        0,
+                        0,
+                        0,
+                        64,
+                        0,
+                        62,
+                        0,
+                        0,
+                        59,
+                        0,
+                        0
+                    ]
+                ],
+                "baixos": [
+                    [
+                        [
+                            35,
+                            4
+                        ],
+                        0,
+                        0,
+                        0,
+                        0,
+                        42,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        [
+                            40,
+                            5
+                        ],
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        47,
+                        0,
+                        0,
+                        0
+                    ],
+                    [
+                        [
+                            31,
+                            4
+                        ],
+                        0,
+                        0,
+                        0,
+                        0,
+                        38,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                ],
+                "contracanto": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    83,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    78,
+                    0,
+                    0
+                ],
+                "acordes": [
+                    [
+                        47,
+                        54,
+                        62
+                    ],
+                    [
+                        52,
+                        59,
+                        66
+                    ],
+                    [
+                        43,
+                        50,
+                        59
+                    ]
+                ],
+                "bateria": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    2,
+                    0,
+                    0,
+                    0,
+                    0,
+                    4,
+                    0,
+                    0
+                ]
+            },
+            "15": {
+                "nomeInterno": "Páginas sob Suspeita",
+                "intervaloDoPasso": 245,
+                "volumeRelativo": 1.9,
+                "instrumento": "triangle",
+                "instrumentoSecundario": "sine",
+                "volumeMelodia": 0.1,
+                "volumeContracanto": 0.024,
+                "volumeBaixo": 0.085,
+                "volumeHarmonia": 0.02,
+                "volumeBateria": 0.035,
+                "sustentoHarmonia": 5,
+                "ordem": [
+                    0,
+                    1,
+                    2,
+                    1
+                ],
+                "frases": [
+                    [
+                        67,
+                        0,
+                        70,
+                        0,
+                        74,
+                        72,
+                        0,
+                        0,
+                        69,
+                        0,
+                        66,
+                        0
+                    ],
+                    [
+                        70,
+                        0,
+                        74,
+                        77,
+                        0,
+                        75,
+                        74,
+                        0,
+                        72,
+                        0,
+                        69,
+                        0
+                    ],
+                    [
+                        [
+                            79,
+                            2
+                        ],
+                        0,
+                        77,
+                        74,
+                        0,
+                        72,
+                        70,
+                        0,
+                        69,
+                        66,
+                        0,
+                        0
+                    ]
+                ],
+                "baixos": [
+                    [
+                        43,
+                        0,
+                        50,
+                        0,
+                        55,
+                        0,
+                        43,
+                        0,
+                        50,
+                        0,
+                        55,
+                        0
+                    ],
+                    [
+                        39,
+                        0,
+                        46,
+                        0,
+                        51,
+                        0,
+                        41,
+                        0,
+                        48,
+                        0,
+                        53,
+                        0
+                    ],
+                    [
+                        38,
+                        0,
+                        45,
+                        0,
+                        50,
+                        0,
+                        38,
+                        0,
+                        45,
+                        0,
+                        54,
+                        0
+                    ]
+                ],
+                "contracanto": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    86,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    81
+                ],
+                "acordes": [
+                    [
+                        55,
+                        62
+                    ],
+                    [
+                        51,
+                        58
+                    ],
+                    [
+                        50,
+                        57
+                    ]
+                ],
+                "bateria": [
+                    4,
+                    0,
+                    0,
+                    3,
+                    0,
+                    0,
+                    4,
+                    0,
+                    0,
+                    0,
+                    0,
+                    3
+                ]
+            }
+        },
         volumeInicialDosEfeitos: 0.8,
+        usarMusicaAnteriorDoLobby: true,
         musicaDoLobby: Object.freeze({
+            nomeInterno: "Festa na Praça Pixel",
+            intervaloDoPasso: 240,
+            volumeRelativo: 1.25,
+            instrumento: "square",
+            instrumentoSecundario: "triangle",
+            volumeMelodia: 0.085,
+            volumeContracanto: 0.035,
+            volumeBaixo: 0.09,
+            volumeHarmonia: 0.025,
+            volumeBateria: 0.266,
+            volumeAcordesRitmados: 0.063,
+            ritmoDosAcordes: [0, 1, 0, 1, 0, 1, 0, 1],
+            sustentoHarmonia: 6,
+            ordem: [0, 1, 0, 2, 0, 3],
+            frases: [
+                [72, 0, 76, 79, 0, 76, 74, 72, 0, 74, 76, 0, 79, 81, 79, 76],
+                [74, 0, 77, 81, 0, 79, 77, 74, 76, 0, 74, 71, 0, 67, 71, 74],
+                [81, 79, 76, 0, 72, 76, 79, 0, 77, 76, 74, 72, 0, 69, 72, 74],
+                [77, 0, 81, 79, 77, 74, 0, 71, 74, 77, 79, 0, 76, 74, [72, 1.7], 0]
+            ],
+            baixos: [
+                [48, 0, 55, 0, 48, 55, 57, 55],
+                [50, 0, 57, 0, 43, 0, 50, 55],
+                [45, 0, 52, 0, 41, 0, 48, 53],
+                [41, 0, 48, 0, 43, 50, 55, 47]
+            ],
+            contracanto: [0, 67, 0, 0, 0, 64, 0, 67, 0, 64, 0, 0, 0, 67, 0, 62],
+            acordes: [[60, 64, 67], [59, 62, 67], [60, 64, 69], [60, 65, 69]],
+            bateria: [[1, 3], 3, [2, 3], [3, 4], [1, 3], 3, [2, 3], [1, 3],
+                [1, 3], [3, 4], [2, 3], 3, [1, 3], [3, 4], [2, 3], [2, 3, 4]]
+        }),
+        musicaAnteriorDoLobby: Object.freeze({
             intervaloDoPasso: 430,
             volumeRelativo: 1.25,
             melodia: Object.freeze([
@@ -7478,10 +9343,9 @@ const CONFIG = Object.freeze({
             ]),
             baixo: Object.freeze([98, 87.31, 82.41, 73.42])
         }),
-        musicaPixeladaDaFase1: Object.freeze({
+        musicaPixeladaDaFase1: ampliarComposicaoExistente({
             intervaloDoPasso: 360,
             volumeRelativo: 1.25,
-            volumeRelativoDaMusicaOriginal: 0.65,
             melodia: Object.freeze([
                 293.66, 311.13, 349.23, 311.13,
                 293.66, 261.63, 233.08, 261.63,
@@ -7489,8 +9353,8 @@ const CONFIG = Object.freeze({
                 311.13, 293.66, 261.63, 233.08
             ]),
             baixo: Object.freeze([73.42, 69.3, 58.27, 65.41])
-        }),
-        musicaDoDeserto: Object.freeze({
+        }, [[65,65,62,60,58,60,62,65,67,65,63,62,60,58,57,58],[70,67,65,63,62,65,60,62,58,60,57,58,62,60,58,62]], "melodia"),
+        musicaDoDeserto: ampliarComposicaoExistente({
             intervaloDoPasso: 270,
             volumeRelativo: 1.65,
             melodia: Object.freeze([
@@ -7499,8 +9363,8 @@ const CONFIG = Object.freeze({
                 329.63, 415.3, 493.88, 523.25,
                 493.88, 440, 415.3, 349.23
             ])
-        }),
-        musicaDoArtico: Object.freeze({
+        }, [[76,77,80,77,76,74,72,71,68,69,71,72,71,69,68,64],[81,80,77,76,77,80,83,84,83,80,77,76,72,71,68,64]], "melodia"),
+        musicaDoArtico: ampliarComposicaoExistente({
             intervaloDoPasso: 400,
             volumeRelativo: 1.55,
             melodia: Object.freeze([
@@ -7510,7 +9374,7 @@ const CONFIG = Object.freeze({
                 440, 369.99, 293.66, 329.63
             ]),
             baixo: Object.freeze([82.41, 73.42, 65.41, 61.74])
-        }),
+        }, [[76,78,79,83,81,78,76,74,71,74,76,79,78,74,71,69],[83,81,79,78,76,79,74,71,69,71,74,76,74,71,66,64]], "melodia"),
         musicaDaSelva: Object.freeze({
             intervaloDoPasso: 260,
             volumeRelativo: 1.45,
@@ -7571,7 +9435,7 @@ const CONFIG = Object.freeze({
             baixo: Object.freeze([46.25, 41.2, 49, 36.71]),
             percussao: Object.freeze([1, 0.12, 0.68, 0.18, 0.9, 0.24, 0.76, 0.34])
         }),
-        musicaDoPontoZero: Object.freeze({
+        musicaDoPontoZero: ampliarComposicaoExistente({
             intervaloDoPasso: 340,
             volumeRelativo: 2.05,
             melodia: Object.freeze([
@@ -7587,8 +9451,8 @@ const CONFIG = Object.freeze({
                 1, 0.25, 0.5,
                 0.85, 0.32, 0.6
             ])
-        }),
-        musicaDaEraApagada: Object.freeze({
+        }, [[64,0,71,67,0,74,65,0,72,59,0,66],[76,0,72,69,0,65,71,0,68,64,0,60]], "melodia"),
+        musicaDaEraApagada: ampliarComposicaoExistente({
             nomeInterno: "Memórias que Não Existem",
             intervaloDoPasso: 360,
             volumeRelativo: 1.95,
@@ -7616,8 +9480,20 @@ const CONFIG = Object.freeze({
                 1, 0.22, 0.5, 0,
                 0.8, 0, 0.28, 0.6
             ])
-        }),
-        musicaDoIntervaloPerdido: Object.freeze({
+        }, [[67,0,65,63,0,60,62,0,68,65,0,63,59,0,56,55],[72,0,68,67,0,65,63,0,62,59,0,60,56,0,55,48]], "melodia"),
+        musicaDoCasteloDoLimbo: ampliarComposicaoExistente({
+            nomeInterno: "Salões do Vazio",
+            intervaloDoPasso: 400,
+            volumeRelativo: 4,
+            volumeAlaude: 0.065,
+            volumeFlauta: 0.035,
+            volumeDoVazio: 0.018,
+            // Frases originais em seis tempos, com pausas entre as respostas.
+            melodia: [293.66, 0, 349.23, 392, 0, 349.23, 329.63, 0, 293.66, 261.63, 0, 0,
+                293.66, 0, 440, 392, 349.23, 0, 329.63, 261.63, 293.66, 0, 0, 0],
+            acordes: [[146.83, 220, 293.66], [130.81, 196, 261.63], [174.61, 220, 349.23], [146.83, 220, 293.66]],
+        }, [[65,0,69,67,0,65,64,0,60,62,0,0,69,0,72,69,67,0,65,64,62,0,0,0],[70,0,69,65,64,0,62,0,60,57,0,0,62,0,65,64,62,0,60,57,62,0,0,0]], "melodia"),
+        musicaDoIntervaloPerdido: ampliarComposicaoExistente({
             nomeInterno: "Ecos do Limbo",
             intervaloDoPasso: 480,
             volumeRelativo: 1.9,
@@ -7629,8 +9505,8 @@ const CONFIG = Object.freeze({
             ]),
             baixo: Object.freeze([65.41, 55, 73.42, 49]),
             badaladas: Object.freeze([1046.5, 1318.51, 987.77, 1567.98])
-        }),
-        musicaDaLinhaTemporal: Object.freeze({
+        }, [[79,0,76,0,74,71,0,72,77,0,74,0,71,69,0,67],[84,0,79,0,76,74,0,71,72,0,67,0,64,62,0,60]], "melodia"),
+        musicaDaLinhaTemporal: ampliarComposicaoExistente({
             nomeInterno: "Guerra dos Séculos",
             intervaloDoPasso: 280,
             volumeRelativo: 1.85,
@@ -7666,8 +9542,8 @@ const CONFIG = Object.freeze({
                 1, 0.16, 0.56, 0.26,
                 0.92, 0.24, 0.7, 0.34
             ])
-        }),
-        musicaDoBosque: Object.freeze({
+        }, [[64,67,69,0,65,69,72,0,62,65,67,0,59,62,64,0],[72,71,67,64,69,67,65,62,67,65,62,59,64,62,59,57]], "pulsoDoPresente"),
+        musicaDoBosque: ampliarComposicaoExistente({
             intervaloDoPasso: 330,
             volumeRelativo: 1.65,
             melodia: Object.freeze([
@@ -7677,7 +9553,7 @@ const CONFIG = Object.freeze({
                 392, 349.23, 261.63, 293.66
             ]),
             baixo: Object.freeze([73.42, 65.41, 58.27, 55])
-        }),
+        }, [[69,72,74,72,69,65,64,65,67,70,69,67,64,62,60,62],[77,74,72,69,70,69,65,67,64,65,62,60,58,60,64,62]], "melodia"),
         musicaDaForja: Object.freeze({
             intervaloDoPasso: 240,
             volumeRelativo: 1.55,
@@ -7702,7 +9578,7 @@ const CONFIG = Object.freeze({
             baixo: Object.freeze([58.27, 55, 51.91, 49]),
             percussao: Object.freeze([1, 0.18, 0.48, 0.24, 0.82, 0.3, 0.58, 0.2])
         }),
-        musicaDaDimensaoGlitch: Object.freeze({
+        musicaDaDimensaoGlitch: ampliarComposicaoExistente({
             intervaloDoPasso: 310,
             volumeRelativo: 1.75,
             melodia: Object.freeze([
@@ -7718,7 +9594,7 @@ const CONFIG = Object.freeze({
                 0.28, 0, 0.14, 0,
                 0.4, 0.1, 0.22, 0.5
             ])
-        }),
+        }, [[63,64,58,61,67,66,60,59,56,61,58,55,60,54,57,51],[70,63,69,62,68,61,55,60,54,59,53,58,52,57,51,50]], "melodia"),
         musicaDaConversaDoPortal: Object.freeze({
             intervaloDoPasso: 540,
             volumeRelativo: 1.85,
@@ -8074,6 +9950,19 @@ const CONFIG = Object.freeze({
         })
     }),
     inimigo: Object.freeze({
+        rasurador: Object.freeze({"nome":"Rasurador","vida":280,"velocidade":1.5,"tamanho":23,"cor":"#d4b785","detalhe":"Exclusivo da Fase 15 | Avança carregando páginas rasuradas"}),
+        censorVelado: Object.freeze({"nome":"Censor Velado","vida":480,"velocidade":1.15,"tamanho":27,"cor":"#8fad99","camuflado":true,"detalhe":"Exclusivo da Fase 15 | Camuflado: precisa ser detectado pela Varredura"}),
+        sentinelaDeIndice: Object.freeze({"nome":"Sentinela de Índice","vida":900,"velocidade":0.8,"tamanho":33,"cor":"#aa8266","reducaoDeDano":0.25,"detalhe":"Exclusiva da Fase 15 | Capas blindadas reduzem o dano em 25%"}),
+        bibliotecarioMudo: Object.freeze({"nome":"Bibliotecário Mudo","vida":6200,"incrementoVidaPorAparicao":750,"velocidade":0.65,"tamanho":64,"cor":"#9ab29b","percentuaisDeVidaParaConvocar":[0.65,0.3],"tipoDoReforco":"censorVelado","quantidadeDeReforcos":2,"avisoDaConvocacao":"O Bibliotecário convocou Censores Velados!","detalhe":"Exclusivo da Fase 15 | Aos 65% e 30% de vida, convoca dois Censores Velados"}),
+        fragmentoMnesico: Object.freeze({"nome":"Fragmento Mnésico","vida":320,"velocidade":1.6,"tamanho":22,"cor":"#a7d7ec","detalhe":"Exclusivo da Fase 16 | Lembrança fragmentada que avança rapidamente"}),
+        lembrancaBlindada: Object.freeze({"nome":"Lembrança Blindada","vida":1050,"velocidade":0.75,"tamanho":34,"cor":"#819cb8","reducaoDeDano":0.25,"detalhe":"Exclusiva da Fase 16 | Memória cristalizada reduz o dano em 25%"}),
+        ecoDaMemoria: Object.freeze({"nome":"Eco da Memória","vida":650,"velocidade":1.25,"tamanho":28,"cor":"#bc98dd","retornoAposDerrota":true,"percentualDeVidaNoRetorno":0.35,"distanciaDoRetorno":180,"duracaoVisualDoRetorno":700,"avisoDoRetorno":"O Eco da Memória se recompôs!","detalhe":"Exclusivo da Fase 16 | Retorna uma vez com 35% da vida e recua 180 px"}),
+        devoradorDeMemorias: Object.freeze({"nome":"Devorador de Memórias","vida":6800,"incrementoVidaPorAparicao":800,"velocidade":0.6,"tamanho":66,"cor":"#9fa6da","percentuaisDeVidaParaConvocar":[0.7,0.35],"tipoDoReforco":"fragmentoMnesico","quantidadeDeReforcos":2,"raioDaRestauracao":220,"percentualDeRestauracao":0.25,"avisoDaConvocacao":"O Devorador restaurou as memórias ao redor!","detalhe":"Exclusivo da Fase 16 | Aos 70% e 35% de vida, restaura 25% da vida de aliados a 220 px e convoca dois Fragmentos"}),
+        batedorDeInstantes: Object.freeze({"nome":"Batedor de Instantes","vida":340,"velocidade":1.7,"tamanho":23,"cor":"#70e4e0","percentualVidaParaAcelerar":0.5,"multiplicadorDeAceleracao":1.6,"detalhe":"Exclusivo da Fase 17 | Acelera 60% com metade da vida"}),
+        couracadoDeAmpulheta: Object.freeze({"nome":"Couraçado de Ampulheta","vida":1100,"velocidade":0.75,"tamanho":34,"cor":"#c3a46c","reducaoDeDano":0.3,"detalhe":"Exclusivo da Fase 17 | Armadura reduz o dano em 30%"}),
+        tecelaoDeSegundos: Object.freeze({"nome":"Tecelão de Segundos","vida":950,"velocidade":1,"tamanho":29,"cor":"#b08be3","percentuaisDeVidaParaConvocar":[0.5],"tipoDoReforco":"batedorDeInstantes","quantidadeDeReforcos":2,"detalhe":"Exclusivo da Fase 17 | Convoca dois Batedores com metade da vida"}),
+        senhorDoTempo: CONFIG_BOSS_FINAL,
+        arconteDoLimiar: Object.freeze({"nome":"Arconte do Limiar","vida":7200,"incrementoVidaPorAparicao":850,"velocidade":0.62,"tamanho":66,"cor":"#c8ab70","percentuaisDeVidaParaConvocar":[0.7,0.35],"tipoDoReforco":"couracadoDeAmpulheta","quantidadeDeReforcos":1,"quantidadeDeTorresSeladas":2,"duracaoDoSelo":2000,"detalhe":"Exclusivo da Fase 17 | Aos 70% e 35% de vida, sela duas torres por 2s e convoca um Couraçado"}),
         normal: Object.freeze({ nome: "Vermelho", vida: 100, velocidade: 1.5, tamanho: 20, cor: "#d33a45" }),
         elite: Object.freeze({ nome: "Roxo", vida: 300, velocidade: 1.1, tamanho: 25, cor: "#7b2cbf" }),
         rapido: Object.freeze({ nome: "Ciano rápido", vida: 200, velocidade: 2.2, tamanho: 18, escalaVisual: 20, cor: "#00bcd4" }),
@@ -8615,6 +10504,13 @@ const CONFIG = Object.freeze({
         largura: 64,
         altura: 78
     }),
+    melhoriasEscolhidas: Object.freeze({ limite: 5, danoPorPonto: 0.5, alcancePorPonto: 0.15, cadenciaPorPonto: 0.2, custoMinimo: 200, fracaoDoCustoDeConstrucao: 0.8, arredondamentoDoCusto: 10, multiplicadoresDeCusto: Object.freeze([0.5,1,2,5,8]) }),
+    desafiosFinais: Object.freeze({ waves: Object.freeze({
+        8: { aviso: 'Investida veloz — prepare cadência e controle!', reforcos: { batedorDeInstantes: 8 } },
+        12: { aviso: 'Coluna blindada — concentre dano nos Couraçados!', reforcos: { couracadoDeAmpulheta: 4 } },
+        16: { aviso: 'Convergência — elimine os Tecelões antes dos reforços!', reforcos: { tecelaoDeSegundos: 4, couracadoDeAmpulheta: 2 } },
+        19: { aviso: 'Última ofensiva — rápidos, blindados e invocadores juntos!', reforcos: { batedorDeInstantes: 10, couracadoDeAmpulheta: 3, tecelaoDeSegundos: 3 } }
+    }) }),
     torre: Object.freeze({
         recompensaPorTiro: 20,
         percentualDeVenda: 0.6,
@@ -8626,7 +10522,7 @@ const CONFIG = Object.freeze({
             Object.freeze({ id: "ultimo", nome: "Último" }),
             Object.freeze({ id: "aleatorio", nome: "Aleatório" })
         ]),
-        limitesPorFase: Object.freeze({ 1: 10, 2: 12, 3: 12, 4: 14, 5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 10: 15, 11: 15, 12: 15, 13: 15, 14: 15, 99: 12, 100: 12 }),
+        limitesPorFase: Object.freeze({ 1: 10, 2: 12, 3: 12, 4: 14, 5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 10: 15, 11: 15, 12: 15, 13: 15, 14: 15, 15: 15, 16: 15, 17: 15, 18: 15, 99: 12, 100: 12 }),
         distanciaMinima: 70,
         tipos: Object.freeze({
             padrao: Object.freeze({
@@ -9128,6 +11024,33 @@ const CONFIG = Object.freeze({
                         })
                     })
                 ])
+            }),
+            torreFeixeContinuo: Object.freeze({
+                nome: "Torre de Feixe Contínuo", faseConcluidaParaDesbloqueio: 16,
+                custo: 400, alcance: 230, dano: 5, velocidadeAtaque: 500,
+                feixeContinuo: Object.freeze({ maximoDePulsos: 10 }),
+                visualBase: Object.freeze({ tipoVisual: "feixeContinuo", corBase: "#513563", corCanhao: "#c685e0", corDetalhe: "#fff0b0", raioBase: 25, nivelVisual: 0 }),
+                melhorias: Object.freeze([
+                    Object.freeze({ custo: 350, dano: 7, alcance: 250, velocidadeAtaque: 500 }),
+                    Object.freeze({ custo: 550, dano: 9, alcance: 270, velocidadeAtaque: 500 }),
+                    Object.freeze({ custo: 800, dano: 12, alcance: 290, velocidadeAtaque: 500 })
+                ].map((melhoria, indice) => Object.freeze({ ...melhoria,
+                    feixeContinuo: Object.freeze({ maximoDePulsos: 10 }),
+                    visual: Object.freeze({ tipoVisual: "feixeContinuo", corBase: "#513563", corCanhao: "#c685e0", corDetalhe: "#fff0b0", raioBase: 26 + indice * 2, nivelVisual: indice + 1 })
+                })))
+            }),
+            torreLongoAlcance: Object.freeze({
+                nome: "Torre de Longo Alcance", faseConcluidaParaDesbloqueio: 0, nivelParaDesbloqueio: 12,
+                custo: 250, alcance: 1100, dano: 6, velocidadeAtaque: 1200, velocidadeTiro: 24,
+                visualBase: Object.freeze({ tipoVisual: "longoAlcance", corBase: "#344857", corCanhao: "#a3c1d3", corDetalhe: "#f0d580", raioBase: 25, nivelVisual: 0 }),
+                melhorias: Object.freeze([
+                    Object.freeze({ custo: 250, dano: 9, alcance: 1150, velocidadeAtaque: 1150 }),
+                    Object.freeze({ custo: 400, dano: 12, alcance: 1200, velocidadeAtaque: 1100 }),
+                    Object.freeze({ custo: 600, dano: 16, alcance: 1250, velocidadeAtaque: 1000 })
+                ].map((melhoria, indice) => Object.freeze({ ...melhoria,
+                    velocidadeTiro: 24,
+                    visual: Object.freeze({ tipoVisual: "longoAlcance", corBase: "#344857", corCanhao: "#a3c1d3", corDetalhe: "#f0d580", raioBase: 26 + indice * 2, nivelVisual: indice + 1 })
+                })))
             }),
             torreDeVarredura: Object.freeze({
                 nome: "Torre de Varredura",
@@ -10135,6 +12058,29 @@ const caminhosDasFases = Object.freeze({
         { x: 1050, y: 300 },
         { x: 1200, y: 300 }
     ]),
+    15: Object.freeze([
+        { x: 0, y: 120 }, { x: 240, y: 120 },
+        { x: 240, y: 540 }, { x: 480, y: 540 },
+        { x: 480, y: 260 }, { x: 720, y: 260 },
+        { x: 720, y: 580 }, { x: 960, y: 580 },
+        { x: 960, y: 120 }, { x: 1100, y: 120 },
+        { x: 1100, y: 350 }, { x: 1200, y: 350 }
+    ]),
+    16: Object.freeze([
+        { x: 0, y: 340 }, { x: 180, y: 340 },
+        { x: 180, y: 120 }, { x: 440, y: 120 },
+        { x: 440, y: 540 }, { x: 730, y: 540 },
+        { x: 730, y: 180 }, { x: 990, y: 180 },
+        { x: 990, y: 400 }, { x: 1200, y: 400 }
+    ]),
+    18: Object.freeze([{x:0,y:350},{x:180,y:350},{x:180,y:120},{x:380,y:120},{x:380,y:550},{x:800,y:550},{x:800,y:160},{x:990,y:160},{x:990,y:350},{x:1200,y:350}]),
+    17: Object.freeze([
+        { x: 0, y: 560 }, { x: 210, y: 560 },
+        { x: 210, y: 180 }, { x: 470, y: 180 },
+        { x: 470, y: 490 }, { x: 750, y: 490 },
+        { x: 750, y: 120 }, { x: 1030, y: 120 },
+        { x: 1030, y: 350 }, { x: 1200, y: 350 }
+    ]),
     99: Object.freeze([
         { x: 0, y: 590 },
         { x: 190, y: 590 },
@@ -10900,6 +12846,7 @@ let inimigosGuardasDeContencaoParaCriar = 0;
 let inimigosDronesDoFuturoDespedacadoParaCriar = 0;
 let inimigosAndarilhosDeSucataParaCriar = 0;
 let inimigosEcosTemporaisParaCriar = 0;
+let filaDeInimigosExclusivos = [];
 let inimigosSentinelasCronologicasParaCriar = 0;
 let inimigosResiduosTemporaisParaCriar = 0;
 let inimigosArquivistasCorrompidosParaCriar = 0;
@@ -10938,7 +12885,9 @@ let tutorialConcluido = carregarTutorialConcluido();
 let tutorialAtivo = false;
 let passoTutorial = 0;
 let tutorialSolicitado = false;
-let progressoMissoesSemanais = carregarProgressoMissoesSemanais();
+let progressoMissoesPermanentes = carregarProgressoMissoesPermanentes();
+let categoriaDeMissoesSelecionada = "";
+let categoriaDeConquistasSelecionada = "comuns";
 let recompensasPermanentesDasMissoes = carregarRecompensasPermanentesDasMissoes();
 let pacoteApoiador = carregarPacoteApoiador();
 let estatisticasDasConquistas = carregarEstatisticasDasConquistas();
@@ -11522,8 +13471,7 @@ function normalizarSelecaoDeDefesas(selecao, preencherSeVazia = true) {
 
 function faseAtualExigeTorreDeVarredura() {
     return !mapaPersonalizadoAtivo
-        && !selecaoDeDefesasParaModoInfinito
-        && faseSelecionada === CONFIG.eraApagada.numeroDaFase
+        && [CONFIG.eraApagada.numeroDaFase, CONFIG.arquivoProibido.numeroDaFase].includes(faseSelecionada)
         && torreEstaDesbloqueada("torreDeVarredura");
 }
 
@@ -11576,119 +13524,59 @@ function obterPrimeiraDefesaDisponivelParaPartida() {
         .find(tipo => torreEstaDesbloqueada(tipo)) || "padrao";
 }
 
+// A Loja ainda usa a semana para suas ofertas; as missões não usam calendário.
 function obterIdentificadorDaSemana(data = new Date()) {
-    const dataLocalComoUtc = new Date(Date.UTC(
-        data.getFullYear(),
-        data.getMonth(),
-        data.getDate()
-    ));
-    const diaDaSemana = dataLocalComoUtc.getUTCDay() || 7;
-    dataLocalComoUtc.setUTCDate(dataLocalComoUtc.getUTCDate() + 4 - diaDaSemana);
-    const anoDaSemana = dataLocalComoUtc.getUTCFullYear();
-    const primeiroDiaDoAno = new Date(Date.UTC(anoDaSemana, 0, 1));
-    const numeroDaSemana = Math.ceil(
-        (((dataLocalComoUtc - primeiroDiaDoAno) / 86400000) + 1) / 7
-    );
-
-    return `${anoDaSemana}-S${numeroDaSemana.toString().padStart(2, "0")}`;
+    const dia = new Date(Date.UTC(data.getFullYear(), data.getMonth(), data.getDate()));
+    dia.setUTCDate(dia.getUTCDate() + 4 - (dia.getUTCDay() || 7));
+    const ano = dia.getUTCFullYear();
+    const numero = Math.ceil((((dia - new Date(Date.UTC(ano, 0, 1))) / 86400000) + 1) / 7);
+    return `${ano}-S${String(numero).padStart(2, '0')}`;
 }
 
-function obterDataDaProximaRenovacaoSemanal(data = new Date()) {
-    const diasAteSegunda = data.getDay() === 1 ? 7 : (8 - data.getDay()) % 7;
-    return new Date(
-        data.getFullYear(),
-        data.getMonth(),
-        data.getDate() + diasAteSegunda,
-        0,
-        0,
-        0,
-        0
-    );
+function criarProgressoPermanenteVazio() {
+    return {versao:1,inimigosEliminados:0,fasesConcluidas:0,maiorWaveInfinita:0,
+        colecoes:{},vitoriasPorFase:{},recompensasResgatadas:[],recompensasConcedidas:{}};
 }
-
-function criarProgressoSemanalVazio(data = new Date()) {
-    return {
-        semana: obterIdentificadorDaSemana(data),
-        inimigosEliminados: 0,
-        fasesConcluidas: 0,
-        maiorWaveInfinita: 0,
-        recompensasResgatadas: [],
-        recompensasConcedidas: {}
-    };
-}
-
-function normalizarProgressoDasMissoesSemanais(valorSalvo, data = new Date()) {
-    const progressoVazio = criarProgressoSemanalVazio(data);
-
-    if (!valorSalvo || valorSalvo.semana !== progressoVazio.semana) {
-        return progressoVazio;
+function normalizarProgressoDasMissoesPermanentes(valor) {
+    const p=criarProgressoPermanenteVazio();
+    if(!valor || typeof valor!=='object')return p;
+    p.premioFinalResgatado = valor.premioFinalResgatado === true;
+    for(const m of CONFIG.missoes.permanentes) {
+        const n=valor[m.propriedadeDoProgresso];
+        if(Number.isSafeInteger(n)&&n>=0)p[m.propriedadeDoProgresso]=n;
     }
-
-    const idsValidos = new Set(CONFIG.missoes.semanais.map(missao => missao.id));
-    const normalizarContador = valor => (
-        Number.isInteger(valor) && valor >= 0 ? valor : 0
-    );
-
-    const recompensasConcedidas = valorSalvo.recompensasConcedidas
-        && typeof valorSalvo.recompensasConcedidas === "object"
-        ? Object.fromEntries(
-            Object.entries(valorSalvo.recompensasConcedidas)
-                .filter(([id, rotulo]) => idsValidos.has(id) && typeof rotulo === "string")
-        )
-        : {};
-
-    return {
-        semana: progressoVazio.semana,
-        inimigosEliminados: normalizarContador(valorSalvo.inimigosEliminados),
-        fasesConcluidas: normalizarContador(valorSalvo.fasesConcluidas),
-        maiorWaveInfinita: normalizarContador(valorSalvo.maiorWaveInfinita),
-        recompensasResgatadas: Array.isArray(valorSalvo.recompensasResgatadas)
-            ? [...new Set(valorSalvo.recompensasResgatadas.filter(id => idsValidos.has(id)))]
-            : [],
-        recompensasConcedidas
-    };
+    const ids=new Set(CONFIG.missoes.permanentes.map(m=>m.id));
+    p.recompensasResgatadas=Array.isArray(valor.recompensasResgatadas)?[...new Set(valor.recompensasResgatadas.filter(id=>ids.has(id)))]:[];
+    for(const [id,rotulo] of Object.entries(valor.recompensasConcedidas||{}))if(ids.has(id)&&typeof rotulo==='string')p.recompensasConcedidas[id]=rotulo;
+    for(const grupo of ['bosses','fases','mapasInfinitos']) {
+        const lista=valor.colecoes?.[grupo];
+        p.colecoes[grupo]=Array.isArray(lista)?[...new Set(lista.filter(v=>grupo==='bosses'?typeof v==='string'&&tipoEhBoss(v):Number.isInteger(v)&&v>=1&&v<=100))]:[];
+    }
+    for(const [fase,n] of Object.entries(valor.vitoriasPorFase||{}))if(/^\d+$/.test(fase)&&Number.isSafeInteger(n)&&n>=0)p.vitoriasPorFase[fase]=n;
+    return p;
 }
-
-function carregarProgressoMissoesSemanais() {
+function carregarProgressoMissoesPermanentes() {
     try {
-        const valorSalvo = JSON.parse(localStorage.getItem(CHAVE_MISSOES_SEMANAIS) || "null");
-        const progressoNormalizado = normalizarProgressoDasMissoesSemanais(valorSalvo);
-
-        if (!valorSalvo || valorSalvo.semana !== progressoNormalizado.semana) {
-            localStorage.setItem(
-                CHAVE_MISSOES_SEMANAIS,
-                JSON.stringify(progressoNormalizado)
-            );
+        const salvo=localStorage.getItem(CHAVE_MISSOES_PERMANENTES);
+        if(salvo)return normalizarProgressoDasMissoesPermanentes(JSON.parse(salvo));
+        const antigo=JSON.parse(localStorage.getItem(CHAVE_MISSOES_SEMANAIS)||'null');
+        const p=normalizarProgressoDasMissoesPermanentes(antigo);
+        // O recorde antigo contava a wave iniciada, não a concluída.
+        p.maiorWaveInfinita=Math.max(0,p.maiorWaveInfinita-1);
+        const mapa={cacadorDePixels:'permanente11',guardiaoDaCampanha:'permanente61',alemDoLimite:'permanente83'};
+        for(const id of antigo?.recompensasResgatadas||[])if(mapa[id]) {
+            p.recompensasResgatadas.push(mapa[id]);
+            const m=CONFIG.missoes.permanentes.find(m=>m.id===mapa[id]);
+            p[m.propriedadeDoProgresso]=Math.max(p[m.propriedadeDoProgresso]||0,m.objetivo);
+            p.recompensasConcedidas[m.id]=antigo.recompensasConcedidas?.[id]||m.recompensa.rotulo;
         }
-
-        return progressoNormalizado;
-    } catch (erro) {
-        return criarProgressoSemanalVazio();
-    }
+        localStorage.setItem(CHAVE_MISSOES_PERMANENTES,JSON.stringify(p));
+        return p;
+    } catch {return criarProgressoPermanenteVazio();}
 }
-
-function salvarProgressoMissoesSemanais() {
-    try {
-        localStorage.setItem(
-            CHAVE_MISSOES_SEMANAIS,
-            JSON.stringify(progressoMissoesSemanais)
-        );
-    } catch (erro) {
-        // O progresso continua válido durante a sessão sem armazenamento local.
-    }
+function salvarProgressoMissoesPermanentes() {
+    try {localStorage.setItem(CHAVE_MISSOES_PERMANENTES,JSON.stringify(progressoMissoesPermanentes));} catch {}
 }
-
-function garantirMissoesDaSemanaAtual() {
-    const semanaAtual = obterIdentificadorDaSemana();
-
-    if (progressoMissoesSemanais.semana === semanaAtual) {
-        return;
-    }
-
-    progressoMissoesSemanais = criarProgressoSemanalVazio();
-    salvarProgressoMissoesSemanais();
-}
-
 function carregarRecompensasPermanentesDasMissoes() {
     const recompensasVazias = {
         skinsDesbloqueadas: [],
@@ -11786,9 +13674,9 @@ function carregarPreferenciaLocalDaSkinDoApoiador() {
 
 function carregarEstatisticasDasConquistas() {
     const estatisticasVazias = {
-        inimigosEliminados: progressoMissoesSemanais.inimigosEliminados || 0,
-        fasesConcluidas: progressoMissoesSemanais.fasesConcluidas || 0,
-        maiorWaveInfinita: progressoMissoesSemanais.maiorWaveInfinita || 0,
+        inimigosEliminados: progressoMissoesPermanentes.inimigosEliminados || 0,
+        fasesConcluidas: progressoMissoesPermanentes.fasesConcluidas || 0,
+        maiorWaveInfinita: progressoMissoesPermanentes.maiorWaveInfinita || 0,
         minigamesFliperamaConcluidos: []
     };
 
@@ -11860,13 +13748,8 @@ function carregarMaiorFaseConcluida() {
         ) === "true";
 
         if (!correcaoJaAplicada) {
-            const valorCorrigido = Math.min(
-                valorNormalizado,
-                CONFIG.progressoDaCampanha.maiorFaseConfiavelAntesDaCorrecao
-            );
-            localStorage.setItem(CHAVE_PROGRESSO_FASES, valorCorrigido.toString());
+            // A ausência da marca antiga não prova que o progresso foi indevido.
             localStorage.setItem(CHAVE_CORRECAO_PROGRESSO_FASES, "true");
-            return valorCorrigido;
         }
 
         if (valorSalvo !== valorNormalizado) {
@@ -11973,6 +13856,7 @@ function carregarProgressaoDeNivel() {
 }
 
 function salvarProgressaoDeNivel() {
+    if (obterDadosDoNivel().nivel >= 12) registrarProgressoDaMissao('nivel12',1,true);
     try {
         localStorage.setItem(
             CHAVE_PROGRESSAO_NIVEL,
@@ -13622,8 +15506,8 @@ function desenharPreviaDoEditor() {
     const tema = temasDoMapa[mapa.tema] || temasDoMapa.campo;
     const caminho = CONFIG.editorDeFases.caminhos.find(item => item.id === mapa.idDoCaminho)
         || CONFIG.editorDeFases.caminhos[0];
-    const escalaX = canvasDaPrevia.width / 1200;
-    const escalaY = canvasDaPrevia.height / 720;
+    const escalaX = canvasDaPrevia.width / canvas.width;
+    const escalaY = canvasDaPrevia.height / canvas.height;
     contexto.fillStyle = tema.terrenoBase;
     contexto.fillRect(0, 0, canvasDaPrevia.width, canvasDaPrevia.height);
     contexto.fillStyle = tema.terrenoClaro;
@@ -14747,6 +16631,7 @@ function interagirComPortalSecreto() {
 
     if (!faseSecretaDescoberta) {
         faseSecretaDescoberta = true;
+        registrarProgressoDaMissao('portal',1,true);
         salvarFaseSecretaDescoberta();
         atualizarPortalFaseSecreta();
     }
@@ -14755,39 +16640,71 @@ function interagirComPortalSecreto() {
 }
 
 function mostrarConversaSecretaBloqueada() {
-    conversaDoPortalSecretoBloqueadoAtiva = true;
-    fecharConversaDoPortal();
+    ocultarConversaNoPortal();
     fecharConteudoMenu();
+    conversaDoPortalSecretoBloqueadoAtiva = true;
     camadaConversaPortal.classList.add("camada-conversa-senhor-tempo");
     camadaConversaPortal.dataset.tipoConversa = "portal-bloqueado";
     camadaConversaPortal.hidden = false;
     camadaConversaPortal.innerHTML = `
         <section class="balao-conversa-portal balao-senhor-do-tempo" role="document">
-            ${criarRetratoDoSenhorDoTempo(true)}
+            <div class="portal-retrato-conversa" aria-hidden="true"><span>?</span></div>
             <div class="conversa-portal-conteudo">
                 <small>${localizar("TRANSMISSÃO DESCONHECIDA")}</small>
-                <h2 id="titulo-conversa-portal">${localizar("ENTIDADE DA FALHA")}</h2>
-                <p class="conversa-portal-fala">â€œ${localizar("Ainda nÃ£o...")}â€</p>
+                <h2 id="titulo-conversa-portal">???</h2>
+                <p class="conversa-portal-fala">“${localizar("Ainda não...")}”</p>
                 <div class="conversa-portal-escolhas">
                     <button
                         class="botao botao-conversa-portal botao-avancar-senhor-tempo"
                         type="button"
-                        onclick="encerrarConversaSecretaBloqueada()"
+                    onclick="responderConversaSecretaBloqueada('como-assim')"
                     >${localizar("Como assim?")}</button>
                     <button
                         class="botao botao-conversa-portal botao-avancar-senhor-tempo"
                         type="button"
-                        onclick="encerrarConversaSecretaBloqueada()"
-                    >${localizar("O quÃª?")}</button>
+                    onclick="responderConversaSecretaBloqueada('o-que')"
+                    >${localizar("O quê?")}</button>
                     <button
                         class="botao botao-conversa-portal botao-avancar-senhor-tempo"
                         type="button"
-                        onclick="encerrarConversaSecretaBloqueada()"
-                    >${localizar("Quem Ã© vocÃª?")}</button>
+                    onclick="responderConversaSecretaBloqueada('quem-e')"
+                    >${localizar("Quem é você?")}</button>
                 </div>
             </div>
         </section>
     `;
+    atualizarRetratoDoPortal();
+    camadaConversaPortal.querySelector(".botao-conversa-portal")?.focus();
+}
+
+function responderConversaSecretaBloqueada(tipoDeResposta) {
+    if (!conversaDoPortalSecretoBloqueadoAtiva) {
+        return;
+    }
+
+    const respostas = {
+        "como-assim": "Volte quando você estiver pronto.",
+        "o-que": "Ainda não...",
+        "quem-e": "..."
+    };
+    const resposta = respostas[tipoDeResposta] || respostas["como-assim"];
+
+    camadaConversaPortal.innerHTML = `
+        <section class="balao-conversa-portal balao-senhor-do-tempo" role="document">
+            <div class="portal-retrato-conversa" aria-hidden="true"><span>?</span></div>
+            <div class="conversa-portal-conteudo">
+                <small>${localizar("TRANSMISSÃO DESCONHECIDA")}</small>
+                <h2 id="titulo-conversa-portal">???</h2>
+                <p class="conversa-portal-fala">“${localizar(resposta)}”</p>
+                <button
+                    class="botao botao-conversa-portal"
+                    type="button"
+                    onclick="encerrarConversaSecretaBloqueada()"
+                >${localizar("Encerrar conversa")}</button>
+            </div>
+        </section>
+    `;
+    atualizarRetratoDoPortal();
     camadaConversaPortal.querySelector(".botao-conversa-portal")?.focus();
 }
 
@@ -14797,7 +16714,7 @@ function encerrarConversaSecretaBloqueada() {
     }
 
     conversaDoPortalSecretoBloqueadoAtiva = false;
-    fecharConversaDoPortal();
+    ocultarConversaNoPortal();
 }
 
 function iniciarTransicaoDoPortalGlitch() {
@@ -14913,6 +16830,7 @@ function mostrarConversaDaArmadilhaDoIntervalo(indiceDaFala = 0) {
             </div>
         </section>
     `;
+    atualizarRetratoDoPortal();
     camadaConversaPortal.querySelector(".botao-avancar-armadilha-intervalo")?.focus();
 }
 
@@ -14975,6 +16893,7 @@ function iniciarCorredoresAmarelos(agora = Date.now()) {
     }
 
     const configuracao = CONFIG.faseSecreta.corredoresAmarelos;
+    desbloquearConquista('cadeSaida');
     labirintoAmareloAtivo = true;
     jogadorDosCorredoresAmarelos = {
         x: configuracao.inicio.x,
@@ -15165,6 +17084,7 @@ function concluirCorredoresAmarelos() {
         return;
     }
 
+    desbloquearConquista('amareloDemais');
     ocultarCorredoresAmarelos();
     iniciarFaseSecreta();
 }
@@ -15172,6 +17092,7 @@ function concluirCorredoresAmarelos() {
 function fecharConversaDoPortalAoClicarFora(evento) {
     if (
         !conversaDoSenhorDoTempoAtiva
+        && !conversaDoPortalSecretoBloqueadoAtiva
         && !conversaDaArmadilhaDoIntervaloAtiva
         && evento.target === camadaConversaPortal
     ) {
@@ -15179,7 +17100,7 @@ function fecharConversaDoPortalAoClicarFora(evento) {
     }
 }
 
-function criarRetratoDoSenhorDoTempo(forcarFormaHumana = false) {
+function criarRetratoDoSenhorDoTempo(forcarFormaHumana = true) {
     const formaHumanaAtiva = forcarFormaHumana
         || CONFIG.faseSecreta.senhorDoTempo.formaHumanaFutura.ativa;
     const classeDaFormaHumana = formaHumanaAtiva ? "senhor-tempo-forma-humana" : "";
@@ -15269,6 +17190,7 @@ function mostrarConversaDoSenhorDoTempo(
             </div>
         </section>
     `;
+    atualizarRetratoDoPortal();
     camadaConversaPortal.querySelector(".botao-avancar-senhor-tempo")?.focus();
 }
 
@@ -15326,11 +17248,13 @@ function mostrarCutsceneDaCarta(tipoDaCarta = "portal") {
     if (cartaConcedeMaquinaDoTempo) {
         cartaDaMaquinaDoTempoVista = true;
         maquinaDoTempoDesbloqueada = true;
+        registrarProgressoDaMissao('maquina',1,true);
         maquinaDoTempoAcabouDeSerConcedida = true;
         salvarCartaDaMaquinaDoTempoVista();
         salvarMaquinaDoTempoDesbloqueada();
     } else {
         cartaMisteriosaVista = true;
+        registrarProgressoDaMissao('carta',1,true);
         salvarCartaMisteriosaVista();
     }
 
@@ -15339,6 +17263,8 @@ function mostrarCutsceneDaCarta(tipoDaCarta = "portal") {
     if (camadaCutsceneCarta.dataset) {
         camadaCutsceneCarta.dataset.tipoCarta = "carta";
     }
+    camadaCutsceneCarta.classList.remove("conversa-pixelada");
+    camadaCutsceneCarta.querySelector('.retrato-dialogo')?.remove();
     tituloCutsceneCarta.textContent = localizar("VOCÊ ENCONTROU UMA CARTA");
     textoCutsceneCarta.textContent = localizar(configuracao.texto);
     assinaturaCutsceneCarta.textContent = localizar(configuracao.assinatura);
@@ -15364,9 +17290,13 @@ function exibirConteudoDaCutscene({
     assinatura,
     textoDoBotao,
     retomarPartida = false,
-    etapa = null
+    etapa = null,
+    meioComunicacao = null
 }) {
     cutsceneDaCartaAtiva = true;
+    const escolhasDoLimbo = document.getElementById("escolhas-entidade-limbo");
+    if (escolhasDoLimbo) escolhasDoLimbo.hidden = true;
+    botaoContinuarCutsceneCarta.hidden = false;
     cutsceneDaTransmissaoRetomaPartida = Boolean(retomarPartida && !partidaEncerrada);
     if (camadaCutsceneCarta.dataset) {
         camadaCutsceneCarta.dataset.tipoCarta = tipo;
@@ -15377,6 +17307,7 @@ function exibirConteudoDaCutscene({
         }
     }
     tituloCutsceneCarta.textContent = localizar(titulo);
+    atualizarRetratoDaCutscene(titulo, tipo, assinatura, meioComunicacao);
     textoCutsceneCarta.textContent = localizar(texto);
     assinaturaCutsceneCarta.textContent = localizar(assinatura);
     botaoContinuarCutsceneCarta.textContent = localizar(textoDoBotao);
@@ -15572,7 +17503,7 @@ function avancarCenaFinalDoPontoZero() {
 
 function deveMostrarCenaFinalIntervaloPerdidoAposVitoria() {
     return faseAtualEhIntervaloPerdido()
-        && (!cenaFinalIntervaloPerdidoVista || !capitulo3Desbloqueado);
+        && !mapaPersonalizadoAtivo && !modoWavesInfinitas;
 }
 
 function mostrarIntroducaoDoIntervaloPerdido(indiceDaEtapa = 0) {
@@ -15606,8 +17537,9 @@ function avancarIntroducaoDoIntervaloPerdido() {
     botaoMenuPartida.focus();
 }
 
-function mostrarCenaFinalDoIntervaloPerdido(indiceDaEtapa = 0) {
-    const etapas = CONFIG.intervaloPerdido.cenaFinal.etapas;
+function mostrarCenaFinalDoIntervaloPerdido(indiceDaEtapa = 0, caminho = "etapas") {
+    if (!["etapas", "verdade", "silencio"].includes(caminho)) return;
+    const etapas = CONFIG.intervaloPerdido.cenaFinal[caminho];
     indiceDaCenaFinalIntervaloPerdido = Math.max(
         0,
         Math.min(indiceDaEtapa, etapas.length - 1)
@@ -15621,19 +17553,118 @@ function mostrarCenaFinalDoIntervaloPerdido(indiceDaEtapa = 0) {
         textoDoBotao: etapa.textoDoBotao,
         etapa: etapa.id
     });
+    camadaCutsceneCarta.dataset.caminhoLimbo = caminho;
+    const escolha = etapa.id === "pergunta";
+    document.getElementById("escolha-limbo-silencio").textContent = localizar("Permanecer calado");
+    document.getElementById("escolha-limbo-verdade").textContent = localizar("Foi o Senhor do Tempo");
+    document.getElementById("escolhas-entidade-limbo").hidden = !escolha;
+    botaoContinuarCutsceneCarta.hidden = escolha;
+    desenharCenaDaEntidadeDoLimbo(etapa.id);
+    if (escolha) document.getElementById("escolha-limbo-silencio").focus();
 }
 
 function avancarCenaFinalDoIntervaloPerdido() {
-    const ultimoIndice = CONFIG.intervaloPerdido.cenaFinal.etapas.length - 1;
+    const caminho = camadaCutsceneCarta.dataset.caminhoLimbo || "etapas";
+    if (camadaCutsceneCarta.dataset.etapaCena === "pergunta") return;
+    const ultimoIndice = CONFIG.intervaloPerdido.cenaFinal[caminho].length - 1;
     if (indiceDaCenaFinalIntervaloPerdido < ultimoIndice) {
-        mostrarCenaFinalDoIntervaloPerdido(indiceDaCenaFinalIntervaloPerdido + 1);
+        mostrarCenaFinalDoIntervaloPerdido(indiceDaCenaFinalIntervaloPerdido + 1, caminho);
         return;
     }
 
+    if (caminho === "verdade") registrarRotaParaConquistas('verdade');
+    if (caminho === "silencio") {
+        ocultarCutsceneDaCarta();
+        iniciarExploracaoDoCastelo();
+        return;
+    }
     cenaFinalIntervaloPerdidoVista = true;
     salvarCenaFinalIntervaloPerdidoVista();
     ocultarCutsceneDaCarta();
     mostrarCutsceneDoCapitulo3();
+}
+
+function escolherRespostaDaEntidadeDoLimbo(caminho) {
+    if (!cutsceneDaCartaAtiva
+        || camadaCutsceneCarta.dataset.tipoCarta !== "cena-final-intervalo-perdido"
+        || camadaCutsceneCarta.dataset.etapaCena !== "pergunta"
+        || !["verdade", "silencio"].includes(caminho)) return;
+    mostrarCenaFinalDoIntervaloPerdido(0, caminho);
+}
+
+function desenharCenaDaEntidadeDoLimbo(etapa) {
+    const paisagem = document.getElementById("paisagem-entidade-limbo").getContext("2d");
+    desenharRetratoDaEntidadeDoLimbo(document.getElementById("retrato-entidade-limbo").getContext("2d"));
+    paisagem.clearRect(0, 0, 480, 190);
+    paisagem.fillStyle = "#111020";
+    paisagem.fillRect(0, 0, 480, 190);
+    for (let faixa = 0; faixa < 5; faixa++) {
+        paisagem.fillStyle = faixa % 2 ? "#272137" : "#201b30";
+        paisagem.fillRect((faixa * 79) % 130, 90 + faixa * 19, 380, 7);
+    }
+    paisagem.fillStyle = "#aaa1bd";
+    for (let ponto = 0; ponto < 16; ponto++) {
+        paisagem.fillRect((ponto * 79 + 23) % 480, (ponto * 37 + 11) % 85, 2, 2);
+    }
+    if (etapa === "castelo") {
+        paisagem.fillStyle = "#544a69";
+        paisagem.fillRect(145, 65, 220, 110);
+        for (const torre of [125, 235, 345]) {
+            paisagem.fillRect(torre, 42, 40, 133);
+            paisagem.fillRect(torre - 4, 30, 12, 20);
+            paisagem.fillRect(torre + 16, 30, 12, 20);
+            paisagem.fillRect(torre + 32, 30, 12, 20);
+            paisagem.fillStyle = "#dbc87e";
+            paisagem.fillRect(torre + 16, 70, 8, 18);
+            paisagem.fillStyle = "#544a69";
+        }
+        paisagem.fillStyle = "#0b0b14";
+        paisagem.fillRect(233, 126, 42, 49);
+        paisagem.fillStyle = "#b39250";
+        paisagem.fillRect(229, 122, 4, 53);
+        paisagem.fillRect(275, 122, 4, 53);
+        paisagem.fillRect(229, 122, 50, 4);
+    }
+    if (etapa === "selado") {
+        paisagem.strokeStyle = "#d5b866";
+        paisagem.lineWidth = 4;
+        paisagem.strokeRect(22, 12, 436, 165);
+        paisagem.strokeStyle = "#8670aa";
+        paisagem.strokeRect(32, 22, 416, 145);
+    }
+}
+
+function desenharRetratoDaEntidadeDoLimbo(retrato) {
+    // Visual compartilhado entre mapa e retratos.
+    retrato.clearRect(0, 0, 96, 128);
+    const bloco = (cor, x, y, largura, altura) => {
+        retrato.fillStyle = cor;
+        retrato.fillRect(x, y, largura, altura);
+    };
+    bloco("#08070d", 28, 22, 40, 35);
+    bloco("#08070d", 24, 30, 48, 16);
+    bloco("#08070d", 36, 52, 24, 12);
+    bloco("#d9a831", 24, 12, 48, 14);
+    for (const ponta of [24, 44, 64]) bloco("#ffe16a", ponta, ponta === 44 ? 0 : 5, 8, 13);
+    bloco("#ffe16a", 24, 18, 48, 4);
+    bloco("#b62e49", 44, 9, 8, 9);
+    bloco("#ff8d85", 44, 9, 4, 4);
+    bloco("#100b1b", 24, 60, 48, 20);
+    bloco("#100b1b", 16, 76, 64, 24);
+    bloco("#100b1b", 8, 96, 80, 32);
+    bloco("#54238a", 24, 64, 48, 64);
+    bloco("#54238a", 16, 84, 64, 44);
+    bloco("#9034c2", 24, 64, 8, 64);
+    bloco("#9034c2", 64, 80, 8, 48);
+    bloco("#e5bd48", 32, 62, 32, 66);
+    bloco("#fff3c8", 36, 62, 24, 66);
+    for (const altura of [76, 100, 120]) {
+        bloco("#bc3047", 36, altura, 4, 4);
+        bloco("#bc3047", 44, altura + 4, 8, 4);
+        bloco("#bc3047", 56, altura, 4, 4);
+    }
+    bloco("#e5bd48", 16, 120, 16, 4);
+    bloco("#e5bd48", 64, 120, 16, 4);
 }
 
 function deveMostrarIntroducaoFase13() {
@@ -15776,13 +17807,69 @@ function avancarCenaFinalDaFase14() {
     mostrarPainelDeResultado(true);
 }
 
+function faseAtualEhArquivoProibido() {
+    return !mapaPersonalizadoAtivo && faseSelecionada === CONFIG.arquivoProibido.numeroDaFase;
+}
+
+function faseAtualEhCamaraDasMemorias() {
+    return !mapaPersonalizadoAtivo && faseSelecionada === CONFIG.camaraDasMemorias.numeroDaFase;
+}
+
+function faseAtualEhLimiarDoTempo() {
+    return !mapaPersonalizadoAtivo && faseSelecionada === CONFIG.limiarDoTempo.numeroDaFase;
+}
+
+function obterHistoriaDoArquivoAtual() {
+    if (faseAtualEhLimiarDoTempo()) return CONFIG.limiarDoTempo;
+    return faseAtualEhCamaraDasMemorias() ? CONFIG.camaraDasMemorias : CONFIG.arquivoProibido;
+}
+
+function mostrarHistoriaDoArquivoProibido(final = false, indice = 0) {
+    const historia = obterHistoriaDoArquivoAtual();
+    const etapas = final ? historia.final : historia.introducao;
+    const etapa = etapas[indice];
+    if (!etapa) return;
+    exibirConteudoDaCutscene({
+        ...etapa,
+        tipo: final ? "final-arquivo-proibido" : "entrada-arquivo-proibido",
+        etapa: String(indice),
+        retomarPartida: !final
+    });
+}
+
+function avancarHistoriaDoArquivoProibido() {
+    const final = camadaCutsceneCarta.dataset.tipoCarta === "final-arquivo-proibido";
+    const indice = Number(camadaCutsceneCarta.dataset.etapaCena) + 1;
+    const historia = obterHistoriaDoArquivoAtual();
+    const etapas = final ? historia.final : historia.introducao;
+    if (indice < etapas.length) {
+        mostrarHistoriaDoArquivoProibido(final, indice);
+        return;
+    }
+    cutsceneDaTransmissaoRetomaPartida = false;
+    ocultarCutsceneDaCarta();
+    if (final) {
+        if (!faseAtualEhLimiarDoTempo()) registrarProgressoDaMissao(faseAtualEhCamaraDasMemorias() ? "historia16" : "historia15", 1, true);
+        mostrarPainelDeResultado(true);
+    }
+    else {
+        definirJogoPausado(false);
+        botaoMenuPartida.focus();
+    }
+}
+
 function ocultarCutsceneDaCarta() {
+    limparCenaDoConfronto();
+    const escolhas = document.getElementById("escolhas-entidade-limbo");
+    if (escolhas) escolhas.hidden = true;
+    botaoContinuarCutsceneCarta.hidden = false;
     cutsceneDaCartaAtiva = false;
     camadaCutsceneCarta.hidden = true;
     camadaCutsceneCarta.classList.remove("cutscene-carta-em-exibicao");
     if (typeof camadaCutsceneCarta.removeAttribute === "function") {
         camadaCutsceneCarta.removeAttribute("data-tipo-carta");
         camadaCutsceneCarta.removeAttribute("data-etapa-cena");
+        camadaCutsceneCarta.removeAttribute("data-caminho-limbo");
     }
 }
 
@@ -15793,6 +17880,24 @@ function concluirCutsceneDaCarta() {
 
     const deveRetomarPartida = cutsceneDaTransmissaoRetomaPartida;
     const tipoDaCutscene = camadaCutsceneCarta.dataset?.tipoCarta;
+    if (["entrada-confronto", "final-campanha"].includes(tipoDaCutscene)) { avancarConfrontoFinal(); return; }
+    if (tipoDaCutscene === "introducao-fase-1") {
+        const indice = Number(camadaCutsceneCarta.dataset.etapaCena) + 1;
+        const iniciarTutorial = camadaCutsceneCarta.dataset.tutorialAposIntroducao === "true";
+        if (indice < CONFIG.introducaoFase1.length) {
+            mostrarIntroducaoDaFase1(indice, iniciarTutorial);
+        } else {
+            delete camadaCutsceneCarta.dataset.tutorialAposIntroducao;
+            cutsceneDaTransmissaoRetomaPartida = false;
+            ocultarCutsceneDaCarta();
+            if (iniciarTutorial) iniciarTutorialDaPartida();
+            else {
+                definirJogoPausado(false);
+                botaoMenuPartida.focus();
+            }
+        }
+        return;
+    }
     if (tipoDaCutscene === "cena-final-laboratorio") {
         avancarCenaFinalDoLaboratorio();
         return;
@@ -15825,6 +17930,11 @@ function concluirCutsceneDaCarta() {
 
     if (tipoDaCutscene === "cena-final-fase-13") {
         avancarCenaFinalDaFase13();
+        return;
+    }
+
+    if (tipoDaCutscene === "entrada-arquivo-proibido" || tipoDaCutscene === "final-arquivo-proibido") {
+        avancarHistoriaDoArquivoProibido();
         return;
     }
 
@@ -15874,10 +17984,12 @@ function concluirCutsceneDaCarta() {
 function mostrarCutsceneDeDesbloqueioDoCapitulo(numeroDoCapitulo) {
     if (numeroDoCapitulo === 3) {
         capitulo3Desbloqueado = true;
+        registrarProgressoDaMissao('capitulo3',1,true);
         salvarDesbloqueioDoCapitulo3();
         atualizarRelogioQuebradoDoIntervalo();
     } else {
         capitulo2Desbloqueado = true;
+        registrarProgressoDaMissao('capitulo2',1,true);
         salvarDesbloqueioDoCapitulo2();
     }
 
@@ -16293,15 +18405,26 @@ function obterConfiguracaoDaTorre(tipoDaTorre = tipoDeTorreParaConstruir) {
 
 function torreEstaDesbloqueada(tipoDaTorre) {
     const configuracao = obterConfiguracaoDaTorre(tipoDaTorre);
+    if (configuracao.nivelParaDesbloqueio) return obterDadosDoNivel().nivel >= configuracao.nivelParaDesbloqueio;
     const faseNecessariaConcluida =
-        maiorFaseConcluida >= configuracao.faseConcluidaParaDesbloqueio;
+        obterProgressoParaEquipamentos() >= configuracao.faseConcluidaParaDesbloqueio;
     const compraNecessariaConcluida =
         !configuracao.requerCompraNaLoja || comprasDaLoja.has(tipoDaTorre);
     return faseNecessariaConcluida && compraNecessariaConcluida;
 }
 
+function obterProgressoParaEquipamentos() {
+    let preservado=0;
+    try {
+        const valor=Number(localStorage.getItem('guardians-of-pixel-progresso-equipamentos-v1'));
+        if(Number.isInteger(valor)&&valor>=0&&valor<=CONFIG.fases.length)preservado=valor;
+    } catch {}
+    return Math.max(maiorFaseConcluida,preservado);
+}
+
 function obterMensagemDeTorreBloqueada(configuracao) {
     const nome = obterNomeLocalizado(configuracao);
+    if (configuracao.nivelParaDesbloqueio) return localizar("Recompensa do nível {nivel}", { nivel: configuracao.nivelParaDesbloqueio });
 
     if (configuracao.requerCompraNaLoja) {
         return localizar("{nome} deve ser comprada na Loja.", { nome });
@@ -16314,6 +18437,7 @@ function obterMensagemDeTorreBloqueada(configuracao) {
 }
 
 function obterTextoDeTorreBloqueada(configuracao) {
+    if (configuracao.nivelParaDesbloqueio) return localizar("Recompensa do nível {nivel}", { nivel: configuracao.nivelParaDesbloqueio });
     if (configuracao.requerCompraNaLoja) {
         return localizar("Compre na Loja");
     }
@@ -16332,7 +18456,7 @@ function configuracaoEhExplosivoConsumivel(configuracao) {
 }
 
 function configuracaoPossuiMelhorias(configuracao) {
-    return configuracao.melhorias.length > 0;
+    return configuracaoUsaMelhoriasEscolhidas(configuracao) || configuracao.melhorias.length > 0;
 }
 
 function obterDuracaoDaQueimaduraEmSegundos(efeitoDeQueimadura) {
@@ -16438,6 +18562,9 @@ function obterTextoDasFraquezasElementais(tipoDoInimigo) {
 }
 
 function obterResumoBaseDaConfiguracaoDaTorre(configuracao) {
+    if (configuracao.feixeContinuo) return localizar("Feixe {minimo}–{maximo} por pulso · Alcance {alcance}", {
+        minimo: configuracao.dano, maximo: configuracao.dano * configuracao.feixeContinuo.maximoDePulsos, alcance: configuracao.alcance
+    });
     if (configuracao.tipoDeItem === "mina") {
         const detalheCorrosivo = configuracao.efeitoCorrosivo
             ? localizar(" · Corrosão +{percentual}% por {segundos}s", {
@@ -16663,7 +18790,7 @@ function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
                 ${obrigatoriaNoTutorial
                     ? localizar("Obrigatória no tutorial")
                     : obrigatoriaNaFase14
-                        ? localizar("Obrigatória na Fase 14")
+                        ? localizar(faseAtualEhArquivoProibido() ? "Obrigatória nesta fase" : "Obrigatória na Fase 14")
                         : estado}
             </span>
         </button>
@@ -16845,6 +18972,8 @@ function confirmarSelecaoDeDefesas() {
 
 function obterBotoesDeConstrucao() {
     return [
+        { tipo: "torreFeixeContinuo", elemento: document.getElementById("botao-feixe-continuo") },
+        { tipo: "torreLongoAlcance", elemento: document.getElementById("botao-longo-alcance") },
         { tipo: "padrao", elemento: botaoTorrePadrao },
         { tipo: "canhaoPesado", elemento: botaoCanhaoPesado },
         { tipo: "torreGlacial", elemento: botaoTorreGlacial },
@@ -17066,6 +19195,7 @@ function concluirTutorialDaPartida() {
 
     tutorialConcluido = true;
     salvarTutorialConcluido();
+    registrarProgressoDaMissao("tutorial", 1, true);
     ocultarTutorialDaPartida();
     definirJogoPausado(false);
     mostrarAviso(localizar("Treinamento concluído. Defenda sua base!"));
@@ -17097,6 +19227,20 @@ function tutorialBloqueiaAcoesDaTorre() {
     return true;
 }
 
+function mostrarIntroducaoDaFase1(indice = 0, iniciarTutorial = false) {
+    camadaCutsceneCarta.dataset.tutorialAposIntroducao = String(iniciarTutorial);
+    desenharCenaPausadaDoTutorial();
+    exibirConteudoDaCutscene({
+        tipo: "introducao-fase-1",
+        titulo: "VOCÊ",
+        texto: CONFIG.introducaoFase1[indice],
+        assinatura: "",
+        textoDoBotao: indice === CONFIG.introducaoFase1.length - 1 ? "Começar defesa" : "Continuar",
+        etapa: String(indice),
+        retomarPartida: true
+    });
+}
+
 function iniciarPartida(wavesInfinitas = false) {
     pararMusicaDoLobby();
 
@@ -17122,8 +19266,11 @@ function iniciarPartida(wavesInfinitas = false) {
     obterContextoAudio();
     selecionarTrilhaDaPartida();
     prepararNovaPartida();
+    if (faseAtualEhSecreta() && !mapaPersonalizadoAtivo) registrarProgressoDaMissao("glitch", 1, true);
 
-    if (deveIniciarTutorial) {
+    if (faseSelecionada === 1 && !modoWavesInfinitas && !mapaPersonalizadoAtivo) {
+        mostrarIntroducaoDaFase1(0, deveIniciarTutorial);
+    } else if (deveIniciarTutorial) {
         iniciarTutorialDaPartida();
     }
 
@@ -17131,6 +19278,8 @@ function iniciarPartida(wavesInfinitas = false) {
 }
 
 function prepararNovaPartida() {
+    iniciarTentativaParaConquistas();
+    reiniciarEstatisticasDaPartidaParaMissoes();
     ocultarTutorialDaPartida();
     inimigos = [];
     torres = [];
@@ -17175,6 +19324,7 @@ function prepararNovaPartida() {
     inimigosDronesDoFuturoDespedacadoParaCriar = 0;
     inimigosAndarilhosDeSucataParaCriar = 0;
     inimigosEcosTemporaisParaCriar = 0;
+    filaDeInimigosExclusivos = [];
     inimigosSentinelasCronologicasParaCriar = 0;
     inimigosResiduosTemporaisParaCriar = 0;
     inimigosArquivistasCorrompidosParaCriar = 0;
@@ -17268,6 +19418,10 @@ function prepararNovaPartida() {
         mostrarIntroducaoDaFase13();
     } else if (deveMostrarIntroducaoFase14()) {
         mostrarIntroducaoDaFase14();
+    } else if (faseAtualEhConfrontoFinal() && !modoWavesInfinitas) {
+        mostrarConfrontoFinal();
+    } else if ((faseAtualEhArquivoProibido() || faseAtualEhCamaraDasMemorias() || faseAtualEhLimiarDoTempo()) && !modoWavesInfinitas) {
+        mostrarHistoriaDoArquivoProibido();
     }
 }
 
@@ -17325,7 +19479,7 @@ function ocultarPainelBonusPosBoss() {
 }
 
 function pulsoTemporalEstaDesbloqueado() {
-    return maiorFaseConcluida >= CONFIG.pulsoTemporal.faseConcluidaParaDesbloqueio;
+    return obterProgressoParaEquipamentos() >= CONFIG.pulsoTemporal.faseConcluidaParaDesbloqueio;
 }
 
 function pulsoTemporalEstaAtivo(agora = Date.now()) {
@@ -19022,6 +21176,7 @@ function finalizarPartida() {
 
     partidaEncerrada = true;
     partidaVencida = false;
+    terminarTentativaParaConquistas(false);
     fragmentosRecebidosNoResultado = concederFragmentosPelasWavesAlcancadas();
     tiros = [];
     tirosDosInimigos = [];
@@ -19036,6 +21191,7 @@ function finalizarPartidaComVitoria() {
 
     partidaEncerrada = true;
     partidaVencida = true;
+    terminarTentativaParaConquistas(true);
     const vitoriaNoMapaPersonalizado = Boolean(mapaPersonalizadoAtivo);
     const vitoriaNaFaseSecreta = faseAtualEhSecreta();
     const vitoriaNoIntervaloPerdido = faseAtualEhIntervaloPerdido();
@@ -19057,7 +21213,9 @@ function finalizarPartidaComVitoria() {
             CONFIG.progressaoDeNivel.experienciaPorFaseConcluida
         );
     }
+    if (faseSelecionada === 16 && !vitoriaNoMapaPersonalizado) registrarProgressoDaMissao('feixeLiberado',1,true);
     if (vitoriaNaFaseSecreta) {
+        registrarProgressoDaMissao('vitoriaGlitch',1,true);
         desbloquearConquista("aindaEstaEsperando");
     }
     fragmentosRecebidosNoResultado = vitoriaNoMapaPersonalizado
@@ -19092,6 +21250,10 @@ function finalizarPartidaComVitoria() {
         mostrarCenaFinalDaFase13();
     } else if (deveMostrarCenaFinalFase14AposVitoria()) {
         mostrarCenaFinalDaFase14();
+    } else if (faseAtualEhConfrontoFinal() && !modoWavesInfinitas) {
+        mostrarConfrontoFinal(true);
+    } else if ((faseAtualEhArquivoProibido() || faseAtualEhCamaraDasMemorias() || faseAtualEhLimiarDoTempo()) && !modoWavesInfinitas) {
+        mostrarHistoriaDoArquivoProibido(true);
     } else {
         mostrarPainelDeResultado(true);
     }
@@ -19228,6 +21390,7 @@ function iniciarProximaFaseDoResultado() {
 }
 
 function voltarAoLobby(comVinheta = false) {
+    if (typeof atualizarBotaoDaFloresta === 'function') atualizarBotaoDaFloresta();
     const partidaEraPersonalizada = Boolean(mapaPersonalizadoAtivo);
     const abaDoEditorDaPartida = origemDoMapaPersonalizadoAtivo;
     const partidaEraSecreta = faseAtualEhSecreta();
@@ -19401,21 +21564,21 @@ function atualizarDisponibilidadeDaDesistencia() {
     }
 }
 
-function obterMissaoSemanal(idDaMissao) {
-    return CONFIG.missoes.semanais.find(missao => missao.id === idDaMissao) || null;
+function obterMissaoPermanente(idDaMissao) {
+    return CONFIG.missoes.permanentes.find(missao => missao.id === idDaMissao) || null;
 }
 
 function obterProgressoAtualDaMissao(missao) {
-    const progresso = progressoMissoesSemanais[missao.propriedadeDoProgresso] || 0;
+    const progresso = progressoMissoesPermanentes[missao.propriedadeDoProgresso] || 0;
     return Math.min(progresso, missao.objetivo);
 }
 
-function missaoSemanalEstaConcluida(missao) {
+function missaoPermanenteEstaConcluida(missao) {
     return obterProgressoAtualDaMissao(missao) >= missao.objetivo;
 }
 
 function recompensaDaMissaoFoiResgatada(idDaMissao) {
-    return progressoMissoesSemanais.recompensasResgatadas.includes(idDaMissao);
+    return progressoMissoesPermanentes.recompensasResgatadas.includes(idDaMissao);
 }
 
 function recompensaPermanenteJaFoiDesbloqueada(recompensa) {
@@ -19492,7 +21655,9 @@ function exibirProximaNotificacaoDeProgresso() {
     cartao.setAttribute("role", "status");
     icone.className = "notificacao-progresso-icone";
     icone.setAttribute("aria-hidden", "true");
-    icone.textContent = notificacao.icone;
+    if (notificacao.idDaConquista) {
+        icone.innerHTML = criarImagemDaConquista(notificacao.idDaConquista);
+    } else icone.textContent = notificacao.icone;
     titulo.textContent = notificacao.titulo;
     nome.textContent = notificacao.nome;
     descricao.textContent = notificacao.descricao;
@@ -19512,69 +21677,46 @@ function exibirProximaNotificacaoDeProgresso() {
     }, CONFIG.interface.duracaoNotificacaoDeProgressoMs);
 }
 
-function enfileirarNotificacaoDeProgresso(tipo, titulo, nome, descricao, icone) {
-    filaDeNotificacoesDeProgresso.push({ tipo, titulo, nome, descricao, icone });
+function enfileirarNotificacaoDeProgresso(tipo, titulo, nome, descricao, icone, idDaConquista = null) {
+    filaDeNotificacoesDeProgresso.push({ tipo, titulo, nome, descricao, icone, idDaConquista });
     exibirProximaNotificacaoDeProgresso();
 }
 
-function registrarProgressoDaMissao(propriedade, valor, usarMaiorValor = false) {
-    garantirMissoesDaSemanaAtual();
-    const valorAtual = progressoMissoesSemanais[propriedade] || 0;
-    const missaoDaPropriedade = CONFIG.missoes.semanais.find(missao => (
-        missao.propriedadeDoProgresso === propriedade
-    ));
-    const valorCalculado = usarMaiorValor
-        ? Math.max(valorAtual, valor)
-        : valorAtual + valor;
-    const novoValor = !usarMaiorValor && missaoDaPropriedade
-        ? Math.min(valorCalculado, missaoDaPropriedade.objetivo)
-        : valorCalculado;
-
-    if (!Number.isInteger(novoValor) || novoValor < 0 || novoValor === valorAtual) {
-        return;
-    }
-
-    progressoMissoesSemanais[propriedade] = novoValor;
-    salvarProgressoMissoesSemanais();
+function registrarProgressoDaMissao(propriedade,valor,usarMaiorValor=false) {
+    if(!Number.isSafeInteger(valor)||valor<0)return;
+    const atual=progressoMissoesPermanentes[propriedade]||0;
+    const missoes=CONFIG.missoes.permanentes.filter(m=>m.propriedadeDoProgresso===propriedade);
+    if(!missoes.length)return;
+    const limite=Math.max(...missoes.map(m=>m.objetivo));
+    const novo=Math.min(limite,usarMaiorValor?Math.max(atual,valor):atual+valor);
+    if(novo<=atual)return;
+    progressoMissoesPermanentes[propriedade]=novo;
+    salvarProgressoMissoesPermanentes();
     atualizarResumoDasMissoesNoMenu();
-
-    if (
-        missaoDaPropriedade
-        && valorAtual < missaoDaPropriedade.objetivo
-        && novoValor >= missaoDaPropriedade.objetivo
-    ) {
-        enfileirarNotificacaoDeProgresso(
-            "missao",
-            traduzir("notificacoes.missaoConcluida"),
-            obterNomeLocalizado(missaoDaPropriedade),
-            traduzir("notificacoes.resgatarMissao"),
-            missaoDaPropriedade.icone
-        );
+    for(const m of missoes)if(atual<m.objetivo&&novo>=m.objetivo&&!recompensaDaMissaoFoiResgatada(m.id)) {
+        enfileirarNotificacaoDeProgresso('missao',traduzir('notificacoes.missaoConcluida'),localizarMissao(m.nome),traduzir('notificacoes.resgatarMissao'),m.icone);
     }
 }
 
-function registrarInimigoEliminadoParaMissoes() {
+function registrarInimigoEliminadoParaMissoes(inimigo) {
+    if (!partidaContaParaMissoes()) return;
+    if (inimigo) registrarEliminacaoDetalhadaParaMissoes(inimigo);
     registrarProgressoDaMissao("inimigosEliminados", 1);
 }
 
 function registrarFaseConcluidaParaMissoes() {
+    if (!partidaContaParaMissoes() || estatisticasDaPartidaParaMissoes.vitoriaRegistrada) return;
+    registrarVitoriaDetalhadaParaMissoes();
     if (!modoWavesInfinitas) {
         registrarProgressoDaMissao("fasesConcluidas", 1);
     }
 }
 
-function registrarWaveInfinitaParaMissoes(numeroDaWave) {
-    if (modoWavesInfinitas) {
-        registrarProgressoDaMissao("maiorWaveInfinita", numeroDaWave, true);
-    }
-}
-
 function contarRecompensasProntasDasMissoes() {
-    garantirMissoesDaSemanaAtual();
-    return CONFIG.missoes.semanais.filter(missao => (
-        missaoSemanalEstaConcluida(missao)
+    return CONFIG.missoes.permanentes.filter(missao => (
+        missaoPermanenteEstaConcluida(missao)
         && !recompensaDaMissaoFoiResgatada(missao.id)
-    )).length;
+    )).length + (premioFinalDasMissoesDisponivel() ? 1 : 0);
 }
 
 function atualizarResumoDasMissoesNoMenu() {
@@ -19589,24 +21731,16 @@ function atualizarResumoDasMissoesNoMenu() {
     resumoMissoesMenu.textContent = traduzir(chave, { quantidade });
 }
 
-function formatarProximaRenovacaoSemanal() {
-    return obterDataDaProximaRenovacaoSemanal().toLocaleDateString(idiomaAtual, {
-        weekday: "long",
-        day: "2-digit",
-        month: "2-digit"
-    });
-}
-
-function criarCartaoDaMissaoSemanal(missao) {
+function criarCartaoDaMissaoPermanente(missao) {
     const progresso = obterProgressoAtualDaMissao(missao);
-    const concluida = missaoSemanalEstaConcluida(missao);
+    const concluida = missaoPermanenteEstaConcluida(missao);
     const resgatada = recompensaDaMissaoFoiResgatada(missao.id);
     const percentual = Math.min(100, Math.round((progresso / missao.objetivo) * 100));
     const recompensaEfetiva = obterRecompensaEfetivaDaMissao(missao);
-    const nomeDaMissao = obterNomeLocalizado(missao);
-    const descricaoDaMissao = localizar(missao.descricao);
+    const nomeDaMissao = localizarMissao(missao.nome);
+    const descricaoDaMissao = localizarMissao(missao.descricao);
     const rotuloDaRecompensaOriginal = resgatada
-        ? progressoMissoesSemanais.recompensasConcedidas[missao.id]
+        ? progressoMissoesPermanentes.recompensasConcedidas[missao.id]
             || missao.recompensa.rotulo
         : recompensaEfetiva.rotulo;
     const rotuloDaRecompensa = localizarRotuloDaRecompensa(rotuloDaRecompensaOriginal);
@@ -19625,7 +21759,7 @@ function criarCartaoDaMissaoSemanal(missao) {
             <div class="missao-dados">
                 <header class="missao-topo">
                     <div>
-                        <small>${localizar("MISSÃO SEMANAL")}</small>
+                        <small>${localizarMissao("MISSÃO PERMANENTE")}</small>
                         <h3>${nomeDaMissao}</h3>
                     </div>
                     <span class="missao-recompensa">
@@ -19648,7 +21782,7 @@ function criarCartaoDaMissaoSemanal(missao) {
                     <strong>${progresso} / ${missao.objetivo}</strong>
                     <button
                         class="botao botao-resgatar-missao"
-                        onclick="resgatarMissaoSemanal('${missao.id}')"
+                        onclick="resgatarMissaoPermanente('${missao.id}')"
                         ${!concluida || resgatada ? "disabled" : ""}
                     >${textoDoBotao}</button>
                 </div>
@@ -19694,47 +21828,39 @@ function criarColecaoDasMissoes() {
     `;
 }
 
-function mostrarMissoes() {
-    definirTelaDoMenuAberta("missoes");
+function mostrarMissoes(categoria = categoriaDeMissoesSelecionada) {
+    categoriaDeMissoesSelecionada = categoria;
+    definirTelaDoMenuAberta('missoes');
     tentarIniciarMusicaDoLobby();
-    garantirMissoesDaSemanaAtual();
+    sincronizarDescobertasParaMissoes();
     atualizarResumoDasMissoesNoMenu();
-    const [ano, numeroDaSemana] = progressoMissoesSemanais.semana.split("-S");
-    const cartoes = CONFIG.missoes.semanais
-        .map(criarCartaoDaMissaoSemanal)
-        .join("");
-
-    conteudoMenu.innerHTML = `
-        ${criarCabecalhoConteudoMenu(
-            localizar("Missões"),
-            localizar("Complete objetivos, resgate prêmios e monte sua coleção.")
-        )}
-        <section class="missoes-semana-cabecalho">
-            <div>
-                <small>${localizar("SEMANA ATUAL")}</small>
-                <strong>${localizar("Semana {semana} de {ano}", {
-                    semana: numeroDaSemana,
-                    ano
-                })}</strong>
-            </div>
-            <p>${localizar("Renova {data} à 0h", {
-                data: formatarProximaRenovacaoSemanal()
-            })}</p>
-        </section>
-        <section class="missoes-grade" aria-label="${localizar("Missões semanais")}">
-            ${cartoes}
-        </section>
+    const lista=CONFIG.missoes.permanentes;
+    const concluidas=lista.filter(missaoPermanenteEstaConcluida).length;
+    const categorias=[...new Set(lista.map(m=>m.categoria))];
+    const categoriasComPremio = new Set(lista
+        .filter(m => missaoPermanenteEstaConcluida(m) && !recompensaDaMissaoFoiResgatada(m.id))
+        .map(m => m.categoria));
+    const visiveis=lista.filter(m=>!categoria||m.categoria===categoria);
+    conteudoMenu.innerHTML=`
+        ${criarCabecalhoConteudoMenu(localizarMissao('Missões'),localizarMissao('100 missões permanentes. Sem prazo, sem renovação.'))}
+        <section class="missoes-semana-cabecalho"><strong>${concluidas} / ${lista.length} · ${localizarMissao('Concluídas')}</strong>
+        <p>${localizarMissao('Progresso acumulado e recompensas únicas.')}</p></section>
+        ${criarPainelDoPremioFinalDasMissoes()}
+        <nav class="categorias-missoes" aria-label="${localizarMissao('Categorias de missões')}">
+        ${['',...categorias].map(c=>`<button class="botao" aria-pressed="${categoria===c}" onclick="mostrarMissoes('${c}')">${localizarMissao(c||'Todas')}${(c ? categoriasComPremio.has(c) : categoriasComPremio.size > 0 || premioFinalDasMissoesDisponivel()) ? `<span class="categoria-missao-premio" aria-label="${traduzir('notificacoes.resgatarMissao')}">!</span>` : ''}</button>`).join('')}</nav>
+        <section class="missoes-grade">${visiveis.map(m=>m.secreta&&!missaoPermanenteEstaConcluida(m)
+            ? `<article class="missao-cartao"><span class="missao-icone">?</span><div class="missao-dados"><h3>???</h3><p>${localizarMissao('Continue sua jornada para descobrir esta missão.')}</p></div></article>`
+            : criarCartaoDaMissaoPermanente(m)).join('')}</section>
         ${criarColecaoDasMissoes()}
     `;
 }
 
-function resgatarMissaoSemanal(idDaMissao) {
-    garantirMissoesDaSemanaAtual();
-    const missao = obterMissaoSemanal(idDaMissao);
+function resgatarMissaoPermanente(idDaMissao) {
+    const missao = obterMissaoPermanente(idDaMissao);
 
     if (
         !missao
-        || !missaoSemanalEstaConcluida(missao)
+        || !missaoPermanenteEstaConcluida(missao)
         || recompensaDaMissaoFoiResgatada(idDaMissao)
     ) {
         return;
@@ -19760,9 +21886,9 @@ function resgatarMissaoSemanal(idDaMissao) {
         desbloquearConquista(recompensa.id);
     }
 
-    progressoMissoesSemanais.recompensasResgatadas.push(idDaMissao);
-    progressoMissoesSemanais.recompensasConcedidas[idDaMissao] = recompensa.rotulo;
-    salvarProgressoMissoesSemanais();
+    progressoMissoesPermanentes.recompensasResgatadas.push(idDaMissao);
+    progressoMissoesPermanentes.recompensasConcedidas[idDaMissao] = recompensa.rotulo;
+    salvarProgressoMissoesPermanentes();
     atualizarResumoDasMissoesNoMenu();
     mostrarMissoes();
 }
@@ -20170,7 +22296,8 @@ function desbloquearConquista(idDaConquista) {
         traduzir("notificacoes.conquistaDesbloqueada"),
         obterNomeLocalizado(conquista),
         localizar(conquista.descricao),
-        conquista.icone
+        conquista.icone,
+        idDaConquista
     );
     return true;
 }
@@ -20246,6 +22373,7 @@ function registrarWaveInfinitaParaConquistas(numeroDaWave) {
 }
 
 function registrarDefesaConstruidaParaConquistas(tipoDaDefesa) {
+    registrarConstrucaoParaMissoes(tipoDaDefesa);
     if (!CONFIG.torre.tipos[tipoDaDefesa]) {
         return false;
     }
@@ -20307,6 +22435,7 @@ function registrarEliminacoesDaBombaPesadaParaConquistas(quantidadeEliminada) {
 }
 
 function registrarTransmissaoProjetoRelogioParaConquistas() {
+    registrarProgressoDaMissao('transmissao',1,true);
     return desbloquearConquista("frequencia09");
 }
 
@@ -20325,6 +22454,11 @@ function atualizarResumoDasConquistasNoMenu() {
     });
 }
 
+function criarImagemDaConquista(idDaConquista) {
+    if (!Object.hasOwn(CONFIG.conquistas, idDaConquista)) return "?";
+    return `<img class="imagem-conquista" src="assets/conquistas/${encodeURIComponent(idDaConquista)}.svg" width="64" height="64" alt="" draggable="false">`;
+}
+
 function criarCartaoDeConquista([idDaConquista, conquista]) {
     const desbloqueada = conquistaEstaDesbloqueada(idDaConquista);
     const conteudoOculto = conquista.secreta && !desbloqueada;
@@ -20337,14 +22471,14 @@ function criarCartaoDeConquista([idDaConquista, conquista]) {
         ? localizar("CONQUISTA ESPECIAL")
         : localizar("MARCO PERMANENTE");
     const nomeDaConquista = conteudoOculto
-        ? localizar(conquista.nomeBloqueado)
+        ? "???"
         : obterNomeLocalizado(conquista);
     const descricaoDaConquista = conteudoOculto
-        ? localizar(conquista.descricaoBloqueada)
+        ? localizar("Explore o jogo para descobrir.")
         : localizar(conquista.descricao);
     const iconeDaConquista = conteudoOculto
-        ? conquista.iconeBloqueado
-        : conquista.icone;
+        ? "?"
+        : criarImagemDaConquista(idDaConquista);
 
     return `
         <article class="conquista-cartao ${desbloqueada ? "conquista-desbloqueada" : "conquista-bloqueada"} ${conquista.secreta ? "conquista-secreta" : ""}">
@@ -20357,7 +22491,7 @@ function criarCartaoDeConquista([idDaConquista, conquista]) {
             <small>${rotuloDoTipo}</small>
             <h3>${nomeDaConquista}</h3>
             <p>${descricaoDaConquista}</p>
-            <div
+            ${conteudoOculto ? '' : `<div
                 class="conquista-progresso"
                 role="progressbar"
                 aria-label="${localizar("Progresso de {nome}", { nome: nomeDaConquista })}"
@@ -20367,12 +22501,13 @@ function criarCartaoDeConquista([idDaConquista, conquista]) {
             >
                 <span style="width: ${percentual}%"></span>
             </div>
-            <strong class="conquista-contador">${estado.progressoExibido} / ${estado.objetivo}</strong>
+            <strong class="conquista-contador">${estado.progressoExibido} / ${estado.objetivo}</strong>`}
         </article>
     `;
 }
 
-function mostrarConquistas() {
+function mostrarConquistas(categoria = categoriaDeConquistasSelecionada) {
+    categoriaDeConquistasSelecionada = categoria === 'ocultas' ? 'ocultas' : 'comuns';
     definirTelaDoMenuAberta("conquistas");
     tentarIniciarMusicaDoLobby();
     verificarConquistasAutomaticas();
@@ -20382,6 +22517,7 @@ function mostrarConquistas() {
         .filter(conquistaEstaDesbloqueada)
         .length;
     const cartoes = Object.entries(CONFIG.conquistas)
+        .filter(([, conquista]) => Boolean(conquista.secreta) === (categoriaDeConquistasSelecionada === 'ocultas'))
         .map(criarCartaoDeConquista)
         .join("");
 
@@ -20400,7 +22536,14 @@ function mostrarConquistas() {
                 })}</strong>
             </div>
         </section>
-        <section class="conquistas-grade" aria-label="${localizar("Todas as conquistas")}">
+        <nav class="abas-conquistas" aria-label="${localizar('Categorias de conquistas')}">
+            ${['comuns', 'ocultas'].map(tipo => {
+                const grupo = Object.entries(CONFIG.conquistas).filter(([, c]) => Boolean(c.secreta) === (tipo === 'ocultas'));
+                const obtidas = grupo.filter(([id]) => conquistaEstaDesbloqueada(id)).length;
+                return `<button class="botao" data-categoria-conquistas="${tipo}" aria-pressed="${categoriaDeConquistasSelecionada === tipo}" onclick="mostrarConquistas('${tipo}')">${localizar(tipo === 'comuns' ? 'Conquistas comuns' : 'Conquistas ocultas')} <span>${obtidas}/${grupo.length}</span></button>`;
+            }).join('')}
+        </nav>
+        <section class="conquistas-grade" aria-label="${localizar(categoriaDeConquistasSelecionada === 'comuns' ? 'Conquistas comuns' : 'Conquistas ocultas')}">
             ${cartoes}
         </section>
     `;
@@ -21405,6 +23548,7 @@ function concluirCompraDaLoja(idDoItem) {
 }
 
 function obterDetalheDoInimigoNoAlbum(tipo, configuracao) {
+    if (configuracao.detalhe) return localizar(configuracao.detalhe);
     const detalhes = {
         sabotador: localizar("Atira em torres | Destrói com {tiros} tiros", {
             tiros: configuracao.tirosParaDestruirTorre
@@ -21451,10 +23595,10 @@ function obterDetalheDoInimigoNoAlbum(tipo, configuracao) {
         roboReparador: localizar("Exclusivo da Fase 9 | Restaura 45 de vida de um aliado próximo"),
         sentinelaDeEscudo: localizar("Exclusivo da Fase 9 | Reduz 25% do dano recebido por aliados próximos"),
         protocoloZero: localizar("Exclusivo da Fase 9 | Rebobina o caminho e recupera vida duas vezes"),
-        automatoDeCobre: localizar("Exclusivo da Fase 10 | Muito rápido"),
-        cobaiaInstavel: localizar("Exclusiva da Fase 10 | Acelera 55% depois de alcançar 50% da vida"),
-        guardaDeContencao: localizar("Exclusivo da Fase 10 | Reduz 25% do dano recebido"),
-        prototipoAlfa: localizar("Exclusivo da Fase 10 | Paralisa até 3 torres com 70% e 35% de vida"),
+        automatoDeCobre: localizar("Fases 10 e 15 | Muito rápido"),
+        cobaiaInstavel: localizar("Fases 10 e 15 | Acelera 55% depois de alcançar 50% da vida"),
+        guardaDeContencao: localizar("Fases 10 e 15 | Reduz 25% do dano recebido"),
+        prototipoAlfa: localizar("Fases 10 e 15 | Paralisa até 3 torres com 70% e 35% de vida"),
         andarilhoDeSucata: localizar("Exclusivo da Fase 11 | Resistente e capaz de usar Fendas Temporais"),
         ecoTemporal: localizar("Exclusivo da Fase 11 | Retorna uma vez com metade da vida"),
         sentinelaCronologica: localizar("Exclusiva da Fase 11 | Reduz 30% do dano perto das fendas"),
@@ -21471,7 +23615,7 @@ function obterDetalheDoInimigoNoAlbum(tipo, configuracao) {
         soldadoCronal: localizar("Exclusivo da Fase 13 | Alterna entre Passado resistente e Futuro veloz"),
         portadorDaFenda: localizar("Exclusivo da Fase 13 | Ao morrer, deixa uma fenda que transporta o próximo inimigo"),
         executorCronal: localizar("Exclusivo da Fase 13 | Convoca duas eras e muda a frente ativa com 60% e 30% de vida"),
-        infiltradorCamuflado: localizar("Exclusivo da Fase 14 | Somente a Torre de Varredura consegue detectá-lo"),
+        infiltradorCamuflado: localizar("Fase 14 | Somente a Torre de Varredura consegue detectá-lo"),
         rascunhoVivo: localizar("Exclusivo da Fase 14 | Muito rápido e parcialmente apagado"),
         sentinelaIncompleta: localizar("Exclusiva da Fase 14 | Blindada; recebe 18% menos dano"),
         sombraCongelada: localizar("Exclusiva da Fase 14 | Uma pessoa preservada como sombra temporal"),
@@ -21520,6 +23664,9 @@ function obterSkinsDoAlbum() {
     const skinEquipada = obterSkinEquipadaDaTorrePadrao();
 
     return [
+        ...CONFIG.missoes.premioFinal.skins.map(id => ({ id, nome: localizar(CONFIG.missoes.skins[id].nome), descricao: CONFIG.missoes.skins[id].descricao,
+            origem: 'Prêmio por concluir as 100 missões.', desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(id),
+            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === id })),
         {
             id: "original",
             nome: "Visual original",
@@ -21532,7 +23679,7 @@ function obterSkinsDoAlbum() {
             id: idDaSkinDeMissao,
             nome: obterNomeLocalizado(skinDeMissao),
             descricao: skinDeMissao.descricao,
-            origem: "Obtida em missão semanal.",
+            origem: "Obtida em missão permanente.",
             desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkinDeMissao),
             equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === idDaSkinDeMissao
         },
@@ -21578,7 +23725,11 @@ function obterDadosDasCategoriasDoAlbum() {
         "residuoTemporal", "arquivistaCorrompido", "fragmentoDeArquivo", "vigiaDoPontoZero",
         "soldadoCronal", "portadorDaFenda",
         "infiltradorCamuflado", "rascunhoVivo", "sentinelaIncompleta", "sombraCongelada",
+        "rasurador", "censorVelado", "sentinelaDeIndice",
+        "fragmentoMnesico", "lembrancaBlindada", "ecoDaMemoria",
+        "batedorDeInstantes", "couracadoDeAmpulheta", "tecelaoDeSegundos",
         "boss", "bossDeserto", "bossArtico", "bossSelva", "bossTemperado", "bossVulcanico", "bossPantano", "bossPrimordial", "protocoloZero", "prototipoAlfa", "sentinelaDoAmanha", "guardiaoDoPontoZero", "executorCronal", "curadorDoVazio",
+        "bibliotecarioMudo", "devoradorDeMemorias", "arconteDoLimiar", "senhorDoTempo",
         ...(intervaloPerdidoDescoberto
             ? ["fragmentoDeSegundo", "ponteiroErrante", "paradoxoBlindado", "carcereiroDoIntervalo"]
             : []),
@@ -21805,7 +23956,8 @@ function criarCartoesDaTorre(tipo, configuracao) {
                     + detalheDeDesbloqueio;
     const textoDoElemento = obterTextoDoElemento(configuracao);
     const detalheDoElemento = textoDoElemento ? ` | ${textoDoElemento}` : "";
-    const descricaoDoNivelBase = descricaoBaseDoNivelBase + detalheDoElemento;
+    const descricaoDoNivelBase = descricaoBaseDoNivelBase + detalheDoElemento
+        + (configuracaoUsaMelhoriasEscolhidas(configuracao) ? ' | ' + resumoDasMelhoriasEscolhidas() : '');
     const nomeDaTorre = obterNomeLocalizado(configuracao);
     const nomeDoNivelBase = configuracaoEhExplosivoConsumivel(configuracao)
         || !configuracaoPossuiMelhorias(configuracao)
@@ -21819,7 +23971,7 @@ function criarCartoesDaTorre(tipo, configuracao) {
             nomeDoNivelBase,
             descricaoDoNivelBase
         ),
-        ...configuracao.melhorias.map((melhoria, indice) => {
+        ...(configuracaoUsaMelhoriasEscolhidas(configuracao) ? [] : configuracao.melhorias).map((melhoria, indice) => {
             const descricaoDaMelhoria = melhoria.efeitoSismico
                 ? indice === 0
                     ? localizar("Melhoria: {custo} | Carga reduzida para {cargas} inimigos", {
@@ -21920,6 +24072,7 @@ function atualizarConteudoMenuAberto() {
         conquistas: mostrarConquistas,
         niveis: mostrarNiveis,
         salvos: mostrarSalvos,
+        classico: () => mostrarApresentacaoClassico(),
         editor: () => rascunhoDoMapaNoEditor
             ? mostrarFormularioDoEditor()
             : mostrarEditorDeFases(),
@@ -21945,8 +24098,7 @@ function fecharConteudoMenu(preservarMapaPersonalizado = false) {
     }
 
     if (camadaConversaPortal) {
-        camadaConversaPortal.hidden = true;
-        camadaConversaPortal.innerHTML = "";
+        ocultarConversaNoPortal();
     }
 
     const elementoParaRestaurarFoco = elementoDeOrigemDoConteudoMenu;
@@ -22206,6 +24358,7 @@ function criarMiniaturaDaSkinNosDetalhes(idDaSkin) {
 
 function criarDadosDosDetalhesDaTorre(tipo, nivel) {
     const configuracao = CONFIG.torre.tipos[tipo];
+    if (configuracaoUsaMelhoriasEscolhidas(configuracao) && nivel !== 0) return null;
     const nivelValido = Number.isInteger(nivel)
         && nivel >= 0
         && nivel <= (configuracao?.melhorias?.length || 0);
@@ -22215,7 +24368,7 @@ function criarDadosDosDetalhesDaTorre(tipo, nivel) {
 
     const configuracaoAtual = obterConfiguracaoDaTorreNoNivel(configuracao, nivel);
     const configuracaoDoElemento = obterConfiguracaoDoElemento(configuracao.elemento);
-    const possuiNiveis = (configuracao.melhorias?.length || 0) > 0;
+    const possuiNiveis = configuracaoPossuiMelhorias(configuracao);
     const ehExplosivo = configuracaoEhExplosivoConsumivel(configuracao);
     const tempoDeAtaque = configuracaoAtual.velocidadeAtaque > 0
         ? localizar("{segundos} s", {
@@ -22302,7 +24455,7 @@ function criarDadosDosDetalhesDaTorre(tipo, nivel) {
         categoria: obterCategoriaDaDefesaNosDetalhes(configuracao),
         miniatura: criarMiniaturaDaTorreNosDetalhes(tipo, nivel),
         atributos,
-        descricao: obterResumoBaseDaConfiguracaoDaTorre(configuracaoAtual),
+        descricao: obterResumoBaseDaConfiguracaoDaTorre(configuracaoAtual) + (configuracaoUsaMelhoriasEscolhidas(configuracao) ? ' · ' + resumoDasMelhoriasEscolhidas() : ''),
         observacao: configuracaoDoElemento
             ? localizar("Contra o mesmo elemento, o dano permanece normal.")
             : ehExplosivo
@@ -22600,7 +24753,9 @@ function desenharMiniaturasDosInimigosDoAlbum() {
 
         copiarDesenhoParaMiniaturaDoAlbum(miniatura, (tamanhoDaAreaDeDesenho) => {
             const escalaVisual = obterEscalaVisualDoInimigo(tipo, configuracao.tamanho);
-            const tamanhoDoSprite = escalaVisual * 2;
+            const tamanhoDoSprite = SPRITES_DOS_ELENCOS_EXCLUSIVOS[tipo]
+                ? Math.min(escalaVisual * 2, tamanhoDaAreaDeDesenho - 8)
+                : escalaVisual * 2;
             const x = Math.round((tamanhoDaAreaDeDesenho - tamanhoDoSprite) / 2);
             const y = Math.round((tamanhoDaAreaDeDesenho - tamanhoDoSprite) / 2);
             desenharCorpoDoInimigo(inimigoDaMiniatura, x, y, tamanhoDoSprite);
@@ -22830,6 +24985,100 @@ function mostrarTutorial() {
 }
 
 // Waves e inimigos
+function obterElencoExclusivoDaFase() {
+    if (mapaPersonalizadoAtivo) return null;
+    return [CONFIG.arquivoProibido, CONFIG.camaraDasMemorias, CONFIG.limiarDoTempo, CONFIG.confrontoFinal]
+        .find(c => c.numeroDaFase === faseSelecionada) || null;
+}
+
+function configurarWaveDoElencoExclusivo() {
+    const c = obterElencoExclusivoDaFase();
+    const desafio = obterWaveEspecialFinal(wave);
+    const quantidades = c.elenco.map(regra => regra.base != null
+        ? regra.base + wave * regra.porWave
+        : calcularQuantidadeDeInimigoExclusivo(true, regra.primeiraWave, regra.wavesPorUnidade));
+    c.elenco.forEach((regra,i) => { quantidades[i] += desafio?.reforcos[regra.tipo] || 0; });
+    avisarWaveEspecialFinal(wave);
+    filaDeInimigosExclusivos = [];
+    for (let i = 0; i < Math.max(...quantidades); i++) {
+        c.elenco.forEach((regra, indice) => {
+            if (i < quantidades[indice]) filaDeInimigosExclusivos.push(regra.tipo);
+        });
+    }
+    inimigosChefesParaCriar = wave % CONFIG.wave.intervaloDeBoss === 0 ? 1 : 0;
+    if (inimigosChefesParaCriar) filaDeInimigosExclusivos.push(c.waveDoBoss && wave < c.waveDoBoss ? c.bossIntermediario : c.boss);
+    inimigosParaCriar = filaDeInimigosExclusivos.length;
+    avisoBossExpiraEm = inimigosChefesParaCriar ? Date.now() + 2500 : 0;
+    proximoInimigoEm = Date.now();
+    proximaWaveEm = 0;
+}
+
+function ativarConvocacaoDoInimigo(inimigo, agora = Date.now()) {
+    const c = CONFIG.inimigo[inimigo.tipo];
+    if (!c?.percentuaisDeVidaParaConvocar || inimigo.vida <= 0) return;
+    inimigo.convocacoesRealizadas = inimigo.convocacoesRealizadas || 0;
+    while (inimigo.convocacoesRealizadas < c.percentuaisDeVidaParaConvocar.length
+        && inimigo.vida <= inimigo.vidaMaxima * c.percentuaisDeVidaParaConvocar[inimigo.convocacoesRealizadas]) {
+        inimigo.convocacoesRealizadas++;
+        if (c.percentualDeRestauracao) {
+            for (const aliado of inimigos) {
+                if (aliado.vida <= 0 || tipoEhBoss(aliado.tipo)
+                    || Math.hypot(aliado.x - inimigo.x, aliado.y - inimigo.y) > c.raioDaRestauracao) continue;
+                aliado.vida = Math.min(aliado.vidaMaxima, aliado.vida + aliado.vidaMaxima * c.percentualDeRestauracao);
+            }
+        }
+        for (let i = 0; i < c.quantidadeDeReforcos; i++) {
+            criarInimigo(c.tipoDoReforco);
+            const reforco = inimigos[inimigos.length - 1];
+            // Os reforços surgem no mesmo ponto, sem teleporte para a entrada nem para a base.
+            Object.assign(reforco, {x: inimigo.x, y: inimigo.y, alvo: inimigo.alvo, indiceDoCaminho: inimigo.indiceDoCaminho});
+        }
+        if (c.quantidadeDeTorresSeladas) {
+            const proximas = torres.filter(t => !obterConfiguracaoDaTorre(t.tipo).naoAtira)
+                .sort((a, b) => Math.hypot(a.x - inimigo.x, a.y - inimigo.y) - Math.hypot(b.x - inimigo.x, b.y - inimigo.y))
+                .slice(0, c.quantidadeDeTorresSeladas);
+            for (const torre of proximas) {
+                torre.estaseTemporalExpiraEm = Math.max(torre.estaseTemporalExpiraEm || 0, agora + c.duracaoDoSelo);
+                torre.alvoAtual = null;
+                torre.pulsosDoFeixe = 0;
+            }
+            mostrarAviso(localizar(c.avisoDaConvocacao || "O Arconte selou suas defesas!"));
+        } else mostrarAviso(localizar(c.avisoDaConvocacao || "O Tecelão convocou reforços!"));
+    }
+}
+
+const SPRITES_DOS_ELENCOS_EXCLUSIVOS = Object.freeze({
+    rasurador: ["............","...aaaaa....","...accba....","...abbba....","..aaaaaaa...",".aacccaaa...",".aacbbaca...","..acbbca....","..aaaaaa....","...a..a.....","..aa..aa....","............"],
+    censorVelado: [".....aa.....","....abba....","...abbbba...","..abccccba..","...abbbba...","...aaaaaa...","..aabbbbaa..","..abbbbbba..",".abbbccbbba.",".abbbbbbbba.","aaaaa..aaaaa","............"],
+    sentinelaDeIndice: ["...aaaaaa...","...acccca...","...abbbba...",".aaaaaaaaaa.","aaccaaaaccaa","aabbaaaabbaa","aabbaaaabbaa","aaccaaaaccaa",".aaaaaaaaaa.","..aaa..aaa..","..aba..aba..","..aaa..aaa.."],
+    bibliotecarioMudo: ["....aaaa....","...abbbba...","...acccca...","...abbbba...","..aaaaaaaa..",".aaabbbbaaa.","aaaaccccaaaa","abccabbaccba","abcbaaaabcba","abccabbaccba",".aaaaaaaaaa.","..aaa..aaa.."],
+    fragmentoMnesico: ["............",".....c......","....aca.....","...abbca....","..abbcbca...",".abbcbbbca..","..acbbcca...","...accaa....","....aa......","...c..c.....","..a....a....","............"],
+    lembrancaBlindada: ["....aaaa....","...abccba...","..aabbbbaa..",".aaaaccaaaa.","aabbaccabbaa","abbbaaaabbba","abbbaccabbba","aabbaccabbaa",".aaaaaaaaaa.","..aaa..aaa..","..abb..bba..","..aaa..aaa.."],
+    ecoDaMemoria: ["....aaaa....","...abbbba...","...acbcba...","...abbbba...","....aaaa....","..aabbbbaa..",".a.abbbba.a.","c..abbbba..c","...abbbba...","....a.aa....","...a...a....","..c.....c..."],
+    devoradorDeMemorias: ["..aa....aa..",".abbbaabbba.","aabccbbccbaa","abbbbbbbbbba","abccccccccba",".abcbbbbcba.","..abccccba..",".aabbbbbbaa.","aaabbbbbbaaa","a.abbbbbba.a","c..aa..aa..c","..aaa..aaa.."],
+    batedorDeInstantes: ["....cc......","...cbbc.....","....bb......","...aaaa.....","..aaabba....",".a.aabba.c..","...aaaa.ccc.","....aa..c...","...a..a.....","..aa..aa....","..b....b....","............"],
+    couracadoDeAmpulheta: ["...aaaaaa...","..abbbbbba..","..abccccba..","...abbbba...",".aaaaaaaaaa.","abbaa..aabba","abba.cc.abba","abba.cc.abba",".aaaaaaaaaa.","..aaa..aaa..","..abb..bba..","..aaa..aaa.."],
+    tecelaoDeSegundos: [".....aa.....","....abba....","...abccba...","....abba....","..aaaaaaaa..",".aa..aa..aa.","c...abba...c",".c.abbbba.c.","..abbbbbba..",".abbbbbbbba.","aaaaa..aaaaa","............"],
+    arconteDoLimiar: ["..a......a..","..aa.aa.aa..","...aaaaaa...","...abccba...","..aabbbbaa..",".aaabccbaaa.","aa.abccba.aa","a..abbbba..a","c..abccba..c","..aabbbbaa..",".aaaabbbaaa.","aaaaa..aaaaa"]
+});
+
+function desenharInimigoExclusivo(inimigo, x, y, tamanho) {
+    const grade = SPRITES_DOS_ELENCOS_EXCLUSIVOS[inimigo.tipo];
+    const cores = {a: CONFIG.inimigo[inimigo.tipo].cor, b: "#242137", c: "#e4ffff"};
+    const pixel = tamanho / grade.length;
+    ctx.save();
+    for (let linha = 0; linha < grade.length; linha++) {
+        for (let coluna = 0; coluna < grade[linha].length; coluna++) {
+            const cor = cores[grade[linha][coluna]];
+            if (!cor) continue;
+            ctx.fillStyle = cor;
+            const esquerda = Math.round(x + coluna * pixel), topo = Math.round(y + linha * pixel);
+            ctx.fillRect(esquerda, topo, Math.round(x + (coluna + 1) * pixel) - esquerda, Math.round(y + (linha + 1) * pixel) - topo);
+        }
+    }
+    ctx.restore();
+}
+
 function criarInimigo(tipo) {
     const configuracao = CONFIG.inimigo[tipo];
     const caminhosAtuais = obterCaminhosAtuais();
@@ -22917,6 +25166,9 @@ function criarInimigo(tipo) {
 
 function tipoEhBoss(tipoDoInimigo) {
     return [
+        "senhorDoTempo",
+        "bibliotecarioMudo", "devoradorDeMemorias",
+        "arconteDoLimiar",
         "boss",
         "bossDeserto",
         "bossArtico",
@@ -22937,6 +25189,8 @@ function tipoEhBoss(tipoDoInimigo) {
 }
 
 function obterTipoDeBossDaFase() {
+    const elencoExclusivo = obterElencoExclusivoDaFase();
+    if (elencoExclusivo) return elencoExclusivo.waveDoBoss && wave < elencoExclusivo.waveDoBoss ? elencoExclusivo.bossIntermediario : elencoExclusivo.boss;
     if (mapaPersonalizadoAtivo) {
         return "boss";
     }
@@ -23267,19 +25521,19 @@ function obterReducaoCronologicaDoInimigo(inimigo) {
 
 function ativarRetornoDoEco(inimigo, agora = Date.now()) {
     if (
-        inimigo.tipo !== "ecoTemporal"
+        (inimigo.tipo !== "ecoTemporal" && !CONFIG.inimigo[inimigo.tipo]?.retornoAposDerrota)
         || inimigo.retornosDoEcoRealizados > 0
         || inimigo.vida > 0
     ) {
         return false;
     }
 
-    const configuracao = CONFIG.inimigo.ecoTemporal;
+    const configuracao = CONFIG.inimigo[inimigo.tipo];
     inimigo.retornosDoEcoRealizados = 1;
     inimigo.vida = inimigo.vidaMaxima * configuracao.percentualDeVidaNoRetorno;
     recuarInimigoNoCaminho(inimigo, configuracao.distanciaDoRetorno);
     inimigo.retornoDoEcoExpiraEm = agora + configuracao.duracaoVisualDoRetorno;
-    mostrarAviso(localizar("O Eco Temporal retornou pelo caminho!"));
+    mostrarAviso(localizar(configuracao.avisoDoRetorno || "O Eco Temporal retornou pelo caminho!"));
     return true;
 }
 
@@ -23494,7 +25748,7 @@ function aplicarDanoAoInimigo(
     inimigo,
     dano,
     agora = Date.now(),
-    { ignorarReducoes = false, elemento = null } = {}
+    { ignorarReducoes = false, elemento = null, tipoDaDefesa = null, torreOrigem = null } = {}
 ) {
     if (!inimigo || inimigo.vida <= 0 || dano <= 0) {
         return 0;
@@ -23584,6 +25838,9 @@ function aplicarDanoAoInimigo(
         }
     } else {
         inimigo.vida -= danoEfetivo;
+        if (inimigo.vida <= 0) {
+            inimigo.defesaDoGolpeFinal = tipoDaDefesa;
+        }
     }
 
     if (
@@ -23597,6 +25854,8 @@ function aplicarDanoAoInimigo(
         inimigo.regeneracaoAtivadaEm = agora;
         mostrarAviso(localizar("A Hidra despertou sua regeneração!"));
     }
+
+    ativarConvocacaoDoInimigo(inimigo, agora);
 
     if (inimigo.tipo === "bossPrimordial") {
         ativarChamadoDaMatilha(inimigo, agora);
@@ -23636,6 +25895,7 @@ function aplicarDanoAoInimigo(
         ? ativarRetornoDoEco(inimigo, agora)
         : false;
 
+    if (inimigo.vida <= 0) registrarGolpeFinalParaConquistas(inimigo, torreOrigem, agora);
     return ecoRetornou ? vidaAnterior : vidaAnterior - inimigo.vida;
 }
 
@@ -23696,7 +25956,8 @@ function aplicarEfeitoDeQueimadura(
     inimigo,
     efeitoDeQueimadura,
     agora = Date.now(),
-    elemento = null
+    elemento = null,
+    torreOrigem = null
 ) {
     if (!inimigo || inimigo.vida <= 0 || !efeitoDeQueimadura) {
         return false;
@@ -23707,6 +25968,7 @@ function aplicarEfeitoDeQueimadura(
     inimigo.intervaloDaQueimadura = efeitoDeQueimadura.intervaloEntreDanos;
     inimigo.queimaduraExpiraEm = agora + efeitoDeQueimadura.duracao;
     inimigo.elementoDaQueimadura = elemento;
+    inimigo.torreOrigemDaQueimadura = torreOrigem;
 
     if (!queimaduraJaEstavaAtiva) {
         inimigo.proximoDanoDeQueimaduraEm = agora
@@ -23740,7 +26002,7 @@ function atualizarDanoDaQueimaduraNoInimigo(inimigo, agora = Date.now()) {
             inimigo,
             inimigo.danoDaQueimadura,
             inimigo.proximoDanoDeQueimaduraEm,
-            { elemento: inimigo.elementoDaQueimadura }
+            { elemento: inimigo.elementoDaQueimadura, torreOrigem: inimigo.torreOrigemDaQueimadura }
         );
         inimigo.proximoDanoDeQueimaduraEm += inimigo.intervaloDaQueimadura;
     }
@@ -23812,7 +26074,7 @@ function iniciarProximaWave() {
 
     wave++;
     recarregarProtocoloDeContencao();
-    registrarWaveInfinitaParaMissoes(wave);
+
     registrarWaveInfinitaParaConquistas(wave);
 
     if (mapaPersonalizadoAtivo) {
@@ -23834,6 +26096,12 @@ function iniciarProximaWave() {
 
     if (faseAtualEhIntervaloPerdido()) {
         configurarComposicaoDaWaveDoIntervaloPerdido();
+        tentarExibirFliperamaNaWaveAtual();
+        return;
+    }
+
+    if (obterElencoExclusivoDaFase()) {
+        configurarWaveDoElencoExclusivo();
         tentarExibirFliperamaNaWaveAtual();
         return;
     }
@@ -24052,9 +26320,9 @@ function iniciarProximaWave() {
         CONFIG.linhaDeFrenteTemporal.waves.wavesPorNovoPortadorDaFenda
     );
     inimigosInfiltradoresCamufladosParaCriar = calcularQuantidadeDeInimigoExclusivo(
-        faseDaEraApagada,
-        CONFIG.eraApagada.waves.primeiraWaveInfiltradorCamuflado,
-        CONFIG.eraApagada.waves.wavesPorNovoInfiltradorCamuflado
+        faseDaEraApagada || faseAtualEhArquivoProibido(),
+        faseAtualEhArquivoProibido() ? CONFIG.arquivoProibido.primeiraWaveCamuflado : CONFIG.eraApagada.waves.primeiraWaveInfiltradorCamuflado,
+        faseAtualEhArquivoProibido() ? CONFIG.arquivoProibido.wavesPorNovoCamuflado : CONFIG.eraApagada.waves.wavesPorNovoInfiltradorCamuflado
     );
     inimigosRascunhosVivosParaCriar = calcularQuantidadeDeInimigoExclusivo(
         faseDaEraApagada,
@@ -24187,6 +26455,9 @@ function atualizarWaves() {
 
             if (mapaPersonalizadoAtivo) {
                 // A fila personalizada já removeu este inimigo ao escolhê-lo.
+            } else if (obterElencoExclusivoDaFase()) {
+                if (tipoEhBoss(tipoDoInimigo)) inimigosChefesParaCriar--;
+                // A fila exclusiva é consumida ao selecionar o tipo.
             } else if (tipoEhBoss(tipoDoInimigo)) {
                 inimigosChefesParaCriar--;
             } else if (tipoDoInimigo === "portadorDaFenda") {
@@ -24296,6 +26567,7 @@ function atualizarWaves() {
     }
 
     if (inimigos.length === 0) {
+        registrarWaveCompletaParaMissoes();
         concederCreditosDosGeradoresAposWave(wave);
         disponibilizarRadioProjetoRelogio();
         disponibilizarTerminalLaboratorio();
@@ -24308,6 +26580,7 @@ function atualizarWaves() {
         }
 
         if (deveOferecerBonusPosBoss()) {
+            avisarWaveEspecialFinal(wave + 1);
             abrirPainelBonusPosBoss();
             return;
         }
@@ -24315,6 +26588,7 @@ function atualizarWaves() {
         if (proximaWaveEm === 0) {
             proximaWaveEm = agora + CONFIG.wave.pausaEntreWaves;
             avisarProximoCaminhoVivo(wave + 1);
+            avisarWaveEspecialFinal(wave + 1);
         } else if (agora >= proximaWaveEm) {
             iniciarProximaWave();
         }
@@ -24322,6 +26596,7 @@ function atualizarWaves() {
 }
 
 function obterProximoTipoDeInimigo() {
+    if (obterElencoExclusivoDaFase()) return filaDeInimigosExclusivos.shift();
     if (mapaPersonalizadoAtivo) {
         return filaDeInimigosDoMapaPersonalizado.shift() || "normal";
     }
@@ -24592,6 +26867,10 @@ function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
         return 0;
     }
 
+    const configuracaoLimiar = CONFIG.inimigo[inimigo.tipo];
+    const aceleracaoLimiar = configuracaoLimiar?.percentualVidaParaAcelerar
+        && inimigo.vida <= inimigo.vidaMaxima * configuracaoLimiar.percentualVidaParaAcelerar
+        ? configuracaoLimiar.multiplicadorDeAceleracao : 1;
     const multiplicadorDeDisparada = oncaEstaEmDisparada(inimigo)
         ? CONFIG.inimigo.oncaDaSelva.multiplicadorVelocidadeEmDisparada
         : 1;
@@ -24637,6 +26916,7 @@ function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
         ? CONFIG.inimigo.soldadoCronal.multiplicadorDeVelocidadeNoFuturo
         : 1;
     const velocidadeComHabilidades = inimigo.velocidade
+        * aceleracaoLimiar
         * multiplicadorDeDisparada
         * multiplicadorDaArrancada
         * multiplicadorDaErupcao
@@ -24771,6 +27051,10 @@ function moverInimigos(multiplicadorDeMovimento = 1) {
     for (let i = inimigos.length - 1; i >= 0; i--) {
         const inimigo = inimigos[i];
         const caminhoAtual = obterCaminhoDoInimigo(inimigo);
+        if (inimigo.vida > 0 && inimigo.camuflado && !inimigo.reveladoParaMissoes && inimigoEstaReveladoPelaVarredura(inimigo) && partidaContaParaMissoes()) {
+            inimigo.reveladoParaMissoes = true;
+            registrarProgressoDaMissao("revelados", 1);
+        }
         atualizarDanoDaQueimaduraNoInimigo(inimigo, agora);
         atualizarRegeneracaoDaHidra(inimigo, multiplicadorDeMovimento);
         atualizarReparoDoRobo(inimigo, agora);
@@ -24781,7 +27065,7 @@ function moverInimigos(multiplicadorDeMovimento = 1) {
             if (!inimigo.restauradoPeloCurador) {
                 coletarSucataParaTorresProximas(inimigo, agora);
                 if (!mapaPersonalizadoAtivo) {
-                    registrarInimigoEliminadoParaMissoes();
+                    registrarInimigoEliminadoParaMissoes(inimigo);
                     registrarInimigoEliminadoParaConquistas();
                     registrarExperienciaDaPartida(tipoEhBoss(inimigo.tipo)
                         ? CONFIG.progressaoDeNivel.experienciaPorBoss
@@ -24876,7 +27160,8 @@ function aplicarDanoEmArea(
     dano,
     elemento = null,
     agora = Date.now(),
-    tipoDaDefesa = null
+    tipoDaDefesa = null,
+    torreOrigem = null
 ) {
     const inimigosPresentesAntesDoImpacto = obterInimigosVivosNaArea(
         x,
@@ -24888,7 +27173,7 @@ function aplicarDanoEmArea(
     let quantidadeEliminada = 0;
 
     for (const inimigo of inimigosPresentesAntesDoImpacto) {
-        aplicarDanoAoInimigo(inimigo, dano, agora, { elemento });
+        aplicarDanoAoInimigo(inimigo, dano, agora, { elemento, tipoDaDefesa, torreOrigem });
 
         if (inimigo.vida <= 0) {
             quantidadeEliminada++;
@@ -25066,6 +27351,16 @@ function atualizarAvisosDeCreditosGerados(multiplicadorDeMovimento = 1) {
 }
 
 // Interação com o mapa
+function alternarAmpliacaoDoMapa() {
+    const palco = canvas.closest('.palco-jogo');
+    const ampliado = palco.classList.toggle('mapa-ampliado');
+    const botao = document.getElementById('botao-ampliar-mapa');
+    botao.setAttribute('aria-pressed', String(ampliado));
+    botao.dataset.localizar = ampliado ? 'Ver mapa inteiro' : 'Ampliar mapa';
+    botao.textContent = localizar(botao.dataset.localizar);
+    if (!ampliado) palco.scrollTo(0, 0);
+}
+
 function obterPosicaoNoMapaPeloEvento(evento) {
     const retangulo = canvas.getBoundingClientRect();
 
@@ -25454,6 +27749,7 @@ canvas.addEventListener("click", (evento) => {
         };
         atualizarAtributosDaTorreComBonus(novaTorre);
         torres.push(novaTorre);
+        registrarTorreParaConquistasExtras(novaTorre);
 
         dinheiro -= configuracaoDaConstrucao.custo;
         registrarDefesaConstruidaParaConquistas(tipoDeTorreParaConstruir);
@@ -25490,6 +27786,7 @@ function encontrarBombaNaPosicao(x, y) {
 }
 
 function selecionarTorre(torre) {
+    if (torreSelecionada !== torre) document.getElementById('painel-melhorias-escolhidas').hidden = true;
     torreSelecionada = torre;
     atualizarBotoesDaTorre();
     const configuracao = obterConfiguracaoDaTorre(torre.tipo);
@@ -25506,7 +27803,7 @@ function selecionarTorre(torre) {
     }
 }
 
-function melhorarTorreSelecionada() {
+function melhorarTorreSelecionada(atributo = null) {
     if (tutorialBloqueiaAcoesDaTorre()) {
         return;
     }
@@ -25517,6 +27814,15 @@ function melhorarTorreSelecionada() {
     }
 
     const configuracao = obterConfiguracaoDaTorre(torreSelecionada.tipo);
+    if (configuracaoUsaMelhoriasEscolhidas(configuracao)) {
+        if (atributo) comprarMelhoriaEscolhida(atributo);
+        else {
+            const painel = document.getElementById('painel-melhorias-escolhidas');
+            painel.hidden = !painel.hidden;
+            atualizarPainelDeMelhoriasEscolhidas();
+        }
+        return;
+    }
     const proximaMelhoria = configuracao.melhorias[torreSelecionada.nivel];
 
     if (!proximaMelhoria) {
@@ -25531,6 +27837,7 @@ function melhorarTorreSelecionada() {
 
     dinheiro -= proximaMelhoria.custo;
     torreSelecionada.nivel++;
+    registrarAcaoDaTorreParaMissoes("melhorias");
     torreSelecionada.valorInvestido += proximaMelhoria.custo;
     atualizarAtributosDaTorreComBonus(torreSelecionada);
 
@@ -25551,6 +27858,7 @@ function venderTorreSelecionada() {
         return;
     }
 
+    registrarAcaoDaTorreParaMissoes("vendas");
     const valorDaVenda = calcularValorDeVenda(torreSelecionada);
     dinheiro += valorDaVenda;
     torres.splice(torres.indexOf(torreSelecionada), 1);
@@ -25567,6 +27875,9 @@ function calcularValorDeVenda(torre) {
 }
 
 function obterDescricaoDaTorreSelecionada(torre, configuracao, configuracaoAtual) {
+    if (configuracao.feixeContinuo) return localizar("Feixe {minimo}–{maximo} por pulso · Alcance {alcance}", {
+        minimo: torre.dano, maximo: torre.dano * configuracaoAtual.feixeContinuo.maximoDePulsos, alcance: torre.alcance
+    });
     const nomeDaTorre = obterNomeLocalizado(configuracao);
     const textoDoElemento = typeof obterTextoDoElemento === "function"
         ? obterTextoDoElemento(configuracao)
@@ -25704,6 +28015,7 @@ function alternarModoDeAlvoDaTorreSelecionada() {
     const proximoModo = CONFIG.torre.modosDeAlvo[
         (indiceAtual + 1) % CONFIG.torre.modosDeAlvo.length
     ];
+    registrarAcaoDaTorreParaMissoes("prioridades");
     torreSelecionada.modoDeAlvo = proximoModo.id;
     torreSelecionada.alvoAtual = null;
     atualizarBotaoModoDeAlvo();
@@ -25713,6 +28025,7 @@ function alternarModoDeAlvoDaTorreSelecionada() {
 }
 
 function atualizarBotaoMelhorar() {
+    atualizarPainelDeMelhoriasEscolhidas();
     if (!torreSelecionada) {
         botaoMelhorar.disabled = true;
         botaoMelhorar.textContent = localizar("Selecione uma torre");
@@ -25720,6 +28033,11 @@ function atualizarBotaoMelhorar() {
     }
 
     const configuracao = obterConfiguracaoDaTorre(torreSelecionada.tipo);
+    if (configuracaoUsaMelhoriasEscolhidas(configuracao)) {
+        botaoMelhorar.disabled = false;
+        botaoMelhorar.textContent = localizar('Melhorias ({usadas}/{total})', { usadas: obterTotalDeMelhorias(torreSelecionada), total: CONFIG.melhoriasEscolhidas.limite });
+        return;
+    }
     const proximaMelhoria = configuracao.melhorias[torreSelecionada.nivel];
 
     if (!proximaMelhoria) {
@@ -25768,12 +28086,13 @@ function obterEstiloDaTorre(torre) {
         return estiloOriginal;
     }
 
-    const coresDaSkin = skin.coresPorNivel[torre.nivel] || skin.coresPorNivel[0];
+    const coresDaSkin = skin.coresPorNivel[Math.min(torre.nivel, 3)] || skin.coresPorNivel[0];
     return { ...estiloOriginal, ...coresDaSkin };
 }
 
 function obterConfiguracaoAtualDaTorre(torre) {
     const configuracao = obterConfiguracaoDaTorre(torre.tipo);
+    if (configuracaoUsaMelhoriasEscolhidas(configuracao)) return obterConfiguracaoComMelhoriasEscolhidas(torre);
 
     if (torre.nivel === 0) {
         return configuracao;
@@ -25964,6 +28283,12 @@ function atacarComTorres(agora = Date.now()) {
             || torreEstaEmEstaseTemporal(torre, agora)
         ) {
             torre.alvoAtual = null;
+            torre.pulsosDoFeixe = 0;
+            continue;
+        }
+
+        if (configuracaoBase.feixeContinuo) {
+            atacarComFeixeContinuo(torre, agora);
             continue;
         }
 
@@ -26016,6 +28341,7 @@ function atacarComTorres(agora = Date.now()) {
                 velocidade: torre.velocidadeTiro || CONFIG.tiro.velocidade,
                 dano: danoDoAtaque,
                 tipoDaTorre: torre.tipo,
+                torreOrigem: torre,
                 elemento: configuracaoBase.elemento || null,
                 indiceDoTiro,
                 efeitoGlacial: configuracaoAtual.efeitoGlacial || null,
@@ -26040,6 +28366,27 @@ function atacarComTorres(agora = Date.now()) {
         torre.ultimoTiro = agora;
         dinheiro += obterRecompensaPorTiro();
     }
+}
+
+function atacarComFeixeContinuo(torre, agora) {
+    const candidatos = obterInimigosNoAlcanceDaTorre(torre).filter(alvo => alvo.vida > 0);
+    const alvo = candidatos.includes(torre.alvoAtual)
+        ? torre.alvoAtual : escolherAlvoDaTorre(torre, true);
+    if (!alvo || alvo.vida <= 0) {
+        torre.alvoAtual = null;
+        torre.pulsosDoFeixe = 0;
+        return;
+    }
+    if (torre.alvoAtual !== alvo) torre.pulsosDoFeixe = 0;
+    torre.alvoAtual = alvo;
+    torre.anguloDaMira = Math.atan2(alvo.y - torre.y, alvo.x - torre.x);
+    if (agora - torre.ultimoTiro < obterIntervaloDeAtaqueAtualDaTorre(torre, agora)) return;
+    const limite = obterConfiguracaoAtualDaTorre(torre).feixeContinuo.maximoDePulsos;
+    torre.pulsosDoFeixe = Math.min(limite, (torre.pulsosDoFeixe || 0) + 1);
+    if (torre.pulsosDoFeixe === limite && partidaContaParaMissoes()) registrarProgressoDaMissao("feixeMaximo", 1, true);
+    aplicarDanoAoInimigo(alvo, torre.dano * torre.pulsosDoFeixe, agora, {tipoDaDefesa:torre.tipo,torreOrigem:torre});
+    torre.ultimoTiro = agora;
+    dinheiro += obterRecompensaPorTiro();
 }
 
 function obterInimigosNoAlcanceDaTorre(torre) {
@@ -26470,7 +28817,8 @@ function detonarTiroDeEsporos(tiro, agora = Date.now()) {
         tiro.dano,
         tiro.elemento,
         agora,
-        tiro.tipoDaTorre
+        tiro.tipoDaTorre,
+        tiro.torreOrigem
     );
 
     explosoesDosExplosivos.push({
@@ -26501,7 +28849,7 @@ function aplicarRaioEncadeado(tiro) {
             tiro.dano * Math.pow(configuracao.multiplicadorDeDanoPorSalto, salto)
         ));
         aplicarDanoAoInimigo(alvoAtual, danoDoSalto, agora, {
-            elemento: tiro.elemento
+            elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem
         });
         atingidos.push(alvoAtual);
 
@@ -26607,7 +28955,7 @@ function aplicarTiroPerfurante(tiro, agora = Date.now()) {
             && distanciaLateral <= metadeDaLargura
         ) {
             aplicarDanoAoInimigo(inimigo, tiro.dano, agora, {
-                elemento: tiro.elemento
+                elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem
             });
             quantidadeAtingida++;
         }
@@ -26632,7 +28980,7 @@ function aplicarTiroPerfurante(tiro, agora = Date.now()) {
 
 function aplicarTiroDeCorrente(tiro, agora = Date.now()) {
     aplicarDanoAoInimigo(tiro.alvo, tiro.dano, agora, {
-        elemento: tiro.elemento
+        elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem
     });
     const segundoAlvo = encontrarAlvoMaisProximo(
         tiro.alvo,
@@ -26653,7 +29001,7 @@ function aplicarTiroDeCorrente(tiro, agora = Date.now()) {
             segundoAlvo,
             tiro.dano * tiro.efeitoDeCorrente.multiplicadorDanoSegundoAlvo,
             agora,
-            { elemento: tiro.elemento }
+            { elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem }
         );
         segmentos.push({
             inicioX: tiro.alvo.x,
@@ -26683,7 +29031,7 @@ function aplicarDisparoPrismatico(tiro, agora = Date.now()) {
             tiro.alvo,
             tiro.dano * efeito.multiplicadorVermelho,
             agora,
-            { elemento: tiro.elemento }
+            { elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem }
         );
     }
 
@@ -26692,7 +29040,7 @@ function aplicarDisparoPrismatico(tiro, agora = Date.now()) {
             tiro.alvo,
             tiro.dano * efeito.multiplicadorAzul,
             agora,
-            { elemento: tiro.elemento }
+            { elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem }
         );
         if (tiro.alvo.vida > 0) {
             tiro.alvo.percentualLentidao = Math.max(
@@ -26709,7 +29057,7 @@ function aplicarDisparoPrismatico(tiro, agora = Date.now()) {
 
     return aplicarDanoAoInimigo(tiro.alvo, tiro.dano, agora, {
         ignorarReducoes: true,
-        elemento: tiro.elemento
+        elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem
     });
 }
 
@@ -26741,14 +29089,15 @@ function moverTiros(multiplicadorDeMovimento = 1) {
                 detonarTiroDeEsporos(tiro);
             } else {
                 aplicarDanoAoInimigo(tiro.alvo, tiro.dano, agora, {
-                    elemento: tiro.elemento
+                    elemento: tiro.elemento, tipoDaDefesa: tiro.tipoDaTorre, torreOrigem: tiro.torreOrigem
                 });
                 aplicarEfeitoGlacial(tiro.alvo, tiro.efeitoGlacial, agora);
                 aplicarEfeitoDeQueimadura(
                     tiro.alvo,
                     tiro.efeitoDeQueimadura,
                     agora,
-                    tiro.elemento
+                    tiro.elemento,
+                    tiro.torreOrigem
                 );
                 aplicarMarcaAoInimigo(tiro.alvo, tiro.efeitoDeMarca, agora);
             }
@@ -26834,6 +29183,7 @@ function atingirTorreComTiroInimigo(torre, tipoDoInimigo = "sabotador") {
         return;
     }
 
+    if (combateContaParaConquistasExtras()) tentativaConquistasExtras.perdeuTorre = true;
     torres.splice(indiceDaTorre, 1);
 
     if (torreSelecionada === torre) {
@@ -26984,7 +29334,11 @@ function desenharMapa() {
         desenharMarcasDoIntervaloPerdido();
     }
 
-    desenharDecoracoesDoMapa(faseAtual.tema);
+    if (faseAtualEhArquivoProibido()) desenharEstantesDoArquivoProibido();
+    if (faseAtualEhCamaraDasMemorias()) desenharArquivosDaCamaraDasMemorias();
+    else if (faseAtualEhLimiarDoTempo()) desenharLimiarDoTempo();
+    else if (faseAtualEhConfrontoFinal()) desenharSalaDoUltimoRelogio();
+    else desenharDecoracoesDoMapa(faseAtual.tema);
 
     ctx.lineCap = "square";
     ctx.lineJoin = "miter";
@@ -27020,6 +29374,65 @@ function desenharMapa() {
     desenharTransmissorFuturoDespedacado();
     desenharRegistrosPontoZero();
     desenharRelogiosDeRuptura();
+}
+
+function desenharLimiarDoTempo() {
+    ctx.save();
+    // Engrenagens quadradas e pilares fora da trajetória de combate.
+    for (const [x, y] of [[70, 100], [330, 330], [590, 90], [870, 540]]) {
+        ctx.fillStyle = "#161b30"; ctx.fillRect(x - 42, y - 42, 84, 84);
+        ctx.fillStyle = "#8d789b";
+        ctx.fillRect(x - 30, y - 36, 60, 72); ctx.fillRect(x - 36, y - 30, 72, 60);
+        ctx.fillRect(x - 10, y - 46, 20, 92); ctx.fillRect(x - 46, y - 10, 92, 20);
+        ctx.fillStyle = "#262439"; ctx.fillRect(x - 23, y - 23, 46, 46);
+        ctx.fillStyle = "#76d8db"; ctx.fillRect(x - 3, y - 18, 6, 21); ctx.fillRect(x, y - 3, 17, 6);
+    }
+    for (const y of [240, 415]) {
+        ctx.fillStyle = "#171b2b"; ctx.fillRect(1100, y, 63, 58);
+        ctx.fillStyle = "#817c9c"; ctx.fillRect(1107, y + 5, 45, 43);
+        ctx.fillStyle = "#b6edf0"; ctx.fillRect(1118, y + 12, 7, 28);
+        ctx.fillStyle = "#393b58"; ctx.fillRect(1133, y + 12, 10, 28);
+    }
+    ctx.restore();
+}
+
+function desenharArquivosDaCamaraDasMemorias() {
+    ctx.save();
+    for (const [x, y] of [[65, 100], [285, 290], [545, 185], [825, 345], [1050, 80]]) {
+        ctx.fillStyle = "#182632"; ctx.fillRect(x, y + 100, 86, 9);
+        ctx.fillStyle = "#577c89"; ctx.fillRect(x + 12, y + 7, 63, 71);
+        ctx.fillStyle = "#b8ccc7"; ctx.fillRect(x + 17, y + 12, 53, 59);
+        ctx.fillStyle = "#627b88";
+        for (let i = 0; i < 4; i++) ctx.fillRect(x + 25, y + 23 + i * 10, 33 - i * 4, 3);
+        ctx.fillStyle = "#92ded5"; ctx.fillRect(x + 39, y + 87, 5, 5);
+        // Relógio rachado e ponteiros imóveis: lembranças suspensas.
+        ctx.fillStyle = "#b59a68"; ctx.fillRect(x + 59, y + 61, 29, 28);
+        ctx.fillStyle = "#302e40"; ctx.fillRect(x + 63, y + 65, 21, 20);
+        ctx.fillStyle = "#dbcd9b"; ctx.fillRect(x + 73, y + 68, 2, 9); ctx.fillRect(x + 68, y + 76, 7, 2);
+        ctx.fillStyle = "#151924"; ctx.fillRect(x + 65, y + 61, 4, 10); ctx.fillRect(x + 68, y + 69, 4, 8);
+    }
+    ctx.restore();
+}
+
+function desenharEstantesDoArquivoProibido() {
+    ctx.save();
+    for (const [x, y] of [[80, 230], [310, 170], [550, 370], [790, 110], [1020, 470]]) {
+        ctx.fillStyle = "#11151c";
+        ctx.fillRect(x, y, 90, 150);
+        ctx.fillStyle = "#827056";
+        ctx.fillRect(x + 5, y + 5, 80, 140);
+        for (let fileira = 0; fileira < 3; fileira++) {
+            ctx.fillStyle = "#262c35";
+            ctx.fillRect(x + 10, y + 12 + fileira * 44, 70, 35);
+            for (let pasta = 0; pasta < 5; pasta++) {
+                ctx.fillStyle = pasta % 2 ? "#d8c48d" : "#72938d";
+                ctx.fillRect(x + 14 + pasta * 12, y + 18 + fileira * 44, 8, 23);
+                ctx.fillStyle = "#f4e8c5";
+                ctx.fillRect(x + 15 + pasta * 12, y + 22 + fileira * 44, 6, 3);
+            }
+        }
+    }
+    ctx.restore();
 }
 
 function desenharFundoDasFrentesTemporais() {
@@ -29135,6 +31548,8 @@ function desenharInterface() {
             : localizar("FASE {fase} · WAVE", { fase: faseSelecionada });
     desenharMetricaDoHud(34, 36, rotuloDaWave, wave.toString(), "#f2c76e");
     desenharMetricaDoHud(158, 36, localizar("CRÉDITOS"), dinheiro.toString(), "#7ce59c");
+    const painelMelhorias = document.getElementById('painel-melhorias-escolhidas');
+    if (!painelMelhorias.hidden && painelMelhorias.dataset.saldo !== String(dinheiro)) atualizarPainelDeMelhoriasEscolhidas();
     desenharMetricaDoHud(300, 36, localizar("TORRES"), `${torres.length}/${obterLimiteDeTorres()}`, "#8fc9ff");
     desenharIndicadorDoCaminhoVivo();
 
@@ -29201,7 +31616,7 @@ function desenharInterface() {
                         : configuracaoSelecionada.naoAtira
                             ? localizar("ISCA DEFENSIVA")
                     : configuracaoPossuiMelhorias(configuracaoSelecionada)
-                        ? localizar("Nível {nivel}/3", { nivel: torreSelecionada.nivel })
+                        ? localizar("Nível {nivel}/{limite}", { nivel: torreSelecionada.nivel, limite: configuracaoUsaMelhoriasEscolhidas(configuracaoSelecionada) ? CONFIG.melhoriasEscolhidas.limite : configuracaoSelecionada.melhorias.length })
                         : obterNomeLocalizado(configuracaoSelecionada),
             x + 18,
             68
@@ -29737,6 +32152,11 @@ function desenharEfeitoGlacialNoInimigo(inimigo, x, y, tamanho) {
 }
 
 function desenharCorpoDoInimigo(inimigo, x, y, tamanho) {
+    if (inimigo.tipo === "senhorDoTempo") { desenharSenhorDoTempoFinal(ctx,x,y,tamanho); return; }
+    if (SPRITES_DOS_ELENCOS_EXCLUSIVOS[inimigo.tipo]) {
+        desenharInimigoExclusivo(inimigo, x, y, tamanho);
+        return;
+    }
     if (inimigo.tipo === "curadorDoVazio") {
         desenharCuradorDoVazio(inimigo, x, y, tamanho);
         return;
@@ -30152,24 +32572,20 @@ function desenharCarcereiroDoIntervalo(inimigo, x, y, tamanho) {
 }
 
 function desenharExecutorCronal(inimigo, x, y, tamanho) {
-    const u = Math.max(4, Math.floor(tamanho / 14));
-    const ordemAtiva = Date.now() < (inimigo.ordemCronalExpiraEm || 0);
-    ctx.save();
-    ctx.fillStyle = "#070911";
-    ctx.fillRect(x - u, y + u * 3, tamanho + u * 2, tamanho - u * 5);
-    ctx.fillRect(x + u * 2, y, tamanho - u * 4, tamanho);
-    ctx.fillStyle = CONFIG.inimigo.executorCronal.cor;
-    ctx.fillRect(x, y + u, tamanho, tamanho - u * 2);
-    ctx.fillStyle = ordemAtiva ? "#fff06c" : "#60e3d4";
-    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, u * 2);
-    ctx.fillRect(x + u * 3, y + tamanho - u * 4, tamanho - u * 6, u * 2);
-    ctx.fillStyle = "#efb653";
-    ctx.fillRect(x + u * 3, y + u * 6, u * 2, u * 2);
-    ctx.fillRect(x + tamanho - u * 5, y + u * 6, u * 2, u * 2);
-    ctx.strokeStyle = ordemAtiva ? "#e55ee8" : "#8d6ca8";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(x - u * 2, y - u * 2, tamanho + u * 4, tamanho + u * 4);
-    ctx.restore();
+    desenharSpriteDoRemake(x, y, tamanho, [
+        "....0220....",
+        "....0110....",
+        "....0330....",
+        ".0000110000.",
+        "011102201110",
+        "011012210110",
+        "011013310110",
+        "011012210110",
+        "022011110220",
+        ".2..0110..2.",
+        ".2.010010.2.",
+        ".0.000000.0."
+    ], ["#111522","#46536a","#d7ae57",Date.now() < (inimigo.ordemCronalExpiraEm || 0) ? "#fff06c" : "#6de0d1"]);
 }
 
 function desenharSoldadoCronal(inimigo, x, y, tamanho) {
@@ -30296,24 +32712,20 @@ function desenharSombraCongelada(x, y, tamanho) {
 }
 
 function desenharCuradorDoVazio(inimigo, x, y, tamanho) {
-    const u = Math.max(4, Math.floor(tamanho / 14));
-    const restaurando = Date.now() < (inimigo.restauracaoDoVazioExpiraEm || 0);
-    ctx.save();
-    ctx.fillStyle = "#15161c";
-    ctx.fillRect(x - u, y + u * 3, tamanho + u * 2, tamanho - u * 6);
-    ctx.fillRect(x + u * 3, y - u, tamanho - u * 6, tamanho + u * 2);
-    ctx.fillStyle = CONFIG.inimigo.curadorDoVazio.cor;
-    ctx.fillRect(x, y, tamanho, tamanho);
-    ctx.fillStyle = "#efefeb";
-    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, u * 3);
-    ctx.fillRect(x + u * 3, y + tamanho - u * 5, tamanho - u * 6, u * 3);
-    ctx.fillStyle = restaurando ? "#fff09a" : "#8de0da";
-    ctx.fillRect(x + tamanho / 2 - u, y + u * 5, u * 2, tamanho - u * 10);
-    ctx.fillRect(x + u * 4, y + tamanho / 2 - u, tamanho - u * 8, u * 2);
-    ctx.strokeStyle = restaurando ? "#fff4b5" : "#7e758f";
-    ctx.lineWidth = restaurando ? 5 : 3;
-    ctx.strokeRect(x - u * 2, y - u * 2, tamanho + u * 4, tamanho + u * 4);
-    ctx.restore();
+    desenharSpriteDoRemake(x, y, tamanho, [
+        ".....00.....",
+        "....0110....",
+        "...012210...",
+        "...013310...",
+        ".0001221000.",
+        "011101101110",
+        "012013310210",
+        "022013310220",
+        ".0011111100.",
+        "..01111110..",
+        "..01100110..",
+        "..000..000.."
+    ], ["#191624","#625a77","#e6e4db",Date.now() < (inimigo.restauracaoDoVazioExpiraEm || 0) ? "#fff09a" : "#8de0da"]);
 }
 
 function desenharEfeitoDaRestauracaoDoVazio(inimigo, x, y, tamanho) {
@@ -30698,25 +33110,20 @@ function desenharTriceratopo(x, y, tamanho) {
 }
 
 function desenharTiranoPrimordial(inimigo, x, y, tamanho) {
-    const u = Math.max(4, Math.floor(tamanho / 15));
-    ctx.fillStyle = "#192319";
-    ctx.fillRect(x + u * 2, y + u * 5, tamanho - u * 3, tamanho - u * 7);
-    ctx.fillRect(x + tamanho - u * 7, y + u, u * 7, u * 8);
-    ctx.fillRect(x - u * 3, y + u * 8, u * 7, u * 3);
-    ctx.fillStyle = CONFIG.inimigo.bossPrimordial.cor;
-    ctx.fillRect(x + u * 3, y + u * 5, tamanho - u * 7, tamanho - u * 9);
-    ctx.fillRect(x + tamanho - u * 7, y + u * 2, u * 6, u * 6);
-    ctx.fillRect(x, y + u * 8, u * 7, u * 2);
-    ctx.fillStyle = "#78914a";
-    ctx.fillRect(x + u * 5, y + u * 5, u * 3, u);
-    ctx.fillRect(x + u * 4, y + u * 8, u * 2, u * 2);
-    ctx.fillStyle = "#f4d46a";
-    ctx.fillRect(x + tamanho - u * 5, y + u * 3, u, u);
-    ctx.fillRect(x + tamanho - u, y + u * 6, u * 3, u);
-    ctx.fillStyle = "#101710";
-    ctx.fillRect(x + u * 4, y + tamanho - u * 5, u * 3, u * 5);
-    ctx.fillRect(x + tamanho - u * 8, y + tamanho - u * 5, u * 3, u * 5);
-
+    desenharSpriteDoRemake(x, y, tamanho, [
+        "......00000.",
+        ".....0121110",
+        ".....0111110",
+        "....01100000",
+        "....01103330",
+        "...01111000.",
+        "..0112210...",
+        "00111221110.",
+        "01111221000.",
+        "001111110...",
+        "..0110110...",
+        "..03300330.."
+    ], ["#1b281c","#567040","#a7ab62","#eee1a1"]);
     if (Date.now() < (inimigo.chamadoPrimordialExpiraEm || 0)) {
         const margem = 8 + (Math.floor(Date.now() / 100) % 2) * 6;
         ctx.save();
@@ -30797,33 +33204,20 @@ function desenharGuardiaoDeLodo(x, y, tamanho) {
 }
 
 function desenharHidraDoPantano(inimigo, x, y, tamanho) {
-    const u = Math.max(4, Math.floor(tamanho / 14));
-    const centrosDasCabecas = [x + u * 3, x + Math.floor(tamanho / 2), x + tamanho - u * 3];
-
-    ctx.fillStyle = "#14231a";
-    ctx.fillRect(x - u, y + u * 7, tamanho + u * 2, tamanho - u * 6);
-    ctx.fillStyle = CONFIG.inimigo.bossPantano.cor;
-    ctx.fillRect(x + u, y + u * 7, tamanho - u * 2, tamanho - u * 7);
-    ctx.fillRect(x - u * 2, y + u * 9, u * 5, u * 4);
-    ctx.fillRect(x + tamanho - u * 3, y + u * 9, u * 5, u * 4);
-
-    for (let indice = 0; indice < centrosDasCabecas.length; indice++) {
-        const centro = centrosDasCabecas[indice];
-        const topo = y + (indice === 1 ? 0 : u * 2);
-        ctx.fillStyle = "#203627";
-        ctx.fillRect(centro - u * 2, topo + u * 4, u * 4, u * 6);
-        ctx.fillStyle = indice === 1 ? "#4f7b43" : "#416b3d";
-        ctx.fillRect(centro - u * 3, topo, u * 6, u * 5);
-        ctx.fillRect(centro - u * 2, topo + u * 4, u * 4, u * 4);
-        ctx.fillStyle = "#d4ef68";
-        ctx.fillRect(centro - u * 2, topo + u, u, u);
-        ctx.fillRect(centro + u, topo + u, u, u);
-        ctx.fillStyle = "#172219";
-        ctx.fillRect(centro - u, topo + u * 3, u * 2, u);
-    }
-
-    ctx.fillStyle = "#83aa4e";
-    ctx.fillRect(x + u * 3, y + tamanho - u * 4, tamanho - u * 6, u * 2);
+    desenharSpriteDoRemake(x, y, tamanho, [
+        ".....11.....",
+        "....1331....",
+        ".11..11..11.",
+        "1331.12.1331",
+        ".11..12..11.",
+        ".12..12..12.",
+        ".12..12..12.",
+        ".0111111110.",
+        "..01122110..",
+        ".0112222110.",
+        "011011110110",
+        "00..0000..00"
+    ], ["#17291e","#477043","#91b15c","#eddd8a"]);
     desenharEfeitoDeRegeneracaoDaHidra(inimigo, x, y, tamanho);
 }
 
@@ -31092,42 +33486,58 @@ function desenharOncaDaSelva(inimigo, x, y, tamanho) {
     ctx.fillRect(x + tamanho - u * 2, y + u * 5, u, u);
 }
 
+// Grade compartilhada pelos remakes na partida e no Álbum.
+function desenharSpriteDoRemake(x, y, tamanho, linhas, paleta) {
+    const colunas = Math.max(...linhas.map(linha => linha.length));
+    const unidade = tamanho / Math.max(colunas, linhas.length);
+    ctx.save();
+    for (let linha = 0; linha < linhas.length; linha++) {
+        for (let coluna = 0; coluna < linhas[linha].length; coluna++) {
+            const pixel = linhas[linha][coluna];
+            if (pixel === ".") continue;
+            ctx.fillStyle = paleta[Number(pixel)];
+            const esquerda = Math.round(x + coluna * unidade);
+            const topo = Math.round(y + linha * unidade);
+            ctx.fillRect(esquerda, topo,
+                Math.round(x + (coluna + 1) * unidade) - esquerda,
+                Math.round(y + (linha + 1) * unidade) - topo);
+        }
+    }
+    ctx.restore();
+}
+
 function desenharGorilaDaSelva(x, y, tamanho) {
-    const u = Math.max(3, Math.floor(tamanho / 9));
-    ctx.fillStyle = "#20281e";
-    ctx.fillRect(x - u, y + u * 3, u * 3, tamanho - u * 2);
-    ctx.fillRect(x + tamanho - u * 2, y + u * 3, u * 3, tamanho - u * 2);
-    ctx.fillStyle = CONFIG.inimigo.gorilaDaSelva.cor;
-    ctx.fillRect(x + u, y, tamanho - u * 2, tamanho - u);
-    ctx.fillRect(x, y + u * 3, tamanho, tamanho - u * 4);
-    ctx.fillStyle = "#718064";
-    ctx.fillRect(x + u * 2, y + u * 2, tamanho - u * 4, u * 4);
-    ctx.fillRect(x + u * 2, y + tamanho - u * 3, tamanho - u * 4, u * 2);
-    ctx.fillStyle = "#11160f";
-    ctx.fillRect(x + u * 3, y + u * 3, u, u);
-    ctx.fillRect(x + tamanho - u * 4, y + u * 3, u, u);
+    desenharSpriteDoRemake(x, y, tamanho, [
+        "....0000....",
+        "...011110...",
+        "..01122110..",
+        ".0112332110.",
+        "011112211110",
+        "011122221110",
+        "011122221110",
+        "011112211110",
+        "022011110220",
+        "000.0110.000",
+        "....0110....",
+        "...001100..."
+    ], ["#172019","#43533e","#899377","#e7d28a"]);
 }
 
 function desenharColossoDaSelva(x, y, tamanho) {
-    const u = Math.max(4, Math.floor(tamanho / 10));
-    ctx.fillStyle = "#24301d";
-    ctx.fillRect(x - u, y + u * 2, tamanho + u * 2, tamanho - u);
-    ctx.fillStyle = CONFIG.inimigo.bossSelva.cor;
-    ctx.fillRect(x, y, tamanho, tamanho);
-    ctx.fillStyle = "#73814f";
-    ctx.fillRect(x + u * 2, y + u, tamanho - u * 4, tamanho - u * 3);
-    ctx.fillStyle = "#334d2a";
-    ctx.fillRect(x - u, y - u, tamanho + u * 2, u * 3);
-    ctx.fillRect(x, y - u * 3, u * 3, u * 3);
-    ctx.fillRect(x + tamanho - u * 3, y - u * 3, u * 3, u * 3);
-    ctx.fillStyle = "#9bc05d";
-    ctx.fillRect(x + u, y - u * 2, u * 2, u * 2);
-    ctx.fillRect(x + tamanho - u * 3, y - u * 2, u * 2, u * 2);
-    ctx.fillStyle = "#f4d35e";
-    ctx.fillRect(x + u * 3, y + u * 3, u, u);
-    ctx.fillRect(x + tamanho - u * 4, y + u * 3, u, u);
-    ctx.fillStyle = "#3d2b1d";
-    ctx.fillRect(x + u * 3, y + tamanho - u * 3, tamanho - u * 6, u * 2);
+    desenharSpriteDoRemake(x, y, tamanho, [
+        ".22......22.",
+        ".22..22..22.",
+        "..00000000..",
+        ".0111111110.",
+        "011131131110",
+        "011110011110",
+        "011111111110",
+        "021110011120",
+        "021111111120",
+        "000.0110.000",
+        "...011110...",
+        "...000000..."
+    ], ["#24301f","#65714b","#497535","#efd477"]);
 }
 
 function desenharRaposaLadina(x, y, tamanho) {
@@ -31395,27 +33805,20 @@ function desenharInimigoBasico(inimigo, x, y, tamanho) {
 }
 
 function desenharEscorpiao(x, y, tamanho) {
-    const unidade = Math.max(3, Math.floor(tamanho / 8));
-
-    ctx.fillStyle = "#59311d";
-    ctx.fillRect(x + unidade, y + unidade * 3, tamanho - unidade * 2, tamanho - unidade * 3);
-    ctx.fillRect(x, y + unidade * 2, unidade * 3, unidade);
-    ctx.fillRect(x, y + unidade * 5, unidade * 3, unidade);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 2, unidade * 3, unidade);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 5, unidade * 3, unidade);
-
-    ctx.fillStyle = CONFIG.inimigo.escorpiao.cor;
-    ctx.fillRect(x + unidade * 2, y + unidade * 2, tamanho - unidade * 4, tamanho - unidade * 3);
-    ctx.fillRect(x, y + unidade, unidade * 3, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade, unidade * 3, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 2, y, unidade, unidade * 3);
-    ctx.fillRect(x + tamanho - unidade * 3, y, unidade * 2, unidade);
-
-    ctx.fillStyle = "#f5b04f";
-    ctx.fillRect(x + unidade * 3, y + unidade * 3, tamanho - unidade * 6, unidade);
-    ctx.fillStyle = "#24150f";
-    ctx.fillRect(x + unidade * 2, y + unidade * 2, unidade, unidade);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 2, unidade, unidade);
+    desenharSpriteDoRemake(x, y, tamanho, [
+        ".......0110.",
+        ".......02010",
+        ".......03010",
+        "..........10",
+        ".1.1.....010",
+        ".212.....10.",
+        "..10....010.",
+        "...0111110..",
+        ".1110220111.",
+        "...012210...",
+        ".1110220111.",
+        "....0000...."
+    ], ["#392319","#b87937","#f4bd61","#eee0a4"]);
 }
 
 function desenharMumia(x, y, tamanho) {
@@ -32463,7 +34866,16 @@ function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
     ctx.save();
     ctx.rotate(anguloDaMira + Math.PI / 2);
 
-    if (estilo.tipoVisual === "glacial") {
+    if (estilo.tipoVisual === "feixeContinuo") {
+        ctx.fillStyle = estilo.corCanhao; ctx.fillRect(-12, -30, 8, 25); ctx.fillRect(4, -30, 8, 25);
+        ctx.fillStyle = estilo.corDetalhe; ctx.fillRect(-5, -24, 10, 16);
+        ctx.fillStyle = "#62376d"; ctx.fillRect(-9, -8, 18, 14);
+    } else if (estilo.tipoVisual === "longoAlcance") {
+        ctx.fillStyle = estilo.corCanhao; ctx.fillRect(-5, -44, 10, 43);
+        ctx.fillStyle = estilo.corDetalhe; ctx.fillRect(-9, -40, 18, 5);
+        ctx.fillStyle = "#20303e"; ctx.fillRect(8, -20, 8, 18);
+        ctx.fillStyle = estilo.corDetalhe; ctx.fillRect(10, -22, 4, 6);
+    } else if (estilo.tipoVisual === "glacial") {
         desenharArmamentoGlacial(estilo);
     } else if (estilo.tipoVisual === "besta") {
         desenharArmamentoDaBesta(estilo);
@@ -32518,6 +34930,16 @@ function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
 
 function desenharTorres() {
     for (const torre of torres) {
+        if (obterConfiguracaoDaTorre(torre.tipo).feixeContinuo && torre.alvoAtual?.vida > 0
+            && inimigos.includes(torre.alvoAtual) && !torreEstaAtordoadaPeloUrso(torre)
+            && !torreEstaEmEstaseTemporal(torre) && torrePodeDetectarInimigo(torre, torre.alvoAtual)
+            && Math.hypot(torre.alvoAtual.x - torre.x, torre.alvoAtual.y - torre.y) <= obterAlcanceAtualDaTorre(torre)) {
+            ctx.save();
+            ctx.strokeStyle = "#c875ed"; ctx.lineWidth = 3 + (torre.pulsosDoFeixe || 0) * 0.4;
+            ctx.beginPath(); ctx.moveTo(torre.x, torre.y); ctx.lineTo(torre.alvoAtual.x, torre.alvoAtual.y); ctx.stroke();
+            ctx.strokeStyle = "#fff0ba"; ctx.lineWidth = 2; ctx.stroke();
+            ctx.restore();
+        }
         const estilo = obterEstiloDaTorre(torre);
         const alcanceAtual = obterAlcanceAtualDaTorre(torre);
         desenharAuraDoAmplificador(torre);
@@ -33211,6 +35633,10 @@ function desenharAvisoBoss() {
             destaque: "#67e5db",
             titulo: localizar("GUARDIÃO DO PONTO ZERO")
         }
+        : ["bibliotecarioMudo", "devoradorDeMemorias", "senhorDoTempo"].includes(tipoDoBoss)
+        ? { fundo: "rgba(17, 15, 30, .97)", borda: CONFIG.inimigo[tipoDoBoss].cor, destaque: "#d8ebeb", titulo: localizar(CONFIG.inimigo[tipoDoBoss].nome.toUpperCase()) }
+        : tipoDoBoss === "arconteDoLimiar"
+        ? { fundo: "rgba(17, 15, 30, .97)", borda: "#c8ab70", destaque: "#70e4e0", titulo: localizar("ARCONTE DO LIMIAR") }
         : tipoDoBoss === "sentinelaDoAmanha"
         ? {
             fundo: "rgba(8, 12, 22, 0.96)",

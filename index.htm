@@ -6,7 +6,10 @@
     <meta name="theme-color" content="#07150f">
     <meta name="token-csrf-checkout" content="">
     <title>Guardians of Pixel</title>
-    <link rel="stylesheet" href="styles.css?v=maquina-tempo-1&build=salvos-28">
+    <link rel="stylesheet" href="styles.css?v=maquina-tempo-1&build=replay-equipamentos-1">
+    <link rel="stylesheet" href="dialogos.css?v=7">
+    <link rel="stylesheet" href="floresta.css?v=7">
+    <link rel="stylesheet" href="melhorias.css?v=2">
 </head>
 <body class="jogo-antes-do-lobby">
 <section id="tela-carregamento" class="tela-carregamento" role="status" aria-live="polite" aria-label="Carregando Guardians of Pixel" data-i18n-aria-label="abertura.carregandoJogo">
@@ -72,10 +75,13 @@
 
         <aside id="seletor-torres" class="seletor-torres oculto" aria-label="Defesas disponíveis" data-localizar-aria-label="Defesas disponíveis">
             <header class="seletor-torres-cabecalho">
+                <button id="botao-ampliar-mapa" class="botao" type="button" aria-pressed="false" onclick="alternarAmpliacaoDoMapa()" data-localizar="Ampliar mapa">Ampliar mapa</button>
                 <strong data-localizar="Defesas">Defesas</strong>
                 <small data-localizar="Torres e explosivos">Torres e explosivos</small>
             </header>
             <div class="seletor-torres-lista">
+                <button id="botao-feixe-continuo" class="botao botao-construcao" onclick="selecionarTipoDeTorre('torreFeixeContinuo')" aria-pressed="false" disabled>Torre de Feixe Contínuo</button>
+                <button id="botao-longo-alcance" class="botao botao-construcao" onclick="selecionarTipoDeTorre('torreLongoAlcance')" aria-pressed="false" disabled>Torre de Longo Alcance</button>
                 <button id="botao-torre-padrao" class="botao botao-construcao" onclick="selecionarTipoDeTorre('padrao')" aria-pressed="true">Torre padrão (150)</button>
                 <button id="botao-canhao-pesado" class="botao botao-construcao botao-construcao-pesada" onclick="selecionarTipoDeTorre('canhaoPesado')" aria-pressed="false" aria-disabled="true" disabled>Canhão pesado (Conclua Fase 1)</button>
                 <button id="botao-torre-glacial" class="botao botao-construcao botao-construcao-glacial" onclick="selecionarTipoDeTorre('torreGlacial')" aria-pressed="false" aria-disabled="true" disabled>Torre Glacial (Conclua Fase 2)</button>
@@ -122,6 +128,14 @@
             <button id="botao-melhorar" class="botao botao-primario botao-com-atalho" data-atalho="E" onclick="melhorarTorreSelecionada()" aria-keyshortcuts="E" disabled>Selecione uma torre</button>
             <button id="botao-vender" class="botao botao-perigo botao-com-atalho" data-atalho="X" onclick="venderTorreSelecionada()" aria-keyshortcuts="X" disabled>Selecione uma torre</button>
         </div>
+        <section id="painel-melhorias-escolhidas" aria-label="Melhorias da torre" hidden>
+            <div class="cabecalho-melhorias"><p id="resumo-melhorias-escolhidas" aria-live="polite"></p><button id="fechar-melhorias" type="button" onclick="fecharPainelDeMelhoriasEscolhidas()" data-localizar="Fechar">Fechar</button></div>
+            <div class="opcoes-melhorias">
+                <button id="melhoria-dano" type="button" onclick="melhorarTorreSelecionada('dano')">Dano</button>
+                <button id="melhoria-velocidade" type="button" onclick="melhorarTorreSelecionada('velocidade')">Velocidade</button>
+                <button id="melhoria-alcance" type="button" onclick="melhorarTorreSelecionada('alcance')">Alcance</button>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -417,6 +431,7 @@
         <span class="arvore-lobby arvore-lobby-1" aria-hidden="true"></span>
     </div>
 
+    <button id="botao-retomar-castelo" class="botao-retorno-limbo" type="button" onclick="retomarCasteloDoLimbo()" hidden><span aria-hidden="true">♛</span><strong data-localizar="Continuar no Limbo">Continuar no Limbo</strong></button>
     <button
         id="relogio-quebrado-intervalo"
         class="relogio-quebrado-intervalo"
@@ -507,11 +522,6 @@
                 <strong data-i18n="lobby.conquistas">Conquistas</strong>
                 <small id="resumo-conquistas-menu">0/6 desbloqueadas</small>
             </button>
-            <button class="botao-lobby-extra botao-lobby-salvos" onclick="mostrarSalvos()">
-                <span aria-hidden="true">▣</span>
-                <strong data-i18n="lobby.salvos">Salvos</strong>
-                <small data-i18n="lobby.espacosDeProgresso">3 espaços de progresso</small>
-            </button>
             <button class="botao-lobby-extra botao-lobby-infinito" onclick="abrirSelecaoDeDefesas(true)">
                 <span aria-hidden="true">∞</span>
                 <strong data-i18n="lobby.wavesInfinitas">Waves infinitas</strong>
@@ -527,12 +537,22 @@
                 <strong data-i18n="lobby.treinamento">Treinamento</strong>
                 <small data-i18n="lobby.minigamesForaDoFliperama">Minigames fora do fliperama</small>
             </button>
+            <button id="botao-modo-classico" class="botao-lobby-extra botao-modo-classico" type="button" onclick="mostrarApresentacaoClassico()">
+                <span aria-hidden="true">⚑</span>
+                <strong data-localizar="Modo clássico">Modo clássico</strong>
+                <small data-localizar="Em breve">Em breve</small>
+            </button>
         </div>
 
         <footer class="lobby-rodape">
+            <div class="lobby-perfil-e-salvos">
+                <button class="botao-lobby-salvos" type="button" onclick="mostrarSalvos()" aria-label="Partidas salvas" data-i18n-aria-label="lobby.salvos">
+                    <img class="icone-partidas-salvas" src="assets/partidas-salvas.svg" alt="">
+                </button>
             <div id="lobby-jogador" class="lobby-jogador">
                 <span id="lobby-avatar" class="lobby-avatar" aria-hidden="true">GP</span>
                 <span><small id="rotulo-defensor-lobby">DEFENSOR</small><strong id="estado-defensor-lobby">PRONTO PARA JOGAR</strong></span>
+            </div>
             </div>
             <button
                 id="progresso-nivel-lobby"
@@ -659,6 +679,10 @@
         <div class="cutscene-carta-painel">
             <small id="titulo-cutscene-carta">VOCÊ ENCONTROU UMA CARTA</small>
             <article class="carta-misteriosa">
+                <div class="cenario-entidade-limbo" aria-hidden="true">
+                    <canvas id="paisagem-entidade-limbo" width="480" height="190"></canvas>
+                    <canvas id="retrato-entidade-limbo" width="96" height="128"></canvas>
+                </div>
                 <span class="carta-misteriosa-selo" aria-hidden="true">?</span>
                 <div class="radio-transmissao" aria-hidden="true">
                     <i class="radio-transmissao-antena"></i>
@@ -710,6 +734,10 @@
                 <p id="texto-cutscene-carta">Você está pronto. Algo estará lhe esperando no lobby da Fase 1, entre as árvores. Venha ver meu desafio.</p>
                 <strong id="assinatura-cutscene-carta">???</strong>
             </article>
+            <div id="escolhas-entidade-limbo" hidden>
+                <button id="escolha-limbo-silencio" class="botao" type="button" onclick="escolherRespostaDaEntidadeDoLimbo('silencio')">Permanecer calado</button>
+                <button id="escolha-limbo-verdade" class="botao" type="button" onclick="escolherRespostaDaEntidadeDoLimbo('verdade')">Foi o Senhor do Tempo</button>
+            </div>
             <button id="botao-continuar-cutscene-carta" class="botao botao-continuar-cutscene-carta" type="button" onclick="concluirCutsceneDaCarta()">Guardar carta</button>
         </div>
     </div>
@@ -783,6 +811,54 @@
     </section>
 </div>
 
-    <script src="game.js?v=maquina-tempo-1&build=salvos-28"></script>
+    <section id="exploracao-limbo" role="dialog" aria-modal="true" aria-labelledby="titulo-exploracao-limbo" hidden>
+        <div class="limbo-exploracao-painel">
+            <header><h2 id="titulo-exploracao-limbo">Castelo do Limbo</h2><button id="limbo-sair" class="botao" type="button">Salvar e voltar ao lobby</button></header>
+            <p id="limbo-instrucao">WASD ou setas para andar · E para interagir</p>
+            <canvas id="canvas-exploracao-limbo" width="640" height="400" tabindex="0" aria-label="Exploração do castelo"></canvas>
+            <p id="limbo-aviso" role="status" aria-live="polite"></p>
+            <div id="limbo-dialogo" hidden><canvas id="limbo-retrato-ampliado" width="200" height="180" hidden aria-label="Retrato" role="img"></canvas><strong id="limbo-falante">???</strong><p id="limbo-fala"></p><button id="limbo-continuar" class="botao" type="button">Continuar</button></div>
+            <div id="limbo-controles-exploracao">
+                <div class="limbo-direcional" aria-label="Movimento">
+                    <button class="botao" data-direcao-castelo="cima" aria-label="Andar para cima">↑</button>
+                    <button class="botao" data-direcao-castelo="esquerda" aria-label="Andar para a esquerda">←</button>
+                    <button class="botao" data-direcao-castelo="baixo" aria-label="Andar para baixo">↓</button>
+                    <button class="botao" data-direcao-castelo="direita" aria-label="Andar para a direita">→</button>
+                </div>
+                <button id="limbo-interagir" class="botao" type="button">Interagir (E)</button>
+            </div>
+            <div id="limbo-controles-arena" hidden>
+                <div id="limbo-defesas"></div>
+                <button id="limbo-wave" class="botao" type="button">Iniciar wave</button>
+                <button id="limbo-melhorar" class="botao" type="button">Melhorar (60)</button>
+                <button id="limbo-pausar" class="botao" type="button">Pausar</button>
+                <button id="limbo-repetir" class="botao" type="button" hidden>Tentar novamente</button>
+            </div>
+        </div>
+    </section>
+    <script src="conquistas-extras.js?v=2"></script>
+    <script src="missoes.js?melhorias=1&v=3"></script>
+    <script src="missoes-idiomas.js?v=1"></script>
+    <section id="floresta-secreta" role="dialog" aria-modal="true" aria-labelledby="floresta-titulo" hidden>
+        <div class="floresta-painel">
+            <header><h2 id="floresta-titulo"></h2><button id="floresta-sair" type="button">Salvar e voltar ao lobby</button></header>
+            <p id="floresta-objetivo" role="status"></p>
+            <canvas id="floresta-canvas" width="640" height="384" tabindex="0" aria-label="Exploração da floresta"></canvas>
+            <p id="floresta-aviso" aria-live="polite"></p>
+            <div id="floresta-dialogo" hidden><h2 id="descanso-fim" hidden>FIM</h2><strong id="floresta-falante"></strong><p id="floresta-fala"></p><button id="floresta-continuar" type="button">Continuar</button><div id="escolhas-descanso" hidden><button id="descanso-reiniciar" type="button">Reiniciar a história</button><button id="descanso-limbo" type="button">Voltar à Fase 12</button><button id="descanso-lobby" type="button">Voltar ao lobby</button></div></div>
+            <div id="floresta-controles"><div class="floresta-direcional"><button data-floresta-direcao="cima" aria-label="Cima">▲</button><button data-floresta-direcao="esquerda" aria-label="Esquerda">◀</button><button data-floresta-direcao="baixo" aria-label="Baixo">▼</button><button data-floresta-direcao="direita" aria-label="Direita">▶</button></div><button id="floresta-interagir" type="button">Interagir (E)</button><button id="floresta-pausar" type="button">Pausar</button></div>
+        </div>
+    </section>
+    <script src="fase18.js?v=11"></script>
+    <script src="melhorias.js?v=2"></script>
+    <script src="dialogos.js?v=6"></script>
+    <script src="game.js?v=maquina-tempo-1&build=replay-equipamentos-1"></script>
+    <script src="limbo-visual.js?v=5"></script>
+    <script src="limbo.js?v=5"></script>
+    <script src="floresta.js?v=7"></script>
+    <script src="casa.js?v=8"></script>
+    <script src="memoria.js?v=1"></script>
+    <script src="desfecho.js?v=9"></script>
+    <script src="classico.js?v=1"></script>
 </body>
 </html>

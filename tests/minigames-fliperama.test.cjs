@@ -107,6 +107,7 @@ const contextoDoVoo = {
     Date,
     canvasMinigameFliperama: { width: 720, height: 420 },
     estadoVooPixel: null,
+    minigameFliperamaEmTreinamento: false,
     tipoMinigameFliperamaAtivo: "voo",
     finalizarMinigameFliperama(...argumentos) {
         resultadosDoVoo.push(argumentos);
@@ -137,6 +138,7 @@ const contextoDaColeta = {
     Date,
     canvasMinigameFliperama: { width: 720, height: 420 },
     estadoChuvaDePixels: null,
+    minigameFliperamaEmTreinamento: false,
     teclasPressionadasNoLabirinto: new Set(),
     obterDirecaoPelasTeclas() { return { x: 0, y: 0 }; },
     finalizarMinigameFliperama(...argumentos) {

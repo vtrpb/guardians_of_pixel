@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180" shape-rendering="crispEdges">
+  <!-- Mesma linguagem do lobby da História: gramado quadriculado e objetos nas bordas. -->
+  <defs>
+    <g id="pedra"><path fill="#557a5a" d="M3 0h15v3h5v13H0V5h3z"/><path fill="#8d9e78" d="M5 3h13v3h2v7H3V6h2z"/><path fill="#c7c966" d="M6 3h9v3H6z"/></g>
+    <g id="flores"><path fill="#cfff70" d="M0 4h4v4H0zM9 8h4v4H9zM18 2h4v4h-4zM27 9h4v4h-4z"/></g>
+    <g id="grama"><path fill="#8fde5d" d="M0 10h4v12H0z"/><path fill="#3ca370" d="M8 0h4v22H8z"/><path fill="#4aad6d" d="M16 5h4v17h-4z"/><path fill="#cfff70" d="M24 10h3v12h-3z"/></g>
+  </defs>
+  <!-- Quadriculado, linhas e cores do tema campo do lobby normal. -->
+  <path fill="#326b35" d="M0 0h320v180H0z"/>
+  <path fill="#3f7f3d" d="M0 0h18v18H0zM36 0h18v18H36zM72 0h18v18H72zM108 0h18v18h-18zM144 0h18v18h-18zM180 0h18v18h-18zM216 0h18v18h-18zM252 0h18v18h-18zM288 0h18v18h-18zM18 18h18v18H18zM54 18h18v18H54zM90 18h18v18H90zM126 18h18v18h-18zM162 18h18v18h-18zM198 18h18v18h-18zM234 18h18v18h-18zM270 18h18v18h-18zM306 18h14v18h-14zM0 36h18v18H0zM36 36h18v18H36zM72 36h18v18H72zM108 36h18v18h-18zM144 36h18v18h-18zM180 36h18v18h-18zM216 36h18v18h-18zM252 36h18v18h-18zM288 36h18v18h-18zM18 54h18v18H18zM54 54h18v18H54zM90 54h18v18H90zM126 54h18v18h-18zM162 54h18v18h-18zM198 54h18v18h-18zM234 54h18v18h-18zM270 54h18v18h-18zM306 54h14v18h-14zM0 72h18v18H0zM36 72h18v18H36zM72 72h18v18H72zM108 72h18v18h-18zM144 72h18v18h-18zM180 72h18v18h-18zM216 72h18v18h-18zM252 72h18v18h-18zM288 72h18v18h-18zM18 90h18v18H18zM54 90h18v18H54zM90 90h18v18H90zM126 90h18v18h-18zM162 90h18v18h-18zM198 90h18v18h-18zM234 90h18v18h-18zM270 90h18v18h-18zM306 90h14v18h-14zM0 108h18v18H0zM36 108h18v18H36zM72 108h18v18H72zM108 108h18v18h-18zM144 108h18v18h-18zM180 108h18v18h-18zM216 108h18v18h-18zM252 108h18v18h-18zM288 108h18v18h-18zM18 126h18v18H18zM54 126h18v18H54zM90 126h18v18H90zM126 126h18v18h-18zM162 126h18v18h-18zM198 126h18v18h-18zM234 126h18v18h-18zM270 126h18v18h-18zM306 126h14v18h-14zM0 144h18v18H0zM36 144h18v18H36zM72 144h18v18H72zM108 144h18v18h-18zM144 144h18v18h-18zM180 144h18v18h-18zM216 144h18v18h-18zM252 144h18v18h-18zM288 144h18v18h-18zM18 162h18v18H18zM54 162h18v18H54zM90 162h18v18H90zM126 162h18v18h-18zM162 162h18v18h-18zM198 162h18v18h-18zM234 162h18v18h-18zM270 162h18v18h-18zM306 162h14v18h-14z"/>
+  <path fill="#5a8d42" opacity=".35" d="M0 18h320v1H0zM0 54h320v1H0zM0 90h320v1H0zM0 126h320v1H0zM0 162h320v1H0z"/>
+  <use href="#pedra" x="22" y="90"/><use href="#pedra" x="276" y="94"/><use href="#pedra" x="89" y="152"/>
+  <use href="#flores" x="65" y="88"/><use href="#flores" x="225" y="136"/><use href="#grama" x="57" y="134"/><use href="#grama" x="242" y="76"/>
+  <!-- Lago e vegetação discretos no canto, como no lobby da História. -->
+  <path fill="#3ca370" d="M260 147h48v4h7v21h-7v4h-48v-4h-7v-21h7z"/>
+  <path fill="#45c5c4" d="M264 151h40v3h7v15h-7v3h-40v-3h-7v-15h7z"/>
+  <path fill="#8de9d0" d="M267 153h33v3h-33z"/>
+</svg>

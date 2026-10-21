@@ -4,9 +4,8 @@ const path = require("path");
 const vm = require("vm");
 
 const raiz = path.resolve(__dirname, "..");
-const raizSecundaria = path.join(raiz, "tower defense 2");
-
-for (const diretorio of [raiz, raizSecundaria]) {
+// Valida a aplicação da raiz, usada pelo servidor e pela suíte funcional.
+for (const diretorio of [raiz]) {
     const html = fs.readFileSync(path.join(diretorio, "index.htm"), "utf8");
     const codigo = fs.readFileSync(path.join(diretorio, "game.js"), "utf8");
     const estilos = fs.readFileSync(path.join(diretorio, "styles.css"), "utf8");
@@ -16,10 +15,9 @@ for (const diretorio of [raiz, raizSecundaria]) {
     );
 
     [
-        'class="botao-lobby-extra botao-lobby-salvos"',
+        'class="botao-lobby-salvos lobby-atalho"',
         'onclick="mostrarSalvos()"',
-        'data-i18n="lobby.espacosDeProgresso"',
-        "build=salvos-28"
+        'data-i18n-aria-label="lobby.salvos"'
     ].forEach(trecho => assert.ok(html.includes(trecho), `Interface ausente: ${trecho}`));
 
     [
@@ -69,7 +67,10 @@ const CHAVE_FASES = "tower-defense-2-progresso-fases-v2";
 const CHAVE_FRAGMENTOS = "guardians-of-pixel-fragmentos-v2";
 const CHAVE_COMPRAS = "guardians-of-pixel-compras-v2";
 const CHAVE_NIVEL = "guardians-of-pixel-progressao-nivel-v1";
+const CHAVE_SUPREMAS = "guardians-of-pixel-supremas-v1";
+const supremasOriginais = JSON.stringify({ desbloqueadas: ["supremaCronarca"], equipada: "supremaCronarca" });
 const armazenamento = new Map([
+    [CHAVE_SUPREMAS, supremasOriginais],
     [CHAVE_FASES, "13"],
     [CHAVE_FRAGMENTOS, "87"],
     [CHAVE_COMPRAS, JSON.stringify(["torreDeRaios", "minaTerrestre"])],
@@ -117,6 +118,7 @@ assert.strictEqual(sistema.indiceAtivo, 0);
 assert.strictEqual(sistema.espacos.length, 3);
 assert.strictEqual(sistema.espacos[0].dados[CHAVE_FASES], "13");
 assert.strictEqual(sistema.espacos[0].dados[CHAVE_FRAGMENTOS], "87");
+assert.strictEqual(sistema.espacos[0].dados[CHAVE_SUPREMAS], supremasOriginais);
 assert.strictEqual(sistema.espacos[1], null);
 assert.strictEqual(sistema.espacos[2], null);
 assert.ok(!(CHAVE_IDIOMA in sistema.espacos[0].dados));
@@ -126,6 +128,7 @@ assert.strictEqual(vm.runInContext("trocarSalvoAtivo(2)", contexto), true);
 assert.strictEqual(recarregamentos, 1);
 assert.strictEqual(armazenamento.has(CHAVE_FASES), false);
 assert.strictEqual(armazenamento.has(CHAVE_FRAGMENTOS), false);
+assert.strictEqual(armazenamento.has(CHAVE_SUPREMAS), false);
 assert.strictEqual(armazenamento.get(CHAVE_IDIOMA), "pt-BR");
 assert.deepStrictEqual(
     JSON.parse(armazenamento.get(CHAVE_PREFERENCIAS)),
@@ -139,6 +142,7 @@ assert.strictEqual(vm.runInContext("trocarSalvoAtivo(1)", contexto), true);
 assert.strictEqual(recarregamentos, 2);
 assert.strictEqual(armazenamento.get(CHAVE_FASES), "13");
 assert.strictEqual(armazenamento.get(CHAVE_FRAGMENTOS), "87");
+assert.strictEqual(armazenamento.get(CHAVE_SUPREMAS), supremasOriginais);
 assert.strictEqual(JSON.parse(armazenamento.get(CHAVE_NIVEL)).experienciaTotal, 10400);
 
 sistema = JSON.parse(armazenamento.get(CHAVE_SISTEMA));

@@ -15,10 +15,11 @@ const especificacao = fs.readFileSync("docs/ESPECIFICACAO.md", "utf8");
     "pararMusicaDaDimensaoGlitch();"
 ].forEach((trecho) => assert.ok(codigo.includes(trecho), `Integração ausente: ${trecho}`));
 
-assert.match(
-    codigo,
-    /musicaDaDimensaoGlitch: Object\.freeze\(\{\s*intervaloDoPasso: 310,\s*volumeRelativo: 1\.75,/
-);
+const configuracaoReal = require('./apoio/codigo-jogo.cjs').carregarConfig().audio.musicaDaDimensaoGlitch;
+assert.strictEqual(configuracaoReal.intervaloDoPasso,310);
+assert.strictEqual(configuracaoReal.volumeRelativo,1.75);
+assert.deepStrictEqual(Array.from(configuracaoReal.melodia.slice(0,16)),[146.83,155.56,220,207.65,146.83,116.54,155.56,138.59,174.61,164.81,233.08,220,138.59,146.83,110,103.83]);
+assert.ok(configuracaoReal.melodia.length>16,'A composição ampliada deve preservar a frase original e adicionar novas frases');
 assert.match(codigo, /intensidadeDosCortes: Object\.freeze\(\[[\s\S]*?0\.5/);
 assert.match(codigo, /indice === 7 \|\| indice === 15/);
 assert.match(codigo, /for \(let repeticao = 0; repeticao < 3; repeticao\+\+\)/);
@@ -104,6 +105,9 @@ const musicaFalsa = {
     pause() { this.paused = true; }
 };
 const contextoDaSelecao = {
+    temaMusicalAlternativo:null,
+    obterNumeroDaFaseMusical:()=>99,
+    mapaPersonalizadoAtivo:null,
     obterFaseAtual: () => ({ numero: 99, tema: "glitch" }),
     trilhaDoLobbyAtiva: true,
     trilhaDoDesertoAtiva: false,

@@ -1,0 +1,17 @@
+{
+  "Exclusivo do Intervalo Perdido | Muito rápido": "Nur im Verlorenen Intervall | Sehr schnell",
+  "Exclusivo do Intervalo Perdido | Unidade básica presa entre segundos": "Nur im Verlorenen Intervall | Grundeinheit, die zwischen Sekunden gefangen ist",
+  "Exclusivo do Iron em {mapa}": "Nur im Iron-Modus auf {mapa}",
+  "Executor Cronal": "Chronaler Vollstrecker",
+  "EXECUTOR CRONAL": "CHRONALER VOLLSTRECKER",
+  "Exército do desafio": "Armee der Herausforderung",
+  "Exército emprestado e fixo, sem bônus da loja, núcleos ou Supremas. Uma invasão na base encerra a tentativa. Vença todas as waves para conquistar a torre permanentemente.": "Eine feste, geliehene Armee ohne Ladenboni, Kerne oder Supreme-Türme. Dringt ein Gegner in die Basis ein, endet der Versuch. Besiege alle Wellen, um den Turm dauerhaft freizuschalten.",
+  "Exigir respostas": "Antworten verlangen",
+  "Existe alguém observando o laboratório. Ele conhece acontecimentos que ainda não ocorreram. Se eu desaparecer, destruam a máquina.": "Jemand beobachtet das Labor. Er kennt Ereignisse, die noch nicht stattgefunden haben. Falls ich verschwinde, zerstört die Maschine.",
+  "Existe alguma coisa vivendo fora da linha temporal.": "Irgendetwas lebt außerhalb der Zeitlinie.",
+  "Explode por contato, causa {dano} de dano em {raio} px e desacelera inimigos em {percentual}%.": "Explodiert bei Berührung, verursacht {dano} Schaden in einem Radius von {raio} px und verlangsamt Gegner um {percentual} %.",
+  "Explode por contato, causa {dano} de dano em {raio} px e empurra inimigos comuns {distancia} px.": "Explodiert bei Berührung, verursacht {dano} Schaden in einem Radius von {raio} px und stößt gewöhnliche Gegner {distancia} px zurück.",
+  "Explode por contato, causa {dano} de dano em {raio} px e faz os inimigos receberem {percentual}% mais dano por {segundos} segundos.": "Explodiert bei Berührung, verursacht {dano} Schaden in einem Radius von {raio} px und lässt Gegner {segundos} Sekunden lang {percentual} % mehr Schaden erleiden.",
+  "Explode somente quando um inimigo encosta nela e causa {dano} de dano em uma área de {raio} px.": "Explodiert erst bei Berührung durch einen Gegner und verursacht {dano} Schaden in einem Bereich von {raio} px.",
+  "Explorador clássico": "Klassischer Entdecker"
+}

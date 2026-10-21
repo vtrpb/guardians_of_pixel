@@ -1,0 +1,54 @@
+const {test,expect}=require('@playwright/test');
+test.beforeEach(async({page})=>{
+ await page.clock.setFixedTime(new Date('2026-09-22T12:00:00'));
+ await page.addInitScript(()=>localStorage.setItem('guardians-of-pixel-tutorial-concluido-v1','true'));
+ await page.goto('/');await page.locator('#botao-jogar-menu-inicial').click();await expect(page.locator('#tela-inicial-jogo')).toBeHidden();
+});
+test('Resgate, XP, bloqueio entre modos, recarga e renovação diária',async({page},info)=>{
+ const erros=[];page.on('pageerror',e=>erros.push(e.message));
+ await page.locator('.cristal-diario').scrollIntoViewIfNeeded();await page.screenshot({path:'artifacts/cristal-diario-desktop.png'});
+ const antes=await page.evaluate(()=>({f:fragmentosPixel,x:progressaoDeNivel.experienciaTotal}));
+ await page.evaluate(()=>{Math.random=()=>.5;});
+ await page.locator('#botao-cristal-diario').click();
+ await expect(page.locator('#estado-cristal-diario')).toContainText('2 Fragmentos e 25 XP');
+ expect(await page.evaluate(()=>({f:fragmentosPixel,x:progressaoDeNivel.experienciaTotal}))).toEqual({f:antes.f+2,x:antes.x+25});
+ expect(await page.evaluate(()=>resgatarCristalDiario())).toBe(false);
+ await page.evaluate(()=>alternarModoClassico());await expect(page.locator('#botao-cristal-diario')).toBeDisabled();
+ await page.reload();await page.locator('#botao-jogar-menu-inicial').click();await expect(page.locator('#tela-inicial-jogo')).toBeHidden();
+ await expect(page.locator('#botao-cristal-diario')).toBeDisabled();
+ await page.clock.setFixedTime(new Date('2026-09-23T00:00:01'));
+ await expect(page.locator('#botao-cristal-diario')).toBeEnabled();await page.evaluate(()=>{Math.random=()=>.999;});
+ await page.locator('#botao-cristal-diario').click();
+ await expect(page.locator('#estado-cristal-diario')).toContainText('3 Fragmentos e 25 XP');
+ expect(await page.evaluate(()=>({f:fragmentosPixel,x:progressaoDeNivel.experienciaTotal}))).toEqual({f:antes.f+5,x:antes.x+50});
+ await page.clock.setFixedTime(new Date('2026-09-21T12:00:00'));expect(await page.evaluate(()=>resgatarCristalDiario())).toBe(false);
+ expect(erros).toEqual([]);
+});
+for(const chave of ['CHAVE_CRISTAL_DIARIO','CHAVE_FRAGMENTOS_PIXEL','CHAVE_PROGRESSAO_NIVEL','CHAVE_SISTEMA_DE_SALVOS'])test(`Falha em ${chave} reverte o resgate e permite retentativa`,async({page})=>{
+ const antes=await page.evaluate(()=>({f:fragmentosPixel,x:progressaoDeNivel.experienciaTotal,d:localStorage.getItem(CHAVE_CRISTAL_DIARIO)}));
+ await page.evaluate(chave=>{window.gravacaoOriginal=Storage.prototype.setItem;const k=eval(chave);Storage.prototype.setItem=function(c,v){if(c===k)throw Error('sem espaço');return window.gravacaoOriginal.call(this,c,v);};},chave);
+ expect(await page.evaluate(()=>resgatarCristalDiario())).toBe(false);
+ expect(await page.evaluate(()=>({f:fragmentosPixel,x:progressaoDeNivel.experienciaTotal,d:localStorage.getItem(CHAVE_CRISTAL_DIARIO)}))).toEqual(antes);
+ await expect(page.locator('#estado-cristal-diario')).toContainText('Não foi possível salvar');
+ await page.evaluate(()=>{Storage.prototype.setItem=window.gravacaoOriginal;Math.random=()=>0;});
+ expect(await page.evaluate(()=>resgatarCristalDiario())).toBe(true);
+ expect(await page.evaluate(()=>fragmentosPixel)).toBe(antes.f+1);
+});
+test('Sobe nível, respeita slots e adapta visual e idioma no celular',async({page},info)=>{
+ await page.evaluate(()=>{progressaoDeNivel.experienciaTotal=190;salvarProgressaoDeNivel();});
+ await page.locator('#botao-cristal-diario').click();
+ await expect(page.locator('#estado-cristal-diario')).toContainText('Você recebeu');
+ expect(await page.evaluate(()=>obterDadosDoNivel().nivel)).toBe(2);
+ expect(await page.evaluate(()=>recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes('vanguardaEsmeralda'))).toBe(true);
+ await Promise.all([page.waitForEvent('load'),page.evaluate(()=>trocarSalvoAtivo(2))]);
+ expect(await page.evaluate(()=>cristalDiarioEstaDisponivel())).toBe(true);
+ await Promise.all([page.waitForEvent('load'),page.evaluate(()=>trocarSalvoAtivo(1))]);
+ expect(await page.evaluate(()=>cristalDiarioEstaDisponivel())).toBe(false);
+ await page.locator('#botao-jogar-menu-inicial').click();await expect(page.locator('#tela-inicial-jogo')).toBeHidden();
+ await page.evaluate(()=>{alternarModoClassico();selecionarMapaClassico(101);selecionarIdioma('en');});
+ await page.setViewportSize({width:390,height:844});await page.locator('.cristal-diario').scrollIntoViewIfNeeded();
+ await expect(page.locator('#titulo-cristal-diario')).toHaveText('Daily crystal');
+ await page.screenshot({path:'artifacts/cristal-diario-celular.png'});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.evaluate(()=>selecionarIdioma('es'));await expect(page.locator('#botao-cristal-diario')).toHaveText('Vuelve mañana');
+});

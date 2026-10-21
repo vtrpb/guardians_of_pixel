@@ -51,9 +51,7 @@ const botaoContinuarTutorial = document.getElementById("botao-continuar-tutorial
 const menuPrincipal = document.getElementById("menu-principal");
 const conteudoMenu = document.getElementById("conteudo-menu");
 const indicadorFaseSelecionada = document.getElementById("fase-selecionada-menu");
-const limiteTorresMenu = document.getElementById("limite-torres-menu");
 const fragmentosPixelMenu = document.getElementById("fragmentos-pixel-menu");
-const creditosIniciaisMenu = document.getElementById("creditos-iniciais-menu");
 const resumoMissoesMenu = document.getElementById("resumo-missoes-menu");
 const resumoConquistasMenu = document.getElementById("resumo-conquistas-menu");
 const estadoPacoteApoiadorMenu = document.getElementById("estado-pacote-apoiador-menu");
@@ -113,6 +111,11 @@ const camadaResultado = document.getElementById("camada-resultado");
 const seloResultado = document.getElementById("selo-resultado");
 const tituloResultado = document.getElementById("titulo-resultado");
 const descricaoResultado = document.getElementById("descricao-resultado");
+const orientacaoVitoriaFase1 = document.getElementById("orientacao-vitoria-fase1");
+const tituloOrientacaoVitoriaFase1 = document.getElementById("titulo-orientacao-vitoria-fase1");
+const textoOrientacaoVitoriaFase1 = document.getElementById("texto-orientacao-vitoria-fase1");
+const pistaOrientacaoVitoriaFase1 = document.getElementById("pista-orientacao-vitoria-fase1");
+const falaIdadeDaPedra = document.getElementById("fala-idade-da-pedra");
 const botaoRepetirResultado = document.getElementById("botao-repetir-resultado");
 const botaoVoltarLobbyResultado = document.getElementById("botao-voltar-lobby-resultado");
 const botaoProximaFaseResultado = document.getElementById("botao-proxima-fase-resultado");
@@ -147,6 +150,8 @@ const CHAVE_OFERTA_SEMANAL_LOJA = "guardians-of-pixel-oferta-semanal-v1";
 const CHAVE_TUTORIAL_CONCLUIDO = "guardians-of-pixel-tutorial-concluido-v1";
 const CHAVE_MISSOES_SEMANAIS = "guardians-of-pixel-missoes-semanais-v1";
 const CHAVE_MISSOES_PERMANENTES = "guardians-of-pixel-missoes-permanentes-v1";
+const CHAVE_ESTATISTICAS_DOS_OBJETIVOS = "guardians-of-pixel-estatisticas-objetivos-v1";
+const CHAVE_PREMIO_FINAL_LEGADO = "guardians-of-pixel-premio-final-legado-v1";
 const CHAVE_RECOMPENSAS_MISSOES = "guardians-of-pixel-recompensas-missoes-v1";
 const CHAVE_ESTATISTICAS_CONQUISTAS = "guardians-of-pixel-estatisticas-conquistas-v1";
 const CHAVE_PROGRESSAO_NIVEL = "guardians-of-pixel-progressao-nivel-v1";
@@ -174,11 +179,16 @@ const CHAVE_INTRODUCAO_FASE_14_VISTA = "guardians-of-pixel-introducao-fase-14-v2
 const CHAVE_CENA_FINAL_FASE_14_VISTA = "guardians-of-pixel-cena-final-fase-14-v1";
 const CHAVE_FIGURINHAS_DO_ALBUM = "guardians-of-pixel-album-figurinhas-v1";
 const CHAVE_SELECAO_DE_DEFESAS = "guardians-of-pixel-selecao-defesas-v1";
+const CHAVE_VITORIAS_DOS_EVENTOS = "guardians-of-pixel-eventos-v1";
 const CHAVE_MAPAS_DO_EDITOR = "guardians-of-pixel-editor-mapas-v1";
 const CHAVE_MAPAS_IMPORTADOS_DO_EDITOR = "guardians-of-pixel-editor-comunidade-v1";
+const CHAVE_SERVIDOR_COMUNIDADE_LOCAL = "guardians-of-pixel-servidor-comunidade-local-v1";
+const CHAVE_PUBLICACOES_COMUNIDADE_LOCAL = "guardians-of-pixel-publicacoes-comunidade-local-v1";
 const CHAVE_AVALIACOES_DO_EDITOR = "guardians-of-pixel-editor-avaliacoes-v1";
+const CHAVE_MODERACAO_DO_EDITOR = "guardians-of-pixel-editor-moderacao-v1";
 const CHAVE_CENTRO_DE_TREINAMENTO = "guardians-of-pixel-centro-treinamento-v1";
 const CHAVE_SISTEMA_DE_SALVOS = "guardians-of-pixel-salvos-v1";
+const CHAVE_CONTADOR_DE_MISSOES = "guardians-of-pixel-contador-missoes-v1";
 const PREFIXOS_DOS_DADOS_DE_PROGRESSO = Object.freeze([
     "guardians-of-pixel-",
     "tower-defense-2-"
@@ -186,7 +196,8 @@ const PREFIXOS_DOS_DADOS_DE_PROGRESSO = Object.freeze([
 const CHAVES_GLOBAIS_DO_JOGO = Object.freeze([
     CHAVE_SISTEMA_DE_SALVOS,
     CHAVE_IDIOMA,
-    CHAVE_PREFERENCIAS
+    CHAVE_PREFERENCIAS,
+    CHAVE_MODERACAO_DO_EDITOR
 ]);
 const IDIOMAS_SUPORTADOS = Object.freeze(["pt-BR", "en", "es"]);
 const TRADUCOES = Object.freeze({
@@ -200,6 +211,9 @@ const TRADUCOES = Object.freeze({
         "configuracoes.desativarEfeitos": "Desativar efeitos",
         "configuracoes.ativarEfeitos": "Ativar efeitos",
         "configuracoes.iluminacao": "Iluminação",
+        "configuracoes.construcaoCursor": "Mostrar a defesa seguindo o cursor antes de construir",
+        "configuracoes.animacaoVermelho": "Animar caminhada dos inimigos",
+        "configuracoes.continuar": "Continuar",
         "configuracoes.modoDia": "Modo dia",
         "configuracoes.modoNoite": "Modo noite",
         "configuracoes.idioma": "Idioma",
@@ -261,7 +275,8 @@ const TRADUCOES = Object.freeze({
         "nivel.porFase": "por fase concluída",
         "nivel.skinVanguarda": "Skin Vanguarda Esmeralda",
         "nivel.skinVanguardaDescricao": "Visual verde-esmeralda conquistado pela experiência do defensor.",
-        "nivel.origemSkin": "Obtida no nível 2.",
+        "nivel.origemSkin": "Obtida no nível {nivel}.",
+        "missoes.contadorTotal": "Missões resgatadas: {total}/{objetivo}",
         "nivel.torreRaiosDescricao": "Libera permanentemente a Torre de Raios sem custo de Fragmentos.",
         "nivel.miraCalibradaDescricao": "Libera permanentemente a melhoria Mira Calibrada sem custo de Fragmentos.",
         "nivel.xpPartida": " Você recebeu {quantidade} XP nesta partida.",
@@ -318,6 +333,7 @@ const TRADUCOES = Object.freeze({
         "treinamento.recorde": "RECORDE",
         "treinamento.semRecorde": "Ainda sem recorde",
         "treinamento.melhorTempo": "Melhor tempo: {tempo}s",
+        "treinamento.melhoresImpulsos": "Menos impulsos: {quantidade}",
         "treinamento.melhorReflexo": "Melhor média: {tempo} ms",
         "treinamento.preparar": "PREPARE-SE",
         "treinamento.comecaEm": "Começa em",
@@ -340,6 +356,7 @@ const TRADUCOES = Object.freeze({
         "treinamento.resultadoReflexo": "Seu tempo médio de reação foi {tempo} ms.",
         "treinamento.resultadoPulso": "Você estabilizou as três faixas em {tempo}s.",
         "treinamento.resultadoFliperama": "Você concluiu o desafio em {tempo}s.",
+        "treinamento.resultadoVoo": "Você atravessou os portais com {quantidade} impulsos.",
         "treinamento.resultadoFalha": "Tente novamente para completar o desafio e registrar um recorde.",
         "treinamento.novoRecorde": "NOVO RECORDE!",
         "treinamento.modoTreino": "Modo treino",
@@ -355,6 +372,9 @@ const TRADUCOES = Object.freeze({
         "editor.descricao": "Crie desafios simples, teste e compartilhe com outros jogadores.",
         "editor.meusMapas": "Meus mapas",
         "editor.comunidade": "Comunidade",
+        "editor.comunidadeOnline": "Online",
+        "editor.comunidadeLocal": "Local",
+        "editor.onlineEmDesenvolvimento": "A Comunidade online ainda está em desenvolvimento.",
         "editor.espacos": "{usados} de {limite} espaços usados",
         "editor.novoMapa": "Criar novo mapa",
         "editor.semMapas": "Você ainda não criou nenhum mapa.",
@@ -371,6 +391,7 @@ const TRADUCOES = Object.freeze({
         "editor.nome": "Nome do mapa",
         "editor.criador": "Nome do criador",
         "editor.descricaoMapa": "Descrição",
+        "editor.regraLinguagem": "Sem ofensas ou palavrões aqui. Termos inadequados são removidos; {limite} tentativas bloqueiam o Editor e a Comunidade por {minutos} min.",
         "editor.visual": "2 · Cenário",
         "editor.cenario": "Tema visual",
         "editor.caminho": "Formato do caminho",
@@ -396,22 +417,63 @@ const TRADUCOES = Object.freeze({
         "editor.entrada": "ENTRADA",
         "editor.base": "BASE",
         "editor.codigo": "Código de compartilhamento",
-        "editor.codigoAjuda": "Este jogo não usa servidor. Envie este código para outro jogador importar o mapa.",
+        "editor.codigoAjuda": "Envie este código para outro jogador importar o mapa, mesmo sem conexão local.",
+        "editor.redeTitulo": "Comunidade na rede local",
+        "editor.redeAjuda": "Um computador precisa manter o servidor aberto. Digite o endereço mostrado nele. Seus saves continuam neste navegador.",
+        "editor.redeEndereco": "Endereço do servidor",
+        "editor.redeConectar": "Conectar e atualizar",
+        "editor.redeDesconectada": "Sem servidor conectado. Os códigos ainda funcionam.",
+        "editor.redeConectada": "Servidor conectado. {quantidade} mapas disponíveis.",
+        "editor.redeFalha": "Não foi possível acessar o servidor local. Confira o endereço, a rede e se ele está aberto.",
+        "editor.redePublicada": "Mapa publicado na Comunidade local. O código também está disponível para compartilhar.",
+        "editor.redePublicacaoFalhou": "Código pronto, mas a publicação na rede falhou. O mapa continua compartilhável pelo código.",
+        "editor.redeRetiradaFalhou": "Não foi possível retirar o mapa do servidor. Tente de novo quando ele estiver conectado.",
+        "editor.redeImportar": "Adicionar à minha biblioteca",
+        "editor.redeJaImportado": "Já está na sua biblioteca",
+        "editor.redeSemMapas": "O servidor ainda não tem mapas publicados.",
+        "ajudaEditor.intro": "O Editor libera no nível {nivel}. Abra cada tópico para aprender a criar e compartilhar mapas.",
+        "ajudaEditor.cabecalho": "Aprenda a jogar, criar mapas e compartilhar desafios.",
+        "ajudaEditor.abrir": "Abrir Editor de fases",
+        "ajudaEditor.botaoDescricao": "Crie, teste e compartilhe mapas próprios. Disponível a partir do nível 5.",
+        "ajudaEditor.criarTitulo": "Criar e salvar um mapa",
+        "ajudaEditor.criar1": "No lobby, abra Editor de fases, entre em Meus mapas e clique em Criar novo mapa.",
+        "ajudaEditor.criar2": "Escreva o nome do mapa e o nome do criador. Escolha o cenário, o caminho e as decorações.",
+        "ajudaEditor.criar3": "Defina os créditos iniciais, o limite de torres e as waves. Em cada wave, escolha os inimigos e suas quantidades. Confira a prévia e clique em Salvar mapa.",
+        "ajudaEditor.livreTitulo": "Desenhar um caminho próprio",
+        "ajudaEditor.livre1": "Ao editar o mapa, escolha Modo livre. Use Caminho para criar curvas, Decoração para colocar objetos, Mover para arrastar e Apagar para remover.",
+        "ajudaEditor.livre2": "A entrada fica na esquerda e a base na direita. Use Desfazer e Refazer se quiser mudar o desenho antes de salvar.",
+        "ajudaEditor.publicarTitulo": "Publicar e compartilhar",
+        "ajudaEditor.publicar1": "Em Meus mapas, clique em Publicar e copiar código. Com o servidor conectado, o mapa também aparece na lista da rede local.",
+        "ajudaEditor.publicar2": "Você pode enviar o código GP-MAPA-1 ou GP-MAPA-2 a um amigo mesmo sem servidor. Para retirar uma publicação da rede, use Retirar da Comunidade em Meus mapas.",
+        "ajudaEditor.conectarTitulo": "Conectar a Comunidade local",
+        "ajudaEditor.conectar1": "No computador que vai guardar os mapas, abra a pasta do jogo e execute este comando em um terminal:",
+        "ajudaEditor.conectar2": "Deixe o terminal aberto. Os dois aparelhos precisam estar na mesma rede Wi-Fi ou LAN. Anote o endereço mostrado, como http://192.168.1.10:4174.",
+        "ajudaEditor.conectar3": "No jogo, abra Editor de fases → Comunidade → Local. Digite o endereço do servidor e clique em Conectar e atualizar.",
+        "ajudaEditor.encontrarTitulo": "Encontrar e jogar um mapa",
+        "ajudaEditor.encontrar1": "Em Comunidade → Local, clique em Conectar e atualizar para ver os mapas publicados. Escolha um e clique em Adicionar à minha biblioteca; depois clique em Jogar.",
+        "ajudaEditor.encontrar2": "Se um site HTTPS não abrir a lista, abra o endereço do servidor em outra aba, copie o código do mapa e cole em Importar mapa no jogo.",
+        "ajudaEditor.encontrar3": "Depois de importar, o mapa fica na sua biblioteca e pode ser jogado mesmo com o servidor desligado.",
+        "ajudaEditor.dicasTitulo": "Limites e dicas",
+        "ajudaEditor.dicas1": "Você pode guardar até 2 mapas próprios e 20 importados. O Editor libera no nível {nivel}.",
+        "ajudaEditor.dicas2": "Jogar mapas do Editor não altera o progresso da campanha. Suas avaliações dos mapas importados ficam neste navegador.",
         "editor.copiarCodigo": "Copiar código",
         "editor.importarTitulo": "Importar mapa de outro jogador",
-        "editor.importarAjuda": "Cole abaixo um código que começa com GP-MAPA-1.",
+        "editor.importarAjuda": "Cole abaixo um código GP-MAPA-1 ou GP-MAPA-2.",
         "editor.importar": "Importar mapa",
         "editor.semComunidade": "Nenhum mapa de outro jogador foi importado neste aparelho.",
         "editor.avaliacao": "Sua avaliação",
         "editor.comentario": "Comentário opcional",
         "editor.salvarAvaliacao": "Salvar avaliação",
         "editor.removerImportado": "Remover da biblioteca",
+        "editor.retirarDaComunidade": "Retirar da Comunidade",
+        "editor.retiradoDaComunidade": "Publicação retirada. Códigos já compartilhados continuam válidos.",
         "editor.publicado": "Publicado por código",
         "editor.rascunho": "Rascunho local",
         "editor.criadoPor": "Criado por {criador}",
         "editor.resumo": "{waves} waves · {inimigos} inimigos · limite {torres} torres",
         "editor.mapaSalvo": "Mapa salvo!",
         "editor.mapaExcluido": "Mapa excluído.",
+        "editor.falhaAoSalvar": "Não foi possível salvar neste navegador.",
         "editor.codigoCopiado": "Código copiado!",
         "editor.codigoPronto": "Código pronto para compartilhar.",
         "editor.mapaImportado": "Mapa importado para a Comunidade!",
@@ -419,6 +481,8 @@ const TRADUCOES = Object.freeze({
         "editor.limiteCriados": "Os dois espaços já estão ocupados. Exclua um mapa para criar outro.",
         "editor.limiteImportados": "A biblioteca comunitária já possui 20 mapas.",
         "editor.dadosInvalidos": "Revise nome, criador, waves e quantidades antes de salvar.",
+        "editor.textoOcultado": "Sem ofensas ou palavrões aqui! Termo removido ({tentativas}/{limite}).",
+        "editor.banimentoTemporario": "Editor e Comunidade bloqueados por até {minutos} min neste navegador.",
         "editor.avaliacaoSalva": "Avaliação salva!",
         "editor.mapaPersonalizado": "MAPA PERSONALIZADO · {waves} WAVES CONCLUÍDAS",
         "editor.vitoria": "Desafio de {criador} concluído. Esta partida não altera o progresso da campanha.",
@@ -430,6 +494,11 @@ const TRADUCOES = Object.freeze({
         "editor.caminho.escadaria": "Escadaria",
         "editor.caminho.onda": "Onda longa",
         "editor.caminho.atalhos": "Curvas curtas",
+        "editor.caminho.loopBifurcado": "Loop bifurcado",
+        "editor.caminho.caracol": "Caracol",
+        "editor.caminho.ferradura": "Ferradura",
+        "editor.caminho.ampulheta": "Ampulheta",
+        "editor.caminho.muralha": "Muralha",
         "lobby.faseWave": "Fase {fase} · Wave 1",
         "lobby.creditos": "créditos",
         "lobby.fragmentos": "fragmentos",
@@ -464,6 +533,9 @@ const TRADUCOES = Object.freeze({
         "configuracoes.desativarEfeitos": "Disable effects",
         "configuracoes.ativarEfeitos": "Enable effects",
         "configuracoes.iluminacao": "Lighting",
+        "configuracoes.construcaoCursor": "Show the defense following the cursor before building",
+        "configuracoes.animacaoVermelho": "Animate enemy walking",
+        "configuracoes.continuar": "Continue",
         "configuracoes.modoDia": "Day mode",
         "configuracoes.modoNoite": "Night mode",
         "configuracoes.idioma": "Language",
@@ -525,7 +597,8 @@ const TRADUCOES = Object.freeze({
         "nivel.porFase": "per completed stage",
         "nivel.skinVanguarda": "Emerald Vanguard Skin",
         "nivel.skinVanguardaDescricao": "An emerald-green look earned through defender experience.",
-        "nivel.origemSkin": "Earned at level 2.",
+        "nivel.origemSkin": "Earned at level {nivel}.",
+        "missoes.contadorTotal": "Missions claimed: {total}/{objetivo}",
         "nivel.torreRaiosDescricao": "Permanently unlocks the Lightning Tower without spending Fragments.",
         "nivel.miraCalibradaDescricao": "Permanently unlocks the Calibrated Aim upgrade without spending Fragments.",
         "nivel.xpPartida": " You earned {quantidade} XP in this match.",
@@ -582,6 +655,7 @@ const TRADUCOES = Object.freeze({
         "treinamento.recorde": "RECORD",
         "treinamento.semRecorde": "No record yet",
         "treinamento.melhorTempo": "Best time: {tempo}s",
+        "treinamento.melhoresImpulsos": "Fewest boosts: {quantidade}",
         "treinamento.melhorReflexo": "Best average: {tempo} ms",
         "treinamento.preparar": "GET READY",
         "treinamento.comecaEm": "Starts in",
@@ -604,6 +678,7 @@ const TRADUCOES = Object.freeze({
         "treinamento.resultadoReflexo": "Your average reaction time was {tempo} ms.",
         "treinamento.resultadoPulso": "You stabilized all three bands in {tempo}s.",
         "treinamento.resultadoFliperama": "You completed the challenge in {tempo}s.",
+        "treinamento.resultadoVoo": "You crossed the portals with {quantidade} boosts.",
         "treinamento.resultadoFalha": "Try again to complete the challenge and set a record.",
         "treinamento.novoRecorde": "NEW RECORD!",
         "treinamento.modoTreino": "Training mode",
@@ -619,6 +694,9 @@ const TRADUCOES = Object.freeze({
         "editor.descricao": "Create simple challenges, test them, and share them with other players.",
         "editor.meusMapas": "My maps",
         "editor.comunidade": "Community",
+        "editor.comunidadeOnline": "Online",
+        "editor.comunidadeLocal": "Local",
+        "editor.onlineEmDesenvolvimento": "The online Community is still in development.",
         "editor.espacos": "{usados} of {limite} slots used",
         "editor.novoMapa": "Create new map",
         "editor.semMapas": "You have not created a map yet.",
@@ -635,6 +713,7 @@ const TRADUCOES = Object.freeze({
         "editor.nome": "Map name",
         "editor.criador": "Creator name",
         "editor.descricaoMapa": "Description",
+        "editor.regraLinguagem": "No insults or profanity here. Inappropriate terms are removed; {limite} attempts block the Editor and Community for {minutos} min.",
         "editor.visual": "2 · Scenery",
         "editor.cenario": "Visual theme",
         "editor.caminho": "Path shape",
@@ -660,22 +739,63 @@ const TRADUCOES = Object.freeze({
         "editor.entrada": "ENTRY",
         "editor.base": "BASE",
         "editor.codigo": "Share code",
-        "editor.codigoAjuda": "This game has no server. Send this code to another player so they can import the map.",
+        "editor.codigoAjuda": "Send this code to another player to import the map, even without a local connection.",
+        "editor.redeTitulo": "Local network community",
+        "editor.redeAjuda": "One computer must keep the server running. Enter the address shown there. Your saves stay in this browser.",
+        "editor.redeEndereco": "Server address",
+        "editor.redeConectar": "Connect and refresh",
+        "editor.redeDesconectada": "No server connected. Map codes still work.",
+        "editor.redeConectada": "Server connected. {quantidade} maps available.",
+        "editor.redeFalha": "Could not reach the local server. Check its address, the network, and whether it is running.",
+        "editor.redePublicada": "Map published in the local Community. The code is also available to share.",
+        "editor.redePublicacaoFalhou": "Code ready, but publishing to the network failed. You can still share the code.",
+        "editor.redeRetiradaFalhou": "Could not remove the map from the server. Try again when it is connected.",
+        "editor.redeImportar": "Add to my library",
+        "editor.redeJaImportado": "Already in your library",
+        "editor.redeSemMapas": "No maps have been published on this server yet.",
+        "ajudaEditor.intro": "The Editor unlocks at level {nivel}. Open each topic to learn how to create and share maps.",
+        "ajudaEditor.cabecalho": "Learn to play, create maps, and share challenges.",
+        "ajudaEditor.abrir": "Open Stage editor",
+        "ajudaEditor.botaoDescricao": "Create, test, and share your own maps. Available from level 5.",
+        "ajudaEditor.criarTitulo": "Create and save a map",
+        "ajudaEditor.criar1": "In the lobby, open Stage editor, go to My maps, and click Create new map.",
+        "ajudaEditor.criar2": "Enter the map and creator names. Choose the scenery, path, and decorations.",
+        "ajudaEditor.criar3": "Set starting credits, the tower limit, and waves. For each wave, choose the enemies and their amounts. Check the preview and click Save map.",
+        "ajudaEditor.livreTitulo": "Draw your own path",
+        "ajudaEditor.livre1": "While editing the map, choose Free mode. Use Path to add turns, Decoration to place objects, Move to drag, and Erase to remove.",
+        "ajudaEditor.livre2": "The entrance is on the left and the base is on the right. Use Undo and Redo to change your drawing before saving.",
+        "ajudaEditor.publicarTitulo": "Publish and share",
+        "ajudaEditor.publicar1": "In My maps, click Publish and copy code. When connected to the server, the map also appears in the local network list.",
+        "ajudaEditor.publicar2": "You can send a GP-MAPA-1 or GP-MAPA-2 code to a friend even without a server. To remove a network publication, use Withdraw from Community in My maps.",
+        "ajudaEditor.conectarTitulo": "Connect to the local Community",
+        "ajudaEditor.conectar1": "On the computer that will store the maps, open the game folder and run this command in a terminal:",
+        "ajudaEditor.conectar2": "Keep the terminal open. Both devices must be on the same Wi-Fi or LAN. Note the address shown, such as http://192.168.1.10:4174.",
+        "ajudaEditor.conectar3": "In the game, open Stage editor → Community → Local. Enter the server address and click Connect and refresh.",
+        "ajudaEditor.encontrarTitulo": "Find and play a map",
+        "ajudaEditor.encontrar1": "In Community → Local, click Connect and refresh to see published maps. Choose one and click Add to my library; then click Play.",
+        "ajudaEditor.encontrar2": "If an HTTPS site cannot show the list, open the server address in another tab, copy the map code, and paste it into Import map in the game.",
+        "ajudaEditor.encontrar3": "After importing, the map stays in your library and can be played while the server is offline.",
+        "ajudaEditor.dicasTitulo": "Limits and tips",
+        "ajudaEditor.dicas1": "You can keep up to 2 of your own maps and 20 imported maps. The Editor unlocks at level {nivel}.",
+        "ajudaEditor.dicas2": "Playing Editor maps does not change campaign progress. Your ratings of imported maps stay in this browser.",
         "editor.copiarCodigo": "Copy code",
         "editor.importarTitulo": "Import another player's map",
-        "editor.importarAjuda": "Paste a code beginning with GP-MAPA-1 below.",
+        "editor.importarAjuda": "Paste a GP-MAPA-1 or GP-MAPA-2 code below.",
         "editor.importar": "Import map",
         "editor.semComunidade": "No map from another player has been imported on this device.",
         "editor.avaliacao": "Your rating",
         "editor.comentario": "Optional comment",
         "editor.salvarAvaliacao": "Save rating",
         "editor.removerImportado": "Remove from library",
+        "editor.retirarDaComunidade": "Withdraw from Community",
+        "editor.retiradoDaComunidade": "Publication removed. Previously shared codes still work.",
         "editor.publicado": "Published by code",
         "editor.rascunho": "Local draft",
         "editor.criadoPor": "Created by {criador}",
         "editor.resumo": "{waves} waves · {inimigos} enemies · {torres} tower limit",
         "editor.mapaSalvo": "Map saved!",
         "editor.mapaExcluido": "Map deleted.",
+        "editor.falhaAoSalvar": "Could not save in this browser.",
         "editor.codigoCopiado": "Code copied!",
         "editor.codigoPronto": "Code ready to share.",
         "editor.mapaImportado": "Map imported into Community!",
@@ -683,6 +803,8 @@ const TRADUCOES = Object.freeze({
         "editor.limiteCriados": "Both slots are occupied. Delete a map to create another.",
         "editor.limiteImportados": "The community library already contains 20 maps.",
         "editor.dadosInvalidos": "Review the name, creator, waves, and amounts before saving.",
+        "editor.textoOcultado": "No insults or profanity here! Term removed ({tentativas}/{limite}).",
+        "editor.banimentoTemporario": "Editor and Community are blocked for up to {minutos} min in this browser.",
         "editor.avaliacaoSalva": "Rating saved!",
         "editor.mapaPersonalizado": "CUSTOM MAP · {waves} WAVES COMPLETED",
         "editor.vitoria": "{criador}'s challenge completed. This match does not change campaign progress.",
@@ -694,6 +816,11 @@ const TRADUCOES = Object.freeze({
         "editor.caminho.escadaria": "Staircase",
         "editor.caminho.onda": "Long wave",
         "editor.caminho.atalhos": "Short turns",
+        "editor.caminho.loopBifurcado": "Forked loop",
+        "editor.caminho.caracol": "Spiral",
+        "editor.caminho.ferradura": "Horseshoe",
+        "editor.caminho.ampulheta": "Hourglass",
+        "editor.caminho.muralha": "Ramparts",
         "lobby.faseWave": "Stage {fase} · Wave 1",
         "lobby.creditos": "credits",
         "lobby.fragmentos": "fragments",
@@ -709,7 +836,7 @@ const TRADUCOES = Object.freeze({
         "loja.ofertaDescricao": "Up to 3 items with discounts from 5% to 15%.",
         "loja.renovacaoOferta": "Resets {data} at midnight",
         "loja.precoComDesconto": "From {precoOriginal} to {precoAtual} Fragments, {percentual}% off.",
-        "loja.semOfertas": "NO SALES",
+        "loja.semOfertas": "NO OFFERS",
         "notificacoes.missaoConcluida": "Mission complete",
         "notificacoes.resgatarMissao": "Open Missions to claim the reward.",
         "notificacoes.conquistaDesbloqueada": "Achievement unlocked",
@@ -728,6 +855,9 @@ const TRADUCOES = Object.freeze({
         "configuracoes.desativarEfeitos": "Desactivar efectos",
         "configuracoes.ativarEfeitos": "Activar efectos",
         "configuracoes.iluminacao": "Iluminación",
+        "configuracoes.construcaoCursor": "Mostrar la defensa siguiendo el cursor antes de construir",
+        "configuracoes.animacaoVermelho": "Animar el movimiento de los enemigos",
+        "configuracoes.continuar": "Continuar",
         "configuracoes.modoDia": "Modo día",
         "configuracoes.modoNoite": "Modo noche",
         "configuracoes.idioma": "Idioma",
@@ -789,7 +919,8 @@ const TRADUCOES = Object.freeze({
         "nivel.porFase": "por fase completada",
         "nivel.skinVanguarda": "Skin Vanguardia Esmeralda",
         "nivel.skinVanguardaDescricao": "Un aspecto verde esmeralda obtenido con la experiencia del defensor.",
-        "nivel.origemSkin": "Obtenida en el nivel 2.",
+        "nivel.origemSkin": "Obtenida en el nivel {nivel}.",
+        "missoes.contadorTotal": "Misiones reclamadas: {total}/{objetivo}",
         "nivel.torreRaiosDescricao": "Desbloquea permanentemente la Torre de Rayos sin gastar Fragmentos.",
         "nivel.miraCalibradaDescricao": "Desbloquea permanentemente la mejora Mira Calibrada sin gastar Fragmentos.",
         "nivel.xpPartida": " Has recibido {quantidade} XP en esta partida.",
@@ -846,6 +977,7 @@ const TRADUCOES = Object.freeze({
         "treinamento.recorde": "RÉCORD",
         "treinamento.semRecorde": "Todavía sin récord",
         "treinamento.melhorTempo": "Mejor tiempo: {tempo}s",
+        "treinamento.melhoresImpulsos": "Menos impulsos: {quantidade}",
         "treinamento.melhorReflexo": "Mejor media: {tempo} ms",
         "treinamento.preparar": "PREPÁRATE",
         "treinamento.comecaEm": "Empieza en",
@@ -868,6 +1000,7 @@ const TRADUCOES = Object.freeze({
         "treinamento.resultadoReflexo": "Tu tiempo medio de reacción fue de {tempo} ms.",
         "treinamento.resultadoPulso": "Estabilizaste las tres franjas en {tempo}s.",
         "treinamento.resultadoFliperama": "Completaste el desafío en {tempo}s.",
+        "treinamento.resultadoVoo": "Cruzaste los portales con {quantidade} impulsos.",
         "treinamento.resultadoFalha": "Inténtalo de nuevo para completar el desafío y registrar un récord.",
         "treinamento.novoRecorde": "¡NUEVO RÉCORD!",
         "treinamento.modoTreino": "Modo entrenamiento",
@@ -883,6 +1016,9 @@ const TRADUCOES = Object.freeze({
         "editor.descricao": "Crea desafíos sencillos, pruébalos y compártelos con otros jugadores.",
         "editor.meusMapas": "Mis mapas",
         "editor.comunidade": "Comunidad",
+        "editor.comunidadeOnline": "Online",
+        "editor.comunidadeLocal": "Local",
+        "editor.onlineEmDesenvolvimento": "La Comunidad online todavía está en desarrollo.",
         "editor.espacos": "{usados} de {limite} espacios usados",
         "editor.novoMapa": "Crear nuevo mapa",
         "editor.semMapas": "Todavía no has creado ningún mapa.",
@@ -899,6 +1035,7 @@ const TRADUCOES = Object.freeze({
         "editor.nome": "Nombre del mapa",
         "editor.criador": "Nombre del creador",
         "editor.descricaoMapa": "Descripción",
+        "editor.regraLinguagem": "Sin insultos ni palabrotas aquí. Se eliminan los términos inapropiados; {limite} intentos bloquean el Editor y la Comunidad por {minutos} min.",
         "editor.visual": "2 · Escenario",
         "editor.cenario": "Tema visual",
         "editor.caminho": "Forma del camino",
@@ -924,22 +1061,63 @@ const TRADUCOES = Object.freeze({
         "editor.entrada": "ENTRADA",
         "editor.base": "BASE",
         "editor.codigo": "Código para compartir",
-        "editor.codigoAjuda": "Este juego no usa servidor. Envía este código a otro jugador para que importe el mapa.",
+        "editor.codigoAjuda": "Envía este código a otro jugador para que importe el mapa, incluso sin conexión local.",
+        "editor.redeTitulo": "Comunidad en la red local",
+        "editor.redeAjuda": "Un ordenador debe mantener el servidor abierto. Introduce la dirección que muestra. Tus partidas siguen en este navegador.",
+        "editor.redeEndereco": "Dirección del servidor",
+        "editor.redeConectar": "Conectar y actualizar",
+        "editor.redeDesconectada": "Sin servidor conectado. Los códigos siguen funcionando.",
+        "editor.redeConectada": "Servidor conectado. {quantidade} mapas disponibles.",
+        "editor.redeFalha": "No se pudo acceder al servidor local. Comprueba la dirección, la red y si está abierto.",
+        "editor.redePublicada": "Mapa publicado en la Comunidad local. El código también está disponible para compartir.",
+        "editor.redePublicacaoFalhou": "Código listo, pero falló la publicación en la red. Aún puedes compartir el código.",
+        "editor.redeRetiradaFalhou": "No se pudo retirar el mapa del servidor. Inténtalo cuando esté conectado.",
+        "editor.redeImportar": "Añadir a mi biblioteca",
+        "editor.redeJaImportado": "Ya está en tu biblioteca",
+        "editor.redeSemMapas": "Todavía no hay mapas publicados en este servidor.",
+        "ajudaEditor.intro": "El Editor se desbloquea en el nivel {nivel}. Abre cada tema para aprender a crear y compartir mapas.",
+        "ajudaEditor.cabecalho": "Aprende a jugar, crear mapas y compartir desafíos.",
+        "ajudaEditor.abrir": "Abrir Editor de fases",
+        "ajudaEditor.botaoDescricao": "Crea, prueba y comparte tus propios mapas. Disponible a partir del nivel 5.",
+        "ajudaEditor.criarTitulo": "Crear y guardar un mapa",
+        "ajudaEditor.criar1": "En el lobby, abre Editor de fases, entra en Mis mapas y pulsa Crear nuevo mapa.",
+        "ajudaEditor.criar2": "Escribe el nombre del mapa y del creador. Elige el escenario, el camino y las decoraciones.",
+        "ajudaEditor.criar3": "Define los créditos iniciales, el límite de torres y las oleadas. En cada oleada, elige los enemigos y sus cantidades. Revisa la vista previa y pulsa Guardar mapa.",
+        "ajudaEditor.livreTitulo": "Dibujar tu propio camino",
+        "ajudaEditor.livre1": "Al editar el mapa, elige Modo libre. Usa Camino para crear curvas, Decoración para colocar objetos, Mover para arrastrar y Borrar para eliminar.",
+        "ajudaEditor.livre2": "La entrada está a la izquierda y la base a la derecha. Usa Deshacer y Rehacer para cambiar el dibujo antes de guardarlo.",
+        "ajudaEditor.publicarTitulo": "Publicar y compartir",
+        "ajudaEditor.publicar1": "En Mis mapas, pulsa Publicar y copiar código. Con el servidor conectado, el mapa también aparece en la lista de la red local.",
+        "ajudaEditor.publicar2": "Puedes enviar un código GP-MAPA-1 o GP-MAPA-2 a un amigo incluso sin servidor. Para retirar una publicación de la red, usa Retirar de la Comunidad en Mis mapas.",
+        "ajudaEditor.conectarTitulo": "Conectar a la Comunidad local",
+        "ajudaEditor.conectar1": "En el ordenador que guardará los mapas, abre la carpeta del juego y ejecuta este comando en una terminal:",
+        "ajudaEditor.conectar2": "Deja la terminal abierta. Los dos dispositivos deben estar en la misma red Wi-Fi o LAN. Anota la dirección que aparece, como http://192.168.1.10:4174.",
+        "ajudaEditor.conectar3": "En el juego, abre Editor de fases → Comunidad → Local. Escribe la dirección del servidor y pulsa Conectar y actualizar.",
+        "ajudaEditor.encontrarTitulo": "Buscar y jugar un mapa",
+        "ajudaEditor.encontrar1": "En Comunidad → Local, pulsa Conectar y actualizar para ver los mapas publicados. Elige uno y pulsa Añadir a mi biblioteca; después pulsa Jugar.",
+        "ajudaEditor.encontrar2": "Si un sitio HTTPS no muestra la lista, abre la dirección del servidor en otra pestaña, copia el código del mapa y pégalo en Importar mapa en el juego.",
+        "ajudaEditor.encontrar3": "Después de importarlo, el mapa permanece en tu biblioteca y puedes jugarlo aunque el servidor esté apagado.",
+        "ajudaEditor.dicasTitulo": "Límites y consejos",
+        "ajudaEditor.dicas1": "Puedes guardar hasta 2 mapas propios y 20 importados. El Editor se desbloquea en el nivel {nivel}.",
+        "ajudaEditor.dicas2": "Jugar mapas del Editor no cambia el progreso de la campaña. Tus valoraciones de mapas importados quedan en este navegador.",
         "editor.copiarCodigo": "Copiar código",
         "editor.importarTitulo": "Importar el mapa de otro jugador",
-        "editor.importarAjuda": "Pega abajo un código que empiece por GP-MAPA-1.",
+        "editor.importarAjuda": "Pega abajo un código GP-MAPA-1 o GP-MAPA-2.",
         "editor.importar": "Importar mapa",
         "editor.semComunidade": "No se ha importado ningún mapa de otro jugador en este dispositivo.",
         "editor.avaliacao": "Tu valoración",
         "editor.comentario": "Comentario opcional",
         "editor.salvarAvaliacao": "Guardar valoración",
         "editor.removerImportado": "Eliminar de la biblioteca",
+        "editor.retirarDaComunidade": "Retirar de la Comunidad",
+        "editor.retiradoDaComunidade": "Publicación retirada. Los códigos ya compartidos siguen funcionando.",
         "editor.publicado": "Publicado por código",
         "editor.rascunho": "Borrador local",
         "editor.criadoPor": "Creado por {criador}",
         "editor.resumo": "{waves} oleadas · {inimigos} enemigos · límite de {torres} torres",
         "editor.mapaSalvo": "¡Mapa guardado!",
         "editor.mapaExcluido": "Mapa eliminado.",
+        "editor.falhaAoSalvar": "No se pudo guardar en este navegador.",
         "editor.codigoCopiado": "¡Código copiado!",
         "editor.codigoPronto": "Código listo para compartir.",
         "editor.mapaImportado": "¡Mapa importado a Comunidad!",
@@ -947,6 +1125,8 @@ const TRADUCOES = Object.freeze({
         "editor.limiteCriados": "Los dos espacios están ocupados. Elimina un mapa para crear otro.",
         "editor.limiteImportados": "La biblioteca comunitaria ya contiene 20 mapas.",
         "editor.dadosInvalidos": "Revisa el nombre, el creador, las oleadas y las cantidades antes de guardar.",
+        "editor.textoOcultado": "¡Sin insultos ni palabrotas aquí! Término eliminado ({tentativas}/{limite}).",
+        "editor.banimentoTemporario": "Editor y Comunidad bloqueados hasta {minutos} min en este navegador.",
         "editor.avaliacaoSalva": "¡Valoración guardada!",
         "editor.mapaPersonalizado": "MAPA PERSONALIZADO · {waves} OLEADAS COMPLETADAS",
         "editor.vitoria": "Desafío de {criador} completado. Esta partida no cambia el progreso de la campaña.",
@@ -958,6 +1138,11 @@ const TRADUCOES = Object.freeze({
         "editor.caminho.escadaria": "Escalera",
         "editor.caminho.onda": "Onda larga",
         "editor.caminho.atalhos": "Curvas cortas",
+        "editor.caminho.loopBifurcado": "Bucle bifurcado",
+        "editor.caminho.caracol": "Caracol",
+        "editor.caminho.ferradura": "Herradura",
+        "editor.caminho.ampulheta": "Reloj de arena",
+        "editor.caminho.muralha": "Muralla",
         "lobby.faseWave": "Fase {fase} · Oleada 1",
         "lobby.creditos": "créditos",
         "lobby.fragmentos": "fragmentos",
@@ -988,6 +1173,30 @@ const CHAVES_PRINCIPAIS_POR_TEXTO = Object.freeze(Object.fromEntries(
 ));
 const TEXTOS_LOCALIZADOS = Object.freeze({
     en: Object.freeze({
+        "Super-Bosses": "Super Bosses",
+        "Super-Boss": "Super Boss",
+        "Vida na wave 20": "Health in wave 20",
+        "Veja vida e ataque por dificuldade nos detalhes.": "See health and attacks by difficulty in the details.",
+        "Bloqueado": "Locked",
+        "Ataque": "Attack",
+        "Vença este evento nesta dificuldade para revelar vida e ataque.": "Win this event on this difficulty to reveal health and attacks.",
+        "Queima as torres por {segundos} s.": "Burns towers for {segundos} s.",
+        "Paralisa as torres por {segundos} s.": "Stuns towers for {segundos} s.",
+        "Reduz o alcance das torres em {percentual}% por {segundos} s.": "Reduces tower range by {percentual}% for {segundos} s.",
+        "O ácido causa {tiros} tiros extras de dano na torre.": "Acid deals {tiros} extra hits of damage to the tower.",
+        "A cada {segundos} s, atinge até {alvos} torres. {efeito}": "Every {segundos} s, hits up to {alvos} towers. {efeito}",
+        "Sem ataque secundário.": "No secondary attack.",
+        "Fúria das Cinzas: acelera {percentual}% por {duracao} s.": "Ash Fury: speeds up by {percentual}% for {duracao} s.",
+        "Instala uma torreta que atira nas suas torres.": "Deploys a turret that fires at your towers.",
+        "Invoca {quantidade} reforços.": "Summons {quantidade} reinforcements.",
+        "Deixa uma carcaça que acelera a Víbora em {percentual}%.": "Leaves a shed skin that speeds up the Viper by {percentual}%.",
+        "A cada {segundos} s: {efeito}": "Every {segundos} s: {efeito}",
+        "Vitórias antigas neste evento: {quantidade}. O save não guardava a dificuldade.": "Older wins in this event: {quantidade}. The save did not record the difficulty.",
+        "Marque somente as dificuldades que você venceu. Esta confirmação pode ser feita uma vez.": "Select only the difficulties you won. You can confirm this once.",
+        "Confirmar dificuldades antigas": "Confirm older difficulties",
+        "Selecione dificuldades vencidas dentro do total de vitórias antigas.": "Select completed difficulties within the number of older wins.",
+        "Os chefes finais dos eventos aparecem após serem derrotados.": "Event final bosses appear after you defeat them.",
+        "Derrote um Super-Boss na wave 20 para revelar sua figurinha.": "Defeat a Super Boss in wave 20 to reveal its sticker.",
         "Fechar ×": "Close ×",
         "Sala de estar": "Sitting room",
         "Biblioteca": "Library",
@@ -1099,6 +1308,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "TORRE DE FEIXE CONTÍNUO": "CONTINUOUS BEAM TOWER",
         "Torre de Longo Alcance": "Long-Range Tower",
         "Recompensa do nível {nivel}": "Level {nivel} reward",
+        "Fechar": "Close",
+        "Fase 16": "Stage 16",
+        "Fase 17": "Stage 17",
+        "Um presente para gastar na Loja.": "A gift to spend in the Shop.",
+        "Skin Aurora Boreal": "Northern Lights Skin",
+        "Cores de gelo e aurora para a Torre padrão.": "Ice and aurora colors for the Standard Tower.",
+        "Skin Guardiã do Crepúsculo": "Twilight Guardian Skin",
+        "Armadura violeta com detalhes dourados para a Torre padrão.": "Violet armor with golden details for the Standard Tower.",
+        "Desbloqueio permanente. Se já possuir, recebe Fragmentos.": "Permanent unlock. If already owned, you receive Shards.",
         "Pouco dano, mas alcance de quase todo o mapa. Recompensa exclusiva do nível 12.": "Low damage, but covers almost the entire map. Exclusive level 12 reward.",
         "TORRE DESBLOQUEADA": "TOWER UNLOCKED",
         "NOVA DEFESA DISPONÍVEL": "NEW DEFENSE AVAILABLE",
@@ -1194,14 +1412,23 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Vaga livre": "Empty slot",
         "Defesas para Waves infinitas": "Defenses for Endless Waves",
         "Escolha suas defesas": "Choose your defenses",
+        "Torre de Bolhas": "Bubble Tower",
+        "Aquática · A cada {acertos} acertos, bolhas estouram: {dano} de dano em {raio} px · Limite {limite}": "Aquatic · Every {acertos} hits, bubbles burst: {dano} damage within {raio} px · Limit {limite}",
+        "Teste da Fase 7: efeitos para esta partida.": "Stage 7 trial: effects for this match.",
+        "Efeitos das torres nesta partida.": "Tower effects for this match.",
+        "Bônus: {nome} causa 10% mais dano.": "Bonus: {nome} deals 10% more damage.",
+        "Desafio: {nome} causa 10% menos dano.": "Challenge: {nome} deals 10% less damage.",
+        "A Torre padrão não recebe efeitos.": "The Standard Tower is unaffected.",
+        "+10% de dano": "+10% damage",
+        "−10% de dano": "−10% damage",
         "Iniciar Waves infinitas": "Start Endless Waves",
         "A Torre padrão é obrigatória na primeira partida para concluir o tutorial.": "The Standard Tower is required in your first game to complete the tutorial.",
-        "Monte sua equipe antes da batalha. Você pode levar até 6 defesas, incluindo torres, suportes, minas e bombas.": "Build your team before battle. You can bring up to 6 defenses, including towers, supports, mines, and bombs.",
+        "Monte sua equipe antes da batalha. Você pode levar até {limite} defesas, incluindo torres, suportes, minas e bombas.": "Build your team before battle. You can bring up to {limite} defenses, including towers, supports, mines, and bombs.",
         "EQUIPE DA PARTIDA": "GAME LOADOUT",
         "{quantidade} de {limite} escolhidas": "{quantidade} of {limite} selected",
         "Defesas disponíveis": "Available defenses",
         "SUA EQUIPE": "YOUR TEAM",
-        "6 vagas para a batalha": "6 slots for battle",
+        "{limite} vagas para a batalha": "{limite} slots for battle",
         "A Torre padrão precisa ficar na equipe durante o tutorial.": "The Standard Tower must stay on the team during the tutorial.",
         "A Torre de Varredura precisa ficar na equipe para detectar os inimigos camuflados da Fase 14.": "The Sweep Tower must stay on the team to detect the camouflaged enemies in Stage 14.",
         "Sua equipe já está completa. Retire uma defesa para escolher outra.": "Your team is already full. Remove a defense to choose another one.",
@@ -1235,16 +1462,16 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "???": "???",
         "Ainda está te esperando, sempre vai estar.": "It is still waiting for you. It always will be.",
         "Mestre do Arsenal": "Arsenal Master",
-        "Compre todos os 23 itens disponíveis na Loja.": "Buy all 23 items available in the Shop.",
+        "Compre todos os 27 itens disponíveis na Loja.": "Buy all 27 items available in the Shop.",
         "Lenda do Infinito": "Endless Legend",
         "Alcance a wave 100 no modo infinito.": "Reach wave 100 in endless mode.",
         "Caçador de Pixels Supremo": "Supreme Pixel Hunter",
         "Elimine 500 inimigos em qualquer modo.": "Defeat 500 enemies in any mode.",
-        "Resgate a missão permanente da wave 40 infinita.": "Claim the permanent endless wave 40 mission.",
+        "Complete a wave 40 no modo infinito.": "Complete wave 40 in endless mode.",
         "Os Seis Guardiões": "The Six Guardians",
         "Construa as seis defesas escolhidas para a equipe na mesma partida.": "Build all six defenses selected for the team in the same game.",
         "Mestre do Fliperama": "Arcade Master",
-        "Conclua os cinco minigames do fliperama pelo menos uma vez.": "Complete all five arcade minigames at least once.",
+        "Conclua os oito minigames do fliperama pelo menos uma vez.": "Complete all eight arcade minigames at least once.",
         "Pare o Relógio!": "Stop the Clock!",
         "Ative o Pulso Temporal com um Boss e pelo menos cinco inimigos comuns no mapa.": "Activate Time Pulse with a Boss and at least five regular enemies on the map.",
         "Demolição em Massa": "Mass Demolition",
@@ -1260,11 +1487,16 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Guardião Solar": "Solar Guardian",
         "Sentinela Cósmica": "Cosmic Sentinel",
         "Lenda das 100 Missões": "Legend of the 100 Missions",
-        "Conclua as 100 missões permanentes e resgate o prêmio final.": "Complete all 100 permanent missions and claim the final reward.",
+        "Resgate 100 missões de qualquer tipo.": "Claim 100 missions of any type.",
         "Prêmio por concluir as 100 missões.": "Reward for completing all 100 missions.",
+        "Prêmio de evento especial.": "Special event reward.",
+        "Uma pintura dourada exclusiva dos eventos.": "An exclusive golden event paint job.",
         "Prêmio final das 100 missões": "Final reward for the 100 missions",
-        "Duas skins exclusivas e uma conquista": "Two exclusive skins and an achievement",
+        "Duas skins exclusivas": "Two exclusive skins",
         "Resgatar prêmio final": "Claim final reward",
+        "Missões diárias e semanais.": "Daily and weekly missions.",
+        "Recompensas antigas disponíveis": "Available legacy rewards",
+        "Prêmios conquistados antes da retirada das missões permanentes.": "Rewards earned before permanent missions were retired.",
         "VOCÊ": "YOU",
         "Como eu vim parar aqui? Não consigo lembrar…": "How did I end up here? I can't remember…",
         "Essas criaturas… Por que elas querem me atacar?": "These creatures… Why do they want to attack me?",
@@ -1297,7 +1529,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "+50 créditos iniciais em todas as fases e no modo infinito": "+50 starting credits in every stage and endless mode",
         "Licença de Construção": "Building License",
         "Amplia permanentemente o espaço disponível para suas defesas.": "Permanently expands the space available for your defenses.",
-        "+1 vaga no limite geral de torres de todas as fases": "+1 slot in the overall tower limit for every stage",
+        "+1 vaga de defesa na equipe e +1 no limite de torres das fases": "+1 defense slot on your team and +1 to the stage tower limit",
         "Recompensa Otimizada": "Optimized Reward",
         "Melhora permanentemente o pagamento recebido pelas torres de combate.": "Permanently improves the payment earned by combat towers.",
         "+2 créditos por disparo realizado pelas torres": "+2 credits for every shot fired by towers",
@@ -1332,6 +1564,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Vermelho": "Red",
         "Roxo": "Purple",
         "Ciano rápido": "Fast Cyan",
+        "Metamorfo": "Shapeshifter",
         "Sabotador": "Saboteur",
         "Escorpião do deserto": "Desert Scorpion",
         "Múmia": "Mummy",
@@ -1358,6 +1591,11 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Besouro de Âmbar": "Amber Beetle",
         "Tricerátopo": "Triceratops",
         "Tirano Primordial": "Primal Tyrant",
+        "Mímico Embrulhado": "Wrapped Mimic", "Saqueador de Pacotes": "Package Raider",
+        "Rei dos Presentes": "Gift King", "Ficha Viva": "Living Token",
+        "Cobrador da Banca": "House Collector", "Dono da Banca": "House Boss",
+        "Corredor de Cinzas": "Ash Runner", "Guardião de Cratera": "Crater Guardian",
+        "Arauto do Cometa": "Comet Herald",
         "O Tirano usou Chamado da Matilha!": "The Tyrant used Pack Call!",
         "Drone Caçador": "Hunter Drone",
         "Robô Reparador": "Repair Robot",
@@ -1388,6 +1626,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Aleatório": "Random",
         "{nome} deve ser comprada na Loja.": "{nome} must be purchased in the Shop.",
         "{nome} é desbloqueado ao concluir a Fase {fase}.": "{nome} is unlocked after completing Stage {fase}.",
+        "{nome} é desbloqueada ao vencer Idade da Pedra.": "{nome} is unlocked by winning the Stone Age event.",
+        "Vença Idade da Pedra": "Win the Stone Age event",
+        "{nome} é desbloqueada ao vencer {evento}.": "{nome} is unlocked by winning {evento}.",
+        "Vença {evento}": "Win {evento}",
+        "Torre Magnética": "Magnet Tower", "Torre Metamorfa": "Shapeshifter Tower",
+        "Coral Abissal": "Abyssal Coral", "Corrosão Viva": "Living Corrosion",
+        "Coral luminoso conquistado no Leviatã Abissal.": "Glowing coral earned from the Abyssal Leviathan.",
+        "Esporos ácidos conquistados na Víbora Ácida.": "Acid spores earned from the Acid Viper.",
+        "Bônus do Superboss": "Superboss bonus", "+{percentual}% de dano": "+{percentual}% damage",
         "Compre na Loja": "Buy in the Shop",
         "Conclua Fase {fase}": "Complete Stage {fase}",
         " · Lentidão {percentual}%": " · Slow {percentual}%",
@@ -1395,7 +1642,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         " · Limite {limite} armadas": " · Limit {limite} armed",
         "Dano {dano} em {raio} px · Clique para detonar · Limite {limite}": "{dano} damage in {raio} px · Click to detonate · Limit {limite}",
         "Acelera torres em {percentual}% · Alcance {alcance} · Limite {limite}": "Speeds up towers by {percentual}% · Range {alcance} · Limit {limite}",
-        "Carrega com {cargas} inimigos · Empurra {distancia} px · Limite {limite}": "Charges with {cargas} enemies · Pushes {distancia} px · Limit {limite}",
+        "Recarga {segundos}s · Empurra {distancia} px · Limite {limite}": "{segundos}s cooldown · Pushes {distancia} px · Limit {limite}",
         "Produz {creditos} créditos por wave completa · Limite {limite}": "Produces {creditos} credits per full wave · Limit {limite}",
         "Dano {dano} · Queima {danoQueimadura}/s por {segundos}s · Alcance {alcance}": "Damage {dano} · Burns for {danoQueimadura}/s for {segundos}s · Range {alcance}",
         "Dano {dano} · Encadeia em {alvos} alvos · Alcance {alcance}": "Damage {dano} · Chains to {alvos} targets · Range {alcance}",
@@ -1545,7 +1792,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Exclusivo da Fase 6 | Carapaça rompe com 50% de vida, acelera e libera fragmentos": "Exclusive to Stage 6 | Shell breaks at 50% health, speeds up, and releases fragments",
         "Exclusivo da Fase 7 | Muito rápido": "Exclusive to Stage 7 | Very fast",
         "Exclusivo da Fase 7": "Exclusive to Stage 7",
-        "Exclusivo da Fase 7 | Regenera 40 de vida por segundo depois de alcançar 50%": "Exclusive to Stage 7 | Regenerates 40 health per second after reaching 50%",
+        "Exclusivo da Fase 7 | Regenera {cura} de vida por segundo depois de alcançar 50%": "Exclusive to Stage 7 | Regenerates {cura} health per second after reaching 50%",
         "Exclusivo da Fase 8 | Muito rápido": "Exclusive to Stage 8 | Very fast",
         "Exclusivo da Fase 8 | Reduz 20% do dano recebido": "Exclusive to Stage 8 | Reduces incoming damage by 20%",
         "Exclusivo da Fase 8 | Muita vida": "Exclusive to Stage 8 | High health",
@@ -1720,6 +1967,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Equipada": "Equipped",
         " | Loja: {custo} fragmentos": " | Shop: {custo} fragments",
         " | Desbloqueio: conclua a Fase {fase}": " | Unlock: complete Stage {fase}",
+        " | Desbloqueio: vença Idade da Pedra": " | Unlock: win the Stone Age event",
+        " | Desbloqueio: vença {evento}": " | Unlock: win {evento}",
         " | Dano em área: {raio} px": " | Area damage: {raio} px",
         " | Queimadura: {dano}/s durante {segundos}s": " | Burn: {dano}/s for {segundos}s",
         "Custo: {custo} | Dano em área: {dano} | Raio: {raio} px | Limite: {limite}": "Cost: {custo} | Area damage: {dano} | Radius: {raio} px | Limit: {limite}",
@@ -1728,15 +1977,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         " | Corrosão: +{percentual}% de dano por {segundos}s": " | Corrosion: +{percentual}% damage for {segundos}s",
         " | Fragmentos: {quantidade} de {dano} de dano em {raio} px": " | Fragments: {quantidade} dealing {dano} damage in {raio} px",
         "Custo: {custo} | Cadência próxima: +{percentual}% | Alcance: {alcance} | Limite: {limite}": "Cost: {custo} | Nearby fire rate: +{percentual}% | Range: {alcance} | Limit: {limite}",
-        "Custo: {custo} | Carga: {cargas} inimigos | Empurrão: {distancia} px | Limite: {limite}": "Cost: {custo} | Charge: {cargas} enemies | Push: {distancia} px | Limit: {limite}",
+        "Custo: {custo} | Recarga: {segundos}s | Empurrão: {distancia} px | Limite: {limite}": "Cost: {custo} | Cooldown: {segundos}s | Push: {distancia} px | Limit: {limite}",
         "Custo: {custo} | Produção: {creditos} por wave | Limite: {limite}": "Cost: {custo} | Production: {creditos} per wave | Limit: {limite}",
         "Custo: {custo} | Resistência: {tiros} tiros | Limite: {limite}": "Cost: {custo} | Durability: {tiros} shots | Limit: {limite}",
         "Custo: {custo} | Dano: {dano} | Alcance: {alcance}": "Cost: {custo} | Damage: {dano} | Range: {alcance}",
         "{nome} · nível {nivel}": "{nome} · level {nivel}",
         "Melhoria: {custo} | Dano: {dano} | Alcance: {alcance}": "Upgrade: {custo} | Damage: {dano} | Range: {alcance}",
-        "Melhoria: {custo} | Carga reduzida para {cargas} inimigos": "Upgrade: {custo} | Charge reduced to {cargas} enemies",
-        "Melhoria: {custo} | Vulnerabilidade: +{percentual}% por {segundos}s": "Upgrade: {custo} | Vulnerability: +{percentual}% for {segundos}s",
-        "Melhoria: {custo} | Segundo impacto após {segundos}s": "Upgrade: {custo} | Second impact after {segundos}s",
+        "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px": "Upgrade: {custo} | Cooldown {segundos}s · Push {distancia} px",
+        "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Vulnerabilidade +{percentual}%": "Upgrade: {custo} | Cooldown {segundos}s · Push {distancia} px · Vulnerability +{percentual}%",
+        "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Segundo impacto após {atraso}s": "Upgrade: {custo} | Cooldown {segundos}s · Push {distancia} px · Second impact after {atraso}s",
         "Melhoria: {custo} | Produção: {creditos} por wave": "Upgrade: {custo} | Production: {creditos} per wave",
         "Vida: {vida} | Velocidade: {velocidade}": "Health: {vida} | Speed: {velocidade}",
         "Aprenda o básico e pratique antes da primeira wave.": "Learn the basics and practice before the first wave.",
@@ -1744,11 +1993,23 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Defenda a torre-base": "Defend the base tower",
         "Construa torres perto do caminho e impeça que os inimigos cheguem ao final.": "Build towers near the path and stop enemies from reaching the end.",
         "Jogar tutorial": "Play tutorial",
+        "Básico": "Basics",
+        "Botões do menu": "Menu buttons",
+        "Escolha a fase e a equipe de defesas para iniciar uma partida.": "Choose a stage and defense team to start a match.",
+        "Acompanhe a campanha e escolha as fases desbloqueadas.": "Follow the campaign and choose unlocked stages.",
+        "Veja torres desbloqueadas, inimigos derrotados, Bosses, minas e skins.": "View unlocked towers, defeated enemies, bosses, mines, and skins.",
+        "Compre defesas e melhorias usando Fragmentos de Pixel.": "Buy defenses and upgrades with Pixel Fragments.",
+        "Complete missões diárias e semanais e resgate seus prêmios.": "Complete daily and weekly missions and claim rewards.",
+        "Veja as conquistas obtidas e as que ainda faltam desbloquear.": "See earned achievements and those still locked.",
+        "Alterne entre a campanha e os mapas do modo Clássico.": "Switch between the campaign and Classic mode maps.",
+        "Jogue desafios especiais e enfrente os Superbosses.": "Play special challenges and face Superbosses.",
+        "Consulte e equipe as defesas supremas disponíveis.": "View and equip available supreme defenses.",
+        "Ajuste música, efeitos, idioma e outras preferências.": "Adjust music, effects, language, and other preferences.",
         "Escolha uma defesa liberada na lista à direita. A Torre padrão custa 150 créditos.": "Choose an unlocked defense from the list on the right. The Standard Tower costs 150 credits.",
         "Clique fora do caminho para construir. Deixe a torre perto da estrada para alcançar os inimigos.": "Click away from the path to build. Keep the tower near the road so it can reach enemies.",
         "As torres atacam automaticamente e cada disparo rende {creditos} créditos.": "Towers attack automatically, and each shot earns {creditos} credits.",
         "Clique em uma torre construída para ver dano, alcance, melhoria, venda e prioridade de alvo.": "Click a built tower to view damage, range, upgrades, selling, and target priority.",
-        "Use os créditos recebidos para construir ou melhorar. Cada torre pode chegar ao nível 3.": "Use earned credits to build or upgrade. Each tower can reach level 3.",
+        "Use os créditos recebidos para construir ou melhorar. Confira o limite de melhorias de cada torre na ficha dela.": "Use earned credits to build or upgrade. Check each tower's upgrade limit in its details.",
         "Não deixe nenhum inimigo chegar à torre-base. Conclua a wave {wave} para vencer a fase.": "Do not let any enemy reach the base tower. Complete wave {wave} to win the stage.",
         "{nome} selecionado.": "{nome} selected.",
         "{nome} nível {nivel} selecionado.": "{nome} level {nivel} selected.",
@@ -1758,7 +2019,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "{nome} melhorado para o nível {nivel}.": "{nome} upgraded to level {nivel}.",
         "Selecione uma torre para vender.": "Select a tower to sell.",
         "Torre vendida por {valor}.": "Tower sold for {valor}.",
-        "{nome} · Nível {nivel} · Carga {atual}/{total} · Empurra {distancia} px": "{nome} · Level {nivel} · Charge {atual}/{total} · Pushes {distancia} px",
+        "{nome} · Nível {nivel} · Recarga {segundos}s · Empurra {distancia} px": "{nome} · Level {nivel} · {segundos}s cooldown · Pushes {distancia} px",
         "{nome} · Nível {nivel} · Produção {creditos} créditos por wave": "{nome} · Level {nivel} · Production {creditos} credits per wave",
         "{nome} · Cadência próxima +{percentual}% · Alcance {alcance}": "{nome} · Nearby fire rate +{percentual}% · Range {alcance}",
         "{nome} · Resistência {atual}/{total} tiros": "{nome} · Durability {atual}/{total} shots",
@@ -1800,6 +2061,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "+{creditos} créditos": "+{creditos} credits",
         "Bônus escolhido: {nome}. {descricao}": "Bonus chosen: {nome}. {descricao}",
         "Um fliperama apareceu no mapa!": "An arcade machine appeared on the map!",
+        "Esse é o fliperama": "This is the arcade machine",
+        "Clique nele para jogar. Vença os minigames para suas torres receberem um benefício. Se perder, os inimigos recebem o benefício. A partida ficará pausada até você clicar no fliperama.": "Click it to play. Win the minigames to give your towers a bonus. If you lose, the enemies get the bonus. The game will stay paused until you click the arcade machine.",
+        "Clique no fliperama": "Click the arcade machine",
         "Começa em": "Starts in",
         "Prepare-se!": "Get ready!",
         "Labirinto Pixel": "Pixel Maze",
@@ -1848,6 +2112,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "SUA BASE FOI INVADIDA": "YOUR BASE WAS OVERRUN",
         "VITÓRIA": "VICTORY",
         "A Fase {fase} foi desbloqueada. Escolha seu próximo destino.": "Stage {fase} has been unlocked. Choose your next destination.",
+        "Parabéns, você conseguiu! Agora você desbloqueou o Canhão pesado.": "Congratulations, you did it! You have now unlocked the Heavy Cannon.",
+        "Para ir para a Fase 2, clique em Próxima fase. Ou volte ao menu, entre em Capítulos, escolha o Capítulo 1 e selecione a Fase 2. Depois volte ao lobby e clique em Jogar.": "To go to Stage 2, click Next stage. Or return to the menu, open Chapters, choose Chapter 1, and select Stage 2. Then return to the lobby and click Play.",
+        "Para saber que a Fase 2 está selecionada, o tema do lobby muda para um deserto.": "You will know Stage 2 is selected when the lobby changes to a desert theme.",
         "Todas as fases disponíveis foram concluídas.": "All available stages have been completed.",
         "Fase concluída. Você pode repeti-la ou seguir em frente.": "Stage complete. You can replay it or move forward.",
         "Um inimigo alcançou sua base. Reorganize sua defesa e tente novamente.": "An enemy reached your base. Reorganize your defense and try again.",
@@ -1892,18 +2159,20 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "+{percentual}% de cadência próxima": "+{percentual}% nearby fire rate",
         "Atrai inimigos atiradores": "Draws ranged enemies",
         "Cada tiro  +{creditos}": "Each shot  +{creditos}",
-        "Carga com {cargas} inimigos · Empurra {distancia} px": "Charges with {cargas} enemies · Pushes {distancia} px",
+        "Recarga {segundos}s · Empurra {distancia} px": "{segundos}s cooldown · Pushes {distancia} px",
         "Produz {creditos} por wave completa": "Produces {creditos} per full wave",
         "Queima {dano}/s por {segundos}s": "Burns for {dano}/s for {segundos}s",
         "TORRE SELECIONADA": "SELECTED TOWER",
         "GERADOR ATIVO": "ACTIVE GENERATOR",
-        "CARGA SÍSMICA": "SEISMIC CHARGE",
+        "IMPACTO SÍSMICO": "SEISMIC IMPACT",
+        "Recarga {segundos}s": "Cooldown {segundos}s",
+        "Pronta para impacto": "Ready to strike",
         "SUPORTE ATIVO": "ACTIVE SUPPORT",
         "ISCA DEFENSIVA": "DEFENSIVE DECOY",
         "Nível {nivel}/3": "Level {nivel}/3",
         "Cadência próxima +{percentual}%  •  Alcance {alcance}": "Nearby fire rate +{percentual}%  •  Range {alcance}",
         "Produção +{creditos} por wave completa": "Production +{creditos} per full wave",
-        "Carga {atual}/{total}  •  Empurra {distancia} px": "Charge {atual}/{total}  •  Pushes {distancia} px",
+        "{estado}  •  Empurra {distancia} px": "{estado}  •  Pushes {distancia} px",
         "Resistência {atual}/{total} tiros": "Durability {atual}/{total} shots",
         "Dano {dano}  •  Alcance {alcance}": "Damage {dano}  •  Range {alcance}",
         "Dano {dano}  •  Queima {danoQueimadura}/s por {segundos}s": "Damage {dano}  •  Burns for {danoQueimadura}/s for {segundos}s",
@@ -1916,6 +2185,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "FARAÓ": "PHARAOH",
         "TITÃ": "TITAN",
         "BOSS": "BOSS",
+        "SUBORDINADO {numero}": "LIEUTENANT {numero}",
+        "SUPERBOSS": "SUPERBOSS",
         "ALGO ESTÁ VINDO...": "SOMETHING IS COMING...",
         "Menu da partida": "Game menu",
         "Mapa do jogo Guardians of Pixel": "Guardians of Pixel game map",
@@ -1928,6 +2199,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Canhão pesado": "Heavy Cannon",
         "Torre Glacial": "Frost Tower",
         "Torre Besta": "Crossbow Tower",
+        "Catapulta": "Catapult",
         "Torre de Esporos": "Spore Tower",
         "Obliterador": "Obliterator",
         "Torre Sísmica": "Seismic Tower",
@@ -1958,6 +2230,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Abrir detalhes de {nome}": "Open details for {nome}",
         "DETALHES DA FIGURINHA": "STICKER DETAILS",
         "Fechar detalhes": "Close details",
+        "Ver animação": "View animation",
+        "Parar animação": "Stop animation",
         "Categoria": "Category",
         "Nível": "Level",
         "Nível único": "Single level",
@@ -1994,6 +2268,11 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Orgânico": "Organic",
         "Sem característica elemental": "No elemental characteristic",
         "Inimigo comum": "Common enemy",
+        "Inimigos normais": "Regular enemies",
+        "Bosses normais": "Regular bosses",
+        "Modo história": "Story mode",
+        "Eventos": "Events",
+        "Evento": "Event",
         "Boss": "Boss",
         "Vida base": "Base health",
         "Velocidade": "Speed",
@@ -2292,6 +2571,30 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "ERRO": "ERROR"
     }),
     es: Object.freeze({
+        "Super-Bosses": "Superjefes",
+        "Super-Boss": "Superjefe",
+        "Vida na wave 20": "Vida en la oleada 20",
+        "Veja vida e ataque por dificuldade nos detalhes.": "Consulta la vida y los ataques por dificultad en los detalles.",
+        "Bloqueado": "Bloqueado",
+        "Ataque": "Ataque",
+        "Vença este evento nesta dificuldade para revelar vida e ataque.": "Gana este evento en esta dificultad para revelar la vida y los ataques.",
+        "Queima as torres por {segundos} s.": "Quema las torres durante {segundos} s.",
+        "Paralisa as torres por {segundos} s.": "Paraliza las torres durante {segundos} s.",
+        "Reduz o alcance das torres em {percentual}% por {segundos} s.": "Reduce el alcance de las torres un {percentual}% durante {segundos} s.",
+        "O ácido causa {tiros} tiros extras de dano na torre.": "El ácido causa {tiros} impactos adicionales a la torre.",
+        "A cada {segundos} s, atinge até {alvos} torres. {efeito}": "Cada {segundos} s, alcanza hasta {alvos} torres. {efeito}",
+        "Sem ataque secundário.": "Sin ataque secundario.",
+        "Fúria das Cinzas: acelera {percentual}% por {duracao} s.": "Furia de las Cenizas: acelera un {percentual}% durante {duracao} s.",
+        "Instala uma torreta que atira nas suas torres.": "Instala una torreta que dispara a tus torres.",
+        "Invoca {quantidade} reforços.": "Invoca {quantidade} refuerzos.",
+        "Deixa uma carcaça que acelera a Víbora em {percentual}%.": "Deja una piel mudada que acelera a la Víbora un {percentual}%.",
+        "A cada {segundos} s: {efeito}": "Cada {segundos} s: {efeito}",
+        "Vitórias antigas neste evento: {quantidade}. O save não guardava a dificuldade.": "Victorias anteriores en este evento: {quantidade}. La partida guardada no registraba la dificultad.",
+        "Marque somente as dificuldades que você venceu. Esta confirmação pode ser feita uma vez.": "Marca solo las dificultades que ganaste. Puedes confirmar esto una vez.",
+        "Confirmar dificuldades antigas": "Confirmar dificultades anteriores",
+        "Selecione dificuldades vencidas dentro do total de vitórias antigas.": "Selecciona dificultades ganadas dentro del total de victorias anteriores.",
+        "Os chefes finais dos eventos aparecem após serem derrotados.": "Los jefes finales de los eventos aparecen después de derrotarlos.",
+        "Derrote um Super-Boss na wave 20 para revelar sua figurinha.": "Derrota a un Superjefe en la oleada 20 para revelar su figurita.",
         "Fechar ×": "Cerrar ×",
         "Sala de estar": "Sala de estar",
         "Biblioteca": "Biblioteca",
@@ -2403,6 +2706,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "TORRE DE FEIXE CONTÍNUO": "TORRE DE RAYO CONTINUO",
         "Torre de Longo Alcance": "Torre de Largo Alcance",
         "Recompensa do nível {nivel}": "Recompensa del nivel {nivel}",
+        "Fechar": "Cerrar",
+        "Fase 16": "Fase 16",
+        "Fase 17": "Fase 17",
+        "Um presente para gastar na Loja.": "Un regalo para gastar en la Tienda.",
+        "Skin Aurora Boreal": "Aspecto Aurora Boreal",
+        "Cores de gelo e aurora para a Torre padrão.": "Colores de hielo y aurora para la Torre estándar.",
+        "Skin Guardiã do Crepúsculo": "Aspecto Guardiana del Crepúsculo",
+        "Armadura violeta com detalhes dourados para a Torre padrão.": "Armadura violeta con detalles dorados para la Torre estándar.",
+        "Desbloqueio permanente. Se já possuir, recebe Fragmentos.": "Desbloqueo permanente. Si ya lo tienes, recibes Fragmentos.",
         "Pouco dano, mas alcance de quase todo o mapa. Recompensa exclusiva do nível 12.": "Poco daño, pero cubre casi todo el mapa. Recompensa exclusiva del nivel 12.",
         "TORRE DESBLOQUEADA": "TORRE DESBLOQUEADA",
         "NOVA DEFESA DISPONÍVEL": "NUEVA DEFENSA DISPONIBLE",
@@ -2498,14 +2810,23 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Vaga livre": "Espacio libre",
         "Defesas para Waves infinitas": "Defensas para Oleadas infinitas",
         "Escolha suas defesas": "Elige tus defensas",
+        "Torre de Bolhas": "Torre de Burbujas",
+        "Aquática · A cada {acertos} acertos, bolhas estouram: {dano} de dano em {raio} px · Limite {limite}": "Acuática · Cada {acertos} impactos, las burbujas estallan: {dano} de daño en {raio} px · Límite {limite}",
+        "Teste da Fase 7: efeitos para esta partida.": "Prueba de la fase 7: efectos para esta partida.",
+        "Efeitos das torres nesta partida.": "Efectos de las torres en esta partida.",
+        "Bônus: {nome} causa 10% mais dano.": "Ventaja: {nome} inflige un 10% más de daño.",
+        "Desafio: {nome} causa 10% menos dano.": "Desafío: {nome} inflige un 10% menos de daño.",
+        "A Torre padrão não recebe efeitos.": "La Torre estándar no recibe efectos.",
+        "+10% de dano": "+10% de daño",
+        "−10% de dano": "−10% de daño",
         "Iniciar Waves infinitas": "Iniciar Oleadas infinitas",
         "A Torre padrão é obrigatória na primeira partida para concluir o tutorial.": "La Torre estándar es obligatoria en tu primera partida para completar el tutorial.",
-        "Monte sua equipe antes da batalha. Você pode levar até 6 defesas, incluindo torres, suportes, minas e bombas.": "Prepara tu equipo antes de la batalla. Puedes llevar hasta 6 defensas, incluidas torres, apoyos, minas y bombas.",
+        "Monte sua equipe antes da batalha. Você pode levar até {limite} defesas, incluindo torres, suportes, minas e bombas.": "Prepara tu equipo antes de la batalla. Puedes llevar hasta {limite} defensas, incluidas torres, apoyos, minas y bombas.",
         "EQUIPE DA PARTIDA": "EQUIPO DE LA PARTIDA",
         "{quantidade} de {limite} escolhidas": "{quantidade} de {limite} elegidas",
         "Defesas disponíveis": "Defensas disponibles",
         "SUA EQUIPE": "TU EQUIPO",
-        "6 vagas para a batalha": "6 espacios para la batalla",
+        "{limite} vagas para a batalha": "{limite} espacios para la batalla",
         "A Torre padrão precisa ficar na equipe durante o tutorial.": "La Torre estándar debe permanecer en el equipo durante el tutorial.",
         "A Torre de Varredura precisa ficar na equipe para detectar os inimigos camuflados da Fase 14.": "La Torre de Barrido debe permanecer en el equipo para detectar a los enemigos camuflados de la Fase 14.",
         "Sua equipe já está completa. Retire uma defesa para escolher outra.": "Tu equipo ya está completo. Retira una defensa para elegir otra.",
@@ -2539,16 +2860,16 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "???": "???",
         "Ainda está te esperando, sempre vai estar.": "Todavía te está esperando, siempre lo estará.",
         "Mestre do Arsenal": "Maestro del Arsenal",
-        "Compre todos os 23 itens disponíveis na Loja.": "Compra los 23 objetos disponibles en la Tienda.",
+        "Compre todos os 27 itens disponíveis na Loja.": "Compra los 27 objetos disponibles en la Tienda.",
         "Lenda do Infinito": "Leyenda del Infinito",
         "Alcance a wave 100 no modo infinito.": "Alcanza la oleada 100 en el modo infinito.",
         "Caçador de Pixels Supremo": "Cazador de Píxeles Supremo",
         "Elimine 500 inimigos em qualquer modo.": "Elimina 500 enemigos en cualquier modo.",
-        "Resgate a missão permanente da wave 40 infinita.": "Reclama la misión permanente de la oleada infinita 40.",
+        "Complete a wave 40 no modo infinito.": "Completa la oleada 40 en el modo infinito.",
         "Os Seis Guardiões": "Los Seis Guardianes",
         "Construa as seis defesas escolhidas para a equipe na mesma partida.": "Construye las seis defensas elegidas para el equipo en la misma partida.",
         "Mestre do Fliperama": "Maestro del Salón Recreativo",
-        "Conclua os cinco minigames do fliperama pelo menos uma vez.": "Completa los cinco minijuegos del salón recreativo al menos una vez.",
+        "Conclua os oito minigames do fliperama pelo menos uma vez.": "Completa los ocho minijuegos del salón recreativo al menos una vez.",
         "Pare o Relógio!": "¡Detén el Reloj!",
         "Ative o Pulso Temporal com um Boss e pelo menos cinco inimigos comuns no mapa.": "Activa el Pulso Temporal con un Jefe y al menos cinco enemigos comunes en el mapa.",
         "Demolição em Massa": "Demolición Masiva",
@@ -2564,11 +2885,16 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Guardião Solar": "Guardián Solar",
         "Sentinela Cósmica": "Centinela Cósmica",
         "Lenda das 100 Missões": "Leyenda de las 100 Misiones",
-        "Conclua as 100 missões permanentes e resgate o prêmio final.": "Completa las 100 misiones permanentes y reclama el premio final.",
+        "Resgate 100 missões de qualquer tipo.": "Reclama 100 misiones de cualquier tipo.",
         "Prêmio por concluir as 100 missões.": "Premio por completar las 100 misiones.",
+        "Prêmio de evento especial.": "Premio de evento especial.",
+        "Uma pintura dourada exclusiva dos eventos.": "Una pintura dorada exclusiva de los eventos.",
         "Prêmio final das 100 missões": "Premio final de las 100 misiones",
-        "Duas skins exclusivas e uma conquista": "Dos skins exclusivas y un logro",
+        "Duas skins exclusivas": "Dos skins exclusivas",
         "Resgatar prêmio final": "Reclamar premio final",
+        "Missões diárias e semanais.": "Misiones diarias y semanales.",
+        "Recompensas antigas disponíveis": "Recompensas antiguas disponibles",
+        "Prêmios conquistados antes da retirada das missões permanentes.": "Premios obtenidos antes de retirar las misiones permanentes.",
         "VOCÊ": "TÚ",
         "Como eu vim parar aqui? Não consigo lembrar…": "¿Cómo llegué aquí? No consigo recordarlo…",
         "Essas criaturas… Por que elas querem me atacar?": "Esas criaturas… ¿Por qué quieren atacarme?",
@@ -2601,7 +2927,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "+50 créditos iniciais em todas as fases e no modo infinito": "+50 créditos iniciales en todas las fases y en el modo infinito",
         "Licença de Construção": "Licencia de Construcción",
         "Amplia permanentemente o espaço disponível para suas defesas.": "Amplía permanentemente el espacio disponible para tus defensas.",
-        "+1 vaga no limite geral de torres de todas as fases": "+1 espacio en el límite general de torres de todas las fases",
+        "+1 vaga de defesa na equipe e +1 no limite de torres das fases": "+1 espacio de defensa en el equipo y +1 en el límite de torres de las fases",
         "Recompensa Otimizada": "Recompensa Optimizada",
         "Melhora permanentemente o pagamento recebido pelas torres de combate.": "Mejora permanentemente el pago recibido por las torres de combate.",
         "+2 créditos por disparo realizado pelas torres": "+2 créditos por cada disparo de las torres",
@@ -2636,6 +2962,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Vermelho": "Rojo",
         "Roxo": "Morado",
         "Ciano rápido": "Cian Rápido",
+        "Metamorfo": "Metamorfo",
         "Sabotador": "Saboteador",
         "Escorpião do deserto": "Escorpión del Desierto",
         "Múmia": "Momia",
@@ -2662,6 +2989,11 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Besouro de Âmbar": "Escarabajo de Ámbar",
         "Tricerátopo": "Tricerátops",
         "Tirano Primordial": "Tirano Primordial",
+        "Mímico Embrulhado": "Mímico Envuelto", "Saqueador de Pacotes": "Saqueador de Paquetes",
+        "Rei dos Presentes": "Rey de los Regalos", "Ficha Viva": "Ficha Viviente",
+        "Cobrador da Banca": "Cobrador de la Banca", "Dono da Banca": "Dueño de la Banca",
+        "Corredor de Cinzas": "Corredor de Cenizas", "Guardião de Cratera": "Guardián del Cráter",
+        "Arauto do Cometa": "Heraldo del Cometa",
         "O Tirano usou Chamado da Matilha!": "¡El Tirano usó Llamada de la Manada!",
         "Drone Caçador": "Dron Cazador",
         "Robô Reparador": "Robot Reparador",
@@ -2692,6 +3024,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Aleatório": "Aleatorio",
         "{nome} deve ser comprada na Loja.": "Debes comprar {nome} en la Tienda.",
         "{nome} é desbloqueado ao concluir a Fase {fase}.": "{nome} se desbloquea al completar la Fase {fase}.",
+        "{nome} é desbloqueada ao vencer Idade da Pedra.": "{nome} se desbloquea al ganar el evento Edad de Piedra.",
+        "Vença Idade da Pedra": "Gana el evento Edad de Piedra",
+        "{nome} é desbloqueada ao vencer {evento}.": "{nome} se desbloquea al ganar {evento}.",
+        "Vença {evento}": "Gana {evento}",
+        "Torre Magnética": "Torre Magnética", "Torre Metamorfa": "Torre Metamorfa",
+        "Coral Abissal": "Coral Abisal", "Corrosão Viva": "Corrosión Viva",
+        "Coral luminoso conquistado no Leviatã Abissal.": "Coral luminoso obtenido del Leviatán Abisal.",
+        "Esporos ácidos conquistados na Víbora Ácida.": "Esporas ácidas obtenidas de la Víbora Ácida.",
+        "Bônus do Superboss": "Bono del Superjefe", "+{percentual}% de dano": "+{percentual}% de daño",
         "Compre na Loja": "Compra en la Tienda",
         "Conclua Fase {fase}": "Completa la Fase {fase}",
         " · Lentidão {percentual}%": " · Ralentización {percentual}%",
@@ -2699,7 +3040,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         " · Limite {limite} armadas": " · Límite {limite} armadas",
         "Dano {dano} em {raio} px · Clique para detonar · Limite {limite}": "{dano} de daño en {raio} px · Haz clic para detonar · Límite {limite}",
         "Acelera torres em {percentual}% · Alcance {alcance} · Limite {limite}": "Acelera las torres un {percentual}% · Alcance {alcance} · Límite {limite}",
-        "Carrega com {cargas} inimigos · Empurra {distancia} px · Limite {limite}": "Carga con {cargas} enemigos · Empuja {distancia} px · Límite {limite}",
+        "Recarga {segundos}s · Empurra {distancia} px · Limite {limite}": "Recarga {segundos}s · Empuja {distancia} px · Límite {limite}",
         "Produz {creditos} créditos por wave completa · Limite {limite}": "Produce {creditos} créditos por oleada completa · Límite {limite}",
         "Dano {dano} · Queima {danoQueimadura}/s por {segundos}s · Alcance {alcance}": "Daño {dano} · Quema {danoQueimadura}/s durante {segundos}s · Alcance {alcance}",
         "Dano {dano} · Encadeia em {alvos} alvos · Alcance {alcance}": "Daño {dano} · Encadena a {alvos} objetivos · Alcance {alcance}",
@@ -2849,7 +3190,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Exclusivo da Fase 6 | Carapaça rompe com 50% de vida, acelera e libera fragmentos": "Exclusivo de la Fase 6 | El caparazón se rompe con 50% de vida, acelera y libera fragmentos",
         "Exclusivo da Fase 7 | Muito rápido": "Exclusivo de la Fase 7 | Muy rápido",
         "Exclusivo da Fase 7": "Exclusivo de la Fase 7",
-        "Exclusivo da Fase 7 | Regenera 40 de vida por segundo depois de alcançar 50%": "Exclusivo de la Fase 7 | Regenera 40 de vida por segundo después de alcanzar el 50%",
+        "Exclusivo da Fase 7 | Regenera {cura} de vida por segundo depois de alcançar 50%": "Exclusivo de la Fase 7 | Regenera {cura} de vida por segundo después de alcanzar el 50%",
         "Exclusivo da Fase 8 | Muito rápido": "Exclusivo de la Fase 8 | Muy rápido",
         "Exclusivo da Fase 8 | Reduz 20% do dano recebido": "Exclusivo de la Fase 8 | Reduce un 20% el daño recibido",
         "Exclusivo da Fase 8 | Muita vida": "Exclusivo de la Fase 8 | Mucha vida",
@@ -3024,6 +3365,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Equipada": "Equipada",
         " | Loja: {custo} fragmentos": " | Tienda: {custo} fragmentos",
         " | Desbloqueio: conclua a Fase {fase}": " | Desbloqueo: completa la Fase {fase}",
+        " | Desbloqueio: vença Idade da Pedra": " | Desbloqueo: gana el evento Edad de Piedra",
+        " | Desbloqueio: vença {evento}": " | Desbloqueo: gana {evento}",
         " | Dano em área: {raio} px": " | Daño de área: {raio} px",
         " | Queimadura: {dano}/s durante {segundos}s": " | Quemadura: {dano}/s durante {segundos}s",
         "Custo: {custo} | Dano em área: {dano} | Raio: {raio} px | Limite: {limite}": "Costo: {custo} | Daño de área: {dano} | Radio: {raio} px | Límite: {limite}",
@@ -3032,15 +3375,15 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         " | Corrosão: +{percentual}% de dano por {segundos}s": " | Corrosión: +{percentual}% de daño durante {segundos}s",
         " | Fragmentos: {quantidade} de {dano} de dano em {raio} px": " | Fragmentos: {quantidade} de {dano} de daño en {raio} px",
         "Custo: {custo} | Cadência próxima: +{percentual}% | Alcance: {alcance} | Limite: {limite}": "Costo: {custo} | Cadencia cercana: +{percentual}% | Alcance: {alcance} | Límite: {limite}",
-        "Custo: {custo} | Carga: {cargas} inimigos | Empurrão: {distancia} px | Limite: {limite}": "Costo: {custo} | Carga: {cargas} enemigos | Empuje: {distancia} px | Límite: {limite}",
+        "Custo: {custo} | Recarga: {segundos}s | Empurrão: {distancia} px | Limite: {limite}": "Costo: {custo} | Recarga: {segundos}s | Empuje: {distancia} px | Límite: {limite}",
         "Custo: {custo} | Produção: {creditos} por wave | Limite: {limite}": "Costo: {custo} | Producción: {creditos} por oleada | Límite: {limite}",
         "Custo: {custo} | Resistência: {tiros} tiros | Limite: {limite}": "Costo: {custo} | Resistencia: {tiros} disparos | Límite: {limite}",
         "Custo: {custo} | Dano: {dano} | Alcance: {alcance}": "Costo: {custo} | Daño: {dano} | Alcance: {alcance}",
         "{nome} · nível {nivel}": "{nome} · nivel {nivel}",
         "Melhoria: {custo} | Dano: {dano} | Alcance: {alcance}": "Mejora: {custo} | Daño: {dano} | Alcance: {alcance}",
-        "Melhoria: {custo} | Carga reduzida para {cargas} inimigos": "Mejora: {custo} | Carga reducida a {cargas} enemigos",
-        "Melhoria: {custo} | Vulnerabilidade: +{percentual}% por {segundos}s": "Mejora: {custo} | Vulnerabilidad: +{percentual}% durante {segundos}s",
-        "Melhoria: {custo} | Segundo impacto após {segundos}s": "Mejora: {custo} | Segundo impacto después de {segundos}s",
+        "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px": "Mejora: {custo} | Recarga {segundos}s · Empuje {distancia} px",
+        "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Vulnerabilidade +{percentual}%": "Mejora: {custo} | Recarga {segundos}s · Empuje {distancia} px · Vulnerabilidad +{percentual}%",
+        "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Segundo impacto após {atraso}s": "Mejora: {custo} | Recarga {segundos}s · Empuje {distancia} px · Segundo impacto tras {atraso}s",
         "Melhoria: {custo} | Produção: {creditos} por wave": "Mejora: {custo} | Producción: {creditos} por oleada",
         "Vida: {vida} | Velocidade: {velocidade}": "Vida: {vida} | Velocidad: {velocidade}",
         "Aprenda o básico e pratique antes da primeira wave.": "Aprende lo básico y practica antes de la primera oleada.",
@@ -3048,11 +3391,23 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Defenda a torre-base": "Defiende la torre base",
         "Construa torres perto do caminho e impeça que os inimigos cheguem ao final.": "Construye torres cerca del camino e impide que los enemigos lleguen al final.",
         "Jogar tutorial": "Jugar tutorial",
+        "Básico": "Básico",
+        "Botões do menu": "Botones del menú",
+        "Escolha a fase e a equipe de defesas para iniciar uma partida.": "Elige la fase y el equipo de defensas para empezar una partida.",
+        "Acompanhe a campanha e escolha as fases desbloqueadas.": "Sigue la campaña y elige las fases desbloqueadas.",
+        "Veja torres desbloqueadas, inimigos derrotados, Bosses, minas e skins.": "Ve torres desbloqueadas, enemigos derrotados, jefes, minas y skins.",
+        "Compre defesas e melhorias usando Fragmentos de Pixel.": "Compra defensas y mejoras con Fragmentos de Píxel.",
+        "Complete missões diárias e semanais e resgate seus prêmios.": "Completa misiones diarias y semanales y reclama tus premios.",
+        "Veja as conquistas obtidas e as que ainda faltam desbloquear.": "Ve los logros obtenidos y los que faltan por desbloquear.",
+        "Alterne entre a campanha e os mapas do modo Clássico.": "Alterna entre la campaña y los mapas del modo Clásico.",
+        "Jogue desafios especiais e enfrente os Superbosses.": "Juega desafíos especiales y enfréntate a los Superbosses.",
+        "Consulte e equipe as defesas supremas disponíveis.": "Consulta y equipa las defensas supremas disponibles.",
+        "Ajuste música, efeitos, idioma e outras preferências.": "Ajusta la música, los efectos, el idioma y otras preferencias.",
         "Escolha uma defesa liberada na lista à direita. A Torre padrão custa 150 créditos.": "Elige una defensa desbloqueada en la lista de la derecha. La Torre estándar cuesta 150 créditos.",
         "Clique fora do caminho para construir. Deixe a torre perto da estrada para alcançar os inimigos.": "Haz clic fuera del camino para construir. Deja la torre cerca para alcanzar a los enemigos.",
         "As torres atacam automaticamente e cada disparo rende {creditos} créditos.": "Las torres atacan automáticamente y cada disparo otorga {creditos} créditos.",
         "Clique em uma torre construída para ver dano, alcance, melhoria, venda e prioridade de alvo.": "Haz clic en una torre construida para ver daño, alcance, mejora, venta y prioridad de objetivo.",
-        "Use os créditos recebidos para construir ou melhorar. Cada torre pode chegar ao nível 3.": "Usa los créditos obtenidos para construir o mejorar. Cada torre puede alcanzar el nivel 3.",
+        "Use os créditos recebidos para construir ou melhorar. Confira o limite de melhorias de cada torre na ficha dela.": "Usa los créditos obtenidos para construir o mejorar. Consulta el límite de mejoras de cada torre en su ficha.",
         "Não deixe nenhum inimigo chegar à torre-base. Conclua a wave {wave} para vencer a fase.": "No dejes que ningún enemigo llegue a la torre base. Completa la oleada {wave} para ganar la fase.",
         "{nome} selecionado.": "{nome} seleccionado.",
         "{nome} nível {nivel} selecionado.": "{nome} nivel {nivel} seleccionado.",
@@ -3062,7 +3417,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "{nome} melhorado para o nível {nivel}.": "{nome} mejorado al nivel {nivel}.",
         "Selecione uma torre para vender.": "Selecciona una torre para vender.",
         "Torre vendida por {valor}.": "Torre vendida por {valor}.",
-        "{nome} · Nível {nivel} · Carga {atual}/{total} · Empurra {distancia} px": "{nome} · Nivel {nivel} · Carga {atual}/{total} · Empuja {distancia} px",
+        "{nome} · Nível {nivel} · Recarga {segundos}s · Empurra {distancia} px": "{nome} · Nivel {nivel} · Recarga {segundos}s · Empuja {distancia} px",
         "{nome} · Nível {nivel} · Produção {creditos} créditos por wave": "{nome} · Nivel {nivel} · Producción {creditos} créditos por oleada",
         "{nome} · Cadência próxima +{percentual}% · Alcance {alcance}": "{nome} · Cadencia cercana +{percentual}% · Alcance {alcance}",
         "{nome} · Resistência {atual}/{total} tiros": "{nome} · Resistencia {atual}/{total} disparos",
@@ -3104,6 +3459,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "+{creditos} créditos": "+{creditos} créditos",
         "Bônus escolhido: {nome}. {descricao}": "Bonificación elegida: {nome}. {descricao}",
         "Um fliperama apareceu no mapa!": "¡Apareció una máquina recreativa en el mapa!",
+        "Esse é o fliperama": "Esta es la máquina recreativa",
+        "Clique nele para jogar. Vença os minigames para suas torres receberem um benefício. Se perder, os inimigos recebem o benefício. A partida ficará pausada até você clicar no fliperama.": "Haz clic en ella para jugar. Gana los minijuegos para que tus torres reciban una ventaja. Si pierdes, los enemigos reciben la ventaja. La partida permanecerá en pausa hasta que hagas clic en la máquina recreativa.",
+        "Clique no fliperama": "Haz clic en la máquina recreativa",
         "Começa em": "Comienza en",
         "Prepare-se!": "¡Prepárate!",
         "Labirinto Pixel": "Laberinto Píxel",
@@ -3152,6 +3510,9 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "SUA BASE FOI INVADIDA": "TU BASE FUE INVADIDA",
         "VITÓRIA": "VICTORIA",
         "A Fase {fase} foi desbloqueada. Escolha seu próximo destino.": "La Fase {fase} fue desbloqueada. Elige tu próximo destino.",
+        "Parabéns, você conseguiu! Agora você desbloqueou o Canhão pesado.": "¡Felicidades, lo lograste! Ahora has desbloqueado el Cañón pesado.",
+        "Para ir para a Fase 2, clique em Próxima fase. Ou volte ao menu, entre em Capítulos, escolha o Capítulo 1 e selecione a Fase 2. Depois volte ao lobby e clique em Jogar.": "Para ir a la Fase 2, pulsa Siguiente fase. O vuelve al menú, entra en Capítulos, elige el Capítulo 1 y selecciona la Fase 2. Después vuelve al lobby y pulsa Jugar.",
+        "Para saber que a Fase 2 está selecionada, o tema do lobby muda para um deserto.": "Sabrás que la Fase 2 está seleccionada cuando el lobby cambie al tema del desierto.",
         "Todas as fases disponíveis foram concluídas.": "Todas las fases disponibles fueron completadas.",
         "Fase concluída. Você pode repeti-la ou seguir em frente.": "Fase completada. Puedes repetirla o seguir adelante.",
         "Um inimigo alcançou sua base. Reorganize sua defesa e tente novamente.": "Un enemigo alcanzó tu base. Reorganiza tu defensa e inténtalo de nuevo.",
@@ -3196,18 +3557,20 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "+{percentual}% de cadência próxima": "+{percentual}% de cadencia cercana",
         "Atrai inimigos atiradores": "Atrae enemigos a distancia",
         "Cada tiro  +{creditos}": "Cada disparo  +{creditos}",
-        "Carga com {cargas} inimigos · Empurra {distancia} px": "Carga con {cargas} enemigos · Empuja {distancia} px",
+        "Recarga {segundos}s · Empurra {distancia} px": "Recarga {segundos}s · Empuja {distancia} px",
         "Produz {creditos} por wave completa": "Produce {creditos} por oleada completa",
         "Queima {dano}/s por {segundos}s": "Quema {dano}/s durante {segundos}s",
         "TORRE SELECIONADA": "TORRE SELECCIONADA",
         "GERADOR ATIVO": "GENERADOR ACTIVO",
-        "CARGA SÍSMICA": "CARGA SÍSMICA",
+        "IMPACTO SÍSMICO": "IMPACTO SÍSMICO",
+        "Recarga {segundos}s": "Recarga {segundos}s",
+        "Pronta para impacto": "Lista para impactar",
         "SUPORTE ATIVO": "APOYO ACTIVO",
         "ISCA DEFENSIVA": "SEÑUELO DEFENSIVO",
         "Nível {nivel}/3": "Nivel {nivel}/3",
         "Cadência próxima +{percentual}%  •  Alcance {alcance}": "Cadencia cercana +{percentual}%  •  Alcance {alcance}",
         "Produção +{creditos} por wave completa": "Producción +{creditos} por oleada completa",
-        "Carga {atual}/{total}  •  Empurra {distancia} px": "Carga {atual}/{total}  •  Empuja {distancia} px",
+        "{estado}  •  Empurra {distancia} px": "{estado}  •  Empuja {distancia} px",
         "Resistência {atual}/{total} tiros": "Resistencia {atual}/{total} disparos",
         "Dano {dano}  •  Alcance {alcance}": "Daño {dano}  •  Alcance {alcance}",
         "Dano {dano}  •  Queima {danoQueimadura}/s por {segundos}s": "Daño {dano}  •  Quema {danoQueimadura}/s durante {segundos}s",
@@ -3220,6 +3583,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "FARAÓ": "FARAÓN",
         "TITÃ": "TITÁN",
         "BOSS": "JEFE",
+        "SUBORDINADO {numero}": "SUBORDINADO {numero}",
+        "SUPERBOSS": "SUPERJEFE",
         "ALGO ESTÁ VINDO...": "ALGO SE ACERCA...",
         "Menu da partida": "Menú de la partida",
         "Mapa do jogo Guardians of Pixel": "Mapa del juego Guardians of Pixel",
@@ -3232,6 +3597,7 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Canhão pesado": "Cañón pesado",
         "Torre Glacial": "Torre Glacial",
         "Torre Besta": "Torre Ballesta",
+        "Catapulta": "Catapulta",
         "Torre de Esporos": "Torre de Esporas",
         "Obliterador": "Obliterador",
         "Torre Sísmica": "Torre Sísmica",
@@ -3262,6 +3628,8 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Abrir detalhes de {nome}": "Abrir detalles de {nome}",
         "DETALHES DA FIGURINHA": "DETALLES DEL CROMO",
         "Fechar detalhes": "Cerrar detalles",
+        "Ver animação": "Ver animación",
+        "Parar animação": "Detener animación",
         "Categoria": "Categoría",
         "Nível": "Nivel",
         "Nível único": "Nivel único",
@@ -3298,6 +3666,11 @@ const TEXTOS_LOCALIZADOS = Object.freeze({
         "Orgânico": "Orgánico",
         "Sem característica elemental": "Sin característica elemental",
         "Inimigo comum": "Enemigo común",
+        "Inimigos normais": "Enemigos normales",
+        "Bosses normais": "Jefes normales",
+        "Modo história": "Modo historia",
+        "Eventos": "Eventos",
+        "Evento": "Evento",
         "Boss": "Jefe",
         "Vida base": "Vida base",
         "Velocidade": "Velocidad",
@@ -3601,6 +3974,8 @@ let musicaPausadaPeloJogador = false;
 let volumeDaMusica = VOLUME_MUSICA_DE_FUNDO;
 let ultimoVolumeAudivel = VOLUME_MUSICA_DE_FUNDO;
 let modoNoturno = false;
+let construcaoSeguindoCursor = false;
+let animacaoDoVermelhoAtiva = true;
 let trilhaDoLobbyAtiva = true;
 let musicaDoLobbyTocando = false;
 let trilhaDoDesertoAtiva = false;
@@ -3625,6 +4000,8 @@ let musicaPixeladaDaFase1Tocando = false;
 let contextoAudio = null;
 let ganhoDosEfeitos = null;
 let ganhoDaMusicaDoLobby = null;
+let ganhoDaTransicaoDoLobby = null;
+let musicaDaAberturaConcluida = false;
 let ganhoDaMusicaDoDeserto = null;
 let ganhoDaMusicaDoArtico = null;
 let ganhoDaMusicaDaSelva = null;
@@ -3635,6 +4012,7 @@ let ganhoDaMusicaDaDimensaoGlitch = null;
 let ganhoDaMusicaDaConversaDoPortal = null;
 let ganhoDaMusicaPixeladaDaFase1 = null;
 let intervaloDaMusicaDoLobby = null;
+let temporizadorDaTrocaDeTrilhaDoMenu = null;
 let intervaloDaMusicaDoDeserto = null;
 let intervaloDaMusicaDoArtico = null;
 let intervaloDaMusicaDaSelva = null;
@@ -3690,7 +4068,9 @@ function carregarPreferencias() {
         volumeDosEfeitos: CONFIG.audio.volumeInicialDosEfeitos,
         ultimoVolumeAudivelDosEfeitos: CONFIG.audio.volumeInicialDosEfeitos,
         efeitosSonorosAtivos: true,
-        modoNoturno: false
+        modoNoturno: false,
+        construcaoSeguindoCursor: false,
+        animacaoDoVermelhoAtiva: true
     };
 
     try {
@@ -3719,7 +4099,9 @@ function carregarPreferencias() {
                 preferenciasPadrao.ultimoVolumeAudivelDosEfeitos
             ) || preferenciasPadrao.ultimoVolumeAudivelDosEfeitos,
             efeitosSonorosAtivos: valorSalvo.efeitosSonorosAtivos !== false,
-            modoNoturno: valorSalvo.modoNoturno === true
+            modoNoturno: valorSalvo.modoNoturno === true,
+            construcaoSeguindoCursor: valorSalvo.construcaoSeguindoCursor === true,
+            animacaoDoVermelhoAtiva: valorSalvo.animacaoDoVermelhoAtiva !== false
         };
     } catch (erro) {
         return preferenciasPadrao;
@@ -3735,7 +4117,9 @@ function salvarPreferencias() {
             volumeDosEfeitos,
             ultimoVolumeAudivelDosEfeitos,
             efeitosSonorosAtivos,
-            modoNoturno
+            modoNoturno,
+            construcaoSeguindoCursor,
+            animacaoDoVermelhoAtiva
         }));
     } catch (erro) {
         // As preferências continuam válidas durante a sessão.
@@ -3751,6 +4135,12 @@ function aplicarPreferenciasSalvas() {
     ultimoVolumeAudivelDosEfeitos = preferencias.ultimoVolumeAudivelDosEfeitos;
     efeitosSonorosAtivos = preferencias.efeitosSonorosAtivos;
     modoNoturno = preferencias.modoNoturno;
+    construcaoSeguindoCursor = preferencias.construcaoSeguindoCursor;
+    animacaoDoVermelhoAtiva = preferencias.animacaoDoVermelhoAtiva;
+    const controleConstrucaoCursor = document.getElementById?.("controle-construcao-cursor");
+    if (controleConstrucaoCursor) controleConstrucaoCursor.checked = construcaoSeguindoCursor;
+    const controleAnimacaoVermelho = document.getElementById?.("controle-animacao-vermelho");
+    if (controleAnimacaoVermelho) controleAnimacaoVermelho.checked = animacaoDoVermelhoAtiva;
     document.body?.classList.toggle("modo-noturno", modoNoturno);
     atualizarVolumeEfetivoDaMusica();
     atualizarGanhoDosEfeitos();
@@ -3774,7 +4164,12 @@ function preencherVariaveisDoTexto(texto, variaveis = {}) {
 }
 
 function localizar(textoEmPortugues, variaveis = {}) {
+    if (typeof TEXTOS_DOS_EVENTOS !== 'undefined' && TEXTOS_DOS_EVENTOS[idiomaAtual]?.[textoEmPortugues]) {
+        return preencherVariaveisDoTexto(TEXTOS_DOS_EVENTOS[idiomaAtual][textoEmPortugues], variaveis);
+    }
     if (TRADUCOES_FASE18[idiomaAtual]?.[textoEmPortugues]) return preencherVariaveisDoTexto(TRADUCOES_FASE18[idiomaAtual][textoEmPortugues], variaveis);
+    const traducaoMemoravel = TRADUCOES_CONQUISTAS_MEMORAVEIS[idiomaAtual]?.[textoEmPortugues];
+    if (traducaoMemoravel) return preencherVariaveisDoTexto(traducaoMemoravel, variaveis);
     const traducaoDaNovaConquista = TRADUCOES_NOVAS_CONQUISTAS[idiomaAtual]?.[textoEmPortugues];
     if (traducaoDaNovaConquista) return traducaoDaNovaConquista;
     const chaveDaTraducaoPrincipal = CHAVES_PRINCIPAIS_POR_TEXTO[textoEmPortugues];
@@ -3827,6 +4222,7 @@ function aplicarIdiomaNaInterface() {
     }
 
     atualizarControleDeIdioma();
+    if (typeof atualizarCristalDiario === "function") atualizarCristalDiario();
     if (typeof atualizarTextosDaAbertura === "function") {
         atualizarTextosDaAbertura();
     }
@@ -3847,6 +4243,7 @@ function aplicarIdiomaNaInterface() {
     atualizarBotoesDeConstrucao();
     atualizarBotoesDaTorre();
     atualizarConteudoMenuAberto();
+    if (typeof atualizarIdiomaDosEventos === 'function') atualizarIdiomaDosEventos();
 
     if (!camadaConfirmacaoCompraLoja.hidden) {
         atualizarConfirmacaoDaCompraDaLoja();
@@ -3866,18 +4263,22 @@ function selecionarIdioma(novoIdioma) {
     idiomaAtual = novoIdioma;
     salvarIdioma();
     aplicarIdiomaNaInterface();
+    if (typeof atualizarLobbyClassico === 'function') atualizarLobbyClassico();
     if (typeof atualizarBotaoDaFloresta === 'function') { atualizarBotaoDaFloresta(); if (florestaAtiva) atualizarInterfaceFloresta(); }
 }
 
 function atualizarVolumeEfetivoDaMusica() {
     musica.volume = volumeDaMusica;
+    if (typeof atualizarVolumeDaMusicaDoEvento === 'function') atualizarVolumeDaMusicaDoEvento();
 }
 
 function atualizarBotoesDaMusica() {
-    const musicaTocando = trilhaDaConversaDoPortalAtiva
+    const musicaTocando = typeof obterEventoAtivoParaMusica === 'function' && obterEventoAtivoParaMusica()
+        ? musicaDoEventoTocando && volumeDaMusica > 0
+        : trilhaDaConversaDoPortalAtiva
         ? musicaDaConversaDoPortalTocando && volumeDaMusica > 0
         : trilhaDoLobbyAtiva
-        ? musicaDoLobbyTocando && volumeDaMusica > 0
+        ? (musicaDoLobbyTocando || temporizadorDaTrocaDeTrilhaDoMenu !== null) && volumeDaMusica > 0
         : trilhaDoDesertoAtiva
             ? musicaDoDesertoTocando && volumeDaMusica > 0
             : trilhaDoArticoAtiva
@@ -3900,21 +4301,17 @@ function atualizarBotoesDaMusica() {
 }
 
 function reproduzirMusica() {
-    if (trilhaPixeladaDaFase1Ativa) {
-        musica.pause();
-        return;
-    }
-    const tentativa = musica.play();
-
-    if (tentativa) {
-        tentativa.then(atualizarBotoesDaMusica).catch(atualizarBotoesDaMusica);
-    }
+    // A faixa antiga foi retirada: sem Web Audio, a alternativa é silêncio.
+    musica.pause();
+    atualizarBotoesDaMusica();
 }
 
 function tocarMusica() {
     musicaPausadaPeloJogador = false;
 
-    if (trilhaDaConversaDoPortalAtiva) {
+    if (mapaPersonalizadoAtivo?.evento) {
+        iniciarMusicaDoEvento();
+    } else if (trilhaDaConversaDoPortalAtiva) {
         iniciarMusicaDaConversaDoPortal();
     } else if (trilhaDoLobbyAtiva) {
         iniciarMusicaDoLobby();
@@ -3942,10 +4339,12 @@ function tocarMusica() {
 }
 
 function alternarMusica() {
-    const musicaTocando = trilhaDaConversaDoPortalAtiva
+    const musicaTocando = mapaPersonalizadoAtivo?.evento
+        ? musicaDoEventoTocando && volumeDaMusica > 0
+        : trilhaDaConversaDoPortalAtiva
         ? musicaDaConversaDoPortalTocando && volumeDaMusica > 0
         : trilhaDoLobbyAtiva
-        ? musicaDoLobbyTocando && volumeDaMusica > 0
+        ? (musicaDoLobbyTocando || temporizadorDaTrocaDeTrilhaDoMenu !== null) && volumeDaMusica > 0
         : trilhaDoDesertoAtiva
             ? musicaDoDesertoTocando && volumeDaMusica > 0
             : trilhaDoArticoAtiva
@@ -3973,7 +4372,9 @@ function alternarMusica() {
     } else {
         musicaPausadaPeloJogador = true;
 
-        if (trilhaDaConversaDoPortalAtiva) {
+        if (mapaPersonalizadoAtivo?.evento) {
+            pararMusicaDoEvento();
+        } else if (trilhaDaConversaDoPortalAtiva) {
             pararMusicaDaConversaDoPortal();
         } else if (trilhaDoLobbyAtiva) {
             pararMusicaDoLobby();
@@ -4196,7 +4597,9 @@ function obterContextoAudio() {
         ganhoDaMusicaPixeladaDaFase1 = contextoAudio.createGain();
         ganhoDosEfeitos.gain.value = efeitosSonorosAtivos ? volumeDosEfeitos : 0;
         ganhoDosEfeitos.connect(contextoAudio.destination);
-        ganhoDaMusicaDoLobby.connect(contextoAudio.destination);
+        ganhoDaTransicaoDoLobby = contextoAudio.createGain();
+        ganhoDaMusicaDoLobby.connect(ganhoDaTransicaoDoLobby);
+        ganhoDaTransicaoDoLobby.connect(contextoAudio.destination);
         ganhoDaMusicaDoDeserto.connect(contextoAudio.destination);
         ganhoDaMusicaDoArtico.connect(contextoAudio.destination);
         ganhoDaMusicaDaSelva.connect(contextoAudio.destination);
@@ -4260,7 +4663,7 @@ function obterConfiguracaoDaMusicaDaSelva() {
     const tema = temaMusicalAlternativo || obterFaseAtual().tema;
 
     const partitura = obterPartituraOriginalDaFase();
-    if (partitura && faseSelecionada !== 7) return partitura;
+    if (partitura && obterNumeroDaFaseMusical() !== 7) return partitura;
 
     if (tema === "casteloDoLimbo") return CONFIG.audio.musicaDoCasteloDoLimbo;
 
@@ -4315,9 +4718,20 @@ function atualizarGanhoDaMusicaDaForja() {
     ganhoDaMusicaDaForja.gain.setTargetAtTime(volume, contextoAudio.currentTime, 0.02);
 }
 
+function obterNumeroDaFaseMusical() {
+    const faseMusicalDoDesafio = CONFIG.supremas.desafios[mapaPersonalizadoAtivo?.suprema]?.faseMusical;
+    if (faseMusicalDoDesafio) return faseMusicalDoDesafio;
+    if (mapaPersonalizadoAtivo?.classico) {
+        const mapa = CONFIG.classico.mapasExclusivos.find(m => m.numero === mapaPersonalizadoAtivo.numeroClassico);
+        if (mapa) return mapa.numero;
+    }
+    return mapaPersonalizadoAtivo?.classico ? mapaPersonalizadoAtivo.numeroClassico : faseSelecionada;
+}
+
 function obterPartituraOriginalDaFase() {
-    if (temaMusicalAlternativo || mapaPersonalizadoAtivo) return null;
-    return CONFIG.audio.partiturasPorFase[faseSelecionada] || null;
+    if (temaMusicalAlternativo || (mapaPersonalizadoAtivo && !mapaPersonalizadoAtivo.classico)) return null;
+    const numero = obterNumeroDaFaseMusical();
+    return CONFIG.audio.partiturasClassicas[numero] || CONFIG.audio.partiturasPorFase[numero] || null;
 }
 
 function obterConfiguracaoDaMusicaDoPantano() {
@@ -4569,6 +4983,12 @@ function pararSequenciaMusical(intervalo) {
 }
 
 function obterConfiguracaoDaMusicaDoLobby() {
+    if (!musicaDaAberturaConcluida) return CONFIG.audio.musicaDaAbertura;
+    const trilhaDaTela = CONFIG.audio.trilhasDasTelas[telaDoMenuAberta === 'dominio' ? 'supremas' : telaDoMenuAberta];
+    if (trilhaDaTela) return trilhaDaTela;
+    if (typeof lobbyClassicoAtivo !== 'undefined' && lobbyClassicoAtivo) {
+        return CONFIG.audio.musicaDoLobby;
+    }
     return CONFIG.audio.usarMusicaAnteriorDoLobby
         ? CONFIG.audio.musicaAnteriorDoLobby
         : CONFIG.audio.musicaDoLobby;
@@ -4611,6 +5031,7 @@ function iniciarMusicaDoLobby() {
         !trilhaDoLobbyAtiva
         || musicaPausadaPeloJogador
         || volumeDaMusica === 0
+        || temporizadorDaTrocaDeTrilhaDoMenu !== null
         || musicaDoLobbyTocando
     ) {
         return;
@@ -4646,6 +5067,33 @@ function pararMusicaDoLobby() {
     intervaloDaMusicaDoLobby = pararSequenciaMusical(intervaloDaMusicaDoLobby);
     musicaDoLobbyTocando = false;
     atualizarBotoesDaMusica();
+}
+
+function transicionarTrilhaDoMenu(trilhaAnterior) {
+    if (trilhaAnterior === obterConfiguracaoDaMusicaDoLobby() || !musicaDaAberturaConcluida
+        || temporizadorDaTrocaDeTrilhaDoMenu !== null || !musicaDoLobbyTocando) return;
+    const audio = contextoAudio;
+    const envelope = ganhoDaTransicaoDoLobby?.gain;
+    if (!audio || !envelope) {
+        pararMusicaDoLobby();
+        tentarIniciarMusicaDoLobby();
+        return;
+    }
+    const metade = CONFIG.audio.duracaoTransicaoDasTelasMs / 2;
+    pararMusicaDoLobby();
+    envelope.cancelScheduledValues(audio.currentTime);
+    envelope.setValueAtTime(envelope.value, audio.currentTime);
+    envelope.linearRampToValueAtTime(0, audio.currentTime + metade / 1000);
+    temporizadorDaTrocaDeTrilhaDoMenu = setTimeout(() => {
+        temporizadorDaTrocaDeTrilhaDoMenu = null;
+        ganhoDaMusicaDoLobby.disconnect();
+        ganhoDaMusicaDoLobby = audio.createGain();
+        ganhoDaMusicaDoLobby.connect(ganhoDaTransicaoDoLobby);
+        envelope.cancelScheduledValues(audio.currentTime);
+        envelope.setValueAtTime(0, audio.currentTime);
+        if (trilhaDoLobbyAtiva && !jogoIniciado) tentarIniciarMusicaDoLobby();
+        envelope.linearRampToValueAtTime(1, audio.currentTime + metade / 1000);
+    }, metade);
 }
 
 function tocarPassoDaMusicaDoDeserto() {
@@ -5452,6 +5900,18 @@ function tocarPassoDaPartituraPixelada(audio, c, passoAtual, destino) {
     return (passoAtual + 1) % (tamanho * c.ordem.length);
 }
 
+function criarTrilhaDoEvento(nomeInterno, intervaloDoPasso, instrumento, frases, baixos, acordes, contracanto, bateria, ajustesDeMixagem = {}) {
+    return Object.freeze({
+        nomeInterno, intervaloDoPasso, instrumento, instrumentoSecundario: 'sine',
+        frases, baixos, acordes, contracanto, bateria,
+        ordem: [0, 1, 0, 1], ritmoDosAcordes: [0, 0, 1, 0, 0, 0, 1, 0],
+        volumeRelativo: 1, volumeMelodia: instrumento === 'sawtooth' ? 0.04 : 0.07,
+        volumeContracanto: 0.025, volumeBaixo: 0.065, volumeHarmonia: 0.012,
+        volumeBateria: 0.095, volumeAcordesRitmados: 0.025, sustentoHarmonia: 3,
+        ...ajustesDeMixagem
+    });
+}
+
 function tocarPassoDaMusicaDoPantano() {
     const audio = obterContextoAudio();
 
@@ -5828,11 +6288,39 @@ function pararMusicaPixeladaDaFase1() {
 
 function selecionarTrilhaDaPartida(temaAlternativo = null) {
     // Trocas entre fases que compartilham o sequenciador também trocam o andamento.
+    if (typeof pararMusicaDoEvento === 'function') pararMusicaDoEvento();
     pararMusicaDaSelva();
     pararMusicaDoPantano();
+    if (mapaPersonalizadoAtivo?.evento) {
+        temaMusicalAlternativo = null;
+        trilhaDoLobbyAtiva = false;
+        trilhaDaConversaDoPortalAtiva = false;
+        trilhaDoDesertoAtiva = false;
+        trilhaDoArticoAtiva = false;
+        trilhaDaSelvaAtiva = false;
+        trilhaDoBosqueAtiva = false;
+        trilhaDaForjaAtiva = false;
+        trilhaDoPantanoAtiva = false;
+        trilhaDaDimensaoGlitchAtiva = false;
+        trilhaPixeladaDaFase1Ativa = false;
+        pararMusicaDoLobby();
+        pararMusicaDaConversaDoPortal();
+        pararMusicaDoDeserto();
+        pararMusicaDoArtico();
+        pararMusicaDaSelva();
+        pararMusicaDoBosque();
+        pararMusicaDaForja();
+        pararMusicaDoPantano();
+        pararMusicaDaDimensaoGlitch();
+        pararMusicaPixeladaDaFase1();
+        musica.pause();
+        iniciarMusicaDoEvento();
+        atualizarBotoesDaMusica();
+        return;
+    }
     if (temaMusicalAlternativo !== temaAlternativo) pararMusicaDaSelva();
     temaMusicalAlternativo = temaAlternativo;
-    const faseAtual = temaAlternativo ? { tema: temaAlternativo } : obterFaseAtual();
+    const faseAtual = temaAlternativo ? { tema: temaAlternativo } : { ...obterFaseAtual(), numero: obterNumeroDaFaseMusical() };
     trilhaDoLobbyAtiva = false;
     trilhaDaConversaDoPortalAtiva = false;
     trilhaDoDesertoAtiva = faseAtual.tema === "deserto";
@@ -5851,9 +6339,13 @@ function selecionarTrilhaDaPartida(temaAlternativo = null) {
     ].includes(faseAtual.tema);
     trilhaDoBosqueAtiva = faseAtual.tema === "temperada";
     trilhaDaForjaAtiva = faseAtual.tema === "vulcanica";
-    trilhaDoPantanoAtiva = faseAtual.tema === "pantano";
+    trilhaDoPantanoAtiva = faseAtual.tema === "pantano" || Boolean(!temaAlternativo && mapaPersonalizadoAtivo?.classico && CONFIG.audio.partiturasClassicas[faseAtual.numero]);
     trilhaDaDimensaoGlitchAtiva = faseAtual.tema === "glitch";
-    trilhaPixeladaDaFase1Ativa = faseAtual.numero === 1;
+    const campoDoEditor = mapaPersonalizadoAtivo
+        && !mapaPersonalizadoAtivo.classico
+        && !mapaPersonalizadoAtivo.evento
+        && faseAtual.tema === "campo";
+    trilhaPixeladaDaFase1Ativa = faseAtual.numero === 1 || Boolean(campoDoEditor);
     atualizarVolumeEfetivoDaMusica();
     pararMusicaDoLobby();
     pararMusicaDaConversaDoPortal();
@@ -6027,6 +6519,7 @@ function selecionarTrilhaDaPartida(temaAlternativo = null) {
 }
 
 function selecionarTrilhaDaConversaDoPortal() {
+    if (typeof pararMusicaDoEvento === 'function') pararMusicaDoEvento();
     trilhaDaConversaDoPortalAtiva = true;
     trilhaDoLobbyAtiva = false;
     trilhaDoDesertoAtiva = false;
@@ -6052,6 +6545,7 @@ function selecionarTrilhaDaConversaDoPortal() {
 }
 
 function selecionarTrilhaDoLobby() {
+    if (typeof pararMusicaDoEvento === 'function') pararMusicaDoEvento();
     temaMusicalAlternativo = null;
     trilhaDoLobbyAtiva = true;
     trilhaDaConversaDoPortalAtiva = false;
@@ -6099,6 +6593,22 @@ function reiniciarRelogioDaSimulacao() {
     instanteDoUltimoQuadro = 0;
 }
 
+function agendarQuadroDaPartida() {
+    if (!jogoIniciado || quadroDaPartidaAgendado) return;
+    quadroDaPartidaAgendado = requestAnimationFrame(instante => {
+        quadroDaPartidaAgendado = 0;
+        atualizar(instante);
+    });
+}
+
+function garantirRetomadaDaPartida() {
+    if (!jogoIniciado || document.hidden) return;
+    if (quadroDaPartidaAgendado) cancelAnimationFrame(quadroDaPartidaAgendado);
+    quadroDaPartidaAgendado = 0;
+    reiniciarRelogioDaSimulacao();
+    agendarQuadroDaPartida();
+}
+
 function calcularMultiplicadorDeMovimento(instanteDoQuadro) {
     const duracaoDoQuadroDeReferencia = 1000
         / CONFIG.simulacao.quadrosPorSegundoDeReferencia;
@@ -6119,12 +6629,15 @@ function calcularMultiplicadorDeMovimento(instanteDoQuadro) {
 }
 
 function definirJogoPausado(pausar) {
+    if (!pausar && explicacaoFliperamaAtiva) return;
     if (!jogoIniciado || jogoPausado === pausar) {
         return;
     }
 
     if (pausar) {
         jogoPausado = true;
+        fecharMochila(false);
+        atualizarControleDaSobrecarga();
         pausaIniciadaEm = Date.now();
         reiniciarRelogioDaSimulacao();
         atualizarPulsoTemporalNoControle();
@@ -6145,6 +6658,10 @@ function definirJogoPausado(pausar) {
     );
     boostDanoFliperamaExpiraEm = deslocarCronometroAposPausa(
         boostDanoFliperamaExpiraEm,
+        duracaoDaPausa
+    );
+    boostInimigosFliperamaExpiraEm = deslocarCronometroAposPausa(
+        boostInimigosFliperamaExpiraEm,
         duracaoDaPausa
     );
     pulsoTemporalNormalExpiraEm = deslocarCronometroAposPausa(
@@ -6242,6 +6759,10 @@ function definirJogoPausado(pausar) {
         );
         torre.impactoSismicoSecundarioEm = deslocarCronometroAposPausa(
             torre.impactoSismicoSecundarioEm || 0,
+            duracaoDaPausa
+        );
+        torre.sismicaProntaEm = deslocarCronometroAposPausa(
+            torre.sismicaProntaEm || 0,
             duracaoDaPausa
         );
         torre.sucataExpiraEm = deslocarCronometroAposPausa(
@@ -6372,6 +6893,7 @@ function definirJogoPausado(pausar) {
     }
 
     atualizarPulsoTemporalNoControle();
+    garantirRetomadaDaPartida();
 }
 
 function definirMenuDaPartidaAberto(aberto) {
@@ -6478,9 +7000,13 @@ function controlarVisibilidadeDaPagina() {
         pausaAutomaticaPorOcultacao = false;
         botaoMenuPartida.focus();
     }
+    garantirRetomadaDaPartida();
 }
 
 function controlarAtalhosDaPartida(evento) {
+    if (evento.key === 'Escape' && mochilaEstaAberta()) {
+        evento.preventDefault(); fecharMochila(); return;
+    }
     if (
         (
             conversaDoSenhorDoTempoAtiva
@@ -6564,6 +7090,10 @@ function controlarAtalhosDaPartida(evento) {
 
     const tecla = evento.key.toLowerCase();
 
+    if (tecla === 'q' && !evento.target?.closest('input,textarea,select,[contenteditable="true"]')) {
+        evento.preventDefault(); alternarMochila(); return;
+    }
+    if (mochilaEstaAberta()) return;
     if (tecla === "e") {
         evento.preventDefault();
         melhorarTorreSelecionada();
@@ -6599,8 +7129,27 @@ function abrirConfiguracoes() {
     }
 }
 
+let configuracoesDaPrimeiraEntradaAbertas = false;
+
 function fecharConfiguracoes() {
     definirConfiguracoesAbertas(false);
+    if (configuracoesDaPrimeiraEntradaAbertas) {
+        configuracoesDaPrimeiraEntradaAbertas = false;
+        camadaConfiguracoes.classList.remove("primeira-entrada");
+        document.getElementById("apresentacao-primeiras-configuracoes").hidden = true;
+        document.getElementById("acoes-primeiras-configuracoes").hidden = true;
+        mostrarMenuInicial();
+    }
+}
+
+function alternarConstrucaoSeguindoCursor(ativa) {
+    construcaoSeguindoCursor = ativa === true;
+    salvarPreferencias();
+}
+
+function alternarAnimacaoDoVermelho(ativa) {
+    animacaoDoVermelhoAtiva = ativa === true;
+    salvarPreferencias();
 }
 
 function alternarConfiguracoes() {
@@ -6696,9 +7245,20 @@ function atualizarTextosDaAbertura() {
 }
 
 function obterDuracaoDaAbertura(nomeDaDuracao) {
-    return typeof navigator !== "undefined" && navigator.webdriver
+    // A dissolução não desloca elementos; preservar sua duração em qualquer ambiente.
+    if (nomeDaDuracao === "duracaoSaidaMs") return CONFIG.aberturaDoJogo.duracaoSaidaMs;
+    if (nomeDaDuracao !== "duracaoMinimaCarregamentoMs"
+        && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return 0;
+    return nomeDaDuracao !== "duracaoSaidaMs"
+        && typeof navigator !== "undefined" && navigator.webdriver
         ? 0
         : CONFIG.aberturaDoJogo[nomeDaDuracao];
+}
+
+function mostrarMenuInicial() {
+    telaInicialJogo.hidden = false;
+    requestAnimationFrame(() => telaInicialJogo.classList.add("menu-inicial-visivel"));
+    botaoJogarMenuInicial.focus();
 }
 
 function revelarMenuInicial() {
@@ -6708,14 +7268,25 @@ function revelarMenuInicial() {
 
     telaInicialPronta = true;
     atualizarTextosDaAbertura();
+    window.atualizarEntidadeDaAbertura?.();
+    const apresentarPreferencias = !jogadorJaEntrouAntes
+        || sistemaDeSalvos.espacos[sistemaDeSalvos.indiceAtivo]?.preferenciasApresentadas === false;
     salvarRegistroDeEntradaAnterior();
-    telaInicialJogo.hidden = false;
-    requestAnimationFrame(() => telaInicialJogo.classList.add("menu-inicial-visivel"));
     telaCarregamento.classList.add("carregamento-concluido");
 
     setTimeout(() => {
         telaCarregamento.hidden = true;
-        botaoJogarMenuInicial.focus();
+        if (apresentarPreferencias) {
+            registrarPreferenciasDoSalvoAtivo();
+            configuracoesDaPrimeiraEntradaAbertas = true;
+            camadaConfiguracoes.classList.add("primeira-entrada");
+            document.getElementById("apresentacao-primeiras-configuracoes").hidden = false;
+            document.getElementById("acoes-primeiras-configuracoes").hidden = false;
+            abrirConfiguracoes();
+            botoesDeIdioma.find(botao => botao.dataset.idioma === idiomaAtual)?.focus();
+        } else {
+            mostrarMenuInicial();
+        }
     }, obterDuracaoDaAbertura("duracaoTransicaoMs"));
 }
 
@@ -6738,26 +7309,68 @@ function liberarConteudoDoJogo() {
     menuPrincipal.setAttribute("aria-hidden", "false");
 }
 
+function registrarPreferenciasDoSalvoAtivo() {
+    const indice = sistemaDeSalvos.indiceAtivo;
+    const registro = sistemaDeSalvos.espacos[indice];
+    if (!registro || registro.preferenciasApresentadas) return;
+    const espacos = [...sistemaDeSalvos.espacos];
+    espacos[indice] = { ...registro, preferenciasApresentadas: true };
+    const sistemaAtualizado = { ...sistemaDeSalvos, espacos };
+    if (salvarSistemaDeSalvos(sistemaAtualizado)) sistemaDeSalvos = sistemaAtualizado;
+}
+
 function entrarNoLobbyPeloMenuInicial() {
-    if (!telaInicialPronta || !telaCarregamento.hidden) {
+    if (!telaInicialPronta || !telaCarregamento.hidden
+        || telaInicialJogo.hidden || telaInicialJogo.classList.contains("menu-inicial-saindo")) {
         return;
     }
 
     botaoJogarMenuInicial.disabled = true;
     botaoSairMenuInicial.disabled = true;
-    liberarConteudoDoJogo();
+    const duracaoDaSaida = obterDuracaoDaAbertura("duracaoSaidaMs");
+    telaInicialJogo.style.setProperty("--duracao-saida-abertura", `${duracaoDaSaida}ms`);
+    document.body.classList.add("menu-lobby-revelando");
     telaInicialJogo.classList.add("menu-inicial-saindo");
-    tentarIniciarMusicaDoLobby();
+    transicionarMusicaDaAbertura();
 
     setTimeout(() => {
+        liberarConteudoDoJogo();
+        document.body.classList.remove("menu-lobby-revelando");
         telaInicialJogo.hidden = true;
         telaInicialJogo.classList.remove("menu-inicial-visivel", "menu-inicial-saindo");
+        jogadorJaEntrouAntes = true;
         if (!tutorialConcluido) {
             mostrarTutorial();
-            return;
+        } else {
+            document.querySelector(".botao-lobby-jogar")?.focus();
         }
-        document.querySelector(".botao-lobby-jogar")?.focus();
-    }, obterDuracaoDaAbertura("duracaoTransicaoMs"));
+    }, duracaoDaSaida);
+}
+
+function transicionarMusicaDaAbertura() {
+    tentarIniciarMusicaDoLobby();
+    const audio = contextoAudio;
+    if (!audio || !ganhoDaTransicaoDoLobby || !musicaDoLobbyTocando) {
+        musicaDaAberturaConcluida = true;
+        return;
+    }
+    const metade = CONFIG.audio.duracaoTransicaoDaAberturaMs / 2;
+    const envelope = ganhoDaTransicaoDoLobby.gain;
+    envelope.cancelScheduledValues(audio.currentTime);
+    envelope.setValueAtTime(envelope.value, audio.currentTime);
+    envelope.linearRampToValueAtTime(0, audio.currentTime + metade / 1000);
+    setTimeout(() => {
+        pararMusicaDoLobby();
+        // Desconecta também as notas sustentadas, para não vazarem na nova trilha.
+        ganhoDaMusicaDoLobby.disconnect();
+        ganhoDaMusicaDoLobby = audio.createGain();
+        ganhoDaMusicaDoLobby.connect(ganhoDaTransicaoDoLobby);
+        musicaDaAberturaConcluida = true;
+        envelope.cancelScheduledValues(audio.currentTime);
+        envelope.setValueAtTime(0, audio.currentTime);
+        tentarIniciarMusicaDoLobby();
+        envelope.linearRampToValueAtTime(1, audio.currentTime + metade / 1000);
+    }, metade);
 }
 
 function sairDoJogoPeloMenuInicial() {
@@ -6784,6 +7397,7 @@ musica.addEventListener("playing", atualizarBotoesDaMusica);
 musica.addEventListener("pause", atualizarBotoesDaMusica);
 document.addEventListener("keydown", controlarAtalhosDaPartida);
 document.addEventListener("visibilitychange", controlarVisibilidadeDaPagina);
+window.addEventListener("focus", garantirRetomadaDaPartida);
 atualizarControleDeVolume();
 atualizarBotoesDaMusica();
 
@@ -6809,7 +7423,169 @@ function ampliarComposicaoExistente(configuracao, novasFrases, campo = "melodia"
     return Object.freeze(ampliada);
 }
 
+function criarConfiguracaoDoInimigoIron({ mapa, nome, ingles, espanhol, vida, velocidade, cor, traco, valor }) {
+    const efeito = traco === 'armadura'
+        ? { reducaoDeDano: valor }
+        : traco === 'disparada'
+            ? { percentualVidaParaAcelerar: .5, multiplicadorDeAceleracao: valor }
+            : { retornoAposDerrota: true, percentualDeVidaNoRetorno: valor,
+                distanciaDoRetorno: 120, duracaoVisualDoRetorno: 700,
+                avisoDoRetorno: 'O inimigo Iron retornou pelo caminho!' };
+    return Object.freeze({ nome, nomeEn: ingles, nomeEs: espanhol, vida, velocidade,
+        tamanho: traco === 'armadura' ? 34 : 28, cor, visualClassico: 'ironMapa',
+        numeroDoMapaIron: mapa, tracoIron: traco, ...efeito });
+}
+
 const CONFIG = Object.freeze({
+    substitutosDoSabotador: Object.freeze({8:'raptorAncestral',10:'cobaiaInstavel',103:'peixeAgulha'}),
+    previaInimigosPorTema: Object.freeze({
+        deserto:['escorpiao','mumia'], artico:['loboDeGelo','yeti'],
+        selva:['macacoSaqueador','oncaDaSelva','gorilaDaSelva'],
+        temperada:['raposaLadina','javaliFurioso','corujaSombria'],
+        vulcanica:['morcegoDeFogo','lagartoVulcanico','golemDeMagma'],
+        pantano:['mosquitoDoBrejo','sapoVenenoso','guardiaoDeLodo'],
+        primordial:['raptorAncestral','besouroDeAmbar','triceratopo'],
+        futurista:['droneCacador','roboReparador','sentinelaDeEscudo'],
+        laboratorio:['automatoDeCobre','cobaiaInstavel','guardaDeContencao'],
+        futuroDespedacado:['droneCacador','andarilhoDeSucata','ecoTemporal','sentinelaCronologica'],
+        pontoZero:['residuoTemporal','arquivistaCorrompido','vigiaDoPontoZero'],
+        linhaTemporal:['morcegoDeFogo','raptorAncestral','droneCacador','ecoTemporal','soldadoCronal','portadorDaFenda'],
+        eraApagada:['infiltradorCamuflado','rascunhoVivo','sentinelaIncompleta','sombraCongelada'],
+        glitch:['pixelCorrompido','erroVeloz','blocoInstavel'],
+        intervaloPerdido:['fragmentoDeSegundo','ponteiroErrante','paradoxoBlindado']
+    }),
+    desafioDaCampanha: Object.freeze({
+        fase: 1, limiteConstrucoes: 3,
+        objetivos: Object.freeze({
+            2: Object.freeze({regra: 'semExplosivos'}),
+            3: Object.freeze({regra: 'intactas'}),
+            4: Object.freeze({regra: 'tipos', quantidade: 3}),
+            5: Object.freeze({regra: 'melhorias', quantidade: 3}),
+            6: Object.freeze({regra: 'carroca', quantidade: 100})
+        })
+    }),
+    desafiosSemanais: Object.freeze({
+        candidatas: Object.freeze([
+            [13,'Defensor dedicado','Elimine 500 inimigos.','inimigosEliminados',500],
+            [14,'Sem passagem','Elimine 1000 inimigos.','inimigosEliminados',1000],
+            [15,'Exército de um só','Elimine 2500 inimigos.','inimigosEliminados',2500],
+            [16,'Pesadelo dos invasores','Elimine 5000 inimigos.','inimigosEliminados',5000],
+            [17,'Guardião incansável','Elimine 10000 inimigos.','inimigosEliminados',10000],
+            [18,'Muralha viva','Elimine 20000 inimigos.','inimigosEliminados',20000],
+            [19,'Lenda dos pixels','Elimine 35000 inimigos.','inimigosEliminados',35000],
+            [22,'Derrubando gigantes','Derrote 10 Bosses.','bosses',10],
+            [23,'Especialista em gigantes','Derrote 25 Bosses.','bosses',25],
+            [24,'Nenhum me assusta','Derrote 50 Bosses.','bosses',50],
+            [26,'Fim dos titãs','Derrote 250 Bosses.','bosses',250],
+            [27,'Conhecendo o perigo','Derrote três tipos de Boss.','tiposDeBoss',3],
+            [29,'Quatro encontros','Derrote quatro Bosses em uma partida.','bossesNaPartida',4],
+            [30,'Pode mandar o próximo','Derrote oito Bosses em uma partida infinita.','bossesNaInfinita',8],
+            [32,'Construtor','Construa 50 torres.','torresConstruidas',50],
+            [33,'Engenheiro de defesa','Construa 150 torres.','torresConstruidas',150],
+            [34,'Arquiteto da resistência','Construa 500 torres.','torresConstruidas',500],
+            [36,'Sempre melhorando','Faça 50 melhorias.','melhorias',50],
+            [37,'Tecnologia de ponta','Faça 150 melhorias.','melhorias',150],
+            [39,'Trio de elite','Tenha três torres no nível máximo em uma partida.','torresMaximas',3],
+            [40,'Fortaleza completa','Tenha seis torres no nível máximo em uma partida.','torresMaximas',6],
+            [42,'Fiel à primeira torre','Vença cinco partidas com a Torre padrão construída.','vitoriasPadrao',5],
+            [44,'Passo em falso','Elimine 500 inimigos com Minas.','eliminacoes_minaTerrestre',500],
+            [46,'Explosão em cadeia','Elimine 500 inimigos com a Bomba Pesada.','eliminacoes_bombaPesada',500],
+            [61,'De volta ao campo','Vença 3 partidas de campanha.','fasesConcluidas',3],
+            [62,'Defensor experiente','Vença 10 partidas de campanha.','fasesConcluidas',10],
+            [63,'Serviço de proteção','Vença 25 partidas de campanha.','fasesConcluidas',25],
+            [64,'Sempre de pé','Vença 50 partidas de campanha.','fasesConcluidas',50],
+            [65,'Guardião veterano','Vença 100 partidas de campanha.','fasesConcluidas',100],
+            [66,'Conheço este caminho','Vença a mesma fase cinco vezes.','vitoriasMesmaFase',5],
+            [67,'Especialista local','Vença a mesma fase dez vezes.','vitoriasMesmaFase',10],
+            [68,'Explorador de campos','Vença cinco fases numeradas diferentes.','fasesDiferentes',5],
+            [69,'Defensor de muitas terras','Vença dez fases numeradas diferentes.','fasesDiferentes',10],
+            [71,'Economia de espaço','Vença a Fase 1 construindo no máximo cinco torres.','estrategia_71',1],
+            [72,'Poucas, mas boas','Vença uma fase usando no máximo três tipos de torre.','estrategia_72',1],
+            [73,'Tudo no lugar','Vença uma partida sem vender torres.','estrategia_73',1],
+            [74,'Sem explosivos','Vença uma fase sem colocar Minas ou Bombas Pesadas.','estrategia_74',1],
+            [75,'Defesa convencional','Vença a Fase 1 usando somente Torres padrão.','estrategia_75',1],
+            [76,'Sem aperfeiçoamentos','Vença a Fase 1 sem melhorar torres.','estrategia_76',1],
+            [77,'Diversidade em campo','Vença com seis tipos de torre construídos.','estrategia_77',1],
+            [78,'Reserva de emergência','Vença com pelo menos 500 créditos restantes.','estrategia_78',1],
+            [79,'Cofre protegido','Vença com pelo menos 1.000 créditos restantes.','estrategia_79',1],
+            [80,'Investimento completo','Vença com quatro torres no nível máximo.','estrategia_80',1],
+            [81,'Sem linha de chegada','Complete a wave 20 no modo infinito.','maiorWaveInfinita',20],
+            [82,'Só aquecendo','Complete a wave 30 no modo infinito.','maiorWaveInfinita',30],
+            [83,'Além do limite','Complete a wave 40 no modo infinito.','maiorWaveInfinita',40],
+            [84,'Ainda estou aqui','Complete a wave 50 no modo infinito.','maiorWaveInfinita',50],
+            [85,'Resistência extrema','Complete a wave 60 no modo infinito.','maiorWaveInfinita',60],
+            [86,'Não acaba nunca?','Complete a wave 75 no modo infinito.','maiorWaveInfinita',75],
+            [88,'Maratonista','Complete 250 waves acumuladas no infinito.','wavesInfinitasCompletas',250],
+            [90,'Resistência em qualquer lugar','Complete a wave 30 em três fases diferentes no infinito.','mapasInfinitos30',3]
+        ].map(([numero,nome,descricao,propriedadeDoProgresso,objetivo]) =>
+            Object.freeze({numero,nome,descricao,propriedadeDoProgresso,objetivo}))),
+        eliminar: Object.freeze({ objetivo: 100, fragmentos: 12, experiencia: 60 }),
+        vencer: Object.freeze({ objetivo: 3, fragmentos: 15, experiencia: 75 }),
+        construir: Object.freeze({ objetivo: 18, fragmentos: 10, experiencia: 50 })
+    }),
+    desafiosDiarios: Object.freeze({
+        quantidade: 3, fragmentos: 4, experiencia: 20,
+        candidatas: Object.freeze([
+            ['danoTotal', 150], ['danoTotal', 400], ['danoTotal', 800], ['danoTotal', 1400],
+            ['eliminacoesNaWave', 4], ['eliminacoesNaWave', 8], ['eliminacoesNaWave', 12],
+            ['danoNaWave', 100], ['danoNaWave', 250],
+            ['construcoesComInimigos', 1], ['construcoesComInimigos', 2],
+            ['melhoriasComInimigos', 1], ['melhoriasComInimigos', 2],
+            ['tiposComDanoNaPartida', 2],
+            ['prioridades', 1, 'diaria-4-1'], ['prioridades', 2, 'diaria-4-2'],
+            ['prioridades', 3, 'diaria-4-3'], ['prioridades', 4, 'diaria-4-4'],
+            ['tiposNaPartida', 2, 'diaria-7-2'], ['tiposNaPartida', 3, 'diaria-7-3'],
+            ['eliminacoes_padrao', 10, 'diaria-41-10'], ['eliminacoes_padrao', 20, 'diaria-41-20'],
+            ['eliminacoes_padrao', 40, 'diaria-41-40'], ['eliminacoes_padrao', 60, 'diaria-41-60'],
+            ['feixeMaximo', 1, 'diaria-49-1'],
+            ['eliminacoes_torreLongoAlcance', 15, 'diaria-50-15']
+        ].map(([propriedadeDoProgresso, objetivo, id]) => Object.freeze({ propriedadeDoProgresso, objetivo, id })))
+    }),
+    carrocaDaCampanha: Object.freeze({x: 680, y: 240, vida: 100, alcance: 100, dano: 4, intervaloMs: 1200, raioConstrucao: 55}),
+    climaClassico: Object.freeze({
+        intervaloWaves:3,avisoMs:4000,duracaoMs:12000,particulas:70,
+        mapas:Object.freeze({
+            106:Object.freeze({tipo:'neve',nome:'Nevasca boreal',efeito:'Inimigos 15% mais lentos',velocidade:.85}),
+            107:Object.freeze({tipo:'neblina',nome:'Dança dos vagalumes',efeito:'Torres com 10% mais alcance',alcance:1.1}),
+            110:Object.freeze({tipo:'chuva',nome:'Vento favorável',efeito:'Intervalo entre disparos 10% menor',intervalo:.9})
+        })
+    }),
+    decoracoesExtrasClassicas: Object.freeze({distanciaCaminho:88,margem:48,separacao:120,raioLivre:36,quantidadePorTipo:3,limitePorTipoBase:3,limiteObjetosExclusivos:4}),
+    supremas: Object.freeze({
+        equipeDoDesafio: Object.freeze(['obliterador', 'torreEsporos', 'torreGlacial', 'torreDeRaios', 'iscaBlindada', 'canhaoBlindado']),
+        recompensaPorTiro: 8,
+        wavesPorRapido: 2, wavesPorElite: 3, wavesPorSabotador: 4,
+        primeiraWaveSabotador: 3, chefesNaUltimaWave: 2,
+        multiplicadorDaFraqueza: 1.15,
+        fraquezaPorSuperBoss: Object.freeze({
+            soberanoInfernal: 'supremaBastiao',
+            titaDaForja: 'supremaCronarca',
+            leviataAbissal: 'supremaTempestade',
+            viboraAcida: 'supremaPurificadora',
+            metamorfo: 'supremaReveladora'
+        }),
+        desafios: Object.freeze({
+            supremaCronarca: Object.freeze({ nome: 'Contra o Tempo', tema: 'artico', caminho: 'serpente', waves: 15, creditos: 2800, limite: 6, vida: 1.7, velocidade: 1.4, intervalo: 460, comuns: 7, crescimento: 2, rapidos: 3, elites: 2, sabotadores: 0, intervaloBoss: 5 }),
+            supremaTempestade: Object.freeze({ nome: 'Maré Infinita', tema: 'campo', faseMusical: 1, caminho: 'ziguezague', waves: 18, creditos: 2400, limite: 6, vida: 1.6, velocidade: 1.1, intervalo: 280, comuns: 15, crescimento: 3, rapidos: 2, elites: 3, sabotadores: 0, intervaloBoss: 6 }),
+            supremaBastiao: Object.freeze({ nome: 'Última Fortaleza', tema: 'deserto', caminho: 'ziguezague', waves: 20, creditos: 3000, recompensaPorTiro: 10, limite: 5, vida: 1.6, velocidade: 1.05, intervalo: 550, comuns: 6, crescimento: 2, rapidos: 0, elites: 2, sabotadores: 2, intervaloBoss: 4 }),
+            supremaPurificadora: Object.freeze({ nome: 'Zona Contaminada', tema: 'pantano', caminho: 'serpente', waves: 18, creditos: 2700, limite: 6, vida: 1.7, velocidade: 1.15, intervalo: 430, comuns: 9, crescimento: 2, rapidos: 4, elites: 3, sabotadores: 1, intervaloBoss: 6 }),
+            supremaReveladora: Object.freeze({ nome: 'Espelhos da Ruptura', tema: 'laboratorio', caminho: 'ampulheta', waves: 20, creditos: 2900, limite: 6, vida: 1.75, velocidade: 1.2, intervalo: 410, comuns: 8, crescimento: 2, rapidos: 5, elites: 4, sabotadores: 2, intervaloBoss: 5 })
+        })
+    }),
+    sobrecarga: Object.freeze({
+        estoqueMaximo: 999, duracao: 20000,
+        chanceInimigo: 0.01, chanceBoss: 0.04, duracaoDoDrop: 1400,
+        tipos: Object.freeze({
+            dano: Object.freeze({id:'nucleoDano',nome:'Núcleo de Dano',rotulo:'Dano',atributo:'dano',custoNaLoja:5,multiplicador:1.35}),
+            velocidade: Object.freeze({id:'nucleoVelocidade',nome:'Núcleo de Velocidade',rotulo:'Velocidade',atributo:'velocidade de ataque',custoNaLoja:5,multiplicador:1.3}),
+            alcance: Object.freeze({id:'nucleoAlcance',nome:'Núcleo de Alcance',rotulo:'Alcance',atributo:'alcance',custoNaLoja:5,multiplicador:1.25})
+        })
+    }),
+    construcaoNoTerreno: Object.freeze({
+        raioDaBase: 26,
+        aguaDoLago: Object.freeze([[-52,-24,104,48],[-64,-12,128,24]]),
+        decoracoesLivres: Object.freeze(['lago','flores','matoSeco','cipoSelva','florTropical','cogumelosTemperados','juncosDoPantano','cogumeloDoPantano','documentosDoLaboratorio','simboloGuardians'])
+    }),
     introducaoFase1: [
         "Como eu vim parar aqui? Não consigo lembrar…",
         "Essas criaturas… Por que elas querem me atacar?",
@@ -6854,12 +7630,38 @@ const CONFIG = Object.freeze({
         quadrosPorSegundoDeReferencia: 60,
         deltaMaximoMs: 50
     }),
+    animacaoDoVermelho: Object.freeze({ distanciaPorQuadro: 8, quadrosDaCaminhada: 4 }),
     progressoDaCampanha: Object.freeze({
         maiorFaseConfiavelAntesDaCorrecao: 12
     }),
+    dominioDasTorres: Object.freeze({
+        pontosParaConcluir: Object.freeze({ rapida: 20000, intermediaria: 15000, lenta: 9500, suporte: 1600 }),
+        metaAnteriorDaTorrePadrao: 5000,
+        metaDaTorrePadrao: 20000,
+        cadenciaMaximaRapida: 600,
+        cadenciaMaximaIntermediaria: 1100,
+        danoPorPonto: 25,
+        pontosPorEliminacao: 5,
+        pontosPorWaveDeSuporte: 8,
+        pontosPorGravacao: 20,
+        bonusPercentualDano: 0.05,
+        bonusPercentualAlcance: 0.05,
+        bonusDeResistencia: 1,
+        bonusPercentualCreditos: 0.05
+    }),
+    segundaEtapaDosChefes: Object.freeze({
+        percentualVida: 0.5, avisoMs: 1600, intervaloMs: 8000,
+        alcance: 260, raio: 85, velocidadeTiro: 3.5, alvosDaSalva: 2,
+        tipos: Object.freeze({ boss: 'salva', bossDeserto: 'impacto', bossArtico: 'geada', bossSelva: 'selva', bossTemperado: 'urso' }),
+        ataques: Object.freeze({
+            selva: Object.freeze({passiva: true, avisoMs: 2000, velocidade: 1.15, danoRecebido: 1.15}),
+            urso: Object.freeze({passiva: true, avisoMs: 2000, velocidade: 0.85, intervaloRugido: 0.85})
+        })
+    }),
     aberturaDoJogo: Object.freeze({
         duracaoMinimaCarregamentoMs: 1800,
-        duracaoTransicaoMs: 360
+        duracaoTransicaoMs: 360,
+        duracaoSaidaMs: 1800
     }),
     interface: Object.freeze({
         duracaoNotificacaoDeProgressoMs: 5200,
@@ -6873,6 +7675,28 @@ const CONFIG = Object.freeze({
         quantidadeDePassos: 5
     }),
     editorDeFases: Object.freeze({
+        livre: Object.freeze({ largura: 1200, altura: 700, grade: 20, maximoDePontos: 48, maximoDeDecoracoes: 120, limiteHistorico: 50, escalas: Object.freeze([0.5, 0.75, 1, 1.25, 1.5]) }),
+        moderacao: Object.freeze({
+            tentativasParaBloqueio: 3,
+            duracaoBloqueioMs: 10 * 60 * 1000,
+            termosProibidos: Object.freeze([
+                "caralho", "porra", "merda", "buceta", "foda", "fodase", "cuzao", "puta", "puto",
+                "fuck", "fucking", "motherfucker", "shit", "bullshit", "bitch", "cunt", "asshole",
+                "mierda", "joder", "cono", "cabron", "pendejo", "chingada",
+                "merde", "putain", "connard", "scheisse", "scheiße", "arschloch", "cazzo", "stronzo", "vaffanculo",
+                "idiota", "imbecil", "otario", "babaca", "escroto", "retardado", "desgracado", "arrombado",
+                "moron", "jerk", "dumbass", "idiot", "imbecile", "gilipollas", "capullo",
+                "cretin", "debil", "trottel", "cretino",
+                "fdp", "pqp", "vsf", "tmnc", "vtnc", "pnc", "krl", "crl", "fck", "wtf", "stfu"
+            ]),
+            expressoesProibidas: Object.freeze([
+                "filho da puta", "filha da puta", "vai se foder", "vai tomar no cu", "vai se ferrar",
+                "son of a bitch", "piece of shit", "fuck you", "shut the fuck up",
+                "hijo de puta", "hija de puta", "vete a la mierda",
+                "fils de pute", "va te faire foutre", "figlio di puttana", "vaffanculo a te",
+                "f d p", "p q p", "v s f", "t m n c"
+            ])
+        }),
         nivelNecessarioParaDesbloqueio: 5,
         numeroInterno: 101,
         maximoDeMapasCriados: 2,
@@ -6886,7 +7710,7 @@ const CONFIG = Object.freeze({
         passoDeCreditos: 50,
         minimoDeTorres: 3,
         maximoDeTorres: 30,
-        nomePadraoDoCriador: "Lequ48",
+        nomePadraoDoCriador: "",
         cenarios: Object.freeze([
             Object.freeze({ id: "campo", nome: "Campo verde" }),
             Object.freeze({ id: "deserto", nome: "Deserto antigo" }),
@@ -6952,6 +7776,58 @@ const CONFIG = Object.freeze({
                     Object.freeze({ x: 720, y: 470 }), Object.freeze({ x: 960, y: 470 }),
                     Object.freeze({ x: 960, y: 250 }), Object.freeze({ x: 1200, y: 250 })
                 ])
+            }),
+            Object.freeze({
+                id: "loopBifurcado", nome: "Loop bifurcado",
+                pontos: Object.freeze([
+                    { x: 0, y: 350 }, { x: 450, y: 350 },
+                    { x: 450, y: 130 }, { x: 720, y: 130 },
+                    { x: 720, y: 570 }, { x: 450, y: 570 },
+                    { x: 450, y: 350 }, { x: 900, y: 350 }
+                ].map(Object.freeze)),
+                saidas: Object.freeze([
+                    Object.freeze([{ x: 900, y: 130 }, { x: 1200, y: 130 }].map(Object.freeze)),
+                    Object.freeze([{ x: 900, y: 570 }, { x: 1200, y: 570 }].map(Object.freeze))
+                ])
+            }),
+            Object.freeze({
+                id: "caracol", nome: "Caracol",
+                pontos: Object.freeze([
+                    { x: 0, y: 90 }, { x: 1090, y: 90 },
+                    { x: 1090, y: 610 }, { x: 160, y: 610 },
+                    { x: 160, y: 240 }, { x: 890, y: 240 },
+                    { x: 890, y: 450 }, { x: 400, y: 450 },
+                    { x: 400, y: 350 }, { x: 650, y: 350 }
+                ].map(Object.freeze))
+            }),
+            Object.freeze({
+                id: "ferradura", nome: "Ferradura",
+                pontos: Object.freeze([
+                    { x: 0, y: 150 }, { x: 950, y: 150 },
+                    { x: 1080, y: 280 }, { x: 1080, y: 460 },
+                    { x: 950, y: 590 }, { x: 260, y: 590 },
+                    { x: 130, y: 460 }, { x: 130, y: 350 },
+                    { x: 700, y: 350 }
+                ].map(Object.freeze))
+            }),
+            Object.freeze({
+                id: "ampulheta", nome: "Ampulheta",
+                pontos: Object.freeze([
+                    { x: 0, y: 110 }, { x: 250, y: 110 },
+                    { x: 950, y: 590 }, { x: 250, y: 590 },
+                    { x: 950, y: 110 }, { x: 1200, y: 110 }
+                ].map(Object.freeze))
+            }),
+            Object.freeze({
+                id: "muralha", nome: "Muralha",
+                pontos: Object.freeze([
+                    { x: 0, y: 500 }, { x: 150, y: 500 },
+                    { x: 150, y: 180 }, { x: 350, y: 180 },
+                    { x: 350, y: 500 }, { x: 550, y: 500 },
+                    { x: 550, y: 180 }, { x: 750, y: 180 },
+                    { x: 750, y: 500 }, { x: 950, y: 500 },
+                    { x: 950, y: 180 }, { x: 1200, y: 180 }
+                ].map(Object.freeze))
             })
         ]),
         inimigos: Object.freeze([
@@ -6962,6 +7838,7 @@ const CONFIG = Object.freeze({
         ]),
         percentuaisDeDecoracoes: Object.freeze([0, 0.35, 0.7, 1])
     }),
+    recompensaDiaria: Object.freeze({fragmentosMinimos:1,fragmentosMaximos:3,experiencia:25}),
     progressaoDeNivel: Object.freeze({
         experienciaPorInimigo: 1,
         experienciaPorBoss: 15,
@@ -6999,9 +7876,24 @@ const CONFIG = Object.freeze({
                 icone: "+5%",
                 fragmentosAlternativos: 10
             }),
-            Object.freeze({ id: "longoAlcancePorNivel", nivel: 12, tipo: "torre", idDoItem: "torreLongoAlcance", nome: "Torre de Longo Alcance", descricao: "Pouco dano, mas alcance de quase todo o mapa. Recompensa exclusiva do nível 12.", icone: "◎", fragmentosAlternativos: 0 })
+            Object.freeze({ id: "longoAlcancePorNivel", nivel: 12, tipo: "torre", idDoItem: "torreLongoAlcance", nome: "Torre de Longo Alcance", descricao: "Pouco dano, mas alcance de quase todo o mapa. Recompensa exclusiva do nível 12.", icone: "◎", fragmentosAlternativos: 0 }),
+            ...[[3,5],[5,5],[7,8],[9,8],[11,10],[13,10],[15,12],[17,12],[19,15],[20,20]].map(([nivel,quantidade]) => Object.freeze({
+                id: `fragmentosNivel${nivel}`, nivel, tipo: "fragmentos", quantidade,
+                nome: `${quantidade} Fragmentos de Pixel`, descricao: "Um presente para gastar na Loja.", icone: "◆"
+            })),
+            Object.freeze({id:"skinAuroraNivel",nivel:8,tipo:"skin",idDoItem:"auroraBoreal",nome:"Skin Aurora Boreal",descricao:"Cores de gelo e aurora para a Torre padrão.",icone:"✦",fragmentosAlternativos:8}),
+            Object.freeze({id:"marcadoraNivel",nivel:10,tipo:"torre",idDoItem:"torreMarcadora",nome:"Torre Marcadora",descricao:"Desbloqueio permanente. Se já possuir, recebe Fragmentos.",icone:"◎",fragmentosAlternativos:12}),
+            Object.freeze({id:"perfuradoraNivel",nivel:14,tipo:"torre",idDoItem:"torrePerfuradora",nome:"Torre Perfuradora",descricao:"Desbloqueio permanente. Se já possuir, recebe Fragmentos.",icone:"➶",fragmentosAlternativos:15}),
+            Object.freeze({id:"skinCrepusculoNivel",nivel:16,tipo:"skin",idDoItem:"guardiaCrepusculo",nome:"Skin Guardiã do Crepúsculo",descricao:"Armadura violeta com detalhes dourados para a Torre padrão.",icone:"✦",fragmentosAlternativos:12}),
+            Object.freeze({id:"dronesNivel",nivel:18,tipo:"torre",idDoItem:"torreDrones",nome:"Torre de Drones",descricao:"Desbloqueio permanente. Se já possuir, recebe Fragmentos.",icone:"◈",fragmentosAlternativos:20})
         ]),
         skins: Object.freeze({
+            auroraBoreal: Object.freeze({nome:"Skin Aurora Boreal",tipoDeTorre:"padrao",descricao:"Cores de gelo e aurora para a Torre padrão.",coresPorNivel:Object.freeze([
+                Object.freeze({corBase:"#246b86",corCanhao:"#9cf1dd"}),Object.freeze({corBase:"#328fa3",corCanhao:"#c2fff0"}),Object.freeze({corBase:"#466db0",corCanhao:"#b3f5f4"}),Object.freeze({corBase:"#735dba",corCanhao:"#defff9"})
+            ])}),
+            guardiaCrepusculo: Object.freeze({nome:"Skin Guardiã do Crepúsculo",tipoDeTorre:"padrao",descricao:"Armadura violeta com detalhes dourados para a Torre padrão.",coresPorNivel:Object.freeze([
+                Object.freeze({corBase:"#624187",corCanhao:"#e4bb6b"}),Object.freeze({corBase:"#80539e",corCanhao:"#f2d17f"}),Object.freeze({corBase:"#a369ae",corCanhao:"#ffe3a4"}),Object.freeze({corBase:"#bb83cc",corCanhao:"#fff1c2"})
+            ])}),
             vanguardaEsmeralda: Object.freeze({
                 nome: "Skin Vanguarda Esmeralda",
                 tipoDeTorre: "padrao",
@@ -7015,16 +7907,319 @@ const CONFIG = Object.freeze({
             })
         })
     }),
+    eventos: Object.freeze({
+        waves: 16,
+        wavesSuperBosses: 20,
+        intervaloDosSubordinados: 5,
+        rodadasDeAvisoSuperBoss: 3,
+        elencosNormais: Object.freeze({
+            caixaSurpresa: Object.freeze({ comuns: Object.freeze(['mimicoEmbrulhado', 'saqueadorDePacotes']), chefe: 'reiDosPresentes' }),
+            roleta: Object.freeze({ comuns: Object.freeze(['fichaViva', 'cobradorDaBanca']), chefe: 'donoDaBanca' }),
+            idadeDaPedra: Object.freeze({ comuns: Object.freeze(['cacadorDaTribo', 'mamuteLanoso']), chefe: 'liderDaTribo' }),
+            meteoros: Object.freeze({ comuns: Object.freeze(['corredorDeCinzas', 'guardiaoDeCratera']), chefe: 'arautoDoCometa' })
+        }),
+        torresDaIdadeDaPedra: Object.freeze(['padrao', 'torreBesta', 'canhaoPesado']),
+        dificuldadesNormais: Object.freeze({
+            facil: Object.freeze({ nome: 'Fácil', multiplicadorVida: 1, multiplicadorVelocidade: 1,
+                inimigosExtrasPorFaixa: 0, multiplicadorIntervaloChefe: 1, fragmentosExtras: 0 }),
+            medio: Object.freeze({ nome: 'Médio', multiplicadorVida: 1.12, multiplicadorVelocidade: 1.05,
+                inimigosExtrasPorFaixa: 1, intervaloEmboscadaCaixas: 2, intervaloCobrancaRoleta: 2,
+                intervaloMeteorosMs: 4500, intervaloChuvasDuplasMeteoros: 3,
+                multiplicadorIntervaloChefe: 0.85, fragmentosExtras: 2 }),
+            dificil: Object.freeze({ nome: 'Difícil', multiplicadorVida: 1.25, multiplicadorVelocidade: 1.1,
+                inimigosExtrasPorFaixa: 2, intervaloEmboscadaCaixas: 2, intervaloCobrancaRoleta: 2,
+                intervaloMeteorosMs: 4200, intervaloChuvasDuplasMeteoros: 2,
+                intervaloChuvasDirecionadasMeteoros: 2, multiplicadorIntervaloChefe: 0.7,
+                fragmentosExtras: 4 })
+        }),
+        dificuldadesSuperBosses: Object.freeze({
+            facil: Object.freeze({ nome: 'Fácil', multiplicadorVida: 1, multiplicadorVelocidade: 1,
+                inimigosExtrasPorFaixa: 0, multiplicadorIntervaloAtaque: 1, fragmentosExtras: 0 }),
+            medio: Object.freeze({ nome: 'Médio', multiplicadorVida: 1.8, multiplicadorVelocidade: 1.15,
+                inimigosExtrasPorFaixa: 3, multiplicadorSegundoGrupo: 2, limiteDeTorres: 8,
+                multiplicadorIntervaloAtaque: 0.9,
+                ataqueSecundario: true, fragmentosExtras: 5 }),
+            dificil: Object.freeze({ nome: 'Difícil', multiplicadorVida: 2.3, multiplicadorVelocidade: 1.25,
+                inimigosExtrasPorFaixa: 4, multiplicadorSegundoGrupo: 3, limiteDeTorres: 7,
+                multiplicadorIntervaloAtaque: 0.8,
+                ataqueSecundario: true, fragmentosExtras: 10 })
+        }),
+        intervaloEmboscadaCaixas: 3,
+        intervaloCobrancaRoleta: 3,
+        intervaloReforcoChefeCaixasMs: 8000,
+        intervaloReparoChefeRoletaMs: 7000,
+        percentualReparoChefeRoleta: 0.12,
+        raioReparoChefeRoleta: 160,
+        intervaloMeteoroChefeMs: 8000,
+        intervaloChuvasDirecionadasMeteoros: 3,
+        elencosSuperBosses: Object.freeze({
+            superBosses: Object.freeze({ comuns: Object.freeze(['impDeBrasa', 'cavaleiroInfernal']), chefes: Object.freeze(['duqueDasBrasas', 'cerberoDeLava', 'rainhaDasCinzas', 'soberanoInfernal']) }),
+            superBossesMecanicos: Object.freeze({ comuns: Object.freeze(['droneDeSucata', 'automatoBlindado']), chefes: Object.freeze(['perfuradorDeAco', 'fornalhaAndante', 'aranhaMecanica', 'titaDaForja']) }),
+            superBossesAbissais: Object.freeze({ comuns: Object.freeze(['enguiaAbissal', 'guardiaoDeCoralNegro']), chefes: Object.freeze(['sirenaSombria', 'caranguejoColossal', 'polvoDoAbismo', 'leviataAbissal']) }),
+            superBossesAcidos: Object.freeze({ comuns: Object.freeze(['gotaCorrosiva', 'ofidioToxico']), chefes: Object.freeze(['serpenteDoEsgoto', 'basiliscoCaustico', 'hidraAcida', 'viboraAcida']) }),
+            superBossesMetamorfos: Object.freeze({ comuns: Object.freeze(['fragmentoInstavel', 'sentinelaMutante']), chefes: Object.freeze(['ecoPrismatico', 'guardiaoDoCasulo', 'quimeraDaRuptura', 'metamorfo']) })
+        }),
+        caminhos: Object.freeze({
+            caixaSurpresa: Object.freeze([
+                { x: 0, y: 350 }, { x: 170, y: 350 }, { x: 170, y: 120 },
+                { x: 450, y: 120 }, { x: 450, y: 560 }, { x: 750, y: 560 },
+                { x: 750, y: 240 }, { x: 1020, y: 240 }, { x: 1020, y: 440 }, { x: 1200, y: 440 }
+            ].map(Object.freeze)),
+            roleta: Object.freeze([
+                { x: 0, y: 120 }, { x: 230, y: 120 }, { x: 230, y: 550 },
+                { x: 500, y: 550 }, { x: 500, y: 260 }, { x: 730, y: 260 },
+                { x: 730, y: 500 }, { x: 970, y: 500 }, { x: 970, y: 140 }, { x: 1200, y: 140 }
+            ].map(Object.freeze)),
+            superBosses: Object.freeze([
+                { x: 0, y: 350 }, { x: 200, y: 350 }, { x: 200, y: 160 },
+                { x: 460, y: 160 }, { x: 460, y: 500 }, { x: 710, y: 500 },
+                { x: 710, y: 250 }, { x: 870, y: 250 }, { x: 870, y: 500 },
+                { x: 1050, y: 500 }, { x: 1050, y: 320 }, { x: 1200, y: 320 }
+            ].map(Object.freeze)),
+            superBossesMecanicos: Object.freeze([
+                { x: 0, y: 160 }, { x: 150, y: 160 }, { x: 150, y: 510 },
+                { x: 350, y: 510 }, { x: 350, y: 220 }, { x: 560, y: 220 },
+                { x: 560, y: 570 }, { x: 790, y: 570 }, { x: 790, y: 300 },
+                { x: 1010, y: 300 }, { x: 1010, y: 500 }, { x: 1200, y: 500 }
+            ].map(Object.freeze)),
+            superBossesAbissais: Object.freeze([
+                { x: 0, y: 520 }, { x: 170, y: 520 }, { x: 170, y: 170 },
+                { x: 390, y: 170 }, { x: 390, y: 570 }, { x: 610, y: 570 },
+                { x: 610, y: 260 }, { x: 830, y: 260 }, { x: 830, y: 540 },
+                { x: 1030, y: 540 }, { x: 1030, y: 180 }, { x: 1200, y: 180 }
+            ].map(Object.freeze)),
+            superBossesAcidos: Object.freeze([
+                { x: 0, y: 340 }, { x: 170, y: 340 }, { x: 170, y: 130 },
+                { x: 400, y: 130 }, { x: 400, y: 560 }, { x: 620, y: 560 },
+                { x: 620, y: 210 }, { x: 850, y: 210 }, { x: 850, y: 510 },
+                { x: 1060, y: 510 }, { x: 1060, y: 320 }, { x: 1200, y: 320 }
+            ].map(Object.freeze)),
+            superBossesMetamorfos: Object.freeze([
+                { x: 0, y: 180 }, { x: 210, y: 180 }, { x: 210, y: 510 },
+                { x: 440, y: 510 }, { x: 440, y: 120 }, { x: 670, y: 120 },
+                { x: 670, y: 570 }, { x: 900, y: 570 }, { x: 900, y: 270 },
+                { x: 1090, y: 270 }, { x: 1090, y: 480 }, { x: 1200, y: 480 }
+            ].map(Object.freeze)),
+            idadeDaPedra: Object.freeze([
+                { x: 0, y: 210 }, { x: 220, y: 210 }, { x: 220, y: 500 },
+                { x: 490, y: 500 }, { x: 490, y: 140 }, { x: 760, y: 140 },
+                { x: 760, y: 540 }, { x: 1010, y: 540 }, { x: 1010, y: 290 },
+                { x: 1200, y: 290 }
+            ].map(Object.freeze)),
+            meteoros: Object.freeze([
+                { x: 0, y: 600 }, { x: 260, y: 600 }, { x: 260, y: 400 },
+                { x: 480, y: 400 }, { x: 480, y: 160 }, { x: 760, y: 160 },
+                { x: 760, y: 440 }, { x: 1000, y: 440 }, { x: 1000, y: 260 }, { x: 1200, y: 260 }
+            ].map(Object.freeze))
+        }),
+        visuais: Object.freeze({
+            idadeDaPedra: Object.freeze({
+                terrenoBase: '#665f43', terrenoClaro: '#786f4e', terrenoEscuro: '#514a37',
+                caminhoContorno: '#38392f', caminhoBase: '#907859', caminhoCentro: '#baa078', caminhoMarcas: '#e9d1a0',
+                torreFinalBase: '#4c4137', torreFinalCorpo: '#8d7050', torreFinalDetalhe: '#d7b579', torreFinalNucleo: '#f2dcaa'
+            }),
+            caixaSurpresa: Object.freeze({
+                terrenoBase: '#44448a', terrenoClaro: '#55539b', terrenoEscuro: '#3b397c',
+                caminhoContorno: '#252854', caminhoBase: '#bc799c', caminhoCentro: '#edafd1', caminhoMarcas: '#fff0a4',
+                torreFinalBase: '#32255b', torreFinalCorpo: '#a468b3', torreFinalDetalhe: '#ffdd83', torreFinalNucleo: '#fff5b2'
+            }),
+            roleta: Object.freeze({
+                terrenoBase: '#145b58', terrenoClaro: '#176c66', terrenoEscuro: '#104c4a',
+                caminhoContorno: '#0b373b', caminhoBase: '#9c6d30', caminhoCentro: '#e4b755', caminhoMarcas: '#fff0a8',
+                torreFinalBase: '#123f3e', torreFinalCorpo: '#8b692f', torreFinalDetalhe: '#f8df76', torreFinalNucleo: '#8ff6df'
+            }),
+            superBosses: Object.freeze({
+                terrenoBase: '#462326', terrenoClaro: '#64302a', terrenoEscuro: '#321c22',
+                caminhoContorno: '#201722', caminhoBase: '#75413a', caminhoCentro: '#b65c3d', caminhoMarcas: '#ffc06b',
+                torreFinalBase: '#291820', torreFinalCorpo: '#80382e', torreFinalDetalhe: '#ff9b46', torreFinalNucleo: '#ff4939'
+            }),
+            superBossesMecanicos: Object.freeze({
+                terrenoBase: '#39454a', terrenoClaro: '#4b5b60', terrenoEscuro: '#2a353a',
+                caminhoContorno: '#1c272d', caminhoBase: '#6c7471', caminhoCentro: '#a6a589', caminhoMarcas: '#f9c66b',
+                torreFinalBase: '#25343a', torreFinalCorpo: '#687c82', torreFinalDetalhe: '#f4bb59', torreFinalNucleo: '#aaf4e8'
+            }),
+            superBossesAbissais: Object.freeze({
+                terrenoBase: '#193e58', terrenoClaro: '#23516b', terrenoEscuro: '#153247',
+                caminhoContorno: '#102836', caminhoBase: '#377086', caminhoCentro: '#61a2ad', caminhoMarcas: '#b8efdb',
+                torreFinalBase: '#133448', torreFinalCorpo: '#387d91', torreFinalDetalhe: '#b3e8cd', torreFinalNucleo: '#90f5f1'
+            }),
+            superBossesAcidos: Object.freeze({
+                terrenoBase: '#263b2c', terrenoClaro: '#33533a', terrenoEscuro: '#1b2d25',
+                caminhoContorno: '#172620', caminhoBase: '#526b3a', caminhoCentro: '#7f9c4a', caminhoMarcas: '#bafa69',
+                torreFinalBase: '#203329', torreFinalCorpo: '#477049', torreFinalDetalhe: '#9ddc5f', torreFinalNucleo: '#c9fa6a'
+            }),
+            superBossesMetamorfos: Object.freeze({
+                terrenoBase: '#242840', terrenoClaro: '#333959', terrenoEscuro: '#1b2035',
+                caminhoContorno: '#141a2e', caminhoBase: '#485070', caminhoCentro: '#747f9e', caminhoMarcas: '#e8a8e9',
+                torreFinalBase: '#20243d', torreFinalCorpo: '#625587', torreFinalDetalhe: '#d99de4', torreFinalNucleo: '#9bf2e9'
+            }),
+            meteoros: Object.freeze({
+                terrenoBase: '#202640', terrenoClaro: '#29314f', terrenoEscuro: '#1b2139',
+                caminhoContorno: '#101729', caminhoBase: '#59617f', caminhoCentro: '#8993b4', caminhoMarcas: '#f6b56a',
+                torreFinalBase: '#192039', torreFinalCorpo: '#5e698c', torreFinalDetalhe: '#b6c6ec', torreFinalNucleo: '#ffad68'
+            })
+        }),
+        volumeRelativoSuperBosses: Object.freeze({
+            superBosses: 2.6,
+            superBossesMecanicos: 1.8,
+            superBossesAbissais: 3,
+            superBossesAcidos: 3,
+            superBossesMetamorfos: 2.4
+        }),
+        trilhas: Object.freeze({
+            idadeDaPedra: criarTrilhaDoEvento('Batida Ancestral', 230, 'triangle',
+                [[52,0,55,0,59,55,52,0,50,0,55,0,52,0,48,0], [55,0,59,0,62,59,55,0,53,0,57,0,55,0,50,0]],
+                [[28,0,35,0,28,0,35,0], [31,0,38,0,31,0,38,0]], [[48,52,55],[50,53,57]],
+                [0,0,60,0,0,0,57,0,0,0,62,0,0,0,57,0], [1,0,3,0,2,0,3,0,1,0,3,0,2,0,4,0],
+                { volumeRelativo: 4, volumeMelodia: 0.14, volumeBateria: 0.13 }),
+            caixaSurpresa: criarTrilhaDoEvento('Presentes ao Vento', 210, 'triangle',
+                [[72,0,76,79,84,0,79,76,74,0,76,79,81,0,79,0], [76,79,84,0,86,84,79,0,81,79,76,74,72,0,76,0]],
+                [[36,0,43,0,48,0,43,0], [41,0,48,0,53,0,48,0]], [[60,64,67],[65,69,72]],
+                [0,67,0,0,0,72,0,0,0,64,0,0,0,67,0,0], [1,3,4,3,2,3,4,3,1,3,4,3,2,3,4,3]),
+            roleta: criarTrilhaDoEvento('Giro Dourado', 185, 'square',
+                [[74,0,77,81,0,80,77,0,74,77,0,83,81,0,77,0], [77,0,81,86,0,84,81,0,80,77,74,0,73,0,74,0]],
+                [[38,0,45,0,0,50,45,0], [43,0,50,0,0,55,50,0]], [[62,65,69],[67,71,74]],
+                [0,69,0,72,0,69,0,0,0,71,0,74,0,69,0,0], [1,3,0,3,2,3,4,3,1,3,4,3,2,3,0,3]),
+            superBosses: criarTrilhaDoEvento('Marcha Infernal', 260, 'sawtooth',
+                [[65,0,65,68,0,72,0,68,65,0,63,0,65,68,0,0], [68,0,72,0,75,0,72,68,67,0,65,0,63,0,65,0]],
+                [[29,0,29,0,36,0,29,0], [32,0,32,0,39,0,32,0]], [[53,56,60],[56,59,63]],
+                [0,0,0,53,0,0,0,56,0,0,0,51,0,0,0,53], [[1,3],0,3,0,2,0,3,4,[1,3],0,3,0,2,3,0,4]),
+            superBossesMecanicos: criarTrilhaDoEvento('Engrenagens de Guerra', 195, 'square',
+                [[62,0,66,0,69,66,62,0,64,0,67,71,0,67,64,0], [66,69,0,73,0,71,69,0,67,64,0,62,64,0,66,0]],
+                [[31,0,38,0,31,0,38,0], [35,0,42,0,35,0,42,0]], [[55,59,62],[59,62,66]],
+                [0,0,74,0,0,0,71,0,0,0,76,0,0,0,71,0], [[1,3],3,4,3,2,3,4,3,[1,3],3,4,3,2,3,4,3]),
+            superBossesAbissais: criarTrilhaDoEvento('Chamado do Abismo', 285, 'triangle',
+                [[57,0,60,0,64,0,60,0,55,0,59,0,62,0,59,0], [60,0,64,67,0,64,60,0,59,0,62,65,0,62,59,0]],
+                [[38,0,45,0,38,0,45,0], [41,0,48,0,41,0,48,0]], [[50,53,57],[53,57,60]],
+                [0,69,0,0,0,67,0,0,0,65,0,0,0,64,0,0], [1,0,3,0,2,0,4,0,1,0,3,0,2,0,4,0],
+                { volumeMelodia: 0.11, volumeContracanto: 0.04, volumeBaixo: 0.09,
+                    volumeHarmonia: 0.02, volumeBateria: 0.11, volumeAcordesRitmados: 0.035 }),
+            superBossesAcidos: criarTrilhaDoEvento('Rastro Cáustico', 225, 'sawtooth',
+                [[55,0,58,61,0,57,0,53,55,0,60,0,58,55,0,0], [53,0,57,60,0,58,55,0,52,0,55,59,0,57,0,0]],
+                [[31,0,38,0,31,0,38,0], [29,0,36,0,29,0,36,0]], [[50,55,58],[48,53,57]],
+                [0,0,67,0,0,65,0,0,0,69,0,0,67,0,0,0], [1,3,0,3,2,3,4,0,1,3,0,3,2,3,4,0]),
+            superBossesMetamorfos: criarTrilhaDoEvento('Código Mutante', 205, 'square',
+                [[62,0,65,69,0,72,69,65,60,0,64,67,0,71,67,64], [65,69,72,0,74,72,69,0,64,67,71,0,72,71,67,0]],
+                [[34,0,41,0,39,0,46,0], [36,0,43,0,41,0,48,0]], [[55,59,62],[57,60,64]],
+                [0,74,0,0,72,0,0,69,0,76,0,0,74,0,0,71], [1,3,4,0,2,3,4,0,1,3,4,0,2,3,4,0]),
+            meteoros: criarTrilhaDoEvento('Rastros de Fogo', 175, 'triangle',
+                [[76,79,83,0,88,83,79,0,74,79,83,86,0,83,79,0], [79,83,88,0,91,88,83,0,81,79,76,0,74,79,0,0]],
+                [[40,0,47,0,52,0,47,0], [43,0,50,0,55,0,50,0]], [[64,67,71],[67,71,74]],
+                [0,0,71,0,0,0,74,0,0,0,69,0,0,0,71,0], [1,3,4,3,2,3,4,3,1,3,4,3,2,3,4,3])
+        }),
+        limiteDeTorres: 12,
+        fragmentosPorVitoria: 12,
+        fragmentosPorVitoriaSuperBosses: 25,
+        intervaloCaixasMs: 11000,
+        custoRoleta: 180,
+        creditosIniciaisRoleta: 1000,
+        creditosIniciaisMeteoros: 600,
+        inimigosEventosNormais: Object.freeze({ primeiraWave: 3, multiplicadorVida: 1.4, multiplicadorVelocidade: 1.1 }),
+        intervaloEvacuacaoMeteorosMs: 30000,
+        creditosDaTrocaNaRoleta: 100,
+        creditosIniciaisBosses: 2000,
+        bonusCreditosPorTiroBosses: 3,
+        economiaSuperBosses: Object.freeze({ limiteInicialPorWave: 700, aumentoPorWave: 75 }),
+        multiplicadorVidaSuperBoss: 3,
+        bonusDeDanoDasTorresPremio: Object.freeze({ facil: 0.05, medio: 0.10, dificil: 0.15 }),
+        premioDasTorresSuperBosses: Object.freeze({ torreMagnetica: 'superBossesMecanicos', torreMetamorfa: 'superBossesMetamorfos' }),
+        eventoDasSkinsSuperBosses: Object.freeze({ sentinelaCosmica: 'superBosses', coralAbissal: 'superBossesAbissais', corrosaoViva: 'superBossesAcidos' }),
+        coresDasSkinsPorDificuldade: Object.freeze({
+            facil: Object.freeze({ coralAbissal: Object.freeze({ corBase: '#225470', corCanhao: '#72d4dc' }),
+                corrosaoViva: Object.freeze({ corBase: '#45642d', corCanhao: '#85c944', corEsporos: '#b9ef52' }) }),
+            medio: Object.freeze({ coralAbissal: Object.freeze({ corBase: '#247f94', corCanhao: '#94f4e9' }),
+                corrosaoViva: Object.freeze({ corBase: '#669031', corCanhao: '#b2ec50', corEsporos: '#e0f965' }) }),
+            dificil: Object.freeze({ coralAbissal: Object.freeze({ corBase: '#49afbe', corCanhao: '#dcfff2' }),
+                corrosaoViva: Object.freeze({ corBase: '#8dbc34', corCanhao: '#e2ff5d', corEsporos: '#f4ff81' }) })
+        }),
+        vidasFinaisDosSuperBosses: Object.freeze({
+            facil: Object.freeze({ metamorfo: 26500 }),
+            medio: Object.freeze({ soberanoInfernal: 35000, titaDaForja: 36500, leviataAbissal: 38000, viboraAcida: 37000, metamorfo: 30500 }),
+            dificil: Object.freeze({ soberanoInfernal: 40000, titaDaForja: 41500, leviataAbissal: 43500, viboraAcida: 42500, metamorfo: 35000 })
+        }),
+        duracaoDoAvisoSuperBossMs: 2500,
+        intervaloAtaqueSuperBossMs: 5500,
+        danoAtaqueSuperBoss: 1,
+        raioAtaqueSuperBoss: 120,
+        ataquesEspeciaisSuperBoss: Object.freeze({
+            superBosses: Object.freeze({ duracaoMs: 5000, intervaloDanoMs: 2000, alvos: 3 }),
+            superBossesMecanicos: Object.freeze({ duracaoMs: 3000, alvos: 3 }),
+            superBossesAbissais: Object.freeze({ duracaoMs: 5000, reducaoAlcance: 0.4, alvos: 4 }),
+            superBossesAcidos: Object.freeze({ alvos: 1, tempoDoCuspeMs: 1100, aberturaDaBocaMs: 220,
+                tirosPorImpacto: 2,
+                duracaoDerretimentoMs: 900 }),
+            superBossesMetamorfos: Object.freeze({ alvos: 1, intervaloFormaFacilMs: 9000,
+                intervaloFormaMedioMs: 7500, intervaloFormaDificilMs: 6500,
+                duracaoCasuloMs: 1000, fimFechamentoCasulo: 0.25,
+                inicioAberturaCasulo: 0.7, escalaFormaNoCasulo: 0.48,
+                multiplicadorVelocidadeCiano: 1.85,
+                intervaloTiroSabotadorMs: 1700, alcanceTiroSabotador: 230,
+                chanceDeArmadura: 0.25, reducaoDaArmadura: 0.18,
+                reducaoTotalMaxima: 0.36, intervaloGeloArticoMs: 3000,
+                duracaoGeloArticoMs: 1200, curaFormaCuradorPorSegundo: 0.004,
+                limiteTotalDeCura: 0.08 }),
+        }),
+        ataquesSecundariosSuperBoss: Object.freeze({
+            superBosses: Object.freeze({ intervaloMedioMs: 12000, intervaloDificilMs: 9000,
+                raioFuria: 200, duracaoFuriaMs: 5000,
+                multiplicadorVelocidadeMedio: 1.35, multiplicadorVelocidadeDificil: 1.5 }),
+            superBossesMecanicos: Object.freeze({ intervaloMedioMs: 14000, intervaloDificilMs: 11000,
+                intervaloTiroMedioMs: 3200,
+                intervaloTiroDificilMs: 2800, alcanceTorreta: 260, velocidadeTiro: 13,
+                tirosParaDestruirTorre: 6, deslocamentoX: 55, deslocamentoY: 65 }),
+            superBossesAbissais: Object.freeze({ intervaloMedioMs: 12000, intervaloDificilMs: 9000,
+                reforcosMedio: 2, reforcosDificil: 3, maximoReforcos: 6 }),
+            superBossesAcidos: Object.freeze({ intervaloMedioMs: 14000, intervaloDificilMs: 11000,
+                vidaDaCarcaca: 4500, duracaoDaCarcacaMs: 10000,
+                multiplicadorVelocidade: 1.3 }),
+            superBossesMetamorfos: Object.freeze({ intervaloMedioMs: 7500, intervaloDificilMs: 6500,
+                reducaoAdaptacao: 0.22 })
+        }),
+        duracaoSobrevivenciaMeteorosMs: 180000,
+        intervaloGruposMeteorosMs: 18000,
+        gruposMeteoros: 10,
+        duracaoCrateraMeteorosMs: 9000,
+        raioCrateraMeteoros: 55,
+        intervaloMeteorosMs: 5000,
+        intervaloChuvasDuplasMeteoros: 4,
+        distanciaMinimaEntreMeteorosDaChuva: 190,
+        quedaMeteoroMs: 1800,
+        raioMeteoro: 95
+    }),
     missoes: Object.freeze({
-        permanentes: criarCatalogoDeMissoesPermanentes(),
-        premioFinal: Object.freeze({ experiencia: 1250, skins: Object.freeze(['guardiaoSolar', 'sentinelaCosmica']), conquista: 'lendaDasCemMissoes' }),
+        // Metas máximas históricas: preservam o direito aos 1.250 XP mesmo sem o catálogo visível.
+        criteriosDoPremioFinalLegado: Object.freeze({
+            torresConstruidas:500, tutorial:1, melhorias:150, prioridades:1, vendas:1,
+            torresSimultaneas:3, tiposNaPartida:3, wavesCompletas:5, bosses:250,
+            fasesConcluidas:100, inimigosEliminados:50000, tiposDeBoss:6,
+            bossesNaPartida:4, bossesNaInfinita:8, torresMaximas:6,
+            eliminacoes_padrao:500, vitoriasPadrao:5, eliminacoes_minaTerrestre:500,
+            eliminacoes_bombaPesada:500, revelados:50, camufladosEliminados:100,
+            feixeMaximo:1, eliminacoes_torreLongoAlcance:100,
+            fase_1:1, fase_2:1, fase_3:1, fase_4:1, fase_5:1, fase_6:1,
+            capitulo2:1, fase_7:1, passadoEFuturo:2, capitulo3:1,
+            vitoriasMesmaFase:10, fasesDiferentes:16,
+            estrategia_71:1, estrategia_72:1, estrategia_73:1, estrategia_74:1,
+            estrategia_75:1, estrategia_76:1, estrategia_77:1, estrategia_78:1,
+            estrategia_79:1, estrategia_80:1, maiorWaveInfinita:100,
+            wavesInfinitasCompletas:1000, mapasInfinitos30:3, carta:1,
+            portal:1, glitch:1, vitoriaGlitch:1, maquina:1, transmissao:1,
+            historia15:1, historia16:1, feixeLiberado:1, nivel12:1
+        }),
+        premioFinal: Object.freeze({ experiencia: 1250, skins: Object.freeze([]) }),
         skins: Object.freeze({
             guardiaoSolar: criarSkinFinalDeMissoes('Guardião Solar', ['#bf4e21','#e77126','#ff953c','#ffbe64'], ['#4ed4f0','#72e4fa','#a5f1ff','#e1fbff']),
             sentinelaCosmica: criarSkinFinalDeMissoes('Sentinela Cósmica', ['#493486','#6545a8','#865bca','#b581ed'], ['#a5b8d4','#c1d3e9','#e0ebf7','#ffffff']),
+            coralAbissal: Object.freeze({ nome: 'Coral Abissal', tipoDeTorre: 'torreTorpedos',
+                descricao: 'Coral luminoso conquistado no Leviatã Abissal.',
+                coresPorNivel: Object.freeze([Object.freeze({ corBase: '#225470', corCanhao: '#72d4dc', corDetalhe: '#b6f2eb' })]) }),
+            corrosaoViva: Object.freeze({ nome: 'Corrosão Viva', tipoDeTorre: 'torreEsporos',
+                descricao: 'Esporos ácidos conquistados na Víbora Ácida.',
+                coresPorNivel: Object.freeze([Object.freeze({ corBase: '#45642d', corCanhao: '#85c944', corDetalhe: '#dcff73', corEsporos: '#b9ef52' })]) }),
             sentinelaDourada: Object.freeze({
                 nome: "Sentinela Dourada",
                 tipoDeTorre: "padrao",
-                descricao: "Uma pintura dourada exclusiva das missões permanentes.",
+                descricao: "Uma pintura dourada exclusiva dos eventos.",
                 coresPorNivel: Object.freeze([
                     Object.freeze({ corBase: "#c89528", corCanhao: "#5a431e" }),
                     Object.freeze({ corBase: "#dda931", corCanhao: "#6d5124" }),
@@ -7111,8 +8306,19 @@ const CONFIG = Object.freeze({
     desafiosDeConquistas: Object.freeze({ limiteFinal:0.9, metadeDoCaminho:0.5, efeitosSimultaneos:3, partidasNaSessao:3,
         salasDoCastelo:Object.freeze(['salao','andar','varanda','real','hospedes','estar','biblioteca','galeria']) }),
     conquistas: Object.freeze({
+        primeiroInimigo: Object.freeze({ nome: "Primeiro inimigo", descricao: "Derrote seu primeiro inimigo.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        primeiraTorre: Object.freeze({ nome: "Primeira torre", descricao: "Construa sua primeira torre.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        primeiraMelhoria: Object.freeze({ nome: "Primeira melhoria", descricao: "Melhore uma torre pela primeira vez.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        primeiroChefe: Object.freeze({ nome: "Primeiro chefe", descricao: "Derrote seu primeiro chefe.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        primeiraCompra: Object.freeze({ nome: "Primeira compra", descricao: "Compre seu primeiro item na Loja.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        primeiroNivel: Object.freeze({ nome: "Primeiro nível", descricao: "Suba seu primeiro nível de jogador.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        estreiaClassica: Object.freeze({ nome: "Estreia clássica", descricao: "Vença uma partida no Modo clássico.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        exploradorClassico: Object.freeze({ nome: "Explorador clássico", descricao: "Vença em todos os mapas do Modo clássico.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        mestreClassico: Object.freeze({ nome: "Mestre clássico", descricao: "Vença em todos os mapas no modo Iron / Sobrevivência.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
+        formatura: Object.freeze({ nome: "Formatura", descricao: "Complete todos os passos do tutorial.", icone: "★", tipoDeCriterio: "especial", objetivo: 1 }),
         ...criarConquistasExtras(),
-        lendaDasCemMissoes: Object.freeze({ nome: 'Lenda das 100 Missões', descricao: 'Conclua as 100 missões permanentes e resgate o prêmio final.', icone: '★', tipoDeCriterio: 'especial', objetivo: 1 }),
+        lendasDoClassico: Object.freeze({ nome: "Lendas do Clássico", descricao: "Vença os oito mapas do Modo Clássico em qualquer modo.", icone: "\u2605", tipoDeCriterio: "especial", objetivo: 8, progressoPorMapasClassicos: true }),
+        lendaDasCemMissoes: Object.freeze({ nome: 'Lenda das 100 Missões', descricao: 'Resgate 100 missões de qualquer tipo.', icone: '★', tipoDeCriterio: 'missoesResgatadas', objetivo: 100 }),
         primeiraVigilia: Object.freeze({
             nome: "Primeira Vigília",
             descricao: "Conclua sua primeira partida da campanha.",
@@ -7137,7 +8343,7 @@ const CONFIG = Object.freeze({
         }),
         mestreDoArsenal: Object.freeze({
             nome: "Mestre do Arsenal",
-            descricao: "Compre todos os 23 itens disponíveis na Loja.",
+            descricao: "Compre todos os 27 itens disponíveis na Loja.",
             icone: "⚒",
             tipoDeCriterio: "loja"
         }),
@@ -7159,10 +8365,11 @@ const CONFIG = Object.freeze({
         }),
         alemDoLimite: Object.freeze({
             nome: "Além do Limite",
-            descricao: "Resgate a missão permanente da wave 40 infinita.",
+            descricao: "Complete a wave 40 no modo infinito.",
             icone: "✦",
-            tipoDeCriterio: "especial",
-            objetivo: 1
+            tipoDeCriterio: "estatistica",
+            propriedade: "maiorWaveInfinitaConcluida",
+            objetivo: 40
         }),
         aindaEstaEsperando: Object.freeze({
             secreta: true,
@@ -7181,7 +8388,7 @@ const CONFIG = Object.freeze({
         }),
         mestreDoFliperama: Object.freeze({
             nome: "Mestre do Fliperama",
-            descricao: "Conclua os cinco minigames do fliperama pelo menos uma vez.",
+            descricao: "Conclua os oito minigames do fliperama pelo menos uma vez.",
             icone: "★",
             tipoDeCriterio: "colecao",
             propriedade: "minigamesFliperamaConcluidos",
@@ -7190,9 +8397,12 @@ const CONFIG = Object.freeze({
                 "labirinto",
                 "voo",
                 "coleta",
-                "sequencia"
+                "sequencia",
+                "carga",
+                "reflexo",
+                "pulso"
             ]),
-            objetivo: 5
+            objetivo: 8
         }),
         pareORelogio: Object.freeze({
             nome: "Pare o Relógio!",
@@ -7974,6 +9184,97 @@ const CONFIG = Object.freeze({
         Object.freeze({ numero: 2, nome: "Capítulo 2", faseInicial: 7, faseFinal: 12, tema: "fronteira", requerVitoriaNaFaseSecreta: true }),
         Object.freeze({ numero: 3, nome: "Capítulo 3", faseInicial: 13, faseFinal: 18, tema: "misterio", requerVitoriaNoIntervaloPerdido: true })
     ]),
+    classico: Object.freeze({
+        vidaComumAposWave: Object.freeze({ primeiraWave: 6, multiplicador: 1.08 }),
+        duracaoDoAnuncioDoModificadorMs: 5400,
+        modificadores: Object.freeze({
+            inflacao: Object.freeze({ nome: 'Inflação', descricao: 'Torres e melhorias 12% mais caras; torres causam 10% mais dano.', multiplicadorCusto: 1.12, multiplicadorDano: 1.1 }),
+            ventania: Object.freeze({ nome: 'Ventania', descricao: 'Projéteis 25% mais rápidos, com 10% de chance de errar.', multiplicadorVelocidadeTiro: 1.25, chanceDeErro: 0.1 }),
+            diaDeSorte: Object.freeze({ nome: 'Dia de sorte', descricao: 'Inimigos têm 15% menos vida.', multiplicadorVidaInimiga: 0.85 })
+        }),
+        mutacoes: Object.freeze({
+            chancePorInimigo: .18,
+            variantes: Object.freeze({
+                resistente: Object.freeze({nome:'Resistente',descricao:'+20% vida, −15% velocidade',vida:1.2,velocidade:.85,cor:'#8ce8c7'}),
+                agitado: Object.freeze({nome:'Agitado',descricao:'+20% velocidade, −15% vida',vida:.85,velocidade:1.2,cor:'#f5b879'})
+            })
+        }),
+        desafios: Object.freeze({limiteTorresCompacta:5}),
+        contratos: Object.freeze({
+            101: Object.freeze({nome:'Pétalas sem explosões',descricao:'Vença sem construir minas ou bombas.',objetivo:'semExplosivos'}),
+            103: Object.freeze({nome:'Maré de prova',descricao:'Ative o contrato e sobreviva à wave {quantidade}: os inimigos avançam 25% mais rápido durante a maré.',objetivo:'mareDeProva',quantidade:10,multiplicadorVelocidade:1.25}),
+            106: Object.freeze({nome:'Aurora em equipe',descricao:'Vença usando ao menos {quantidade} tipos de defesa.',objetivo:'diversidade',quantidade:3})
+        }),
+        margemDaAgua:26,
+        margemDaRotaAlternativaNaAgua:40,
+        mapasPorPagina: 6,
+        mapasDaConquistaLendas: Object.freeze([101,102,103,104,105,106,107,108]),
+        mapasExclusivos: Object.freeze([
+            Object.freeze({numero:111,nome:'Ruínas Celestes',descricao:'Passagens sobre o céu violeta',tema:'ruinasCelestes',faseMusical:104,
+                paisagem:'celeste',paleta:Object.freeze(['#353b68','#404979','#777fba','#dedff0','#bde4f4','#596395']),
+                caminho:Object.freeze([[0,360],[200,360],[200,160],[470,160],[470,520],[750,520],[750,300],[980,300],[980,480],[1200,480]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'orbeCeleste',elite:'sentinelaAlada',boss:'arconteDasRuinas'})}),
+            Object.freeze({numero:112,nome:'Jardim de Bambu',descricao:'Trilhas entre folhas de jade',tema:'jardimBambu',faseMusical:101,
+                paisagem:'bambu',paleta:Object.freeze(['#315746','#3b634d','#193b35','#c1c38a','#9bcc78','#527f55']),
+                caminho:Object.freeze([[0,220],[300,220],[300,480],[560,480],[560,150],[860,150],[860,400],[1060,400],[1060,540],[1200,540]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'brotoDeBambu',elite:'mongeDeJade',boss:'guardiaoDoBambu'})}),
+            Object.freeze({numero:113,nome:'Deserto de Sal',descricao:'Cristais brancos sob o poente',tema:'desertoSal',faseMusical:105,
+                paisagem:'sal',paleta:Object.freeze(['#d9d2c8','#ece1d1','#9d8995','#f5eddc','#d5b9c1','#998fa8']),
+                caminho:Object.freeze([[0,470],[220,470],[220,180],[500,180],[500,390],[730,390],[730,550],[970,550],[970,210],[1200,210]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'cristalSalino',elite:'caravanaDeSal',boss:'reiDasSalinas'})}),
+            Object.freeze({numero:114,nome:'Bosque Lunar',descricao:'Pedras azuis sob a lua cheia',tema:'bosqueLunar',faseMusical:102,
+                paisagem:'cogumelos',paleta:Object.freeze(['#252e4d','#34405f','#171e35','#9aa9c7','#b7dcf0','#645e9c']),
+                caminho:Object.freeze([[0,260],[180,260],[180,510],[430,510],[430,190],[690,190],[690,450],[920,450],[920,250],[1200,250]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'corujaLunar',elite:'loboDaLua',boss:'oraculoLunar'})}),
+            Object.freeze({numero:115,nome:'Plato das Nuvens',descricao:'Pontes altas entre nuvens douradas',tema:'platoNuvens',faseMusical:104,
+                paisagem:'celeste',paleta:Object.freeze(['#617ba2','#7795ba','#405d82','#e7d9a2','#f6efc7','#667e9a']),
+                caminho:Object.freeze([[0,430],[240,430],[240,190],[480,190],[480,470],[720,470],[720,240],[990,240],[990,510],[1200,510]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'nuvemTravessa',elite:'condorDourado',boss:'titaDasNuvens'})}),
+            Object.freeze({numero:116,nome:'Templo do Jade',descricao:'Ruinas silenciosas entre bambus',tema:'temploJade',faseMusical:101,
+                paisagem:'bambu',paleta:Object.freeze(['#27483f','#356451','#17332f','#cabf86','#a7d67d','#416c55']),
+                caminho:Object.freeze([[0,180],[260,180],[260,400],[510,400],[510,570],[760,570],[760,290],[1000,290],[1000,130],[1200,130]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'lagartoDeJade',elite:'guardiaoDoTemplo',boss:'dragaoDeJade'})}),
+            Object.freeze({numero:117,nome:'Mar de Vidro',descricao:'Salinas refletindo o por do sol',tema:'marVidro',faseMusical:105,
+                paisagem:'sal',paleta:Object.freeze(['#b9b6c4','#d5d2db','#77758b','#f5dfc4','#f1c8b8','#9c91a6']),
+                caminho:Object.freeze([[0,540],[180,540],[180,310],[450,310],[450,150],[700,150],[700,430],[950,430],[950,230],[1200,230]].map(([x,y])=>Object.freeze({x,y}))),
+                rotaAlternativa:Object.freeze({nome:'Margem espelhada',descricao:'Contorna as salinas pelo sul',caminho:Object.freeze([[0,540],[240,540],[240,600],[560,600],[560,430],[810,430],[810,570],[1030,570],[1030,320],[1200,230]].map(([x,y])=>Object.freeze({x,y})))}),elenco:Object.freeze({normal:'estilhacoDeVidro',elite:'espelhoVivo',boss:'rainhaDeVidro'})}),
+            Object.freeze({numero:106,nome:'Tundra Boreal',descricao:'Entre neve e auroras',tema:'tundraBoreal',faseMusical:104,
+                paisagem:'tundra',paleta:Object.freeze(['#c6dce0','#b6cfd5','#7299a8','#e9f3e8','#77948e','#3d6768']),
+                caminho:Object.freeze([[0,190],[230,190],[230,460],[470,460],[470,270],[790,270],[790,510],[1030,510],[1030,340],[1200,340]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'lebreDaNeve',elite:'morsaBoreal',boss:'mamuteAurora'})}),
+            Object.freeze({numero:107,nome:'Pântano dos Vagalumes',descricao:'Luzes sobre a trilha de turfa',tema:'pantanoVagalumes',faseMusical:102,
+                paisagem:'pantano',paleta:Object.freeze(['#294944','#325b4d','#172e32','#9b9b63','#71ad70','#375b4c']),
+                caminho:Object.freeze([[0,520],[190,520],[190,240],[410,240],[410,420],[700,420],[700,160],[980,160],[980,370],[1200,370]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'mosquitoLuminoso',elite:'sapoDeTurfa',boss:'rainhaDosVagalumes'})}),
+            Object.freeze({numero:108,nome:'Cânion Vermelho',descricao:'Curvas entre pilares de arenito',tema:'canionVermelho',faseMusical:105,
+                paisagem:'canion',paleta:Object.freeze(['#9e5543','#af6147','#613b36','#e1b17a','#dc875d','#834738']),
+                caminho:Object.freeze([[0,350],[170,350],[170,150],[480,150],[480,530],[760,530],[760,180],[1010,180],[1010,430],[1200,430]].map(([x,y])=>Object.freeze({x,y}))),
+                rotaAlternativa:Object.freeze({nome:'Passagem das pedras',descricao:'Corta pelo vale baixo',caminho:Object.freeze([[0,350],[210,350],[210,550],[460,550],[460,360],[690,360],[690,590],[940,590],[940,280],[1200,430]].map(([x,y])=>Object.freeze({x,y})))}),elenco:Object.freeze({normal:'lagartoDoCanion',elite:'escarpadoVivo',boss:'colossoDeArenito'})}),
+            Object.freeze({numero:109,nome:'Jardim dos Cogumelos',descricao:'Um jardim sob a luz das esporas',tema:'jardimCogumelos',faseMusical:101,
+                paisagem:'cogumelos',paleta:Object.freeze(['#343951','#3d4561','#242a42','#ad9cb0','#d987b3','#805781']),
+                caminho:Object.freeze([[0,300],[260,300],[260,140],[630,140],[630,350],[410,350],[410,550],[940,550],[940,300],[1200,300]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'esporoErrante',elite:'fungoBlindado',boss:'reiMicelio'})}),
+            Object.freeze({numero:110,nome:'Costa da Tempestade',descricao:'Falésias sob chuva azul',tema:'costaTempestade',faseMusical:103,
+                paisagem:'costa',paleta:Object.freeze(['#536d77','#607e85','#354d61','#b2b8ac','#b4d3d0','#456979']),
+                caminho:Object.freeze([[0,480],[220,480],[220,170],[470,170],[470,390],[770,390],[770,140],[1030,140],[1030,330],[1200,330]].map(([x,y])=>Object.freeze({x,y}))),elenco:Object.freeze({normal:'gaivotaTempestuosa',elite:'marinheiroDasOndas',boss:'leviataDaCosta'})}),
+            Object.freeze({ numero:101, nome:'Floresta de Cerejeiras', descricao:'Pétalas ao vento', tema:'cerejeiras',
+                caminho:Object.freeze([[0,350],[190,350],[190,160],[510,160],[510,510],[850,510],[850,280],[1200,280]].map(([x,y])=>Object.freeze({x,y}))),
+                rotaAlternativa:Object.freeze({nome:'Trilha das pétalas',descricao:'Segue o bosque pelo sul',caminho:Object.freeze([[0,350],[180,350],[180,560],[430,560],[430,350],[690,350],[690,590],[960,590],[960,280],[1200,280]].map(([x,y])=>Object.freeze({x,y})))}),
+                elenco:Object.freeze({normal:'brotoSakura',elite:'guardiaoSakura',rapido:'raposaSakura',boss:'anciaoSakura'}) }),
+            Object.freeze({ numero:102, nome:'Floresta Morta', descricao:'O bosque da névoa', tema:'florestaMorta',
+                caminho:Object.freeze([[0,490],[260,490],[260,210],[570,210],[570,510],[940,510],[940,170],[1200,170]].map(([x,y])=>Object.freeze({x,y}))),
+                elenco:Object.freeze({normal:'espectroCinza',elite:'besouroCinza',rapido:'corvoCinza',boss:'reiRessequido'}) }),
+            Object.freeze({numero:103,nome:'Lagoa dos Corais',descricao:'Marés de safira',tema:'lagoaCorais',
+                agua:Object.freeze({x:0,y:120,largura:1200,altura:460}),
+                caminho:Object.freeze([[0,340],[210,340],[210,210],[540,210],[540,470],[920,470],[920,300],[1200,300]].map(([x,y])=>Object.freeze({x,y}))),
+                elenco:Object.freeze({normal:'caranguejoCoral',elite:'tartarugaCoral',rapido:'peixeAgulha',boss:'reiCaranguejo'})}),
+            Object.freeze({numero:104,nome:'Vale dos Cristais',descricao:'Brilhos sob a montanha',tema:'valeCristais',
+                caminho:Object.freeze([[0,170],[310,170],[310,510],[610,510],[610,270],[880,270],[880,470],[1200,470]].map(([x,y])=>Object.freeze({x,y}))),
+                elenco:Object.freeze({normal:'fragmentoVioleta',elite:'golemQuartzo',rapido:'morcegoAmetista',boss:'colossoGeodo'})}),
+            Object.freeze({numero:105,nome:'Dunas Douradas',descricao:'Oásis ao entardecer',tema:'dunasDouradas',
+                caminho:Object.freeze([[0,440],[170,440],[170,230],[460,230],[460,510],[760,510],[760,170],[1020,170],[1020,350],[1200,350]].map(([x,y])=>Object.freeze({x,y}))),
+                elenco:Object.freeze({normal:'escaravelhoDuna',elite:'tatuDuna',rapido:'serpenteDuna',boss:'soberanoAreia'})})
+        ]),
+        dificuldades: Object.freeze({
+            normal: Object.freeze({ nome: 'Normal', descricao: 'Regras clássicas sem restrições extras.', waves: 30, vida: 1, velocidade: 1, creditos: 300, limiteTorres: 12, multiplicadorCusto: 1, fragmentos: 5, xp: 80 }),
+            escasso: Object.freeze({ nome: 'Escasso', descricao: 'Torres e melhorias 15% mais caras; limite de 8 torres.', waves: 30, vida: 1, velocidade: 1, creditos: 300, limiteTorres: 8, multiplicadorCusto: 1.15, fragmentos: 7, xp: 100 }),
+            iron: Object.freeze({ nome: 'Iron / Sobrevivência', nomeMedalha: 'Iron', descricao: 'Inimigos mais fortes e rápidos, com ameaça própria em cada mapa.', waves: 40, vida: 1.25, velocidade: 1.15, creditos: 250, limiteTorres: 12, multiplicadorCusto: 1, fragmentos: 10, xp: 140, waveInimigoExclusivo: 6, intervaloInimigoExclusivo: 5 })
+        }),
+        inimigosIniciais: 5, aumentoPorWave: 2, waveElite: 3, waveRapido: 4, waveSabotador: 5,
+        intervaloBoss: 5,
+        premios: Object.freeze([{mapas:2,torre:'boiaArpoes'}, { mapas: 3, torre: 'iscaBlindada' }, {mapas:5,torre:'torreTorpedos'}, { mapas: 9, torre: 'canhaoBlindado' }])
+    }),
     fases: Object.freeze([
         Object.freeze({ numero: 1, nome: "Fase 1", tema: "campo", descricao: "Campo verde" }),
         Object.freeze({ numero: 2, nome: "Fase 2", tema: "deserto", descricao: "Deserto antigo" }),
@@ -8013,6 +9314,12 @@ const CONFIG = Object.freeze({
                 nome: "Bosses",
                 icone: "♛",
                 descricao: "Cada chefe é colado depois que você consegue derrotá-lo."
+            }),
+            Object.freeze({
+                id: "superBosses",
+                nome: "Super-Bosses",
+                icone: "✦",
+                descricao: "Os chefes finais dos eventos aparecem após serem derrotados."
             }),
             Object.freeze({
                 id: "minas",
@@ -8057,7 +9364,7 @@ const CONFIG = Object.freeze({
                 rotuloVisual: "+1",
                 classeVisual: "melhoria-licenca-construcao",
                 descricao: "Amplia permanentemente o espaço disponível para suas defesas.",
-                detalhe: "+1 vaga no limite geral de torres de todas as fases",
+                detalhe: "+1 vaga de defesa na equipe e +1 no limite de torres das fases",
                 bonusLimiteDeTorres: 1
             }),
             recompensaOtimizada: Object.freeze({
@@ -8113,6 +9420,7 @@ const CONFIG = Object.freeze({
                 descricao: "Itens sorteados para receber descontos nesta semana.",
                 mensagemVazia: "Você já comprou todos os itens disponíveis na Loja."
             }),
+            Object.freeze({id:'nucleos',nome:'Núcleos',icone:'◈',descricao:'Consumíveis temporários para todas as torres.',mensagemVazia:''}),
             Object.freeze({
                 id: "torres",
                 nome: "Torres",
@@ -8137,6 +9445,7 @@ const CONFIG = Object.freeze({
         ])
     }),
     audio: Object.freeze({
+        partiturasClassicas: criarPartiturasClassicas(),
         partiturasPorFase: {
             "4": {
                 "nomeInterno": "Chamados entre as Ruínas",
@@ -9300,6 +10609,32 @@ const CONFIG = Object.freeze({
         },
         volumeInicialDosEfeitos: 0.8,
         usarMusicaAnteriorDoLobby: true,
+        duracaoTransicaoDaAberturaMs: 1800,
+        musicaDaAbertura: Object.freeze({
+            nomeInterno: "Ponte do Entardecer",
+            intervaloDoPasso: 520,
+            volumeRelativo: 2.6,
+            instrumento: "triangle",
+            instrumentoSecundario: "sine",
+            volumeMelodia: 0.075,
+            volumeContracanto: 0.025,
+            volumeBaixo: 0.055,
+            volumeHarmonia: 0.018,
+            volumeBateria: 0,
+            sustentoHarmonia: 12,
+            ordem: [0, 1, 2, 3],
+            frases: [
+                [[72, 2], 0, 76, 79, [74, 2], 0, [72, 2], 0, 67, 0, [69, 2], 0, [67, 3], 0, 0, 0],
+                [[69, 2], 0, 72, 76, [79, 2], 0, 76, 0, [74, 2], 0, 72, 0, [69, 3], 0, 0, 0],
+                [[65, 2], 0, 69, 72, [76, 2], 0, 74, 0, [72, 2], 0, 69, 0, [67, 3], 0, 0, 0],
+                [[67, 2], 0, 71, 74, [79, 2], 0, 74, 0, [76, 2], 0, 74, 0, [72, 3], 0, 0, 0]
+            ],
+            baixos: [[48, 0, 0, 0, 55, 0, 0, 0], [45, 0, 0, 0, 52, 0, 0, 0],
+                [41, 0, 0, 0, 48, 0, 0, 0], [43, 0, 0, 0, 50, 0, 0, 0]],
+            contracanto: [0, 0, 0, 0, 0, 0, 0, 0, 0, 79, 0, 0, 0, 76, 0, 0],
+            acordes: [[60, 64, 67], [57, 60, 64], [53, 57, 60], [55, 59, 62]],
+            bateria: [0]
+        }),
         musicaDoLobby: Object.freeze({
             nomeInterno: "Festa na Praça Pixel",
             intervaloDoPasso: 240,
@@ -9332,6 +10667,44 @@ const CONFIG = Object.freeze({
             bateria: [[1, 3], 3, [2, 3], [3, 4], [1, 3], 3, [2, 3], [1, 3],
                 [1, 3], [3, 4], [2, 3], 3, [1, 3], [3, 4], [2, 3], [2, 3, 4]]
         }),
+        trilhasDasTelas: Object.freeze({
+            loja: criarTrilhaDoEvento('Vitrine Pixel', 315, 'triangle',
+                [[72,76,79,0,81,79,76,0,74,77,81,0,79,76,72,0],[76,79,84,0,83,79,76,0,77,81,84,0,81,79,76,0]],
+                [[48,0,55,0,52,0,55,0],[53,0,60,0,55,0,60,0]], [[60,64,67],[65,69,72]],
+                [0,67,0,0,0,69,0,0,0,72,0,0,0,67,0,0], [1,3,0,3,2,3,0,3,1,3,0,3,2,3,0,3],
+                {volumeRelativo:2.8,instrumentoSecundario:'sine',volumeMelodia:.075,volumeBateria:.055,volumeAcordesRitmados:.04}),
+            laboratorio: criarTrilhaDoEvento('Amostra Desconhecida', 390, 'sine',
+                [[57,0,60,0,66,0,60,0,58,0,63,0,69,0,63,0],[54,0,58,0,63,0,58,0,57,0,60,0,66,0,60,0]],
+                [[33,0,0,40,0,0,33,0],[30,0,0,37,0,0,30,0]], [[45,48,54],[42,46,51]],
+                [0,0,69,0,0,0,66,0,0,0,72,0,0,0,68,0], [1,0,0,0,2,0,3,0,1,0,0,0,2,0,4,0],
+                {volumeRelativo:2.8,instrumentoSecundario:'triangle',volumeMelodia:.07,volumeBaixo:.085,volumeHarmonia:.025,volumeBateria:.035,volumeAcordesRitmados:0,sustentoHarmonia:8}),
+            album: criarTrilhaDoEvento('Páginas de Memória', 345, 'triangle',
+                [[67,72,0,74,76,0,74,72,69,0,72,76,79,0,76,0],[64,69,0,72,74,0,72,69,67,0,69,72,76,0,72,0]],
+                [[43,0,50,0,43,0,50,0],[40,0,47,0,40,0,47,0]], [[55,59,62],[52,55,59]],
+                [0,0,76,0,0,0,72,0,0,0,74,0,0,0,71,0], [1,0,3,0,2,0,3,0,1,0,3,0,2,0,3,0],
+                {volumeRelativo:2.8,volumeBateria:.045,volumeHarmonia:.02}),
+            missoes: criarTrilhaDoEvento('Plano de Ação', 255, 'square',
+                [[69,0,72,76,0,74,72,0,67,0,69,72,0,76,74,0],[72,0,76,79,0,76,74,0,69,0,72,74,0,79,76,0]],
+                [[38,0,45,0,38,0,45,0],[41,0,48,0,41,0,48,0]], [[57,60,64],[60,64,67]],
+                [0,64,0,0,0,67,0,0,0,69,0,0,0,67,0,0], [1,3,0,3,2,3,0,3,1,3,0,3,2,3,4,3],
+                {volumeRelativo:3,volumeMelodia:.055,volumeBateria:.08}),
+            conquistas: criarTrilhaDoEvento('Galeria de Vitórias', 330, 'triangle',
+                [[72,76,79,84,0,79,76,0,74,77,81,86,0,81,77,0],[76,79,84,88,0,84,79,0,77,81,84,89,0,84,81,0]],
+                [[48,0,55,0,48,0,55,0],[53,0,60,0,53,0,60,0]], [[60,64,67],[65,69,72]],
+                [0,67,0,72,0,67,0,72,0,69,0,74,0,69,0,74], [1,3,0,3,2,3,4,3,1,3,0,3,2,3,4,3],
+                {volumeRelativo:2.9,volumeMelodia:.065,volumeHarmonia:.025,volumeBateria:.08}),
+            supremas: criarTrilhaDoEvento('Salão das Supremas', 305, 'sawtooth',
+                [[60,0,67,0,72,0,70,67,65,0,72,0,75,0,72,0],[63,0,70,0,75,0,73,70,68,0,75,0,78,0,75,0]],
+                [[36,0,43,0,36,0,43,0],[39,0,46,0,39,0,46,0]], [[48,55,60],[51,58,63]],
+                [0,0,75,0,0,0,72,0,0,0,78,0,0,0,75,0], [[1,3],0,3,0,2,0,3,0,[1,3],0,3,0,2,0,4,0],
+                {volumeRelativo:3,volumeMelodia:.035,volumeBaixo:.075,volumeHarmonia:.03,volumeBateria:.075}),
+            eventos: criarTrilhaDoEvento('Portas do Desafio', 275, 'triangle',
+                [[74,0,77,81,0,79,77,0,76,0,79,83,0,81,79,0],[77,0,81,84,0,83,81,0,79,0,76,81,0,84,83,0]],
+                [[38,0,45,0,38,0,45,0],[41,0,48,0,41,0,48,0]], [[62,65,69],[65,69,72]],
+                [0,0,69,0,0,0,72,0,0,0,71,0,0,0,74,0], [1,3,4,3,2,3,4,3,1,3,4,3,2,3,4,3],
+                {volumeRelativo:3,volumeMelodia:.06,volumeBateria:.09})
+        }),
+        duracaoTransicaoDasTelasMs: 600,
         musicaAnteriorDoLobby: Object.freeze({
             intervaloDoPasso: 430,
             volumeRelativo: 1.25,
@@ -9618,6 +10991,24 @@ const CONFIG = Object.freeze({
             volumeRelativo: 1
         })
     }),
+    escolhasDaWave: Object.freeze({
+        intervaloEntreEscolhas: 4,
+        ultimaWaveComEscolha: 16,
+        fragmentosMinimos: 2,
+        fragmentosMaximos: 5,
+        fasesPorAumento: 5,
+        velocidade: Object.freeze({ multiplicador: 1.15 }),
+        resistencia: Object.freeze({ multiplicador: 1.2 })
+    }),
+    pressaoDaHistoria: Object.freeze({
+        vidaComumAposWave: Object.freeze({ primeiraWave: 6, multiplicador: 1.08 }),
+        intervaloDosRapidos: 3,
+        faixas: Object.freeze([
+            Object.freeze({ faseInicial: 4, faseFinal: 6, waves: Object.freeze([17]), intervaloEntreInimigos: 630, elitesExtras: 0, rapidosExtras: 1 }),
+            Object.freeze({ faseInicial: 7, faseFinal: 12, waves: Object.freeze([13, 17]), intervaloEntreInimigos: 600, elitesExtras: 1, rapidosExtras: 2 }),
+            Object.freeze({ faseInicial: 13, faseFinal: 18, waves: Object.freeze([9, 13, 17]), intervaloEntreInimigos: 570, elitesExtras: 1, rapidosExtras: 3 })
+        ])
+    }),
     wave: Object.freeze({
         intervaloEntreInimigos: 700,
         pausaEntreWaves: 2000,
@@ -9844,11 +11235,21 @@ const CONFIG = Object.freeze({
             percentualDeCadencia: 0.2,
             percentualDeDano: 0.15,
             duracao: 30000
+        }),
+        testeDeDificuldade: Object.freeze({
+            numeroDaFase: 7,
+            ultimaFaseComPenalidadeLeve: 3,
+            percentualDeVelocidadeInimigaLeve: 0.08,
+            percentualDeVelocidadeInimiga: 0.15,
+            primeiraWaveDoSuperSabotador: 10,
+            intervaloDeWavesDoSuperSabotador: 5
         })
     }),
     centroDeTreinamento: Object.freeze({
         duracaoDaContagemRegressiva: 3000,
         intervaloDeAtualizacao: 32,
+        variacaoDoVoo: Object.freeze({ diferencaMaximaEntreVaos: 135 }),
+        variacaoDaChuva: Object.freeze({ deslocamentoMaximoEntrePixels: 190 }),
         tiposDisponiveis: Object.freeze([
             "alvo", "labirinto", "voo", "coleta", "sequencia",
             "carga", "reflexo", "pulso"
@@ -9950,19 +11351,142 @@ const CONFIG = Object.freeze({
         })
     }),
     inimigo: Object.freeze({
+        cacadorDaTribo: Object.freeze({ nome: 'Caçador da Tribo', vida: 135, velocidade: 1.5, tamanho: 23, cor: '#b98b58', visualEvento: 'idadeDaPedra' }),
+        mamuteLanoso: Object.freeze({ nome: 'Mamute Lanoso', vida: 410, velocidade: 0.8, tamanho: 34, cor: '#8b674d', visualEvento: 'idadeDaPedra', reducaoDeDano: 0.12 }),
+        liderDaTribo: Object.freeze({ nome: 'Líder da Tribo', vida: 2450, incrementoVidaPorAparicao: 0, velocidade: 0.66, tamanho: 54, cor: '#c79a60', visualEvento: 'idadeDaPedra', bossClassico: true }),
+        mimicoEmbrulhado: Object.freeze({ nome: 'Mímico Embrulhado', vida: 155, velocidade: 1.55, tamanho: 23, cor: '#e97696', visualEvento: 'caixaSurpresa' }),
+        saqueadorDePacotes: Object.freeze({ nome: 'Saqueador de Pacotes', vida: 390, velocidade: 0.95, tamanho: 30, cor: '#a2528d', visualEvento: 'caixaSurpresa', reducaoDeDano: 0.12 }),
+        reiDosPresentes: Object.freeze({ nome: 'Rei dos Presentes', vida: 2450, incrementoVidaPorAparicao: 0, velocidade: 0.64, tamanho: 56, cor: '#e2a85c', visualEvento: 'caixaSurpresa', bossClassico: true }),
+        fichaViva: Object.freeze({ nome: 'Ficha Viva', vida: 165, velocidade: 1.7, tamanho: 22, cor: '#f4cd6b', visualEvento: 'roleta' }),
+        cobradorDaBanca: Object.freeze({ nome: 'Cobrador da Banca', vida: 420, velocidade: 0.9, tamanho: 31, cor: '#70c59b', visualEvento: 'roleta', reducaoDeDano: 0.15 }),
+        donoDaBanca: Object.freeze({ nome: 'Dono da Banca', vida: 2600, incrementoVidaPorAparicao: 0, velocidade: 0.62, tamanho: 58, cor: '#e5bc57', visualEvento: 'roleta', bossClassico: true }),
+        corredorDeCinzas: Object.freeze({ nome: 'Corredor de Cinzas', vida: 150, velocidade: 1.8, tamanho: 22, cor: '#f18b69', visualEvento: 'meteoros' }),
+        guardiaoDeCratera: Object.freeze({ nome: 'Guardião de Cratera', vida: 450, velocidade: 0.85, tamanho: 31, cor: '#827fa8', visualEvento: 'meteoros', reducaoDeDano: 0.18 }),
+        arautoDoCometa: Object.freeze({ nome: 'Arauto do Cometa', vida: 2850, incrementoVidaPorAparicao: 0, velocidade: 0.66, tamanho: 58, cor: '#e9776d', visualEvento: 'meteoros', bossClassico: true }),
+        impDeBrasa: Object.freeze({ nome: 'Imp de Brasa', vida: 120, velocidade: 1.65, tamanho: 21, cor: '#ee7644', visualEvento: 'inferno' }),
+        cavaleiroInfernal: Object.freeze({ nome: 'Cavaleiro Infernal', vida: 310, velocidade: 1.0, tamanho: 29, cor: '#a63d39', visualEvento: 'inferno' }),
+        duqueDasBrasas: Object.freeze({ nome: 'Duque das Brasas', vida: 800, incrementoVidaPorAparicao: 180, velocidade: 0.84, tamanho: 43, cor: '#f28b40', visualEvento: 'inferno', bossClassico: true }),
+        cerberoDeLava: Object.freeze({ nome: 'Cérbero de Lava', vida: 1100, incrementoVidaPorAparicao: 200, velocidade: 0.9, tamanho: 47, cor: '#f4603e', visualEvento: 'inferno', bossClassico: true }),
+        rainhaDasCinzas: Object.freeze({ nome: 'Rainha das Cinzas', vida: 1350, incrementoVidaPorAparicao: 220, velocidade: 0.72, tamanho: 49, cor: '#b9668c', visualEvento: 'inferno', bossClassico: true }),
+        soberanoInfernal: Object.freeze({ nome: 'Soberano Infernal', vida: 7000, incrementoVidaPorAparicao: 250, velocidade: 0.38, tamanho: 75, cor: '#d83c44', visualEvento: 'inferno', bossClassico: true, superBossDeEvento: true }),
+        droneDeSucata: Object.freeze({ nome: 'Drone de Sucata', vida: 115, velocidade: 1.7, tamanho: 20, cor: '#a6c8b9', visualEvento: 'forja' }),
+        automatoBlindado: Object.freeze({ nome: 'Autômato Blindado', vida: 350, velocidade: 0.92, tamanho: 29, cor: '#859a9d', visualEvento: 'forja' }),
+        perfuradorDeAco: Object.freeze({ nome: 'Perfurador de Aço', vida: 820, incrementoVidaPorAparicao: 180, velocidade: 0.85, tamanho: 43, cor: '#c1a46e', visualEvento: 'forja', bossClassico: true }),
+        fornalhaAndante: Object.freeze({ nome: 'Fornalha Andante', vida: 1150, incrementoVidaPorAparicao: 200, velocidade: 0.75, tamanho: 47, cor: '#e08a54', visualEvento: 'forja', bossClassico: true }),
+        aranhaMecanica: Object.freeze({ nome: 'Aranha Mecânica', vida: 1400, incrementoVidaPorAparicao: 220, velocidade: 0.8, tamanho: 49, cor: '#8caeb1', visualEvento: 'forja', bossClassico: true }),
+        titaDaForja: Object.freeze({ nome: 'Titã da Forja', vida: 7300, incrementoVidaPorAparicao: 250, velocidade: 0.36, tamanho: 78, cor: '#d1b575', visualEvento: 'forja', bossClassico: true, superBossDeEvento: true }),
+        enguiaAbissal: Object.freeze({ nome: 'Enguia Abissal', vida: 110, velocidade: 1.75, tamanho: 20, cor: '#7bd8d0', visualEvento: 'abismo' }),
+        guardiaoDeCoralNegro: Object.freeze({ nome: 'Guardião de Coral Negro', vida: 340, velocidade: 0.95, tamanho: 29, cor: '#538c9e', visualEvento: 'abismo' }),
+        sirenaSombria: Object.freeze({ nome: 'Sirena Sombria', vida: 830, incrementoVidaPorAparicao: 180, velocidade: 0.86, tamanho: 43, cor: '#ad94c7', visualEvento: 'abismo', bossClassico: true }),
+        caranguejoColossal: Object.freeze({ nome: 'Caranguejo Colossal', vida: 1180, incrementoVidaPorAparicao: 200, velocidade: 0.72, tamanho: 47, cor: '#769ec4', visualEvento: 'abismo', bossClassico: true }),
+        polvoDoAbismo: Object.freeze({ nome: 'Polvo do Abismo', vida: 1450, incrementoVidaPorAparicao: 220, velocidade: 0.75, tamanho: 49, cor: '#8a72b2', visualEvento: 'abismo', bossClassico: true }),
+        leviataAbissal: Object.freeze({ nome: 'Leviatã Abissal', vida: 7600, incrementoVidaPorAparicao: 250, velocidade: 0.35, tamanho: 80, cor: '#5bc5c3', visualEvento: 'abismo', bossClassico: true, superBossDeEvento: true }),
+        gotaCorrosiva: Object.freeze({ nome: 'Gota Corrosiva', vida: 125, velocidade: 1.7, tamanho: 21, cor: '#b5e35a', visualEvento: 'acido' }),
+        ofidioToxico: Object.freeze({ nome: 'Ofídio Tóxico', vida: 360, velocidade: 0.95, tamanho: 29, cor: '#7ab755', visualEvento: 'acido' }),
+        serpenteDoEsgoto: Object.freeze({ nome: 'Serpente do Esgoto', vida: 850, incrementoVidaPorAparicao: 180, velocidade: 0.83, tamanho: 43, cor: '#91bc4e', visualEvento: 'acido', bossClassico: true }),
+        basiliscoCaustico: Object.freeze({ nome: 'Basilisco Cáustico', vida: 1200, incrementoVidaPorAparicao: 200, velocidade: 0.76, tamanho: 47, cor: '#c4d768', visualEvento: 'acido', bossClassico: true }),
+        hidraAcida: Object.freeze({ nome: 'Hidra Ácida', vida: 1450, incrementoVidaPorAparicao: 220, velocidade: 0.72, tamanho: 49, cor: '#74c997', visualEvento: 'acido', bossClassico: true }),
+        viboraAcida: Object.freeze({ nome: 'Víbora Ácida', vida: 7450, incrementoVidaPorAparicao: 250, velocidade: 0.37, tamanho: 78, cor: '#aff064', visualEvento: 'acido', bossClassico: true, superBossDeEvento: true }),
+        fragmentoInstavel: Object.freeze({ nome: 'Fragmento Instável', vida: 120, velocidade: 1.7,
+            tamanho: 21, cor: '#bb9cf0', visualEvento: 'metamorfo' }),
+        sentinelaMutante: Object.freeze({ nome: 'Sentinela Mutante', vida: 350, velocidade: 0.95,
+            tamanho: 29, cor: '#80c9bd', visualEvento: 'metamorfo' }),
+        ecoPrismatico: Object.freeze({ nome: 'Eco Prismático', vida: 830,
+            incrementoVidaPorAparicao: 180, velocidade: 0.85, tamanho: 43, cor: '#d5a9f1',
+            visualEvento: 'metamorfo', bossClassico: true }),
+        guardiaoDoCasulo: Object.freeze({ nome: 'Guardião do Casulo', vida: 1170,
+            incrementoVidaPorAparicao: 200, velocidade: 0.76, tamanho: 47, cor: '#8fc8bf',
+            visualEvento: 'metamorfo', bossClassico: true }),
+        quimeraDaRuptura: Object.freeze({ nome: 'Quimera da Ruptura', vida: 1420,
+            incrementoVidaPorAparicao: 220, velocidade: 0.73, tamanho: 49, cor: '#b083d4',
+            visualEvento: 'metamorfo', bossClassico: true }),
+        metamorfo: Object.freeze({ nome: 'Metamorfo', vida: 8500, incrementoVidaPorAparicao: 0, velocidade: 0.42,
+            tamanho: 76, cor: '#c49ae5', visualEvento: 'metamorfo', bossClassico: true, superBossDeEvento: true }),
+        carcacaDaVibora: Object.freeze({ nome: 'Carcaça da Víbora', vida: 4500, velocidade: 0, tamanho: 38, cor: '#8aaf6c', visualEvento: 'acido' }),
+        orbeCeleste:Object.freeze({nome:'Orbe Celeste',vida:95,velocidade:1.35,tamanho:21,cor:'#a9d8f2',visualClassico:'celeste'}),sentinelaAlada:Object.freeze({nome:'Sentinela Alada',vida:230,velocidade:.78,tamanho:28,cor:'#7c91df',visualClassico:'celeste'}),arconteDasRuinas:Object.freeze({nome:'Arconte das Ruínas',vida:900,incrementoVidaPorAparicao:250,velocidade:.72,tamanho:43,cor:'#e2c477',visualClassico:'celeste',bossClassico:true}),
+        brotoDeBambu:Object.freeze({nome:'Broto de Bambu',vida:90,velocidade:1.4,tamanho:21,cor:'#a8d873',visualClassico:'bambu'}),mongeDeJade:Object.freeze({nome:'Monge de Jade',vida:240,velocidade:.75,tamanho:28,cor:'#5ba881',visualClassico:'bambu'}),guardiaoDoBambu:Object.freeze({nome:'Guardião do Bambu',vida:920,incrementoVidaPorAparicao:250,velocidade:.7,tamanho:43,cor:'#d5c879',visualClassico:'bambu',bossClassico:true}),
+        cristalSalino:Object.freeze({nome:'Cristal Salino',vida:95,velocidade:1.25,tamanho:21,cor:'#f2e5d0',visualClassico:'sal'}),caravanaDeSal:Object.freeze({nome:'Caravana de Sal',vida:250,velocidade:.72,tamanho:29,cor:'#b894b4',visualClassico:'sal'}),reiDasSalinas:Object.freeze({nome:'Rei das Salinas',vida:925,incrementoVidaPorAparicao:250,velocidade:.7,tamanho:44,cor:'#e5c9d8',visualClassico:'sal',bossClassico:true}),
+        corujaLunar:Object.freeze({nome:'Coruja Lunar',vida:90,velocidade:1.45,tamanho:21,cor:'#b7d7f0',visualClassico:'lunar'}),loboDaLua:Object.freeze({nome:'Lobo da Lua',vida:235,velocidade:.8,tamanho:28,cor:'#7589c9',visualClassico:'lunar'}),oraculoLunar:Object.freeze({nome:'Oráculo Lunar',vida:930,incrementoVidaPorAparicao:250,velocidade:.68,tamanho:44,cor:'#d4dcff',visualClassico:'lunar',bossClassico:true}),
+        nuvemTravessa:Object.freeze({nome:'Nuvem Travessa',vida:88,velocidade:1.5,tamanho:21,cor:'#f1e7b4',visualClassico:'nuvem'}),condorDourado:Object.freeze({nome:'Condor Dourado',vida:245,velocidade:.78,tamanho:29,cor:'#d6a85c',visualClassico:'nuvem'}),titaDasNuvens:Object.freeze({nome:'Titã das Nuvens',vida:940,incrementoVidaPorAparicao:255,velocidade:.68,tamanho:44,cor:'#f4df99',visualClassico:'nuvem',bossClassico:true}),
+        lagartoDeJade:Object.freeze({nome:'Lagarto de Jade',vida:95,velocidade:1.3,tamanho:21,cor:'#7bc497',visualClassico:'jade'}),guardiaoDoTemplo:Object.freeze({nome:'Guardião do Templo',vida:255,velocidade:.7,tamanho:29,cor:'#c3ae6e',visualClassico:'jade'}),dragaoDeJade:Object.freeze({nome:'Dragão de Jade',vida:950,incrementoVidaPorAparicao:255,velocidade:.67,tamanho:45,cor:'#7ed49b',visualClassico:'jade',bossClassico:true}),
+        estilhacoDeVidro:Object.freeze({nome:'Estilhaço de Vidro',vida:92,velocidade:1.45,tamanho:21,cor:'#b5e4e5',visualClassico:'vidro'}),espelhoVivo:Object.freeze({nome:'Espelho Vivo',vida:250,velocidade:.74,tamanho:29,cor:'#c7a9cf',visualClassico:'vidro'}),rainhaDeVidro:Object.freeze({nome:'Rainha de Vidro',vida:950,incrementoVidaPorAparicao:255,velocidade:.68,tamanho:45,cor:'#f2c3ba',visualClassico:'vidro',bossClassico:true}),
+        lebreDaNeve:Object.freeze({nome:'Lebre da Neve',vida:88,velocidade:1.55,tamanho:20,cor:'#e8f4f0',visualClassico:'tundra'}),morsaBoreal:Object.freeze({nome:'Morsa Boreal',vida:260,velocidade:.68,tamanho:30,cor:'#7198a7',visualClassico:'tundra'}),mamuteAurora:Object.freeze({nome:'Mamute Aurora',vida:960,incrementoVidaPorAparicao:260,velocidade:.65,tamanho:46,cor:'#9ccfbc',visualClassico:'tundra',bossClassico:true}),
+        mosquitoLuminoso:Object.freeze({nome:'Mosquito Luminoso',vida:86,velocidade:1.55,tamanho:20,cor:'#d9ee7d',visualClassico:'pantano'}),sapoDeTurfa:Object.freeze({nome:'Sapo de Turfa',vida:255,velocidade:.72,tamanho:29,cor:'#6b9d72',visualClassico:'pantano'}),rainhaDosVagalumes:Object.freeze({nome:'Rainha dos Vagalumes',vida:960,incrementoVidaPorAparicao:260,velocidade:.66,tamanho:45,cor:'#e8f09d',visualClassico:'pantano',bossClassico:true}),
+        lagartoDoCanion:Object.freeze({nome:'Lagarto do Cânion',vida:95,velocidade:1.35,tamanho:21,cor:'#df8560',visualClassico:'canion'}),escarpadoVivo:Object.freeze({nome:'Escarpado Vivo',vida:270,velocidade:.68,tamanho:30,cor:'#9e5f4b',visualClassico:'canion'}),colossoDeArenito:Object.freeze({nome:'Colosso de Arenito',vida:970,incrementoVidaPorAparicao:260,velocidade:.65,tamanho:46,cor:'#ddaa70',visualClassico:'canion',bossClassico:true}),
+        esporoErrante:Object.freeze({nome:'Esporo Errante',vida:90,velocidade:1.45,tamanho:21,cor:'#de9ec2',visualClassico:'cogumelo'}),fungoBlindado:Object.freeze({nome:'Fungo Blindado',vida:265,velocidade:.7,tamanho:30,cor:'#8a6bad',visualClassico:'cogumelo'}),reiMicelio:Object.freeze({nome:'Rei Micélio',vida:970,incrementoVidaPorAparicao:260,velocidade:.66,tamanho:46,cor:'#e6c0db',visualClassico:'cogumelo',bossClassico:true}),
+        gaivotaTempestuosa:Object.freeze({nome:'Gaivota Tempestuosa',vida:90,velocidade:1.5,tamanho:21,cor:'#b8d8dc',visualClassico:'costa'}),marinheiroDasOndas:Object.freeze({nome:'Marinheiro das Ondas',vida:270,velocidade:.7,tamanho:30,cor:'#5e899a',visualClassico:'costa'}),leviataDaCosta:Object.freeze({nome:'Leviatã da Costa',vida:980,incrementoVidaPorAparicao:265,velocidade:.64,tamanho:47,cor:'#87c3c6',visualClassico:'costa',bossClassico:true}),
+        caranguejoCoral:Object.freeze({nome:'Caranguejo de Coral',vida:100,velocidade:1,tamanho:22,cor:'#f58b79',visualClassico:'caranguejo'}),
+        tartarugaCoral:Object.freeze({nome:'Tartaruga de Recife',vida:240,velocidade:.6,tamanho:27,cor:'#6fc2aa',visualClassico:'tartaruga'}),
+        peixeAgulha:Object.freeze({nome:'Peixe-agulha',vida:60,velocidade:1.85,tamanho:21,cor:'#b7e9eb',visualClassico:'peixe'}),
+        reiCaranguejo:Object.freeze({nome:'Rei dos Corais',vida:910,incrementoVidaPorAparicao:270,velocidade:.7,tamanho:44,cor:'#e86b69',visualClassico:'caranguejo',bossClassico:true}),
+        fragmentoVioleta:Object.freeze({nome:'Fragmento Violeta',vida:95,velocidade:1,tamanho:21,cor:'#b29bf5',visualClassico:'cristal'}),
+        golemQuartzo:Object.freeze({nome:'Golem de Quartzo',vida:230,velocidade:.65,tamanho:28,cor:'#bce3ed',visualClassico:'golem'}),
+        morcegoAmetista:Object.freeze({nome:'Morcego de Ametista',vida:65,velocidade:1.75,tamanho:22,cor:'#a985e3',visualClassico:'morcego'}),
+        colossoGeodo:Object.freeze({nome:'Colosso Geodo',vida:945,incrementoVidaPorAparicao:240,velocidade:.7,tamanho:43,cor:'#af78e1',visualClassico:'golem',bossClassico:true}),
+        escaravelhoDuna:Object.freeze({nome:'Escaravelho Dourado',vida:95,velocidade:1,tamanho:22,cor:'#e3b653',visualClassico:'escaravelho'}),
+        tatuDuna:Object.freeze({nome:'Tatu das Dunas',vida:220,velocidade:.7,tamanho:26,cor:'#c38c5e',visualClassico:'tatu'}),
+        serpenteDuna:Object.freeze({nome:'Serpente de Areia',vida:60,velocidade:1.8,tamanho:22,cor:'#e1c387',visualClassico:'serpente'}),
+        soberanoAreia:Object.freeze({nome:'Soberano das Areias',vida:875,incrementoVidaPorAparicao:270,velocidade:.72,tamanho:44,cor:'#dcb55e',visualClassico:'escaravelho',bossClassico:true}),
+        brotoSakura: Object.freeze({nome:'Broto Errante',vida:90,velocidade:1,tamanho:20,cor:'#ee97b6',visualClassico:'broto'}),
+        guardiaoSakura: Object.freeze({nome:'Guardião das Pétalas',vida:200,velocidade:.72,tamanho:27,cor:'#bd648c',visualClassico:'guardiao'}),
+        raposaSakura: Object.freeze({nome:'Raposa Sakura',vida:65,velocidade:1.7,tamanho:22,cor:'#ffd3df',visualClassico:'raposa'}),
+        anciaoSakura: Object.freeze({nome:'Ancião das Cerejeiras',vida:770,incrementoVidaPorAparicao:270,velocidade:.75,tamanho:42,cor:'#d65b91',visualClassico:'anciao',bossClassico:true}),
+        espectroCinza: Object.freeze({nome:'Espectro de Cinzas',vida:95,velocidade:1,tamanho:21,cor:'#dbdfe3',visualClassico:'espectro'}),
+        besouroCinza: Object.freeze({nome:'Besouro de Mármore',vida:220,velocidade:.65,tamanho:26,cor:'#929baa',visualClassico:'besouro'}),
+        corvoCinza: Object.freeze({nome:'Corvo da Névoa',vida:60,velocidade:1.8,tamanho:22,cor:'#b8c1cf',visualClassico:'corvo'}),
+        reiRessequido: Object.freeze({nome:'Rei Ressequido',vida:875,incrementoVidaPorAparicao:240,velocidade:.7,tamanho:43,cor:'#bfc6cc',visualClassico:'rei',bossClassico:true}),
+        perseguidorDeFerro: Object.freeze({nome:'Perseguidor de Ferro',vida:320,velocidade:1.45,tamanho:27,cor:'#94a8b6',visualClassico:'ironRapido'}),
+        bastiaoDeFerro: Object.freeze({nome:'Bastião de Ferro',vida:850,velocidade:.85,tamanho:38,cor:'#747f99',visualClassico:'ironPesado'}),
+        ...Object.fromEntries([
+            {mapa:1,nome:'Vigia do Campo',ingles:'Field Watcher',espanhol:'Vigía del Campo',vida:440,velocidade:1.08,cor:'#83b47b',traco:'armadura',valor:.14},
+            {mapa:2,nome:'Escorpião das Dunas',ingles:'Dune Scorpion',espanhol:'Escorpión de las Dunas',vida:370,velocidade:1.32,cor:'#d9a663',traco:'disparada',valor:1.35},
+            {mapa:3,nome:'Lobo da Geada',ingles:'Frost Wolf',espanhol:'Lobo de Escarcha',vida:465,velocidade:1.04,cor:'#a7d4e8',traco:'armadura',valor:.17},
+            {mapa:4,nome:'Caçador das Ruínas',ingles:'Ruin Hunter',espanhol:'Cazador de las Ruinas',vida:380,velocidade:1.38,cor:'#78ad69',traco:'disparada',valor:1.4},
+            {mapa:5,nome:'Sombra Crepuscular',ingles:'Twilight Shade',espanhol:'Sombra Crepuscular',vida:390,velocidade:1.18,cor:'#ab8eb7',traco:'retorno',valor:.27},
+            {mapa:6,nome:'Salamandra da Forja',ingles:'Forge Salamander',espanhol:'Salamandra de la Forja',vida:490,velocidade:1.02,cor:'#ec7950',traco:'armadura',valor:.18},
+            {mapa:7,nome:'Sanguessuga Tóxica',ingles:'Toxic Leech',espanhol:'Sanguijuela Tóxica',vida:410,velocidade:1.14,cor:'#83bc6c',traco:'retorno',valor:.28},
+            {mapa:8,nome:'Predador Primordial',ingles:'Primal Predator',espanhol:'Depredador Primordial',vida:420,velocidade:1.36,cor:'#aa865c',traco:'disparada',valor:1.42},
+            {mapa:9,nome:'Drone Neon',ingles:'Neon Drone',espanhol:'Dron Neón',vida:395,velocidade:1.4,cor:'#72d7e2',traco:'disparada',valor:1.38},
+            {mapa:10,nome:'Protótipo Blindado',ingles:'Armored Prototype',espanhol:'Prototipo Blindado',vida:530,velocidade:.95,cor:'#b6b8bc',traco:'armadura',valor:.2},
+            {mapa:11,nome:'Estilhaço do Futuro',ingles:'Future Shard',espanhol:'Esquirla del Futuro',vida:420,velocidade:1.22,cor:'#a38dda',traco:'retorno',valor:.3},
+            {mapa:12,nome:'Núcleo da Ruptura',ingles:'Rift Core',espanhol:'Núcleo de la Ruptura',vida:540,velocidade:.96,cor:'#d99386',traco:'armadura',valor:.21},
+            {mapa:13,nome:'Patrulheiro Cronal',ingles:'Chronal Ranger',espanhol:'Patrullero Cronal',vida:440,velocidade:1.3,cor:'#79c7d4',traco:'disparada',valor:1.45},
+            {mapa:14,nome:'Rasura Viva',ingles:'Living Erasure',espanhol:'Tachadura Viva',vida:430,velocidade:1.15,cor:'#d5c49a',traco:'retorno',valor:.31},
+            {mapa:15,nome:'Censor de Ferro',ingles:'Iron Censor',espanhol:'Censor de Hierro',vida:560,velocidade:.93,cor:'#9caa91',traco:'armadura',valor:.22},
+            {mapa:16,nome:'Eco Cristalizado',ingles:'Crystallized Echo',espanhol:'Eco Cristalizado',vida:460,velocidade:1.13,cor:'#a0badd',traco:'retorno',valor:.32},
+            {mapa:17,nome:'Sombra do Limiar',ingles:'Threshold Shade',espanhol:'Sombra del Umbral',vida:455,velocidade:1.34,cor:'#aa91d6',traco:'disparada',valor:1.47},
+            {mapa:18,nome:'Sentinela do Relógio',ingles:'Clock Sentinel',espanhol:'Centinela del Reloj',vida:590,velocidade:.91,cor:'#d5b675',traco:'armadura',valor:.23},
+            {mapa:101,nome:'Espinho Sakura',ingles:'Sakura Thorn',espanhol:'Espina Sakura',vida:360,velocidade:1.35,cor:'#ef91b7',traco:'disparada',valor:1.32},
+            {mapa:102,nome:'Corvo de Ossos',ingles:'Bone Crow',espanhol:'Cuervo de Huesos',vida:375,velocidade:1.2,cor:'#b9c3cd',traco:'retorno',valor:.26},
+            {mapa:103,nome:'Caranguejo da Maré',ingles:'Tide Crab',espanhol:'Cangrejo de la Marea',vida:490,velocidade:.98,cor:'#ef9b86',traco:'armadura',valor:.19},
+            {mapa:104,nome:'Cristal Guardião',ingles:'Guardian Crystal',espanhol:'Cristal Guardián',vida:500,velocidade:.99,cor:'#bd9aeb',traco:'armadura',valor:.2},
+            {mapa:105,nome:'Serpente Dourada',ingles:'Golden Serpent',espanhol:'Serpiente Dorada',vida:375,velocidade:1.4,cor:'#e1bc69',traco:'disparada',valor:1.4},
+            {mapa:106,nome:'Lobo da Aurora',ingles:'Aurora Wolf',espanhol:'Lobo de la Aurora',vida:480,velocidade:1.08,cor:'#b5e7dc',traco:'armadura',valor:.18},
+            {mapa:107,nome:'Besouro do Brejo',ingles:'Marsh Beetle',espanhol:'Escarabajo del Pantano',vida:400,velocidade:1.13,cor:'#a3be7a',traco:'retorno',valor:.28},
+            {mapa:108,nome:'Escorpião Rubro',ingles:'Crimson Scorpion',espanhol:'Escorpión Carmesí',vida:515,velocidade:1.01,cor:'#d77c5e',traco:'armadura',valor:.2},
+            {mapa:109,nome:'Fungo Renascido',ingles:'Reborn Fungus',espanhol:'Hongo Renacido',vida:405,velocidade:1.12,cor:'#dca7c9',traco:'retorno',valor:.3},
+            {mapa:110,nome:'Albatroz da Tempestade',ingles:'Storm Albatross',espanhol:'Albatros de la Tormenta',vida:390,velocidade:1.43,cor:'#a0cfdb',traco:'disparada',valor:1.43},
+            {mapa:111,nome:'Vigia Celeste',ingles:'Sky Watcher',espanhol:'Vigía Celeste',vida:520,velocidade:1.02,cor:'#b5cafa',traco:'armadura',valor:.21},
+            {mapa:112,nome:'Ronin de Bambu',ingles:'Bamboo Ronin',espanhol:'Ronin de Bambú',vida:405,velocidade:1.36,cor:'#9fc977',traco:'disparada',valor:1.42},
+            {mapa:113,nome:'Escaravelho Salino',ingles:'Salt Beetle',espanhol:'Escarabajo Salino',vida:525,velocidade:.97,cor:'#e9d8cb',traco:'armadura',valor:.2},
+            {mapa:114,nome:'Caçador Lunar',ingles:'Moon Hunter',espanhol:'Cazador Lunar',vida:410,velocidade:1.37,cor:'#b3bcf0',traco:'disparada',valor:1.44},
+            {mapa:115,nome:'Condor da Tormenta',ingles:'Storm Condor',espanhol:'Cóndor de la Tormenta',vida:405,velocidade:1.38,cor:'#ebd39a',traco:'disparada',valor:1.4},
+            {mapa:116,nome:'Guardião Sombrio de Jade',ingles:'Dark Jade Guardian',espanhol:'Guardián Sombrío de Jade',vida:540,velocidade:.96,cor:'#86b999',traco:'armadura',valor:.22},
+            {mapa:117,nome:'Espelho Partido',ingles:'Broken Mirror',espanhol:'Espejo Roto',vida:430,velocidade:1.17,cor:'#d7c9e7',traco:'retorno',valor:.32}
+        ].map(dados=>[`ironMapa${dados.mapa}`,criarConfiguracaoDoInimigoIron(dados)])),
         rasurador: Object.freeze({"nome":"Rasurador","vida":280,"velocidade":1.5,"tamanho":23,"cor":"#d4b785","detalhe":"Exclusivo da Fase 15 | Avança carregando páginas rasuradas"}),
         censorVelado: Object.freeze({"nome":"Censor Velado","vida":480,"velocidade":1.15,"tamanho":27,"cor":"#8fad99","camuflado":true,"detalhe":"Exclusivo da Fase 15 | Camuflado: precisa ser detectado pela Varredura"}),
         sentinelaDeIndice: Object.freeze({"nome":"Sentinela de Índice","vida":900,"velocidade":0.8,"tamanho":33,"cor":"#aa8266","reducaoDeDano":0.25,"detalhe":"Exclusiva da Fase 15 | Capas blindadas reduzem o dano em 25%"}),
-        bibliotecarioMudo: Object.freeze({"nome":"Bibliotecário Mudo","vida":6200,"incrementoVidaPorAparicao":750,"velocidade":0.65,"tamanho":64,"cor":"#9ab29b","percentuaisDeVidaParaConvocar":[0.65,0.3],"tipoDoReforco":"censorVelado","quantidadeDeReforcos":2,"avisoDaConvocacao":"O Bibliotecário convocou Censores Velados!","detalhe":"Exclusivo da Fase 15 | Aos 65% e 30% de vida, convoca dois Censores Velados"}),
+        bibliotecarioMudo: Object.freeze({"nome":"Bibliotecário Mudo","vida":4340,"incrementoVidaPorAparicao":450,"velocidade":0.65,"tamanho":64,"cor":"#9ab29b","percentuaisDeVidaParaConvocar":[0.65,0.3],"tipoDoReforco":"censorVelado","quantidadeDeReforcos":2,"avisoDaConvocacao":"O Bibliotecário convocou Censores Velados!","detalhe":"Exclusivo da Fase 15 | Aos 65% e 30% de vida, convoca dois Censores Velados"}),
         fragmentoMnesico: Object.freeze({"nome":"Fragmento Mnésico","vida":320,"velocidade":1.6,"tamanho":22,"cor":"#a7d7ec","detalhe":"Exclusivo da Fase 16 | Lembrança fragmentada que avança rapidamente"}),
         lembrancaBlindada: Object.freeze({"nome":"Lembrança Blindada","vida":1050,"velocidade":0.75,"tamanho":34,"cor":"#819cb8","reducaoDeDano":0.25,"detalhe":"Exclusiva da Fase 16 | Memória cristalizada reduz o dano em 25%"}),
         ecoDaMemoria: Object.freeze({"nome":"Eco da Memória","vida":650,"velocidade":1.25,"tamanho":28,"cor":"#bc98dd","retornoAposDerrota":true,"percentualDeVidaNoRetorno":0.35,"distanciaDoRetorno":180,"duracaoVisualDoRetorno":700,"avisoDoRetorno":"O Eco da Memória se recompôs!","detalhe":"Exclusivo da Fase 16 | Retorna uma vez com 35% da vida e recua 180 px"}),
-        devoradorDeMemorias: Object.freeze({"nome":"Devorador de Memórias","vida":6800,"incrementoVidaPorAparicao":800,"velocidade":0.6,"tamanho":66,"cor":"#9fa6da","percentuaisDeVidaParaConvocar":[0.7,0.35],"tipoDoReforco":"fragmentoMnesico","quantidadeDeReforcos":2,"raioDaRestauracao":220,"percentualDeRestauracao":0.25,"avisoDaConvocacao":"O Devorador restaurou as memórias ao redor!","detalhe":"Exclusivo da Fase 16 | Aos 70% e 35% de vida, restaura 25% da vida de aliados a 220 px e convoca dois Fragmentos"}),
+        devoradorDeMemorias: Object.freeze({"nome":"Devorador de Memórias","vida":4760,"incrementoVidaPorAparicao":480,"velocidade":0.6,"tamanho":66,"cor":"#9fa6da","percentuaisDeVidaParaConvocar":[0.7,0.35],"tipoDoReforco":"fragmentoMnesico","quantidadeDeReforcos":2,"raioDaRestauracao":220,"percentualDeRestauracao":0.25,"avisoDaConvocacao":"O Devorador restaurou as memórias ao redor!","detalhe":"Exclusivo da Fase 16 | Aos 70% e 35% de vida, restaura 25% da vida de aliados a 220 px e convoca dois Fragmentos"}),
         batedorDeInstantes: Object.freeze({"nome":"Batedor de Instantes","vida":340,"velocidade":1.7,"tamanho":23,"cor":"#70e4e0","percentualVidaParaAcelerar":0.5,"multiplicadorDeAceleracao":1.6,"detalhe":"Exclusivo da Fase 17 | Acelera 60% com metade da vida"}),
         couracadoDeAmpulheta: Object.freeze({"nome":"Couraçado de Ampulheta","vida":1100,"velocidade":0.75,"tamanho":34,"cor":"#c3a46c","reducaoDeDano":0.3,"detalhe":"Exclusivo da Fase 17 | Armadura reduz o dano em 30%"}),
         tecelaoDeSegundos: Object.freeze({"nome":"Tecelão de Segundos","vida":950,"velocidade":1,"tamanho":29,"cor":"#b08be3","percentuaisDeVidaParaConvocar":[0.5],"tipoDoReforco":"batedorDeInstantes","quantidadeDeReforcos":2,"detalhe":"Exclusivo da Fase 17 | Convoca dois Batedores com metade da vida"}),
         senhorDoTempo: CONFIG_BOSS_FINAL,
-        arconteDoLimiar: Object.freeze({"nome":"Arconte do Limiar","vida":7200,"incrementoVidaPorAparicao":850,"velocidade":0.62,"tamanho":66,"cor":"#c8ab70","percentuaisDeVidaParaConvocar":[0.7,0.35],"tipoDoReforco":"couracadoDeAmpulheta","quantidadeDeReforcos":1,"quantidadeDeTorresSeladas":2,"duracaoDoSelo":2000,"detalhe":"Exclusivo da Fase 17 | Aos 70% e 35% de vida, sela duas torres por 2s e convoca um Couraçado"}),
+        arconteDoLimiar: Object.freeze({"nome":"Arconte do Limiar","vida":5040,"incrementoVidaPorAparicao":510,"velocidade":0.62,"tamanho":66,"cor":"#c8ab70","percentuaisDeVidaParaConvocar":[0.7,0.35],"tipoDoReforco":"couracadoDeAmpulheta","quantidadeDeReforcos":1,"quantidadeDeTorresSeladas":2,"duracaoDoSelo":2000,"detalhe":"Exclusivo da Fase 17 | Aos 70% e 35% de vida, sela duas torres por 2s e convoca um Couraçado"}),
         normal: Object.freeze({ nome: "Vermelho", vida: 100, velocidade: 1.5, tamanho: 20, cor: "#d33a45" }),
         elite: Object.freeze({ nome: "Roxo", vida: 300, velocidade: 1.1, tamanho: 25, cor: "#7b2cbf" }),
         rapido: Object.freeze({ nome: "Ciano rápido", vida: 200, velocidade: 2.2, tamanho: 18, escalaVisual: 20, cor: "#00bcd4" }),
@@ -9978,6 +11502,20 @@ const CONFIG = Object.freeze({
             velocidadeTiro: 6,
             tirosParaDestruirTorre: 6
         }),
+        superSabotador: Object.freeze({
+            nome: "Super Sabotador",
+            vida: 280,
+            velocidade: 1.1,
+            tamanho: 26,
+            cor: "#dd6b69",
+            alcanceAtaque: 210,
+            intervaloAtaque: 2000,
+            velocidadeTiro: 7,
+            tirosPorAtaque: 2,
+            detalhe: "Fase 7 e mapas clássicos | Dispara dois tiros contra torres"
+        }),
+        torretaDaForja: Object.freeze({ nome: 'Torreta da Forja', vida: 6000, velocidade: 0,
+            tamanho: 23, cor: '#d8a344' }),
         escorpiao: Object.freeze({ nome: "Escorpião do deserto", vida: 160, velocidade: 1.9, tamanho: 19, cor: "#d87524" }),
         mumia: Object.freeze({ nome: "Múmia", vida: 500, velocidade: 0.85, tamanho: 28, cor: "#d8c38e" }),
         loboDeGelo: Object.freeze({ nome: "Lobo de Gelo", vida: 240, velocidade: 1.8, tamanho: 21, cor: "#79d8f2" }),
@@ -10244,40 +11782,40 @@ const CONFIG = Object.freeze({
         }),
         boss: Object.freeze({
             nome: "Boss comum",
-            vida: 1000,
-            incrementoVidaPorAparicao: 500,
-            velocidade: 1.1,
+            vida: 600,
+            incrementoVidaPorAparicao: 250,
+            velocidade: 0.9,
             tamanho: 38,
             cor: "#4a001f"
         }),
         bossDeserto: Object.freeze({
             nome: "Faraó de Areia",
-            vida: 2000,
-            incrementoVidaPorAparicao: 500,
-            velocidade: 1.3,
+            vida: 1200,
+            incrementoVidaPorAparicao: 250,
+            velocidade: 1.0,
             tamanho: 42,
             cor: "#c98c32"
         }),
         bossArtico: Object.freeze({
             nome: "Titã Glacial",
-            vida: 3000,
-            incrementoVidaPorAparicao: 500,
+            vida: 2100,
+            incrementoVidaPorAparicao: 300,
             velocidade: 0.65,
             tamanho: 46,
             cor: "#78cce5"
         }),
         bossSelva: Object.freeze({
             nome: "Colosso da Selva",
-            vida: 4000,
-            incrementoVidaPorAparicao: 500,
+            vida: 2800,
+            incrementoVidaPorAparicao: 300,
             velocidade: 0.55,
             tamanho: 50,
             cor: "#54713b"
         }),
         bossTemperado: Object.freeze({
             nome: "Urso Ancestral",
-            vida: 3500,
-            incrementoVidaPorAparicao: 500,
+            vida: 2450,
+            incrementoVidaPorAparicao: 300,
             velocidade: 0.45,
             tamanho: 54,
             cor: "#594333",
@@ -10289,7 +11827,7 @@ const CONFIG = Object.freeze({
         }),
         bossVulcanico: Object.freeze({
             nome: "Titã de Obsidiana",
-            vida: 3200,
+            vida: 2240,
             incrementoVidaPorAparicao: 0,
             velocidade: 1.05,
             tamanho: 52,
@@ -10303,19 +11841,19 @@ const CONFIG = Object.freeze({
         }),
         bossPantano: Object.freeze({
             nome: "Hidra do Pântano",
-            vida: 3800,
-            incrementoVidaPorAparicao: 500,
+            vida: 2660,
+            incrementoVidaPorAparicao: 300,
             velocidade: 0.7,
             tamanho: 58,
             cor: "#314f36",
             percentualDeVidaParaRegeneracao: 0.5,
-            vidaRegeneradaPorSegundo: 40,
+            vidaRegeneradaPorSegundo: 28,
             duracaoVisualDaAtivacao: 650
         }),
         bossPrimordial: Object.freeze({
             nome: "Tirano Primordial",
-            vida: 4800,
-            incrementoVidaPorAparicao: 600,
+            vida: 3360,
+            incrementoVidaPorAparicao: 360,
             velocidade: 0.68,
             tamanho: 62,
             cor: "#556b38",
@@ -10325,8 +11863,8 @@ const CONFIG = Object.freeze({
         }),
         protocoloZero: Object.freeze({
             nome: "Protocolo Zero",
-            vida: 5400,
-            incrementoVidaPorAparicao: 650,
+            vida: 3780,
+            incrementoVidaPorAparicao: 390,
             velocidade: 0.75,
             tamanho: 60,
             cor: "#273456",
@@ -10337,8 +11875,8 @@ const CONFIG = Object.freeze({
         }),
         prototipoAlfa: Object.freeze({
             nome: "Protótipo Alfa",
-            vida: 5900,
-            incrementoVidaPorAparicao: 700,
+            vida: 4130,
+            incrementoVidaPorAparicao: 420,
             velocidade: 0.7,
             tamanho: 62,
             cor: "#5f5649",
@@ -10349,8 +11887,8 @@ const CONFIG = Object.freeze({
         }),
         sentinelaDoAmanha: Object.freeze({
             nome: "Sentinela do Amanhã",
-            vida: 6500,
-            incrementoVidaPorAparicao: 750,
+            vida: 4550,
+            incrementoVidaPorAparicao: 450,
             velocidade: 0.7,
             tamanho: 64,
             cor: "#24334a",
@@ -10365,8 +11903,8 @@ const CONFIG = Object.freeze({
         }),
         guardiaoDoPontoZero: Object.freeze({
             nome: "Guardião do Ponto Zero",
-            vida: 3500,
-            incrementoVidaPorAparicao: 1100,
+            vida: 2450,
+            incrementoVidaPorAparicao: 660,
             velocidade: 0.65,
             tamanho: 68,
             cor: "#202a3c",
@@ -10405,8 +11943,8 @@ const CONFIG = Object.freeze({
         }),
         carcereiroDoIntervalo: Object.freeze({
             nome: "Carcereiro do Intervalo",
-            vida: 5000,
-            incrementoVidaPorAparicao: 800,
+            vida: 3500,
+            incrementoVidaPorAparicao: 480,
             velocidade: 0.72,
             tamanho: 66,
             cor: "#392250",
@@ -10417,8 +11955,8 @@ const CONFIG = Object.freeze({
         }),
         executorCronal: Object.freeze({
             nome: "Executor Cronal",
-            vida: 6200,
-            incrementoVidaPorAparicao: 650,
+            vida: 4340,
+            incrementoVidaPorAparicao: 390,
             velocidade: 0.7,
             tamanho: 68,
             cor: "#263552",
@@ -10477,8 +12015,8 @@ const CONFIG = Object.freeze({
         }),
         curadorDoVazio: Object.freeze({
             nome: "Curador do Vazio",
-            vida: 5600,
-            incrementoVidaPorAparicao: 600,
+            vida: 3920,
+            incrementoVidaPorAparicao: 360,
             velocidade: 0.62,
             tamanho: 68,
             cor: "#252631",
@@ -10490,21 +12028,21 @@ const CONFIG = Object.freeze({
         }),
         bossGlitch: Object.freeze({
             nome: "Núcleo Glitch",
-            vida: 2600,
-            incrementoVidaPorAparicao: 450,
+            vida: 1820,
+            incrementoVidaPorAparicao: 270,
             velocidade: 0.9,
             tamanho: 48,
             cor: "#28143d"
         })
     }),
-    economia: Object.freeze({ dinheiroInicial: 150 }),
+    economia: Object.freeze({ dinheiroInicial: 150, tetoDeSaldoDasPartidasComuns: 5000 }),
     torreFinal: Object.freeze({
         margemDaBorda: 20,
         raioDeContato: 18,
         largura: 64,
         altura: 78
     }),
-    melhoriasEscolhidas: Object.freeze({ limite: 5, danoPorPonto: 0.5, alcancePorPonto: 0.15, cadenciaPorPonto: 0.2, custoMinimo: 200, fracaoDoCustoDeConstrucao: 0.8, arredondamentoDoCusto: 10, multiplicadoresDeCusto: Object.freeze([0.5,1,2,5,8]) }),
+    melhoriasEscolhidas: Object.freeze({ limite: 5, danoPorPonto: 0.5, alcancePorPonto: 0.15, cadenciaPorPonto: 0.2, custoMinimo: 200, fracaoDoCustoDeConstrucao: 0.8, arredondamentoDoCusto: 10, multiplicadoresDeCusto: Object.freeze([0.5,1,2,5,8]), multiplicadorFinalDoObliterador: 7.5 }),
     desafiosFinais: Object.freeze({ waves: Object.freeze({
         8: { aviso: 'Investida veloz — prepare cadência e controle!', reforcos: { batedorDeInstantes: 8 } },
         12: { aviso: 'Coluna blindada — concentre dano nos Couraçados!', reforcos: { couracadoDeAmpulheta: 4 } },
@@ -10512,6 +12050,7 @@ const CONFIG = Object.freeze({
         19: { aviso: 'Última ofensiva — rápidos, blindados e invocadores juntos!', reforcos: { batedorDeInstantes: 10, couracadoDeAmpulheta: 3, tecelaoDeSegundos: 3 } }
     }) }),
     torre: Object.freeze({
+        afinidadesDasTorres: Object.freeze({ quantidadeDeBonus: 2, quantidadeDePenalidades: 2, multiplicadorDoBonus: 1.1, multiplicadorDaPenalidade: 0.9 }),
         recompensaPorTiro: 20,
         percentualDeVenda: 0.6,
         quantidadeMaximaDeDefesasSelecionadas: 6,
@@ -10525,6 +12064,31 @@ const CONFIG = Object.freeze({
         limitesPorFase: Object.freeze({ 1: 10, 2: 12, 3: 12, 4: 14, 5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 10: 15, 11: 15, 12: 15, 13: 15, 14: 15, 15: 15, 16: 15, 17: 15, 18: 15, 99: 12, 100: 12 }),
         distanciaMinima: 70,
         tipos: Object.freeze({
+            supremaCronarca: Object.freeze({
+                nome: 'Cronarca', suprema: true, custo: 900, dano: 65, alcance: 220, velocidadeAtaque: 700, resistenciaATiros: 10, limitePorPartida: 1,
+                poder: Object.freeze({ nome: 'Instante Zero', carga: 45000, duracao: 6000, duracaoBoss: 2500 }),
+                visualBase: Object.freeze({ tipoVisual: 'suprema', identidadeSuprema: 'tempo', corBase: '#26395f', corCanhao: '#6fe4ee', corDetalhe: '#f4e4a6', raioBase: 29 }), melhorias: Object.freeze([])
+            }),
+            supremaTempestade: Object.freeze({
+                nome: 'Tempestade', suprema: true, custo: 1100, dano: 85, alcance: 200, velocidadeAtaque: 850, resistenciaATiros: 10, limitePorPartida: 1,
+                poder: Object.freeze({ nome: 'Céu em Ruínas', carga: 55000, dano: 600, danoBoss: 1000 }),
+                visualBase: Object.freeze({ tipoVisual: 'suprema', identidadeSuprema: 'tempestade', corBase: '#44316a', corCanhao: '#c695ff', corDetalhe: '#f4e4a6', raioBase: 29 }), melhorias: Object.freeze([])
+            }),
+            supremaBastiao: Object.freeze({
+                nome: 'Bastião', suprema: true, custo: 1000, dano: 90, alcance: 185, velocidadeAtaque: 1100, resistenciaATiros: 16, limitePorPartida: 1, atraiInimigosAtiradores: true,
+                poder: Object.freeze({ nome: 'Muralha Absoluta', carga: 50000, duracao: 8000 }),
+                visualBase: Object.freeze({ tipoVisual: 'suprema', identidadeSuprema: 'bastiao', corBase: '#445046', corCanhao: '#dfb561', corDetalhe: '#fff0bb', raioBase: 30 }), melhorias: Object.freeze([])
+            }),
+            supremaPurificadora: Object.freeze({
+                nome: 'Purificadora', suprema: true, custo: 1150, dano: 75, alcance: 210, velocidadeAtaque: 800, resistenciaATiros: 12, limitePorPartida: 1,
+                poder: Object.freeze({ nome: 'Restauração', carga: 50000, tirosRestaurados: 3 }),
+                visualBase: Object.freeze({ tipoVisual: 'suprema', identidadeSuprema: 'purificadora', corBase: '#24594d', corCanhao: '#7ff1be', corDetalhe: '#e3ffd2', raioBase: 29 }), melhorias: Object.freeze([])
+            }),
+            supremaReveladora: Object.freeze({
+                nome: 'Reveladora', suprema: true, custo: 1250, dano: 70, alcance: 230, velocidadeAtaque: 720, resistenciaATiros: 10, limitePorPartida: 1,
+                poder: Object.freeze({ nome: 'Forma Exposta', carga: 55000, duracao: 7000, danoAdicional: 0.25 }),
+                visualBase: Object.freeze({ tipoVisual: 'suprema', identidadeSuprema: 'reveladora', corBase: '#42305c', corCanhao: '#d7a8fa', corDetalhe: '#f9d8ff', raioBase: 29 }), melhorias: Object.freeze([])
+            }),
             padrao: Object.freeze({
                 nome: "Torre padrão",
                 faseConcluidaParaDesbloqueio: 0,
@@ -10778,6 +12342,54 @@ const CONFIG = Object.freeze({
                     })
                 ])
             }),
+            catapulta: Object.freeze({
+                nome: "Catapulta",
+                eventoParaDesbloqueio: "idadeDaPedra",
+                custo: 550,
+                alcance: 180,
+                dano: 60,
+                velocidadeAtaque: 1800,
+                velocidadeTiro: 7,
+                raioDanoEmArea: 70,
+                duracaoExplosaoEmQuadros: 20,
+                tipoVisualDoImpacto: "catapulta",
+                visualBase: Object.freeze({ tipoVisual: "catapulta", corBase: "#715333", corCanhao: "#6d4527", corDetalhe: "#c7a46b", raioBase: 27 }),
+                melhorias: Object.freeze([
+                    Object.freeze({ custo: 600, raioDanoEmArea: 75,
+                        visual: Object.freeze({ tipoVisual: "catapulta", corBase: "#805d37", corCanhao: "#80502a", corDetalhe: "#d7b77c", raioBase: 29 }) }),
+                    Object.freeze({ custo: 750, raioDanoEmArea: 80,
+                        visual: Object.freeze({ tipoVisual: "catapulta", corBase: "#8a6539", corCanhao: "#8e582d", corDetalhe: "#e6c68a", raioBase: 31 }) }),
+                    Object.freeze({ custo: 900, raioDanoEmArea: 85,
+                        visual: Object.freeze({ tipoVisual: "catapulta", corBase: "#946b3d", corCanhao: "#9b6032", corDetalhe: "#f1d49a", raioBase: 33 }) })
+                ])
+            }),
+            torreMagnetica: Object.freeze({
+                nome: 'Torre Magnética', eventoParaDesbloqueio: 'superBossesMecanicos',
+                custo: 650, alcance: 185, dano: 38, velocidadeAtaque: 1400, limitePorPartida: 2,
+                velocidadeTiro: 8, raioDanoEmArea: 75, duracaoExplosaoEmQuadros: 18,
+                tipoVisualDoImpacto: 'magnetico', puxaoNoCaminho: 26,
+                multiplicadorDeAvancoEntrePuxoes: 2,
+                visualBase: Object.freeze({ tipoVisual: 'magnetica', corBase: '#485765', corCanhao: '#65d8ea', corDetalhe: '#f1a762', raioBase: 27 }),
+                melhorias: Object.freeze([
+                    Object.freeze({ custo: 650, visual: Object.freeze({ tipoVisual: 'magnetica', corBase: '#536776', corCanhao: '#76e4ed', corDetalhe: '#ffb66c', raioBase: 29 }) }),
+                    Object.freeze({ custo: 800, visual: Object.freeze({ tipoVisual: 'magnetica', corBase: '#637688', corCanhao: '#87eef2', corDetalhe: '#ffc67b', raioBase: 31 }) }),
+                    Object.freeze({ custo: 950, visual: Object.freeze({ tipoVisual: 'magnetica', corBase: '#75869a', corCanhao: '#a0f5fa', corDetalhe: '#ffd891', raioBase: 33 }) })
+                ])
+            }),
+            torreMetamorfa: Object.freeze({
+                nome: 'Torre Metamorfa', eventoParaDesbloqueio: 'superBossesMetamorfos',
+                custo: 750, alcance: 195, dano: 48, velocidadeAtaque: 1150,
+                velocidadeTiro: 10, duracaoExplosaoEmQuadros: 18,
+                modos: Object.freeze({ rapido: Object.freeze({ multiplicadorDano: 0.7, multiplicadorIntervalo: 0.7 }),
+                    pesado: Object.freeze({ multiplicadorDano: 1.65, multiplicadorIntervalo: 1.3 }),
+                    area: Object.freeze({ multiplicadorDano: 0.9, multiplicadorIntervalo: 1, raio: 60 }) }),
+                visualBase: Object.freeze({ tipoVisual: 'metamorfa', corBase: '#503568', corCanhao: '#b68eec', corDetalhe: '#8ff4df', raioBase: 27 }),
+                melhorias: Object.freeze([
+                    Object.freeze({ custo: 700, visual: Object.freeze({ tipoVisual: 'metamorfa', corBase: '#604078', corCanhao: '#c59ef2', corDetalhe: '#a0f7e7', raioBase: 29 }) }),
+                    Object.freeze({ custo: 850, visual: Object.freeze({ tipoVisual: 'metamorfa', corBase: '#704b89', corCanhao: '#d2acf7', corDetalhe: '#b2f9ed', raioBase: 31 }) }),
+                    Object.freeze({ custo: 1000, visual: Object.freeze({ tipoVisual: 'metamorfa', corBase: '#80579a', corCanhao: '#debaff', corDetalhe: '#c3fbf3', raioBase: 33 }) })
+                ])
+            }),
             torreEsporos: Object.freeze({
                 nome: "Torre de Esporos",
                 elemento: "toxico",
@@ -10859,7 +12471,7 @@ const CONFIG = Object.freeze({
             obliterador: Object.freeze({
                 nome: "Obliterador",
                 faseConcluidaParaDesbloqueio: 5,
-                custo: 550,
+                custo: 750,
                 alcance: 230,
                 dano: 34,
                 velocidadeAtaque: 1600,
@@ -10935,7 +12547,7 @@ const CONFIG = Object.freeze({
                 naoAtira: true,
                 limitePorPartida: 2,
                 efeitoSismico: Object.freeze({
-                    cargasNecessarias: 3,
+                    recargaEmMs: 6000,
                     distanciaDoEmpurrao: 110,
                     duracaoDoAtordoamentoDoBoss: 900,
                     percentualDeVulnerabilidade: 0,
@@ -10958,8 +12570,8 @@ const CONFIG = Object.freeze({
                         custo: 400,
                         alcance: 170,
                         efeitoSismico: Object.freeze({
-                            cargasNecessarias: 2,
-                            distanciaDoEmpurrao: 110,
+                            recargaEmMs: 5000,
+                            distanciaDoEmpurrao: 120,
                             duracaoDoAtordoamentoDoBoss: 900,
                             percentualDeVulnerabilidade: 0,
                             duracaoDaVulnerabilidade: 0,
@@ -10981,8 +12593,8 @@ const CONFIG = Object.freeze({
                         custo: 550,
                         alcance: 170,
                         efeitoSismico: Object.freeze({
-                            cargasNecessarias: 2,
-                            distanciaDoEmpurrao: 110,
+                            recargaEmMs: 4500,
+                            distanciaDoEmpurrao: 125,
                             duracaoDoAtordoamentoDoBoss: 900,
                             percentualDeVulnerabilidade: 0.15,
                             duracaoDaVulnerabilidade: 3000,
@@ -11004,8 +12616,8 @@ const CONFIG = Object.freeze({
                         custo: 750,
                         alcance: 170,
                         efeitoSismico: Object.freeze({
-                            cargasNecessarias: 2,
-                            distanciaDoEmpurrao: 110,
+                            recargaEmMs: 4000,
+                            distanciaDoEmpurrao: 130,
                             duracaoDoAtordoamentoDoBoss: 900,
                             percentualDeVulnerabilidade: 0.15,
                             duracaoDaVulnerabilidade: 3000,
@@ -11121,6 +12733,8 @@ const CONFIG = Object.freeze({
                 categoriaLoja: "torres",
                 custoNaLoja: 30,
                 custo: 200,
+                custoEmprestimo: 300,
+                faseDeEmprestimo: 1,
                 alcance: 0,
                 dano: 0,
                 velocidadeAtaque: 0,
@@ -11136,6 +12750,24 @@ const CONFIG = Object.freeze({
                     raioBase: 27
                 }),
                 melhorias: Object.freeze([])
+            }),
+            boiaArpoes:Object.freeze({nome:'Boia de Arpões',faseConcluidaParaDesbloqueio:0,requerCompraNaLoja:true,categoriaLoja:'torres',aquatica:true,
+                custoNaLoja:25,custo:175,alcance:180,dano:15,velocidadeAtaque:850,
+                visualBase:criarVisualDaTorreAquatica(0,false),melhorias:Object.freeze([1,2,3].map(n=>Object.freeze({custo:200,visual:criarVisualDaTorreAquatica(n,false)})))}),
+            torreTorpedos:Object.freeze({nome:'Torre de Torpedos',faseConcluidaParaDesbloqueio:0,requerCompraNaLoja:true,categoriaLoja:'torres',aquatica:true,
+                custoNaLoja:45,custo:275,alcance:220,dano:35,velocidadeAtaque:1600,projetilDeCanhao:true,
+                visualBase:criarVisualDaTorreAquatica(0,true),melhorias:Object.freeze([1,2,3].map(n=>Object.freeze({custo:220,visual:criarVisualDaTorreAquatica(n,true)})))}),
+            torreDeBolhas:Object.freeze({nome:'Torre de Bolhas',faseConcluidaParaDesbloqueio:0,requerCompraNaLoja:true,categoriaLoja:'torres',aquatica:true,
+                custoNaLoja:60,custo:350,alcance:185,dano:13,velocidadeAtaque:780,limitePorPartida:2,
+                efeitoDeBolhas:Object.freeze({acertosParaEstourar:3,danoEstouro:52,raioEstouro:70,duracaoMs:5000}),
+                visualBase:criarVisualDaTorreDeBolhas(0),melhorias:Object.freeze([1,2,3].map(n=>Object.freeze({custo:260,visual:criarVisualDaTorreDeBolhas(n)})))}),
+            canhaoBlindado: Object.freeze({
+                nome:"Canhão Blindado",faseConcluidaParaDesbloqueio:0,requerCompraNaLoja:true,categoriaLoja:"torres",
+                custoNaLoja:75,custo:350,alcance:170,dano:40,velocidadeAtaque:1400,
+                atraiInimigosAtiradores:true,resistenciaATiros:14,limitePorPartida:2,
+                tiposDeAlvo:Object.freeze(['sabotador', 'superSabotador']),projetilDeCanhao:true,
+                visualBase:criarVisualDoCanhaoBlindado(0),
+                melhorias:Object.freeze([1,2,3].map(nivel=>Object.freeze({custo:200,visual:criarVisualDoCanhaoBlindado(nivel)})))
             }),
             amplificadorPixel: Object.freeze({
                 nome: "Amplificador Pixel",
@@ -11542,7 +13174,7 @@ const CONFIG = Object.freeze({
                 requerCompraNaLoja: true,
                 categoriaLoja: "torres",
                 custoNaLoja: 125,
-                custo: 700,
+                custo: 600,
                 alcance: 220,
                 dano: 44,
                 velocidadeAtaque: 1150,
@@ -11560,7 +13192,7 @@ const CONFIG = Object.freeze({
                 }),
                 melhorias: Object.freeze([
                     Object.freeze({
-                        custo: 650, dano: 56, alcance: 230, velocidadeAtaque: 1070,
+                        custo: 500, dano: 56, alcance: 230, velocidadeAtaque: 1070,
                         efeitoPrismatico: Object.freeze({ multiplicadorVermelho: 1.5, multiplicadorAzul: 0.82, percentualLentidaoAzul: 0.32, duracaoLentidaoAzul: 2000 }),
                         visual: Object.freeze({
                             tipoVisual: "prismatico", corBase: "#39436a",
@@ -11569,7 +13201,7 @@ const CONFIG = Object.freeze({
                         })
                     }),
                     Object.freeze({
-                        custo: 850, dano: 72, alcance: 245, velocidadeAtaque: 980,
+                        custo: 650, dano: 72, alcance: 245, velocidadeAtaque: 980,
                         efeitoPrismatico: Object.freeze({ multiplicadorVermelho: 1.55, multiplicadorAzul: 0.85, percentualLentidaoAzul: 0.35, duracaoLentidaoAzul: 2200 }),
                         visual: Object.freeze({
                             tipoVisual: "prismatico", corBase: "#454f79",
@@ -11578,7 +13210,7 @@ const CONFIG = Object.freeze({
                         })
                     }),
                     Object.freeze({
-                        custo: 1100, dano: 94, alcance: 265, velocidadeAtaque: 860,
+                        custo: 850, dano: 94, alcance: 265, velocidadeAtaque: 860,
                         efeitoPrismatico: Object.freeze({ multiplicadorVermelho: 1.65, multiplicadorAzul: 0.9, percentualLentidaoAzul: 0.4, duracaoLentidaoAzul: 2500 }),
                         visual: Object.freeze({
                             tipoVisual: "prismatico", corBase: "#252d4b",
@@ -12541,10 +14173,18 @@ function normalizarDadosDoSalvo(valor) {
         return {};
     }
 
-    return Object.fromEntries(Object.entries(valor).filter(
+    const dados = Object.fromEntries(Object.entries(valor).filter(
         ([chave, dado]) => chavePertenceAoProgressoDoSalvo(chave)
             && typeof dado === "string"
     ));
+    // Migração do interlúdio removido: não altera nenhum outro progresso.
+    delete dados['guardians-of-pixel-vila-relogios-v1'];
+    const chaveColecao='guardians-of-pixel-enciclopedia-v1';
+    try {
+        const registros=JSON.parse(dados[chaveColecao]);
+        if(Array.isArray(registros))dados[chaveColecao]=JSON.stringify(registros.filter(id=>typeof id!=='string'||!id.startsWith('vila-')));
+    } catch {}
+    return dados;
 }
 
 function capturarDadosDoSalvoAtivo() {
@@ -12568,13 +14208,14 @@ function capturarDadosDoSalvoAtivo() {
     return dados;
 }
 
-function criarRegistroDeSalvo(dados, registroAnterior = null) {
+function criarRegistroDeSalvo(dados, registroAnterior = null, preferenciasApresentadas = registroAnterior?.preferenciasApresentadas !== false) {
     const agora = Date.now();
     return {
         criadoEm: Number.isFinite(registroAnterior?.criadoEm)
             ? registroAnterior.criadoEm
             : agora,
         atualizadoEm: agora,
+        preferenciasApresentadas,
         dados: normalizarDadosDoSalvo(dados)
     };
 }
@@ -12587,6 +14228,7 @@ function normalizarRegistroDeSalvo(valor) {
     return {
         criadoEm: Number.isFinite(valor.criadoEm) ? Math.max(0, valor.criadoEm) : 0,
         atualizadoEm: Number.isFinite(valor.atualizadoEm) ? Math.max(0, valor.atualizadoEm) : 0,
+        preferenciasApresentadas: valor.preferenciasApresentadas !== false,
         dados: normalizarDadosDoSalvo(valor.dados)
     };
 }
@@ -12642,6 +14284,12 @@ function criarSistemaDeSalvosInicial() {
 }
 
 function inicializarSistemaDeSalvos() {
+    try {
+        const limpos=normalizarDadosDoSalvo(capturarDadosDoSalvoAtivo());
+        localStorage.removeItem('guardians-of-pixel-vila-relogios-v1');
+        const chaveColecao='guardians-of-pixel-enciclopedia-v1';
+        if(limpos[chaveColecao]!==undefined)localStorage.setItem(chaveColecao,limpos[chaveColecao]);
+    } catch {}
     const sistemaExistente = carregarSistemaDeSalvos();
     if (!sistemaExistente) {
         const sistemaInicial = criarSistemaDeSalvosInicial();
@@ -12713,7 +14361,7 @@ function trocarSalvoAtivo(numeroDoSalvo) {
     const sistemaComSalvoAtual = { ...sistemaDeSalvos, espacos: espacosAtuais };
     const espacosNovos = [...espacosAtuais];
     espacosNovos[indiceNovo] = espacosNovos[indiceNovo]
-        || criarRegistroDeSalvo({});
+        || criarRegistroDeSalvo({}, null, false);
     const sistemaNovo = {
         ...sistemaComSalvoAtual,
         indiceAtivo: indiceNovo,
@@ -12812,12 +14460,14 @@ let avisosDeCreditosGerados = [];
 let tiros = [];
 let tirosDosInimigos = [];
 let dinheiro = CONFIG.economia.dinheiroInicial;
+let creditosDeCombateRecebidosNaWave = 0;
 let wave = 0;
 let inimigosParaCriar = 0;
 let inimigosRoxosParaCriar = 0;
 let inimigosVermelhosParaCriar = 0;
 let inimigosRapidosParaCriar = 0;
 let inimigosSabotadoresParaCriar = 0;
+let inimigosSuperSabotadoresParaCriar = 0;
 let inimigosEscorpioesParaCriar = 0;
 let inimigosMumiasParaCriar = 0;
 let inimigosLobosDeGeloParaCriar = 0;
@@ -12877,6 +14527,7 @@ let partidaVencida = false;
 let jogoPausado = false;
 let pausaIniciadaEm = 0;
 let instanteDoUltimoQuadro = 0;
+let quadroDaPartidaAgendado = 0;
 let paginaOcultadaEm = 0;
 let pausaAutomaticaPorOcultacao = false;
 let jogadorJaEntrouAntes = carregarRegistroDeEntradaAnterior();
@@ -12885,12 +14536,20 @@ let tutorialConcluido = carregarTutorialConcluido();
 let tutorialAtivo = false;
 let passoTutorial = 0;
 let tutorialSolicitado = false;
+let explicacaoFliperamaPendente = false;
+let explicacaoFliperamaAtiva = false;
 let progressoMissoesPermanentes = carregarProgressoMissoesPermanentes();
+let premioFinalLegado = carregarPremioFinalLegado();
+salvarPremioFinalLegado();
+let estatisticasDosObjetivos = carregarEstatisticasDosObjetivos();
+salvarEstatisticasDosObjetivos();
+let contadorDeMissoes = carregarContadorDeMissoes();
 let categoriaDeMissoesSelecionada = "";
 let categoriaDeConquistasSelecionada = "comuns";
 let recompensasPermanentesDasMissoes = carregarRecompensasPermanentesDasMissoes();
 let pacoteApoiador = carregarPacoteApoiador();
 let estatisticasDasConquistas = carregarEstatisticasDasConquistas();
+salvarEstatisticasDasConquistas();
 let maiorFaseConcluida = carregarMaiorFaseConcluida();
 let faseSecretaDescoberta = carregarFaseSecretaDescoberta();
 let capitulo2Desbloqueado = carregarDesbloqueioDoCapitulo2();
@@ -12968,10 +14627,16 @@ let mapasImportadosNoEditor = carregarMapasDoEditor(
 );
 let avaliacoesDosMapasImportados = carregarAvaliacoesDoEditor();
 let abaDoEditorSelecionada = "meus";
+let abaDaComunidadeSelecionada = "local";
 let rascunhoDoMapaNoEditor = null;
 let idDoMapaAguardandoExclusao = null;
 let compartilhamentoDoEditor = null;
 let mensagemDoEditor = "";
+let enderecoDaComunidadeLocal = localStorage.getItem(CHAVE_SERVIDOR_COMUNIDADE_LOCAL) || "";
+let mapasDaComunidadeLocal = [];
+let comunidadeLocalFoiConsultada = false;
+let estadoDaComunidadeLocal = "desconectada";
+let estadoModeracaoDoEditor = carregarEstadoModeracaoDoEditor();
 let historicoDoCentroDeTreinamento = carregarHistoricoDoCentroDeTreinamento();
 let desafioDeTreinamentoAtivo = null;
 let temporizadorDoCentroDeTreinamento = null;
@@ -12983,8 +14648,11 @@ let inimigosDerrotadosNoAlbum = carregarInimigosDerrotadosNoAlbum();
 let categoriaDaLojaSelecionada = "torres";
 let categoriaDoAlbumSelecionada = "torres";
 let elementoDeOrigemDosDetalhesDoAlbum = null;
+let animacaoDoInimigoNoAlbum = null;
 let telaDoMenuAberta = null;
 const TELAS_DO_LOBBY_EM_TELA_CHEIA = new Set([
+    "supremas",
+    "enciclopedia",
     "album",
     "capitulos",
     "fases",
@@ -13010,6 +14678,7 @@ let checkoutDoApoiadorFalhou = false;
 let sincronizacaoDoApoiadorEmAndamento = false;
 let sincronizacaoDoApoiadorTentada = CONFIG.pacoteApoiador.modoDemonstracao;
 let faseSelecionada = 1;
+let afinidadesDasTorres = null;
 let capituloSelecionado = 1;
 let novaFaseDesbloqueada = false;
 let fragmentosRecebidosNoResultado = 0;
@@ -13053,6 +14722,7 @@ let boostFliperamaAtivo = false;
 let boostFliperamaExpiraEm = 0;
 let boostDanoFliperamaAtivo = false;
 let boostDanoFliperamaExpiraEm = 0;
+let boostInimigosFliperamaExpiraEm = 0;
 let proximaWaveDoPulsoTemporal = 1;
 let pulsoTemporalNormalExpiraEm = 0;
 let pulsoTemporalBossExpiraEm = 0;
@@ -13084,8 +14754,7 @@ atualizarPulsoTemporalNoControle();
 atualizarSaldoDeFragmentos();
 atualizarResumoDoNivelNoMenu();
 atualizarResumoDasMissoesNoMenu();
-revalidarConquistaMestreDoArsenal();
-revalidarConquistaMestreDoFliperama();
+// Conquistas já obtidas permanecem mesmo ao recomeçar a campanha.
 verificarConquistasAutomaticas();
 atualizarResumoDasConquistasNoMenu();
 atualizarIdentidadeDoApoiador();
@@ -13433,6 +15102,7 @@ function carregarSelecaoDeDefesas() {
 }
 
 function salvarSelecaoDeDefesas() {
+    if (desafioSupremoAtivo) return;
     try {
         localStorage.setItem(
             CHAVE_SELECAO_DE_DEFESAS,
@@ -13447,12 +15117,24 @@ function obterTiposDeDefesa() {
     return Object.keys(CONFIG.torre.tipos);
 }
 
+function obterLimiteDaSelecaoDeDefesas() {
+    return CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas
+        + obterBonusPermanenteDaLoja("bonusLimiteDeTorres");
+}
+
+function obterLimiteDeDefesasComuns() {
+    return obterLimiteDaSelecaoDeDefesas()
+        - (desafioSupremoAtivo || !carregarSupremas().equipada ? 0 : 1);
+}
+
 function normalizarSelecaoDeDefesas(selecao, preencherSeVazia = true) {
-    const limite = CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas;
+    if (desafioSupremoAtivo) return new Set(CONFIG.supremas.equipeDoDesafio);
+    const limite = obterLimiteDeDefesasComuns();
     const tiposValidos = new Set(obterTiposDeDefesa());
     const tiposSelecionados = [...(selecao || [])]
         .filter((tipo, indice, lista) => (
             tiposValidos.has(tipo)
+            && !CONFIG.torre.tipos[tipo].suprema
             && lista.indexOf(tipo) === indice
             && torreEstaDesbloqueada(tipo)
         ))
@@ -13461,6 +15143,7 @@ function normalizarSelecaoDeDefesas(selecao, preencherSeVazia = true) {
     if (tiposSelecionados.length === 0 && preencherSeVazia) {
         return new Set(
             obterTiposDeDefesa()
+                .filter(tipo => !CONFIG.torre.tipos[tipo].suprema)
                 .filter(torreEstaDesbloqueada)
                 .slice(0, limite)
         );
@@ -13483,7 +15166,7 @@ function incluirTorreDeVarreduraNaSelecao(selecao) {
         return new Set(tipos);
     }
 
-    if (tipos.length >= CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas) {
+    while (tipos.length >= obterLimiteDeDefesasComuns()) {
         tipos.pop();
     }
 
@@ -13501,7 +15184,7 @@ function prepararSelecaoDeDefesasParaPartida(tutorialDeveIniciar = false) {
             "padrao",
             ...[...defesasSelecionadasParaPartida].slice(
                 0,
-                CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas - 1
+                obterLimiteDeDefesasComuns() - 1
             )
         ]);
     }
@@ -13515,11 +15198,39 @@ function prepararSelecaoDeDefesasParaPartida(tutorialDeveIniciar = false) {
     salvarSelecaoDeDefesas();
 }
 
+function obterTorresDaIdadeDaPedra() {
+    return torreEstaDesbloqueada('catapulta')
+        ? [...CONFIG.eventos.torresDaIdadeDaPedra, 'catapulta']
+        : CONFIG.eventos.torresDaIdadeDaPedra;
+}
+
 function defesaEstaSelecionadaParaPartida(tipoDaDefesa) {
-    return defesasSelecionadasParaPartida.has(tipoDaDefesa);
+    if (mapaPersonalizadoAtivo?.evento === 'idadeDaPedra') {
+        return obterTorresDaIdadeDaPedra().includes(tipoDaDefesa);
+    }
+    if (CONFIG.torre.tipos[tipoDaDefesa]?.suprema) return tipoDaDefesa === supremaDaPartida;
+    return defesaEstaEmprestadaNaPartida(tipoDaDefesa) || defesasSelecionadasParaPartida.has(tipoDaDefesa);
+}
+
+function defesaEstaEmprestadaNaPartida(tipo) {
+    return jogoIniciado && !modoWavesInfinitas && !mapaPersonalizadoAtivo
+        && !faseAtualEhAlgumaFaseSecreta()
+        && obterConfiguracaoDaTorre(tipo).faseDeEmprestimo === faseSelecionada
+        && !torreEstaDesbloqueada(tipo);
+}
+
+function defesaEstaDisponivelNaPartida(tipo) {
+    if (mapaPersonalizadoAtivo?.evento === 'idadeDaPedra') {
+        return obterTorresDaIdadeDaPedra().includes(tipo);
+    }
+    if (CONFIG.torre.tipos[tipo]?.suprema) return tipo === supremaDaPartida && torreEstaDesbloqueada(tipo) && !desafioSupremoAtivo;
+    return torreEstaDesbloqueada(tipo) || defesaEstaEmprestadaNaPartida(tipo);
 }
 
 function obterPrimeiraDefesaDisponivelParaPartida() {
+    if (mapaPersonalizadoAtivo?.evento === 'idadeDaPedra') {
+        return obterTorresDaIdadeDaPedra()[0];
+    }
     return [...defesasSelecionadasParaPartida]
         .find(tipo => torreEstaDesbloqueada(tipo)) || "padrao";
 }
@@ -13533,19 +15244,29 @@ function obterIdentificadorDaSemana(data = new Date()) {
     return `${ano}-S${String(numero).padStart(2, '0')}`;
 }
 
+function formatarProximaRenovacaoSemanal(data = new Date()) {
+    const proximaSegunda = new Date(data);
+    proximaSegunda.setDate(proximaSegunda.getDate() + 8 - (proximaSegunda.getDay() || 7));
+    proximaSegunda.setHours(0, 0, 0, 0);
+    return proximaSegunda.toLocaleDateString(idiomaAtual, { day: '2-digit', month: '2-digit' });
+}
+
 function criarProgressoPermanenteVazio() {
     return {versao:1,inimigosEliminados:0,fasesConcluidas:0,maiorWaveInfinita:0,
-        colecoes:{},vitoriasPorFase:{},recompensasResgatadas:[],recompensasConcedidas:{}};
+        premioFinalDesbloqueado:false,colecoes:{},vitoriasPorFase:{},recompensasResgatadas:[],recompensasConcedidas:{}};
 }
 function normalizarProgressoDasMissoesPermanentes(valor) {
     const p=criarProgressoPermanenteVazio();
     if(!valor || typeof valor!=='object')return p;
     p.premioFinalResgatado = valor.premioFinalResgatado === true;
-    for(const m of CONFIG.missoes.permanentes) {
-        const n=valor[m.propriedadeDoProgresso];
-        if(Number.isSafeInteger(n)&&n>=0)p[m.propriedadeDoProgresso]=n;
+    for(const propriedade of Object.keys(CONFIG.missoes.criteriosDoPremioFinalLegado)) {
+        const n=valor[propriedade];
+        if(Number.isSafeInteger(n)&&n>=0)p[propriedade]=n;
     }
-    const ids=new Set(CONFIG.missoes.permanentes.map(m=>m.id));
+    p.premioFinalDesbloqueado = valor.premioFinalDesbloqueado === true
+        || p.premioFinalResgatado
+        || objetivosDoPremioFinalLegadoConcluidos(p);
+    const ids=new Set(obterCatalogoHistoricoDasMissoes().map(m=>m.id));
     p.recompensasResgatadas=Array.isArray(valor.recompensasResgatadas)?[...new Set(valor.recompensasResgatadas.filter(id=>ids.has(id)))]:[];
     for(const [id,rotulo] of Object.entries(valor.recompensasConcedidas||{}))if(ids.has(id)&&typeof rotulo==='string')p.recompensasConcedidas[id]=rotulo;
     for(const grupo of ['bosses','fases','mapasInfinitos']) {
@@ -13560,19 +15281,127 @@ function carregarProgressoMissoesPermanentes() {
         const salvo=localStorage.getItem(CHAVE_MISSOES_PERMANENTES);
         if(salvo)return normalizarProgressoDasMissoesPermanentes(JSON.parse(salvo));
         const antigo=JSON.parse(localStorage.getItem(CHAVE_MISSOES_SEMANAIS)||'null');
+        if (!antigo) return criarProgressoPermanenteVazio();
         const p=normalizarProgressoDasMissoesPermanentes(antigo);
         // O recorde antigo contava a wave iniciada, não a concluída.
         p.maiorWaveInfinita=Math.max(0,p.maiorWaveInfinita-1);
         const mapa={cacadorDePixels:'permanente11',guardiaoDaCampanha:'permanente61',alemDoLimite:'permanente83'};
         for(const id of antigo?.recompensasResgatadas||[])if(mapa[id]) {
             p.recompensasResgatadas.push(mapa[id]);
-            const m=CONFIG.missoes.permanentes.find(m=>m.id===mapa[id]);
+            const m=obterCatalogoHistoricoDasMissoes().find(m=>m.id===mapa[id]);
             p[m.propriedadeDoProgresso]=Math.max(p[m.propriedadeDoProgresso]||0,m.objetivo);
             p.recompensasConcedidas[m.id]=antigo.recompensasConcedidas?.[id]||m.recompensa.rotulo;
         }
         localStorage.setItem(CHAVE_MISSOES_PERMANENTES,JSON.stringify(p));
         return p;
     } catch {return criarProgressoPermanenteVazio();}
+}
+function carregarPremioFinalLegado() {
+    let salvo = null;
+    try { salvo = JSON.parse(localStorage.getItem(CHAVE_PREMIO_FINAL_LEGADO) || "null"); } catch {}
+    const resgatado = salvo?.resgatado === true || progressoMissoesPermanentes.premioFinalResgatado === true;
+    const desbloqueado = resgatado || salvo?.desbloqueado === true
+        || progressoMissoesPermanentes.premioFinalDesbloqueado === true
+        || objetivosDoPremioFinalLegadoConcluidos(progressoMissoesPermanentes);
+    progressoMissoesPermanentes.premioFinalDesbloqueado = desbloqueado;
+    progressoMissoesPermanentes.premioFinalResgatado = resgatado;
+    return { versao: 1, desbloqueado, resgatado };
+}
+function salvarPremioFinalLegado() {
+    try {
+        localStorage.setItem(CHAVE_PREMIO_FINAL_LEGADO, JSON.stringify(premioFinalLegado));
+        return true;
+    } catch { return false; }
+}
+function carregarEstatisticasDosObjetivos() {
+    let salvo = null;
+    try { salvo = JSON.parse(localStorage.getItem(CHAVE_ESTATISTICAS_DOS_OBJETIVOS) || "null"); } catch {}
+    const fontes = [progressoMissoesPermanentes, salvo].filter(valor => valor && typeof valor === "object");
+    const colecoes = {};
+    for (const grupo of ["bosses", "fases", "mapasInfinitos"]) {
+        const valores = fontes.flatMap(fonte => Array.isArray(fonte.colecoes?.[grupo]) ? fonte.colecoes[grupo] : []);
+        colecoes[grupo] = [...new Set(valores.filter(valor => grupo === "bosses"
+            ? typeof valor === "string" && tipoEhBoss(valor)
+            : Number.isInteger(valor) && valor >= 1 && valor <= 100))];
+    }
+    const vitoriasPorFase = {};
+    for (const fonte of fontes) {
+        for (const [fase, quantidade] of Object.entries(fonte.vitoriasPorFase || {})) {
+            if (/^\d+$/.test(fase) && Number.isSafeInteger(quantidade) && quantidade >= 0) {
+                vitoriasPorFase[fase] = Math.max(vitoriasPorFase[fase] || 0, quantidade);
+            }
+        }
+    }
+    return { versao: 1, colecoes, vitoriasPorFase };
+}
+function salvarEstatisticasDosObjetivos() {
+    try {
+        localStorage.setItem(CHAVE_ESTATISTICAS_DOS_OBJETIVOS, JSON.stringify(estatisticasDosObjetivos));
+        return true;
+    } catch { return false; }
+}
+function carregarContadorDeMissoes() {
+    let salvo = null;
+    let permanentesAntigas = null;
+    try { salvo = JSON.parse(localStorage.getItem(CHAVE_CONTADOR_DE_MISSOES) || "null"); } catch {}
+    try { permanentesAntigas = JSON.parse(localStorage.getItem(CHAVE_MISSOES_PERMANENTES) || "null"); } catch {}
+    const idPermanenteValido = id => /^permanente(?:100|[1-9]\d?)$/.test(id);
+    const resgatesValidos = Array.isArray(salvo?.resgates) ? salvo.resgates.filter(chave =>
+        typeof chave === "string" && chave.length < 160 && (
+            /^diaria:\d{4}-\d{2}-\d{2}:diaria-[\w-]+$/.test(chave)
+            || /^semanal:\d{4}-S\d{2}:semanal-\d+$/.test(chave)
+            || (chave.startsWith("permanente:") && idPermanenteValido(chave.slice(11)))
+        )) : [];
+    for (const id of Array.isArray(permanentesAntigas?.recompensasResgatadas) ? permanentesAntigas.recompensasResgatadas : []) {
+        if (typeof id === "string" && idPermanenteValido(id)) resgatesValidos.push(`permanente:${id}`);
+    }
+    return { versao: 1, resgates: [...new Set(resgatesValidos)] };
+}
+function adicionarResgateAoContador(tipo, periodo, id) {
+    const chave = tipo === "permanente" ? `permanente:${id}` : `${tipo}:${periodo}:${id}`;
+    if (contadorDeMissoes.resgates.includes(chave)) return false;
+    contadorDeMissoes.resgates.push(chave);
+    return true;
+}
+function obterTotalDeMissoesResgatadas() {
+    return contadorDeMissoes.resgates.length;
+}
+function atualizarPainelDoContadorDeMissoes() {
+    const painel = document.getElementById("contador-missoes");
+    if (!painel) return;
+    const total = obterTotalDeMissoesResgatadas();
+    const objetivo = CONFIG.conquistas.lendaDasCemMissoes.objetivo;
+    painel.querySelector("span").textContent = traduzir("missoes.contadorTotal", { total, objetivo });
+    painel.querySelector("progress").value = Math.min(total, objetivo);
+}
+function reconciliarContadorComMissoesAtuais() {
+    const anterior = JSON.stringify(contadorDeMissoes);
+    let valorSalvoAnterior = null;
+    try { valorSalvoAnterior = localStorage.getItem(CHAVE_CONTADOR_DE_MISSOES); } catch {}
+    const semana = progressoDosDesafiosSemanais?.semana;
+    const dia = progressoDosDesafiosDiarios?.dia;
+    if (semana === obterSemanaDoDesafio()) {
+        for (const id of progressoDosDesafiosSemanais.resgatados) adicionarResgateAoContador("semanal", semana, id);
+    }
+    if (dia === diaDosDesafiosDiarios()) {
+        for (const id of progressoDosDesafiosDiarios.resgatados) adicionarResgateAoContador("diaria", dia, id);
+    }
+    if (JSON.stringify(contadorDeMissoes) !== anterior || valorSalvoAnterior === null) {
+        try {
+            localStorage.setItem(CHAVE_CONTADOR_DE_MISSOES, JSON.stringify(contadorDeMissoes));
+            if (!atualizarSalvoAtivo()) throw Error("salvo");
+        } catch {
+            contadorDeMissoes = JSON.parse(anterior);
+            try {
+                if (valorSalvoAnterior === null) localStorage.removeItem(CHAVE_CONTADOR_DE_MISSOES);
+                else localStorage.setItem(CHAVE_CONTADOR_DE_MISSOES, valorSalvoAnterior);
+            } catch {}
+            return false;
+        }
+    }
+    verificarConquistasAutomaticas();
+    atualizarResumoDasConquistasNoMenu();
+    return true;
 }
 function salvarProgressoMissoesPermanentes() {
     try {localStorage.setItem(CHAVE_MISSOES_PERMANENTES,JSON.stringify(progressoMissoesPermanentes));} catch {}
@@ -13581,7 +15410,8 @@ function carregarRecompensasPermanentesDasMissoes() {
     const recompensasVazias = {
         skinsDesbloqueadas: [],
         conquistasDesbloqueadas: [],
-        skinTorrePadraoEquipada: null
+        skinTorrePadraoEquipada: null,
+        skinsDeTorresEquipadas: {}
     };
 
     try {
@@ -13589,7 +15419,8 @@ function carregarRecompensasPermanentesDasMissoes() {
             localStorage.getItem(CHAVE_RECOMPENSAS_MISSOES) || "null"
         );
 
-        if (!valorSalvo) {
+        const vitorias = JSON.parse(localStorage.getItem(CHAVE_VITORIAS_DOS_EVENTOS) || '{}');
+        if (!valorSalvo && !Object.values(vitorias).some(valor => Number.isSafeInteger(valor) && valor > 0)) {
             return recompensasVazias;
         }
 
@@ -13598,20 +15429,32 @@ function carregarRecompensasPermanentesDasMissoes() {
             ...Object.keys(CONFIG.progressaoDeNivel.skins)
         ]);
         const conquistasValidas = new Set(Object.keys(CONFIG.conquistas));
-        const skinsDesbloqueadas = Array.isArray(valorSalvo.skinsDesbloqueadas)
+        const skinsDesbloqueadas = Array.isArray(valorSalvo?.skinsDesbloqueadas)
             ? [...new Set(valorSalvo.skinsDesbloqueadas.filter(id => skinsValidas.has(id)))]
             : [];
-        const conquistasDesbloqueadas = Array.isArray(valorSalvo.conquistasDesbloqueadas)
+        for (const [evento, skin] of [['superBossesAbissais', 'coralAbissal'], ['superBossesAcidos', 'corrosaoViva']]) {
+            if (Number.isSafeInteger(vitorias[evento]) && vitorias[evento] > 0) skinsDesbloqueadas.push(skin);
+        }
+        const skinsUnicas = [...new Set(skinsDesbloqueadas)];
+        const conquistasDesbloqueadas = Array.isArray(valorSalvo?.conquistasDesbloqueadas)
             ? [...new Set(valorSalvo.conquistasDesbloqueadas.filter(id => conquistasValidas.has(id)))]
             : [];
-        const skinEquipada = skinsDesbloqueadas.includes(valorSalvo.skinTorrePadraoEquipada)
+        const skinEquipada = skinsUnicas.includes(valorSalvo?.skinTorrePadraoEquipada)
             ? valorSalvo.skinTorrePadraoEquipada
             : null;
+        const skinsDeTorresEquipadas = {};
+        for (const tipo of ['torreTorpedos', 'torreEsporos']) {
+            const id = valorSalvo?.skinsDeTorresEquipadas?.[tipo];
+            if (skinsUnicas.includes(id) && CONFIG.missoes.skins[id]?.tipoDeTorre === tipo) {
+                skinsDeTorresEquipadas[tipo] = id;
+            }
+        }
 
         return {
-            skinsDesbloqueadas,
+            skinsDesbloqueadas: skinsUnicas,
             conquistasDesbloqueadas,
-            skinTorrePadraoEquipada: skinEquipada
+            skinTorrePadraoEquipada: skinEquipada,
+            skinsDeTorresEquipadas
         };
     } catch (erro) {
         return recompensasVazias;
@@ -13675,8 +15518,15 @@ function carregarPreferenciaLocalDaSkinDoApoiador() {
 function carregarEstatisticasDasConquistas() {
     const estatisticasVazias = {
         inimigosEliminados: progressoMissoesPermanentes.inimigosEliminados || 0,
+        torresConstruidas: progressoMissoesPermanentes.torresConstruidas || 0,
+        melhorias: progressoMissoesPermanentes.melhorias || 0,
+        bosses: progressoMissoesPermanentes.bosses || 0,
         fasesConcluidas: progressoMissoesPermanentes.fasesConcluidas || 0,
         maiorWaveInfinita: progressoMissoesPermanentes.maiorWaveInfinita || 0,
+        maiorWaveInfinitaConcluida: Math.max(
+            progressoMissoesPermanentes.maiorWaveInfinita || 0,
+            recompensasPermanentesDasMissoes.conquistasDesbloqueadas.includes("alemDoLimite") ? 40 : 0
+        ),
         minigamesFliperamaConcluidos: []
     };
 
@@ -13708,6 +15558,9 @@ function carregarEstatisticasDasConquistas() {
                 estatisticasVazias.inimigosEliminados,
                 normalizarContador(valorSalvo.inimigosEliminados)
             ),
+            torresConstruidas: Math.max(estatisticasVazias.torresConstruidas, normalizarContador(valorSalvo.torresConstruidas)),
+            melhorias: Math.max(estatisticasVazias.melhorias, normalizarContador(valorSalvo.melhorias)),
+            bosses: Math.max(estatisticasVazias.bosses, normalizarContador(valorSalvo.bosses)),
             fasesConcluidas: Math.max(
                 estatisticasVazias.fasesConcluidas,
                 normalizarContador(valorSalvo.fasesConcluidas)
@@ -13715,6 +15568,10 @@ function carregarEstatisticasDasConquistas() {
             maiorWaveInfinita: Math.max(
                 estatisticasVazias.maiorWaveInfinita,
                 normalizarContador(valorSalvo.maiorWaveInfinita)
+            ),
+            maiorWaveInfinitaConcluida: Math.max(
+                estatisticasVazias.maiorWaveInfinitaConcluida,
+                normalizarContador(valorSalvo.maiorWaveInfinitaConcluida)
             ),
             minigamesFliperamaConcluidos
         };
@@ -13925,7 +15782,10 @@ function importarExperienciaDoHistorico() {
 function concederRecompensaDeNivel(recompensa) {
     let jaPossuia = false;
 
-    if (recompensa.tipo === "skin") {
+    if (recompensa.tipo === "fragmentos") {
+        fragmentosPixel += recompensa.quantidade;
+        salvarFragmentosPixel();
+    } else if (recompensa.tipo === "skin") {
         jaPossuia = recompensasPermanentesDasMissoes.skinsDesbloqueadas
             .includes(recompensa.idDoItem);
 
@@ -13942,7 +15802,9 @@ function concederRecompensaDeNivel(recompensa) {
         }
     }
 
-    let nomeConcedido = obterNomeLocalizado(recompensa);
+    let nomeConcedido = recompensa.tipo === "fragmentos"
+        ? localizar("{quantidade} Fragmentos de Pixel", {quantidade: recompensa.quantidade})
+        : obterNomeLocalizado(recompensa);
 
     if (jaPossuia && recompensa.fragmentosAlternativos > 0) {
         fragmentosPixel += recompensa.fragmentosAlternativos;
@@ -14014,6 +15876,8 @@ function registrarExperiencia(quantidade) {
     const recompensasConcedidas = concederRecompensasDoNivelAtual();
     const nivelAtual = obterDadosDoNivel().nivel;
 
+    if (nivelAtual > 1) desbloquearConquista("primeiroNivel");
+
     for (let nivel = nivelAnterior + 1; nivel <= nivelAtual; nivel++) {
         const recompensa = recompensasConcedidas.find(item => item.nivel === nivel);
         enfileirarNotificacaoDeProgresso(
@@ -14066,21 +15930,127 @@ function contarInimigosDoMapa(mapa) {
     ), 0);
 }
 
+function censurarTextoDoEditor(texto) {
+    const original = String(texto || "");
+    const normalizarPalavra = (palavra) => palavra.normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    const palavras = [...original.matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map((resultado) => ({
+        inicio: resultado.index,
+        fim: resultado.index + resultado[0].length,
+        comparavel: normalizarPalavra(resultado[0])
+    }));
+    const configuracao = CONFIG.editorDeFases.moderacao;
+    const expressoes = configuracao.expressoesProibidas.map((expressao) =>
+        expressao.split(" ").map(normalizarPalavra)
+    ).sort((primeira, segunda) => segunda.length - primeira.length);
+    const trechosParaRemover = [];
+    for (let indice = 0; indice < palavras.length;) {
+        const expressao = expressoes.find((partes) => partes.every((parte, deslocamento) =>
+            palavras[indice + deslocamento]?.comparavel === parte
+        ));
+        const quantidade = expressao?.length || (configuracao.termosProibidos.includes(palavras[indice].comparavel) ? 1 : 0);
+        if (quantidade) {
+            trechosParaRemover.push({
+                inicio: palavras[indice].inicio,
+                fim: palavras[indice + quantidade - 1].fim
+            });
+            indice += quantidade;
+        } else {
+            indice += 1;
+        }
+    }
+    let resultado = original;
+    for (const trecho of trechosParaRemover.reverse()) {
+        resultado = resultado.slice(0, trecho.inicio) + resultado.slice(trecho.fim);
+    }
+    const alterado = trechosParaRemover.length > 0;
+    return {
+        texto: alterado ? resultado.replace(/[ \t]{2,}/g, " ").replace(/\s+([,.!?;:])/g, "$1").trim() : resultado,
+        alterado
+    };
+}
+
+function carregarEstadoModeracaoDoEditor() {
+    try {
+        const dados = JSON.parse(localStorage.getItem(CHAVE_MODERACAO_DO_EDITOR) || "{}");
+        return {
+            tentativas: Number.isInteger(dados.tentativas)
+                ? Math.max(0, Math.min(dados.tentativas, CONFIG.editorDeFases.moderacao.tentativasParaBloqueio - 1))
+                : 0,
+            bloqueadoAte: Number.isFinite(dados.bloqueadoAte)
+                ? Math.max(0, dados.bloqueadoAte)
+                : 0
+        };
+    } catch {
+        return { tentativas: 0, bloqueadoAte: 0 };
+    }
+}
+
+function salvarEstadoModeracaoDoEditor() {
+    try {
+        localStorage.setItem(CHAVE_MODERACAO_DO_EDITOR, JSON.stringify(estadoModeracaoDoEditor));
+    } catch {
+        // O bloqueio ainda funciona durante esta sessão se o armazenamento falhar.
+    }
+}
+
+function editorEstaBloqueado(agora = Date.now()) {
+    if (estadoModeracaoDoEditor.bloqueadoAte > agora) {
+        return true;
+    }
+    if (estadoModeracaoDoEditor.bloqueadoAte > 0) {
+        estadoModeracaoDoEditor = { tentativas: 0, bloqueadoAte: 0 };
+        salvarEstadoModeracaoDoEditor();
+    }
+    return false;
+}
+
+function registrarTextoProibidoNoEditor() {
+    if (editorEstaBloqueado()) {
+        return;
+    }
+    const limite = CONFIG.editorDeFases.moderacao.tentativasParaBloqueio;
+    estadoModeracaoDoEditor.tentativas += 1;
+    if (estadoModeracaoDoEditor.tentativas >= limite) {
+        estadoModeracaoDoEditor.bloqueadoAte = Date.now()
+            + CONFIG.editorDeFases.moderacao.duracaoBloqueioMs;
+        estadoModeracaoDoEditor.tentativas = 0;
+    }
+    salvarEstadoModeracaoDoEditor();
+}
+
+function mostrarBloqueioDoEditor() {
+    definirTelaDoMenuAberta("editor");
+    const minutos = Math.ceil((estadoModeracaoDoEditor.bloqueadoAte - Date.now()) / 60000);
+    conteudoMenu.innerHTML = `
+        ${criarCabecalhoConteudoMenu(traduzir("editor.titulo"), traduzir("editor.descricao"))}
+        <p class="editor-mensagem" role="alert">${traduzir("editor.banimentoTemporario", { minutos })}</p>
+    `;
+}
+
 function normalizarMapaDoEditor(valor) {
     const configuracao = CONFIG.editorDeFases;
 
     if (!valor || typeof valor !== "object") {
         return null;
     }
+    if (![undefined, 'normal', 'livre'].includes(valor.modoEdicao)) return null;
 
     const id = typeof valor.id === "string" && /^[a-z0-9_-]{1,80}$/i.test(valor.id)
         ? valor.id
         : null;
-    const nome = typeof valor.nome === "string" ? valor.nome.trim() : "";
-    const criador = typeof valor.criador === "string" ? valor.criador.trim() : "";
-    const descricao = typeof valor.descricao === "string" ? valor.descricao.trim() : "";
+    const nomeOriginal = typeof valor.nome === "string" ? valor.nome.trim() : "";
+    const criadorOriginal = typeof valor.criador === "string" ? valor.criador.trim() : "";
+    const nomeLimpo = censurarTextoDoEditor(nomeOriginal).texto;
+    const criadorLimpo = censurarTextoDoEditor(criadorOriginal).texto;
+    const nome = nomeOriginal && !nomeLimpo ? "Mapa sem título" : nomeLimpo;
+    const criador = criadorOriginal && !criadorLimpo ? "Anônimo" : criadorLimpo;
+    const descricao = censurarTextoDoEditor(typeof valor.descricao === "string" ? valor.descricao.trim() : "").texto;
     const temaValido = configuracao.cenarios.some(cenario => cenario.id === valor.tema);
     const caminhoValido = configuracao.caminhos.some(caminho => caminho.id === valor.idDoCaminho);
+    const dadosLivres = valor.modoEdicao === 'livre' ? normalizarDadosDoEditorLivre(valor) : null;
+    if (valor.modoEdicao === 'livre' && !dadosLivres) return null;
     const creditosValidos = Number.isInteger(valor.creditosIniciais)
         && valor.creditosIniciais >= configuracao.minimoDeCreditos
         && valor.creditosIniciais <= configuracao.maximoDeCreditos
@@ -14140,6 +16110,9 @@ function normalizarMapaDoEditor(valor) {
 
     const mapaNormalizado = {
         id,
+        ...(typeof valor.idDoMapaOriginal === "string" && /^[a-z0-9_-]{1,80}$/i.test(valor.idDoMapaOriginal)
+            ? { idDoMapaOriginal: valor.idDoMapaOriginal }
+            : {}),
         nome,
         criador,
         descricao,
@@ -14149,6 +16122,7 @@ function normalizarMapaDoEditor(valor) {
         creditosIniciais: valor.creditosIniciais,
         limiteDeTorres: valor.limiteDeTorres,
         waves,
+        ...(dadosLivres || {}),
         publicado: valor.publicado === true,
         atualizadoEm: Number.isFinite(valor.atualizadoEm)
             ? Math.max(0, Math.floor(valor.atualizadoEm))
@@ -14173,14 +16147,25 @@ function carregarMapasDoEditor(chave, limite) {
 }
 
 function salvarMapasDoEditor() {
+    const chaves = [CHAVE_MAPAS_DO_EDITOR, CHAVE_MAPAS_IMPORTADOS_DO_EDITOR];
+    let anteriores;
     try {
+        anteriores = chaves.map(chave => localStorage.getItem(chave));
         localStorage.setItem(CHAVE_MAPAS_DO_EDITOR, JSON.stringify(mapasCriadosNoEditor));
         localStorage.setItem(
             CHAVE_MAPAS_IMPORTADOS_DO_EDITOR,
             JSON.stringify(mapasImportadosNoEditor)
         );
+        if (!atualizarSalvoAtivo()) throw new Error('Falha ao gravar slot');
+        return true;
     } catch {
-        // Os mapas continuam disponíveis durante a sessão atual.
+        if (anteriores) chaves.forEach((chave, i) => {
+            try {
+                if (anteriores[i] === null) localStorage.removeItem(chave);
+                else localStorage.setItem(chave, anteriores[i]);
+            } catch {}
+        });
+        return false;
     }
 }
 
@@ -14276,9 +16261,11 @@ function decodificarTextoDoEditor(texto) {
 }
 
 function gerarCodigoDoMapaNoEditor(mapa) {
+    const versao = mapa.modoEdicao === 'livre' ? 2 : 1;
     const conteudo = JSON.stringify({
-        versao: 1,
+        versao,
         mapa: {
+            idDoMapaOriginal: mapa.id,
             nome: mapa.nome,
             criador: mapa.criador,
             descricao: mapa.descricao,
@@ -14287,11 +16274,12 @@ function gerarCodigoDoMapaNoEditor(mapa) {
             nivelDeDecoracoes: mapa.nivelDeDecoracoes,
             creditosIniciais: mapa.creditosIniciais,
             limiteDeTorres: mapa.limiteDeTorres,
-            waves: mapa.waves
+            waves: mapa.waves,
+            ...(mapa.modoEdicao === 'livre' ? {modoEdicao:'livre',pontosLivres:mapa.pontosLivres,decoracoesLivres:mapa.decoracoesLivres} : {})
         }
     });
     const carga = codificarTextoDoEditor(conteudo);
-    return `GP-MAPA-1.${carga}.${calcularAssinaturaDoCodigoDoEditor(carga)}`;
+    return `GP-MAPA-${versao}.${carga}.${calcularAssinaturaDoCodigoDoEditor(carga)}`;
 }
 
 function importarMapaPeloCodigo(codigo) {
@@ -14299,14 +16287,16 @@ function importarMapaPeloCodigo(codigo) {
         const partes = String(codigo || "").trim().split(".");
         if (
             partes.length !== 3
-            || partes[0] !== "GP-MAPA-1"
+            || !['GP-MAPA-1', 'GP-MAPA-2'].includes(partes[0])
             || calcularAssinaturaDoCodigoDoEditor(partes[1]) !== partes[2]
         ) {
             return null;
         }
 
         const conteudo = JSON.parse(decodificarTextoDoEditor(partes[1]));
-        if (conteudo?.versao !== 1 || !conteudo.mapa) {
+        if (![1,2].includes(conteudo?.versao) || partes[0] !== `GP-MAPA-${conteudo.versao}` || !conteudo.mapa
+            || (conteudo.versao === 2 && conteudo.mapa.modoEdicao !== 'livre')
+            || (conteudo.versao === 1 && conteudo.mapa.modoEdicao === 'livre')) {
             return null;
         }
 
@@ -14379,6 +16369,7 @@ function criarCartaoDoMapaNoEditor(mapa, importado = false) {
                     : `
                         <button class="botao" onclick="editarMapaNoEditor('${mapa.id}')">${traduzir("editor.editar")}</button>
                         <button class="botao" onclick="publicarMapaDoEditor('${mapa.id}')">${traduzir("editor.publicar")}</button>
+                        ${mapa.publicado ? `<button class="botao editor-botao-perigo" onclick="retirarMapaCriadoDaComunidade('${mapa.id}')">${traduzir("editor.retirarDaComunidade")}</button>` : ""}
                         ${criarBotoesDeExclusaoDoMapa(mapa)}
                     `}
             </div>
@@ -14393,6 +16384,7 @@ function criarHistoricoVazioDoCentroDeTreinamento() {
         partidas: 0,
         vitorias: 0,
         tiposConcluidos: [],
+        recordesPorImpulsos: { voo: null },
         recordes: Object.fromEntries(
             CONFIG.centroDeTreinamento.tiposDisponiveis.map(tipo => [tipo, null])
         )
@@ -14424,6 +16416,10 @@ function normalizarHistoricoDoCentroDeTreinamento(dados) {
             ? Math.round(recorde)
             : null;
     });
+    const impulsos = Number(dados.recordesPorImpulsos?.voo);
+    historico.recordesPorImpulsos.voo = Number.isSafeInteger(impulsos) && impulsos > 0
+        ? impulsos
+        : null;
 
     return historico;
 }
@@ -14506,12 +16502,17 @@ function formatarTempoDoTreinamento(duracao) {
 }
 
 function obterTextoDoRecordeDeTreinamento(tipo) {
-    const recorde = historicoDoCentroDeTreinamento.recordes[tipo];
+    const recorde = tipo === "voo"
+        ? historicoDoCentroDeTreinamento.recordesPorImpulsos.voo
+        : historicoDoCentroDeTreinamento.recordes[tipo];
     if (!recorde) {
         return traduzir("treinamento.semRecorde");
     }
     if (tipo === "reflexo") {
         return traduzir("treinamento.melhorReflexo", { tempo: recorde });
+    }
+    if (tipo === "voo") {
+        return traduzir("treinamento.melhoresImpulsos", { quantidade: recorde });
     }
     return traduzir("treinamento.melhorTempo", {
         tempo: formatarTempoDoTreinamento(recorde)
@@ -14555,7 +16556,7 @@ function criarVisualDoDesafioDeTreinamento(tipo) {
             <i id="faixa-alvo-treinamento" class="treinamento-faixa-alvo"></i>
             <span id="marcador-pulso-treinamento" class="treinamento-marcador-pulso"></span>
         </div>
-        <button id="controle-minigame-treinamento" class="treinamento-botao-acao treinamento-botao-pulso" type="button" onclick="acionarControleDoTreinamento()" disabled>${traduzir("treinamento.travar")}</button>
+        <button id="controle-minigame-treinamento" class="treinamento-botao-acao treinamento-botao-pulso" type="button" onpointerdown="acionarControleDoTreinamento()" onclick="if (event.detail === 0) acionarControleDoTreinamento()" disabled>${traduzir("treinamento.travar")}</button>
     `;
 }
 
@@ -14602,7 +16603,9 @@ function criarResultadoDoDesafioDeTreinamento() {
     const dados = obterDadosVisuaisDoMinigameDeTreinamento(desafio.tipo);
     let descricao = traduzir("treinamento.resultadoFalha");
     if (desafio.vitoria) {
-        const chave = CONFIG.fliperama.minigame.tiposNoCanvas.includes(desafio.tipo)
+        const chave = desafio.tipo === "voo"
+            ? "treinamento.resultadoVoo"
+            : CONFIG.fliperama.minigame.tiposNoCanvas.includes(desafio.tipo)
             ? "treinamento.resultadoFliperama"
             : desafio.tipo === "carga"
                 ? "treinamento.resultadoCarga"
@@ -14610,6 +16613,7 @@ function criarResultadoDoDesafioDeTreinamento() {
                     ? "treinamento.resultadoReflexo"
                     : "treinamento.resultadoPulso";
         descricao = traduzir(chave, {
+            quantidade: desafio.valorDoResultado,
             tempo: desafio.tipo === "reflexo"
                 ? desafio.valorDoResultado
                 : formatarTempoDoTreinamento(desafio.valorDoResultado)
@@ -14725,6 +16729,7 @@ function iniciarMinigameDeTreinamento(tipo, origem = "central") {
         proximoSinalEm: 0,
         sinalAtivadoEm: 0,
         indiceDaFaixa: 0,
+        posicaoExibidaDoPulso: null,
         feedback: "",
         feedbackAte: 0
     };
@@ -14836,7 +16841,8 @@ function acionarControleDoTreinamento() {
         prepararProximoSinalDoTreinamento(agora);
     } else {
         const configuracao = CONFIG.centroDeTreinamento.pulso;
-        const posicao = obterPosicaoDoMarcadorDePulso(agora);
+        const posicao = desafio.posicaoExibidaDoPulso
+            ?? obterPosicaoDoMarcadorDePulso(agora);
         const centro = configuracao.centrosDasFaixas[desafio.indiceDaFaixa];
         const acertou = Math.abs(posicao - centro) <= configuracao.larguraDaFaixa / 2;
         if (acertou) {
@@ -14906,7 +16912,8 @@ function atualizarInterfaceDoTreinamento(agora) {
             configuracao.centrosDasFaixas.length - 1
         )];
         if (marcador) {
-            marcador.style.left = `${obterPosicaoDoMarcadorDePulso(agora) * 100}%`;
+            desafio.posicaoExibidaDoPulso = obterPosicaoDoMarcadorDePulso(agora);
+            marcador.style.left = `${desafio.posicaoExibidaDoPulso * 100}%`;
         }
         if (faixa) {
             faixa.style.left = `${(centro - configuracao.larguraDaFaixa / 2) * 100}%`;
@@ -14958,7 +16965,9 @@ function atualizarMinigameDeTreinamento(agora = Date.now()) {
 }
 
 function registrarResultadoDoCentroDeTreinamento(tipo, vitoria, valorDoResultado) {
-    const recordeAnterior = historicoDoCentroDeTreinamento.recordes[tipo];
+    const recordeAnterior = tipo === "voo"
+        ? historicoDoCentroDeTreinamento.recordesPorImpulsos.voo
+        : historicoDoCentroDeTreinamento.recordes[tipo];
     const novoRecorde = Boolean(vitoria && (
         !recordeAnterior || valorDoResultado < recordeAnterior
     ));
@@ -14970,7 +16979,8 @@ function registrarResultadoDoCentroDeTreinamento(tipo, vitoria, valorDoResultado
             historicoDoCentroDeTreinamento.tiposConcluidos.push(tipo);
         }
         if (novoRecorde) {
-            historicoDoCentroDeTreinamento.recordes[tipo] = valorDoResultado;
+            if (tipo === "voo") historicoDoCentroDeTreinamento.recordesPorImpulsos.voo = valorDoResultado;
+            else historicoDoCentroDeTreinamento.recordes[tipo] = valorDoResultado;
         }
     }
     salvarHistoricoDoCentroDeTreinamento();
@@ -14995,10 +17005,10 @@ function concederRecompensaDoMinigameDeTreinamentoNoFliperama(tipo) {
             segundos: CONFIG.fliperama.boost.duracao / 1000
         }));
     } else if (recompensa.tipo === "creditos") {
-        dinheiro += recompensa.valor;
+        const creditosRecebidos = concederCreditosNaPartida(recompensa.valor);
         atualizarBotoesDaTorre();
         mostrarAviso(traduzir("fliperama.pulsoConcluido", {
-            creditos: recompensa.valor
+            creditos: creditosRecebidos
         }));
     }
 }
@@ -15075,7 +17085,92 @@ function atualizarDisponibilidadeDoEditor() {
         : traduzir("editor.bloqueado", { nivel: nivelNecessario });
 }
 
+function normalizarEnderecoDaComunidadeLocal(valor) {
+    try {
+        const endereco = new URL(String(valor).trim());
+        const nome = endereco.hostname.toLowerCase();
+        const partes = nome.split('.').map(Number);
+        const redePrivada = partes.length === 4 && partes.every(parte => Number.isInteger(parte) && parte >= 0 && parte <= 255)
+            && (partes[0] === 10 || partes[0] === 127 || partes[0] === 192 && partes[1] === 168
+                || partes[0] === 172 && partes[1] >= 16 && partes[1] <= 31);
+        if (endereco.protocol !== 'http:' || endereco.username || endereco.password
+            || !['localhost', '127.0.0.1'].includes(nome) && !redePrivada) return "";
+        return endereco.origin;
+    } catch {
+        return "";
+    }
+}
+
+function carregarPublicacoesDaComunidadeLocal() {
+    try { return JSON.parse(localStorage.getItem(CHAVE_PUBLICACOES_COMUNIDADE_LOCAL) || '{}'); }
+    catch { return {}; }
+}
+
+async function requisitarComunidadeLocal(endereco, rota, opcoes = {}) {
+    const controlador = new AbortController();
+    const prazo = setTimeout(() => controlador.abort(), 5000);
+    try {
+        const resposta = await fetch(`${endereco}${rota}`, { ...opcoes, signal: controlador.signal });
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.erro || 'Erro na Comunidade local');
+        return dados;
+    } finally { clearTimeout(prazo); }
+}
+
+function criarCartoesDaComunidadeLocal() {
+    if (estadoDaComunidadeLocal !== 'conectada') return '';
+    if (!mapasDaComunidadeLocal.length) return `<p class="editor-vazio">${traduzir('editor.redeSemMapas')}</p>`;
+    return mapasDaComunidadeLocal.map((registro, indice) => {
+        const mapa = importarMapaPeloCodigo(registro.codigo);
+        if (!mapa) return '';
+        const importado = mapasImportadosNoEditor.some(item => item.id === mapa.id);
+        return `<article class="editor-mapa-cartao">
+            <h3>${escaparTextoDoEditor(mapa.nome)}</h3>
+            <strong>${escaparTextoDoEditor(traduzir('editor.criadoPor', { criador: mapa.criador }))}</strong>
+            <p>${escaparTextoDoEditor(mapa.descricao || '—')}</p>
+            <em>${escaparTextoDoEditor(criarResumoDoMapaNoEditor(mapa))}</em>
+            <button class="botao botao-primario" onclick="importarMapaDaComunidadeLocal(${indice})" ${importado ? 'disabled' : ''}>${traduzir(importado ? 'editor.redeJaImportado' : 'editor.redeImportar')}</button>
+        </article>`;
+    }).join('');
+}
+
+async function conectarComunidadeLocal() {
+    const campo = document.getElementById('endereco-comunidade-local');
+    const endereco = normalizarEnderecoDaComunidadeLocal(campo?.value || enderecoDaComunidadeLocal);
+    comunidadeLocalFoiConsultada = true;
+    if (!endereco) {
+        estadoDaComunidadeLocal = 'falha';
+        mostrarEditorDeFases('comunidade');
+        return;
+    }
+    enderecoDaComunidadeLocal = endereco;
+    localStorage.setItem(CHAVE_SERVIDOR_COMUNIDADE_LOCAL, endereco);
+    try {
+        const dados = await requisitarComunidadeLocal(endereco, '/api/mapas');
+        mapasDaComunidadeLocal = Array.isArray(dados.mapas) ? dados.mapas : [];
+        estadoDaComunidadeLocal = 'conectada';
+    } catch {
+        mapasDaComunidadeLocal = [];
+        estadoDaComunidadeLocal = 'falha';
+    }
+    if (abaDoEditorSelecionada === 'comunidade') mostrarEditorDeFases('comunidade');
+}
+
+function importarMapaDaComunidadeLocal(indice) {
+    const registro = mapasDaComunidadeLocal[indice];
+    if (registro) importarCodigoNoEditor(registro.codigo);
+}
+
+function mostrarAbaDaComunidade(aba) {
+    abaDaComunidadeSelecionada = aba === "online" ? "online" : "local";
+    mostrarEditorDeFases("comunidade");
+}
+
 function mostrarEditorDeFases(aba = abaDoEditorSelecionada) {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
     if (!editorDeFasesEstaDesbloqueado()) {
         atualizarDisponibilidadeDoEditor();
         mostrarAviso(traduzir("editor.bloqueado", {
@@ -15090,10 +17185,11 @@ function mostrarEditorDeFases(aba = abaDoEditorSelecionada) {
     tentarIniciarMusicaDoLobby();
 
     const mostrandoComunidade = abaDoEditorSelecionada === "comunidade";
-    const mapas = mostrandoComunidade ? mapasImportadosNoEditor : mapasCriadosNoEditor;
+    const mostrandoComunidadeLocal = mostrandoComunidade && abaDaComunidadeSelecionada === "local";
+    const mapas = mostrandoComunidade ? (mostrandoComunidadeLocal ? mapasImportadosNoEditor : []) : mapasCriadosNoEditor;
     const cartoes = mapas.length > 0
         ? mapas.map(mapa => criarCartaoDoMapaNoEditor(mapa, mostrandoComunidade)).join("")
-        : `<p class="editor-vazio">${traduzir(mostrandoComunidade ? "editor.semComunidade" : "editor.semMapas")}</p>`;
+        : `<p class="editor-vazio">${traduzir(mostrandoComunidadeLocal ? "editor.semComunidade" : "editor.semMapas")}</p>`;
     const podeCriar = mapasCriadosNoEditor.length < CONFIG.editorDeFases.maximoDeMapasCriados;
 
     conteudoMenu.innerHTML = `
@@ -15102,8 +17198,25 @@ function mostrarEditorDeFases(aba = abaDoEditorSelecionada) {
             <button class="botao ${!mostrandoComunidade ? "ativo" : ""}" aria-pressed="${!mostrandoComunidade}" onclick="mostrarEditorDeFases('meus')">${traduzir("editor.meusMapas")}</button>
             <button class="botao ${mostrandoComunidade ? "ativo" : ""}" aria-pressed="${mostrandoComunidade}" onclick="mostrarEditorDeFases('comunidade')">${traduzir("editor.comunidade")}</button>
         </nav>
-        ${mensagemDoEditor ? `<p class="editor-mensagem" role="status">${escaparTextoDoEditor(mensagemDoEditor)}</p>` : ""}
+        ${mensagemDoEditor && (!mostrandoComunidade || mostrandoComunidadeLocal) ? `<p class="editor-mensagem" role="status">${escaparTextoDoEditor(mensagemDoEditor)}</p>` : ""}
         ${mostrandoComunidade ? `
+            <nav class="editor-abas editor-comunidade-abas" aria-label="${traduzir("editor.comunidade")}">
+                <button type="button" class="botao ${abaDaComunidadeSelecionada === "online" ? "ativo" : ""}" aria-pressed="${abaDaComunidadeSelecionada === "online"}" onclick="mostrarAbaDaComunidade('online')">${traduzir("editor.comunidadeOnline")}</button>
+                <button type="button" class="botao ${mostrandoComunidadeLocal ? "ativo" : ""}" aria-pressed="${mostrandoComunidadeLocal}" onclick="mostrarAbaDaComunidade('local')">${traduzir("editor.comunidadeLocal")}</button>
+            </nav>
+            ${mostrandoComunidadeLocal ? `
+            <section class="editor-rede-local">
+                <h3>${traduzir('editor.redeTitulo')}</h3>
+                <p>${traduzir('editor.redeAjuda')}</p>
+                <div class="editor-rede-controles">
+                    <label>${traduzir('editor.redeEndereco')}
+                        <input id="endereco-comunidade-local" type="url" inputmode="url" placeholder="http://192.168.1.10:4174" value="${escaparTextoDoEditor(enderecoDaComunidadeLocal)}">
+                    </label>
+                    <button class="botao botao-primario" onclick="conectarComunidadeLocal()">${traduzir('editor.redeConectar')}</button>
+                </div>
+                <p role="status">${traduzir(estadoDaComunidadeLocal === 'conectada' ? 'editor.redeConectada' : estadoDaComunidadeLocal === 'falha' ? 'editor.redeFalha' : 'editor.redeDesconectada', { quantidade: mapasDaComunidadeLocal.length })}</p>
+                <div class="editor-mapas-grade">${criarCartoesDaComunidadeLocal()}</div>
+            </section>
             <section class="editor-importacao">
                 <div>
                     <h3>${traduzir("editor.importarTitulo")}</h3>
@@ -15112,6 +17225,7 @@ function mostrarEditorDeFases(aba = abaDoEditorSelecionada) {
                 <textarea id="codigo-importacao-editor" placeholder="GP-MAPA-1..."></textarea>
                 <button class="botao botao-primario" onclick="importarCodigoNoEditor()">${traduzir("editor.importar")}</button>
             </section>
+            ` : `<section class="editor-comunidade-online"><p role="status">${traduzir("editor.onlineEmDesenvolvimento")}</p></section>`}
         ` : `
             <section class="editor-barra-criacao">
                 <strong>${traduzir("editor.espacos", {
@@ -15121,8 +17235,12 @@ function mostrarEditorDeFases(aba = abaDoEditorSelecionada) {
                 <button class="botao botao-primario" onclick="criarNovoMapaNoEditor()" ${podeCriar ? "" : "disabled"}>${traduzir("editor.novoMapa")}</button>
             </section>
         `}
-        <section class="editor-mapas-grade">${cartoes}</section>
+        ${!mostrandoComunidade || mostrandoComunidadeLocal ? `<section class="editor-mapas-grade">${cartoes}</section>` : ""}
     `;
+    if (mostrandoComunidadeLocal && enderecoDaComunidadeLocal && !comunidadeLocalFoiConsultada) {
+        comunidadeLocalFoiConsultada = true;
+        void conectarComunidadeLocal();
+    }
 }
 
 function criarNovoMapaNoEditor() {
@@ -15182,6 +17300,10 @@ function mostrarFormularioDoEditor(editando = Boolean(
     rascunhoDoMapaNoEditor
     && mapasCriadosNoEditor.some(mapa => mapa.id === rascunhoDoMapaNoEditor.id)
 )) {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
     if (!rascunhoDoMapaNoEditor) {
         mostrarEditorDeFases("meus");
         return;
@@ -15189,6 +17311,7 @@ function mostrarFormularioDoEditor(editando = Boolean(
 
     definirTelaDoMenuAberta("editor");
     const mapa = rascunhoDoMapaNoEditor;
+    inicializarTextosDoEditorLivre();
     const opcoesDeCenario = CONFIG.editorDeFases.cenarios.map(cenario => `
         <option value="${cenario.id}" ${cenario.id === mapa.tema ? "selected" : ""}>${escaparTextoDoEditor(localizar(cenario.nome))}</option>
     `).join("");
@@ -15209,18 +17332,23 @@ function mostrarFormularioDoEditor(editando = Boolean(
         )}
         <button class="botao editor-voltar" onclick="voltarParaListaDoEditor()">${traduzir("editor.voltar")}</button>
         ${mensagemDoEditor ? `<p class="editor-mensagem" role="alert">${escaparTextoDoEditor(mensagemDoEditor)}</p>` : ""}
-        <div class="editor-formulario-layout">
+        ${criarPainelDoEditorLivre(mapa)}
+        <div class="editor-formulario-layout ${mapa.modoEdicao === 'livre' ? 'editor-formulario-livre' : ''}">
             <form class="editor-formulario" onsubmit="salvarMapaDoEditor(event)">
                 <fieldset>
                     <legend>${traduzir("editor.identidade")}</legend>
+                    <p class="editor-aviso-linguagem">${traduzir("editor.regraLinguagem", {
+                        limite: CONFIG.editorDeFases.moderacao.tentativasParaBloqueio,
+                        minutos: CONFIG.editorDeFases.moderacao.duracaoBloqueioMs / 60000
+                    })}</p>
                     <label>${traduzir("editor.nome")}
-                        <input id="nome-mapa-editor" maxlength="32" required value="${escaparTextoDoEditor(mapa.nome)}" oninput="atualizarCampoDoEditor('nome', this.value)">
+                        <input id="nome-mapa-editor" maxlength="32" required value="${escaparTextoDoEditor(mapa.nome)}" oninput="atualizarCampoDoEditor('nome', this)">
                     </label>
                     <label>${traduzir("editor.criador")}
-                        <input id="criador-mapa-editor" maxlength="18" required value="${escaparTextoDoEditor(mapa.criador)}" oninput="atualizarCampoDoEditor('criador', this.value)">
+                        <input id="criador-mapa-editor" maxlength="18" required value="${escaparTextoDoEditor(mapa.criador)}" oninput="atualizarCampoDoEditor('criador', this)">
                     </label>
                     <label>${traduzir("editor.descricaoMapa")}
-                        <textarea maxlength="140" oninput="atualizarCampoDoEditor('descricao', this.value)">${escaparTextoDoEditor(mapa.descricao)}</textarea>
+                        <textarea maxlength="140" oninput="atualizarCampoDoEditor('descricao', this)">${escaparTextoDoEditor(mapa.descricao)}</textarea>
                     </label>
                 </fieldset>
                 <fieldset>
@@ -15229,10 +17357,10 @@ function mostrarFormularioDoEditor(editando = Boolean(
                         <select onchange="atualizarCampoDoEditor('tema', this.value)">${opcoesDeCenario}</select>
                     </label>
                     <label>${traduzir("editor.caminho")}
-                        <select onchange="atualizarCampoDoEditor('idDoCaminho', this.value)">${opcoesDeCaminho}</select>
+                        <select ${mapa.modoEdicao === 'livre' ? 'disabled' : ''} onchange="atualizarCampoDoEditor('idDoCaminho', this.value)">${opcoesDeCaminho}</select>
                     </label>
                     <label>${traduzir("editor.decoracoes")}
-                        <select onchange="atualizarCampoDoEditor('nivelDeDecoracoes', this.value)">
+                        <select ${mapa.modoEdicao === 'livre' ? 'disabled' : ''} onchange="atualizarCampoDoEditor('nivelDeDecoracoes', this.value)">
                             ${rotulosDecoracoes.map((rotulo, indice) => `<option value="${indice}" ${mapa.nivelDeDecoracoes === indice ? "selected" : ""}>${traduzir(rotulo)}</option>`).join("")}
                         </select>
                     </label>
@@ -15264,18 +17392,43 @@ function mostrarFormularioDoEditor(editando = Boolean(
         </div>
     `;
     requestAnimationFrame(desenharPreviaDoEditor);
+    configurarInteracaoDoEditorLivre();
 }
 
 function atualizarCampoDoEditor(campo, valor) {
-    if (!rascunhoDoMapaNoEditor) {
+    if (!rascunhoDoMapaNoEditor || editorEstaBloqueado()) {
         return;
+    }
+    const elemento = typeof HTMLElement !== "undefined" && valor instanceof HTMLElement
+        ? valor
+        : null;
+    let valorAtual = elemento ? elemento.value : valor;
+    if (["nome", "criador", "descricao"].includes(campo)) {
+        const resultado = censurarTextoDoEditor(valorAtual);
+        valorAtual = resultado.texto;
+        if (elemento) {
+            elemento.value = valorAtual;
+        }
+        if (resultado.alterado) {
+            registrarTextoProibidoNoEditor();
+            if (editorEstaBloqueado()) {
+                mostrarBloqueioDoEditor();
+                return;
+            }
+            mensagemDoEditor = traduzir("editor.textoOcultado", {
+                tentativas: estadoModeracaoDoEditor.tentativas,
+                limite: CONFIG.editorDeFases.moderacao.tentativasParaBloqueio
+            });
+            mostrarAviso(mensagemDoEditor);
+        }
     }
     rascunhoDoMapaNoEditor[campo] = [
         "nivelDeDecoracoes", "creditosIniciais", "limiteDeTorres"
-    ].includes(campo) ? Number(valor) : valor;
+    ].includes(campo) ? Number(valorAtual) : valorAtual;
 
     if (["tema", "idDoCaminho", "nivelDeDecoracoes"].includes(campo)) {
         desenharPreviaDoEditor();
+        desenharEditorLivre();
     }
     const resumo = document.getElementById("resumo-previa-editor");
     if (resumo) {
@@ -15343,6 +17496,10 @@ function voltarParaListaDoEditor() {
 
 function salvarMapaDoEditor(evento) {
     evento?.preventDefault();
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
     if (!rascunhoDoMapaNoEditor) {
         return;
     }
@@ -15358,6 +17515,7 @@ function salvarMapaDoEditor(evento) {
         return;
     }
 
+    const mapasAnteriores = [...mapasCriadosNoEditor];
     const indiceExistente = mapasCriadosNoEditor.findIndex(item => item.id === mapa.id);
     if (indiceExistente >= 0) {
         mapasCriadosNoEditor[indiceExistente] = mapa;
@@ -15369,7 +17527,12 @@ function salvarMapaDoEditor(evento) {
         return;
     }
 
-    salvarMapasDoEditor();
+    if (!salvarMapasDoEditor()) {
+        mapasCriadosNoEditor = mapasAnteriores;
+        mensagemDoEditor = traduzir("editor.falhaAoSalvar");
+        mostrarFormularioDoEditor();
+        return;
+    }
     compartilhamentoDoEditor = null;
     mensagemDoEditor = traduzir("editor.mapaSalvo");
     rascunhoDoMapaNoEditor = null;
@@ -15414,26 +17577,115 @@ async function copiarTextoDoEditor(texto) {
 }
 
 async function publicarMapaDoEditor(idDoMapa) {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
     const mapa = mapasCriadosNoEditor.find(item => item.id === idDoMapa);
     if (!mapa) {
         return;
     }
+    const estadoAnterior = { publicado: mapa.publicado, atualizadoEm: mapa.atualizadoEm };
     mapa.publicado = true;
     mapa.atualizadoEm = Date.now();
-    salvarMapasDoEditor();
+    if (!salvarMapasDoEditor()) {
+        Object.assign(mapa, estadoAnterior);
+        mensagemDoEditor = traduzir('editor.falhaAoSalvar');
+        mostrarEditorDeFases('meus');
+        return;
+    }
     compartilhamentoDoEditor = { id: mapa.id, codigo: gerarCodigoDoMapaNoEditor(mapa) };
     mensagemDoEditor = traduzir("editor.codigoPronto");
     mostrarEditorDeFases("meus");
-    if (await copiarTextoDoEditor(compartilhamentoDoEditor.codigo)) {
+    const codigo = compartilhamentoDoEditor.codigo;
+    const copiado = await copiarTextoDoEditor(codigo);
+    if (enderecoDaComunidadeLocal && estadoDaComunidadeLocal === 'conectada') {
+        try {
+            const publicacoes = carregarPublicacoesDaComunidadeLocal();
+            const anterior = publicacoes[mapa.id];
+            const dados = await requisitarComunidadeLocal(enderecoDaComunidadeLocal, '/api/mapas', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ codigo, segredo: anterior?.endereco === enderecoDaComunidadeLocal ? anterior.segredo : undefined })
+            });
+            publicacoes[mapa.id] = { endereco: enderecoDaComunidadeLocal, segredo: dados.segredo };
+            localStorage.setItem(CHAVE_PUBLICACOES_COMUNIDADE_LOCAL, JSON.stringify(publicacoes));
+            mensagemDoEditor = traduzir('editor.redePublicada');
+        } catch {
+            mensagemDoEditor = traduzir('editor.redePublicacaoFalhou');
+        }
+    } else if (copiado) {
         mensagemDoEditor = traduzir("editor.codigoCopiado");
-        const mensagem = conteudoMenu.querySelector(".editor-mensagem");
-        if (mensagem) {
-            mensagem.textContent = mensagemDoEditor;
+    }
+    const mensagem = conteudoMenu.querySelector('.editor-mensagem');
+    if (mensagem) mensagem.textContent = mensagemDoEditor;
+}
+
+async function retirarMapaCriadoDaComunidade(idDoMapa) {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
+    const indice = mapasCriadosNoEditor.findIndex(mapa => mapa.id === idDoMapa && mapa.publicado);
+    if (indice < 0) {
+        return;
+    }
+
+    const publicacoes = carregarPublicacoesDaComunidadeLocal();
+    const publicacao = publicacoes[idDoMapa];
+    if (publicacao) {
+        try {
+            await requisitarComunidadeLocal(publicacao.endereco, `/api/mapas/${encodeURIComponent(idDoMapa)}`, {
+                method: 'DELETE', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ segredo: publicacao.segredo })
+            });
+        } catch {
+            mensagemDoEditor = traduzir('editor.redeRetiradaFalhou');
+            mostrarEditorDeFases('meus');
+            return;
         }
     }
+
+    const mapa = mapasCriadosNoEditor[indice];
+    const cargaDoCodigo = gerarCodigoDoMapaNoEditor(mapa).split(".")[1];
+    const idDaCopia = `comunidade-${calcularAssinaturaDoCodigoDoEditor(cargaDoCodigo)}`;
+    const idsDasCopias = mapasImportadosNoEditor.filter(item => (
+        item.id === idDaCopia
+        || item.idDoMapaOriginal === mapa.id
+        || (!item.idDoMapaOriginal && item.nome === mapa.nome && item.criador === mapa.criador)
+    )).map(item => item.id);
+    const mapasCriadosAnteriores = mapasCriadosNoEditor;
+    const mapasImportadosAnteriores = mapasImportadosNoEditor;
+    mapasCriadosNoEditor = mapasCriadosNoEditor.map((item, posicao) =>
+        posicao === indice ? { ...item, publicado: false, atualizadoEm: Date.now() } : item
+    );
+    mapasImportadosNoEditor = mapasImportadosNoEditor.filter(item => !idsDasCopias.includes(item.id));
+    if (!salvarMapasDoEditor()) {
+        mapasCriadosNoEditor = mapasCriadosAnteriores;
+        mapasImportadosNoEditor = mapasImportadosAnteriores;
+        mensagemDoEditor = traduzir("editor.falhaAoSalvar");
+        mostrarEditorDeFases("meus");
+        return;
+    }
+
+    if (publicacao) {
+        delete publicacoes[idDoMapa];
+        localStorage.setItem(CHAVE_PUBLICACOES_COMUNIDADE_LOCAL, JSON.stringify(publicacoes));
+    }
+
+    idsDasCopias.forEach(id => { delete avaliacoesDosMapasImportados[id]; });
+    salvarAvaliacoesDoEditor();
+    if (compartilhamentoDoEditor?.id === idDoMapa) {
+        compartilhamentoDoEditor = null;
+    }
+    mensagemDoEditor = traduzir("editor.retiradoDaComunidade");
+    mostrarEditorDeFases("meus");
 }
 
 async function copiarCodigoDoMapa(idDoMapa) {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
     const mapa = mapasCriadosNoEditor.find(item => item.id === idDoMapa);
     if (!mapa) {
         return;
@@ -15447,8 +17699,12 @@ async function copiarCodigoDoMapa(idDoMapa) {
     }
 }
 
-function importarCodigoNoEditor() {
-    const codigo = document.getElementById("codigo-importacao-editor")?.value || "";
+function importarCodigoNoEditor(codigoRecebido = null) {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
+    const codigo = codigoRecebido || document.getElementById("codigo-importacao-editor")?.value || "";
     const mapa = importarMapaPeloCodigo(codigo);
     if (!mapa) {
         mensagemDoEditor = traduzir("editor.importacaoInvalida");
@@ -15456,6 +17712,7 @@ function importarCodigoNoEditor() {
         return;
     }
 
+    const mapasAnteriores = mapasImportadosNoEditor.slice();
     const indiceExistente = mapasImportadosNoEditor.findIndex(item => item.id === mapa.id);
     if (indiceExistente >= 0) {
         mapasImportadosNoEditor[indiceExistente] = mapa;
@@ -15466,21 +17723,39 @@ function importarCodigoNoEditor() {
         mostrarEditorDeFases("comunidade");
         return;
     }
-    salvarMapasDoEditor();
+    if (!salvarMapasDoEditor()) {
+        mapasImportadosNoEditor = mapasAnteriores;
+        mensagemDoEditor = traduzir('editor.falhaAoSalvar');
+        mostrarEditorDeFases('comunidade');
+        return;
+    }
     mensagemDoEditor = traduzir("editor.mapaImportado");
     mostrarEditorDeFases("comunidade");
 }
 
 function removerMapaImportado(idDoMapa) {
+    if (!mapasImportadosNoEditor.some(mapa => mapa.id === idDoMapa)) {
+        return;
+    }
+    const mapasAnteriores = mapasImportadosNoEditor;
     mapasImportadosNoEditor = mapasImportadosNoEditor.filter(mapa => mapa.id !== idDoMapa);
+    if (!salvarMapasDoEditor()) {
+        mapasImportadosNoEditor = mapasAnteriores;
+        mensagemDoEditor = traduzir("editor.falhaAoSalvar");
+        mostrarEditorDeFases("comunidade");
+        return;
+    }
     delete avaliacoesDosMapasImportados[idDoMapa];
-    salvarMapasDoEditor();
     salvarAvaliacoesDoEditor();
     mensagemDoEditor = traduzir("editor.mapaExcluido");
     mostrarEditorDeFases("comunidade");
 }
 
 function salvarAvaliacaoDoMapa(idDoMapa) {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
     if (!mapasImportadosNoEditor.some(mapa => mapa.id === idDoMapa)) {
         return;
     }
@@ -15501,11 +17776,14 @@ function desenharPreviaDoEditor() {
     if (!canvasDaPrevia || !mapa) {
         return;
     }
+    if (mapa.modoEdicao === 'livre') {
+        desenharCenarioLivre(canvasDaPrevia, mapa, false);
+        return;
+    }
 
     const contexto = canvasDaPrevia.getContext("2d");
     const tema = temasDoMapa[mapa.tema] || temasDoMapa.campo;
-    const caminho = CONFIG.editorDeFases.caminhos.find(item => item.id === mapa.idDoCaminho)
-        || CONFIG.editorDeFases.caminhos[0];
+    const caminhos = obterCaminhosDoEditor(mapa.idDoCaminho);
     const escalaX = canvasDaPrevia.width / canvas.width;
     const escalaY = canvasDaPrevia.height / canvas.height;
     contexto.fillStyle = tema.terrenoBase;
@@ -15538,7 +17816,7 @@ function desenharPreviaDoEditor() {
         [tema.caminhoCentro, 18]
     ]) {
         contexto.beginPath();
-        caminho.pontos.forEach((ponto, indice) => {
+        for (const pontos of caminhos) pontos.forEach((ponto, indice) => {
             const x = ponto.x * escalaX;
             const y = ponto.y * escalaY;
             if (indice === 0) contexto.moveTo(x, y);
@@ -15549,17 +17827,23 @@ function desenharPreviaDoEditor() {
         contexto.stroke();
     }
 
-    const inicio = caminho.pontos[0];
-    const fim = caminho.pontos[caminho.pontos.length - 1];
-    contexto.fillStyle = "#fff36a";
-    contexto.fillRect(0, inicio.y * escalaY - 10, 22, 20);
-    contexto.fillStyle = tema.torreFinalBase;
-    contexto.fillRect(fim.x * escalaX - 28, fim.y * escalaY - 28, 56, 56);
-    contexto.fillStyle = tema.torreFinalNucleo;
-    contexto.fillRect(fim.x * escalaX - 10, fim.y * escalaY - 10, 20, 20);
+    for (const pontos of caminhos) {
+        const inicio = pontos[0];
+        const fim = pontos[pontos.length - 1];
+        contexto.fillStyle = "#fff36a";
+        contexto.fillRect(0, inicio.y * escalaY - 10, 22, 20);
+        contexto.fillStyle = tema.torreFinalBase;
+        contexto.fillRect(fim.x * escalaX - 28, fim.y * escalaY - 28, 56, 56);
+        contexto.fillStyle = tema.torreFinalNucleo;
+        contexto.fillRect(fim.x * escalaX - 10, fim.y * escalaY - 10, 20, 20);
+    }
 }
 
 function jogarMapaDoEditor(idDoMapa, origem = "meus") {
+    if (editorEstaBloqueado()) {
+        mostrarBloqueioDoEditor();
+        return;
+    }
     const colecao = origem === "comunidade" ? mapasImportadosNoEditor : mapasCriadosNoEditor;
     const mapa = colecao.find(item => item.id === idDoMapa);
     if (!mapa || jogoIniciado) {
@@ -15598,9 +17882,14 @@ function configurarComposicaoDaWavePersonalizada() {
     inimigosParaCriar = filaDeInimigosDoMapaPersonalizado.length;
     inimigosChefesParaCriar = filaDeInimigosDoMapaPersonalizado
         .filter(tipoEhBoss).length;
-    avisoBossExpiraEm = inimigosChefesParaCriar > 0 ? Date.now() + 2500 : 0;
+    const duracaoDoAviso = CONFIG.eventos.elencosSuperBosses[mapaPersonalizadoAtivo?.evento]
+        ? CONFIG.eventos.duracaoDoAvisoSuperBossMs : 2500;
+    avisoBossExpiraEm = inimigosChefesParaCriar > 0 ? Date.now() + duracaoDoAviso : 0;
     proximoInimigoEm = Date.now();
     proximaWaveEm = 0;
+    if (mapaPersonalizadoAtivo?.evento && typeof avisarChegadaDoSuperBossDoEvento === 'function') {
+        avisarChegadaDoSuperBossDoEvento(wave);
+    }
 }
 
 function carregarInimigosDerrotadosNoAlbum() {
@@ -15850,6 +18139,8 @@ function obterPrecoAtualDoItemDaLoja(idDoItem, data = new Date()) {
 }
 
 function obterConfiguracaoDoItemDaLoja(idDoItem) {
+    const tipoDeNucleo = obterTipoDoNucleoDaLoja(idDoItem);
+    if (tipoDeNucleo) return CONFIG.sobrecarga.tipos[tipoDeNucleo];
     const configuracaoDaDefesa = CONFIG.torre.tipos[idDoItem];
 
     if (configuracaoDaDefesa && configuracaoDaDefesa.requerCompraNaLoja) {
@@ -15860,6 +18151,7 @@ function obterConfiguracaoDoItemDaLoja(idDoItem) {
 }
 
 function obterBonusPermanenteDaLoja(propriedade) {
+    if (desafioSupremoAtivo) return 0;
     return Object.entries(CONFIG.loja.itens).reduce((total, [idDoItem, configuracao]) => (
         comprasDaLoja.has(idDoItem)
             ? total + (configuracao[propriedade] || 0)
@@ -15882,11 +18174,51 @@ function obterDinheiroInicial() {
 }
 
 function obterRecompensaPorTiro() {
+    if (desafioSupremoAtivo) return CONFIG.supremas.desafios[desafioSupremoAtivo].recompensaPorTiro || CONFIG.supremas.recompensaPorTiro;
+    if (CONFIG.eventos.elencosSuperBosses[mapaPersonalizadoAtivo?.evento]) {
+        return CONFIG.torre.recompensaPorTiro
+            + obterBonusPermanenteDaLoja("bonusRecompensaPorTiro")
+            + CONFIG.eventos.bonusCreditosPorTiroBosses;
+    }
     return CONFIG.torre.recompensaPorTiro
         + obterBonusPermanenteDaLoja("bonusRecompensaPorTiro");
 }
 
+function faseUsaTetoDeSaldo() {
+    return !desafioSupremoAtivo
+        && !CONFIG.eventos.elencosSuperBosses[mapaPersonalizadoAtivo?.evento];
+}
+
+function concederCreditosNaPartida(quantidade) {
+    const creditosRecebidos = faseUsaTetoDeSaldo()
+        ? Math.min(quantidade, Math.max(0, CONFIG.economia.tetoDeSaldoDasPartidasComuns - dinheiro))
+        : quantidade;
+    dinheiro += creditosRecebidos;
+    return creditosRecebidos;
+}
+
+function obterLimiteDeCombateNaWaveDosSuperBosses() {
+    const regra = CONFIG.eventos.economiaSuperBosses;
+    return regra.limiteInicialPorWave + Math.max(0, wave - 1) * regra.aumentoPorWave;
+}
+
+function concederCreditosDeCombate(quantidade) {
+    let premio = quantidade;
+    if (CONFIG.eventos.elencosSuperBosses[mapaPersonalizadoAtivo?.evento]) {
+        const limite = obterLimiteDeCombateNaWaveDosSuperBosses();
+        premio = Math.min(premio, Math.max(0, limite - creditosDeCombateRecebidosNaWave));
+        creditosDeCombateRecebidosNaWave += premio;
+    }
+    return concederCreditosNaPartida(premio);
+}
+
+function registrarCreditosPorDisparo() {
+    return concederCreditosDeCombate(obterRecompensaPorTiro());
+}
+
 function podeComprarItemDaLoja(idDoItem, data = new Date()) {
+    const tipoDeNucleo = obterTipoDoNucleoDaLoja(idDoItem);
+    if (tipoDeNucleo) return Number.isInteger(fragmentosPixel) && fragmentosPixel >= CONFIG.sobrecarga.tipos[tipoDeNucleo].custoNaLoja && obterQuantidadeDeNucleos(tipoDeNucleo) < CONFIG.sobrecarga.estoqueMaximo;
     const configuracao = obterConfiguracaoDoItemDaLoja(idDoItem);
     const precoAtual = obterPrecoAtualDoItemDaLoja(idDoItem, data);
 
@@ -16053,8 +18385,6 @@ function atualizarIndicadorFaseSelecionada() {
         : faseAtualEhSecreta()
             ? localizar("Fase secreta · Wave 1")
             : traduzir("lobby.faseWave", { fase: faseSelecionada });
-    limiteTorresMenu.textContent = obterLimiteDeTorres().toString();
-    creditosIniciaisMenu.textContent = obterDinheiroInicial().toString();
 }
 
 function obterFaseAtual() {
@@ -16099,12 +18429,28 @@ function obterLimiteDeTorres(numeroDaFase = faseSelecionada) {
     return limiteBase + obterBonusPermanenteDaLoja("bonusLimiteDeTorres");
 }
 
+function obterCaminhosDoEditor(idDoCaminho) {
+    const caminho = CONFIG.editorDeFases.caminhos.find(item => item.id === idDoCaminho)
+        || CONFIG.editorDeFases.caminhos[0];
+    return caminho.saidas
+        ? caminho.saidas.map(saida => [...caminho.pontos, ...saida])
+        : [caminho.pontos];
+}
+
 function obterCaminhosAtuais() {
+    if (mapaPersonalizadoAtivo?.evento) {
+        return [CONFIG.eventos.caminhos[mapaPersonalizadoAtivo.evento]];
+    }
+    if (mapaPersonalizadoAtivo?.classico) {
+        const exclusivo = CONFIG.classico.mapasExclusivos.find(m=>m.numero===mapaPersonalizadoAtivo.numeroClassico);
+        if (exclusivo) return obterCaminhosDaRotaClassicaSelecionada(exclusivo,mapaPersonalizadoAtivo.rotaClassica);
+        const caminhos = caminhosDasFases[mapaPersonalizadoAtivo.numeroClassico];
+        const mapaClassico=CONFIG.fases.find(mapa=>mapa.numero===mapaPersonalizadoAtivo.numeroClassico);
+        return mapaClassico?obterCaminhosDaRotaClassicaSelecionada(mapaClassico,mapaPersonalizadoAtivo.rotaClassica):(Array.isArray(caminhos[0]) ? caminhos : [caminhos]);
+    }
     if (mapaPersonalizadoAtivo) {
-        const caminho = CONFIG.editorDeFases.caminhos.find(
-            item => item.id === mapaPersonalizadoAtivo.idDoCaminho
-        ) || CONFIG.editorDeFases.caminhos[0];
-        return [caminho.pontos];
+        if (mapaPersonalizadoAtivo.modoEdicao === 'livre') return [mapaPersonalizadoAtivo.pontosLivres];
+        return obterCaminhosDoEditor(mapaPersonalizadoAtivo.idDoCaminho);
     }
 
     const configuracaoDosCaminhos = caminhosDasFases[faseSelecionada] || caminhosDasFases[1];
@@ -16201,7 +18547,10 @@ function obterPosicaoDaTorreFinal(caminhoAtual = obterCaminhoAtual()) {
 }
 
 function inimigoAtingiuTorreFinal(inimigo) {
-    const torreFinal = obterPosicaoDaTorreFinal();
+    const torreFinal = obterPosicaoDaTorreFinal(
+        mapaPersonalizadoAtivo && !mapaPersonalizadoAtivo.classico
+            ? obterCaminhoDoInimigo(inimigo) : obterCaminhoAtual()
+    );
     const distancia = Math.hypot(inimigo.x - torreFinal.x, inimigo.y - torreFinal.y);
     return distancia <= CONFIG.torreFinal.raioDeContato + inimigo.tamanho;
 }
@@ -16563,26 +18912,13 @@ function disponibilizarRegistrosPontoZero() {
 }
 
 function atualizarTemaDoLobby() {
-    const temaAtual = obterFaseAtual().tema;
-    menuPrincipal.classList.remove(
-        "tema-campo",
-        "tema-deserto",
-        "tema-artico",
-        "tema-selva",
-        "tema-temperada",
-        "tema-vulcanica",
-        "tema-pantano",
-        "tema-primordial",
-        "tema-futurista",
-        "tema-laboratorio",
-        "tema-futuroDespedacado",
-        "tema-pontoZero",
-        "tema-linhaTemporal",
-        "tema-eraApagada",
-        "tema-intervaloPerdido",
-        "tema-glitch"
-    );
+    const mapaDoLobby = typeof obterMapaDoLobbyClassico === "function" ? obterMapaDoLobbyClassico() : null;
+    const temaAtual = mapaDoLobby ? mapaDoLobby.tema : obterFaseAtual().tema;
+    for (const classe of [...menuPrincipal.classList]) {
+        if (classe.startsWith("tema-")) menuPrincipal.classList.remove(classe);
+    }
     menuPrincipal.classList.add(`tema-${temaAtual}`);
+    if (typeof atualizarCenarioDoLobbyClassico === "function") atualizarCenarioDoLobbyClassico(mapaDoLobby);
     atualizarPortalFaseSecreta();
     atualizarRelogioQuebradoDoIntervalo();
 }
@@ -17244,6 +19580,7 @@ function mostrarCutsceneDaCarta(tipoDaCarta = "portal") {
     const configuracao = cartaConcedeMaquinaDoTempo
         ? CONFIG.maquinaDoTempo.carta
         : CONFIG.faseSecreta.cartaMisteriosa;
+    if (typeof registrarTextoNaEnciclopedia === 'function') registrarTextoNaEnciclopedia(configuracao.texto);
 
     if (cartaConcedeMaquinaDoTempo) {
         cartaDaMaquinaDoTempoVista = true;
@@ -17267,6 +19604,7 @@ function mostrarCutsceneDaCarta(tipoDaCarta = "portal") {
     camadaCutsceneCarta.querySelector('.retrato-dialogo')?.remove();
     tituloCutsceneCarta.textContent = localizar("VOCÊ ENCONTROU UMA CARTA");
     textoCutsceneCarta.textContent = localizar(configuracao.texto);
+    if (typeof mostrarResultadoDesafioNaCarta === 'function') mostrarResultadoDesafioNaCarta();
     assinaturaCutsceneCarta.textContent = localizar(configuracao.assinatura);
     botaoContinuarCutsceneCarta.textContent = cartaConcedeMaquinaDoTempo
         ? localizar("Receber Máquina do Tempo")
@@ -17293,6 +19631,7 @@ function exibirConteudoDaCutscene({
     etapa = null,
     meioComunicacao = null
 }) {
+    if (typeof registrarTextoNaEnciclopedia === 'function') registrarTextoNaEnciclopedia(texto);
     cutsceneDaCartaAtiva = true;
     const escolhasDoLimbo = document.getElementById("escolhas-entidade-limbo");
     if (escolhasDoLimbo) escolhasDoLimbo.hidden = true;
@@ -17859,6 +20198,8 @@ function avancarHistoriaDoArquivoProibido() {
 }
 
 function ocultarCutsceneDaCarta() {
+    const resultadoDesafioCarta = document.getElementById('resultado-desafio-carta');
+    if (resultadoDesafioCarta) resultadoDesafioCarta.hidden = true;
     limparCenaDoConfronto();
     const escolhas = document.getElementById("escolhas-entidade-limbo");
     if (escolhas) escolhas.hidden = true;
@@ -17954,6 +20295,11 @@ function concluirCutsceneDaCarta() {
         === "transmissao-futuro-despedacado";
     cutsceneDaTransmissaoRetomaPartida = false;
     ocultarCutsceneDaCarta();
+
+    if (tipoDaCutscene === 'carta') {
+        voltarAoLobby();fecharConteudoMenu();faseSelecionada=1;
+        atualizarIndicadorFaseSelecionada();atualizarTemaDoLobby();return;
+    }
 
     if (concluiuTransmissaoProjetoRelogio) {
         registrarTransmissaoProjetoRelogioParaConquistas();
@@ -18403,8 +20749,52 @@ function obterConfiguracaoDaTorre(tipoDaTorre = tipoDeTorreParaConstruir) {
     return CONFIG.torre.tipos[tipoDaTorre] || CONFIG.torre.tipos.padrao;
 }
 
+function obterCustoAtualDaPartida(custo) {
+    return typeof obterCustoComModificadorClassico === 'function'
+        ? obterCustoComModificadorClassico(custo) : custo;
+}
+
+function obterCustoDeConstrucaoDaTorre(tipo) {
+    const configuracao = obterConfiguracaoDaTorre(tipo);
+    const custo = defesaEstaEmprestadaNaPartida(tipo)
+        ? configuracao.custoEmprestimo ?? configuracao.custo
+        : configuracao.custo;
+    return obterCustoAtualDaPartida(custo);
+}
+
+function obterMaiorDificuldadeConcluidaDoEvento(id) {
+    try {
+        const dados = JSON.parse(localStorage.getItem(CHAVE_VITORIAS_DOS_EVENTOS) || '{}');
+        if (!Number.isSafeInteger(dados[id]) || dados[id] < 1) return null;
+        const concluidas = dados.dificuldadesConcluidas?.[id];
+        if (!Array.isArray(concluidas)) return null;
+        return ['dificil', 'medio', 'facil'].find(dificuldade => concluidas.includes(dificuldade)) || null;
+    } catch { return null; }
+}
+
+function obterBonusDeDanoDaTorrePremio(tipoDaTorre) {
+    const evento = CONFIG.eventos.premioDasTorresSuperBosses[tipoDaTorre];
+    const dificuldade = evento && obterMaiorDificuldadeConcluidaDoEvento(evento);
+    return CONFIG.eventos.bonusDeDanoDasTorresPremio[dificuldade] || 0;
+}
+
+function obterNomeDoEventoDeDesbloqueio(id) {
+    const evento = typeof EVENTOS_DISPONIVEIS !== 'undefined'
+        ? EVENTOS_DISPONIVEIS.find(item => item.id === id) : null;
+    return evento ? localizarEvento(evento.nome) : localizar('Idade da Pedra');
+}
+
 function torreEstaDesbloqueada(tipoDaTorre) {
+    if (CONFIG.torre.tipos[tipoDaTorre]?.suprema) return carregarSupremas().desbloqueadas.includes(tipoDaTorre);
+    if (desafioSupremoAtivo) return CONFIG.supremas.equipeDoDesafio.includes(tipoDaTorre);
     const configuracao = obterConfiguracaoDaTorre(tipoDaTorre);
+    if (configuracao.eventoParaDesbloqueio) {
+        try {
+            const vitorias = JSON.parse(localStorage.getItem(CHAVE_VITORIAS_DOS_EVENTOS) || '{}');
+            return Number.isSafeInteger(vitorias[configuracao.eventoParaDesbloqueio])
+                && vitorias[configuracao.eventoParaDesbloqueio] > 0;
+        } catch { return false; }
+    }
     if (configuracao.nivelParaDesbloqueio) return obterDadosDoNivel().nivel >= configuracao.nivelParaDesbloqueio;
     const faseNecessariaConcluida =
         obterProgressoParaEquipamentos() >= configuracao.faseConcluidaParaDesbloqueio;
@@ -18423,7 +20813,10 @@ function obterProgressoParaEquipamentos() {
 }
 
 function obterMensagemDeTorreBloqueada(configuracao) {
+    if (configuracao.suprema) return localizar('Conquiste esta Suprema no desafio próprio do lobby.');
     const nome = obterNomeLocalizado(configuracao);
+    if (configuracao.eventoParaDesbloqueio) return localizar('{nome} é desbloqueada ao vencer {evento}.', {
+        nome, evento: obterNomeDoEventoDeDesbloqueio(configuracao.eventoParaDesbloqueio) });
     if (configuracao.nivelParaDesbloqueio) return localizar("Recompensa do nível {nivel}", { nivel: configuracao.nivelParaDesbloqueio });
 
     if (configuracao.requerCompraNaLoja) {
@@ -18437,6 +20830,9 @@ function obterMensagemDeTorreBloqueada(configuracao) {
 }
 
 function obterTextoDeTorreBloqueada(configuracao) {
+    if (configuracao.suprema) return localizar('Vença o desafio Supremo');
+    if (configuracao.eventoParaDesbloqueio) return localizar('Vença {evento}', {
+        evento: obterNomeDoEventoDeDesbloqueio(configuracao.eventoParaDesbloqueio) });
     if (configuracao.nivelParaDesbloqueio) return localizar("Recompensa do nível {nivel}", { nivel: configuracao.nivelParaDesbloqueio });
     if (configuracao.requerCompraNaLoja) {
         return localizar("Compre na Loja");
@@ -18562,6 +20958,16 @@ function obterTextoDasFraquezasElementais(tipoDoInimigo) {
 }
 
 function obterResumoBaseDaConfiguracaoDaTorre(configuracao) {
+    if (configuracao.efeitoDeBolhas) return localizar('Aquática · A cada {acertos} acertos, bolhas estouram: {dano} de dano em {raio} px · Limite {limite}', {
+        acertos: configuracao.efeitoDeBolhas.acertosParaEstourar,
+        dano: configuracao.efeitoDeBolhas.danoEstouro,
+        raio: configuracao.efeitoDeBolhas.raioEstouro,
+        limite: configuracao.limitePorPartida
+    });
+    if(configuracao.aquatica)return localizar('Torre aquática: construa na água, fora da rota dos inimigos.');
+    if (configuracao.tiposDeAlvo) {
+        return localizar('Atira somente em Sabotadores. Atrai inimigos atiradores e resiste a {tiros} tiros.', { tiros: configuracao.resistenciaATiros });
+    }
     if (configuracao.feixeContinuo) return localizar("Feixe {minimo}–{maximo} por pulso · Alcance {alcance}", {
         minimo: configuracao.dano, maximo: configuracao.dano * configuracao.feixeContinuo.maximoDePulsos, alcance: configuracao.alcance
     });
@@ -18611,8 +21017,8 @@ function obterResumoBaseDaConfiguracaoDaTorre(configuracao) {
     }
 
     if (configuracao.efeitoSismico) {
-        return localizar("Carrega com {cargas} inimigos · Empurra {distancia} px · Limite {limite}", {
-            cargas: configuracao.efeitoSismico.cargasNecessarias,
+        return localizar("Recarga {segundos}s · Empurra {distancia} px · Limite {limite}", {
+            segundos: configuracao.efeitoSismico.recargaEmMs / 1000,
             distancia: configuracao.efeitoSismico.distanciaDoEmpurrao,
             limite: configuracao.limitePorPartida
         });
@@ -18738,7 +21144,60 @@ function obterResumoBaseDaConfiguracaoDaTorre(configuracao) {
 function obterResumoDaConfiguracaoDaTorre(configuracao) {
     const resumo = obterResumoBaseDaConfiguracaoDaTorre(configuracao);
     const textoDoElemento = obterTextoDoElemento(configuracao);
-    return textoDoElemento ? `${resumo} · ${textoDoElemento}` : resumo;
+    const resumoComElemento = textoDoElemento ? `${resumo} · ${textoDoElemento}` : resumo;
+    return configuracao === CONFIG.torre.tipos.torreMagnetica
+        ? `${resumoComElemento} · ${localizar("Limite de {limite} {nome} por partida.", {
+            limite: configuracao.limitePorPartida, nome: obterNomeLocalizado(configuracao)
+        })}`
+        : resumoComElemento;
+}
+
+function partidaPermiteAfinidades() {
+    const historia = !mapaPersonalizadoAtivo
+        && CONFIG.fases.some(fase => fase.numero === faseSelecionada);
+    return (historia || Boolean(mapaPersonalizadoAtivo?.classico))
+        && !modoWavesInfinitas && !selecaoDeDefesasParaModoInfinito;
+}
+
+function obterAfinidadesDasTorres() {
+    if (!partidaPermiteAfinidades()) return null;
+    if (afinidadesDasTorres) return afinidadesDasTorres;
+
+    const candidatas = Object.entries(CONFIG.torre.tipos)
+        .filter(([tipo, configuracao]) => tipo !== 'padrao' && !configuracao.suprema
+            && !configuracao.tipoDeItem && !configuracao.naoAtira
+            && configuracao.dano > 0 && torreEstaDesbloqueada(tipo))
+        .map(([tipo]) => tipo);
+    const escolher = () => candidatas.splice(Math.floor(Math.random() * candidatas.length), 1)[0] || null;
+    const bonus = [];
+    const penalidade = [];
+    const limite = CONFIG.torre.afinidadesDasTorres;
+    for (let indice = 0; indice < Math.max(limite.quantidadeDeBonus, limite.quantidadeDePenalidades); indice++) {
+        if (indice < limite.quantidadeDeBonus && candidatas.length) bonus.push(escolher());
+        if (indice < limite.quantidadeDePenalidades && candidatas.length) penalidade.push(escolher());
+    }
+    afinidadesDasTorres = { bonus, penalidade };
+    return afinidadesDasTorres;
+}
+
+function obterMultiplicadorDeAfinidadeDaTorre(tipo) {
+    if (tipo === 'padrao') return 1;
+    const afinidades = obterAfinidadesDasTorres();
+    if (afinidades?.bonus.includes(tipo)) return CONFIG.torre.afinidadesDasTorres.multiplicadorDoBonus;
+    if (afinidades?.penalidade.includes(tipo)) return CONFIG.torre.afinidadesDasTorres.multiplicadorDaPenalidade;
+    return 1;
+}
+
+function criarAvisoDasAfinidadesDasTorres() {
+    const afinidades = obterAfinidadesDasTorres();
+    if (!afinidades) return '';
+    const nome = tipo => obterNomeLocalizado(obterConfiguracaoDaTorre(tipo));
+    return `<div class="selecao-defesas-afinidades">
+        <strong>${localizar('Efeitos das torres nesta partida.')}</strong>
+        ${afinidades.bonus.map(tipo => `<span>${localizar('Bônus: {nome} causa 10% mais dano.', { nome: nome(tipo) })}</span>`).join('')}
+        ${afinidades.penalidade.map(tipo => `<span>${localizar('Desafio: {nome} causa 10% menos dano.', { nome: nome(tipo) })}</span>`).join('')}
+        <small>${localizar('A Torre padrão não recebe efeitos.')}</small>
+    </div>`;
 }
 
 function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
@@ -18761,6 +21220,9 @@ function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
             ? "selecao-defesa-cartao-selecionado"
             : ""
         : "selecao-defesa-cartao-bloqueado";
+    const multiplicadorDeAfinidade = obterMultiplicadorDeAfinidadeDaTorre(tipo);
+    const efeitoDeAfinidade = multiplicadorDeAfinidade > 1 ? localizar('+10% de dano')
+        : multiplicadorDeAfinidade < 1 ? localizar('−10% de dano') : '';
 
     return `
         <button
@@ -18768,7 +21230,7 @@ function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
             type="button"
             data-tipo-defesa="${tipo}"
             aria-pressed="${selecionada}"
-            aria-label="${obterNomeLocalizado(configuracao)} · ${estado}"
+            aria-label="${obterNomeLocalizado(configuracao)} · ${estado}${efeitoDeAfinidade ? ` · ${efeitoDeAfinidade}` : ''}"
             onclick="alternarDefesaDaSelecao('${tipo}')"
             ${desbloqueada ? "" : "disabled"}
         >
@@ -18783,7 +21245,8 @@ function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
             ></canvas>
             <span class="selecao-defesa-dados">
                 <strong>${obterNomeLocalizado(configuracao)}</strong>
-                <small>${localizar("{custo} créditos", { custo: configuracao.custo })}</small>
+                ${efeitoDeAfinidade ? `<small class="selecao-defesa-afinidade">${efeitoDeAfinidade}</small>` : ''}
+                <small>${localizar("{custo} créditos", { custo: obterCustoAtualDaPartida(configuracao.custo) })}</small>
                 <em>${obterResumoDaConfiguracaoDaTorre(configuracao)}</em>
             </span>
             <span class="selecao-defesa-estado">
@@ -18799,8 +21262,10 @@ function criarCartaoDaSelecaoDeDefesa(tipo, configuracao) {
 
 function criarVagasDaSelecaoDeDefesas() {
     const tiposSelecionados = [...selecaoDeDefesasEmEdicao];
+    const supremaEquipada = carregarSupremas().equipada;
+    if (supremaEquipada) tiposSelecionados.push(supremaEquipada);
     return Array.from(
-        { length: CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas },
+        { length: obterLimiteDaSelecaoDeDefesas() },
         (_, indice) => {
             const tipo = tiposSelecionados[indice];
 
@@ -18827,8 +21292,9 @@ function mostrarSelecaoDeDefesas() {
     definirTelaDoMenuAberta("selecaoDefesas");
     tentarIniciarMusicaDoLobby();
 
-    const quantidadeSelecionada = selecaoDeDefesasEmEdicao.size;
-    const limite = CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas;
+    const quantidadeSelecionada = selecaoDeDefesasEmEdicao.size
+        + (carregarSupremas().equipada ? 1 : 0);
+    const limite = obterLimiteDaSelecaoDeDefesas();
     const titulo = mapaPersonalizadoAtivo
         ? traduzir("editor.defesasTitulo", {
             mapa: escaparTextoDoEditor(mapaPersonalizadoAtivo.nome)
@@ -18846,13 +21312,14 @@ function mostrarSelecaoDeDefesas() {
         ? `<p class="selecao-defesas-tutorial">${localizar("A Torre padrão é obrigatória na primeira partida para concluir o tutorial.")}</p>`
         : "";
     const cartoes = Object.entries(CONFIG.torre.tipos)
+        .filter(([, configuracao]) => !configuracao.suprema)
         .map(([tipo, configuracao]) => criarCartaoDaSelecaoDeDefesa(tipo, configuracao))
         .join("");
 
     conteudoMenu.innerHTML = `
         ${criarCabecalhoConteudoMenu(
             titulo,
-            localizar("Monte sua equipe antes da batalha. Você pode levar até 6 defesas, incluindo torres, suportes, minas e bombas.")
+            localizar("Monte sua equipe antes da batalha. Você pode levar até {limite} defesas, incluindo torres, suportes, minas e bombas.", { limite })
         )}
         <div class="selecao-defesas-resumo">
             <div>
@@ -18865,13 +21332,16 @@ function mostrarSelecaoDeDefesas() {
             <span aria-hidden="true">${"◆".repeat(quantidadeSelecionada)}${"◇".repeat(limite - quantidadeSelecionada)}</span>
         </div>
         ${avisoDoTutorial}
+        ${criarAvisoDasAfinidadesDasTorres()}
+        ${typeof criarPreviaDosInimigos === 'function' ? criarPreviaDosInimigos() : ''}
+        ${criarSelecaoSupremaDaPartida()}
         <div class="selecao-defesas-layout">
             <section class="selecao-defesas-catalogo" aria-label="${localizar("Defesas disponíveis")}">
                 ${cartoes}
             </section>
             <aside class="selecao-defesas-equipe">
                 <small>${localizar("SUA EQUIPE")}</small>
-                <h3>${localizar("6 vagas para a batalha")}</h3>
+                <h3>${localizar("{limite} vagas para a batalha", { limite })}</h3>
                 <ol>${criarVagasDaSelecaoDeDefesas()}</ol>
                 <p class="selecao-defesas-mensagem" role="status">${mensagemDaSelecaoDeDefesas}</p>
                 <button
@@ -18885,6 +21355,7 @@ function mostrarSelecaoDeDefesas() {
     `;
 
     desenharMiniaturasDasTorresDoAlbum();
+    desenharMiniaturasDosInimigosDoAlbum();
 }
 
 function abrirSelecaoDeDefesas(wavesInfinitas = false) {
@@ -18893,6 +21364,7 @@ function abrirSelecaoDeDefesas(wavesInfinitas = false) {
     }
 
     selecaoDeDefesasParaModoInfinito = Boolean(wavesInfinitas);
+    obterAfinidadesDasTorres();
     selecaoDeDefesasEmEdicao = normalizarSelecaoDeDefesas(
         defesasSelecionadasParaPartida
     );
@@ -18934,7 +21406,7 @@ function alternarDefesaDaSelecao(tipoDaDefesa) {
         return;
     }
 
-    if (selecaoDeDefesasEmEdicao.size >= CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas) {
+    if (selecaoDeDefesasEmEdicao.size >= obterLimiteDeDefesasComuns()) {
         mensagemDaSelecaoDeDefesas = localizar(
             "Sua equipe já está completa. Retire uma defesa para escolher outra."
         );
@@ -18948,6 +21420,9 @@ function alternarDefesaDaSelecao(tipoDaDefesa) {
 }
 
 function confirmarSelecaoDeDefesas() {
+    if(obterMapaAquaticoAtual()&&!Array.from(selecaoDeDefesasEmEdicao).some(t=>CONFIG.torre.tipos[t]?.aquatica)){
+        mensagemDaSelecaoDeDefesas=localizar('Selecione uma torre aquática para jogar neste mapa.');mostrarSelecaoDeDefesas();return;
+    }
     if (selecaoDeDefesasEmEdicao.size === 0) {
         mensagemDaSelecaoDeDefesas = localizar("Escolha pelo menos uma defesa.");
         mostrarSelecaoDeDefesas();
@@ -18972,17 +21447,25 @@ function confirmarSelecaoDeDefesas() {
 
 function obterBotoesDeConstrucao() {
     return [
+        ...obterTiposSupremos().map(tipo => ({tipo, elemento: document.getElementById('botao-' + tipo)})),
+        {tipo:'boiaArpoes',elemento:document.getElementById('botao-boia-arpoes')},
+        {tipo:'torreTorpedos',elemento:document.getElementById('botao-torre-torpedos')},
+        {tipo:'torreDeBolhas',elemento:document.getElementById('botao-torre-de-bolhas')},
         { tipo: "torreFeixeContinuo", elemento: document.getElementById("botao-feixe-continuo") },
         { tipo: "torreLongoAlcance", elemento: document.getElementById("botao-longo-alcance") },
         { tipo: "padrao", elemento: botaoTorrePadrao },
         { tipo: "canhaoPesado", elemento: botaoCanhaoPesado },
         { tipo: "torreGlacial", elemento: botaoTorreGlacial },
         { tipo: "torreBesta", elemento: botaoTorreBesta },
+        { tipo: "catapulta", elemento: document.getElementById("botao-catapulta") },
+        { tipo: "torreMagnetica", elemento: document.getElementById("botao-torre-magnetica") },
+        { tipo: "torreMetamorfa", elemento: document.getElementById("botao-torre-metamorfa") },
         { tipo: "torreEsporos", elemento: botaoTorreEsporos },
         { tipo: "obliterador", elemento: botaoObliterador },
         { tipo: "torreSismica", elemento: botaoTorreSismica },
         { tipo: "torreDeVarredura", elemento: botaoTorreVarredura },
         { tipo: "iscaBlindada", elemento: botaoIscaBlindada },
+        { tipo: "canhaoBlindado", elemento: document.getElementById('botao-canhao-blindado') },
         { tipo: "amplificadorPixel", elemento: botaoAmplificadorPixel },
         { tipo: "geradorDeCreditos", elemento: botaoGeradorCreditos },
         { tipo: "torreDeRaios", elemento: botaoTorreRaios },
@@ -19016,7 +21499,7 @@ function selecionarTipoDeTorre(tipoDaTorre) {
         return;
     }
 
-    if (!torreEstaDesbloqueada(tipoDaTorre)) {
+    if (!defesaEstaDisponivelNaPartida(tipoDaTorre)) {
         tipoDeTorreParaConstruir = obterPrimeiraDefesaDisponivelParaPartida();
         atualizarBotoesDeConstrucao();
         const configuracaoBloqueada = obterConfiguracaoDaTorre(tipoDaTorre);
@@ -19041,7 +21524,7 @@ function selecionarTipoDeTorre(tipoDaTorre) {
 
 function atualizarBotoesDeConstrucao() {
     if (
-        !torreEstaDesbloqueada(tipoDeTorreParaConstruir)
+        !defesaEstaDisponivelNaPartida(tipoDeTorreParaConstruir)
         || !defesaEstaSelecionadaParaPartida(tipoDeTorreParaConstruir)
     ) {
         tipoDeTorreParaConstruir = obterPrimeiraDefesaDisponivelParaPartida();
@@ -19052,14 +21535,17 @@ function atualizarBotoesDeConstrucao() {
     for (const botao of botoes) {
         const selecionado = botao.tipo === tipoDeTorreParaConstruir;
         const configuracao = obterConfiguracaoDaTorre(botao.tipo);
-        const disponivel = torreEstaDesbloqueada(botao.tipo);
+        const disponivel = defesaEstaDisponivelNaPartida(botao.tipo);
         const escolhidaParaPartida = defesaEstaSelecionadaParaPartida(botao.tipo);
         const nome = obterNomeLocalizado(configuracao);
         botao.elemento.hidden = !escolhidaParaPartida;
         botao.elemento.textContent = disponivel
-            ? `${nome} (${configuracao.custo})`
+            ? `${nome} (${obterCustoDeConstrucaoDaTorre(botao.tipo)})`
             : `${nome} (${obterTextoDeTorreBloqueada(configuracao)})`;
         botao.elemento.disabled = !disponivel;
+        if (defesaEstaEmprestadaNaPartida(botao.tipo)) {
+            botao.elemento.textContent += ' · ' + localizar('Empréstimo da fase 1');
+        }
         botao.elemento.setAttribute("aria-disabled", (!disponivel).toString());
         botao.elemento.setAttribute("aria-pressed", selecionado.toString());
         botao.elemento.classList.remove("botao-construcao-ativo");
@@ -19070,8 +21556,8 @@ function atualizarBotoesDeConstrucao() {
     }
 
     resumoDoSeletorTorres.textContent = localizar("{quantidade} de {limite} escolhidas", {
-        quantidade: defesasSelecionadasParaPartida.size,
-        limite: CONFIG.torre.quantidadeMaximaDeDefesasSelecionadas
+        quantidade: defesasSelecionadasParaPartida.size + (supremaDaPartida ? 1 : 0),
+        limite: obterLimiteDaSelecaoDeDefesas()
     });
 }
 
@@ -19153,9 +21639,12 @@ function desenharCenaPausadaDoTutorial() {
     desenharFliperamaNoMapa();
     desenharMinasTerrestres();
     desenharBombasPesadas();
+    desenharInimigos("grandes");
     desenharTorres();
-    desenharInimigos();
+    desenharInimigos("pequenos");
+    desenharBarrasDosInimigosGrandes();
     desenharTiros();
+    desenharEfeitosSupremos();
     desenharExplosoesDosExplosivos();
     desenharIluminacaoDoMapa();
     desenharInterface();
@@ -19188,14 +21677,47 @@ function ocultarTutorialDaPartida() {
     limparDestaquesDoTutorial();
 }
 
-function concluirTutorialDaPartida() {
+function mostrarExplicacaoDoFliperama() {
+    explicacaoFliperamaPendente = false;
+    explicacaoFliperamaAtiva = true;
+    definirJogoPausado(true);
+    camadaTutorialPartida.hidden = false;
+    camadaTutorialPartida.dataset.passo = 'fliperama';
+    camadaTutorialPartida.dataset.posicaoPainel = fliperamaNoMapa.x < canvas.width / 2
+        ? 'direita' : 'esquerda';
+    progressoTutorialPartida.textContent = localizar('Clique no fliperama');
+    tituloTutorialPartida.textContent = localizar('Esse é o fliperama');
+    descricaoTutorialPartida.textContent = localizar('Clique nele para jogar. Vença os minigames para suas torres receberem um benefício. Se perder, os inimigos recebem o benefício. A partida ficará pausada até você clicar no fliperama.');
+    canvas.scrollIntoView({ block: 'center' });
+    const areaDoMapa = canvas.getBoundingClientRect();
+    const alturaDoPainel = camadaTutorialPartida.querySelector('.painel-tutorial-partida').getBoundingClientRect().height;
+    const posicaoYDoFliperama = areaDoMapa.top + fliperamaNoMapa.y * areaDoMapa.height / canvas.height;
+    camadaTutorialPartida.dataset.posicaoVertical = posicaoYDoFliperama > window.innerHeight / 2
+        && posicaoYDoFliperama >= alturaDoPainel + 24 ? 'cima' : 'baixo';
+    desenharCenaPausadaDoTutorial();
+}
+
+function ocultarExplicacaoDoFliperama() {
+    if (!explicacaoFliperamaAtiva) return;
+    explicacaoFliperamaAtiva = false;
+    camadaTutorialPartida.hidden = true;
+    delete camadaTutorialPartida.dataset.passo;
+    delete camadaTutorialPartida.dataset.posicaoPainel;
+    delete camadaTutorialPartida.dataset.posicaoVertical;
+}
+
+function concluirTutorialDaPartida(pulado = false) {
     if (!tutorialAtivo) {
         return;
     }
 
     tutorialConcluido = true;
     salvarTutorialConcluido();
+    if (!pulado && passoTutorial === CONFIG.tutorial.quantidadeDePassos) {
+        desbloquearConquista("formatura");
+    }
     registrarProgressoDaMissao("tutorial", 1, true);
+    explicacaoFliperamaPendente = !pulado;
     ocultarTutorialDaPartida();
     definirJogoPausado(false);
     mostrarAviso(localizar("Treinamento concluído. Defenda sua base!"));
@@ -19210,7 +21732,7 @@ function continuarTutorialDaPartida() {
 }
 
 function pularTutorialDaPartida() {
-    concluirTutorialDaPartida();
+    concluirTutorialDaPartida(true);
 }
 
 function iniciarTutorialPeloMenu() {
@@ -19274,10 +21796,20 @@ function iniciarPartida(wavesInfinitas = false) {
         iniciarTutorialDaPartida();
     }
 
-    requestAnimationFrame(atualizar);
+    agendarQuadroDaPartida();
 }
 
 function prepararNovaPartida() {
+    ocultarExplicacaoDoFliperama();
+    obterAfinidadesDasTorres();
+    if (typeof iniciarModificadorClassico === 'function') iniciarModificadorClassico();
+    if (typeof iniciarPartidaDeDominio === 'function') iniciarPartidaDeDominio();
+    if(typeof iniciarClimaClassico==='function')iniciarClimaClassico();
+    if(typeof iniciarEstatisticasDaBatalha==='function')iniciarEstatisticasDaBatalha();
+    if(typeof reiniciarEstatisticasDosDesafiosDiarios==='function')reiniciarEstatisticasDosDesafiosDiarios();
+    if(typeof iniciarDesafioDaCampanha==='function')iniciarDesafioDaCampanha();
+    prepararSupremaDaPartida();
+    if(typeof iniciarDesafiosClassicos==='function')iniciarDesafiosClassicos();
     iniciarTentativaParaConquistas();
     reiniciarEstatisticasDaPartidaParaMissoes();
     ocultarTutorialDaPartida();
@@ -19290,12 +21822,19 @@ function prepararNovaPartida() {
     tiros = [];
     tirosDosInimigos = [];
     dinheiro = obterDinheiroInicial();
+    if (faseUsaTetoDeSaldo()) {
+        dinheiro = Math.min(dinheiro, CONFIG.economia.tetoDeSaldoDasPartidasComuns);
+    }
+    creditosDeCombateRecebidosNaWave = 0;
+    if (typeof reiniciarEscolhasDaWave === 'function') reiniciarEscolhasDaWave();
+    if (typeof reiniciarMecanicaDoEvento === 'function') reiniciarMecanicaDoEvento();
     wave = 0;
     inimigosParaCriar = 0;
     inimigosRoxosParaCriar = 0;
     inimigosVermelhosParaCriar = 0;
     inimigosRapidosParaCriar = 0;
     inimigosSabotadoresParaCriar = 0;
+    inimigosSuperSabotadoresParaCriar = 0;
     inimigosEscorpioesParaCriar = 0;
     inimigosMumiasParaCriar = 0;
     inimigosLobosDeGeloParaCriar = 0;
@@ -19368,6 +21907,8 @@ function prepararNovaPartida() {
     boostFliperamaExpiraEm = 0;
     boostDanoFliperamaAtivo = false;
     boostDanoFliperamaExpiraEm = 0;
+    boostInimigosFliperamaExpiraEm = 0;
+    limparSobrecargaDaPartida();
     proximaWaveDoPulsoTemporal = 1;
     pulsoTemporalNormalExpiraEm = 0;
     pulsoTemporalBossExpiraEm = 0;
@@ -19413,6 +21954,7 @@ function prepararNovaPartida() {
     atualizarBotoesDeConstrucao();
     atualizarBotoesDaTorre();
     iniciarProximaWave();
+    if (typeof iniciarMecanicaDoEvento === 'function') iniciarMecanicaDoEvento();
 
     if (deveMostrarIntroducaoFase13()) {
         mostrarIntroducaoDaFase13();
@@ -19479,6 +22021,7 @@ function ocultarPainelBonusPosBoss() {
 }
 
 function pulsoTemporalEstaDesbloqueado() {
+    if (desafioSupremoAtivo) return false;
     return obterProgressoParaEquipamentos() >= CONFIG.pulsoTemporal.faseConcluidaParaDesbloqueio;
 }
 
@@ -19556,7 +22099,7 @@ function aplicarBonusPosBoss(tipoDoBonus) {
     if (tipoDoBonus === "cadencia") {
         multiplicadorDeCadenciaDasTorres *= 1 - configuracao.percentual;
     } else if (tipoDoBonus === "creditos") {
-        dinheiro += configuracao.valor;
+        concederCreditosNaPartida(configuracao.valor);
     } else if (tipoDoBonus === "dano") {
         multiplicadorDeDanoDasTorres *= 1 + configuracao.percentual;
     } else if (tipoDoBonus === "alcance") {
@@ -19617,7 +22160,14 @@ function posicaoEstaLivreParaFliperama(x, y) {
     return !pertoDeDefesa && !pertoDaTorreFinal;
 }
 
-function sortearPosicaoDoFliperama() {
+function posicaoDoFliperamaPodeSerClicada(x, y) {
+    const area = canvas.getBoundingClientRect();
+    const pontoX = area.left + x * area.width / canvas.width;
+    const pontoY = area.top + y * area.height / canvas.height;
+    return document.elementFromPoint(pontoX, pontoY) === canvas;
+}
+
+function sortearPosicaoDoFliperama(exigirCliqueVisivel = false) {
     const margem = CONFIG.fliperama.margemDoMapa;
 
     for (
@@ -19628,14 +22178,16 @@ function sortearPosicaoDoFliperama() {
         const x = margem + Math.random() * (canvas.width - margem * 2);
         const y = margem + Math.random() * (canvas.height - margem * 2);
 
-        if (posicaoEstaLivreParaFliperama(x, y)) {
+        if (posicaoEstaLivreParaFliperama(x, y)
+            && (!exigirCliqueVisivel || posicaoDoFliperamaPodeSerClicada(x, y))) {
             return { x: Math.round(x), y: Math.round(y) };
         }
     }
 
     for (let y = margem; y <= canvas.height - margem; y += 70) {
         for (let x = margem; x <= canvas.width - margem; x += 70) {
-            if (posicaoEstaLivreParaFliperama(x, y)) {
+            if (posicaoEstaLivreParaFliperama(x, y)
+                && (!exigirCliqueVisivel || posicaoDoFliperamaPodeSerClicada(x, y))) {
                 return { x, y };
             }
         }
@@ -19654,7 +22206,8 @@ function tentarExibirFliperamaNaWaveAtual() {
         return;
     }
 
-    const posicao = sortearPosicaoDoFliperama();
+    if (explicacaoFliperamaPendente) canvas.scrollIntoView({ block: 'center' });
+    const posicao = sortearPosicaoDoFliperama(explicacaoFliperamaPendente);
 
     if (!posicao) {
         return;
@@ -19665,6 +22218,10 @@ function tentarExibirFliperamaNaWaveAtual() {
         y: posicao.y,
         expiraEm: Date.now() + CONFIG.fliperama.tempoDisponivelNoMapa
     };
+    if (explicacaoFliperamaPendente) {
+        mostrarExplicacaoDoFliperama();
+        return;
+    }
     mostrarAviso(localizar("Um fliperama apareceu no mapa!"));
 }
 
@@ -20116,13 +22673,17 @@ function desenharLabirintoDoFliperama() {
 
 function iniciarEstadoDoVooPixel(agora = Date.now()) {
     const configuracao = CONFIG.fliperama.minigame.voo;
+    const centrosDosVaos = minigameFliperamaEmTreinamento
+        ? sortearVaosDoVooNoTreinamento()
+        : configuracao.centrosDosVaos;
     estadoVooPixel = {
         x: configuracao.xDoRobo,
         y: configuracao.yInicialDoRobo,
         velocidadeY: 0,
         pontos: 0,
+        impulsos: 0,
         atualizadoEm: agora,
-        portais: configuracao.centrosDosVaos.map((centroDoVao, indice) => ({
+        portais: centrosDosVaos.map((centroDoVao, indice) => ({
             x: configuracao.distanciaInicial
                 + indice * configuracao.espacamentoDosPortais,
             centroDoVao,
@@ -20131,12 +22692,27 @@ function iniciarEstadoDoVooPixel(agora = Date.now()) {
     };
 }
 
+function sortearVaosDoVooNoTreinamento() {
+    const candidatos = CONFIG.fliperama.minigame.voo.centrosDosVaos;
+    const limite = CONFIG.centroDeTreinamento.variacaoDoVoo.diferencaMaximaEntreVaos;
+    const vaos = [];
+    for (let indice = 0; indice < CONFIG.fliperama.minigame.voo.portaisNecessarios; indice++) {
+        const anterior = vaos.at(-1);
+        const permitidos = candidatos.filter(centro =>
+            anterior === undefined || (centro !== anterior && Math.abs(centro - anterior) <= limite)
+        );
+        vaos.push(permitidos[Math.floor(Math.random() * permitidos.length)]);
+    }
+    return vaos;
+}
+
 function impulsionarRoboDoVooPixel() {
     if (!estadoVooPixel || tipoMinigameFliperamaAtivo !== "voo") {
         return false;
     }
 
     estadoVooPixel.velocidadeY = CONFIG.fliperama.minigame.voo.impulso;
+    if (minigameFliperamaEmTreinamento) estadoVooPixel.impulsos++;
     return true;
 }
 
@@ -20290,6 +22866,10 @@ function iniciarEstadoDaChuvaDePixels(agora = Date.now()) {
         pixels: [],
         coletados: 0,
         proximoIndice: 0,
+        ultimaPosicao: canvasMinigameFliperama.width / 2,
+        deslocamentoDoCorrompido: minigameFliperamaEmTreinamento
+            ? Math.floor(Math.random() * CONFIG.fliperama.minigame.coleta.frequenciaDePixelCorrompido)
+            : 0,
         atualizadoEm: agora,
         ultimoPixelEm: agora - CONFIG.fliperama.minigame.coleta.intervaloEntrePixels
     };
@@ -20300,11 +22880,20 @@ function criarPixelDaChuva(agora = Date.now()) {
     const configuracao = CONFIG.fliperama.minigame.coleta;
     const indice = estadoChuvaDePixels.proximoIndice;
     const posicoes = configuracao.posicoesDeSurgimento;
+    const permitidas = minigameFliperamaEmTreinamento
+        ? posicoes.filter(x => Math.abs(x - estadoChuvaDePixels.ultimaPosicao)
+            <= CONFIG.centroDeTreinamento.variacaoDaChuva.deslocamentoMaximoEntrePixels)
+        : posicoes;
+    const x = minigameFliperamaEmTreinamento
+        ? permitidas[Math.floor(Math.random() * permitidas.length)]
+        : posicoes[indice % posicoes.length];
     estadoChuvaDePixels.pixels.push({
-        x: posicoes[indice % posicoes.length],
+        x,
         y: -configuracao.tamanhoDoPixel,
-        corrompido: (indice + 1) % configuracao.frequenciaDePixelCorrompido === 0
+        corrompido: (indice + 1 + estadoChuvaDePixels.deslocamentoDoCorrompido)
+            % configuracao.frequenciaDePixelCorrompido === 0
     });
+    estadoChuvaDePixels.ultimaPosicao = x;
     estadoChuvaDePixels.proximoIndice++;
     estadoChuvaDePixels.ultimoPixelEm = agora;
 }
@@ -20805,6 +23394,21 @@ function aplicarBoostDeDanoDoFliperama() {
     }
 }
 
+function obterPercentualDaPenalidadeDoFliperama() {
+    if (mapaPersonalizadoAtivo || faseSelecionada < 1 || faseSelecionada > 18) return 0;
+    const teste = CONFIG.fliperama.testeDeDificuldade;
+    return faseSelecionada <= teste.ultimaFaseComPenalidadeLeve
+        ? teste.percentualDeVelocidadeInimigaLeve
+        : teste.percentualDeVelocidadeInimiga;
+}
+
+function aplicarBoostInimigoDoFliperama(agora = Date.now()) {
+    if (!obterPercentualDaPenalidadeDoFliperama()) return false;
+    boostInimigosFliperamaExpiraEm = Math.max(agora, boostInimigosFliperamaExpiraEm)
+        + CONFIG.fliperama.boost.duracao;
+    return true;
+}
+
 function finalizarMinigameFliperama(vitoria, motivoDaFalha = "tempo") {
     if (!minigameFliperamaAtivo) {
         return;
@@ -20813,20 +23417,23 @@ function finalizarMinigameFliperama(vitoria, motivoDaFalha = "tempo") {
     const tipoConcluido = tipoMinigameFliperamaAtivo;
     const eraTreinamento = minigameFliperamaEmTreinamento;
     const duracaoDaTentativa = Math.max(1, Date.now() - minigameFliperamaComecaEm);
+    const valorDoTreinamento = tipoConcluido === "voo"
+        ? Math.max(1, estadoVooPixel?.impulsos || 0)
+        : duracaoDaTentativa;
     ocultarMinigameFliperama();
 
     if (eraTreinamento) {
         const novoRecorde = registrarResultadoDoCentroDeTreinamento(
             tipoConcluido,
             vitoria,
-            duracaoDaTentativa
+            valorDoTreinamento
         );
         desafioDeTreinamentoAtivo = {
             tipo: tipoConcluido,
             origem: "central",
             estado: "resultado",
             vitoria: Boolean(vitoria),
-            valorDoResultado: duracaoDaTentativa,
+            valorDoResultado: valorDoTreinamento,
             novoRecorde
         };
         mostrarCentroDeTreinamento();
@@ -20855,15 +23462,20 @@ function finalizarMinigameFliperama(vitoria, motivoDaFalha = "tempo") {
             }));
         } else if (tipoConcluido === "sequencia") {
             const recompensa = CONFIG.fliperama.minigame.sequencia.recompensaEmCreditos;
-            dinheiro += recompensa;
+            const creditosRecebidos = concederCreditosNaPartida(recompensa);
             atualizarBotoesDaTorre();
             mostrarAviso(localizar(
                 "Sequência Neon concluída! Você recebeu {creditos} créditos.",
-                { creditos: recompensa }
+                { creditos: creditosRecebidos }
             ));
         }
 
         registrarMinigameFliperamaConcluidoParaConquistas(tipoConcluido);
+    } else if (aplicarBoostInimigoDoFliperama()) {
+        mostrarAviso(localizar("Fliperama perdido! Inimigos {percentual}% mais rápidos por {segundos} segundos.", {
+            percentual: obterPercentualInteiro(obterPercentualDaPenalidadeDoFliperama()),
+            segundos: CONFIG.fliperama.boost.duracao / 1000
+        }));
     } else if (motivoDaFalha === "colisao") {
         mostrarAviso(localizar("O robô colidiu. Tente novamente no próximo fliperama."));
     } else {
@@ -21170,12 +23782,14 @@ window.addEventListener("blur", () => {
 });
 
 function finalizarPartida() {
+    limparSobrecargaDaPartida();
     if (partidaEncerrada) {
         return;
     }
 
     partidaEncerrada = true;
     partidaVencida = false;
+    if (typeof concluirDominioDasTorres === 'function') concluirDominioDasTorres();
     terminarTentativaParaConquistas(false);
     fragmentosRecebidosNoResultado = concederFragmentosPelasWavesAlcancadas();
     tiros = [];
@@ -21185,9 +23799,14 @@ function finalizarPartida() {
 }
 
 function finalizarPartidaComVitoria() {
+    limparSobrecargaDaPartida();
     if (partidaEncerrada) {
         return;
     }
+    if (typeof concluirDominioDasTorres === 'function') concluirDominioDasTorres(true);
+    if (desafioSupremoAtivo) return concluirDesafioSupremo();
+    if (mapaPersonalizadoAtivo?.evento) return concluirPartidaDeEvento();
+    if (mapaPersonalizadoAtivo?.classico) return concluirPartidaClassica();
 
     partidaEncerrada = true;
     partidaVencida = true;
@@ -21260,6 +23879,8 @@ function finalizarPartidaComVitoria() {
 }
 
 function mostrarPainelDeResultado(vitoria) {
+    falaIdadeDaPedra.hidden = true;
+    menuPrincipal.classList.add("oculto");
     const mapaPersonalizado = mapaPersonalizadoAtivo;
     const faseSecreta = faseAtualEhSecreta();
     const intervaloPerdido = faseAtualEhIntervaloPerdido();
@@ -21273,6 +23894,15 @@ function mostrarPainelDeResultado(vitoria) {
     fecharMenuDaPartida();
     menuPartida.classList.add("oculto");
     camadaResultado.dataset.estado = vitoria ? "vitoria" : "derrota";
+    const mostrarOrientacaoFase1 = vitoria && !mapaPersonalizado
+        && !modoWavesInfinitas && faseSelecionada === 1 && novaFaseDesbloqueada;
+    orientacaoVitoriaFase1.hidden = !mostrarOrientacaoFase1;
+    camadaResultado.dataset.orientacaoFase1 = mostrarOrientacaoFase1.toString();
+    if (mostrarOrientacaoFase1) {
+        tituloOrientacaoVitoriaFase1.textContent = localizar("Parabéns, você conseguiu! Agora você desbloqueou o Canhão pesado.");
+        textoOrientacaoVitoriaFase1.textContent = localizar("Para ir para a Fase 2, clique em Próxima fase. Ou volte ao menu, entre em Capítulos, escolha o Capítulo 1 e selecione a Fase 2. Depois volte ao lobby e clique em Jogar.");
+        pistaOrientacaoVitoriaFase1.textContent = localizar("Para saber que a Fase 2 está selecionada, o tema do lobby muda para um deserto.");
+    }
     seloResultado.textContent = vitoria
         ? mapaPersonalizado
             ? traduzir("editor.mapaPersonalizado", { waves: ultimaWaveDaFase })
@@ -21336,6 +23966,8 @@ function mostrarPainelDeResultado(vitoria) {
     botaoProximaFaseResultado.disabled = !existeProximaFase;
     botaoProximaFaseResultado.setAttribute("aria-disabled", (!existeProximaFase).toString());
     camadaResultado.hidden = false;
+    if(typeof mostrarEstatisticasDaBatalha==='function')mostrarEstatisticasDaBatalha();
+    if (typeof concluirDesafioDaCampanha === 'function') concluirDesafioDaCampanha(vitoria);
     botaoRepetirResultado.focus();
 }
 
@@ -21379,6 +24011,7 @@ function iniciarProximaFaseDoResultado() {
         return;
     }
 
+    afinidadesDasTorres = null;
     faseSelecionada = proximaFase;
     capituloSelecionado = obterCapituloDaFase(proximaFase)?.numero || capituloSelecionado;
     modoWavesInfinitas = false;
@@ -21390,6 +24023,19 @@ function iniciarProximaFaseDoResultado() {
 }
 
 function voltarAoLobby(comVinheta = false) {
+    ocultarExplicacaoDoFliperama();
+    if (quadroDaPartidaAgendado) cancelAnimationFrame(quadroDaPartidaAgendado);
+    quadroDaPartidaAgendado = 0;
+    afinidadesDasTorres = null;
+    if (typeof encerrarModificadorClassico === 'function') encerrarModificadorClassico();
+    if (typeof reiniciarEscolhasDaWave === 'function') reiniciarEscolhasDaWave();
+    if (typeof concluirDominioDasTorres === 'function') concluirDominioDasTorres();
+    if (typeof encerrarMecanicaDoEvento === 'function') encerrarMecanicaDoEvento();
+    if(typeof encerrarClimaClassico==='function')encerrarClimaClassico();
+    const eraDesafioSupremo = Boolean(desafioSupremoAtivo);
+    limparSobrecargaDaPartida();
+    const partidaEraClassica = Boolean(mapaPersonalizadoAtivo?.classico);
+    const partidaEraEvento = Boolean(mapaPersonalizadoAtivo?.evento);
     if (typeof atualizarBotaoDaFloresta === 'function') atualizarBotaoDaFloresta();
     const partidaEraPersonalizada = Boolean(mapaPersonalizadoAtivo);
     const abaDoEditorDaPartida = origemDoMapaPersonalizadoAtivo;
@@ -21457,7 +24103,13 @@ function voltarAoLobby(comVinheta = false) {
     atualizarDisponibilidadeDaDesistencia();
     atualizarPulsoTemporalNoControle();
 
-    if (partidaEraPersonalizada) {
+    if (eraDesafioSupremo) {
+        encerrarDesafioSupremo();mostrarSupremas();
+    } else if (partidaEraClassica) {
+        fecharConteudoMenu();atualizarLobbyClassico();
+    } else if (partidaEraEvento) {
+        mostrarEventos();
+    } else if (partidaEraPersonalizada) {
         mostrarEditorDeFases(abaDoEditorDaPartida);
     } else if (partidaEraIntervaloPerdido && exibirSeletorDeFases) {
         mostrarCapitulos();
@@ -21565,7 +24217,7 @@ function atualizarDisponibilidadeDaDesistencia() {
 }
 
 function obterMissaoPermanente(idDaMissao) {
-    return CONFIG.missoes.permanentes.find(missao => missao.id === idDaMissao) || null;
+    return obterCatalogoHistoricoDasMissoes().find(missao => missao.id === idDaMissao) || null;
 }
 
 function obterProgressoAtualDaMissao(missao) {
@@ -21579,6 +24231,13 @@ function missaoPermanenteEstaConcluida(missao) {
 
 function recompensaDaMissaoFoiResgatada(idDaMissao) {
     return progressoMissoesPermanentes.recompensasResgatadas.includes(idDaMissao);
+}
+
+function obterRecompensasLegadasPendentes() {
+    return obterCatalogoHistoricoDasMissoes().filter(missao =>
+        missaoPermanenteEstaConcluida(missao)
+        && !recompensaDaMissaoFoiResgatada(missao.id)
+    );
 }
 
 function recompensaPermanenteJaFoiDesbloqueada(recompensa) {
@@ -21684,18 +24343,8 @@ function enfileirarNotificacaoDeProgresso(tipo, titulo, nome, descricao, icone, 
 
 function registrarProgressoDaMissao(propriedade,valor,usarMaiorValor=false) {
     if(!Number.isSafeInteger(valor)||valor<0)return;
-    const atual=progressoMissoesPermanentes[propriedade]||0;
-    const missoes=CONFIG.missoes.permanentes.filter(m=>m.propriedadeDoProgresso===propriedade);
-    if(!missoes.length)return;
-    const limite=Math.max(...missoes.map(m=>m.objetivo));
-    const novo=Math.min(limite,usarMaiorValor?Math.max(atual,valor):atual+valor);
-    if(novo<=atual)return;
-    progressoMissoesPermanentes[propriedade]=novo;
-    salvarProgressoMissoesPermanentes();
-    atualizarResumoDasMissoesNoMenu();
-    for(const m of missoes)if(atual<m.objetivo&&novo>=m.objetivo&&!recompensaDaMissaoFoiResgatada(m.id)) {
-        enfileirarNotificacaoDeProgresso('missao',traduzir('notificacoes.missaoConcluida'),localizarMissao(m.nome),traduzir('notificacoes.resgatarMissao'),m.icone);
-    }
+    if(typeof registrarProgressoDiarioPorPropriedade==='function') registrarProgressoDiarioPorPropriedade(propriedade,valor,usarMaiorValor);
+    if(typeof registrarProgressoSemanalPorPropriedade==='function')registrarProgressoSemanalPorPropriedade(propriedade,valor,usarMaiorValor);
 }
 
 function registrarInimigoEliminadoParaMissoes(inimigo) {
@@ -21713,10 +24362,11 @@ function registrarFaseConcluidaParaMissoes() {
 }
 
 function contarRecompensasProntasDasMissoes() {
-    return CONFIG.missoes.permanentes.filter(missao => (
-        missaoPermanenteEstaConcluida(missao)
-        && !recompensaDaMissaoFoiResgatada(missao.id)
-    )).length + (premioFinalDasMissoesDisponivel() ? 1 : 0);
+    const legadas = obterRecompensasLegadasPendentes().length
+        + (premioFinalDasMissoesDisponivel() ? 1 : 0);
+    const diarias = typeof contarPremiosDiariosProntos === 'function' ? contarPremiosDiariosProntos() : 0;
+    const semanais = typeof contarPremiosSemanaisProntos === 'function' ? contarPremiosSemanaisProntos() : 0;
+    return legadas + diarias + semanais;
 }
 
 function atualizarResumoDasMissoesNoMenu() {
@@ -21828,30 +24478,36 @@ function criarColecaoDasMissoes() {
     `;
 }
 
-function mostrarMissoes(categoria = categoriaDeMissoesSelecionada) {
-    categoriaDeMissoesSelecionada = categoria;
+function criarPainelDeRecompensasLegadas() {
+    const pendentes = obterRecompensasLegadasPendentes();
+    if (!pendentes.length) return '';
+    return `<section class="premio-final-missoes recompensas-legadas-missoes" aria-label="${localizar('Recompensas antigas disponíveis')}">
+        <h3>${localizar('Recompensas antigas disponíveis')}</h3>
+        <p>${localizar('Prêmios conquistados antes da retirada das missões permanentes.')}</p>
+        <div class="missoes-grade">${pendentes.map(missao => `<article class="missao-cartao missao-concluida">
+            <span class="missao-icone" aria-hidden="true">${missao.icone}</span>
+            <div class="missao-dados"><h3>${localizarMissao(missao.nome)}</h3>
+            <p>${localizarRotuloDaRecompensa(obterRecompensaEfetivaDaMissao(missao).rotulo)}</p>
+            <button class="botao botao-resgatar-missao" onclick="resgatarMissaoPermanente('${missao.id}')">${localizar('Resgatar prêmio')}</button></div>
+        </article>`).join('')}</div>
+    </section>`;
+}
+
+function mostrarMissoes() {
     definirTelaDoMenuAberta('missoes');
     tentarIniciarMusicaDoLobby();
-    sincronizarDescobertasParaMissoes();
     atualizarResumoDasMissoesNoMenu();
-    const lista=CONFIG.missoes.permanentes;
-    const concluidas=lista.filter(missaoPermanenteEstaConcluida).length;
-    const categorias=[...new Set(lista.map(m=>m.categoria))];
-    const categoriasComPremio = new Set(lista
-        .filter(m => missaoPermanenteEstaConcluida(m) && !recompensaDaMissaoFoiResgatada(m.id))
-        .map(m => m.categoria));
-    const visiveis=lista.filter(m=>!categoria||m.categoria===categoria);
     conteudoMenu.innerHTML=`
-        ${criarCabecalhoConteudoMenu(localizarMissao('Missões'),localizarMissao('100 missões permanentes. Sem prazo, sem renovação.'))}
-        <section class="missoes-semana-cabecalho"><strong>${concluidas} / ${lista.length} · ${localizarMissao('Concluídas')}</strong>
-        <p>${localizarMissao('Progresso acumulado e recompensas únicas.')}</p></section>
+        ${criarCabecalhoConteudoMenu(localizarMissao('Missões'),localizar('Missões diárias e semanais.'))}
+        <section id="contador-missoes" class="contador-missoes" aria-label="${obterNomeLocalizado(CONFIG.conquistas.lendaDasCemMissoes)}">
+            <strong>${obterNomeLocalizado(CONFIG.conquistas.lendaDasCemMissoes)}</strong>
+            <span>${traduzir("missoes.contadorTotal", { total: obterTotalDeMissoesResgatadas(), objetivo: CONFIG.conquistas.lendaDasCemMissoes.objetivo })}</span>
+            <progress value="${Math.min(obterTotalDeMissoesResgatadas(), CONFIG.conquistas.lendaDasCemMissoes.objetivo)}" max="${CONFIG.conquistas.lendaDasCemMissoes.objetivo}"></progress>
+        </section>
+        ${typeof criarSecaoDosDesafiosDiarios === 'function' ? criarSecaoDosDesafiosDiarios() : ''}
+        ${typeof criarSecaoDosDesafiosSemanais === 'function' ? criarSecaoDosDesafiosSemanais() : ''}
         ${criarPainelDoPremioFinalDasMissoes()}
-        <nav class="categorias-missoes" aria-label="${localizarMissao('Categorias de missões')}">
-        ${['',...categorias].map(c=>`<button class="botao" aria-pressed="${categoria===c}" onclick="mostrarMissoes('${c}')">${localizarMissao(c||'Todas')}${(c ? categoriasComPremio.has(c) : categoriasComPremio.size > 0 || premioFinalDasMissoesDisponivel()) ? `<span class="categoria-missao-premio" aria-label="${traduzir('notificacoes.resgatarMissao')}">!</span>` : ''}</button>`).join('')}</nav>
-        <section class="missoes-grade">${visiveis.map(m=>m.secreta&&!missaoPermanenteEstaConcluida(m)
-            ? `<article class="missao-cartao"><span class="missao-icone">?</span><div class="missao-dados"><h3>???</h3><p>${localizarMissao('Continue sua jornada para descobrir esta missão.')}</p></div></article>`
-            : criarCartaoDaMissaoPermanente(m)).join('')}</section>
-        ${criarColecaoDasMissoes()}
+        ${criarPainelDeRecompensasLegadas()}
     `;
 }
 
@@ -21889,12 +24545,20 @@ function resgatarMissaoPermanente(idDaMissao) {
     progressoMissoesPermanentes.recompensasResgatadas.push(idDaMissao);
     progressoMissoesPermanentes.recompensasConcedidas[idDaMissao] = recompensa.rotulo;
     salvarProgressoMissoesPermanentes();
+    if (adicionarResgateAoContador("permanente", "", idDaMissao)) {
+        try {
+            localStorage.setItem(CHAVE_CONTADOR_DE_MISSOES, JSON.stringify(contadorDeMissoes));
+            atualizarSalvoAtivo();
+        } catch {}
+        verificarConquistasAutomaticas();
+    }
     atualizarResumoDasMissoesNoMenu();
     mostrarMissoes();
 }
 
 function alternarSkinDeMissao(idDaSkin) {
-    if (!recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkin)) {
+    if (!CONFIG.missoes.skins[idDaSkin]
+        || !recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkin)) {
         return;
     }
 
@@ -21907,7 +24571,15 @@ function alternarSkinDeMissao(idDaSkin) {
     }
 
     salvarRecompensasPermanentesDasMissoes();
-    mostrarMissoes();
+    if (telaDoMenuAberta === "album") {
+        mostrarAlbum();
+        const cartao = conteudoMenu.querySelector(`[data-id-skin="${idDaSkin}"]`)?.closest(".album-cartao");
+        cartao?.focus();
+        abrirDetalhesDaFigurinhaDoAlbum("skin", idDaSkin);
+        conteudoMenu.querySelector(".album-equipar-skin")?.focus();
+    } else {
+        mostrarMissoes();
+    }
 }
 
 function atualizarIdentidadeDoApoiador() {
@@ -22256,6 +24928,8 @@ function obterEstadoDaConquista(idDaConquista, conquista) {
         if (conquista.propriedade === "fasesConcluidas" && maiorFaseConcluida > 0) {
             progresso = Math.max(progresso, 1);
         }
+    } else if (conquista.tipoDeCriterio === "missoesResgatadas") {
+        progresso = Math.max(obterTotalDeMissoesResgatadas(), conquistaEstaDesbloqueada(idDaConquista) ? objetivo : 0);
     } else if (conquista.tipoDeCriterio === "campanha") {
         progresso = maiorFaseConcluida;
     } else if (conquista.tipoDeCriterio === "loja") {
@@ -22269,6 +24943,9 @@ function obterEstadoDaConquista(idDaConquista, conquista) {
                 ? conquista.itensObrigatorios.filter(item => itensConquistados.includes(item)).length
                 : itensConquistados.length
             : 0;
+    } else if (conquista.progressoPorMapasClassicos) {
+        const vitorias = new Set(carregarProgressoClassico().vitorias.map(vitoria => Number(vitoria.split(":")[0])));
+        progresso = CONFIG.classico.mapasDaConquistaLendas.filter(numero => vitorias.has(numero)).length;
     } else if (conquista.tipoDeCriterio === "especial") {
         progresso = conquistaEstaDesbloqueada(idDaConquista) ? objetivo : 0;
     }
@@ -22303,6 +24980,21 @@ function desbloquearConquista(idDaConquista) {
 }
 
 function verificarConquistasAutomaticas() {
+    if (typeof vitoriasDosEventos !== 'undefined' && vitoriasDosEventos.idadeDaPedra > 0
+        && desbloquearConquista('eAgora')) {
+        atualizarSalvoAtivo();
+    }
+    const marcosAnteriores = {
+        primeiroInimigo: (estatisticasDasConquistas.inimigosEliminados || 0) > 0,
+        primeiraTorre: (estatisticasDasConquistas.torresConstruidas || 0) > 0,
+        primeiraMelhoria: (estatisticasDasConquistas.melhorias || 0) > 0,
+        primeiroChefe: (estatisticasDasConquistas.bosses || 0) > 0,
+        primeiraCompra: comprasDaLoja.size > 0,
+        primeiroNivel: obterDadosDoNivel().nivel > 1
+    };
+    for (const [idDaConquista, cumprida] of Object.entries(marcosAnteriores)) {
+        if (cumprida) desbloquearConquista(idDaConquista);
+    }
     for (const [idDaConquista, conquista] of Object.entries(CONFIG.conquistas)) {
         if (
             conquista.tipoDeCriterio !== "especial"
@@ -22360,6 +25052,11 @@ function registrarInimigoEliminadoParaConquistas() {
     registrarEstatisticaDeConquista("inimigosEliminados", 1);
 }
 
+function partidaContaParaConquistasMemoraveis() {
+    return jogoIniciado && (!mapaPersonalizadoAtivo || mapaPersonalizadoAtivo.classico)
+        && !(typeof exploracaoDoLimboAtiva !== "undefined" && exploracaoDoLimboAtiva);
+}
+
 function registrarFaseConcluidaParaConquistas() {
     if (!modoWavesInfinitas) {
         registrarEstatisticaDeConquista("fasesConcluidas", 1);
@@ -22372,7 +25069,16 @@ function registrarWaveInfinitaParaConquistas(numeroDaWave) {
     }
 }
 
+function registrarWaveInfinitaConcluidaParaConquistas(numeroDaWave) {
+    if (modoWavesInfinitas) {
+        registrarEstatisticaDeConquista("maiorWaveInfinitaConcluida", numeroDaWave, true);
+    }
+}
+
 function registrarDefesaConstruidaParaConquistas(tipoDaDefesa) {
+    if(typeof obterRegistroDeDefesaNaBatalha==='function')obterRegistroDeDefesaNaBatalha(tipoDaDefesa);
+    if(typeof registrarConstrucaoDesafioDaCampanha==='function')registrarConstrucaoDesafioDaCampanha(tipoDaDefesa);
+    if(typeof registrarConstrucaoDesafioClassico==='function')registrarConstrucaoDesafioClassico(tipoDaDefesa);
     registrarConstrucaoParaMissoes(tipoDaDefesa);
     if (!CONFIG.torre.tipos[tipoDaDefesa]) {
         return false;
@@ -22794,6 +25500,7 @@ function mostrarFases(numeroDoCapitulo = capituloSelecionado) {
                 <h3>${obterNomeLocalizado(fase)}</h3>
                 <p>${descricao}</p>
                 <button class="botao botao-fase-acao" onclick="selecionarFase(${fase.numero})" ${desabilitado}>${textoBotao}</button>
+                ${typeof criarOpcaoDesafioDaCampanha==='function'?criarOpcaoDesafioDaCampanha(fase.numero):''}
             </article>
         `;
     }).join("");
@@ -22865,6 +25572,7 @@ function selecionarFase(numeroDaFase) {
         return;
     }
 
+    if (numeroDaFase !== faseSelecionada) afinidadesDasTorres = null;
     faseSelecionada = numeroDaFase;
     capituloSelecionado = obterCapituloDaFase(numeroDaFase)?.numero || capituloSelecionado;
     atualizarIndicadorFaseSelecionada();
@@ -22874,6 +25582,7 @@ function selecionarFase(numeroDaFase) {
 }
 
 function obterDescricaoDoItemDaLoja(configuracao) {
+    if(configuracao.aquatica)return obterResumoBaseDaConfiguracaoDaTorre(configuracao);
     if (configuracao.tipoDeItem === "melhoria") {
         return localizar(configuracao.descricao);
     }
@@ -22999,6 +25708,7 @@ function obterDescricaoDoItemDaLoja(configuracao) {
     }
 
     if (configuracao.atraiInimigosAtiradores) {
+        if(configuracao.tiposDeAlvo)return localizar('Atira somente em Sabotadores. Atrai inimigos atiradores e resiste a {tiros} tiros.',{tiros:configuracao.resistenciaATiros});
         return localizar("Atrai Sabotadores, Macacos e Corujas dentro do alcance deles. Aguenta {tiros} tiros e não atira.", {
             tiros: configuracao.resistenciaATiros
         });
@@ -23031,7 +25741,7 @@ function criarCartaoDeRecompensaDeNivel(recompensa, nivelAtual) {
             <span class="nivel-recompensa-icone nivel-recompensa-${recompensa.tipo}" aria-hidden="true">${recompensa.icone}</span>
             <div class="nivel-recompensa-dados">
                 <small>${traduzir("nivel.rotulo", { nivel: recompensa.nivel })}</small>
-                <strong>${obterNomeLocalizado(recompensa)}</strong>
+                <strong>${recompensa.tipo === "fragmentos" ? localizar("{quantidade} Fragmentos de Pixel", {quantidade:recompensa.quantidade}) : obterNomeLocalizado(recompensa)}</strong>
                 <p>${localizar(recompensa.descricao)}</p>
                 <em>${desbloqueada
                     ? traduzir("nivel.desbloqueada")
@@ -23156,6 +25866,7 @@ function mostrarNiveis() {
     tentarIniciarMusicaDoLobby();
     const dados = obterDadosDoNivel();
     const recompensas = CONFIG.progressaoDeNivel.recompensas
+        .slice().sort((a,b) => a.nivel - b.nivel)
         .map(recompensa => criarCartaoDeRecompensaDeNivel(recompensa, dados.nivel))
         .join("");
 
@@ -23319,7 +26030,7 @@ function mostrarLoja() {
         }).join("");
     const abasDaLoja = CONFIG.loja.categorias.map(categoria => {
         const ativa = categoria.id === categoriaAtual.id;
-        const quantidadeDeItens = obterItensDaCategoria(categoria).length;
+        const quantidadeDeItens = categoria.id === 'nucleos' ? Object.keys(CONFIG.sobrecarga.tipos).length : obterItensDaCategoria(categoria).length;
         const resumo = quantidadeDeItens
             ? quantidadeDeItens === 1
                 ? localizar("{quantidade} item", { quantidade: quantidadeDeItens })
@@ -23381,7 +26092,7 @@ function mostrarLoja() {
     conteudoMenu.innerHTML = `
         ${criarCabecalhoConteudoMenu(
             localizar("Loja"),
-            localizar("Use Fragmentos de Pixel para liberar itens permanentemente.")
+            localizar("Use Fragmentos de Pixel para comprar equipamentos e consumíveis.")
         )}
         <div class="loja-saldo" aria-label="${localizar("Seu saldo")}">
             <span aria-hidden="true">◆</span>
@@ -23393,8 +26104,8 @@ function mostrarLoja() {
             ${abasDaLoja}
         </nav>
         ${cabecalhoDaCategoria}
-        <section class="loja-grade" role="tabpanel" aria-label="${obterNomeLocalizado(categoriaAtual)}">
-            ${conteudoDaCategoria}
+        <section class="${categoriaAtual.id === 'nucleos' ? 'loja-secao-nucleos' : 'loja-grade'}" role="tabpanel" aria-label="${obterNomeLocalizado(categoriaAtual)}">
+            ${categoriaAtual.id === 'nucleos' ? criarOfertaDeNucleoNaLoja() : conteudoDaCategoria}
         </section>
     `;
     desenharMiniaturasDasTorresDoAlbum();
@@ -23515,6 +26226,7 @@ function confirmarCompraDaLoja() {
 }
 
 function concluirCompraDaLoja(idDoItem) {
+    if (obterTipoDoNucleoDaLoja(idDoItem)) { comprarNucleoDeSobrecarga(idDoItem); return; }
     const configuracao = obterConfiguracaoDoItemDaLoja(idDoItem);
 
     if (!configuracao || comprasDaLoja.has(idDoItem)) {
@@ -23539,6 +26251,7 @@ function concluirCompraDaLoja(idDoItem) {
     comprasDaLoja.add(idDoItem);
     salvarFragmentosPixel();
     salvarComprasDaLoja();
+    desbloquearConquista("primeiraCompra");
     atualizarSaldoDeFragmentos();
     atualizarIndicadorFaseSelecionada();
     atualizarBotoesDeConstrucao();
@@ -23548,6 +26261,19 @@ function concluirCompraDaLoja(idDoItem) {
 }
 
 function obterDetalheDoInimigoNoAlbum(tipo, configuracao) {
+    if (configuracao.numeroDoMapaIron) {
+        const mapa = obterMapasClassicos().find(item => item.numero === configuracao.numeroDoMapaIron);
+        const origem = localizar('Exclusivo do Iron em {mapa}', {
+            mapa: localizar(mapa?.caminho ? mapa.nome : mapa?.descricao || '')
+        });
+        const comportamento = configuracao.tracoIron === 'armadura'
+            ? localizar('Armadura: reduz dano em {porcentagem}%', {
+                porcentagem: Math.round(configuracao.reducaoDeDano * 100)
+            })
+            : localizar(configuracao.tracoIron === 'disparada'
+                ? 'Acelera com metade da vida' : 'Retorna uma vez após a derrota');
+        return `${origem} | ${comportamento}`;
+    }
     if (configuracao.detalhe) return localizar(configuracao.detalhe);
     const detalhes = {
         sabotador: localizar("Atira em torres | Destrói com {tiros} tiros", {
@@ -23586,7 +26312,7 @@ function obterDetalheDoInimigoNoAlbum(tipo, configuracao) {
         mosquitoDoBrejo: localizar("Exclusivo da Fase 7 | Muito rápido"),
         sapoVenenoso: localizar("Exclusivo da Fase 7"),
         guardiaoDeLodo: localizar("Exclusivo da Fase 7"),
-        bossPantano: localizar("Exclusivo da Fase 7 | Regenera 40 de vida por segundo depois de alcançar 50%"),
+        bossPantano: localizar("Exclusivo da Fase 7 | Regenera {cura} de vida por segundo depois de alcançar 50%", { cura: CONFIG.inimigo.bossPantano.vidaRegeneradaPorSegundo }),
         raptorAncestral: localizar("Exclusivo da Fase 8 | Muito rápido"),
         besouroDeAmbar: localizar("Exclusivo da Fase 8 | Reduz 20% do dano recebido"),
         triceratopo: localizar("Exclusivo da Fase 8 | Muita vida"),
@@ -23650,54 +26376,113 @@ function criarCartoesDosInimigosDoAlbum(tipos) {
             tipo,
             obterNomeLocalizado(configuracao),
             configuracao,
-            obterDetalheDoInimigoNoAlbum(tipo, configuracao)
+            configuracao.superBossDeEvento ? "" : obterDetalheDoInimigoNoAlbum(tipo, configuracao),
+            !configuracao.superBossDeEvento
         );
     }).join("");
+}
+
+function obterIdDoEventoDoInimigo(tipo) {
+    for (const [id, elenco] of Object.entries({
+        ...CONFIG.eventos.elencosNormais, ...CONFIG.eventos.elencosSuperBosses
+    })) {
+        if (elenco.comuns.includes(tipo) || elenco.chefes?.includes(tipo) || elenco.chefe === tipo) return id;
+    }
+    return null;
+}
+
+function criarGrupoDosInimigosDoAlbum(titulo, tipos, total, cartaoExtra = "") {
+    const quantidade = tipos.length + (cartaoExtra ? 1 : 0);
+    return `<section class="album-grupo-inimigos" aria-label="${localizar(titulo)}">
+        <h4>${localizar(titulo)} <small>${localizar("{obtidas}/{total} figurinhas", {
+            obtidas: quantidade, total
+        })}</small></h4>
+        <div class="album-grupo-grade">${quantidade
+            ? criarCartoesDosInimigosDoAlbum(tipos) + cartaoExtra
+            : `<p class="album-grupo-vazio">${localizar("Nenhuma figurinha ainda")}</p>`}</div>
+    </section>`;
+}
+
+function obterOrigemDoInimigoNoAlbum(tipo) {
+    if (obterIdDoEventoDoInimigo(tipo)) return "eventos";
+    return CONFIG.inimigo[tipo]?.visualClassico ? "classico" : "historia";
+}
+
+function criarGruposPorOrigemDoAlbum(tipos, tiposPossiveis, cartaoExtraDaHistoria = "") {
+    return [
+        ["Modo história", "historia"],
+        ["Modo clássico", "classico"],
+        ["Eventos", "eventos"]
+    ].map(([titulo, origem]) => criarGrupoDosInimigosDoAlbum(
+        titulo,
+        tipos.filter(tipo => obterOrigemDoInimigoNoAlbum(tipo) === origem),
+        tiposPossiveis.filter(tipo => obterOrigemDoInimigoNoAlbum(tipo) === origem).length
+            + (origem === "historia" && cartaoExtraDaHistoria ? 1 : 0),
+        origem === "historia" ? cartaoExtraDaHistoria : ""
+    )).join("");
 }
 
 function obterSkinsDoAlbum() {
     const idDaSkinDeMissao = "sentinelaDourada";
     const skinDeMissao = CONFIG.missoes.skins[idDaSkinDeMissao];
-    const idDaSkinDeNivel = "vanguardaEsmeralda";
-    const skinDeNivel = CONFIG.progressaoDeNivel.skins[idDaSkinDeNivel];
     const skinDoApoiador = CONFIG.pacoteApoiador.skin;
     const skinEquipada = obterSkinEquipadaDaTorrePadrao();
+    const niveisDasSkins = new Map(CONFIG.progressaoDeNivel.recompensas
+        .filter(recompensa => recompensa.tipo === "skin")
+        .map(recompensa => [recompensa.idDoItem, recompensa.nivel]));
 
     return [
-        ...CONFIG.missoes.premioFinal.skins.map(id => ({ id, nome: localizar(CONFIG.missoes.skins[id].nome), descricao: CONFIG.missoes.skins[id].descricao,
-            origem: 'Prêmio por concluir as 100 missões.', desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(id),
-            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === id })),
+        ...['guardiaoSolar', 'sentinelaCosmica'].map((id, indice) => ({ id, nome: localizar(CONFIG.missoes.skins[id].nome), descricao: CONFIG.missoes.skins[id].descricao,
+            origem: typeof localizarEvento === 'function' ? localizarEvento(indice === 0 ? 'Sorte na Roleta' : 'Superboss: Soberano Infernal') : indice === 0 ? 'Sorte na Roleta' : 'Superboss: Soberano Infernal', desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(id),
+            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === id && !dominioEstaEquipado('padrao') })),
+        ...[['coralAbissal', 'superBossesAbissais'], ['corrosaoViva', 'superBossesAcidos']].map(([id, evento]) => ({
+            id, nome: localizar(CONFIG.missoes.skins[id].nome), descricao: CONFIG.missoes.skins[id].descricao,
+            tipoDeTorre: CONFIG.missoes.skins[id].tipoDeTorre,
+            origem: localizarEvento(EVENTOS_DISPONIVEIS.find(item => item.id === evento).nome),
+            desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(id),
+            equipada: recompensasPermanentesDasMissoes.skinsDeTorresEquipadas?.[CONFIG.missoes.skins[id].tipoDeTorre] === id
+                && !dominioEstaEquipado(CONFIG.missoes.skins[id].tipoDeTorre)
+        })),
         {
             id: "original",
             nome: "Visual original",
             descricao: "Aparência padrão disponível para todos.",
             origem: "Disponível desde o início.",
             desbloqueada: true,
-            equipada: !skinEquipada
+            equipada: !skinEquipada && !dominioEstaEquipado('padrao')
         },
         {
             id: idDaSkinDeMissao,
             nome: obterNomeLocalizado(skinDeMissao),
             descricao: skinDeMissao.descricao,
-            origem: "Obtida em missão permanente.",
+            origem: typeof localizarEvento === 'function' ? localizarEvento('Caixa Surpresa') : 'Caixa Surpresa',
             desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkinDeMissao),
-            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === idDaSkinDeMissao
+            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === idDaSkinDeMissao && !dominioEstaEquipado('padrao')
         },
-        {
-            id: idDaSkinDeNivel,
-            nome: obterNomeLocalizado(skinDeNivel),
-            descricao: skinDeNivel.descricao,
-            origem: traduzir("nivel.origemSkin"),
-            desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(idDaSkinDeNivel),
-            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === idDaSkinDeNivel
-        },
+        ...Object.entries(CONFIG.progressaoDeNivel.skins).map(([id, skin]) => ({
+            id,
+            nome: obterNomeLocalizado(skin),
+            descricao: skin.descricao,
+            origem: traduzir("nivel.origemSkin", { nivel: niveisDasSkins.get(id) }),
+            desbloqueada: recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes(id),
+            equipada: recompensasPermanentesDasMissoes.skinTorrePadraoEquipada === id && !dominioEstaEquipado('padrao')
+        })),
+        ...obterTiposDeDominio().map(tipo => ({
+            id: `dominio-${tipo}`,
+            tipoDeDominio: tipo,
+            nome: localizar('Domínio de {nome}', { nome: obterNomeLocalizado(CONFIG.torre.tipos[tipo]) }),
+            descricao: localizar('Skin de domínio da torre {nome}.', { nome: obterNomeLocalizado(CONFIG.torre.tipos[tipo]) }),
+            origem: localizar('Domínio das torres'),
+            desbloqueada: dominioFoiConcluido(tipo),
+            equipada: dominioEstaEquipado(tipo)
+        })),
         {
             id: skinDoApoiador.id,
             nome: obterNomeLocalizado(skinDoApoiador),
             descricao: skinDoApoiador.descricao,
             origem: "Obtida no Pacote Apoiador.",
             desbloqueada: pacoteApoiador.adquirido,
-            equipada: pacoteApoiador.adquirido && pacoteApoiador.skinEquipada
+            equipada: pacoteApoiador.adquirido && pacoteApoiador.skinEquipada && !dominioEstaEquipado('padrao')
         }
     ];
 }
@@ -23713,7 +26498,12 @@ function obterDadosDasCategoriasDoAlbum() {
     const minas = todosOsExplosivos
         .filter(([tipo]) => torreEstaDesbloqueada(tipo));
     const ordemDosInimigos = [
-        "normal", "elite", "rapido", "sabotador", "escorpiao", "mumia",
+        ...Object.keys(CONFIG.inimigo).filter(tipo => CONFIG.inimigo[tipo].visualClassico
+            && (!['perseguidorDeFerro', 'bastiaoDeFerro'].includes(tipo)
+                || inimigosDerrotadosNoAlbum.has(tipo))),
+        ...Object.keys(CONFIG.inimigo).filter(tipo => CONFIG.inimigo[tipo].visualEvento
+            && tipo !== 'carcacaDaVibora'),
+        "normal", "elite", "rapido", "sabotador", "superSabotador", "escorpiao", "mumia",
         "loboDeGelo", "yeti", "macacoSaqueador", "oncaDaSelva",
         "gorilaDaSelva", "raposaLadina", "javaliFurioso", "corujaSombria",
         "morcegoDeFogo", "lagartoVulcanico", "golemDeMagma", "fragmentoDeMagma",
@@ -23738,10 +26528,13 @@ function obterDadosDasCategoriasDoAlbum() {
             : [])
     ];
     const todosOsInimigos = ordemDosInimigos.filter(tipo => !tipoEhBoss(tipo));
-    const todosOsBosses = ordemDosInimigos.filter(tipoEhBoss);
+    const todosOsBosses = ordemDosInimigos.filter(tipo => tipoEhBoss(tipo) && !CONFIG.inimigo[tipo].superBossDeEvento);
+    const todosOsSuperBosses = ordemDosInimigos.filter(tipo => CONFIG.inimigo[tipo].superBossDeEvento);
     const inimigos = todosOsInimigos
         .filter(tipo => inimigosDerrotadosNoAlbum.has(tipo));
     const bosses = todosOsBosses
+        .filter(tipo => inimigosDerrotadosNoAlbum.has(tipo));
+    const superBosses = todosOsSuperBosses
         .filter(tipo => inimigosDerrotadosNoAlbum.has(tipo));
     const formaHumanaDoSenhorDoTempo = faseSecretaDescoberta
         && CONFIG.faseSecreta.senhorDoTempo.formaHumanaFutura.ativa
@@ -23761,15 +26554,20 @@ function obterDadosDasCategoriasDoAlbum() {
         inimigos: {
             quantidade: inimigos.length + (formaHumanaDoSenhorDoTempo ? 1 : 0),
             total: todosOsInimigos.length + (formaHumanaDoSenhorDoTempo ? 1 : 0),
-            conteudo: criarCartoesDosInimigosDoAlbum(inimigos)
-                + (formaHumanaDoSenhorDoTempo
+            conteudo: criarGruposPorOrigemDoAlbum(inimigos, todosOsInimigos,
+                formaHumanaDoSenhorDoTempo
                     ? criarCartaoDaFormaHumanaDoSenhorDoTempo(formaHumanaDoSenhorDoTempo)
                     : "")
         },
         bosses: {
             quantidade: bosses.length,
             total: todosOsBosses.length,
-            conteudo: criarCartoesDosInimigosDoAlbum(bosses)
+            conteudo: criarGruposPorOrigemDoAlbum(bosses, todosOsBosses)
+        },
+        superBosses: {
+            quantidade: superBosses.length,
+            total: todosOsSuperBosses.length,
+            conteudo: criarCartoesDosInimigosDoAlbum(superBosses)
         },
         minas: {
             quantidade: minas.length,
@@ -23791,6 +26589,7 @@ function criarEstadoVazioDoAlbum(idDaCategoria) {
         torres: "Desbloqueie uma torre para colar uma nova figurinha aqui.",
         inimigos: "Derrote um inimigo durante uma partida para colar a primeira figurinha.",
         bosses: "Derrote um Boss para revelar e colar sua figurinha.",
+        superBosses: "Derrote um Super-Boss na wave 20 para revelar sua figurinha.",
         minas: "Compre uma mina ou bomba na Loja para adicioná-la ao Álbum.",
         skins: "Ganhe uma skin para adicioná-la à sua coleção."
     };
@@ -23807,6 +26606,7 @@ function criarEstadoVazioDoAlbum(idDaCategoria) {
 }
 
 function mostrarAlbum() {
+    pararAnimacaoDoInimigoNoAlbum();
     definirTelaDoMenuAberta("album");
     tentarIniciarMusicaDoLobby();
     elementoDeOrigemDosDetalhesDoAlbum = null;
@@ -23815,7 +26615,7 @@ function mostrarAlbum() {
     const categoriaAtual = obterCategoriaDoAlbum();
     const dadosDasCategorias = obterDadosDasCategoriasDoAlbum();
     const dadosAtuais = dadosDasCategorias[categoriaAtual.id];
-    const paginaEstaVazia = dadosAtuais.quantidade === 0;
+    const paginaEstaVazia = dadosAtuais.quantidade === 0 && categoriaAtual.id !== "inimigos";
     const abasDoAlbum = CONFIG.album.categorias.map((categoria) => {
         const ativa = categoria.id === categoriaAtual.id;
         const dadosDaCategoria = dadosDasCategorias[categoria.id];
@@ -23882,7 +26682,10 @@ function mostrarAlbum() {
 }
 
 function criarCartoesDaTorre(tipo, configuracao) {
-    const detalheDeDesbloqueio = configuracao.requerCompraNaLoja
+    const detalheDeDesbloqueio = configuracao.eventoParaDesbloqueio
+        ? localizar(" | Desbloqueio: vença {evento}", {
+            evento: obterNomeDoEventoDeDesbloqueio(configuracao.eventoParaDesbloqueio) })
+        : configuracao.requerCompraNaLoja
         ? localizar(" | Loja: {custo} fragmentos", { custo: configuracao.custoNaLoja })
         : configuracao.faseConcluidaParaDesbloqueio > 0
             ? localizar(" | Desbloqueio: conclua a Fase {fase}", {
@@ -23923,9 +26726,9 @@ function criarCartoesDaTorre(tipo, configuracao) {
             : localizar(" | Detonação por contato")) + detalheDoExplosivo
                 + detalheDeDesbloqueio
         : configuracao.efeitoSismico
-            ? localizar("Custo: {custo} | Carga: {cargas} inimigos | Empurrão: {distancia} px | Limite: {limite}", {
+            ? localizar("Custo: {custo} | Recarga: {segundos}s | Empurrão: {distancia} px | Limite: {limite}", {
                 custo: configuracao.custo,
-                cargas: configuracao.efeitoSismico.cargasNecessarias,
+                segundos: configuracao.efeitoSismico.recargaEmMs / 1000,
                 distancia: configuracao.efeitoSismico.distanciaDoEmpurrao,
                 limite: configuracao.limitePorPartida
             }) + detalheDeDesbloqueio
@@ -23957,7 +26760,8 @@ function criarCartoesDaTorre(tipo, configuracao) {
     const textoDoElemento = obterTextoDoElemento(configuracao);
     const detalheDoElemento = textoDoElemento ? ` | ${textoDoElemento}` : "";
     const descricaoDoNivelBase = descricaoBaseDoNivelBase + detalheDoElemento
-        + (configuracaoUsaMelhoriasEscolhidas(configuracao) ? ' | ' + resumoDasMelhoriasEscolhidas() : '');
+        + (configuracaoUsaMelhoriasEscolhidas(configuracao) ? ' | ' + resumoDasMelhoriasEscolhidas() : '')
+        + (configuracao.tiposDeAlvo?' | '+obterResumoBaseDaConfiguracaoDaTorre(configuracao):'');
     const nomeDaTorre = obterNomeLocalizado(configuracao);
     const nomeDoNivelBase = configuracaoEhExplosivoConsumivel(configuracao)
         || !configuracaoPossuiMelhorias(configuracao)
@@ -23971,24 +26775,33 @@ function criarCartoesDaTorre(tipo, configuracao) {
             nomeDoNivelBase,
             descricaoDoNivelBase
         ),
-        ...(configuracaoUsaMelhoriasEscolhidas(configuracao) ? [] : configuracao.melhorias).map((melhoria, indice) => {
+        ...Array.from({length:obterLimiteVisualDaTorre(configuracao)}, (_, indice) => {
+            const melhoria = configuracao.melhorias[indice];
+            if(configuracaoUsaMelhoriasEscolhidas(configuracao))return criarCartaoDeTorre(
+                tipo,indice+1,localizar("{nome} · nível {nivel}",{nome:nomeDaTorre,nivel:indice+1}),
+                obterDescricaoDoNivelVisualDaTorre(indice+1)
+            );
             const descricaoDaMelhoria = melhoria.efeitoSismico
                 ? indice === 0
-                    ? localizar("Melhoria: {custo} | Carga reduzida para {cargas} inimigos", {
+                    ? localizar("Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px", {
                         custo: melhoria.custo,
-                        cargas: melhoria.efeitoSismico.cargasNecessarias
+                        segundos: (melhoria.efeitoSismico.recargaEmMs / 1000).toLocaleString(idiomaAtual),
+                        distancia: melhoria.efeitoSismico.distanciaDoEmpurrao
                     })
                     : indice === 1
-                        ? localizar("Melhoria: {custo} | Vulnerabilidade: +{percentual}% por {segundos}s", {
+                        ? localizar("Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Vulnerabilidade +{percentual}%", {
                             custo: melhoria.custo,
+                            segundos: (melhoria.efeitoSismico.recargaEmMs / 1000).toLocaleString(idiomaAtual),
+                            distancia: melhoria.efeitoSismico.distanciaDoEmpurrao,
                             percentual: obterPercentualInteiro(
                                 melhoria.efeitoSismico.percentualDeVulnerabilidade
-                            ),
-                            segundos: melhoria.efeitoSismico.duracaoDaVulnerabilidade / 1000
+                            )
                         })
-                        : localizar("Melhoria: {custo} | Segundo impacto após {segundos}s", {
+                        : localizar("Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Segundo impacto após {atraso}s", {
                             custo: melhoria.custo,
-                            segundos: (melhoria.efeitoSismico.atrasoDoSegundoImpacto / 1000).toLocaleString(idiomaAtual)
+                            segundos: (melhoria.efeitoSismico.recargaEmMs / 1000).toLocaleString(idiomaAtual),
+                            distancia: melhoria.efeitoSismico.distanciaDoEmpurrao,
+                            atraso: (melhoria.efeitoSismico.atrasoDoSegundoImpacto / 1000).toLocaleString(idiomaAtual)
                         })
                 : melhoria.creditosPorWave
                 ? localizar("Melhoria: {custo} | Produção: {creditos} por wave", {
@@ -24035,6 +26848,7 @@ function criarCabecalhoConteudoMenu(titulo, descricao) {
 }
 
 function definirTelaDoMenuAberta(tela) {
+    const trilhaAnterior = obterConfiguracaoDaMusicaDoLobby();
     const telaAnteriorEraPagina = TELAS_DO_LOBBY_EM_TELA_CHEIA.has(telaDoMenuAberta);
     const telaAtualEhPagina = TELAS_DO_LOBBY_EM_TELA_CHEIA.has(tela);
     const paginaNovaFoiAberta = telaAtualEhPagina && !telaAnteriorEraPagina;
@@ -24044,6 +26858,7 @@ function definirTelaDoMenuAberta(tela) {
     }
 
     telaDoMenuAberta = tela;
+    transicionarTrilhaDoMenu(trilhaAnterior);
     menuPrincipal.classList.toggle("pagina-menu-aberta", telaAtualEhPagina);
     conteudoMenu.classList.toggle("conteudo-menu-tela-cheia", telaAtualEhPagina);
 
@@ -24067,12 +26882,17 @@ function definirTelaDoMenuAberta(tela) {
 
 function atualizarConteudoMenuAberto() {
     const renderizadores = {
+        supremas: mostrarSupremas,
+        enciclopedia: () => mostrarEnciclopedia(registroAbertoNaEnciclopedia),
         missoes: mostrarMissoes,
         pacoteApoiador: mostrarPacoteApoiador,
         conquistas: mostrarConquistas,
         niveis: mostrarNiveis,
         salvos: mostrarSalvos,
         classico: () => mostrarApresentacaoClassico(),
+        laboratorio: () => {
+            if (typeof mostrarLaboratorioClassico === 'function') mostrarLaboratorioClassico();
+        },
         editor: () => rascunhoDoMapaNoEditor
             ? mostrarFormularioDoEditor()
             : mostrarEditorDeFases(),
@@ -24081,8 +26901,12 @@ function atualizarConteudoMenuAberto() {
         fases: mostrarFases,
         loja: mostrarLoja,
         album: mostrarAlbum,
+        dominio: () => mostrarDominioDasTorres(origemDoDominioDasTorres),
         tutorial: mostrarTutorial,
-        selecaoDefesas: mostrarSelecaoDeDefesas
+        selecaoDefesas: mostrarSelecaoDeDefesas,
+        eventos: () => {
+            if (typeof mostrarEventos === 'function') mostrarEventos();
+        }
     };
 
     renderizadores[telaDoMenuAberta]?.();
@@ -24112,6 +26936,9 @@ function fecharConteudoMenu(preservarMapaPersonalizado = false) {
 
     definirTelaDoMenuAberta(null);
     conteudoMenu.innerHTML = "";
+    if (typeof atualizarPontosInterativosDoLobbyClassico === "function") {
+        atualizarPontosInterativosDoLobbyClassico();
+    }
     elementoDeOrigemDoConteudoMenu = null;
     elementoDeOrigemDosDetalhesDoAlbum = null;
     document.body.classList.remove("album-detalhes-abertos");
@@ -24126,11 +26953,12 @@ function fecharConteudoMenu(preservarMapaPersonalizado = false) {
 }
 
 function criarCartaoDeTorre(tipo, nivel, nome, descricao) {
+    const temDominio = typeof dominioFoiConcluido === 'function' && dominioFoiConcluido(tipo);
     return `
         <button
             class="album-cartao album-cartao-torre"
             type="button"
-            aria-label="${localizar("Abrir detalhes de {nome}", { nome })}"
+            aria-label="${localizar("Abrir detalhes de {nome}", { nome })}${temDominio ? ` · ${localizar('Estrela do domínio')}: ${obterDescricaoDoAtributoDeDominio(tipo)}` : ''}"
             onclick="abrirDetalhesDaFigurinhaDoAlbum('torre', '${tipo}', ${nivel})"
         >
             <canvas
@@ -24142,14 +26970,14 @@ function criarCartaoDeTorre(tipo, nivel, nome, descricao) {
                 aria-hidden="true"
             ></canvas>
             <div class="album-torre-dados">
-                <strong>${nome}</strong>
+                <strong>${temDominio ? '<span class="estrela-dominio" aria-hidden="true">★</span> ' : ''}${nome}</strong>
                 <p>${descricao}</p>
             </div>
         </button>
     `;
 }
 
-function criarCartaoDeInimigo(tipo, nome, configuracao, detalheAdicional = "") {
+function criarCartaoDeInimigo(tipo, nome, configuracao, detalheAdicional = "", mostrarAtributos = true) {
     const vida = configuracao.vida.toLocaleString(idiomaAtual);
     const velocidade = configuracao.velocidade.toLocaleString(idiomaAtual);
     const detalhes = [
@@ -24173,10 +27001,10 @@ function criarCartaoDeInimigo(tipo, nome, configuracao, detalheAdicional = "") {
             ></canvas>
             <div class="album-inimigo-dados">
                 <strong>${nome}</strong>
-                <p>${localizar("Vida: {vida} | Velocidade: {velocidade}", {
+                <p>${mostrarAtributos ? localizar("Vida: {vida} | Velocidade: {velocidade}", {
                     vida,
                     velocidade
-                })}${detalhe}</p>
+                }) + detalhe : localizar("Veja vida e ataque por dificuldade nos detalhes.")}</p>
             </div>
         </button>
     `;
@@ -24312,7 +27140,7 @@ function obterCategoriaDaDefesaNosDetalhes(configuracao) {
     if (
         configuracao.percentualBonusCadencia
         || configuracao.creditosPorWave
-        || configuracao.atraiInimigosAtiradores
+        || (configuracao.atraiInimigosAtiradores && configuracao.naoAtira)
     ) {
         return localizar("Suporte");
     }
@@ -24358,13 +27186,23 @@ function criarMiniaturaDaSkinNosDetalhes(idDaSkin) {
 
 function criarDadosDosDetalhesDaTorre(tipo, nivel) {
     const configuracao = CONFIG.torre.tipos[tipo];
-    if (configuracaoUsaMelhoriasEscolhidas(configuracao) && nivel !== 0) return null;
     const nivelValido = Number.isInteger(nivel)
         && nivel >= 0
-        && nivel <= (configuracao?.melhorias?.length || 0);
+        && nivel <= obterLimiteVisualDaTorre(configuracao);
     if (!configuracao || !nivelValido || !torreEstaDesbloqueada(tipo)) {
         return null;
     }
+    if(configuracaoUsaMelhoriasEscolhidas(configuracao)&&nivel>0)return {
+        nome:localizar("{nome} · nível {nivel}",{nome:obterNomeLocalizado(configuracao),nivel}),
+        categoria:obterCategoriaDaDefesaNosDetalhes(configuracao),
+        miniatura:criarMiniaturaDaTorreNosDetalhes(tipo,nivel),
+        atributos:criarAtributoDosDetalhesDoAlbum(localizar('Melhorias'),String(nivel))
+            + (CONFIG.eventos.premioDasTorresSuperBosses[tipo]
+                ? criarAtributoDosDetalhesDoAlbum(localizar('Bônus do Superboss'),
+                    localizar('+{percentual}% de dano', { percentual: Math.round(obterBonusDeDanoDaTorrePremio(tipo) * 100) })) : ''),
+        descricao:obterDescricaoDoNivelVisualDaTorre(nivel),
+        observacao:resumoDasMelhoriasEscolhidas()
+    };
 
     const configuracaoAtual = obterConfiguracaoDaTorreNoNivel(configuracao, nivel);
     const configuracaoDoElemento = obterConfiguracaoDoElemento(configuracao.elemento);
@@ -24392,6 +27230,9 @@ function criarDadosDosDetalhesDaTorre(tipo, nivel) {
                 : localizar("Sem dano direto"),
             configuracaoAtual.dano > 0
         ),
+        CONFIG.eventos.premioDasTorresSuperBosses[tipo]
+            ? criarAtributoDosDetalhesDoAlbum(localizar('Bônus do Superboss'),
+                localizar('+{percentual}% de dano', { percentual: Math.round(obterBonusDeDanoDaTorrePremio(tipo) * 100) })) : '',
         criarAtributoDosDetalhesDoAlbum(
             localizar("Tempo para atacar"),
             tempoDeAtaque
@@ -24464,25 +27305,110 @@ function criarDadosDosDetalhesDaTorre(tipo, nivel) {
     };
 }
 
-function criarDadosDosDetalhesDoInimigo(tipo) {
+function obterResumoDoAtaqueDoSuperBossNoAlbum(tipo, dificuldade) {
+    const id = obterIdDoEventoDoInimigo(tipo);
+    if (id === 'superBossesMetamorfos') {
+        const regra = CONFIG.eventos.ataquesEspeciaisSuperBoss[id];
+        const intervalo = dificuldade === 'dificil' ? regra.intervaloFormaDificilMs
+            : dificuldade === 'medio' ? regra.intervaloFormaMedioMs : regra.intervaloFormaFacilMs;
+        const resumo = localizarEvento('Troca de forma a cada {segundos} s: Ciano, Sabotador, Titã Glacial ou Curador. Pode receber armadura.', {
+            segundos: (intervalo / 1000).toLocaleString(idiomaAtual)
+        });
+        return dificuldade === 'facil' ? resumo
+            : `${resumo} ${localizarEvento('Adaptação: resiste à defesa que mais o feriu na forma anterior.')}`;
+    }
+    const regra = CONFIG.eventos.ataquesEspeciaisSuperBoss[id];
+    const configuracao = CONFIG.eventos.dificuldadesSuperBosses[dificuldade];
+    const segundos = valor => (valor / 1000).toLocaleString(idiomaAtual);
+    const efeitos = {
+        superBosses: localizar("Queima as torres por {segundos} s.", { segundos: segundos(regra.duracaoMs) }),
+        superBossesMecanicos: localizar("Paralisa as torres por {segundos} s.", { segundos: segundos(regra.duracaoMs) }),
+        superBossesAbissais: localizar("Reduz o alcance das torres em {percentual}% por {segundos} s.", {
+            percentual: Math.round(regra.reducaoAlcance * 100), segundos: segundos(regra.duracaoMs)
+        }),
+        superBossesAcidos: localizar("O ácido causa {tiros} tiros extras de dano na torre.", {
+            tiros: regra.tirosPorImpacto
+        })
+    };
+    const principal = localizar("A cada {segundos} s, atinge até {alvos} torres. {efeito}", {
+        segundos: segundos(CONFIG.eventos.intervaloAtaqueSuperBossMs * configuracao.multiplicadorIntervaloAtaque),
+        alvos: regra.alvos, efeito: efeitos[id]
+    });
+    if (!configuracao.ataqueSecundario) return `${principal} ${localizar("Sem ataque secundário.")}`;
+    const secundaria = CONFIG.eventos.ataquesSecundariosSuperBoss[id];
+    const intervalo = dificuldade === 'dificil' ? secundaria.intervaloDificilMs : secundaria.intervaloMedioMs;
+    const efeitosSecundarios = {
+        superBosses: localizar("Fúria das Cinzas: acelera {percentual}% por {duracao} s.", {
+            percentual: Math.round(((dificuldade === 'dificil'
+                ? secundaria.multiplicadorVelocidadeDificil : secundaria.multiplicadorVelocidadeMedio) - 1) * 100),
+            duracao: segundos(secundaria.duracaoFuriaMs)
+        }),
+        superBossesMecanicos: localizar("Instala uma torreta que atira nas suas torres."),
+        superBossesAbissais: localizar("Invoca {quantidade} reforços.", {
+            quantidade: dificuldade === 'dificil' ? secundaria.reforcosDificil : secundaria.reforcosMedio
+        }),
+        superBossesAcidos: localizar("Deixa uma carcaça que acelera a Víbora em {percentual}%.", {
+            percentual: Math.round((secundaria.multiplicadorVelocidade - 1) * 100)
+        })
+    };
+    return `${principal} ${localizar("A cada {segundos} s: {efeito}", {
+        segundos: segundos(intervalo), efeito: efeitosSecundarios[id]
+    })}`;
+}
+
+function criarDadosDosDetalhesDoInimigo(tipo, dificuldadeSelecionada = 'facil') {
     const configuracao = CONFIG.inimigo[tipo];
     if (!configuracao || !inimigosDerrotadosNoAlbum.has(tipo)) {
         return null;
     }
 
     const ehBoss = tipoEhBoss(tipo);
-    const fraquezas = obterResumoDasFraquezasElementais(tipo)
+    const idDoEvento = obterIdDoEventoDoInimigo(tipo);
+    const dificuldadesConcluidas = configuracao.superBossDeEvento
+        && typeof obterDificuldadesConcluidasDoSuperBoss === 'function'
+        ? obterDificuldadesConcluidasDoSuperBoss(idDoEvento) : [];
+    const dificuldade = dificuldadesConcluidas.includes(dificuldadeSelecionada)
+        ? dificuldadeSelecionada : dificuldadesConcluidas[0] || dificuldadeSelecionada;
+    const dificuldadeLiberada = dificuldadesConcluidas.includes(dificuldade);
+    const vitoriasAntigas = configuracao.superBossDeEvento
+        && typeof obterVitoriasAntigasSemDificuldadeDoSuperBoss === 'function'
+        ? obterVitoriasAntigasSemDificuldadeDoSuperBoss(idDoEvento) : 0;
+    const vidaDoSuperBoss = configuracao.superBossDeEvento && dificuldadeLiberada
+        ? CONFIG.eventos.vidasFinaisDosSuperBosses[dificuldade]?.[tipo]
+            ?? calcularVidaDoBoss(CONFIG.eventos.wavesSuperBosses, tipo)
+                * CONFIG.eventos.multiplicadorVidaSuperBoss
+        : 0;
+    const fraquezaElemental = obterResumoDasFraquezasElementais(tipo);
+    const tipoDaSupremaEfetiva = configuracao.superBossDeEvento
+        ? CONFIG.supremas.fraquezaPorSuperBoss[tipo] : null;
+    const fraquezaSuprema = tipoDaSupremaEfetiva
+        ? localizar('Suprema {nome} +{percentual}%', {
+            nome: localizar(CONFIG.torre.tipos[tipoDaSupremaEfetiva].nome),
+            percentual: obterPercentualInteiro(CONFIG.supremas.multiplicadorDaFraqueza - 1)
+        }) : '';
+    const fraquezas = [fraquezaElemental, fraquezaSuprema].filter(Boolean).join(', ')
         || localizar("Nenhuma fraqueza elemental");
+    const evento = idDoEvento && typeof EVENTOS_DISPONIVEIS !== "undefined"
+        ? EVENTOS_DISPONIVEIS.find(item => item.id === idDoEvento)
+        : null;
     const atributos = [
         criarAtributoDosDetalhesDoAlbum(
             localizar("Categoria"),
-            ehBoss ? localizar("Boss") : localizar("Inimigo comum")
+            configuracao.superBossDeEvento ? localizar("Super-Boss") : ehBoss ? localizar("Boss") : localizar("Inimigo comum")
         ),
-        criarAtributoDosDetalhesDoAlbum(
+        evento ? criarAtributoDosDetalhesDoAlbum(localizar("Evento"), localizarEvento(evento.nome)) : "",
+        !configuracao.superBossDeEvento ? criarAtributoDosDetalhesDoAlbum(
             localizar("Vida base"),
             configuracao.vida.toLocaleString(idiomaAtual),
             true
-        ),
+        ) : "",
+        configuracao.superBossDeEvento && dificuldadeLiberada
+            ? criarAtributoDosDetalhesDoAlbum(localizar("Vida na wave 20"), vidaDoSuperBoss.toLocaleString(idiomaAtual), true)
+            : "",
+        configuracao.superBossDeEvento && dificuldadeLiberada
+            ? criarAtributoDosDetalhesDoAlbum(localizar("Ataque"),
+                obterResumoDoAtaqueDoSuperBossNoAlbum(tipo, dificuldade), true)
+            : "",
         criarAtributoDosDetalhesDoAlbum(
             localizar("Velocidade"),
             localizar("{velocidade} px por quadro", {
@@ -24514,14 +27440,44 @@ function criarDadosDosDetalhesDoInimigo(tipo) {
 
     return {
         nome: obterNomeLocalizado(configuracao),
-        categoria: ehBoss ? localizar("Boss") : localizar("Inimigo comum"),
+        categoria: configuracao.superBossDeEvento ? localizar("Super-Boss") : ehBoss ? localizar("Boss") : localizar("Inimigo comum"),
         miniatura: criarMiniaturaDoInimigoNosDetalhes(tipo),
         atributos,
-        descricao: obterDetalheDoInimigoNoAlbum(tipo, configuracao)
-            || localizar("Sem habilidade especial."),
-        observacao: fraquezas === localizar("Nenhuma fraqueza elemental")
-            ? localizar("Armas elementais sem vantagem causam dano normal.")
-            : localizar("Use os elementos indicados para causar o dano adicional mostrado.")
+        descricao: configuracao.superBossDeEvento
+            ? dificuldadeLiberada ? localizarEvento(evento?.descricao || '')
+                : localizar("Vença este evento nesta dificuldade para revelar vida e ataque.")
+            : obterDetalheDoInimigoNoAlbum(tipo, configuracao)
+                || localizar("Sem habilidade especial."),
+        dificuldades: configuracao.superBossDeEvento
+            ? `<div class="album-dificuldades-superboss" role="group" aria-label="${localizarEvento("Dificuldade")}">
+                ${Object.entries(CONFIG.eventos.dificuldadesSuperBosses).map(([id, dados]) => {
+                    const liberada = dificuldadesConcluidas.includes(id);
+                    return `<button type="button" data-dificuldade="${id}" aria-pressed="${liberada && dificuldade === id}"
+                        ${liberada ? `onclick="selecionarDificuldadeDoSuperBossNoAlbum('${tipo}', '${id}')"` : 'disabled'}>
+                        ${localizarEvento(dados.nome)}${liberada ? '' : ` · ${localizar("Bloqueado")}`}</button>`;
+                }).join('')}</div>` : "",
+        recuperacao: vitoriasAntigas
+            ? `<div class="album-recuperacao-superboss">
+                <p>${localizar("Vitórias antigas neste evento: {quantidade}. O save não guardava a dificuldade.", {
+                    quantidade: vitoriasAntigas
+                })}</p>
+                <p>${localizar("Marque somente as dificuldades que você venceu. Esta confirmação pode ser feita uma vez.")}</p>
+                ${Object.entries(CONFIG.eventos.dificuldadesSuperBosses)
+                    .filter(([id]) => !dificuldadesConcluidas.includes(id))
+                    .map(([id, dados]) => `<label><input type="checkbox" value="${id}">
+                        ${localizarEvento(dados.nome)}</label>`).join('')}
+                <button type="button" onclick="recuperarDificuldadesAntigasDoSuperBossNoAlbum('${tipo}')">
+                    ${localizar("Confirmar dificuldades antigas")}</button>
+            </div>` : "",
+        observacao: fraquezaSuprema
+            ? localizar('A Suprema indicada causa mais dano a este Superboss.')
+            : fraquezas === localizar("Nenhuma fraqueza elemental")
+                ? localizar("Armas elementais sem vantagem causam dano normal.")
+                : localizar("Use os elementos indicados para causar o dano adicional mostrado."),
+        animacao: obterDesenhoDaCaminhadaNoAlbum(tipo)
+            ? `<button class="album-ver-animacao" type="button" aria-pressed="false"
+                onclick="alternarAnimacaoDoInimigoNoAlbum('${tipo}', this)">${localizar("Ver animação")}</button>`
+            : ""
     };
 }
 
@@ -24535,7 +27491,11 @@ function criarDadosDosDetalhesDaSkin(idDaSkin) {
     const atributos = [
         criarAtributoDosDetalhesDoAlbum(localizar("Categoria"), localizar("Skin")),
         criarAtributoDosDetalhesDoAlbum(localizar("Estado"), estado, skin.equipada),
-        criarAtributoDosDetalhesDoAlbum(localizar("Uso"), localizar("Torre padrão")),
+        criarAtributoDosDetalhesDoAlbum(localizar("Uso"), skin.tipoDeDominio || skin.tipoDeTorre
+            ? obterNomeLocalizado(CONFIG.torre.tipos[skin.tipoDeDominio || skin.tipoDeTorre]) : localizar("Torre padrão")),
+        skin.tipoDeDominio ? criarAtributoDosDetalhesDoAlbum(
+            localizar('Atributo de domínio'), obterDescricaoDoAtributoDeDominio(skin.tipoDeDominio)
+        ) : '',
         criarAtributoDosDetalhesDoAlbum(
             localizar("Bônus de combate"),
             localizar("Nenhum; esta skin é somente cosmética.")
@@ -24548,8 +27508,66 @@ function criarDadosDosDetalhesDaSkin(idDaSkin) {
         miniatura: criarMiniaturaDaSkinNosDetalhes(idDaSkin),
         atributos,
         descricao: localizar(skin.descricao),
-        observacao: localizar(skin.origem)
+        observacao: localizar(skin.origem),
+        acao: idDaSkin === 'original' && skin.equipada ? '' : `<button class="botao album-equipar-skin" type="button"
+            onclick="alternarSkinPeloAlbum('${idDaSkin}')">${skin.equipada
+                ? localizar(skin.tipoDeDominio ? 'Usar visual anterior' : 'Usar visual original')
+                : idDaSkin === 'original' ? localizar('Usar visual original') : traduzir("nivel.equiparSkin")}</button>`
     };
+}
+
+function alternarSkinPeloAlbum(idDaSkin) {
+    const skin = obterSkinsDoAlbum().find(item => item.id === idDaSkin);
+    if (!skin?.desbloqueada) return;
+    const desativarDominioPadrao = () => {
+        if (!dominioEstaEquipado('padrao')) return true;
+        const dados = structuredClone(carregarDominioDasTorres());
+        dados.padrao.equipado = false;
+        return salvarDominioDasTorres(dados);
+    };
+    if (idDaSkin === 'original') {
+        if (!desativarDominioPadrao()) return;
+        recompensasPermanentesDasMissoes.skinTorrePadraoEquipada = null;
+        salvarRecompensasPermanentesDasMissoes();
+        if (pacoteApoiador.skinEquipada) {
+            pacoteApoiador.skinEquipada = false;
+            salvarPacoteApoiador();
+        }
+    } else if (skin.tipoDeDominio) {
+        if (jogoIniciado) return;
+        const dados = structuredClone(carregarDominioDasTorres());
+        dados[skin.tipoDeDominio].equipado = !dados[skin.tipoDeDominio].equipado;
+        if (!salvarDominioDasTorres(dados)) return;
+    } else if (skin.tipoDeTorre && skin.tipoDeTorre !== 'padrao') {
+        if (jogoIniciado) return;
+        const equipadas = recompensasPermanentesDasMissoes.skinsDeTorresEquipadas || {};
+        const tipo = skin.tipoDeTorre;
+        equipadas[tipo] = equipadas[tipo] === idDaSkin ? null : idDaSkin;
+        recompensasPermanentesDasMissoes.skinsDeTorresEquipadas = equipadas;
+        salvarRecompensasPermanentesDasMissoes();
+    } else if (idDaSkin === CONFIG.pacoteApoiador.skin.id) {
+        if (!desativarDominioPadrao()) return;
+        pacoteApoiador.skinEquipada = !pacoteApoiador.skinEquipada;
+        if (pacoteApoiador.skinEquipada) {
+            recompensasPermanentesDasMissoes.skinTorrePadraoEquipada = null;
+            salvarRecompensasPermanentesDasMissoes();
+        }
+        salvarPacoteApoiador();
+    } else {
+        if (!desativarDominioPadrao()) return;
+        const vaiEquipar = recompensasPermanentesDasMissoes.skinTorrePadraoEquipada !== idDaSkin;
+        recompensasPermanentesDasMissoes.skinTorrePadraoEquipada = vaiEquipar ? idDaSkin : null;
+        if (vaiEquipar && pacoteApoiador.skinEquipada) {
+            pacoteApoiador.skinEquipada = false;
+            salvarPacoteApoiador();
+        }
+        salvarRecompensasPermanentesDasMissoes();
+    }
+    mostrarAlbum();
+    const cartao = conteudoMenu.querySelector(`[data-id-skin="${idDaSkin}"]`)?.closest('.album-cartao');
+    cartao?.focus();
+    abrirDetalhesDaFigurinhaDoAlbum('skin', idDaSkin);
+    conteudoMenu.querySelector('.album-equipar-skin')?.focus();
 }
 
 function criarDadosDosDetalhesDoConceito(idDoConceito) {
@@ -24602,7 +27620,10 @@ function criarPainelDosDetalhesDoAlbum(dados) {
                 <div class="album-detalhes-retrato">
                     ${dados.miniatura}
                     <h2 id="album-detalhes-titulo">${dados.nome}</h2>
+                    ${dados.animacao || ""}
                 </div>
+                ${dados.dificuldades || ""}
+                ${dados.recuperacao || ""}
                 <div class="album-detalhes-atributos">
                     ${dados.atributos}
                 </div>
@@ -24611,6 +27632,7 @@ function criarPainelDosDetalhesDoAlbum(dados) {
                     <p>${dados.descricao}</p>
                 </section>
                 <p class="album-detalhes-observacao">${dados.observacao}</p>
+                ${dados.acao || ""}
             </section>
         </div>
     `;
@@ -24645,7 +27667,31 @@ function abrirDetalhesDaFigurinhaDoAlbum(categoria, id, nivel = 0) {
     return true;
 }
 
+function selecionarDificuldadeDoSuperBossNoAlbum(tipo, dificuldade) {
+    const camada = conteudoMenu.querySelector('.album-detalhes-camada');
+    if (!camada || !obterDificuldadesConcluidasDoSuperBoss(obterIdDoEventoDoInimigo(tipo)).includes(dificuldade)) {
+        return false;
+    }
+    const dados = criarDadosDosDetalhesDoInimigo(tipo, dificuldade);
+    if (!dados) return false;
+    camada.outerHTML = criarPainelDosDetalhesDoAlbum(dados);
+    desenharMiniaturasDosInimigosDoAlbum();
+    conteudoMenu.querySelector(`.album-dificuldades-superboss [data-dificuldade="${dificuldade}"]`)?.focus();
+    return true;
+}
+
+function recuperarDificuldadesAntigasDoSuperBossNoAlbum(tipo) {
+    const marcadas = [...conteudoMenu.querySelectorAll('.album-recuperacao-superboss input:checked')]
+        .map(campo => campo.value);
+    if (!recuperarDificuldadesAntigasDoSuperBoss(obterIdDoEventoDoInimigo(tipo), marcadas)) {
+        mostrarAviso(localizar("Selecione dificuldades vencidas dentro do total de vitórias antigas."));
+        return false;
+    }
+    return selecionarDificuldadeDoSuperBossNoAlbum(tipo, marcadas[0]);
+}
+
 function fecharDetalhesDaFigurinhaDoAlbum(restaurarFoco = true) {
+    pararAnimacaoDoInimigoNoAlbum();
     const camada = conteudoMenu.querySelector(".album-detalhes-camada");
     document.body.classList.remove("album-detalhes-abertos");
     if (!camada) {
@@ -24707,9 +27753,7 @@ function desenharMiniaturasDasTorresDoAlbum() {
     for (const miniatura of miniaturas) {
         const configuracao = CONFIG.torre.tipos[miniatura.dataset.tipoTorre];
         const nivel = Number(miniatura.dataset.nivelTorre);
-        const estilo = nivel === 0
-            ? configuracao?.visualBase
-            : configuracao?.melhorias[nivel - 1]?.visual;
+        const estilo = configuracao && obterVisualDaTorreNoNivel(configuracao,nivel);
 
         if (!estilo) {
             continue;
@@ -24725,42 +27769,104 @@ function desenharMiniaturasDasTorresDoAlbum() {
     }
 }
 
-function desenharMiniaturasDosInimigosDoAlbum() {
-    const miniaturas = conteudoMenu.querySelectorAll(".miniatura-inimigo-album");
+function obterDesenhoDaCaminhadaNoAlbum(tipo) {
+    return {
+        normal: desenharInimigoVermelho,
+        elite: desenharInimigoRoxo,
+        rapido: desenharInimigoCianoRapido,
+        sabotador: desenharSabotador,
+        superSabotador: desenharSuperSabotador,
+        boss: desenharBossComum,
+        escorpiao: desenharEscorpiao,
+        mumia: desenharMumia,
+        bossDeserto: desenharFaraoDeAreia,
+        loboDeGelo: desenharLoboDeGelo,
+        yeti: desenharYeti,
+        bossArtico: desenharTitaGlacial,
+        macacoSaqueador: desenharMacacoSaqueador,
+        oncaDaSelva: (x, y, tamanho, quadro) => desenharOncaDaSelva(null, x, y, tamanho, quadro),
+        gorilaDaSelva: desenharGorilaDaSelva,
+        bossSelva: desenharColossoDaSelva
+    }[tipo] || null;
+}
 
-    for (const miniatura of miniaturas) {
-        const tipo = miniatura.dataset.tipoInimigo;
+function desenharMiniaturaDoInimigoDoAlbum(miniatura, quadroDaCaminhada = null) {
+    const tipo = miniatura.dataset.tipoInimigo;
 
-        if (tipo === CONFIG.faseSecreta.senhorDoTempo.formaHumanaFutura.id) {
-            copiarDesenhoParaMiniaturaDoAlbum(
-                miniatura,
-                desenharFormaHumanaDoSenhorDoTempoNoAlbum
-            );
-            continue;
-        }
-
-        const configuracao = CONFIG.inimigo[tipo];
-
-        if (!configuracao) {
-            continue;
-        }
-
-        const inimigoDaMiniatura = {
-            tipo,
-            tamanho: configuracao.tamanho,
-            cor: configuracao.cor
-        };
-
-        copiarDesenhoParaMiniaturaDoAlbum(miniatura, (tamanhoDaAreaDeDesenho) => {
-            const escalaVisual = obterEscalaVisualDoInimigo(tipo, configuracao.tamanho);
-            const tamanhoDoSprite = SPRITES_DOS_ELENCOS_EXCLUSIVOS[tipo]
-                ? Math.min(escalaVisual * 2, tamanhoDaAreaDeDesenho - 8)
-                : escalaVisual * 2;
-            const x = Math.round((tamanhoDaAreaDeDesenho - tamanhoDoSprite) / 2);
-            const y = Math.round((tamanhoDaAreaDeDesenho - tamanhoDoSprite) / 2);
-            desenharCorpoDoInimigo(inimigoDaMiniatura, x, y, tamanhoDoSprite);
-        });
+    if (tipo === CONFIG.faseSecreta.senhorDoTempo.formaHumanaFutura.id) {
+        copiarDesenhoParaMiniaturaDoAlbum(miniatura, desenharFormaHumanaDoSenhorDoTempoNoAlbum);
+        return;
     }
+
+    const configuracao = CONFIG.inimigo[tipo];
+    if (!configuracao) return;
+
+    const inimigoDaMiniatura = {
+        tipo,
+        tamanho: configuracao.tamanho,
+        cor: configuracao.cor
+    };
+
+    copiarDesenhoParaMiniaturaDoAlbum(miniatura, (tamanhoDaAreaDeDesenho) => {
+        const escalaVisual = obterEscalaVisualDoInimigo(tipo, configuracao.tamanho);
+        const tamanhoDoSprite = SPRITES_DOS_ELENCOS_EXCLUSIVOS[tipo]
+            ? Math.min(escalaVisual * 2, tamanhoDaAreaDeDesenho - 8)
+            : escalaVisual * 2;
+        const x = Math.round((tamanhoDaAreaDeDesenho - tamanhoDoSprite) / 2);
+        const y = Math.round((tamanhoDaAreaDeDesenho - tamanhoDoSprite) / 2);
+        const desenhoDaCaminhada = obterDesenhoDaCaminhadaNoAlbum(tipo);
+        if (desenhoDaCaminhada) desenhoDaCaminhada(x, y, tamanhoDoSprite, quadroDaCaminhada);
+        else desenharCorpoDoInimigo(inimigoDaMiniatura, x, y, tamanhoDoSprite);
+    });
+}
+
+function desenharMiniaturasDosInimigosDoAlbum() {
+    for (const miniatura of conteudoMenu.querySelectorAll(".miniatura-inimigo-album")) {
+        desenharMiniaturaDoInimigoDoAlbum(miniatura);
+    }
+}
+
+function pararAnimacaoDoInimigoNoAlbum() {
+    if (!animacaoDoInimigoNoAlbum) return;
+    cancelAnimationFrame(animacaoDoInimigoNoAlbum.quadroSolicitado);
+    const { miniatura, botao } = animacaoDoInimigoNoAlbum;
+    animacaoDoInimigoNoAlbum = null;
+    if (miniatura.isConnected) desenharMiniaturaDoInimigoDoAlbum(miniatura);
+    if (botao.isConnected) {
+        botao.textContent = localizar("Ver animação");
+        botao.setAttribute("aria-pressed", "false");
+    }
+}
+
+function alternarAnimacaoDoInimigoNoAlbum(tipo, botao) {
+    if (animacaoDoInimigoNoAlbum?.tipo === tipo) {
+        pararAnimacaoDoInimigoNoAlbum();
+        return;
+    }
+    pararAnimacaoDoInimigoNoAlbum();
+    const miniatura = botao.closest(".album-detalhes-painel")
+        ?.querySelector(`.album-detalhes-miniatura[data-tipo-inimigo="${tipo}"]`);
+    const configuracao = CONFIG.inimigo[tipo];
+    if (!miniatura || !configuracao || !obterDesenhoDaCaminhadaNoAlbum(tipo)) return;
+
+    const duracaoDoQuadro = CONFIG.animacaoDoVermelho.distanciaPorQuadro
+        / configuracao.velocidade * (1000 / CONFIG.simulacao.quadrosPorSegundoDeReferencia);
+    const animacao = { tipo, miniatura, botao, inicio: performance.now(), quadroAnterior: -1,
+        quadroSolicitado: 0 };
+    animacaoDoInimigoNoAlbum = animacao;
+    botao.textContent = localizar("Parar animação");
+    botao.setAttribute("aria-pressed", "true");
+    function avancarQuadro(agora) {
+        if (animacaoDoInimigoNoAlbum !== animacao || !miniatura.isConnected) return;
+        const quadro = Math.floor((agora - animacao.inicio) / duracaoDoQuadro)
+            % CONFIG.animacaoDoVermelho.quadrosDaCaminhada;
+        if (quadro !== animacao.quadroAnterior) {
+            desenharMiniaturaDoInimigoDoAlbum(miniatura, quadro);
+            animacao.quadroAnterior = quadro;
+        }
+        animacao.quadroSolicitado = requestAnimationFrame(avancarQuadro);
+    }
+    animacao.quadroSolicitado = requestAnimationFrame(avancarQuadro);
 }
 
 function desenharFormaHumanaDoSenhorDoTempoNoAlbum(tamanhoDaAreaDeDesenho) {
@@ -24916,7 +28022,13 @@ function desenharFormaHumanaDoSenhorDoTempoNoAlbum(tamanhoDaAreaDeDesenho) {
 }
 
 function obterEstiloDaSkinDoAlbum(idDaSkin) {
-    const estiloOriginal = CONFIG.torre.tipos.padrao.visualBase;
+    if (idDaSkin.startsWith('dominio-')) {
+        const tipo = idDaSkin.slice('dominio-'.length);
+        const original = CONFIG.torre.tipos[tipo]?.visualBase;
+        return original ? obterEstiloDeDominio(tipo, original) : null;
+    }
+    const tipoDaSkin = CONFIG.missoes.skins[idDaSkin]?.tipoDeTorre || 'padrao';
+    const estiloOriginal = CONFIG.torre.tipos[tipoDaSkin].visualBase;
 
     if (idDaSkin === "original") {
         return estiloOriginal;
@@ -24927,7 +28039,9 @@ function obterEstiloDaSkinDoAlbum(idDaSkin) {
         : obterSkinConquistavel(idDaSkin);
     const coresDoNivelBase = skin?.coresPorNivel[0];
 
-    return coresDoNivelBase ? { ...estiloOriginal, ...coresDoNivelBase } : null;
+    return coresDoNivelBase ? { ...estiloOriginal, ...coresDoNivelBase,
+        ...obterCoresDaSkinSuperBoss(idDaSkin),
+        ...(idDaSkin === 'coralAbissal' ? { skinDeEvento: idDaSkin } : {}) } : null;
 }
 
 function desenharMiniaturasDasSkinsDoAlbum() {
@@ -24950,16 +28064,65 @@ function desenharMiniaturasDasSkinsDoAlbum() {
     }
 }
 
-function mostrarTutorial() {
+function mostrarTutorial(abaSelecionada = "basico") {
     definirTelaDoMenuAberta("tutorial");
     tentarIniciarMusicaDoLobby();
+
+    const botoesDoMenu = [
+        ["Começar partida", "Escolha a fase e a equipe de defesas para iniciar uma partida.", "lobby.comecarPartida"],
+        ["Capítulos", "Acompanhe a campanha e escolha as fases desbloqueadas.", "lobby.capitulos"],
+        ["Álbum", "Veja torres desbloqueadas, inimigos derrotados, Bosses, minas e skins.", "lobby.album"],
+        ["Loja", "Compre defesas e melhorias usando Fragmentos de Pixel.", "lobby.loja"],
+        ["Missões", "Complete missões diárias e semanais e resgate seus prêmios.", "lobby.missoes"],
+        ["Conquistas", "Veja as conquistas obtidas e as que ainda faltam desbloquear.", "lobby.conquistas"],
+        ["Modo clássico", "Alterne entre a campanha e os mapas do modo Clássico."],
+        ["Eventos", "Jogue desafios especiais e enfrente os Superbosses."],
+        ["Supremas", "Consulte e equipe as defesas supremas disponíveis."],
+        ["Configurações", "Ajuste música, efeitos, idioma e outras preferências.", "configuracoes.titulo"],
+        ["Editor de fases", "", "editor.titulo"]
+    ];
+    const mostrarBotoes = abaSelecionada === "botoes";
+    const nivelDoEditor = CONFIG.editorDeFases.nivelNecessarioParaDesbloqueio;
+    const topicosDoEditor = [
+        { titulo: 'criarTitulo', passos: ['criar1', 'criar2', 'criar3'] },
+        { titulo: 'livreTitulo', passos: ['livre1', 'livre2'] },
+        { titulo: 'publicarTitulo', passos: ['publicar1', 'publicar2'] },
+        { titulo: 'conectarTitulo', passos: ['conectar1', 'conectar2', 'conectar3'], comando: true },
+        { titulo: 'encontrarTitulo', passos: ['encontrar1', 'encontrar2', 'encontrar3'] },
+        { titulo: 'dicasTitulo', passos: ['dicas1', 'dicas2'] }
+    ];
+    const traduzirAjudaDoEditor = chave => traduzir(`ajudaEditor.${chave}`, { nivel: nivelDoEditor });
+    const renderizarBotaoDoMenu = ([nome, descricao, chave]) => {
+        if (chave !== 'editor.titulo') {
+            return `<li><div><strong>${chave ? traduzir(chave) : localizar(nome)}</strong><span>${localizar(descricao)}</span></div></li>`;
+        }
+        return `<li class="tutorial-botao-editor"><div><details class="tutorial-editor-entrada">
+            <summary><strong>${traduzir('editor.titulo')}</strong><span>${traduzirAjudaDoEditor('botaoDescricao')}</span></summary>
+            <div class="tutorial-editor-conteudo">
+                <p>${traduzirAjudaDoEditor('intro')}</p>
+                <button class="botao botao-primario" onclick="mostrarEditorDeFases()" ${editorDeFasesEstaDesbloqueado() ? '' : 'disabled'}>${traduzirAjudaDoEditor('abrir')}</button>
+                <div class="tutorial-editor-topicos">
+                    ${topicosDoEditor.map((topico, indice) => `<details class="tutorial-editor-topico" ${indice === 0 ? 'open' : ''}>
+                        <summary>${traduzirAjudaDoEditor(topico.titulo)}</summary>
+                        <div class="tutorial-editor-passos">${topico.passos.map(passo => `<p>${traduzirAjudaDoEditor(passo)}${topico.comando && passo === 'conectar1' ? '<code>node scripts/servidor-comunidade-local.cjs</code>' : ''}</p>`).join('')}</div>
+                    </details>`).join('')}
+                </div>
+            </div>
+        </details></div></li>`;
+    };
 
     conteudoMenu.innerHTML = `
         <section>
             ${criarCabecalhoConteudoMenu(
                 localizar("Como jogar"),
-                localizar("Aprenda o básico e pratique antes da primeira wave.")
+                traduzir('ajudaEditor.cabecalho')
             )}
+            <nav class="tutorial-abas" role="tablist" aria-label="${localizar("Como jogar")}">
+                <button id="aba-tutorial-basico" type="button" role="tab" aria-controls="painel-tutorial-basico" aria-selected="${!mostrarBotoes}" class="tutorial-aba ${!mostrarBotoes ? "tutorial-aba-ativa" : ""}" onclick="mostrarTutorial('basico')">${localizar("Básico")}</button>
+                <button id="aba-tutorial-botoes" type="button" role="tab" aria-controls="painel-tutorial-botoes" aria-selected="${mostrarBotoes}" class="tutorial-aba ${mostrarBotoes ? "tutorial-aba-ativa" : ""}" onclick="mostrarTutorial('botoes')">${localizar("Botões do menu")}</button>
+            </nav>
+            <div id="painel-tutorial-basico" role="tabpanel" aria-labelledby="aba-tutorial-basico" ${mostrarBotoes ? "hidden" : ""}>
+            <p class="tutorial-resumo-basico">${localizar("Aprenda o básico e pratique antes da primeira wave.")}</p>
             <div class="tutorial-introducao">
                 <div>
                     <small>${localizar("TREINAMENTO PARA INICIANTES")}</small>
@@ -24975,11 +28138,17 @@ function mostrarTutorial() {
                     creditos: obterRecompensaPorTiro()
                 })}</li>
                 <li>${localizar("Clique em uma torre construída para ver dano, alcance, melhoria, venda e prioridade de alvo.")}</li>
-                <li>${localizar("Use os créditos recebidos para construir ou melhorar. Cada torre pode chegar ao nível 3.")}</li>
+                <li>${localizar("Use os créditos recebidos para construir ou melhorar. Confira o limite de melhorias de cada torre na ficha dela.")}</li>
                 <li>${localizar("Não deixe nenhum inimigo chegar à torre-base. Conclua a wave {wave} para vencer a fase.", {
                     wave: CONFIG.wave.ultimaWave
                 })}</li>
             </ol>
+            </div>
+            <div id="painel-tutorial-botoes" role="tabpanel" aria-labelledby="aba-tutorial-botoes" ${mostrarBotoes ? "" : "hidden"}>
+                <ol class="tutorial-lista tutorial-botoes-lista">
+                    ${botoesDoMenu.map(renderizarBotaoDoMenu).join("")}
+                </ol>
+            </div>
         </section>
     `;
 }
@@ -25079,15 +28248,43 @@ function desenharInimigoExclusivo(inimigo, x, y, tamanho) {
     ctx.restore();
 }
 
+function obterMultiplicadorDeVidaDosModosPrincipais(tipo) {
+    if (tipoEhBoss(tipo) || desafioSupremoAtivo || modoWavesInfinitas) return 1;
+
+    if (mapaPersonalizadoAtivo) {
+        const ajuste = CONFIG.classico.vidaComumAposWave;
+        return mapaPersonalizadoAtivo.classico && wave >= ajuste.primeiraWave
+            ? ajuste.multiplicador : 1;
+    }
+
+    const ajuste = CONFIG.pressaoDaHistoria.vidaComumAposWave;
+    return faseSelecionada >= 1 && faseSelecionada <= 18
+        && !faseAtualEhAlgumaFaseSecreta() && wave >= ajuste.primeiraWave
+        ? ajuste.multiplicador : 1;
+}
+
 function criarInimigo(tipo) {
     const configuracao = CONFIG.inimigo[tipo];
     const caminhosAtuais = obterCaminhosAtuais();
     const indiceDoCaminho = obterIndiceDoCaminhoParaNovoInimigo(tipo);
     const caminhoAtual = caminhosAtuais[indiceDoCaminho];
     const agora = Date.now();
-    const vida = tipoEhBoss(tipo)
+    const vidaBase = tipoEhBoss(tipo)
         ? calcularVidaDoBoss(wave, tipo)
         : configuracao.vida;
+    const dificuldadeClassica = desafioSupremoAtivo ? CONFIG.supremas.desafios[desafioSupremoAtivo] : mapaPersonalizadoAtivo?.classico
+        ? CONFIG.classico.dificuldades[mapaPersonalizadoAtivo.dificuldadeClassica] : null;
+    const modificadorClassico = typeof obterModificadorClassicoAtivo === 'function'
+        ? obterModificadorClassicoAtivo() : null;
+    const mutacaoClassica = typeof sortearMutacaoClassica === 'function'
+        ? sortearMutacaoClassica(tipo) : null;
+    const vidaDosModosPrincipais = obterMultiplicadorDeVidaDosModosPrincipais(tipo);
+    const vida = vidaBase * (dificuldadeClassica?.vida || 1)
+        * vidaDosModosPrincipais
+        * (modificadorClassico?.multiplicadorVidaInimiga || 1)
+        * (mutacaoClassica?.vida || 1)
+        * (typeof obterMultiplicadorDoDesafioDaWave === 'function'
+            ? obterMultiplicadorDoDesafioDaWave('vida') : 1);
 
     if (!faseAtualUsaCaminhoVivo()) {
         proximoIndiceDeEntrada = (proximoIndiceDeEntrada + 1) % caminhosAtuais.length;
@@ -25097,12 +28294,17 @@ function criarInimigo(tipo) {
         indiceDoCaminho,
         x: caminhoAtual[0].x,
         y: caminhoAtual[0].y,
-        velocidade: configuracao.velocidade,
+        velocidade: configuracao.velocidade * (dificuldadeClassica?.velocidade || 1)
+            * (mutacaoClassica?.velocidade || 1)
+            * (typeof obterMultiplicadorDaMareClassica === 'function' ? obterMultiplicadorDaMareClassica() : 1)
+            * (typeof obterMultiplicadorDoDesafioDaWave === 'function'
+                ? obterMultiplicadorDoDesafioDaWave('velocidade') : 1),
         alvo: 1,
         tamanho: configuracao.tamanho,
         vida,
         vidaMaxima: vida,
         cor: configuracao.cor,
+        mutacaoClassica: mutacaoClassica?.id || null,
         camuflado: Boolean(configuracao.camuflado),
         ultimoTiro: 0,
         proximaArrancadaEm: tipo === "javaliFurioso"
@@ -25155,6 +28357,10 @@ function criarInimigo(tipo) {
         elementoDaQueimadura: null
     });
 
+    if (typeof ajustarInimigoDoEvento === 'function') {
+        ajustarInimigoDoEvento(inimigos[inimigos.length - 1]);
+    }
+
     if (tipo === "sentinelaDoAmanha") {
         mostrarAviso(localizar(CONFIG.inimigo.sentinelaDoAmanha.falas[0]));
     }
@@ -25165,6 +28371,7 @@ function criarInimigo(tipo) {
 }
 
 function tipoEhBoss(tipoDoInimigo) {
+    if (CONFIG.inimigo[tipoDoInimigo]?.bossClassico) return true;
     return [
         "senhorDoTempo",
         "bibliotecarioMudo", "devoradorDeMemorias",
@@ -25288,6 +28495,7 @@ function criarInimigoInvocado(tipo, invocador, deslocamentoVertical = 0) {
     const caminhoAtual = obterCaminhoDoInimigo(invocador);
     const agora = Date.now();
     inimigos.push({
+        invocadoSemNucleo: true,
         tipo,
         indiceDoCaminho: invocador.indiceDoCaminho,
         x: invocador.x,
@@ -25754,6 +28962,13 @@ function aplicarDanoAoInimigo(
         return 0;
     }
 
+    if (inimigo.torretaDaForja || inimigo.carcacaDaVibora) {
+        const danoRecebido = Math.min(inimigo.vida, dano);
+        inimigo.vida -= danoRecebido;
+        if (inimigo.vida <= 0) inimigo.defesaDoGolpeFinal = tipoDaDefesa;
+        return danoRecebido;
+    }
+
     const vidaAnterior = inimigo.vida;
     const vulnerabilidadeAtiva = agora < (inimigo.vulnerabilidadeSismicaExpiraEm || 0);
     const multiplicadorDeVulnerabilidade = vulnerabilidadeAtiva
@@ -25773,7 +28988,13 @@ function aplicarDanoAoInimigo(
     const multiplicadorElemental = vantagemElemental
         ? vantagemElemental.multiplicadorDeVantagem
         : 1;
+    const multiplicadorDaFraquezaSuprema = typeof obterMultiplicadorDaFraquezaSuprema === 'function'
+        ? obterMultiplicadorDaFraquezaSuprema(inimigo, tipoDaDefesa || torreOrigem?.tipo)
+        : 1;
     const reducaoDeDanoBase = CONFIG.inimigo[inimigo.tipo]?.reducaoDeDano || 0;
+    const reducaoDoMetamorfo = inimigo.tipo === 'metamorfo'
+        && typeof obterReducaoDoMetamorfo === 'function'
+        ? obterReducaoDoMetamorfo(inimigo, tipoDaDefesa || torreOrigem?.tipo) : 0;
     const reducaoDoEscudo = typeof obterReducaoDoEscudoParaInimigo === "function"
         ? obterReducaoDoEscudoParaInimigo(inimigo)
         : 0;
@@ -25800,13 +29021,19 @@ function aplicarDanoAoInimigo(
                 * (1 - reducaoDoPontoZero)
                 * (1 - reducaoDoCarcereiro)
                 * (1 - reducaoDoSoldadoCronal);
+    const reducaoTotal = inimigo.tipo === 'metamorfo'
+        ? 1 - (1 - reducaoDeDano) * (1 - reducaoDoMetamorfo)
+        : reducaoDeDano;
     const danoEfetivo = Math.round(
         dano
         * multiplicadorDeVulnerabilidade
         * multiplicadorDaMarca
         * multiplicadorDaCorrosao
         * multiplicadorElemental
-        * (1 - reducaoDeDano)
+        * multiplicadorDaFraquezaSuprema
+        * (1 + (inimigo.vulnerabilidadeSupremaRestante > 0 ? inimigo.percentualDeVulnerabilidadeSuprema || 0 : 0))
+        * (typeof multiplicadorDaSegundaEtapa === 'function' ? multiplicadorDaSegundaEtapa(inimigo, 'danoRecebido') : 1)
+        * (1 - reducaoTotal)
     );
 
     if (vantagemElemental) {
@@ -25839,8 +29066,16 @@ function aplicarDanoAoInimigo(
     } else {
         inimigo.vida -= danoEfetivo;
         if (inimigo.vida <= 0) {
+            tentarSoltarNucleo(inimigo);
             inimigo.defesaDoGolpeFinal = tipoDaDefesa;
         }
+    }
+
+    const danoRetiradoNestaAplicacao = Math.max(0, vidaAnterior - Math.max(0, inimigo.vida));
+    if (inimigo.tipo === 'metamorfo' && (tipoDaDefesa || torreOrigem?.tipo)) {
+        const defesa = tipoDaDefesa || torreOrigem.tipo;
+        inimigo.danosPorDefesa ||= {};
+        inimigo.danosPorDefesa[defesa] = (inimigo.danosPorDefesa[defesa] || 0) + danoRetiradoNestaAplicacao;
     }
 
     if (
@@ -25896,6 +29131,8 @@ function aplicarDanoAoInimigo(
         : false;
 
     if (inimigo.vida <= 0) registrarGolpeFinalParaConquistas(inimigo, torreOrigem, agora);
+    if (typeof registrarDanoDeDominio === 'function') registrarDanoDeDominio(torreOrigem, danoRetiradoNestaAplicacao, inimigo.vida <= 0);
+    if(typeof registrarDanoNaBatalha==='function')registrarDanoNaBatalha(tipoDaDefesa || torreOrigem?.tipo, danoRetiradoNestaAplicacao, inimigo.vida <= 0);
     return ecoRetornou ? vidaAnterior : vidaAnterior - inimigo.vida;
 }
 
@@ -26018,6 +29255,19 @@ function calcularQuantidadeDeInimigoExclusivo(faseAtiva, primeiraWave, wavesPorN
     return 1 + Math.floor((wave - primeiraWave) / wavesPorNovaUnidade);
 }
 
+function deveAdicionarSuperSabotadorNaWave(numeroDaWave) {
+    const regra = CONFIG.fliperama.testeDeDificuldade;
+    return numeroDaWave >= regra.primeiraWaveDoSuperSabotador
+        && numeroDaWave % regra.intervaloDeWavesDoSuperSabotador === 0;
+}
+
+function obterPressaoDaHistoria(numeroDaWave = wave) {
+    if (mapaPersonalizadoAtivo || desafioSupremoAtivo || modoWavesInfinitas
+        || faseAtualEhAlgumaFaseSecreta()) return null;
+    return CONFIG.pressaoDaHistoria.faixas.find(faixa => faseSelecionada >= faixa.faseInicial
+        && faseSelecionada <= faixa.faseFinal && faixa.waves.includes(numeroDaWave)) || null;
+}
+
 function configurarComposicaoDaWaveSecreta() {
     const configuracao = CONFIG.faseSecreta.waves;
     pixelsCorrompidosParaCriar = configuracao.quantidadeBaseDePixelsCorrompidos
@@ -26073,6 +29323,10 @@ function iniciarProximaWave() {
     }
 
     wave++;
+    creditosDeCombateRecebidosNaWave = 0;
+    if (typeof atualizarMareDoContratoClassico === 'function') atualizarMareDoContratoClassico();
+    if (typeof iniciarDesafioEscolhidoDaWave === 'function') iniciarDesafioEscolhidoDaWave(wave);
+    if (typeof registrarWaveDeDominio === 'function') registrarWaveDeDominio();
     recarregarProtocoloDeContencao();
 
     registrarWaveInfinitaParaConquistas(wave);
@@ -26117,6 +29371,12 @@ function iniciarProximaWave() {
         inimigosRoxosParaCriar = 0;
         inimigosVermelhosParaCriar = 1 + wave;
         inimigosRapidosParaCriar = 0;
+    }
+
+    const pressaoDaHistoria = obterPressaoDaHistoria();
+    if (pressaoDaHistoria) {
+        inimigosRoxosParaCriar += pressaoDaHistoria.elitesExtras;
+        inimigosRapidosParaCriar += pressaoDaHistoria.rapidosExtras;
     }
 
     const temaDaFase = obterFaseAtual().tema;
@@ -26344,6 +29604,15 @@ function iniciarProximaWave() {
             (wave - CONFIG.wave.primeiraWaveSabotador) / CONFIG.wave.wavesPorNovoSabotador
         )
         : 0;
+    const substitutoDoSabotador = CONFIG.substitutosDoSabotador[faseSelecionada];
+    if (substitutoDoSabotador === 'raptorAncestral')
+        inimigosRaptorsAncestraisParaCriar += inimigosSabotadoresParaCriar;
+    if (substitutoDoSabotador === 'cobaiaInstavel')
+        inimigosCobaiasInstaveisParaCriar += inimigosSabotadoresParaCriar;
+    if (substitutoDoSabotador) inimigosSabotadoresParaCriar = 0;
+    inimigosSuperSabotadoresParaCriar = faseSelecionada === CONFIG.fliperama.testeDeDificuldade.numeroDaFase
+        && !mapaPersonalizadoAtivo && !modoWavesInfinitas
+        && deveAdicionarSuperSabotadorNaWave(wave) ? 1 : 0;
     inimigosChefesParaCriar = wave % CONFIG.wave.intervaloDeBoss === 0 ? 1 : 0;
     avisoBossExpiraEm = inimigosChefesParaCriar > 0 ? Date.now() + 2500 : 0;
 
@@ -26351,6 +29620,7 @@ function iniciarProximaWave() {
         + inimigosVermelhosParaCriar
         + inimigosRapidosParaCriar
         + inimigosSabotadoresParaCriar
+        + inimigosSuperSabotadoresParaCriar
         + inimigosEscorpioesParaCriar
         + inimigosMumiasParaCriar
         + inimigosLobosDeGeloParaCriar
@@ -26421,20 +29691,22 @@ function concederCreditosDosGeradoresAposWave(waveConcluida = wave) {
             continue;
         }
 
-        const creditosGerados = obterConfiguracaoAtualDaTorre(torre).creditosPorWave;
+        const creditosGerados = Math.round(obterConfiguracaoAtualDaTorre(torre).creditosPorWave
+            * (typeof dominioFoiConcluido === 'function' && dominioFoiConcluido(torre.tipo)
+                ? 1 + CONFIG.dominioDasTorres.bonusPercentualCreditos : 1));
         torre.ultimaWaveComCreditosGerados = waveConcluida;
-        totalGerado += creditosGerados;
-        avisosDeCreditosGerados.push({
+        const creditosRecebidos = concederCreditosNaPartida(creditosGerados);
+        totalGerado += creditosRecebidos;
+        if (creditosRecebidos > 0) avisosDeCreditosGerados.push({
             x: torre.x,
             y: torre.y - obterEstiloDaTorre(torre).raioBase - 12,
-            creditos: creditosGerados,
+            creditos: creditosRecebidos,
             quadrosRestantes: CONFIG.torre.duracaoAvisoCreditosGeradosEmQuadros,
             totalDeQuadros: CONFIG.torre.duracaoAvisoCreditosGeradosEmQuadros
         });
     }
 
     if (totalGerado > 0) {
-        dinheiro += totalGerado;
         mostrarAviso(localizar("Gerador produziu {creditos} créditos.", {
             creditos: totalGerado
         }));
@@ -26445,6 +29717,8 @@ function concederCreditosDosGeradoresAposWave(waveConcluida = wave) {
 
 function atualizarWaves() {
     const agora = Date.now();
+    if (typeof escolhaDeDesafioDaWaveEstaAberta === 'function'
+        && escolhaDeDesafioDaWaveEstaAberta()) return;
 
     if (inimigosParaCriar > 0) {
         if (agora >= proximoInimigoEm) {
@@ -26542,6 +29816,8 @@ function atualizarWaves() {
                 inimigosOncasDaSelvaParaCriar--;
             } else if (tipoDoInimigo === "macacoSaqueador") {
                 inimigosMacacosSaqueadoresParaCriar--;
+            } else if (tipoDoInimigo === "superSabotador") {
+                inimigosSuperSabotadoresParaCriar--;
             } else if (tipoDoInimigo === "sabotador") {
                 inimigosSabotadoresParaCriar--;
             } else if (tipoDoInimigo === "yeti") {
@@ -26560,14 +29836,21 @@ function atualizarWaves() {
                 inimigosRapidosParaCriar--;
             }
 
-            proximoInimigoEm = agora + CONFIG.wave.intervaloEntreInimigos;
+            proximoInimigoEm = agora + (desafioSupremoAtivo ? CONFIG.supremas.desafios[desafioSupremoAtivo].intervalo
+                : obterPressaoDaHistoria()?.intervaloEntreInimigos || CONFIG.wave.intervaloEntreInimigos);
         }
 
         return;
     }
 
+    if (mapaPersonalizadoAtivo?.evento === 'meteoros') return;
+
     if (inimigos.length === 0) {
+        if (typeof concederPremioDoDesafioDaWave === 'function'
+            && !concederPremioDoDesafioDaWave()) return;
+        if (desafioSupremoAtivo && wave > 0) wavesVencidasNoDesafio.add(wave);
         registrarWaveCompletaParaMissoes();
+        registrarWaveInfinitaConcluidaParaConquistas(wave);
         concederCreditosDosGeradoresAposWave(wave);
         disponibilizarRadioProjetoRelogio();
         disponibilizarTerminalLaboratorio();
@@ -26586,6 +29869,8 @@ function atualizarWaves() {
         }
 
         if (proximaWaveEm === 0) {
+            if (typeof abrirEscolhaDeDesafioDaWave === 'function'
+                && abrirEscolhaDeDesafioDaWave(wave + 1)) return;
             proximaWaveEm = agora + CONFIG.wave.pausaEntreWaves;
             avisarProximoCaminhoVivo(wave + 1);
             avisarWaveEspecialFinal(wave + 1);
@@ -26603,6 +29888,11 @@ function obterProximoTipoDeInimigo() {
 
     if (inimigosChefesParaCriar > 0) {
         return obterTipoDeBossDaFase();
+    }
+
+    if (obterPressaoDaHistoria() && inimigosRapidosParaCriar > 0
+        && inimigosParaCriar % CONFIG.pressaoDaHistoria.intervaloDosRapidos === 0) {
+        return "rapido";
     }
 
     if (inimigosPortadoresDaFendaParaCriar > 0) {
@@ -26781,9 +30071,9 @@ function obterProximoTipoDeInimigo() {
         return "escorpiao";
     }
 
-    if (inimigosSabotadoresParaCriar > 0) {
-        return "sabotador";
-    }
+    if (inimigosSuperSabotadoresParaCriar > 0) return "superSabotador";
+
+    if (inimigosSabotadoresParaCriar > 0) return "sabotador";
 
     if (inimigosRoxosParaCriar > 0) {
         return "elite";
@@ -26799,7 +30089,7 @@ function obterProximoTipoDeInimigo() {
 function oncaEstaEmDisparada(inimigo) {
     const configuracao = CONFIG.inimigo.oncaDaSelva;
 
-    return inimigo.tipo === "oncaDaSelva"
+    return inimigo?.tipo === "oncaDaSelva"
         && Number.isFinite(inimigo.vida)
         && Number.isFinite(inimigo.vidaMaxima)
         && inimigo.vida > 0
@@ -26852,6 +30142,7 @@ function atualizarFormaDoSoldadoCronal(inimigo, agora = Date.now()) {
 }
 
 function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
+    if ((inimigo.estaseSupremaRestante || 0) > 0) return 0;
     if (
         agora < (inimigo.congeladoAte || 0)
         || agora < (inimigo.atordoadoPelaTorreSismicaAte || 0)
@@ -26916,6 +30207,8 @@ function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
         ? CONFIG.inimigo.soldadoCronal.multiplicadorDeVelocidadeNoFuturo
         : 1;
     const velocidadeComHabilidades = inimigo.velocidade
+        * (typeof multiplicadorDaSegundaEtapa === 'function' ? multiplicadorDaSegundaEtapa(inimigo, 'velocidade') : 1)
+        * (typeof multiplicadorDoClimaClassico==='function'?multiplicadorDoClimaClassico('velocidade'):1)
         * aceleracaoLimiar
         * multiplicadorDeDisparada
         * multiplicadorDaArrancada
@@ -26927,7 +30220,15 @@ function obterVelocidadeAtualDoInimigo(inimigo, agora = Date.now()) {
         * multiplicadorDosRelogios
         * multiplicadorDaInterferencia
         * multiplicadorDaFormaDoCarcereiro
-        * multiplicadorDaFormaDoSoldado;
+        * multiplicadorDaFormaDoSoldado
+        * (typeof obterMultiplicadorDaFuriaDasCinzas === 'function'
+            ? obterMultiplicadorDaFuriaDasCinzas(inimigo) : 1)
+        * (typeof obterMultiplicadorDaTrocaDePele === 'function'
+            ? obterMultiplicadorDaTrocaDePele(inimigo) : 1)
+        * (typeof obterMultiplicadorDaFormaDoMetamorfo === 'function'
+            ? obterMultiplicadorDaFormaDoMetamorfo(inimigo) : 1)
+        * (agora < boostInimigosFliperamaExpiraEm
+            ? 1 + obterPercentualDaPenalidadeDoFliperama() : 1);
 
     if (agora < (inimigo.lentidaoExpiraEm || 0)) {
         return velocidadeComHabilidades * (1 - (inimigo.percentualLentidao || 0));
@@ -27064,20 +30365,32 @@ function moverInimigos(multiplicadorDeMovimento = 1) {
             criarFendaDoPortadorDerrotado(inimigo, agora);
             if (!inimigo.restauradoPeloCurador) {
                 coletarSucataParaTorresProximas(inimigo, agora);
+                if (partidaContaParaConquistasMemoraveis()) {
+                    desbloquearConquista("primeiroInimigo");
+                    if (mapaPersonalizadoAtivo?.classico) registrarEstatisticaDeConquista("inimigosEliminados", 1, true);
+                    if (tipoEhBoss(inimigo.tipo)) {
+                        desbloquearConquista("primeiroChefe");
+                        registrarEstatisticaDeConquista("bosses", 1, true);
+                    }
+                }
                 if (!mapaPersonalizadoAtivo) {
                     registrarInimigoEliminadoParaMissoes(inimigo);
                     registrarInimigoEliminadoParaConquistas();
                     registrarExperienciaDaPartida(tipoEhBoss(inimigo.tipo)
                         ? CONFIG.progressaoDeNivel.experienciaPorBoss
                         : CONFIG.progressaoDeNivel.experienciaPorInimigo);
-                }
+                } else if (mapaPersonalizadoAtivo.classico) registrarInimigoEliminadoParaDesafioSemanal(inimigo);
             }
-            if (!mapaPersonalizadoAtivo) {
+            if (!mapaPersonalizadoAtivo || mapaPersonalizadoAtivo.classico
+                || (mapaPersonalizadoAtivo.evento
+                    && obterIdDoEventoDoInimigo(inimigo.tipo) === mapaPersonalizadoAtivo.evento)) {
                 registrarInimigoDerrotadoNoAlbum(inimigo.tipo);
             }
             inimigos.splice(i, 1);
             continue;
         }
+
+        if (inimigo.torretaDaForja || inimigo.carcacaDaVibora) continue;
 
         if (inimigoAtingiuTorreFinal(inimigo)) {
             finalizarPartida();
@@ -27115,6 +30428,11 @@ function moverInimigos(multiplicadorDeMovimento = 1) {
         } else {
             inimigo.x += (dx / distancia) * deslocamento;
             inimigo.y += (dy / distancia) * deslocamento;
+        }
+        if (obterDesenhoDaCaminhadaNoAlbum(inimigo.tipo)) {
+            inimigo.distanciaDaPassada = ((inimigo.distanciaDaPassada || 0)
+                + Math.min(distancia, deslocamento))
+                % (CONFIG.animacaoDoVermelho.distanciaPorQuadro * CONFIG.animacaoDoVermelho.quadrosDaCaminhada);
         }
 
         if (inimigoAtingiuTorreFinal(inimigo)) {
@@ -27407,6 +30725,9 @@ function limparCursoresEspeciaisDoMapa() {
 }
 
 function posicaoEhInvalidaParaCursorDeConstrucao(x, y) {
+    if (typeof estaPertoDaCarroca === 'function' && estaPertoDaCarroca(x, y)) return true;
+    if (construcaoSobreDecoracao(x, y)) return true;
+    if(!terrenoPermiteDefesa(tipoDeTorreParaConstruir,x,y))return true;
     const configuracao = obterConfiguracaoDaTorre();
     const ehMina = configuracao.tipoDeItem === "mina";
     const ehBomba = configuracao.tipoDeItem === "bomba";
@@ -27429,9 +30750,9 @@ function posicaoEhInvalidaParaCursorDeConstrucao(x, y) {
         || estaPertoDosRegistrosPontoZero(xDaConstrucao, yDaConstrucao)
         || estaPertoDosRelogiosDoIntervalo(xDaConstrucao, yDaConstrucao)
         || estaPertoDosPaineisDeContencao(xDaConstrucao, yDaConstrucao)
-        || !torreEstaDesbloqueada(tipoDeTorreParaConstruir)
+        || !defesaEstaDisponivelNaPartida(tipoDeTorreParaConstruir)
         || atingiuLimiteDoTipoDeTorre(tipoDeTorreParaConstruir)
-        || dinheiro < configuracao.custo
+        || dinheiro < obterCustoDeConstrucaoDaTorre(tipoDeTorreParaConstruir)
         || (
             !configuracao.naoContaNoLimiteDeTorres
             && torres.length >= obterLimiteDeTorres()
@@ -27498,6 +30819,36 @@ function atualizarCursorEspecialDoMapa(x, y) {
     );
 }
 
+function criarTorreNaPartida(tipo, x, y, custo = 0) {
+    const configuracao = obterConfiguracaoDaTorre(tipo);
+    const torre = {
+        x, y, tipo,
+        waveDeConstrucao: wave,
+        anguloDaMira: -Math.PI / 2,
+        modoDeAlvo: CONFIG.torre.modoDeAlvoInicial,
+        alvoAtual: null,
+        velocidadeTiro: configuracao.velocidadeTiro || CONFIG.tiro.velocidade,
+        nivel: 0,
+        valorInvestido: custo,
+        ultimoTiro: 0,
+        tirosRecebidos: 0,
+        estaseTemporalExpiraEm: 0,
+        pecasDeSucata: 0,
+        sucataExpiraEm: 0,
+        indicePrismatico: 0,
+        ...(configuracao.creditosPorWave
+            ? { primeiraWaveParaGerarCreditos: wave + 1, ultimaWaveComCreditosGerados: wave }
+            : {}),
+        ...(configuracao.efeitoSismico
+            ? { sismicaProntaEm: Date.now() + configuracao.efeitoSismico.recargaEmMs, impactoSismicoSecundarioEm: 0 }
+            : {})
+    };
+    atualizarAtributosDaTorreComBonus(torre);
+    torres.push(torre);
+    if (configuracao.suprema) supremaFoiConstruida = true;
+    return torre;
+}
+
 canvas.addEventListener("mousemove", (evento) => {
     if (!jogoIniciado || partidaEncerrada) {
         posicaoCursorNoMapa = null;
@@ -27519,6 +30870,18 @@ canvas.addEventListener("click", (evento) => {
     if (!jogoIniciado || partidaEncerrada) {
         return;
     }
+
+    if (explicacaoFliperamaAtiva) {
+        const posicao = obterPosicaoNoMapaPeloEvento(evento);
+        if (fliperamaEstaNaPosicao(posicao.x, posicao.y)) {
+            ocultarExplicacaoDoFliperama();
+            iniciarMinigameFliperama();
+        }
+        return;
+    }
+
+    if (mapaPersonalizadoAtivo?.evento && typeof cliqueNoMapaDoEvento === 'function'
+        && cliqueNoMapaDoEvento(evento)) return;
 
     if (tutorialAtivo && passoTutorial < 3) {
         mostrarAviso(localizar("Siga a instrução do treinamento para continuar."));
@@ -27565,6 +30928,7 @@ canvas.addEventListener("click", (evento) => {
     }
 
     const configuracaoDaConstrucao = obterConfiguracaoDaTorre();
+    const custoDaConstrucao = obterCustoDeConstrucaoDaTorre(tipoDeTorreParaConstruir);
     const construcaoEhMina = configuracaoDaConstrucao.tipoDeItem === "mina";
     const construcaoEhBomba = configuracaoDaConstrucao.tipoDeItem === "bomba";
     const construcaoExigeCaminho = configuracaoDaConstrucao.exigeCaminho === true;
@@ -27617,6 +30981,12 @@ canvas.addEventListener("click", (evento) => {
                     .toLocaleString(idiomaAtual)
             }));
         }
+    } else if (typeof estaEmCrateraDoEvento === 'function' && estaEmCrateraDoEvento(xDaConstrucao, yDaConstrucao)) {
+        mostrarAviso(localizarEvento('A cratera ainda impede construções.'));
+    } else if (construcaoSobreDecoracao(xDaConstrucao, yDaConstrucao) || (typeof estaPertoDaCarroca === 'function' && estaPertoDaCarroca(xDaConstrucao, yDaConstrucao))) {
+        mostrarAviso(localizar('Não é possível construir sobre árvores ou outras decorações.'));
+    } else if (!terrenoPermiteDefesa(tipoDeTorreParaConstruir,xDaConstrucao,yDaConstrucao)) {
+        mostrarAviso(localizar(configuracaoDaConstrucao.aquatica?'Esta torre só pode ser construída na água.':'Use uma torre aquática para construir na água.'));
     } else if (construcaoExigeCaminho && !estaNoCaminho(x, y)) {
         mostrarAviso(localizar("A {nome} só pode ser colocada no caminho.", {
             nome: obterNomeLocalizado(configuracaoDaConstrucao)
@@ -27644,7 +31014,7 @@ canvas.addEventListener("click", (evento) => {
         mostrarAviso(localizar("Deixe espaço livre ao redor dos Relógios de Ruptura."));
     } else if (estaPertoDosPaineisDeContencao(xDaConstrucao, yDaConstrucao)) {
         mostrarAviso(localizar("Deixe espaço livre ao redor do painel de contenção."));
-    } else if (!torreEstaDesbloqueada(tipoDeTorreParaConstruir)) {
+    } else if (!defesaEstaDisponivelNaPartida(tipoDeTorreParaConstruir)) {
         const configuracaoBloqueada = obterConfiguracaoDaTorre(tipoDeTorreParaConstruir);
         tipoDeTorreParaConstruir = obterPrimeiraDefesaDisponivelParaPartida();
         atualizarBotoesDeConstrucao();
@@ -27654,7 +31024,10 @@ canvas.addEventListener("click", (evento) => {
             limite: configuracaoDaConstrucao.limitePorPartida,
             nome: obterNomeLocalizado(configuracaoDaConstrucao)
         }));
-    } else if (dinheiro < configuracaoDaConstrucao.custo) {
+    } else if (mapaPersonalizadoAtivo?.evento === 'caixaSurpresa'
+        || mapaPersonalizadoAtivo?.evento === 'roleta') {
+        mostrarAviso(localizar('Neste evento, as defesas chegam pela sorte.'));
+    } else if (dinheiro < custoDaConstrucao) {
         mostrarAviso(localizar("Dinheiro insuficiente para construir {nome}.", {
             nome: obterNomeLocalizado(configuracaoDaConstrucao)
         }));
@@ -27695,7 +31068,7 @@ canvas.addEventListener("click", (evento) => {
             ativada: false,
             explodeEm: 0
         });
-        dinheiro -= configuracaoDaConstrucao.custo;
+        dinheiro -= custoDaConstrucao;
         registrarDefesaConstruidaParaConquistas(tipoDeTorreParaConstruir);
         mostrarAviso(localizar(
             "Bomba posicionada · clique nela para acender o pavio · {quantidade}/{limite} no mapa.",
@@ -27710,49 +31083,24 @@ canvas.addEventListener("click", (evento) => {
             y: posicaoDaMina.y,
             tipo: tipoDeTorreParaConstruir
         });
-        dinheiro -= configuracaoDaConstrucao.custo;
+        dinheiro -= custoDaConstrucao;
         registrarDefesaConstruidaParaConquistas(tipoDeTorreParaConstruir);
         mostrarAviso(localizar("Mina armada · {quantidade}/{limite} no mapa.", {
             quantidade: obterQuantidadeConstruidaDoTipo(tipoDeTorreParaConstruir),
             limite: configuracaoDaConstrucao.limitePorPartida
         }));
     } else {
-        const novaTorre = {
-            x,
-            y,
-            tipo: tipoDeTorreParaConstruir,
-            anguloDaMira: -Math.PI / 2,
-            modoDeAlvo: CONFIG.torre.modoDeAlvoInicial,
-            alvoAtual: null,
-            velocidadeTiro: configuracaoDaConstrucao.velocidadeTiro || CONFIG.tiro.velocidade,
-            nivel: 0,
-            valorInvestido: configuracaoDaConstrucao.custo,
-            ultimoTiro: 0,
-            tirosRecebidos: 0,
-            estaseTemporalExpiraEm: 0,
-            pecasDeSucata: 0,
-            sucataExpiraEm: 0,
-            indicePrismatico: 0,
-            ...(configuracaoDaConstrucao.creditosPorWave
-                ? {
-                    primeiraWaveParaGerarCreditos: wave + 1,
-                    ultimaWaveComCreditosGerados: wave
-                }
-                : {}),
-            ...(configuracaoDaConstrucao.efeitoSismico
-                ? {
-                    cargaSismica: 0,
-                    inimigosDentroDoAlcanceSismico: new Set(),
-                    impactoSismicoSecundarioEm: 0
-                }
-                : {})
-        };
-        atualizarAtributosDaTorreComBonus(novaTorre);
-        torres.push(novaTorre);
+        const novaTorre = criarTorreNaPartida(
+            tipoDeTorreParaConstruir, x, y, custoDaConstrucao
+        );
         registrarTorreParaConquistasExtras(novaTorre);
 
-        dinheiro -= configuracaoDaConstrucao.custo;
+        dinheiro -= custoDaConstrucao;
         registrarDefesaConstruidaParaConquistas(tipoDeTorreParaConstruir);
+        if (partidaContaParaConquistasMemoraveis()) {
+            desbloquearConquista("primeiraTorre");
+            registrarEstatisticaDeConquista("torresConstruidas", 1, true);
+        }
 
         if (
             tutorialAtivo
@@ -27830,15 +31178,20 @@ function melhorarTorreSelecionada(atributo = null) {
         return;
     }
 
-    if (dinheiro < proximaMelhoria.custo) {
+    const custoDaMelhoria = obterCustoAtualDaPartida(proximaMelhoria.custo);
+    if (dinheiro < custoDaMelhoria) {
         mostrarAviso(localizar("Dinheiro insuficiente para esta melhoria."));
         return;
     }
 
-    dinheiro -= proximaMelhoria.custo;
+    dinheiro -= custoDaMelhoria;
     torreSelecionada.nivel++;
     registrarAcaoDaTorreParaMissoes("melhorias");
-    torreSelecionada.valorInvestido += proximaMelhoria.custo;
+    if (partidaContaParaConquistasMemoraveis()) {
+        desbloquearConquista("primeiraMelhoria");
+        registrarEstatisticaDeConquista("melhorias", 1, true);
+    }
+    torreSelecionada.valorInvestido += custoDaMelhoria;
     atualizarAtributosDaTorreComBonus(torreSelecionada);
 
     atualizarBotoesDaTorre();
@@ -27860,7 +31213,7 @@ function venderTorreSelecionada() {
 
     registrarAcaoDaTorreParaMissoes("vendas");
     const valorDaVenda = calcularValorDeVenda(torreSelecionada);
-    dinheiro += valorDaVenda;
+    concederCreditosNaPartida(valorDaVenda);
     torres.splice(torres.indexOf(torreSelecionada), 1);
     torreSelecionada = null;
 
@@ -27887,11 +31240,10 @@ function obterDescricaoDaTorreSelecionada(torre, configuracao, configuracaoAtual
     );
 
     if (configuracao.efeitoSismico) {
-        return finalizarDescricao(localizar("{nome} · Nível {nivel} · Carga {atual}/{total} · Empurra {distancia} px", {
+        return finalizarDescricao(localizar("{nome} · Nível {nivel} · Recarga {segundos}s · Empurra {distancia} px", {
             nome: nomeDaTorre,
             nivel: torre.nivel,
-            atual: torre.cargaSismica || 0,
-            total: configuracaoAtual.efeitoSismico.cargasNecessarias,
+            segundos: (configuracaoAtual.efeitoSismico.recargaEmMs / 1000).toLocaleString(idiomaAtual),
             distancia: configuracaoAtual.efeitoSismico.distanciaDoEmpurrao
         }));
     }
@@ -27937,6 +31289,13 @@ function obterDescricaoDaTorreSelecionada(torre, configuracao, configuracaoAtual
     return finalizarDescricao(configuracaoPossuiMelhorias(configuracao)
         ? localizar("{nome} · Nível {nivel} · Dano {dano} · Alcance {alcance}", parametros)
         : localizar("{nome} · Dano {dano} · Alcance {alcance}", parametros));
+}
+
+function obterEstadoDaRecargaSismica(torre, agora = Date.now()) {
+    const segundosRestantes = Math.max(0, Math.ceil(((torre.sismicaProntaEm || 0) - agora) / 1000));
+    return segundosRestantes > 0
+        ? localizar("Recarga {segundos}s", { segundos: segundosRestantes })
+        : localizar("Pronta para impacto");
 }
 
 function atualizarBotoesDaTorre() {
@@ -28048,7 +31407,7 @@ function atualizarBotaoMelhorar() {
 
     botaoMelhorar.disabled = false;
     botaoMelhorar.textContent = localizar("Melhorar torre ({custo})", {
-        custo: proximaMelhoria.custo
+        custo: obterCustoAtualDaPartida(proximaMelhoria.custo)
     });
 }
 
@@ -28075,19 +31434,38 @@ function obterSkinEquipadaDaTorrePadrao() {
     return obterSkinConquistavel(idDaSkinDeMissao);
 }
 
+function obterCoresDaSkinSuperBoss(idDaSkin, nivel = 0) {
+    const evento = CONFIG.eventos.eventoDasSkinsSuperBosses[idDaSkin];
+    const dificuldade = evento && obterMaiorDificuldadeConcluidaDoEvento(evento);
+    if (idDaSkin === 'sentinelaCosmica' && dificuldade) {
+        const deslocamento = dificuldade === 'dificil' ? 2 : dificuldade === 'medio' ? 1 : 0;
+        const cores = CONFIG.missoes.skins.sentinelaCosmica.coresPorNivel;
+        return cores[Math.min(nivel + deslocamento, cores.length - 1)];
+    }
+    return CONFIG.eventos.coresDasSkinsPorDificuldade[dificuldade]?.[idDaSkin] || {};
+}
+
 function obterEstiloDaTorre(torre) {
     const configuracaoAtual = obterConfiguracaoAtualDaTorre(torre);
     const estiloOriginal = torre.nivel === 0
         ? configuracaoAtual.visualBase
         : configuracaoAtual.visual;
-    const skin = obterSkinEquipadaDaTorrePadrao();
+    if (typeof obterEstiloDeDominio === 'function' && dominioEstaEquipado(torre.tipo)) {
+        return obterEstiloDeDominio(torre.tipo, estiloOriginal);
+    }
+    const idDaSkin = torre.tipo === 'padrao'
+        ? recompensasPermanentesDasMissoes.skinTorrePadraoEquipada
+        : recompensasPermanentesDasMissoes.skinsDeTorresEquipadas?.[torre.tipo];
+    const skin = torre.tipo === 'padrao' && pacoteApoiador.adquirido && pacoteApoiador.skinEquipada
+        ? CONFIG.pacoteApoiador.skin : obterSkinConquistavel(idDaSkin);
 
     if (!skin || torre.tipo !== skin.tipoDeTorre) {
         return estiloOriginal;
     }
 
-    const coresDaSkin = skin.coresPorNivel[Math.min(torre.nivel, 3)] || skin.coresPorNivel[0];
-    return { ...estiloOriginal, ...coresDaSkin };
+    const coresDaSkin = skin.coresPorNivel[Math.min(torre.nivel, skin.coresPorNivel.length - 1)] || skin.coresPorNivel[0];
+    return { ...estiloOriginal, ...coresDaSkin, ...obterCoresDaSkinSuperBoss(idDaSkin, torre.nivel),
+        ...(idDaSkin === 'coralAbissal' ? { skinDeEvento: idDaSkin } : {}) };
 }
 
 function obterConfiguracaoAtualDaTorre(torre) {
@@ -28103,9 +31481,12 @@ function obterConfiguracaoAtualDaTorre(torre) {
 
 function atualizarAtributosDaTorreComBonus(torre) {
     const configuracaoAtual = obterConfiguracaoAtualDaTorre(torre);
+    const dominioConcluido = typeof dominioFoiConcluido === 'function' && dominioFoiConcluido(torre.tipo);
     if (obterConfiguracaoDaTorre(torre.tipo).naoAtira) {
         torre.dano = 0;
-        torre.alcance = configuracaoAtual.alcance || 0;
+        torre.alcance = Math.round((configuracaoAtual.alcance || 0) * obterMultiplicadorDoNucleo('alcance')
+            * (dominioConcluido && obterAtributoDeDominio(torre.tipo) === 'alcance'
+                ? 1 + CONFIG.dominioDasTorres.bonusPercentualAlcance : 1));
         torre.velocidadeAtaque = 0;
         return;
     }
@@ -28118,14 +31499,21 @@ function atualizarAtributosDaTorreComBonus(torre) {
         : 1;
     torre.dano = Math.round(
         configuracaoAtual.dano
+        * obterMultiplicadorDeAfinidadeDaTorre(torre.tipo)
         * multiplicadorDeDanoDasTorres
         * multiplicadorDeDanoDoFliperama
+        * obterMultiplicadorDoNucleo('dano')
         * obterMultiplicadorPermanenteDaLoja("bonusPercentualDanoDasTorres")
+        * (dominioConcluido ? 1 + CONFIG.dominioDasTorres.bonusPercentualDano : 1)
+        * (1 + obterBonusDeDanoDaTorrePremio(torre.tipo))
+        * (typeof obterModificadorClassicoAtivo === 'function'
+            ? obterModificadorClassicoAtivo()?.multiplicadorDano || 1 : 1)
     );
     torre.alcance = Math.round(
         configuracaoAtual.alcance
         * multiplicadorDeAlcanceDasTorres
         * obterMultiplicadorPermanenteDaLoja("bonusPercentualAlcanceDasTorres")
+        * obterMultiplicadorDoNucleo('alcance')
     );
     torre.velocidadeTiro = configuracaoAtual.velocidadeTiro
         || obterConfiguracaoDaTorre(torre.tipo).velocidadeTiro
@@ -28136,6 +31524,7 @@ function atualizarAtributosDaTorreComBonus(torre) {
             configuracaoAtual.velocidadeAtaque
             * multiplicadorDeCadenciaDasTorres
             * multiplicadorDoFliperama
+            / obterMultiplicadorDoNucleo('velocidade')
         )
     );
 }
@@ -28163,6 +31552,7 @@ function estaPertoDeOutraDefesaConsumivel(defesas, x, y, distanciaMinima) {
 }
 
 function atingiuLimiteDoTipoDeTorre(tipoDaTorre) {
+    if (CONFIG.torre.tipos[tipoDaTorre]?.suprema) return supremaFoiConstruida;
     const configuracao = obterConfiguracaoDaTorre(tipoDaTorre);
     const limitePorPartida = configuracao.limitePorPartida;
 
@@ -28194,16 +31584,18 @@ function obterIntervaloDeAtaqueAtualDaTorre(torre, agora = Date.now()) {
 
     const bonusDoAmplificador = obterBonusDeCadenciaDoAmplificador(torre);
     intervaloDeAtaque *= 1 - bonusDoAmplificador;
+    if(typeof multiplicadorDoClimaClassico==='function')intervaloDeAtaque *= multiplicadorDoClimaClassico('intervalo');
     return Math.max(100, intervaloDeAtaque);
 }
 
 function obterAlcanceAtualDaTorre(torre, agora = Date.now()) {
+    const clima = typeof multiplicadorDoClimaClassico==='function'?multiplicadorDoClimaClassico('alcance'):1;
     if (agora >= (torre.reducaoAlcanceCorujaExpiraEm || 0)) {
         torre.percentualReducaoAlcanceCoruja = 0;
-        return torre.alcance;
+        return torre.alcance * clima;
     }
 
-    return torre.alcance * (1 - (torre.percentualReducaoAlcanceCoruja || 0));
+    return torre.alcance * clima * (1 - (torre.percentualReducaoAlcanceCoruja || 0));
 }
 
 function obterBonusDeCadenciaDoAmplificador(torre) {
@@ -28217,7 +31609,7 @@ function obterBonusDeCadenciaDoAmplificador(torre) {
         if (
             !configuracaoDeSuporte.percentualBonusCadencia
             || Math.hypot(torre.x - torreDeSuporte.x, torre.y - torreDeSuporte.y)
-                > torreDeSuporte.alcance
+                > obterAlcanceAtualDaTorre(torreDeSuporte)
         ) {
             return maiorBonus;
         }
@@ -28292,7 +31684,8 @@ function atacarComTorres(agora = Date.now()) {
             continue;
         }
 
-        const intervaloDeAtaque = obterIntervaloDeAtaqueAtualDaTorre(torre, agora);
+        const intervaloDeAtaque = obterIntervaloDeAtaqueAtualDaTorre(torre, agora)
+            * (torre.multiplicadorIntervaloMetamorfo || 1);
         const prontaParaAtirar = agora - torre.ultimoTiro >= intervaloDeAtaque;
         const alvo = escolherAlvoDaTorre(torre, prontaParaAtirar);
 
@@ -28326,6 +31719,9 @@ function atacarComTorres(agora = Date.now()) {
             configuracaoAtual.efeitoDeSucata,
             agora
         );
+        const modoMetamorfo = configuracaoBase.modos
+            ? ['rapido', 'pesado', 'area'][(torre.indiceMetamorfo || 0) % 3] : null;
+        const atributosDoModo = modoMetamorfo ? configuracaoBase.modos[modoMetamorfo] : null;
         const perpendicularX = -Math.sin(torre.anguloDaMira);
         const perpendicularY = Math.cos(torre.anguloDaMira);
 
@@ -28338,8 +31734,12 @@ function atacarComTorres(agora = Date.now()) {
                 origemX: torre.x,
                 origemY: torre.y,
                 alcanceOriginal: obterAlcanceAtualDaTorre(torre, agora),
-                velocidade: torre.velocidadeTiro || CONFIG.tiro.velocidade,
-                dano: danoDoAtaque,
+                velocidade: (torre.velocidadeTiro || CONFIG.tiro.velocidade)
+                    * (typeof obterModificadorClassicoAtivo === 'function'
+                        ? obterModificadorClassicoAtivo()?.multiplicadorVelocidadeTiro || 1 : 1),
+                erraPorVentania: typeof obterModificadorClassicoAtivo === 'function'
+                    && Math.random() < (obterModificadorClassicoAtivo()?.chanceDeErro || 0),
+                dano: atributosDoModo ? Math.round(danoDoAtaque * atributosDoModo.multiplicadorDano) : danoDoAtaque,
                 tipoDaTorre: torre.tipo,
                 torreOrigem: torre,
                 elemento: configuracaoBase.elemento || null,
@@ -28349,12 +31749,16 @@ function atacarComTorres(agora = Date.now()) {
                 efeitoDeRaio: configuracaoAtual.efeitoDeRaio || null,
                 efeitoPerfurante: configuracaoAtual.efeitoPerfurante || null,
                 efeitoDeMarca: configuracaoAtual.efeitoDeMarca || null,
+                efeitoDeBolhas: configuracaoAtual.efeitoDeBolhas || null,
                 efeitoDeCorrente: configuracaoAtual.efeitoDeCorrente || null,
                 efeitoDeSucata: configuracaoAtual.efeitoDeSucata || null,
                 efeitoPrismatico: configuracaoAtual.efeitoPrismatico || null,
                 modoPrismatico,
-                raioDanoEmArea: configuracaoAtual.raioDanoEmArea || 0,
-                duracaoExplosaoEmQuadros: configuracaoAtual.duracaoExplosaoEmQuadros || 0,
+                raioDanoEmArea: atributosDoModo?.raio || configuracaoAtual.raioDanoEmArea || 0,
+                puxaoNoCaminho: configuracaoAtual.puxaoNoCaminho || 0,
+                modoMetamorfo,
+                duracaoExplosaoEmQuadros: configuracaoAtual.duracaoExplosaoEmQuadros || configuracaoBase.duracaoExplosaoEmQuadros || 0,
+                tipoVisualDoImpacto: configuracaoBase.tipoVisualDoImpacto || null,
                 corEsporos: obterEstiloDaTorre(torre).corEsporos || null
             });
         }
@@ -28362,9 +31766,13 @@ function atacarComTorres(agora = Date.now()) {
         if (configuracaoAtual.efeitoPrismatico) {
             torre.indicePrismatico = ((torre.indicePrismatico || 0) + 1) % 3;
         }
+        if (atributosDoModo) {
+            torre.indiceMetamorfo = ((torre.indiceMetamorfo || 0) + 1) % 3;
+            torre.multiplicadorIntervaloMetamorfo = atributosDoModo.multiplicadorIntervalo;
+        }
 
         torre.ultimoTiro = agora;
-        dinheiro += obterRecompensaPorTiro();
+        registrarCreditosPorDisparo(alvo);
     }
 }
 
@@ -28386,12 +31794,15 @@ function atacarComFeixeContinuo(torre, agora) {
     if (torre.pulsosDoFeixe === limite && partidaContaParaMissoes()) registrarProgressoDaMissao("feixeMaximo", 1, true);
     aplicarDanoAoInimigo(alvo, torre.dano * torre.pulsosDoFeixe, agora, {tipoDaDefesa:torre.tipo,torreOrigem:torre});
     torre.ultimoTiro = agora;
-    dinheiro += obterRecompensaPorTiro();
+    registrarCreditosPorDisparo(alvo);
 }
 
 function obterInimigosNoAlcanceDaTorre(torre) {
     const alcanceAtual = obterAlcanceAtualDaTorre(torre);
+    const tiposDeAlvo=obterConfiguracaoDaTorre(torre.tipo).tiposDeAlvo;
     return inimigos.filter((inimigo) => (
+        (inimigo.torretaDaForja || inimigo.carcacaDaVibora
+            || !tiposDeAlvo || tiposDeAlvo.includes(inimigo.tipo)) &&
         (typeof torrePodeDetectarInimigo !== "function"
             || torrePodeDetectarInimigo(torre, inimigo))
         && Math.hypot(torre.x - inimigo.x, torre.y - inimigo.y) <= alcanceAtual
@@ -28581,32 +31992,20 @@ function atualizarTorresSismicas(agora = Date.now()) {
 
         const configuracaoAtual = obterConfiguracaoAtualDaTorre(torre);
         const efeitoSismico = configuracaoAtual.efeitoSismico;
-        const cargaAntesDaAtualizacao = torre.cargaSismica || 0;
-
         const deveAtivarImpactoSecundario = (
             torre.impactoSismicoSecundarioEm > 0
             && agora >= torre.impactoSismicoSecundarioEm
         );
-
-        const inimigosDentroAgora = new Set(obterInimigosNoAlcanceDaTorre(torre));
-        const inimigosDentroAntes = torre.inimigosDentroDoAlcanceSismico instanceof Set
-            ? torre.inimigosDentroDoAlcanceSismico
-            : new Set();
-
-        for (const inimigo of inimigosDentroAgora) {
-            if (!inimigosDentroAntes.has(inimigo)) {
-                torre.cargaSismica = (torre.cargaSismica || 0) + 1;
-            }
-        }
-
-        torre.inimigosDentroDoAlcanceSismico = inimigosDentroAgora;
-
+        const inimigosDentroAgora = new Set(
+            obterInimigosNoAlcanceDaTorre(torre).filter((inimigo) => inimigo.vida > 0)
+        );
         const deveAtivarImpactoPrincipal = (
-            (torre.cargaSismica || 0) >= efeitoSismico.cargasNecessarias
+            agora >= (torre.sismicaProntaEm || 0)
+            && inimigosDentroAgora.size > 0
         );
 
         if (deveAtivarImpactoPrincipal) {
-            torre.cargaSismica -= efeitoSismico.cargasNecessarias;
+            torre.sismicaProntaEm = agora + efeitoSismico.recargaEmMs;
         }
 
         atualizacoesSismicas.push({
@@ -28614,8 +32013,7 @@ function atualizarTorresSismicas(agora = Date.now()) {
             efeitoSismico,
             inimigosDentroAgora,
             deveAtivarImpactoSecundario,
-            deveAtivarImpactoPrincipal,
-            cargaAntesDaAtualizacao
+            deveAtivarImpactoPrincipal
         });
     }
 
@@ -28625,8 +32023,7 @@ function atualizarTorresSismicas(agora = Date.now()) {
             efeitoSismico,
             inimigosDentroAgora,
             deveAtivarImpactoSecundario,
-            deveAtivarImpactoPrincipal,
-            cargaAntesDaAtualizacao
+            deveAtivarImpactoPrincipal
         } = atualizacao;
 
         if (deveAtivarImpactoSecundario) {
@@ -28650,10 +32047,7 @@ function atualizarTorresSismicas(agora = Date.now()) {
             );
         }
 
-        if (
-            torre === torreSelecionada
-            && cargaAntesDaAtualizacao !== (torre.cargaSismica || 0)
-        ) {
+        if (torre === torreSelecionada && deveAtivarImpactoPrincipal) {
             atualizarBotoesDaTorre();
         }
     }
@@ -28665,6 +32059,11 @@ function escolherAlvoDaTorre(torre, permitirNovoAlvoAleatorio) {
     if (candidatos.length === 0) {
         return null;
     }
+
+    const torreta = candidatos.find(inimigo => inimigo.torretaDaForja);
+    if (torreta) return torreta;
+    const carcaca = candidatos.find(inimigo => inimigo.carcacaDaVibora);
+    if (carcaca) return carcaca;
 
     const modo = obterModoDeAlvoDaTorre(torre).id;
 
@@ -28742,7 +32141,8 @@ function tentarUsarRugidoAncestral(inimigo, agora = Date.now()) {
         torre.alvoAtual = null;
     }
 
-    inimigo.proximoRugidoEm = agora + configuracao.intervaloEntreRugidos;
+    inimigo.proximoRugidoEm = agora + configuracao.intervaloEntreRugidos
+        * (typeof multiplicadorDaSegundaEtapa === 'function' ? multiplicadorDaSegundaEtapa(inimigo, 'intervaloRugido') : 1);
     inimigo.rugidoExpiraEm = agora + configuracao.duracaoVisualDoRugido;
     tocarEfeitoRugidoAncestral();
     return true;
@@ -28750,6 +32150,8 @@ function tentarUsarRugidoAncestral(inimigo, agora = Date.now()) {
 
 function atacarTorresComInimigos(agora = Date.now()) {
     for (const inimigo of inimigos) {
+        if (inimigo.vida <= 0) continue;
+        if ((inimigo.estaseSupremaRestante || 0) > 0) continue;
         const configuracao = CONFIG.inimigo[inimigo.tipo];
 
         tentarUsarRugidoAncestral(inimigo, agora);
@@ -28764,13 +32166,16 @@ function atacarTorresComInimigos(agora = Date.now()) {
         const alvo = encontrarAlvoParaInimigoAtirador(inimigo, configuracao.alcanceAtaque);
 
         if (alvo) {
-            tirosDosInimigos.push({
-                x: inimigo.x,
-                y: inimigo.y,
-                alvo,
-                velocidade: configuracao.velocidadeTiro,
-                tipoDoInimigo: inimigo.tipo
-            });
+            const quantidadeDeTiros = configuracao.tirosPorAtaque || 1;
+            for (let indice = 0; indice < quantidadeDeTiros; indice++) {
+                tirosDosInimigos.push({
+                    x: inimigo.x,
+                    y: inimigo.y + (indice - (quantidadeDeTiros - 1) / 2) * 12,
+                    alvo,
+                    velocidade: configuracao.velocidadeTiro,
+                    tipoDoInimigo: inimigo.tipo
+                });
+            }
             inimigo.ultimoTiro = agora;
         }
     }
@@ -28820,6 +32225,24 @@ function detonarTiroDeEsporos(tiro, agora = Date.now()) {
         tiro.tipoDaTorre,
         tiro.torreOrigem
     );
+    if (tiro.puxaoNoCaminho) {
+        for (const inimigo of inimigos) {
+            if (inimigo.vida <= 0 || tipoEhBoss(inimigo.tipo)
+                || Math.hypot(inimigo.x - xDoImpacto, inimigo.y - yDoImpacto) > tiro.raioDanoEmArea) continue;
+            const progressoAntesDoPuxao = calcularProgressoDoInimigo(inimigo);
+            if (progressoAntesDoPuxao < (inimigo.progressoMinimoParaNovoPuxaoMagnetico || 0)) continue;
+            const pontoAnterior = obterCaminhoDoInimigo(inimigo)[inimigo.alvo - 1];
+            if (!pontoAnterior) continue;
+            const distancia = Math.hypot(inimigo.x - pontoAnterior.x, inimigo.y - pontoAnterior.y);
+            if (distancia < 1) continue;
+            const proporcao = Math.min(1, tiro.puxaoNoCaminho / distancia);
+            inimigo.x += (pontoAnterior.x - inimigo.x) * proporcao;
+            inimigo.y += (pontoAnterior.y - inimigo.y) * proporcao;
+            const distanciaPuxada = progressoAntesDoPuxao - calcularProgressoDoInimigo(inimigo);
+            inimigo.progressoMinimoParaNovoPuxaoMagnetico = progressoAntesDoPuxao
+                + distanciaPuxada * CONFIG.torre.tipos.torreMagnetica.multiplicadorDeAvancoEntrePuxoes;
+        }
+    }
 
     explosoesDosExplosivos.push({
         x: xDoImpacto,
@@ -28827,7 +32250,7 @@ function detonarTiroDeEsporos(tiro, agora = Date.now()) {
         raio: tiro.raioDanoEmArea,
         quadrosRestantes: tiro.duracaoExplosaoEmQuadros,
         totalDeQuadros: tiro.duracaoExplosaoEmQuadros,
-        tipoVisual: "esporos",
+        tipoVisual: tiro.tipoVisualDoImpacto || "esporos",
         cor: tiro.corEsporos
     });
 }
@@ -28902,6 +32325,26 @@ function aplicarMarcaAoInimigo(inimigo, efeitoDeMarca, agora = Date.now()) {
         inimigo.marcaExpiraEm || 0,
         agora + efeitoDeMarca.duracao
     );
+    return true;
+}
+
+function aplicarBolhaDePressao(tiro, agora = Date.now()) {
+    const efeito = tiro.efeitoDeBolhas;
+    const alvo = tiro.alvo;
+    if (!efeito || !alvo) return false;
+
+    const acertosAtivos = agora < (alvo.bolhaExpiraEm || 0) ? alvo.acertosDeBolha || 0 : 0;
+    alvo.acertosDeBolha = acertosAtivos + 1;
+    alvo.bolhaExpiraEm = agora + efeito.duracaoMs;
+    if (alvo.acertosDeBolha < efeito.acertosParaEstourar) return false;
+
+    alvo.acertosDeBolha = 0;
+    alvo.bolhaExpiraEm = 0;
+    const danoEstouro = Math.round(efeito.danoEstouro * tiro.dano
+        / CONFIG.torre.tipos.torreDeBolhas.dano);
+    aplicarDanoEmArea(alvo.x, alvo.y, efeito.raioEstouro, danoEstouro,
+        null, agora, tiro.tipoDaTorre, tiro.torreOrigem);
+    registrarExplosaoVisual(alvo.x, alvo.y, efeito.raioEstouro, 18, 'bolhas');
     return true;
 }
 
@@ -29077,7 +32520,9 @@ function moverTiros(multiplicadorDeMovimento = 1) {
 
         if (distancia <= deslocamento) {
             const agora = Date.now();
-            if (tiro.efeitoDeRaio) {
+            if (tiro.erraPorVentania) {
+                // O disparo passa pelo alvo sem aplicar dano ou efeitos.
+            } else if (tiro.efeitoDeRaio) {
                 aplicarRaioEncadeado(tiro, agora);
             } else if (tiro.efeitoPerfurante) {
                 aplicarTiroPerfurante(tiro, agora);
@@ -29100,6 +32545,7 @@ function moverTiros(multiplicadorDeMovimento = 1) {
                     tiro.torreOrigem
                 );
                 aplicarMarcaAoInimigo(tiro.alvo, tiro.efeitoDeMarca, agora);
+                aplicarBolhaDePressao(tiro, agora);
             }
             tiros.splice(i, 1);
         } else {
@@ -29124,6 +32570,10 @@ function moverTirosDosInimigos(multiplicadorDeMovimento = 1) {
         const deslocamento = tiro.velocidade * multiplicadorDeMovimento;
 
         if (distancia <= deslocamento) {
+            if (escudoSupremoRestante > 0) {
+                tirosDosInimigos.splice(i, 1);
+                continue;
+            }
             const configuracaoDaTorre = obterConfiguracaoDaTorre(tiro.alvo.tipo);
             if (
                 tiro.tipoDoInimigo === "corujaSombria"
@@ -29166,14 +32616,22 @@ function aplicarReducaoDeAlcanceDaCoruja(torre, agora = Date.now()) {
 }
 
 function obterResistenciaDaTorre(torre) {
-    return obterConfiguracaoDaTorre(torre.tipo).resistenciaATiros
+    const resistenciaBase = obterConfiguracaoDaTorre(torre.tipo).resistenciaATiros
         || CONFIG.inimigo.sabotador.tirosParaDestruirTorre;
+    return resistenciaBase + (typeof dominioFoiConcluido === 'function' && dominioFoiConcluido(torre.tipo)
+        && obterAtributoDeDominio(torre.tipo) === 'resistencia'
+        ? CONFIG.dominioDasTorres.bonusDeResistencia : 0);
 }
 
 function atingirTorreComTiroInimigo(torre, tipoDoInimigo = "sabotador") {
-    torre.tirosRecebidos = (torre.tirosRecebidos || 0) + 1;
-
-    if (torre.tirosRecebidos < obterResistenciaDaTorre(torre)) {
+    if (escudoSupremoRestante > 0) return;
+    const tiroDaTorreta = tipoDoInimigo === 'torretaDaForja';
+    const contador = tiroDaTorreta ? 'tirosDaTorretaRecebidos' : 'tirosRecebidos';
+    torre[contador] = (torre[contador] || 0) + 1;
+    const resistencia = tiroDaTorreta
+        ? CONFIG.eventos.ataquesSecundariosSuperBoss.superBossesMecanicos.tirosParaDestruirTorre
+        : obterResistenciaDaTorre(torre);
+    if (torre[contador] < resistencia) {
         return;
     }
 
@@ -29184,6 +32642,11 @@ function atingirTorreComTiroInimigo(torre, tipoDoInimigo = "sabotador") {
     }
 
     if (combateContaParaConquistasExtras()) tentativaConquistasExtras.perdeuTorre = true;
+    if (typeof registrarTorreDestruidaDesafioDaCampanha === 'function') registrarTorreDestruidaDesafioDaCampanha();
+    if (tipoDoInimigo === 'viboraAcida'
+        && typeof registrarTorreDerretendoDoEvento === 'function') {
+        registrarTorreDerretendoDoEvento(torre);
+    }
     torres.splice(indiceDaTorre, 1);
 
     if (torreSelecionada === torre) {
@@ -29193,14 +32656,18 @@ function atingirTorreComTiroInimigo(torre, tipoDoInimigo = "sabotador") {
 
     tocarEfeitoTorreDestruida();
     const configuracaoDoInimigo = CONFIG.inimigo[tipoDoInimigo];
-    const nomeDoInimigo = configuracaoDoInimigo
-        ? obterNomeLocalizado(configuracaoDoInimigo)
+    const nomeDoInimigo = tipoDoInimigo === 'torretaDaForja'
+        ? localizarEvento(configuracaoDoInimigo.nome)
+        : configuracaoDoInimigo
+            ? obterNomeLocalizado(configuracaoDoInimigo)
         : localizar("Inimigo");
     const nomeDaTorre = obterNomeLocalizado(obterConfiguracaoDaTorre(torre.tipo));
-    mostrarAviso(localizar("{inimigo} destruiu {torre}!", {
-        inimigo: nomeDoInimigo,
-        torre: nomeDaTorre
-    }));
+    mostrarAviso(tipoDoInimigo === 'viboraAcida'
+        ? localizarEvento('O ácido derreteu uma torre!')
+        : localizar("{inimigo} destruiu {torre}!", {
+            inimigo: nomeDoInimigo,
+            torre: nomeDaTorre
+        }));
 }
 
 // Funções auxiliares
@@ -29301,9 +32768,16 @@ function desenharRetanguloArredondado(x, y, largura, altura, raio) {
 }
 
 function desenharMapa() {
+    const mapaClassico = mapaPersonalizadoAtivo?.classico && CONFIG.classico.mapasExclusivos.find(m=>m.numero===mapaPersonalizadoAtivo.numeroClassico);
+    if (mapaClassico) {
+        desenharCenarioClassico(ctx, mapaClassico, Date.now());
+        return;
+    }
     const faseAtual = obterFaseAtual();
     const caminhosAtuais = obterCaminhosAtuais();
-    const tema = temasDoMapa[faseAtual.tema] || temasDoMapa.campo;
+    const visualDoEvento = mapaPersonalizadoAtivo?.evento
+        ? CONFIG.eventos.visuais[mapaPersonalizadoAtivo.evento] : null;
+    const tema = visualDoEvento || temasDoMapa[faseAtual.tema] || temasDoMapa.campo;
     const mapaEhLimbo = faseAtual.tema === "intervaloPerdido";
     const mapaEhLinhaTemporal = faseAtual.tema === "linhaTemporal";
 
@@ -29334,7 +32808,8 @@ function desenharMapa() {
         desenharMarcasDoIntervaloPerdido();
     }
 
-    if (faseAtualEhArquivoProibido()) desenharEstantesDoArquivoProibido();
+    if (visualDoEvento) desenharDecoracoesDoEvento(mapaPersonalizadoAtivo.evento);
+    else if (faseAtualEhArquivoProibido()) desenharEstantesDoArquivoProibido();
     if (faseAtualEhCamaraDasMemorias()) desenharArquivosDaCamaraDasMemorias();
     else if (faseAtualEhLimiarDoTempo()) desenharLimiarDoTempo();
     else if (faseAtualEhConfrontoFinal()) desenharSalaDoUltimoRelogio();
@@ -29367,13 +32842,19 @@ function desenharMapa() {
         desenharPortao(entrada.x, entrada.y, "#57b9ff", "ENTRADA", false);
     }
 
-    const torreFinal = obterPosicaoDaTorreFinal(caminhosAtuais[0]);
-    desenharTorreFinal(torreFinal.x, torreFinal.y, tema);
+    const caminhosDasBases = mapaPersonalizadoAtivo && !mapaPersonalizadoAtivo.classico
+        ? caminhosAtuais : [caminhosAtuais[0]];
+    for (const caminhoDaBase of caminhosDasBases) {
+        const torreFinal = obterPosicaoDaTorreFinal(caminhoDaBase);
+        desenharTorreFinal(torreFinal.x, torreFinal.y, tema);
+    }
     desenharRadioProjetoRelogio();
     desenharTerminalLaboratorio();
     desenharTransmissorFuturoDespedacado();
     desenharRegistrosPontoZero();
     desenharRelogiosDeRuptura();
+    if (typeof desenharCarrocaDaCampanha === 'function') desenharCarrocaDaCampanha();
+    if (mapaPersonalizadoAtivo?.classico) desenharDecoracoesExtrasClassicas(ctx, CONFIG.fases.find(m => m.numero === mapaPersonalizadoAtivo.numeroClassico));
 }
 
 function desenharLimiarDoTempo() {
@@ -30294,30 +33775,66 @@ function desenharFliperamaNoMapa() {
         desenharFliperamaPixeladoAnterior(x, y);
     }
 
-    ctx.fillStyle = "#102218";
-    ctx.fillRect(x - 40, y - 66, 76, 18);
-    ctx.strokeStyle = "#6cdb7c";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(x - 40, y - 66, 76, 18);
-    ctx.fillStyle = "#f4f1d0";
-    ctx.font = "900 10px 'Courier New', monospace";
-    ctx.fillText(localizar("CLIQUE · {segundos}s", { segundos }), x - 2, y - 54);
+    if (explicacaoFliperamaAtiva) {
+        desenharSetasDoFliperama(x, y);
+    } else {
+        ctx.fillStyle = "#102218";
+        ctx.fillRect(x - 40, y - 66, 76, 18);
+        ctx.strokeStyle = "#6cdb7c";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x - 40, y - 66, 76, 18);
+        ctx.fillStyle = "#f4f1d0";
+        ctx.font = "900 10px 'Courier New', monospace";
+        ctx.fillText(localizar("CLIQUE · {segundos}s", { segundos }), x - 2, y - 54);
+    }
     ctx.restore();
 }
 
-function desenharDecoracoesDoMapa(temaDaFase) {
+function desenharSetasDoFliperama(x, y) {
+    for (const [deslocamentoX, deslocamentoY, rotacao] of [
+        [0, -60, 0], [0, 60, Math.PI],
+        [-45, 0, -Math.PI / 2], [45, 0, Math.PI / 2]
+    ]) {
+        ctx.save();
+        ctx.translate(x + deslocamentoX, y + deslocamentoY);
+        ctx.rotate(rotacao);
+        ctx.fillStyle = '#102218';
+        ctx.fillRect(-5, -22, 10, 18);
+        ctx.fillStyle = '#fff36a';
+        ctx.fillRect(-3, -20, 6, 16);
+        ctx.beginPath();
+        ctx.moveTo(-10, -6);
+        ctx.lineTo(10, -6);
+        ctx.lineTo(0, 5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+}
+
+function obterDecoracoesVisiveisDoMapa(temaDaFase = obterFaseAtual().tema) {
+    if (mapaPersonalizadoAtivo?.modoEdicao === 'livre') return mapaPersonalizadoAtivo.decoracoesLivres;
+    if (mapaPersonalizadoAtivo?.classico) {
+        const numero = mapaPersonalizadoAtivo.numeroClassico;
+        const mapa = CONFIG.classico.mapasExclusivos.find(item => item.numero === numero)
+            || CONFIG.fases.find(item => item.numero === numero);
+        return obterDecoracoesBaseClassicas(mapa || { tema: temaDaFase, caminho: obterCaminhoAtual() });
+    }
     const decoracoes = decoracoesDoMapa[temaDaFase] || decoracoesDoMapa.campo;
     const percentual = mapaPersonalizadoAtivo
         ? CONFIG.editorDeFases.percentuaisDeDecoracoes[
             mapaPersonalizadoAtivo.nivelDeDecoracoes
         ] ?? 0
         : 1;
-    const decoracoesVisiveis = decoracoes.slice(
+    return decoracoes.slice(
         0,
         Math.round(decoracoes.length * percentual)
     );
 
-    for (const decoracao of decoracoesVisiveis) {
+}
+
+function desenharDecoracoesDoMapa(temaDaFase) {
+    for (const decoracao of obterDecoracoesVisiveisDoMapa(temaDaFase)) {
         const desenharDecoracao = desenhadoresDeDecoracao[decoracao.tipo];
 
         if (desenharDecoracao) {
@@ -30326,7 +33843,8 @@ function desenharDecoracoesDoMapa(temaDaFase) {
     }
 }
 
-function desenharPredioApagado({ x, y, escala }) {
+function desenharPredioApagado({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30348,7 +33866,8 @@ function desenharPredioApagado({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharSilhuetaCongelada({ x, y, escala }) {
+function desenharSilhuetaCongelada({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30366,7 +33885,8 @@ function desenharSilhuetaCongelada({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharFragmentoApagado({ x, y, escala }) {
+function desenharFragmentoApagado({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30384,7 +33904,8 @@ function desenharFragmentoApagado({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharIlhaDoLimbo({ x, y, escala, origem }) {
+function desenharIlhaDoLimbo({ x, y, escala, origem }, contexto = ctx) {
+    const ctx = contexto;
     const aparencias = {
         campo: { topo: "#5f9b60", borda: "#31533d", base: "#88928c", detalhe: desenharArvore },
         deserto: { topo: "#d5a45e", borda: "#8f6136", base: "#a29282", detalhe: desenharPiramide },
@@ -30418,7 +33939,8 @@ function desenharIlhaDoLimbo({ x, y, escala, origem }) {
     ctx.restore();
 }
 
-function desenharRelogioFlutuanteDoLimbo({ x, y, escala, angulo = 0 }) {
+function desenharRelogioFlutuanteDoLimbo({ x, y, escala, angulo = 0 }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(angulo);
@@ -30444,7 +33966,8 @@ function desenharRelogioFlutuanteDoLimbo({ x, y, escala, angulo = 0 }) {
     ctx.restore();
 }
 
-function desenharLago({ x, y, escala }) {
+function desenharLago({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30452,15 +33975,15 @@ function desenharLago({ x, y, escala }) {
     ctx.fillRect(-56, -32, 112, 64);
     ctx.fillRect(-72, -16, 144, 32);
     ctx.fillStyle = "#3e9fb5";
-    ctx.fillRect(-52, -24, 104, 48);
-    ctx.fillRect(-64, -12, 128, 24);
+    for (const retangulo of CONFIG.construcaoNoTerreno.aguaDoLago) ctx.fillRect(...retangulo);
     ctx.fillStyle = "#6ed2d0";
     ctx.fillRect(-38, -15, 42, 7);
     ctx.fillRect(12, 10, 28, 6);
     ctx.restore();
 }
 
-function desenharArvore({ x, y, escala }) {
+function desenharArvore({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30479,7 +34002,8 @@ function desenharArvore({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPedra({ x, y, escala }) {
+function desenharPedra({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30493,7 +34017,8 @@ function desenharPedra({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharArbusto({ x, y, escala }) {
+function desenharArbusto({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30506,7 +34031,8 @@ function desenharArbusto({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharFlores({ x, y, escala }) {
+function desenharFlores({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     const cores = ["#fff1a6", "#f7a8c4", "#d7c1ff"];
     ctx.save();
     ctx.translate(x, y);
@@ -30520,7 +34046,8 @@ function desenharFlores({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharCacto({ x, y, escala }) {
+function desenharCacto({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30541,7 +34068,8 @@ function desenharCacto({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharMatoSeco({ x, y, escala }) {
+function desenharMatoSeco({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30560,7 +34088,8 @@ function desenharMatoSeco({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPiramide({ x, y, escala }) {
+function desenharPiramide({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30583,7 +34112,8 @@ function desenharPiramide({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharRochaDoDeserto({ x, y, escala }) {
+function desenharRochaDoDeserto({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30597,7 +34127,8 @@ function desenharRochaDoDeserto({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharIglu({ x, y, escala }) {
+function desenharIglu({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30630,7 +34161,8 @@ function desenharIglu({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPinguim({ x, y, escala }) {
+function desenharPinguim({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30662,7 +34194,8 @@ function desenharPinguim({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPinheiroNevado({ x, y, escala }) {
+function desenharPinheiroNevado({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30690,7 +34223,8 @@ function desenharPinheiroNevado({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharBlocoDeGelo({ x, y, escala }) {
+function desenharBlocoDeGelo({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30709,7 +34243,8 @@ function desenharBlocoDeGelo({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharLagoCongelado({ x, y, escala }) {
+function desenharLagoCongelado({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30730,7 +34265,8 @@ function desenharLagoCongelado({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharArvoreDaSelva({ x, y, escala }) {
+function desenharArvoreDaSelva({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30751,7 +34287,8 @@ function desenharArvoreDaSelva({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharRuinaDaSelva({ x, y, escala }) {
+function desenharRuinaDaSelva({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30771,7 +34308,8 @@ function desenharRuinaDaSelva({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharCipoDaSelva({ x, y, escala }) {
+function desenharCipoDaSelva({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30785,7 +34323,8 @@ function desenharCipoDaSelva({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharFlorTropical({ x, y, escala }) {
+function desenharFlorTropical({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30800,7 +34339,8 @@ function desenharFlorTropical({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharLagoDaSelva({ x, y, escala }) {
+function desenharLagoDaSelva({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30820,7 +34360,8 @@ function desenharLagoDaSelva({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharArvoreTemperada({ x, y, escala }) {
+function desenharArvoreTemperada({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30843,7 +34384,8 @@ function desenharArvoreTemperada({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharCogumelosTemperados({ x, y, escala }) {
+function desenharCogumelosTemperados({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30862,7 +34404,8 @@ function desenharCogumelosTemperados({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharTroncoCaido({ x, y, escala }) {
+function desenharTroncoCaido({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30880,7 +34423,8 @@ function desenharTroncoCaido({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharLagoOutonal({ x, y, escala }) {
+function desenharLagoOutonal({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30898,7 +34442,8 @@ function desenharLagoOutonal({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharLagoDeLava({ x, y, escala }) {
+function desenharLagoDeLava({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30917,7 +34462,8 @@ function desenharLagoDeLava({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharVulcao({ x, y, escala }) {
+function desenharVulcao({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30940,7 +34486,8 @@ function desenharVulcao({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharCristalDeObsidiana({ x, y, escala }) {
+function desenharCristalDeObsidiana({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30963,7 +34510,8 @@ function desenharCristalDeObsidiana({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharRochaDeBasalto({ x, y, escala }) {
+function desenharRochaDeBasalto({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30978,7 +34526,8 @@ function desenharRochaDeBasalto({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPocaToxica({ x, y, escala }) {
+function desenharPocaToxica({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -30997,7 +34546,8 @@ function desenharPocaToxica({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharArvoreDoPantano({ x, y, escala }) {
+function desenharArvoreDoPantano({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31019,7 +34569,8 @@ function desenharArvoreDoPantano({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharJuncosDoPantano({ x, y, escala }) {
+function desenharJuncosDoPantano({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31036,7 +34587,8 @@ function desenharJuncosDoPantano({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharCogumeloDoPantano({ x, y, escala }) {
+function desenharCogumeloDoPantano({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31053,7 +34605,8 @@ function desenharCogumeloDoPantano({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharArvorePrimordial({ x, y, escala }) {
+function desenharArvorePrimordial({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31079,7 +34632,8 @@ function desenharArvorePrimordial({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharSamambaiaGigante({ x, y, escala }) {
+function desenharSamambaiaGigante({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31098,7 +34652,8 @@ function desenharSamambaiaGigante({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharCristalDeAmbar({ x, y, escala }) {
+function desenharCristalDeAmbar({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31120,7 +34675,8 @@ function desenharCristalDeAmbar({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharOssosPrimordiais({ x, y, escala }) {
+function desenharOssosPrimordiais({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31137,7 +34693,8 @@ function desenharOssosPrimordiais({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPredioNeon({ x, y, escala }) {
+function desenharPredioNeon({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31160,7 +34717,8 @@ function desenharPredioNeon({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharArvoreHolografica({ x, y, escala }) {
+function desenharArvoreHolografica({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31179,7 +34737,8 @@ function desenharArvoreHolografica({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPlacaNeon({ x, y, escala }) {
+function desenharPlacaNeon({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31195,7 +34754,8 @@ function desenharPlacaNeon({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharBobinaTemporal({ x, y, escala }) {
+function desenharBobinaTemporal({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     const pulso = Math.floor(Date.now() / 220) % 2;
     ctx.save();
     ctx.translate(x, y);
@@ -31220,7 +34780,8 @@ function desenharBobinaTemporal({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharTerminalAntigo({ x, y, escala }) {
+function desenharTerminalAntigo({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31243,7 +34804,8 @@ function desenharTerminalAntigo({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharTuboDeContencao({ x, y, escala }) {
+function desenharTuboDeContencao({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31264,7 +34826,8 @@ function desenharTuboDeContencao({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharDocumentosDoLaboratorio({ x, y, escala }) {
+function desenharDocumentosDoLaboratorio({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31282,7 +34845,8 @@ function desenharDocumentosDoLaboratorio({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPredioDestruido({ x, y, escala }) {
+function desenharPredioDestruido({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31310,7 +34874,8 @@ function desenharPredioDestruido({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharRelogioParado({ x, y, escala }) {
+function desenharRelogioParado({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31337,7 +34902,8 @@ function desenharRelogioParado({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharSimboloGuardians({ x, y, escala }) {
+function desenharSimboloGuardians({ x, y, escala }, contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(escala, escala);
@@ -31358,7 +34924,8 @@ function desenharSimboloGuardians({ x, y, escala }) {
     ctx.restore();
 }
 
-function desenharPortao(x, y, cor, rotulo, inverter) {
+function desenharPortao(x, y, cor, rotulo, inverter, contexto = ctx) {
+    const ctx = contexto;
     const posicaoX = inverter ? x - 20 : x;
     const textoX = inverter ? x - 30 : x + 30;
 
@@ -31377,7 +34944,8 @@ function desenharPortao(x, y, cor, rotulo, inverter) {
     ctx.restore();
 }
 
-function desenharTorreFinal(x, y, tema) {
+function desenharTorreFinal(x, y, tema, contexto = ctx) {
+    const ctx = contexto;
     const largura = CONFIG.torreFinal.largura;
     const altura = CONFIG.torreFinal.altura;
     const metadeDaLargura = largura / 2;
@@ -31424,21 +34992,22 @@ function desenharTorreFinal(x, y, tema) {
     ctx.restore();
 }
 
-function desenharCamadaDeCaminhos(caminhos, cor, largura, tracejado = []) {
+function desenharCamadaDeCaminhos(caminhos, cor, largura, tracejado = [], contexto = ctx) {
+    const ctx = contexto;
     ctx.save();
     ctx.strokeStyle = cor;
     ctx.lineWidth = largura;
     ctx.setLineDash(tracejado);
-    desenharTracadoDoCaminho(caminhos);
+    desenharTracadoDoCaminho(caminhos, contexto);
     ctx.stroke();
     ctx.restore();
 }
 
-function desenharCaminhosComTema(tema, caminhos) {
-    desenharCamadaDeCaminhos(caminhos, tema.caminhoContorno, 84);
-    desenharCamadaDeCaminhos(caminhos, tema.caminhoBase, 72);
-    desenharCamadaDeCaminhos(caminhos, tema.caminhoCentro, 58);
-    desenharCamadaDeCaminhos(caminhos, tema.caminhoMarcas, 4, [12, 14]);
+function desenharCaminhosComTema(tema, caminhos, contexto = ctx) {
+    desenharCamadaDeCaminhos(caminhos, tema.caminhoContorno, 84, [], contexto);
+    desenharCamadaDeCaminhos(caminhos, tema.caminhoBase, 72, [], contexto);
+    desenharCamadaDeCaminhos(caminhos, tema.caminhoCentro, 58, [], contexto);
+    desenharCamadaDeCaminhos(caminhos, tema.caminhoMarcas, 4, [12, 14], contexto);
 }
 
 function desenharCaminhoVivo(tema, caminhos) {
@@ -31521,7 +35090,8 @@ function desenharRaizesDoCaminhoVivo() {
     );
 }
 
-function desenharTracadoDoCaminho(caminhos = obterCaminhosAtuais()) {
+function desenharTracadoDoCaminho(caminhos = obterCaminhosAtuais(), contexto = ctx) {
+    const ctx = contexto;
     ctx.beginPath();
 
     for (const caminhoAtual of caminhos) {
@@ -31548,6 +35118,27 @@ function desenharInterface() {
             : localizar("FASE {fase} · WAVE", { fase: faseSelecionada });
     desenharMetricaDoHud(34, 36, rotuloDaWave, wave.toString(), "#f2c76e");
     desenharMetricaDoHud(158, 36, localizar("CRÉDITOS"), dinheiro.toString(), "#7ce59c");
+    if (faseUsaTetoDeSaldo()) {
+        ctx.fillStyle = dinheiro >= CONFIG.economia.tetoDeSaldoDasPartidasComuns ? "#f2c76e" : "#9edbb3";
+        ctx.font = "700 10px system-ui, sans-serif";
+        ctx.fillText(`${dinheiro}/${CONFIG.economia.tetoDeSaldoDasPartidasComuns}`, 158, 81);
+    }
+    if (typeof obterModificadorClassicoAtivo === 'function') {
+        const modificadorClassico = obterModificadorClassicoAtivo();
+        if (modificadorClassico) {
+            ctx.fillStyle = '#f4d88c';
+            ctx.font = '700 11px system-ui, sans-serif';
+            ctx.fillText(localizar(modificadorClassico.nome), 34, 81);
+        }
+    }
+    if (CONFIG.eventos.elencosSuperBosses[mapaPersonalizadoAtivo?.evento] && wave > 0) {
+        const limite = obterLimiteDeCombateNaWaveDosSuperBosses();
+        ctx.fillStyle = creditosDeCombateRecebidosNaWave >= limite ? "#f2c76e" : "#9edbb3";
+        ctx.font = "700 10px system-ui, sans-serif";
+        ctx.fillText(localizarEvento('Renda {atual}/{limite}', {
+            atual: creditosDeCombateRecebidosNaWave, limite
+        }), 158, 81);
+    }
     const painelMelhorias = document.getElementById('painel-melhorias-escolhidas');
     if (!painelMelhorias.hidden && painelMelhorias.dataset.saldo !== String(dinheiro)) atualizarPainelDeMelhoriasEscolhidas();
     desenharMetricaDoHud(300, 36, localizar("TORRES"), `${torres.length}/${obterLimiteDeTorres()}`, "#8fc9ff");
@@ -31570,8 +35161,8 @@ function desenharInterface() {
                 percentual: obterPercentualInteiro(configuracaoDaConstrucao.percentualBonusCadencia)
             })
             : configuracaoDaConstrucao.efeitoSismico
-                ? localizar("Carga com {cargas} inimigos · Empurra {distancia} px", {
-                    cargas: configuracaoDaConstrucao.efeitoSismico.cargasNecessarias,
+                ? localizar("Recarga {segundos}s · Empurra {distancia} px", {
+                    segundos: configuracaoDaConstrucao.efeitoSismico.recargaEmMs / 1000,
                     distancia: configuracaoDaConstrucao.efeitoSismico.distanciaDoEmpurrao
                 })
             : configuracaoDaConstrucao.creditosPorWave
@@ -31587,11 +35178,13 @@ function desenharInterface() {
                             configuracaoDaConstrucao.efeitoDeQueimadura
                         )
                     })
-                : localizar("Cada tiro  +{creditos}", {
-                    creditos: obterRecompensaPorTiro()
-                });
+                : CONFIG.eventos.elencosSuperBosses[mapaPersonalizadoAtivo?.evento]
+                    ? localizarEvento('Economia: renda de combate limitada por wave.')
+                    : localizar("Cada tiro  +{creditos}", {
+                        creditos: obterRecompensaPorTiro()
+                    });
     ctx.fillText(
-        `${obterNomeLocalizado(configuracaoDaConstrucao)}  ${configuracaoDaConstrucao.custo}   •   ${detalheDaConstrucao}`,
+        `${obterNomeLocalizado(configuracaoDaConstrucao)}  ${obterCustoDeConstrucaoDaTorre(tipoDeTorreParaConstruir)}   •   ${detalheDaConstrucao}`,
         34,
         101
     );
@@ -31608,7 +35201,7 @@ function desenharInterface() {
         ctx.font = "800 22px system-ui, sans-serif";
         ctx.fillText(
             configuracaoSelecionada.efeitoSismico
-                ? localizar("CARGA SÍSMICA")
+                ? localizar("IMPACTO SÍSMICO")
                 : configuracaoSelecionada.creditosPorWave
                     ? localizar("GERADOR ATIVO")
                     : configuracaoSelecionada.percentualBonusCadencia
@@ -31625,9 +35218,8 @@ function desenharInterface() {
         ctx.font = "600 11px system-ui, sans-serif";
         const configuracaoAtualSelecionada = obterConfiguracaoAtualDaTorre(torreSelecionada);
         const detalheSelecionado = configuracaoSelecionada.efeitoSismico
-            ? localizar("Carga {atual}/{total}  •  Empurra {distancia} px", {
-                atual: torreSelecionada.cargaSismica || 0,
-                total: configuracaoAtualSelecionada.efeitoSismico.cargasNecessarias,
+            ? localizar("{estado}  •  Empurra {distancia} px", {
+                estado: obterEstadoDaRecargaSismica(torreSelecionada),
                 distancia: configuracaoAtualSelecionada.efeitoSismico.distanciaDoEmpurrao
             })
             : configuracaoSelecionada.creditosPorWave
@@ -31759,9 +35351,16 @@ function desenharEfeitoDeCamuflagem(inimigo, x, y, tamanho, revelado) {
     ctx.restore();
 }
 
-function desenharInimigos() {
+function inimigoTemPorteGrande(inimigo) {
+    return obterEscalaVisualDoInimigo(inimigo.tipo, inimigo.tamanho) >= 40;
+}
+
+function desenharInimigos(camada = "todos") {
     for (const inimigo of inimigos) {
         const escalaVisual = obterEscalaVisualDoInimigo(inimigo.tipo, inimigo.tamanho);
+        const inimigoGrande = inimigoTemPorteGrande(inimigo);
+        if ((camada === "grandes" && !inimigoGrande)
+            || (camada === "pequenos" && inimigoGrande)) continue;
         const tamanho = escalaVisual * 2;
         const x = Math.round(inimigo.x - escalaVisual);
         const y = Math.round(inimigo.y - escalaVisual);
@@ -31773,31 +35372,62 @@ function desenharInimigos() {
         }
 
         desenharCorpoDoInimigo(inimigo, x, y, tamanho);
+        if(typeof desenharIndicadorMutacaoClassica==='function')desenharIndicadorMutacaoClassica(ctx,inimigo,x,y,tamanho);
+        if (typeof desenharSegundaEtapaDoChefe === 'function') desenharSegundaEtapaDoChefe(inimigo);
         desenharEfeitoDaRestauracaoDoVazio(inimigo, x, y, tamanho);
         desenharEfeitoGlacialNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitoDeQueimaduraNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitoSismicoNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitoDaMarcaNoInimigo(inimigo, x, y, tamanho);
+        desenharEfeitoDasBolhasNoInimigo(inimigo);
         desenharEfeitoCorrosivoNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitosFuturistasNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitosDoFuturoDespedacadoNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitosDoPontoZeroNoInimigo(inimigo, x, y, tamanho);
         desenharEfeitoDeContencaoNoInimigo(inimigo, x, y, tamanho);
 
-        const larguraBarra = Math.max(42, inimigo.tamanho * 1.8);
-        const xBarra = inimigo.x - larguraBarra / 2;
-        const yBarra = inimigo.y - inimigo.tamanho - 15;
-        const percentualVida = Math.max(0, inimigo.vida / inimigo.vidaMaxima);
-
-        ctx.fillStyle = "#07120c";
-        ctx.fillRect(xBarra, yBarra, larguraBarra, 8);
-        ctx.fillStyle = percentualVida > 0.35 ? "#68df89" : "#ff6b6b";
-        ctx.fillRect(xBarra + 2, yBarra + 2, (larguraBarra - 4) * percentualVida, 4);
-        desenharAvisoSuperEfetivo(inimigo, yBarra);
+        if (camada !== "grandes") desenharBarraDeVidaDoInimigo(inimigo);
         ctx.restore();
 
         if (inimigo.camuflado) {
             desenharEfeitoDeCamuflagem(inimigo, x, y, tamanho, revelado);
+        }
+    }
+}
+
+function desenharEfeitoDasBolhasNoInimigo(inimigo, agora = Date.now()) {
+    if (agora >= (inimigo.bolhaExpiraEm || 0) || !inimigo.acertosDeBolha) return;
+    ctx.save();
+    ctx.fillStyle = "#d6fbff";
+    ctx.strokeStyle = "#2187a8";
+    ctx.lineWidth = 2;
+    for (let indice = 0; indice < inimigo.acertosDeBolha; indice++) {
+        const x = inimigo.x + (indice - 0.5) * 11;
+        const y = inimigo.y - inimigo.tamanho - 24;
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+    }
+    ctx.restore();
+}
+
+function desenharBarraDeVidaDoInimigo(inimigo) {
+    const larguraBarra = Math.max(42, inimigo.tamanho * 1.8);
+    const xBarra = inimigo.x - larguraBarra / 2;
+    const yBarra = inimigo.y - inimigo.tamanho - 15;
+    const percentualVida = Math.max(0, inimigo.vida / inimigo.vidaMaxima);
+    ctx.fillStyle = "#07120c";
+    ctx.fillRect(xBarra, yBarra, larguraBarra, 8);
+    ctx.fillStyle = percentualVida > 0.35 ? "#68df89" : "#ff6b6b";
+    ctx.fillRect(xBarra + 2, yBarra + 2, (larguraBarra - 4) * percentualVida, 4);
+    desenharAvisoSuperEfetivo(inimigo, yBarra);
+}
+
+function desenharBarrasDosInimigosGrandes() {
+    for (const inimigo of inimigos) {
+        if (inimigoTemPorteGrande(inimigo)) {
+            desenharBarraDeVidaDoInimigo(inimigo);
         }
     }
 }
@@ -32152,6 +35782,25 @@ function desenharEfeitoGlacialNoInimigo(inimigo, x, y, tamanho) {
 }
 
 function desenharCorpoDoInimigo(inimigo, x, y, tamanho) {
+    if (inimigo.torretaDaForja) {
+        ctx.fillStyle = '#252d38';
+        ctx.fillRect(x + tamanho * 0.12, y + tamanho * 0.34, tamanho * 0.76, tamanho * 0.55);
+        ctx.fillStyle = '#a87630';
+        ctx.fillRect(x + tamanho * 0.2, y + tamanho * 0.18, tamanho * 0.6, tamanho * 0.49);
+        ctx.fillStyle = '#f6c868';
+        ctx.fillRect(x + tamanho * 0.4, y + tamanho * 0.02, tamanho * 0.2, tamanho * 0.39);
+        ctx.fillStyle = '#fff0a5';
+        ctx.fillRect(x + tamanho * 0.44, y + tamanho * 0.04, tamanho * 0.12, tamanho * 0.1);
+        return;
+    }
+    if (CONFIG.inimigo[inimigo.tipo]?.visualEvento) {
+        desenharInimigoDoEvento(inimigo, x, y, tamanho);
+        return;
+    }
+    if (CONFIG.inimigo[inimigo.tipo]?.visualClassico) {
+        desenharCriaturaClassica(ctx, inimigo.tipo, x, y, tamanho);
+        return;
+    }
     if (inimigo.tipo === "senhorDoTempo") { desenharSenhorDoTempoFinal(ctx,x,y,tamanho); return; }
     if (SPRITES_DOS_ELENCOS_EXCLUSIVOS[inimigo.tipo]) {
         desenharInimigoExclusivo(inimigo, x, y, tamanho);
@@ -32407,78 +36056,87 @@ function desenharCorpoDoInimigo(inimigo, x, y, tamanho) {
         return;
     }
 
+    const quadroDaCaminhada = animacaoDoVermelhoAtiva
+        ? Math.floor((inimigo.distanciaDaPassada || 0) / CONFIG.animacaoDoVermelho.distanciaPorQuadro)
+        : null;
+
     if (inimigo.tipo === "bossSelva") {
-        desenharColossoDaSelva(x, y, tamanho);
+        desenharColossoDaSelva(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "macacoSaqueador") {
-        desenharMacacoSaqueador(x, y, tamanho);
+        desenharMacacoSaqueador(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "oncaDaSelva") {
-        desenharOncaDaSelva(inimigo, x, y, tamanho);
+        desenharOncaDaSelva(inimigo, x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "gorilaDaSelva") {
-        desenharGorilaDaSelva(x, y, tamanho);
+        desenharGorilaDaSelva(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "bossDeserto") {
-        desenharFaraoDeAreia(x, y, tamanho);
+        desenharFaraoDeAreia(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "escorpiao") {
-        desenharEscorpiao(x, y, tamanho);
+        desenharEscorpiao(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "mumia") {
-        desenharMumia(x, y, tamanho);
+        desenharMumia(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "bossArtico") {
-        desenharTitaGlacial(x, y, tamanho);
+        desenharTitaGlacial(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "loboDeGelo") {
-        desenharLoboDeGelo(x, y, tamanho);
+        desenharLoboDeGelo(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "yeti") {
-        desenharYeti(x, y, tamanho);
+        desenharYeti(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "boss") {
-        desenharBossComum(x, y, tamanho);
+        desenharBossComum(x, y, tamanho, quadroDaCaminhada);
+        return;
+    }
+
+    if (inimigo.tipo === "superSabotador") {
+        desenharSuperSabotador(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "sabotador") {
-        desenharSabotador(x, y, tamanho);
+        desenharSabotador(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "normal") {
-        desenharInimigoVermelho(x, y, tamanho);
+        desenharInimigoVermelho(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "elite") {
-        desenharInimigoRoxo(x, y, tamanho);
+        desenharInimigoRoxo(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
     if (inimigo.tipo === "rapido") {
-        desenharInimigoCianoRapido(x, y, tamanho);
+        desenharInimigoCianoRapido(x, y, tamanho, quadroDaCaminhada);
         return;
     }
 
@@ -33430,12 +37088,21 @@ function desenharEfeitoDaErupcaoDoTita(inimigo, x, y, tamanho) {
     ctx.restore();
 }
 
-function desenharMacacoSaqueador(x, y, tamanho) {
+function desenharMacacoSaqueador(x, y, tamanho, quadroDaCaminhada = null) {
     const u = Math.max(2, Math.floor(tamanho / 7));
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const esquerda = Math.round(u * passo / 2);
+    const direita = -esquerda;
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, u));
     ctx.fillStyle = "#382416";
     ctx.fillRect(x + u, y + u, tamanho - u * 2, tamanho - u);
-    ctx.fillRect(x - u, y + u * 3, u * 2, u * 3);
-    ctx.fillRect(x + tamanho - u, y + u * 3, u * 2, u * 3);
+    ctx.fillRect(x - u, y + u * 3 - esquerda, u * 2, u * 3 + Math.abs(esquerda));
+    ctx.fillRect(x + tamanho - u, y + u * 3 - direita, u * 2, u * 3 + Math.abs(direita));
+    if (quadroDaCaminhada !== null) {
+        ctx.fillRect(x + u, y + tamanho - u * 2, u * 2, u * 2 + esquerda);
+        ctx.fillRect(x + tamanho - u * 3, y + tamanho - u * 2, u * 2, u * 2 + direita);
+    }
     ctx.fillStyle = CONFIG.inimigo.macacoSaqueador.cor;
     ctx.fillRect(x + u * 2, y, tamanho - u * 4, u * 3);
     ctx.fillRect(x, y + u * 3, tamanho, u * 3);
@@ -33447,10 +37114,15 @@ function desenharMacacoSaqueador(x, y, tamanho) {
     ctx.fillStyle = "#f2c84b";
     ctx.fillRect(x + tamanho - u, y - u, u * 3, u);
     ctx.fillRect(x + tamanho + u, y - u, u, u * 3);
+    ctx.restore();
 }
 
-function desenharOncaDaSelva(inimigo, x, y, tamanho) {
+function desenharOncaDaSelva(inimigo, x, y, tamanho, quadroDaCaminhada = null) {
     const u = Math.max(2, Math.floor(tamanho / 10));
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const deslocamento = Math.round(u * passo / 2);
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, u));
 
     if (oncaEstaEmDisparada(inimigo)) {
         ctx.fillStyle = "#ffe66d";
@@ -33464,15 +37136,15 @@ function desenharOncaDaSelva(inimigo, x, y, tamanho) {
     ctx.fillRect(x, y + u * 3, tamanho - u * 2, u * 4);
     ctx.fillRect(x + tamanho - u * 5, y + u, u * 5, u * 6);
     ctx.fillRect(x - u, y + u * 2, u * 3, u);
-    ctx.fillRect(x - u, y + u, u, u * 2);
+    ctx.fillRect(x - u, y + u + deslocamento, u, u * 2);
 
     ctx.fillStyle = CONFIG.inimigo.oncaDaSelva.cor;
     ctx.fillRect(x + u, y + u * 3, tamanho - u * 5, u * 3);
     ctx.fillRect(x + tamanho - u * 5, y + u * 2, u * 4, u * 4);
     ctx.fillRect(x + tamanho - u * 5, y + u, u, u * 2);
     ctx.fillRect(x + tamanho - u * 2, y + u, u, u * 2);
-    ctx.fillRect(x + u * 2, y + u * 6, u * 2, u * 2);
-    ctx.fillRect(x + tamanho - u * 7, y + u * 6, u * 2, u * 2);
+    ctx.fillRect(x + u * 2 + deslocamento, y + u * 6, u * 2, u * 2 + Math.max(0, deslocamento));
+    ctx.fillRect(x + tamanho - u * 7 - deslocamento, y + u * 6, u * 2, u * 2 + Math.max(0, -deslocamento));
 
     ctx.fillStyle = "#382718";
     ctx.fillRect(x + u * 3, y + u * 3, u, u);
@@ -33484,13 +37156,17 @@ function desenharOncaDaSelva(inimigo, x, y, tamanho) {
     ctx.fillRect(x + tamanho - u * 4, y + u * 3, u, u);
     ctx.fillStyle = "#15130e";
     ctx.fillRect(x + tamanho - u * 2, y + u * 5, u, u);
+    ctx.restore();
 }
 
 // Grade compartilhada pelos remakes na partida e no Álbum.
-function desenharSpriteDoRemake(x, y, tamanho, linhas, paleta) {
+function desenharSpriteDoRemake(x, y, tamanho, linhas, paleta, quadroDaCaminhada = null) {
     const colunas = Math.max(...linhas.map(linha => linha.length));
     const unidade = tamanho / Math.max(colunas, linhas.length);
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const deslocamento = Math.round(passo * unidade / 2);
     ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
     for (let linha = 0; linha < linhas.length; linha++) {
         for (let coluna = 0; coluna < linhas[linha].length; coluna++) {
             const pixel = linhas[linha][coluna];
@@ -33498,7 +37174,12 @@ function desenharSpriteDoRemake(x, y, tamanho, linhas, paleta) {
             ctx.fillStyle = paleta[Number(pixel)];
             const esquerda = Math.round(x + coluna * unidade);
             const topo = Math.round(y + linha * unidade);
-            ctx.fillRect(esquerda, topo,
+            const lado = coluna < colunas / 2 ? -1 : 1;
+            const deslocamentoDoMembro = linha >= 9 && coluna >= 3 && coluna <= 8
+                ? lado * deslocamento
+                : linha >= 7 && (coluna <= 2 || coluna >= colunas - 3)
+                    ? -lado * deslocamento : 0;
+            ctx.fillRect(esquerda + deslocamentoDoMembro, topo,
                 Math.round(x + (coluna + 1) * unidade) - esquerda,
                 Math.round(y + (linha + 1) * unidade) - topo);
         }
@@ -33506,7 +37187,7 @@ function desenharSpriteDoRemake(x, y, tamanho, linhas, paleta) {
     ctx.restore();
 }
 
-function desenharGorilaDaSelva(x, y, tamanho) {
+function desenharGorilaDaSelva(x, y, tamanho, quadroDaCaminhada = null) {
     desenharSpriteDoRemake(x, y, tamanho, [
         "....0000....",
         "...011110...",
@@ -33520,10 +37201,10 @@ function desenharGorilaDaSelva(x, y, tamanho) {
         "000.0110.000",
         "....0110....",
         "...001100..."
-    ], ["#172019","#43533e","#899377","#e7d28a"]);
+    ], ["#172019","#43533e","#899377","#e7d28a"], quadroDaCaminhada);
 }
 
-function desenharColossoDaSelva(x, y, tamanho) {
+function desenharColossoDaSelva(x, y, tamanho, quadroDaCaminhada = null) {
     desenharSpriteDoRemake(x, y, tamanho, [
         ".22......22.",
         ".22..22..22.",
@@ -33537,7 +37218,7 @@ function desenharColossoDaSelva(x, y, tamanho) {
         "000.0110.000",
         "...011110...",
         "...000000..."
-    ], ["#24301f","#65714b","#497535","#efd477"]);
+    ], ["#24301f","#65714b","#497535","#efd477"], quadroDaCaminhada);
 }
 
 function desenharRaposaLadina(x, y, tamanho) {
@@ -33662,18 +37343,37 @@ function desenharEfeitoDoRugidoAncestral(inimigo, x, y, tamanho) {
     ctx.restore();
 }
 
-function desenharInimigoVermelho(x, y, tamanho) {
+function obterPassoDaCaminhada(quadroDaCaminhada) {
+    return quadroDaCaminhada === null ? 0
+        : [1, 0.5, -1, -0.5][quadroDaCaminhada % CONFIG.animacaoDoVermelho.quadrosDaCaminhada];
+}
+
+function obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade) {
+    return quadroDaCaminhada === null || quadroDaCaminhada % 2 === 0
+        ? 0 : -Math.max(1, Math.round(unidade / 2));
+}
+
+function desenharInimigoVermelho(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(2, Math.floor(tamanho / 10));
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const deslocamentoDaPernaEsquerda = Math.round(-unidade * passo);
+    const deslocamentoDaPernaDireita = Math.round(unidade * passo);
+    const deslocamentoDoBracoEsquerdo = -deslocamentoDaPernaEsquerda;
+    const deslocamentoDoBracoDireito = -deslocamentoDaPernaDireita;
+    const oscilacaoDoCorpo = obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade);
+
+    ctx.save();
+    ctx.translate(0, oscilacaoDoCorpo);
 
     ctx.fillStyle = "#261319";
-    ctx.fillRect(x - unidade, y + unidade * 3, unidade * 3, unidade * 5);
-    ctx.fillRect(x + tamanho - unidade * 2, y + unidade * 3, unidade * 3, unidade * 5);
-    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3, unidade * 3, unidade * 3);
-    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 3, unidade * 3, unidade * 3);
+    ctx.fillRect(x - unidade, y + unidade * 3 + deslocamentoDoBracoEsquerdo, unidade * 3, unidade * 5);
+    ctx.fillRect(x + tamanho - unidade * 2, y + unidade * 3 + deslocamentoDoBracoDireito, unidade * 3, unidade * 5);
+    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3 + deslocamentoDaPernaEsquerda, unidade * 3, unidade * 3);
+    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 3 + deslocamentoDaPernaDireita, unidade * 3, unidade * 3);
 
     ctx.fillStyle = "#741d29";
-    ctx.fillRect(x, y + unidade * 4, unidade * 3, unidade * 4);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 4, unidade * 3, unidade * 4);
+    ctx.fillRect(x, y + unidade * 4 + deslocamentoDoBracoEsquerdo, unidade * 3, unidade * 4);
+    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 4 + deslocamentoDoBracoDireito, unidade * 3, unidade * 4);
     ctx.fillRect(x + unidade * 2, y + unidade * 3, tamanho - unidade * 4, unidade * 5);
 
     ctx.fillStyle = CONFIG.inimigo.normal.cor;
@@ -33691,24 +37391,30 @@ function desenharInimigoVermelho(x, y, tamanho) {
     ctx.fillRect(x + unidade * 4, y + unidade * 2, unidade, unidade);
 
     ctx.fillStyle = "#ff7178";
-    ctx.fillRect(x + unidade * 3, y + unidade * 4, unidade, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4, unidade, unidade * 2);
+    ctx.fillRect(x + unidade * 3, y + unidade * 4 + deslocamentoDoBracoEsquerdo, unidade, unidade * 2);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4 + deslocamentoDoBracoDireito, unidade, unidade * 2);
     ctx.fillRect(x + tamanho / 2 - unidade, y + unidade * 5, unidade * 2, unidade);
+    ctx.restore();
 }
 
-function desenharInimigoRoxo(x, y, tamanho) {
+function desenharInimigoRoxo(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(3, Math.floor(tamanho / 12));
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const pernaEsquerda = -Math.round(unidade * passo);
+    const pernaDireita = -pernaEsquerda;
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
 
     ctx.fillStyle = "#211329";
     ctx.fillRect(x + unidade, y + unidade * 4, tamanho - unidade * 2, unidade * 7);
-    ctx.fillRect(x, y + unidade * 4, unidade * 4, unidade * 5);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4, unidade * 4, unidade * 5);
-    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3, unidade * 3, unidade * 3);
-    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 3, unidade * 3, unidade * 3);
+    ctx.fillRect(x, y + unidade * 4 - pernaEsquerda, unidade * 4, unidade * 5);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4 - pernaDireita, unidade * 4, unidade * 5);
+    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3 + pernaEsquerda, unidade * 3, unidade * 3);
+    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 3 + pernaDireita, unidade * 3, unidade * 3);
 
     ctx.fillStyle = "#51206f";
-    ctx.fillRect(x + unidade, y + unidade * 3, unidade * 4, unidade * 4);
-    ctx.fillRect(x + tamanho - unidade * 5, y + unidade * 3, unidade * 4, unidade * 4);
+    ctx.fillRect(x + unidade, y + unidade * 3 - pernaEsquerda, unidade * 4, unidade * 4);
+    ctx.fillRect(x + tamanho - unidade * 5, y + unidade * 3 - pernaDireita, unidade * 4, unidade * 4);
     ctx.fillRect(x + unidade * 2, y + unidade * 4, tamanho - unidade * 4, unidade * 6);
 
     ctx.fillStyle = CONFIG.inimigo.elite.cor;
@@ -33725,21 +37431,27 @@ function desenharInimigoRoxo(x, y, tamanho) {
     ctx.fillStyle = "#b95be0";
     ctx.fillRect(x + tamanho / 2 - unidade, y + unidade * 5, unidade * 2, unidade * 3);
     ctx.fillRect(x + tamanho / 2 - unidade * 2, y + unidade * 6, unidade * 4, unidade);
+    ctx.restore();
 }
 
-function desenharInimigoCianoRapido(x, y, tamanho) {
+function desenharInimigoCianoRapido(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(2, Math.floor(tamanho / 10));
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const pernaEsquerda = -Math.round(unidade * passo);
+    const pernaDireita = -pernaEsquerda;
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
 
     ctx.fillStyle = "#12313a";
     ctx.fillRect(x + unidade * 2, y + unidade * 2, tamanho - unidade * 4, unidade * 6);
-    ctx.fillRect(x + unidade, y + unidade * 4, unidade * 3, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4, unidade * 3, unidade * 2);
-    ctx.fillRect(x + unidade * 2, y + unidade * 8, unidade * 2, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 8, unidade * 2, unidade * 2);
+    ctx.fillRect(x + unidade, y + unidade * 4 - pernaEsquerda, unidade * 3, unidade * 2);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4 - pernaDireita, unidade * 3, unidade * 2);
+    ctx.fillRect(x + unidade * 2, y + unidade * 8 + pernaEsquerda, unidade * 2, unidade * 2);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 8 + pernaDireita, unidade * 2, unidade * 2);
 
     ctx.fillStyle = "#087f91";
-    ctx.fillRect(x, y + unidade * 3, unidade * 4, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 3, unidade * 4, unidade * 2);
+    ctx.fillRect(x, y + unidade * 3 - pernaEsquerda, unidade * 4, unidade * 2);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 3 - pernaDireita, unidade * 4, unidade * 2);
     ctx.fillRect(x + unidade * 3, y + unidade, tamanho - unidade * 6, unidade * 7);
 
     ctx.fillStyle = CONFIG.inimigo.rapido.cor;
@@ -33752,23 +37464,29 @@ function desenharInimigoCianoRapido(x, y, tamanho) {
     ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 8, unidade * 2, unidade);
 
     ctx.fillStyle = "#76f4ff";
-    ctx.fillRect(x + unidade, y + tamanho, unidade * 2, unidade);
-    ctx.fillRect(x + tamanho - unidade * 3, y + tamanho, unidade * 2, unidade);
+    ctx.fillRect(x + unidade, y + tamanho + pernaEsquerda, unidade * 2, unidade);
+    ctx.fillRect(x + tamanho - unidade * 3, y + tamanho + pernaDireita, unidade * 2, unidade);
+    ctx.restore();
 }
 
-function desenharBossComum(x, y, tamanho) {
+function desenharBossComum(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(4, Math.floor(tamanho / 12));
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const pernaEsquerda = -Math.round(unidade * passo);
+    const pernaDireita = -pernaEsquerda;
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
 
     ctx.fillStyle = "#1f1018";
     ctx.fillRect(x + unidade, y + unidade * 3, tamanho - unidade * 2, unidade * 8);
-    ctx.fillRect(x - unidade, y + unidade * 4, unidade * 5, unidade * 6);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4, unidade * 5, unidade * 6);
-    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3, unidade * 4, unidade * 3);
-    ctx.fillRect(x + tamanho - unidade * 6, y + tamanho - unidade * 3, unidade * 4, unidade * 3);
+    ctx.fillRect(x - unidade, y + unidade * 4 - pernaEsquerda, unidade * 5, unidade * 6);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4 - pernaDireita, unidade * 5, unidade * 6);
+    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3 + pernaEsquerda, unidade * 4, unidade * 3);
+    ctx.fillRect(x + tamanho - unidade * 6, y + tamanho - unidade * 3 + pernaDireita, unidade * 4, unidade * 3);
 
     ctx.fillStyle = "#76123b";
-    ctx.fillRect(x, y + unidade * 3, unidade * 4, unidade * 5);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 3, unidade * 4, unidade * 5);
+    ctx.fillRect(x, y + unidade * 3 - pernaEsquerda, unidade * 4, unidade * 5);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 3 - pernaDireita, unidade * 4, unidade * 5);
     ctx.fillRect(x + unidade * 2, y + unidade * 4, tamanho - unidade * 4, unidade * 6);
 
     ctx.fillStyle = CONFIG.inimigo.boss.cor;
@@ -33788,6 +37506,7 @@ function desenharBossComum(x, y, tamanho) {
     ctx.fillRect(x + tamanho / 2 - unidade * 2, y + unidade * 6, unidade * 4, unidade * 2);
     ctx.fillStyle = "#fff1ad";
     ctx.fillRect(x + tamanho / 2 - unidade / 2, y + unidade * 6, unidade, unidade);
+    ctx.restore();
 }
 
 function desenharInimigoBasico(inimigo, x, y, tamanho) {
@@ -33804,46 +37523,71 @@ function desenharInimigoBasico(inimigo, x, y, tamanho) {
     ctx.fillRect(x + 6, y + 6, tamanhoBrilho, tamanhoBrilho);
 }
 
-function desenharEscorpiao(x, y, tamanho) {
+function desenharPixelDoDeserto(x, y, unidade, coluna, linha, largura, altura) {
+    ctx.fillRect(Math.round(x + coluna * unidade), Math.round(y + linha * unidade),
+        Math.round((coluna + largura) * unidade) - Math.round(coluna * unidade),
+        Math.round((linha + altura) * unidade) - Math.round(linha * unidade));
+}
+
+function desenharEscorpiao(x, y, tamanho, quadroDaCaminhada = null) {
     desenharSpriteDoRemake(x, y, tamanho, [
-        ".......0110.",
-        ".......02010",
-        ".......03010",
-        "..........10",
-        ".1.1.....010",
-        ".212.....10.",
-        "..10....010.",
-        "...0111110..",
-        ".1110220111.",
-        "...012210...",
-        ".1110220111.",
-        "....0000...."
+        ".......0110.", ".......02010", ".......03010", "..........10",
+        ".1.1.....010", ".212.....10.", "..10....010.",
+        "...0111110..", "..11022011..", "...012210...",
+        "....0220....", ".....00....."
     ], ["#392319","#b87937","#f4bd61","#eee0a4"]);
-}
-
-function desenharMumia(x, y, tamanho) {
-    const unidade = Math.max(4, Math.floor(tamanho / 9));
-
-    ctx.fillStyle = "#4d4030";
-    ctx.fillRect(x + unidade, y + unidade, tamanho - unidade, tamanho - unidade);
-    ctx.fillStyle = CONFIG.inimigo.mumia.cor;
-    ctx.fillRect(x, y, tamanho - unidade, tamanho - unidade);
-    ctx.fillStyle = "#8f7a55";
-
-    for (let faixa = unidade; faixa < tamanho - unidade; faixa += unidade * 2) {
-        ctx.fillRect(x, y + faixa, tamanho - unidade, unidade);
+    const unidade = tamanho / 12;
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    ctx.fillStyle = "#392319";
+    for (const [coluna, linha, lado] of [[2, 8, 1], [3, 10, -1], [8, 8, -1], [9, 10, 1]]) {
+        desenharPixelDoDeserto(x, y, unidade, coluna + Math.round(passo * lado), linha, 2, 1);
+        desenharPixelDoDeserto(x, y, unidade, coluna + Math.round(passo * lado), linha + 1, 1, 1);
     }
-
-    ctx.fillRect(x + unidade * 2, y, unidade, tamanho - unidade);
-    ctx.fillStyle = "#34291e";
-    ctx.fillRect(x + unidade, y + unidade * 2, tamanho - unidade * 3, unidade * 2);
-    ctx.fillStyle = "#ffbd45";
-    ctx.fillRect(x + unidade * 2, y + unidade * 2, unidade, unidade);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 2, unidade, unidade);
+    ctx.fillStyle = "#f4bd61";
+    desenharPixelDoDeserto(x, y, unidade, 1, 5 + Math.round(passo), 2, 1);
+    desenharPixelDoDeserto(x, y, unidade, 9, 6 - Math.round(passo), 2, 1);
 }
 
-function desenharLoboDeGelo(x, y, tamanho) {
+function desenharMumia(x, y, tamanho, quadroDaCaminhada = null) {
+    const unidade = tamanho / 12;
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const pernaEsquerda = -passo;
+    const pernaDireita = passo;
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
+    ctx.fillStyle = "#4d4030";
+    desenharPixelDoDeserto(x, y, unidade, 3, 1, 6, 8);
+    desenharPixelDoDeserto(x, y, unidade, 2, 4, 8, 4);
+    ctx.fillStyle = CONFIG.inimigo.mumia.cor;
+    desenharPixelDoDeserto(x, y, unidade, 3, 0, 6, 5);
+    desenharPixelDoDeserto(x, y, unidade, 3, 5, 6, 4);
+    ctx.fillStyle = "#8f7a55";
+    for (const linha of [1, 3, 6, 8]) desenharPixelDoDeserto(x, y, unidade, 3, linha, 6, 1);
+    ctx.fillStyle = "#34291e";
+    desenharPixelDoDeserto(x, y, unidade, 3, 3, 6, 2);
+    ctx.fillStyle = "#ffbd45";
+    desenharPixelDoDeserto(x, y, unidade, 4, 3, 1, 1);
+    desenharPixelDoDeserto(x, y, unidade, 7, 3, 1, 1);
+    ctx.fillStyle = "#8f7a55";
+    desenharPixelDoDeserto(x, y, unidade, 1, 5 - pernaEsquerda, 2, 4);
+    desenharPixelDoDeserto(x, y, unidade, 9, 5 - pernaDireita, 2, 4);
+    if (quadroDaCaminhada !== null) {
+        desenharPixelDoDeserto(x, y, unidade, 3, 8, 2, 3);
+        desenharPixelDoDeserto(x, y, unidade, 7, 8, 2, 3);
+    }
+    desenharPixelDoDeserto(x, y, unidade, 3, 9 + pernaEsquerda, 2, 3);
+    desenharPixelDoDeserto(x, y, unidade, 7, 9 + pernaDireita, 2, 3);
+    ctx.fillStyle = "#4d4030";
+    desenharPixelDoDeserto(x, y, unidade, 3, 11 + pernaEsquerda, 2, 1);
+    desenharPixelDoDeserto(x, y, unidade, 7, 11 + pernaDireita, 2, 1);
+    ctx.restore();
+}
+
+function desenharLoboDeGelo(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(3, Math.floor(tamanho / 9));
+    const deslocamento = Math.round(obterPassoDaCaminhada(quadroDaCaminhada) * unidade / 2);
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
 
     ctx.fillStyle = "#173347";
     ctx.fillRect(x + unidade, y + unidade * 3, tamanho - unidade, unidade * 4);
@@ -33853,8 +37597,8 @@ function desenharLoboDeGelo(x, y, tamanho) {
     ctx.fillRect(x + unidade * 2, y + unidade * 3, tamanho - unidade * 5, unidade * 3);
     ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 2, unidade * 3, unidade * 4);
     ctx.fillRect(x, y + unidade * 3, unidade * 3, unidade * 2);
-    ctx.fillRect(x + unidade * 2, y + unidade * 6, unidade * 2, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 5, y + unidade * 6, unidade * 2, unidade * 2);
+    ctx.fillRect(x + unidade * 2 + deslocamento, y + unidade * 6 + deslocamento, unidade * 2, unidade * 2);
+    ctx.fillRect(x + tamanho - unidade * 5 - deslocamento, y + unidade * 6 - deslocamento, unidade * 2, unidade * 2);
 
     ctx.fillStyle = "#c9f5ff";
     ctx.fillRect(x + tamanho - unidade * 4, y + unidade, unidade, unidade * 2);
@@ -33864,25 +37608,29 @@ function desenharLoboDeGelo(x, y, tamanho) {
     ctx.fillStyle = "#08202e";
     ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 3, unidade, unidade);
     ctx.fillRect(x + tamanho - unidade, y + unidade * 4, unidade, unidade);
+    ctx.restore();
 }
 
-function desenharYeti(x, y, tamanho) {
+function desenharYeti(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(4, Math.floor(tamanho / 10));
+    const deslocamento = Math.round(obterPassoDaCaminhada(quadroDaCaminhada) * unidade / 2);
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
 
     ctx.fillStyle = "#25465b";
     ctx.fillRect(x + unidade, y + unidade, tamanho - unidade, tamanho - unidade);
 
     ctx.fillStyle = CONFIG.inimigo.yeti.cor;
     ctx.fillRect(x + unidade * 2, y + unidade, tamanho - unidade * 4, tamanho - unidade * 2);
-    ctx.fillRect(x, y + unidade * 3, unidade * 3, unidade * 4);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 3, unidade * 3, unidade * 4);
-    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 2, unidade * 3, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 2, unidade * 3, unidade * 2);
+    ctx.fillRect(x, y + unidade * 3 - deslocamento, unidade * 3, unidade * 4);
+    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 3 + deslocamento, unidade * 3, unidade * 4);
+    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 2 + deslocamento, unidade * 3, unidade * 2);
+    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 2 - deslocamento, unidade * 3, unidade * 2);
 
     ctx.fillStyle = "#8bd5e8";
     ctx.fillRect(x + unidade * 3, y + unidade * 2, tamanho - unidade * 6, unidade * 3);
-    ctx.fillRect(x + unidade, y + unidade * 5, unidade * 2, unidade);
-    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 5, unidade * 2, unidade);
+    ctx.fillRect(x + unidade, y + unidade * 5 - deslocamento, unidade * 2, unidade);
+    ctx.fillRect(x + tamanho - unidade * 3, y + unidade * 5 + deslocamento, unidade * 2, unidade);
 
     ctx.fillStyle = "#183243";
     ctx.fillRect(x + unidade * 3, y + unidade * 3, unidade, unidade);
@@ -33892,25 +37640,29 @@ function desenharYeti(x, y, tamanho) {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(x + unidade * 2, y, unidade * 2, unidade * 2);
     ctx.fillRect(x + tamanho - unidade * 4, y, unidade * 2, unidade * 2);
+    ctx.restore();
 }
 
-function desenharTitaGlacial(x, y, tamanho) {
+function desenharTitaGlacial(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(5, Math.floor(tamanho / 12));
+    const deslocamento = Math.round(obterPassoDaCaminhada(quadroDaCaminhada) * unidade / 2);
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
 
     ctx.fillStyle = "#163447";
     ctx.fillRect(x + unidade, y + unidade, tamanho - unidade, tamanho - unidade);
 
     ctx.fillStyle = CONFIG.inimigo.bossArtico.cor;
     ctx.fillRect(x + unidade * 2, y + unidade * 2, tamanho - unidade * 4, tamanho - unidade * 3);
-    ctx.fillRect(x, y + unidade * 4, unidade * 4, tamanho - unidade * 6);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4, unidade * 4, tamanho - unidade * 6);
-    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3, unidade * 4, unidade * 3);
-    ctx.fillRect(x + tamanho - unidade * 6, y + tamanho - unidade * 3, unidade * 4, unidade * 3);
+    ctx.fillRect(x, y + unidade * 4 - deslocamento, unidade * 4, tamanho - unidade * 6);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4 + deslocamento, unidade * 4, tamanho - unidade * 6);
+    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3 + deslocamento, unidade * 4, unidade * 3);
+    ctx.fillRect(x + tamanho - unidade * 6, y + tamanho - unidade * 3 - deslocamento, unidade * 4, unidade * 3);
 
     ctx.fillStyle = "#dff9ff";
     ctx.fillRect(x + unidade * 3, y + unidade, tamanho - unidade * 6, unidade * 3);
-    ctx.fillRect(x + unidade, y + unidade * 4, unidade * 3, unidade * 2);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4, unidade * 3, unidade * 2);
+    ctx.fillRect(x + unidade, y + unidade * 4 - deslocamento, unidade * 3, unidade * 2);
+    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4 + deslocamento, unidade * 3, unidade * 2);
 
     ctx.fillStyle = "#326c8c";
     ctx.fillRect(x + unidade * 3, y + unidade * 4, tamanho - unidade * 6, unidade * 3);
@@ -33927,21 +37679,27 @@ function desenharTitaGlacial(x, y, tamanho) {
     ctx.fillRect(x + unidade * 2, y - unidade, unidade * 2, unidade * 3);
     ctx.fillRect(x + unidade * 5, y - unidade * 2, unidade * 2, unidade * 4);
     ctx.fillRect(x + tamanho - unidade * 4, y - unidade, unidade * 2, unidade * 3);
+    ctx.restore();
 }
 
-function desenharSabotador(x, y, tamanho) {
+function desenharSabotador(x, y, tamanho, quadroDaCaminhada = null) {
     const unidade = Math.max(2, Math.floor(tamanho / 11));
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const pernaEsquerda = -Math.round(unidade * passo);
+    const pernaDireita = -pernaEsquerda;
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
 
     ctx.fillStyle = "#13272a";
     ctx.fillRect(x + unidade, y + unidade * 3, tamanho - unidade * 2, unidade * 7);
-    ctx.fillRect(x - unidade, y + unidade * 4, unidade * 4, unidade * 5);
-    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3, unidade * 3, unidade * 3);
-    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 3, unidade * 3, unidade * 3);
+    ctx.fillRect(x - unidade, y + unidade * 4 - pernaEsquerda, unidade * 4, unidade * 5);
+    ctx.fillRect(x + unidade * 2, y + tamanho - unidade * 3 + pernaEsquerda, unidade * 3, unidade * 3);
+    ctx.fillRect(x + tamanho - unidade * 5, y + tamanho - unidade * 3 + pernaDireita, unidade * 3, unidade * 3);
 
     ctx.fillStyle = "#234c50";
     ctx.fillRect(x + unidade * 2, y + unidade, tamanho - unidade * 4, unidade * 5);
     ctx.fillRect(x + unidade, y + unidade * 4, tamanho - unidade * 2, unidade * 5);
-    ctx.fillRect(x, y + unidade * 5, unidade * 3, unidade * 3);
+    ctx.fillRect(x, y + unidade * 5 - pernaEsquerda, unidade * 3, unidade * 3);
 
     ctx.fillStyle = CONFIG.inimigo.sabotador.cor;
     ctx.fillRect(x + unidade * 3, y, tamanho - unidade * 6, unidade);
@@ -33955,46 +37713,57 @@ function desenharSabotador(x, y, tamanho) {
     ctx.fillRect(x + tamanho - unidade * 5, y + unidade * 2, unidade, unidade);
 
     ctx.fillStyle = "#d9e5d5";
-    ctx.fillRect(x + tamanho - unidade * 2, y + unidade * 5, unidade * 4, unidade * 2);
-    ctx.fillRect(x + tamanho, y + unidade * 4, unidade, unidade);
+    ctx.fillRect(x + tamanho - unidade * 2, y + unidade * 5 - pernaDireita, unidade * 4, unidade * 2);
+    ctx.fillRect(x + tamanho, y + unidade * 4 - pernaDireita, unidade, unidade);
     ctx.fillStyle = "#26383a";
-    ctx.fillRect(x + tamanho + unidade, y + unidade * 5, unidade * 2, unidade);
+    ctx.fillRect(x + tamanho + unidade, y + unidade * 5 - pernaDireita, unidade * 2, unidade);
     ctx.fillRect(x - unidade, y + unidade * 2, unidade, unidade * 3);
     ctx.fillStyle = "#75eff2";
     ctx.fillRect(x - unidade, y + unidade, unidade, unidade);
+    ctx.restore();
 }
 
-function desenharFaraoDeAreia(x, y, tamanho) {
-    const unidade = Math.max(4, Math.floor(tamanho / 10));
+function desenharSuperSabotador(x, y, tamanho, quadroDaCaminhada = null) {
+    desenharSabotador(x, y, tamanho, quadroDaCaminhada);
+    const unidade = Math.max(2, Math.floor(tamanho / 11));
+    const oscilacao = obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade);
+    ctx.save();
+    ctx.translate(0, oscilacao);
+    ctx.fillStyle = CONFIG.inimigo.superSabotador.cor;
+    ctx.fillRect(x + unidade * 2, y, tamanho - unidade * 4, unidade);
+    ctx.fillRect(x, y + unidade * 5, unidade * 2, unidade * 3);
+    ctx.fillRect(x + tamanho - unidade * 2, y + unidade * 5, unidade * 2, unidade * 3);
+    ctx.fillStyle = "#f6b85a";
+    ctx.fillRect(x + tamanho, y + unidade * 3, unidade * 3, unidade);
+    ctx.fillRect(x + tamanho, y + unidade * 7, unidade * 3, unidade);
+    ctx.restore();
+}
 
-    ctx.fillStyle = "#3b291c";
-    ctx.fillRect(x + unidade, y + unidade, tamanho, tamanho);
-
-    ctx.fillStyle = "#176b75";
-    ctx.fillRect(x, y, tamanho, tamanho - unidade);
-    ctx.fillStyle = CONFIG.inimigo.bossDeserto.cor;
-    ctx.fillRect(x + unidade, y + unidade, tamanho - unidade * 2, tamanho - unidade * 2);
-
+function desenharFaraoDeAreia(x, y, tamanho, quadroDaCaminhada = null) {
+    const unidade = tamanho / 12;
+    const passo = obterPassoDaCaminhada(quadroDaCaminhada);
+    const pernaEsquerda = -passo;
+    const pernaDireita = passo;
+    ctx.save();
+    ctx.translate(0, obterOscilacaoDaCaminhada(quadroDaCaminhada, unidade));
+    desenharSpriteDoRemake(x, y, tamanho, [
+        ".....22.....", "....0220....", "..00122100..", ".0111221110.",
+        "011113311110", "01.033330.10", "01.030030.10", ".1.033330.1.",
+        "..00122100..", "...011110...", "...01..10...", "..001..100.."
+    ], ["#3b291c", "#176b75", CONFIG.inimigo.bossDeserto.cor, "#f5d36f"]);
     ctx.fillStyle = "#f2c45f";
-    ctx.fillRect(x, y, tamanho, unidade * 2);
-    ctx.fillRect(x, y + unidade * 4, unidade * 2, tamanho - unidade * 5);
-    ctx.fillRect(x + tamanho - unidade * 2, y + unidade * 4, unidade * 2, tamanho - unidade * 5);
-
-    ctx.fillStyle = "#164952";
-    for (let faixa = unidade * 2; faixa < tamanho - unidade; faixa += unidade * 2) {
-        ctx.fillRect(x + faixa, y, unidade, unidade * 2);
-    }
-
-    ctx.fillStyle = "#3a2419";
-    ctx.fillRect(x + unidade * 2, y + unidade * 4, tamanho - unidade * 4, unidade * 2);
-    ctx.fillStyle = "#fff06a";
-    ctx.fillRect(x + unidade * 3, y + unidade * 4, unidade, unidade);
-    ctx.fillRect(x + tamanho - unidade * 4, y + unidade * 4, unidade, unidade);
-
-    ctx.fillStyle = "#8d4c24";
-    ctx.fillRect(x + unidade * 4, y + unidade * 6, unidade * 2, unidade);
+    desenharPixelDoDeserto(x, y, unidade, 1, 6 - pernaEsquerda, 2, 3);
+    desenharPixelDoDeserto(x, y, unidade, 9, 6 - pernaDireita, 2, 3);
+    ctx.fillStyle = "#176b75";
+    desenharPixelDoDeserto(x, y, unidade, 3, 10 + pernaEsquerda, 2, 2);
+    desenharPixelDoDeserto(x, y, unidade, 7, 10 + pernaDireita, 2, 2);
+    ctx.fillStyle = "#3b291c";
+    desenharPixelDoDeserto(x, y, unidade, 2, 11 + pernaEsquerda, 3, 1);
+    desenharPixelDoDeserto(x, y, unidade, 7, 11 + pernaDireita, 3, 1);
     ctx.fillStyle = "#f5d36f";
-    ctx.fillRect(x + unidade * 4, y - unidade, unidade * 2, unidade);
+    desenharPixelDoDeserto(x, y, unidade, 11, 3 - pernaDireita, 1, 9);
+    desenharPixelDoDeserto(x, y, unidade, 10, 2 - pernaDireita, 3, 1);
+    ctx.restore();
 }
 
 function desenharTanqueDeCombustivelDoLancaChamas(estilo) {
@@ -34072,6 +37841,160 @@ function desenharArmamentoDaBesta(estilo) {
     ctx.fillRect(-2, topo - 7, 4, 29);
     ctx.fillStyle = "#f0dfaa";
     ctx.fillRect(-1, topo - 10, 2, 22);
+}
+
+function desenharArmamentoDaCatapulta(estilo) {
+    const nivel = estilo.nivelDoPremio || 0;
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-21, -13, 42, 8);
+    ctx.fillRect(-18, -30, 7, 25);
+    ctx.fillRect(11, -30, 7, 25);
+    ctx.fillRect(-4, -38, 8, 34);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-20, -19, 40, 5);
+    ctx.fillRect(-8, -42, 16, 6);
+    ctx.fillStyle = '#514b42';
+    ctx.fillRect(-7, -53, 14, 12);
+    ctx.fillStyle = '#a49a83';
+    ctx.fillRect(-5, -51, 5, 4);
+    if (nivel >= 1) {
+        ctx.fillStyle = '#ead3a0';
+        ctx.fillRect(-17, -32, 5, 5);
+        ctx.fillRect(12, -32, 5, 5);
+        ctx.strokeStyle = '#e4c68c';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-14, -29); ctx.lineTo(0, -42); ctx.lineTo(14, -29);
+        ctx.stroke();
+    }
+    if (nivel >= 2) {
+        ctx.strokeStyle = '#402e20';
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(-25, -8); ctx.lineTo(-15, -34);
+        ctx.moveTo(25, -8); ctx.lineTo(15, -34);
+        ctx.stroke();
+        ctx.fillStyle = '#d6bd88';
+        ctx.fillRect(-24, -11, 7, 7); ctx.fillRect(17, -11, 7, 7);
+    }
+    if (nivel >= 3) {
+        ctx.fillStyle = '#514b42';
+        ctx.fillRect(-11, -57, 22, 8);
+        ctx.fillStyle = '#b9ab8d';
+        ctx.fillRect(-8, -54, 8, 6); ctx.fillRect(2, -54, 8, 6);
+        ctx.fillStyle = '#e0c487';
+        ctx.fillRect(-12, -59, 24, 3);
+    }
+    if (nivel >= 4) {
+        ctx.fillStyle = '#402b1a';
+        ctx.fillRect(-28, -17, 7, 18); ctx.fillRect(21, -17, 7, 18);
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-29, -18, 58, 5);
+        ctx.fillRect(-5, -47, 10, 5);
+    }
+    if (nivel >= 5) {
+        ctx.fillStyle = '#514b42';
+        ctx.fillRect(-22, -53, 10, 10); ctx.fillRect(12, -53, 10, 10);
+        ctx.fillStyle = '#c1b398';
+        ctx.fillRect(-20, -51, 6, 5); ctx.fillRect(14, -51, 6, 5);
+        ctx.strokeStyle = '#e4c68c';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-24, -17); ctx.lineTo(-18, -48);
+        ctx.moveTo(24, -17); ctx.lineTo(18, -48);
+        ctx.stroke();
+    }
+}
+
+function desenharArmamentoDaTorreMagnetica(estilo) {
+    const nivel = estilo.nivelDoPremio || 0;
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-18, -30, 8, 26);
+    ctx.fillRect(10, -30, 8, 26);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-18, -31, 36, 8);
+    ctx.fillStyle = '#203b4a';
+    ctx.fillRect(-9, -15, 18, 11);
+    if (nivel >= 1) {
+        ctx.fillStyle = '#e59b59';
+        for (const x of [-18, 10]) {
+            ctx.fillRect(x - 2, -23, 12, 4);
+            ctx.fillRect(x - 2, -15, 12, 4);
+        }
+    }
+    if (nivel >= 2) {
+        ctx.fillStyle = '#1a3a49';
+        ctx.fillRect(-14, -42, 28, 14);
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-10, -39, 20, 8);
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-4, -38, 8, 6);
+    }
+    if (nivel >= 3) {
+        ctx.fillStyle = '#1b3949';
+        ctx.fillRect(-24, -45, 8, 23); ctx.fillRect(16, -45, 8, 23);
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-25, -48, 10, 7); ctx.fillRect(15, -48, 10, 7);
+    }
+    if (nivel >= 4) {
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-24, -52, 48, 5);
+        ctx.fillRect(-5, -57, 10, 8);
+        ctx.fillStyle = '#d4faff';
+        ctx.fillRect(-3, -55, 6, 5);
+    }
+    if (nivel >= 5) {
+        ctx.fillStyle = '#1b3949';
+        ctx.fillRect(-30, -59, 10, 20); ctx.fillRect(20, -59, 10, 20);
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-31, -61, 12, 8); ctx.fillRect(19, -61, 12, 8);
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-28, -57, 6, 5); ctx.fillRect(22, -57, 6, 5);
+    }
+}
+
+function desenharArmamentoDaTorreMetamorfa(estilo) {
+    const nivel = estilo.nivelDoPremio || 0;
+    ctx.fillStyle = estilo.corCanhao;
+    ctx.fillRect(-7, -37, 14, 32);
+    ctx.fillStyle = estilo.corDetalhe;
+    ctx.fillRect(-12, -39, 24, 9);
+    ctx.fillRect(-3, -46, 6, 8);
+    ctx.fillStyle = '#4c285f';
+    ctx.fillRect(-4, -30, 8, 14);
+    if (nivel >= 1) {
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-19, -29, 7, 19); ctx.fillRect(12, -29, 7, 19);
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-18, -31, 5, 6); ctx.fillRect(13, -31, 5, 6);
+    }
+    if (nivel >= 2) {
+        ctx.fillStyle = '#4c285f';
+        ctx.fillRect(-18, -44, 10, 13); ctx.fillRect(8, -44, 10, 13);
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-16, -49, 6, 17); ctx.fillRect(10, -49, 6, 17);
+    }
+    if (nivel >= 3) {
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-25, -19, 50, 6);
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-28, -23, 9, 14); ctx.fillRect(19, -23, 9, 14);
+    }
+    if (nivel >= 4) {
+        ctx.fillStyle = '#4c285f';
+        ctx.fillRect(-10, -54, 20, 13);
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-8, -58, 16, 15);
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-4, -55, 8, 9);
+    }
+    if (nivel >= 5) {
+        ctx.fillStyle = estilo.corCanhao;
+        ctx.fillRect(-25, -58, 8, 18); ctx.fillRect(17, -58, 8, 18);
+        ctx.fillStyle = estilo.corDetalhe;
+        ctx.fillRect(-27, -62, 12, 7); ctx.fillRect(15, -62, 12, 7);
+        ctx.fillRect(-3, -66, 6, 10);
+    }
 }
 
 function desenharArmamentoDaIscaBlindada(estilo) {
@@ -34169,11 +38092,12 @@ function desenharAuraDoAmplificador(torre) {
     if (!configuracao.percentualBonusCadencia) {
         return;
     }
+    const alcanceAtual = obterAlcanceAtualDaTorre(torre);
 
     ctx.save();
     ctx.fillStyle = "rgba(74, 232, 205, 0.055)";
     ctx.beginPath();
-    ctx.arc(torre.x, torre.y, torre.alcance, 0, Math.PI * 2);
+    ctx.arc(torre.x, torre.y, alcanceAtual, 0, Math.PI * 2);
     ctx.fill();
     ctx.strokeStyle = "rgba(94, 240, 208, 0.42)";
     ctx.lineWidth = 2;
@@ -34183,8 +38107,8 @@ function desenharAuraDoAmplificador(torre) {
 
     for (let indice = 0; indice < 4; indice++) {
         const angulo = indice * Math.PI / 2;
-        const x = Math.round(torre.x + Math.cos(angulo) * torre.alcance);
-        const y = Math.round(torre.y + Math.sin(angulo) * torre.alcance);
+        const x = Math.round(torre.x + Math.cos(angulo) * alcanceAtual);
+        const y = Math.round(torre.y + Math.sin(angulo) * alcanceAtual);
         ctx.fillStyle = "#5ef0d0";
         ctx.fillRect(x - 4, y - 4, 8, 8);
     }
@@ -34283,6 +38207,10 @@ function desenharExplosoesDosExplosivos() {
             desenharNuvemDeEsporos(explosao, progresso, raioAtual);
             continue;
         }
+        if (explosao.tipoVisual === "catapulta") {
+            desenharImpactoDaCatapulta(explosao, progresso, raioAtual);
+            continue;
+        }
 
         if (explosao.tipoVisual === "raios") {
             desenharRaiosEncadeados(explosao, progresso);
@@ -34324,6 +38252,23 @@ function desenharExplosoesDosExplosivos() {
 
         if (explosao.tipoVisual === "sismico") {
             desenharImpactoSismico(explosao, progresso, raioAtual);
+            continue;
+        }
+        if (explosao.tipoVisual === "bolhas") {
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, 1 - progresso);
+            ctx.strokeStyle = "#8ce9f2";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.arc(explosao.x, explosao.y, raioAtual, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = "#d6fbff";
+            for (let indice = 0; indice < 8; indice++) {
+                const angulo = indice * Math.PI / 4;
+                ctx.fillRect(explosao.x + Math.cos(angulo) * raioAtual - 3,
+                    explosao.y + Math.sin(angulo) * raioAtual - 3, 6, 6);
+            }
+            ctx.restore();
             continue;
         }
 
@@ -34508,6 +38453,26 @@ function desenharImpactoSismico(explosao, progresso, raioAtual) {
         }
     }
 
+    ctx.restore();
+}
+
+function desenharImpactoDaCatapulta(explosao, progresso, raioAtual) {
+    ctx.save();
+    ctx.translate(Math.round(explosao.x), Math.round(explosao.y));
+    ctx.globalAlpha = Math.max(0, 1 - progresso);
+    ctx.strokeStyle = '#bb9b69';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(0, 0, raioAtual, 0, Math.PI * 2);
+    ctx.stroke();
+    for (let indice = 0; indice < 8; indice++) {
+        const angulo = indice * Math.PI / 4;
+        const distancia = raioAtual * (0.45 + (indice % 2) * 0.35);
+        const tamanho = indice % 2 === 0 ? 8 : 5;
+        ctx.fillStyle = indice % 2 === 0 ? '#766852' : '#d6bd8c';
+        ctx.fillRect(Math.round(Math.cos(angulo) * distancia) - tamanho / 2,
+            Math.round(Math.sin(angulo) * distancia) - tamanho / 2, tamanho, tamanho);
+    }
     ctx.restore();
 }
 
@@ -34811,6 +38776,66 @@ function desenharArmamentoDaVarredura(estilo) {
 }
 
 function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
+    desenharCorpoOriginalDaTorre(x, y, estilo, anguloDaMira);
+    if (estilo.dominio && typeof desenharInsigniaDeDominio === 'function') desenharInsigniaDeDominio(x, y, estilo);
+}
+
+function desenharPreviaDeDefesaNoCursor(tipo, x, y, valida) {
+    const estilo = obterEstiloDaTorre({ tipo, nivel: 0 });
+    ctx.save();
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = valida ? 'rgba(85, 239, 113, 0.24)' : 'rgba(255, 80, 80, 0.3)';
+    ctx.beginPath();
+    ctx.arc(x, y, Math.max(20, estilo.raioBase || 20), 0, Math.PI * 2);
+    ctx.fill();
+    desenharCorpoDaTorre(x, y, estilo);
+    ctx.restore();
+}
+
+function desenharConstrucaoSeguindoCursor() {
+    if (!construcaoSeguindoCursor || mapaPersonalizadoAtivo?.evento || !posicaoCursorNoMapa
+        || !jogoIniciado || partidaEncerrada || jogoPausado) return;
+    const { x, y } = posicaoCursorNoMapa;
+    desenharPreviaDeDefesaNoCursor(tipoDeTorreParaConstruir, x, y,
+        !posicaoEhInvalidaParaCursorDeConstrucao(x, y));
+}
+
+function desenharDetalhesDoCoralAbissal(ctx, estilo) {
+    const ramos = [
+        [[-22, 13], [-29, 3], [-30, -15], [-37, -25]],
+        [[-29, -8], [-39, -12], [-42, -20]],
+        [[22, 13], [29, 3], [30, -15], [37, -25]],
+        [[29, -8], [39, -12], [42, -20]],
+        [[-13, -25], [-17, -34], [-14, -40]],
+        [[13, -25], [17, -34], [14, -40]]
+    ];
+    ctx.save();
+    ctx.lineCap = 'square';
+    ctx.lineJoin = 'bevel';
+    ctx.strokeStyle = '#123d51';
+    ctx.lineWidth = 10;
+    for (const ramo of ramos) {
+        ctx.beginPath();
+        ctx.moveTo(...ramo[0]);
+        for (const ponto of ramo.slice(1)) ctx.lineTo(...ponto);
+        ctx.stroke();
+    }
+    ctx.strokeStyle = estilo.corCanhao;
+    ctx.lineWidth = 6;
+    for (const ramo of ramos) {
+        ctx.beginPath();
+        ctx.moveTo(...ramo[0]);
+        for (const ponto of ramo.slice(1)) ctx.lineTo(...ponto);
+        ctx.stroke();
+    }
+    ctx.fillStyle = estilo.corDetalhe;
+    for (const [px, py] of [[-37, -25], [-42, -20], [37, -25], [42, -20], [-14, -40], [14, -40]]) {
+        ctx.fillRect(px - 3, py - 3, 6, 6);
+    }
+    ctx.restore();
+}
+
+function desenharCorpoOriginalDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
     if (estilo.tipoVisual === "mina") {
         desenharMinaTerrestre(x, y, estilo);
         return;
@@ -34866,7 +38891,11 @@ function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
     ctx.save();
     ctx.rotate(anguloDaMira + Math.PI / 2);
 
-    if (estilo.tipoVisual === "feixeContinuo") {
+    if (estilo.tipoVisual === 'suprema') {
+        desenharArmamentoSupremo(ctx, estilo);
+    } else if (desenharRemakeDosNiveisDaTorre(ctx, estilo)) {
+        // O armamento específico já foi desenhado na orientação da mira.
+    } else if (estilo.tipoVisual === "feixeContinuo") {
         ctx.fillStyle = estilo.corCanhao; ctx.fillRect(-12, -30, 8, 25); ctx.fillRect(4, -30, 8, 25);
         ctx.fillStyle = estilo.corDetalhe; ctx.fillRect(-5, -24, 10, 16);
         ctx.fillStyle = "#62376d"; ctx.fillRect(-9, -8, 18, 14);
@@ -34879,6 +38908,12 @@ function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
         desenharArmamentoGlacial(estilo);
     } else if (estilo.tipoVisual === "besta") {
         desenharArmamentoDaBesta(estilo);
+    } else if (estilo.tipoVisual === "catapulta") {
+        desenharArmamentoDaCatapulta(estilo);
+    } else if (estilo.tipoVisual === 'magnetica') {
+        desenharArmamentoDaTorreMagnetica(estilo);
+    } else if (estilo.tipoVisual === 'metamorfa') {
+        desenharArmamentoDaTorreMetamorfa(estilo);
     } else if (estilo.tipoVisual === "esporos") {
         desenharArmamentoDeEsporos(estilo);
     } else if (estilo.tipoVisual === "raios") {
@@ -34887,6 +38922,12 @@ function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
         desenharArmamentoDoObliterador(estilo);
     } else if (estilo.tipoVisual === "isca") {
         desenharArmamentoDaIscaBlindada(estilo);
+    } else if (estilo.tipoVisual === "aquatica") {
+        desenharArmamentoAquatico(ctx,estilo);
+    } else if (estilo.tipoVisual === "bolhas") {
+        desenharArmamentoDaTorreDeBolhas(ctx,estilo);
+    } else if (estilo.tipoVisual === "canhaoBlindado") {
+        desenharArmamentoDoCanhaoBlindado(estilo);
     } else if (estilo.tipoVisual === "amplificador") {
         desenharArmamentoDoAmplificador(estilo);
     } else if (estilo.tipoVisual === "lancaChamas") {
@@ -34919,7 +38960,12 @@ function desenharCorpoDaTorre(x, y, estilo, anguloDaMira = -Math.PI / 2) {
         ctx.fill();
     }
 
+    desenharEvolucaoVisualDaTorre(ctx, estilo);
     ctx.restore();
+
+    if (estilo.skinDeEvento === 'coralAbissal') {
+        desenharDetalhesDoCoralAbissal(ctx, estilo);
+    }
 
     ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
     ctx.beginPath();
@@ -34974,6 +39020,9 @@ function desenharTorres() {
             estilo,
             torre.anguloDaMira ?? -Math.PI / 2
         );
+        if (typeof dominioFoiConcluido === 'function' && dominioFoiConcluido(torre.tipo)) {
+            desenharEstrelaDeDominio(torre.x + (estilo.raioBase || 20) + 6, torre.y - (estilo.raioBase || 20) - 8);
+        }
         desenharCargaDaTorreSismica(torre, estilo);
         desenharCargaDeSucata(torre, estilo);
 
@@ -35023,8 +39072,9 @@ function desenharCargaDaTorreSismica(torre, estilo) {
         return;
     }
 
-    const total = configuracaoAtual.efeitoSismico.cargasNecessarias;
-    const atual = Math.min(total, torre.cargaSismica || 0);
+    const recargaEmMs = configuracaoAtual.efeitoSismico.recargaEmMs;
+    const restanteEmMs = Math.max(0, (torre.sismicaProntaEm || 0) - Date.now());
+    const progresso = Math.max(0, 1 - restanteEmMs / recargaEmMs);
     const largura = Math.max(48, estilo.raioBase * 2);
     const x = torre.x - largura / 2;
     const y = torre.y - estilo.raioBase - 18;
@@ -35032,13 +39082,14 @@ function desenharCargaDaTorreSismica(torre, estilo) {
     ctx.fillStyle = "rgba(18, 14, 12, 0.9)";
     ctx.fillRect(x, y, largura, 9);
     ctx.fillStyle = estilo.corFissura || "#ff9145";
-    ctx.fillRect(x + 2, y + 2, (largura - 4) * atual / total, 5);
+    ctx.fillRect(x + 2, y + 2, (largura - 4) * progresso, 5);
     ctx.strokeStyle = "rgba(255, 224, 143, 0.8)";
     ctx.lineWidth = 1;
     ctx.strokeRect(x, y, largura, 9);
 }
 
 function desenharAvisosDeCreditosGerados() {
+    desenharNucleosColetados();
     ctx.save();
     ctx.textAlign = "center";
     ctx.font = "900 15px system-ui, sans-serif";
@@ -35251,6 +39302,21 @@ function desenharLaserDoObliterador(tiro) {
     });
 }
 
+function desenharPedraDaCatapulta(tiro) {
+    const percorrido = Math.hypot(tiro.x - tiro.origemX, tiro.y - tiro.origemY);
+    const restante = Math.hypot(tiro.alvo.x - tiro.x, tiro.alvo.y - tiro.y);
+    const progresso = percorrido / Math.max(1, percorrido + restante);
+    const altura = Math.sin(progresso * Math.PI) * 28;
+    const x = Math.round(tiro.x);
+    const y = Math.round(tiro.y);
+    ctx.fillStyle = 'rgba(22, 19, 15, 0.35)';
+    ctx.fillRect(x - 7, y + 4, 14, 5);
+    ctx.fillStyle = '#49463f';
+    ctx.fillRect(x - 7, Math.round(y - altura) - 7, 14, 14);
+    ctx.fillStyle = '#a8a18d';
+    ctx.fillRect(x - 5, Math.round(y - altura) - 5, 6, 5);
+}
+
 function desenharBolaDeCanhao(tiro) {
     const visual = CONFIG.torre.tipos.canhaoPesado.visualDoProjetil;
     const x = Math.round(tiro.x);
@@ -35368,7 +39434,32 @@ function desenharProjetilDaNovaTorre(tiro) {
 
 function desenharTiros() {
     for (const tiro of tiros) {
-        if (tiro.tipoDaTorre === "canhaoPesado") {
+        if (tiro.tipoDaTorre === 'torreDeBolhas') {
+            ctx.save();
+            ctx.fillStyle = '#d6fbff';
+            ctx.strokeStyle = '#2187a8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(tiro.x, tiro.y, 7, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+            continue;
+        }
+        if (tiro.tipoDaTorre === 'torreMagnetica' || tiro.tipoDaTorre === 'torreMetamorfa') {
+            ctx.save();
+            ctx.fillStyle = tiro.tipoDaTorre === 'torreMagnetica' ? '#83eaf4'
+                : tiro.modoMetamorfo === 'pesado' ? '#f1a5e8'
+                : tiro.modoMetamorfo === 'area' ? '#a6f2c6' : '#c8a5ff';
+            ctx.fillRect(Math.round(tiro.x) - 5, Math.round(tiro.y) - 5, 10, 10);
+            ctx.restore();
+            continue;
+        }
+        if (tiro.tipoDaTorre === "catapulta") {
+            desenharPedraDaCatapulta(tiro);
+            continue;
+        }
+        if (tiro.tipoDaTorre === "canhaoPesado" || obterConfiguracaoDaTorre(tiro.tipoDaTorre).projetilDeCanhao) {
             desenharBolaDeCanhao(tiro);
             continue;
         }
@@ -35434,6 +39525,11 @@ function desenharTiros() {
             ctx.fillRect(x, y, 6, 4);
             ctx.fillStyle = "#6a4522";
             ctx.fillRect(x + 4, y - 4, 3, 3);
+        } else if (tiro.tipoDoInimigo === "superSabotador") {
+            ctx.fillStyle = "#ff8d64";
+            ctx.fillRect(x - 5, y - 3, 10, 6);
+            ctx.fillStyle = "#ffe59a";
+            ctx.fillRect(x - 2, y - 2, 4, 4);
         } else if (tiro.tipoDoInimigo === "corujaSombria") {
             ctx.fillStyle = "#b894d6";
             ctx.fillRect(x - 6, y - 2, 12, 5);
@@ -35583,15 +39679,36 @@ function desenharReescritaTemporalDaEraApagada(agora = Date.now()) {
     ctx.restore();
 }
 
+function obterAvisoDoSuperBossDoEvento() {
+    const elenco = CONFIG.eventos.elencosSuperBosses[mapaPersonalizadoAtivo?.evento];
+    if (!elenco || wave % CONFIG.eventos.intervaloDosSubordinados !== 0) return null;
+    const numero = wave / CONFIG.eventos.intervaloDosSubordinados;
+    if (numero < elenco.chefes.length) {
+        return { titulo: localizar("SUBORDINADO {numero}", { numero }), subordinado: true };
+    }
+    if (numero === elenco.chefes.length) {
+        return { titulo: localizar("SUPERBOSS"), subordinado: false };
+    }
+    return null;
+}
+
 function desenharAvisoBoss() {
     if (Date.now() >= avisoBossExpiraEm) {
         return;
     }
 
+    const avisoDoEvento = obterAvisoDoSuperBossDoEvento();
     ctx.save();
     ctx.textAlign = "center";
     const tipoDoBoss = obterTipoDeBossDaFase();
-    const aparenciaDoAviso = tipoDoBoss === "carcereiroDoIntervalo"
+    const aparenciaDoAviso = avisoDoEvento
+        ? {
+            fundo: "rgba(39, 7, 19, 0.94)",
+            borda: "rgba(255, 87, 112, 0.72)",
+            destaque: "#ff9cab",
+            titulo: avisoDoEvento.titulo
+        }
+        : tipoDoBoss === "carcereiroDoIntervalo"
         ? {
             fundo: "rgba(5, 4, 10, 0.97)",
             borda: "rgba(240, 185, 95, 0.9)",
@@ -35716,7 +39833,7 @@ function desenharAvisoBoss() {
     ctx.font = "800 12px system-ui, sans-serif";
     ctx.fillText(localizar("ALGO ESTÁ VINDO..."), canvas.width / 2, canvas.height / 2 - 32);
     ctx.fillStyle = "#ffffff";
-    ctx.font = "900 58px system-ui, sans-serif";
+    ctx.font = avisoDoEvento?.subordinado ? "900 38px system-ui, sans-serif" : "900 58px system-ui, sans-serif";
     ctx.fillText(aparenciaDoAviso.titulo, canvas.width / 2, canvas.height / 2 + 34);
     ctx.restore();
 }
@@ -35726,9 +39843,11 @@ function atualizar(instanteDoQuadro) {
     if (!jogoIniciado) {
         return;
     }
+    atualizarControleDaSobrecarga();
+    atualizarControleSupremo();
 
     if (jogoPausado) {
-        requestAnimationFrame(atualizar);
+        agendarQuadroDaPartida();
         return;
     }
 
@@ -35736,23 +39855,29 @@ function atualizar(instanteDoQuadro) {
         desenharMapa();
         desenharMinasTerrestres();
         desenharBombasPesadas();
+        desenharInimigos("grandes");
         desenharTorres();
         desenharAvisosDeCreditosGerados();
-        desenharInimigos();
+        desenharInimigos("pequenos");
+        desenharBarrasDosInimigosGrandes();
         desenharExplosoesDosExplosivos();
         desenharEfeitoDoPulsoTemporal();
         desenharIluminacaoDoMapa();
         atualizarPulsoTemporalNoControle();
 
-        requestAnimationFrame(atualizar);
+        agendarQuadroDaPartida();
         return;
     }
 
     const multiplicadorDeMovimento = calcularMultiplicadorDeMovimento(instanteDoQuadro);
+    atualizarPoderSupremo(multiplicadorDeMovimento * 1000 / CONFIG.simulacao.quadrosPorSegundoDeReferencia);
     atualizarDesafioDosRelogiosDoIntervalo();
     atualizarFliperamaNoMapa();
     atualizarEstadoDoBoostFliperama();
+    atualizarSobrecarga(multiplicadorDeMovimento * 1000 / CONFIG.simulacao.quadrosPorSegundoDeReferencia);
     atualizarWaves();
+    if (typeof atualizarMecanicaDoEvento === 'function') atualizarMecanicaDoEvento(multiplicadorDeMovimento);
+    if(typeof atualizarClimaClassico==='function')atualizarClimaClassico(multiplicadorDeMovimento * 1000 / CONFIG.simulacao.quadrosPorSegundoDeReferencia);
     atualizarFrenteTemporal();
     atualizarProtocoloDeContencao();
     atualizarReescritaTemporalDaEraApagada();
@@ -35761,8 +39886,10 @@ function atualizar(instanteDoQuadro) {
     atualizarExplosoesDosExplosivos(multiplicadorDeMovimento);
     atualizarAvisosDeCreditosGerados(multiplicadorDeMovimento);
     moverInimigos(multiplicadorDeMovimento);
+    if (typeof atualizarCarrocaDaCampanha === 'function') atualizarCarrocaDaCampanha(multiplicadorDeMovimento * 1000 / CONFIG.simulacao.quadrosPorSegundoDeReferencia);
     atualizarTorresSismicas();
     atacarComTorres();
+    if (typeof atualizarSegundaEtapaDosChefes === 'function') atualizarSegundaEtapaDosChefes(multiplicadorDeMovimento * 1000 / CONFIG.simulacao.quadrosPorSegundoDeReferencia);
     atacarTorresComInimigos();
     moverTiros(multiplicadorDeMovimento);
     moverTirosDosInimigos(multiplicadorDeMovimento);
@@ -35772,10 +39899,14 @@ function atualizar(instanteDoQuadro) {
     desenharFliperamaNoMapa();
     desenharMinasTerrestres();
     desenharBombasPesadas();
+    desenharInimigos("grandes");
     desenharTorres();
     desenharAvisosDeCreditosGerados();
-    desenharInimigos();
+    desenharInimigos("pequenos");
+    desenharBarrasDosInimigosGrandes();
     desenharTiros();
+    if (typeof desenharMecanicaDoEvento === 'function') desenharMecanicaDoEvento();
+    desenharConstrucaoSeguindoCursor();
     desenharExplosoesDosExplosivos();
     desenharEfeitoDoPulsoTemporal();
     desenharInterferenciaTemporalDoSenhorDoTempo();
@@ -35784,5 +39915,5 @@ function atualizar(instanteDoQuadro) {
     atualizarPulsoTemporalNoControle();
     desenharInformacoesDoInimigoSobCursor();
     desenharAvisoBoss();
-    requestAnimationFrame(atualizar);
+    agendarQuadroDaPartida();
 }

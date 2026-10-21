@@ -11,6 +11,7 @@ for (const tamanho of [{width:390,height:740}, {width:844,height:320}]) {
         await page.screenshot({path:testInfo.outputPath('selecao.png')});
         await page.locator('.botao-confirmar-selecao-defesas').tap();
         expect(await page.evaluate(() => jogoIniciado)).toBe(true);
+        for(let i=0;i<3;i++)await page.locator('#botao-continuar-cutscene-carta').tap();
         await page.evaluate(() => definirJogoPausado(true));
         await page.locator('#botao-ampliar-mapa').tap();
         await expect(page.locator('#botao-ampliar-mapa')).toHaveAttribute('aria-pressed', 'true');

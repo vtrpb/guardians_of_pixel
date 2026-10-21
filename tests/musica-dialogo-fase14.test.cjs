@@ -11,14 +11,6 @@ const especificacao = fs.readFileSync(
     path.join(raiz, "docs", "ESPECIFICACAO.md"),
     "utf8"
 );
-const codigoSecundario = fs.readFileSync(
-    path.join(raiz, "tower defense 2", "game.js"),
-    "utf8"
-);
-const htmlSecundario = fs.readFileSync(
-    path.join(raiz, "tower defense 2", "index.htm"),
-    "utf8"
-);
 
 function extrairFuncao(nome) {
     const inicio = codigo.indexOf(`function ${nome}(`);
@@ -28,19 +20,19 @@ function extrairFuncao(nome) {
 }
 
 [
-    codigo,
-    codigoSecundario
+    codigo
 ].forEach((fonte) => {
     assert.ok(fonte.includes(
         'const CHAVE_INTRODUCAO_FASE_14_VISTA = "guardians-of-pixel-introducao-fase-14-v2"'
     ));
-    assert.ok(fonte.includes("musicaDaEraApagada: Object.freeze({"));
-    assert.ok(fonte.includes('nomeInterno: "Memórias que Não Existem"'));
+    assert.match(fonte,/musicaDaEraApagada: (?:Object\.freeze|ampliarComposicaoExistente)\(\{/);
+    const nome='nomeInterno: "Memórias que Não Existem"';
+    assert.ok(fonte.includes(nome));
     assert.ok(fonte.includes("intervaloDoPasso: 360"));
     assert.ok(fonte.includes("volumeRelativo: 1.95"));
     assert.ok(fonte.includes('if (tema === "eraApagada")'));
     assert.ok(fonte.includes("tocarPassoDaMusicaDaEraApagada(audio, configuracao)"));
-    assert.match(fonte, /"intervaloPerdido",\s*"eraApagada"/);
+    assert.match(fonte, /"intervaloPerdido",\s*(?:"casteloDoLimbo",\s*)?"eraApagada"/);
 });
 
 const notas = [];
@@ -58,6 +50,8 @@ const configuracaoDaEra = {
     volumeDaFalhaTemporal: 0.012
 };
 const contexto = {
+    temaMusicalAlternativo:null,
+    obterPartituraOriginalDaFase:()=>null,
     CONFIG: {
         audio: {
             musicaDaEraApagada: configuracaoDaEra,
@@ -108,13 +102,18 @@ assert.strictEqual(notas.length, 1);
 assert.strictEqual(notas[0][0], 1567.98);
 assert.strictEqual(notas[0][6], 98);
 
-assert.ok(html.includes("build=salvos-28"));
-assert.ok(htmlSecundario.includes("build=salvos-28"));
+assert.match(html,/<script\s+src="game\.js\?[^\"]+"/);
+assert.ok(fs.existsSync(path.join(raiz,'game.js')));
 assert.ok(especificacao.includes("**Memórias que Não Existem**"));
 assert.ok(especificacao.includes("guardians-of-pixel-introducao-fase-14-v2"));
 assert.ok(especificacao.includes("a marca antiga `v1` não impede a exibição"));
 assert.ok(estilos.includes('[data-etapa-cena="inimigosCamuflados"]'));
 assert.ok(estilos.includes('[data-etapa-cena="avisoReescrita"]'));
-assert.ok(especificacao.includes("O retrato humano do Senhor do Tempo fica visível"));
+const configReal=require('./apoio/codigo-jogo.cjs').carregarConfig();
+assert.strictEqual(configReal.audio.musicaDaEraApagada.nomeInterno,'Memórias que Não Existem');
+assert.strictEqual(configReal.audio.musicaDaEraApagada.intervaloDoPasso,360);
+assert.strictEqual(configReal.audio.musicaDaEraApagada.volumeRelativo,1.95);
+assert.strictEqual(configReal.faseSecreta.senhorDoTempo.formaHumanaFutura.ativa,false);
+assert.ok(especificacao.includes('Enquanto `ativa` for `false`, a forma humana não aparece no balão'));
 
 console.log("Fase 14: trilha exclusiva e reapresentação do diálogo validadas.");

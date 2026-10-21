@@ -1,0 +1,11 @@
+.previa-inimigos{margin:16px 0;border:2px solid #a88b5e;background:#241d38;color:#f4e6c5;padding:12px}
+.previa-inimigos summary{cursor:pointer;min-height:44px;display:list-item;align-content:center;font-weight:bold}
+.previa-inimigos summary:focus-visible{outline:3px solid #ffd486;outline-offset:3px}
+.previa-inimigos>p{font-size:13px;line-height:1.5}
+.previa-inimigos ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;padding:0;list-style:none}
+.previa-inimigos li{display:flex;align-items:center;gap:10px;padding:10px;background:#332b43;border:1px solid #74604f;min-width:0}
+.previa-inimigos canvas{width:64px;height:64px;flex-shrink:0;image-rendering:pixelated}
+.previa-inimigos strong{font-size:13px;overflow-wrap:anywhere}
+.previa-inimigos small{display:block;color:#ffcf83;margin-top:5px}
+.previa-inimigos li p{font-size:12px;line-height:1.5;margin:6px 0 0}
+@media(max-width:500px){.previa-inimigos ul{grid-template-columns:1fr}.previa-inimigos{padding:10px}}

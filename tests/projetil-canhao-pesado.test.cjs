@@ -9,10 +9,18 @@ assert.match(
     codigo,
     /canhaoPesado: Object\.freeze\(\{[\s\S]*?visualDoProjetil: Object\.freeze\(\{\s*tamanho: 18,\s*corPrincipal: "#303033",\s*corSombra: "#202124",\s*corBrilho: "#494954"\s*\}\)/
 );
-assert.match(
-    codigo,
-    /if \(tiro\.tipoDaTorre === "canhaoPesado"\) \{\s*desenharBolaDeCanhao\(tiro\);\s*continue;\s*\}/
-);
+// O desenho também atende outras torres com projetilDeCanhao; testar o despacho real.
+const inicioDespacho = codigo.indexOf('function desenharTiros(');
+const fimDespacho = codigo.indexOf('\nfunction ', inicioDespacho + 1);
+const chamadas = [];
+vm.runInNewContext(codigo.slice(inicioDespacho, fimDespacho) + '\ndesenharTiros();', {
+    tiros: [{tipoDaTorre:'canhaoPesado'}, {tipoDaTorre:'canhaoBlindado'}, {tipoDaTorre:'torreGlacial'}],
+    tirosDosInimigos: [],
+    obterConfiguracaoDaTorre: tipo => ({projetilDeCanhao:tipo==='canhaoBlindado'}),
+    desenharBolaDeCanhao: tiro => chamadas.push(tiro.tipoDaTorre),
+    desenharEstilhacoGlacial: () => chamadas.push('gelo')
+});
+assert.deepStrictEqual(chamadas, ['canhaoPesado','canhaoBlindado','gelo']);
 
 const inicio = codigo.indexOf("function desenharBolaDeCanhao(");
 const fim = codigo.indexOf("\nfunction ", inicio + 1);

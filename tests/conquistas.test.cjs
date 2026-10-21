@@ -10,6 +10,21 @@ const especificacao = fs.readFileSync(
     path.join(raiz, "docs", "ESPECIFICACAO.md"),
     "utf8"
 );
+const conquistasReais=require('./apoio/codigo-jogo.cjs').carregarConfig().conquistas;
+assert.strictEqual(Object.keys(conquistasReais).length,48,'O catálogo atual possui quarenta e oito conquistas');
+assert.strictEqual(conquistasReais.alemDoLimite.tipoDeCriterio,'estatistica');
+assert.strictEqual(conquistasReais.alemDoLimite.propriedade,'maiorWaveInfinitaConcluida');
+assert.strictEqual(conquistasReais.alemDoLimite.objetivo,40);
+for (const id of ['primeiroInimigo','primeiraTorre','primeiraMelhoria','primeiroChefe','primeiraCompra','primeiroNivel']) {
+    assert.strictEqual(conquistasReais[id].tipoDeCriterio,'especial',`Conquista memorável ausente: ${id}`);
+    assert.ok(fs.existsSync(path.join(raiz,'assets','conquistas',`${id}.svg`)),`Ícone ausente: ${id}`);
+}
+assert.match(codigo, /if \(partidaContaParaConquistasMemoraveis\(\)\) \{\s*desbloquearConquista\("primeiraTorre"\);\s*registrarEstatisticaDeConquista\("torresConstruidas", 1, true\);/);
+assert.match(codigo, /if \(partidaContaParaConquistasMemoraveis\(\)\) \{\s*desbloquearConquista\("primeiraMelhoria"\);\s*registrarEstatisticaDeConquista\("melhorias", 1, true\);/);
+assert.match(codigo, /if \(tipoEhBoss\(inimigo.tipo\)\) \{\s*desbloquearConquista\("primeiroChefe"\);\s*registrarEstatisticaDeConquista\("bosses", 1, true\);/);
+assert.ok(codigo.includes('if (nivelAtual > 1) desbloquearConquista("primeiroNivel");'));
+assert.strictEqual(conquistasReais.mestreDoFliperama.objetivo,8);
+assert.strictEqual(conquistasReais.mestreDoFliperama.itensObrigatorios.length,8);
 
 [
     'class="botao-lobby-extra botao-lobby-conquistas"',
@@ -56,7 +71,7 @@ const especificacao = fs.readFileSync(
     'tipoDeCriterio: "especial"',
     "function carregarEstatisticasDasConquistas()",
     "function verificarConquistasAutomaticas()",
-    "function mostrarConquistas()",
+    "function mostrarConquistas(categoria = categoriaDeConquistasSelecionada)",
     "registrarFaseConcluidaParaConquistas();",
     'desbloquearConquista("aindaEstaEsperando");',
     "registrarWaveInfinitaParaConquistas(wave);",
@@ -81,6 +96,12 @@ assert.ok(
 assert.ok(
     codigo.indexOf("registrarWaveInfinitaParaConquistas(wave);", inicioDaWave) > inicioDaWave,
     "A nova wave infinita deve atualizar as conquistas."
+);
+const inicioDaAtualizacaoDasWaves = codigo.indexOf("function atualizarWaves()");
+assert.ok(
+    codigo.indexOf("registrarWaveInfinitaConcluidaParaConquistas(wave);", inicioDaAtualizacaoDasWaves)
+        > codigo.indexOf("registrarWaveCompletaParaMissoes();", inicioDaAtualizacaoDasWaves),
+    "Além do Limite deve contar a wave concluída, não a iniciada."
 );
 assert.ok(
     codigo.indexOf("registrarInimigoEliminadoParaConquistas();", inicioDosInimigos)
@@ -119,7 +140,7 @@ assert.ok(
     "**Pare o Relógio!**",
     "**Demolição em Massa**",
     "**Frequência 09**",
-    "treze conquistas",
+    "conquistas da aba selecionada",
     "totalmente em preto e branco"
 ].forEach((trecho) => assert.ok(
     especificacao.includes(trecho),

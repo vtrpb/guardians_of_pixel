@@ -35,7 +35,14 @@ function extrairFuncao(nome) {
 const armazenamento = new Map();
 const classesDaCamada = new Set();
 let resultadoExibido = 0;
+let retornosAoLobby = 0;
+const eventosDeMissao = [];
 const contexto = {
+    document: {getElementById() { return null; }},
+    voltarAoLobby() { retornosAoLobby++; },
+    fecharConteudoMenu() {},
+    atualizarIndicadorFaseSelecionada() {},
+    atualizarTemaDoLobby() {},
     CONFIG: {
         faseSecreta: {
             cartaMisteriosa: { texto: "Carta antiga", assinatura: "???" }
@@ -68,6 +75,8 @@ const contexto = {
         setItem(chave, valor) { armazenamento.set(chave, String(valor)); }
     },
     camadaCutsceneCarta: {
+        dataset: {},
+        querySelector() { return null; },
         hidden: true,
         offsetWidth: 640,
         classList: {
@@ -85,6 +94,7 @@ const contexto = {
         resultadoExibido++;
     },
     salvarCartaMisteriosaVista() {},
+    registrarProgressoDaMissao(...evento) { eventosDeMissao.push(evento); },
     faseSelecionada: 7,
     cartaDaMaquinaDoTempoVista: false,
     maquinaDoTempoDesbloqueada: false,
@@ -95,6 +105,7 @@ const contexto = {
 };
 
 vm.createContext(contexto);
+vm.runInContext(require('./apoio/codigo-jogo.cjs').extrairFuncao('limparCenaDoConfronto','modulos/fase18.js'),contexto);
 vm.runInContext([
     extrairFuncao("salvarCartaDaMaquinaDoTempoVista"),
     extrairFuncao("salvarMaquinaDoTempoDesbloqueada"),
@@ -113,6 +124,7 @@ contexto.mostrarCutsceneDaCarta("maquinaDoTempo");
 assert.strictEqual(contexto.cartaDaMaquinaDoTempoVista, true);
 assert.strictEqual(contexto.maquinaDoTempoDesbloqueada, true);
 assert.strictEqual(contexto.maquinaDoTempoAcabouDeSerConcedida, true);
+assert.deepStrictEqual(eventosDeMissao, [['maquina',1,true]]);
 assert.strictEqual(contexto.textoCutsceneCarta.textContent, "Recompensa temporal");
 assert.strictEqual(contexto.assinaturaCutsceneCarta.textContent, "Senhor do Tempo");
 assert.strictEqual(contexto.botaoContinuarCutsceneCarta.textContent, "Receber Máquina do Tempo");
@@ -122,7 +134,10 @@ assert.strictEqual(
 );
 assert.strictEqual(contexto.deveMostrarCartaDaMaquinaDoTempoAposVitoria(), false);
 contexto.concluirCutsceneDaCarta();
-assert.strictEqual(resultadoExibido, 1);
+assert.strictEqual(resultadoExibido, 0);
+assert.strictEqual(retornosAoLobby, 1);
+assert.strictEqual(contexto.faseSelecionada, 1);
+assert.strictEqual(contexto.camadaCutsceneCarta.hidden, true);
 
 contexto.epocaDaMaquinaDoTempoSelecionada = "passado";
 contexto.salvarEpocaDaMaquinaDoTempo();

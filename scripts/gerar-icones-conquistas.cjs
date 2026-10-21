@@ -19,6 +19,7 @@ const pessoa=(x,y,c='roxo')=>r(x+2,y,5,5,'claro')+r(x,y+6,9,8,c)+r(x,y+14,3,4,c)
 const seta=(x,y,c='verde')=>r(x,y+3,10,4,c)+r(x+8,y,3,10,c)+r(x+11,y+2,2,6,c)+r(x+13,y+4,2,2,c);
 const explosao=()=>p('14,3 18,3 18,8 23,6 24,10 29,10 26,15 29,20 24,21 24,27 18,24 15,29 12,24 6,26 8,20 3,18 8,14 5,9 11,10 11,5 14,7','vermelho')+p('14,9 18,9 18,12 23,12 23,17 20,17 21,22 16,21 13,24 11,19 8,18 11,14 10,12 14,12','ouro')+r(14,13,5,6,'claro')+r(12,15,9,2,'branco')+r(3,4,2,2,'ouro')+r(26,27,3,2,'vermelho');
 const imagens = {
+ eAgora:relogio(3,5,'ouro')+r(22,5,6,3,'claro')+r(25,8,3,3,'claro')+r(22,11,6,3,'claro')+r(22,14,3,3,'claro')+r(22,19,3,3,'claro')+r(3,27,26,2,'verde'),
  esseEOFim:relogio(3,3,'roxo')+grupo(20,12,.65,espada(0,0))+r(3,26,17,3,'vermelho'),
  finalmenteEmCasa:p('3,15 16,3 29,15','ouro')+r(6,15,20,14,'azul')+r(13,20,6,9,'escuro')+grupo(19,13,.7,escudo(0,0,'roxo')),
  porUmPixel:torre(18,6)+r(4,23,11,3,'vermelho')+r(14,20,3,3,'ouro')+estrela(8,9,'vermelho'),

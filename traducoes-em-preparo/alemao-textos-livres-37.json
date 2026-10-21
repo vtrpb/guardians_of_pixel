@@ -1,0 +1,23 @@
+{
+  " | Desbloqueio: vença {evento}": " | Freischaltung: Gewinne {evento}",
+  "{nome} é desbloqueada ao vencer {evento}.": "{nome} wird durch einen Sieg in {evento} freigeschaltet.",
+  "+{percentual}% de dano": "+{percentual} % Schaden",
+  "Bônus do Superboss": "Superboss-Bonus",
+  "Coral luminoso conquistado no Leviatã Abissal.": "Leuchtende Koralle, die beim Abgrund-Leviathan errungen wurde.",
+  "Esporos ácidos conquistados na Víbora Ácida.": "Ätzende Sporen, die bei der Säureviper errungen wurden.",
+  "Exclusivo da Fase 6 | Carapaça rompe com 50% de vida, acelera e libera fragmentos": "Nur in Phase 6 | Bei 50 % Gesundheit bricht der Panzer, beschleunigt und setzt Splitter frei",
+  "Exclusivo da Fase 6 | Muito rápido": "Nur in Phase 6 | Sehr schnell",
+  "Exclusivo da Fase 7": "Nur in Phase 7",
+  "Exclusivo da Fase 7 | Muito rápido": "Nur in Phase 7 | Sehr schnell",
+  "Exclusivo da Fase 7 | Regenera {cura} de vida por segundo depois de alcançar 50%": "Nur in Phase 7 | Regeneriert ab 50 % Gesundheit {cura} Gesundheit pro Sekunde",
+  "Exclusivo da Fase 8 | Invoca 2 Raptors com 60% e 30% de vida": "Nur in Phase 8 | Beschwört bei 60 % und 30 % Gesundheit insgesamt 2 Raptoren",
+  "Exclusivo da Fase 8 | Muita vida": "Nur in Phase 8 | Viel Gesundheit",
+  "Exclusivo da Fase 8 | Muito rápido": "Nur in Phase 8 | Sehr schnell",
+  "Exclusivo da Fase 8 | Reduz 20% do dano recebido": "Nur in Phase 8 | Verringert erlittenen Schaden um 20 %",
+  "Exclusivo da Fase 9 | Muito rápido e ainda mais veloz nos trilhos": "Nur in Phase 9 | Sehr schnell und auf den Schienen noch schneller",
+  "Exclusivo da Fase 9 | Rebobina o caminho e recupera vida duas vezes": "Nur in Phase 9 | Spult den Weg zurück und stellt zweimal Gesundheit wieder her",
+  "Exclusivo da Fase 9 | Reduz 25% do dano recebido por aliados próximos": "Nur in Phase 9 | Verringert den Schaden an nahen Verbündeten um 25 %",
+  "Exclusivo da Fase 9 | Restaura 45 de vida de um aliado próximo": "Nur in Phase 9 | Stellt bei einem nahen Verbündeten 45 Gesundheit wieder her",
+  "Exclusivo do clássico": "Nur im klassischen Modus",
+  "Exclusivo do Intervalo Perdido | Blindado; recebe 18% menos dano": "Nur im Verlorenen Intervall | Gepanzert; erleidet 18 % weniger Schaden"
+}

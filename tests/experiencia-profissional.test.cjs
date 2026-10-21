@@ -6,6 +6,8 @@ const vm = require("vm");
 const raiz = path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(raiz, "index.htm"), "utf8");
 const codigo = fs.readFileSync(path.join(raiz, "game.js"), "utf8");
+const desafiosDiarios = fs.readFileSync(path.join(raiz, "modulos/desafios-diarios.js"), "utf8");
+const desafiosSemanais = fs.readFileSync(path.join(raiz, "modulos/desafios-semanais.js"), "utf8");
 const css = fs.readFileSync(path.join(raiz, "styles.css"), "utf8");
 const especificacao = fs.readFileSync(path.join(raiz, "docs", "ESPECIFICACAO.md"), "utf8");
 const checkout = fs.readFileSync(path.join(raiz, "docs", "CHECKOUT_APOIADOR.md"), "utf8");
@@ -31,7 +33,6 @@ const checkout = fs.readFileSync(path.join(raiz, "docs", "CHECKOUT_APOIADOR.md")
     "function confirmarCompraDaLoja()",
     "function concluirCompraDaLoja(idDoItem)",
     "function enfileirarNotificacaoDeProgresso(",
-    'traduzir("notificacoes.missaoConcluida")',
     'traduzir("notificacoes.conquistaDesbloqueada")',
     "async function iniciarCompraDoPacoteApoiador()",
     "async function sincronizarPacoteApoiadorComServidor()",
@@ -41,6 +42,8 @@ const checkout = fs.readFileSync(path.join(raiz, "docs", "CHECKOUT_APOIADOR.md")
     'url.protocol !== "https:"',
     "checkout.origensPermitidas"
 ].forEach(trecho => assert.ok(codigo.includes(trecho), `Regra ausente: ${trecho}`));
+assert.match(desafiosDiarios, /enfileirarNotificacaoDeProgresso\('missao',/);
+assert.match(desafiosSemanais, /enfileirarNotificacaoDeProgresso\('missao',/);
 
 const trechoDeAberturaDaCompra = codigo.slice(
     codigo.indexOf("function comprarItemDaLoja(idDoItem)"),
@@ -86,10 +89,12 @@ const armazenamento = new Map([["guardians-of-pixel-preferencias-v1", JSON.strin
     volumeDosEfeitos: -3,
     ultimoVolumeAudivelDosEfeitos: 0.63,
     efeitosSonorosAtivos: false,
-    modoNoturno: true
+    modoNoturno: true,
+    modoDeExibicao: "janela"
 })]]);
 const classesDoBody = new Set();
 const contexto = {
+    window: {},
     localStorage: {
         getItem: chave => armazenamento.get(chave) ?? null,
         setItem: (chave, valor) => armazenamento.set(chave, valor)
@@ -119,6 +124,8 @@ vm.runInContext(`
     let ultimoVolumeAudivelDosEfeitos = 0.8;
     let efeitosSonorosAtivos = true;
     let modoNoturno = false;
+    let construcaoSeguindoCursor = false;
+    let animacaoDoVermelhoAtiva = true;
     function atualizarVolumeEfetivoDaMusica() {}
     function atualizarGanhoDosEfeitos() {}
     function atualizarControleDeVolume() {}
@@ -126,6 +133,7 @@ vm.runInContext(`
     function atualizarControleDoModoDiaNoite() {}
     ${codigo.slice(inicioDasPreferencias, fimDasPreferencias)}
     aplicarPreferenciasSalvas();
+    salvarPreferencias();
 `, contexto);
 
 assert.strictEqual(vm.runInContext("volumeDaMusica", contexto), 1);
@@ -134,5 +142,6 @@ assert.strictEqual(vm.runInContext("ultimoVolumeAudivelDosEfeitos", contexto), 0
 assert.strictEqual(vm.runInContext("efeitosSonorosAtivos", contexto), false);
 assert.strictEqual(vm.runInContext("musicaPausadaPeloJogador", contexto), true);
 assert.ok(classesDoBody.has("modo-noturno"));
+assert.strictEqual(JSON.parse(armazenamento.get("guardians-of-pixel-preferencias-v1")).modoDeExibicao, undefined);
 
 console.log("Preferências, compras, notificações e checkout seguro validados.");

@@ -1,13 +1,13 @@
 const {test,expect}=require('@playwright/test');
-test('36 imagens próprias, segredos ocultos e ícone na notificação',async({page},info)=>{
+test('48 imagens próprias, segredos ocultos e ícone na notificação',async({page},info)=>{
     const erros=[];page.on('pageerror',e=>erros.push(e.message));
     await page.goto('/');await page.locator('#botao-jogar-menu-inicial').click();
     await page.evaluate(()=>mostrarConquistas('comuns'));
-    await expect(page.locator('.conquista-icone img')).toHaveCount(22);
+    await expect(page.locator('.conquista-icone img')).toHaveCount(33);
     await expect.poll(()=>page.locator('.conquista-icone img').evaluateAll(imgs=>imgs.filter(i=>!i.complete||!i.naturalWidth).map(i=>i.getAttribute('src')))).toEqual([]);
     await page.evaluate(()=>mostrarConquistas('ocultas'));
     await expect(page.locator('.conquista-icone img')).toHaveCount(0);
-    await expect(page.locator('.conquista-icone')).toHaveText(Array(14).fill('?'));
+    await expect(page.locator('.conquista-icone')).toHaveText(Array(15).fill('?'));
     await page.evaluate(()=>{desbloquearConquista('frequencia09');mostrarConquistas('ocultas');});
     await expect(page.locator('.conquista-icone img')).toHaveCount(1);
     await expect(page.locator('.notificacao-progresso-icone img')).toHaveAttribute('src','assets/conquistas/frequencia09.svg');
@@ -25,9 +25,9 @@ test('36 imagens próprias, segredos ocultos e ícone na notificação',async({p
         }
         document.body.append(galeria);
     });
-    await expect.poll(()=>page.locator('#galeria-teste img').evaluateAll(imgs=>imgs.length===36&&imgs.every(i=>i.complete&&i.naturalWidth>0))).toBe(true);
+    await expect.poll(()=>page.locator('#galeria-teste img').evaluateAll(imgs=>imgs.length===48&&imgs.every(i=>i.complete&&i.naturalWidth>0))).toBe(true);
     const caminhos=await page.locator('#galeria-teste img').evaluateAll(imgs=>imgs.map(i=>i.src));
-    expect(new Set(caminhos).size).toBe(36);
+    expect(new Set(caminhos).size).toBe(48);
     await page.locator('#galeria-teste').screenshot({path:info.outputPath('todos-os-icones.png')});
     await page.reload();
     expect(await page.evaluate(()=>conquistaEstaDesbloqueada('frequencia09'))).toBe(true);

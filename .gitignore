@@ -1,4 +1,17 @@
 node_modules/
 playwright-report/
 test-results/
-
+artifacts/
+backups/
+references/
+guardians arquive/
+tower defense 2/
+%SystemDrive%/
+desktop/
+dados/comunidade-local.json
+dados/comunidade-local.json.tmp
+*.log
+desktop.ini
+/Captura de tela *.png
+/portal-state.png
+/Guardians of Pixel.lnk

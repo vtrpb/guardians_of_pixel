@@ -1,0 +1,22 @@
+{
+  "Custa ${custo} na partida · usa o limite geral de torres": "Kostet ${custo} in der Partie · zählt zum allgemeinen Turmlimit",
+  "Custo": "Kosten",
+  "Custo da melhoria": "Kosten der Verbesserung",
+  "Custo: {custo} | Cadência próxima: +{percentual}% | Alcance: {alcance} | Limite: {limite}": "Kosten: {custo} | Feuerrate naher Türme: +{percentual}% | Reichweite: {alcance} | Limit: {limite}",
+  "Custo: {custo} | Dano em área: {dano} | Raio: {raio} px | Limite: {limite}": "Kosten: {custo} | Flächenschaden: {dano} | Radius: {raio} px | Limit: {limite}",
+  "Custo: {custo} | Dano: {dano} | Alcance: {alcance}": "Kosten: {custo} | Schaden: {dano} | Reichweite: {alcance}",
+  "Custo: {custo} | Produção: {creditos} por wave | Limite: {limite}": "Kosten: {custo} | Produktion: {creditos} pro Welle | Limit: {limite}",
+  "Custo: {custo} | Recarga: {segundos}s | Empurrão: {distancia} px | Limite: {limite}": "Kosten: {custo} | Abklingzeit: {segundos} s | Rückstoß: {distancia} px | Limit: {limite}",
+  "Custo: {custo} | Resistência: {tiros} tiros | Limite: {limite}": "Kosten: {custo} | Widerstand: {tiros} Treffer | Limit: {limite}",
+  "Dança dos vagalumes": "Tanz der Glühwürmchen",
+  "dano": "Schaden",
+  "Dano": "Schaden",
+  "Dano {dano}  •  Alcance {alcance}": "Schaden {dano}  •  Reichweite {alcance}",
+  "Dano {dano}  •  Queima {danoQueimadura}/s por {segundos}s": "Schaden {dano}  •  Brandschaden {danoQueimadura}/s für {segundos} s",
+  "Dano {dano} · Alcance {alcance}": "Schaden {dano} · Reichweite {alcance}",
+  "Dano {dano} · Alterna vermelho, azul e amarelo · Alcance {alcance}": "Schaden {dano} · Wechselt zwischen Rot, Blau und Gelb · Reichweite {alcance}",
+  "Dano {dano} · área {raio} px · clique para acender": "Schaden {dano} · Bereich {raio} px · zum Entzünden klicken",
+  "Dano {dano} · área {raio} px · encoste para explodir": "Schaden {dano} · Bereich {raio} px · explodiert bei Berührung",
+  "Dano {dano} · Até {pecas} peças de sucata · Alcance {alcance}": "Schaden {dano} · Bis zu {pecas} Schrottteile · Reichweite {alcance}",
+  "Dano {dano} · Corrente {percentual}% · Alcance {alcance}": "Schaden {dano} · Ketteneffekt {percentual}% · Reichweite {alcance}"
+}

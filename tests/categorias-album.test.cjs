@@ -10,7 +10,7 @@ const especificacao = fs.readFileSync("docs/ESPECIFICACAO.md", "utf8");
 const inicioDaConfiguracao = codigo.indexOf("album: Object.freeze({");
 const fimDaConfiguracao = codigo.indexOf("\n    loja: Object.freeze({", inicioDaConfiguracao);
 const configuracaoDoAlbum = codigo.slice(inicioDaConfiguracao, fimDaConfiguracao);
-const categoriasEsperadas = ["torres", "inimigos", "bosses", "minas", "skins"];
+const categoriasEsperadas = ["torres", "inimigos", "bosses", "superBosses", "minas", "skins"];
 
 for (const id of categoriasEsperadas) {
     assert.match(configuracaoDoAlbum, new RegExp(`id: "${id}"`));
@@ -18,6 +18,7 @@ for (const id of categoriasEsperadas) {
 
 assert.ok(configuracaoDoAlbum.indexOf('id: "torres"') < configuracaoDoAlbum.indexOf('id: "inimigos"'));
 assert.ok(configuracaoDoAlbum.indexOf('id: "inimigos"') < configuracaoDoAlbum.indexOf('id: "bosses"'));
+assert.ok(configuracaoDoAlbum.indexOf('id: "bosses"') < configuracaoDoAlbum.indexOf('id: "superBosses"'));
 assert.match(codigo, /let categoriaDoAlbumSelecionada = "torres";/);
 assert.match(codigo, /const torres = todasAsTorres\s*\.filter\(\(\[tipo\]\) => torreEstaDesbloqueada\(tipo\)\);/);
 assert.match(codigo, /const minas = todosOsExplosivos\s*\.filter\(\(\[tipo\]\) => torreEstaDesbloqueada\(tipo\)\);/);
@@ -119,17 +120,17 @@ assert.deepStrictEqual(
 );
 assert.strictEqual(armazenamento.get("guardians-of-pixel-fragmentos-v2"), "77");
 
-assert.match(estilos, /\.album-abas\s*\{[\s\S]*?grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
+assert.match(estilos, /\.album-abas\s*\{[\s\S]*?grid-template-columns: repeat\(6, minmax\(0, 1fr\)\)/);
 assert.match(estilos, /\.album-pagina-figurinhas\s*\{[\s\S]*?background-color: #eadcae[\s\S]*?border: 5px solid/);
 assert.match(estilos, /\.album-espiral\s*\{[\s\S]*?repeating-linear-gradient/);
 assert.match(estilos, /\.album-vazio\s*\{[\s\S]*?border: 4px dashed/);
 assert.match(estilos, /\.album-cartao-conceito \.miniatura-inimigo-album\s*\{[\s\S]*?background-color: #171024/);
-assert.match(estilos, /\.album-abas\s*\{[\s\S]*?grid-template-columns: repeat\(5, 88px\)[\s\S]*?overflow-x: auto/);
+assert.match(estilos, /\.album-abas\s*\{[\s\S]*?grid-template-columns: repeat\(6, 88px\)[\s\S]*?overflow-x: auto/);
 assert.ok(html.includes("Complete suas figurinhas"));
 assert.ok(html.includes("styles.css?v=maquina-tempo-1"));
 assert.ok(html.includes("game.js?v=maquina-tempo-1"));
 assert.match(especificacao, /### Mudança: categorias do Álbum/);
-assert.match(especificacao, /\*\*Torres\*\*, \*\*Inimigos\*\*, \*\*Bosses\*\*, \*\*Minas\*\* e \*\*Skins\*\*/);
+assert.match(especificacao, /\*\*Torres\*\*, \*\*Inimigos\*\*, \*\*Bosses\*\*, \*\*Minas\*\* e \*\*Skins\*\*.*\*\*Super-Bosses\*\*/);
 assert.match(especificacao, /histórico de figurinhas de inimigos começa vazio/);
 assert.match(especificacao, /não apaga nem altera estatísticas permanentes/);
 assert.match(especificacao, /Forma humana do Senhor do Tempo/);

@@ -1,0 +1,140 @@
+/* Paisagem exclusiva da tela Jogar/Sair; preserva o lobby de defesas. */
+.segredos-abertura { position: absolute; pointer-events: none; z-index: 1; }
+.arte-segredos-abertura {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; image-rendering: pixelated; shape-rendering: crispEdges;
+}
+.retrato-entidade-abertura[hidden], .segredo-abertura[hidden] { display: none; }
+.segredo-abertura {
+    position: absolute; transform: translate(-50%, -50%); pointer-events: auto;
+    width: clamp(44px, 6vw, 100px); height: clamp(44px, 9vh, 110px);
+    border: 2px solid transparent; background: transparent; padding: 0;
+    box-shadow: none; cursor: pointer;
+}
+.segredo-abertura:focus-visible {
+    border-color: #ffe8b5; outline: 2px solid #392649; background: #ffdfa51a;
+    box-shadow: 0 0 16px #ffd48666;
+}
+.segredo-descoberto::after { content: '\2726'; position: absolute; bottom: 0; right: 0; color: #ffe8b5; text-shadow: 2px 2px #302344; }
+.pista-abertura {
+    position: absolute; z-index: 4; bottom: 3%; left: 50%; transform: translateX(-50%);
+    width: min(520px, 90%); max-height: 45%; overflow: auto; box-sizing: border-box;
+    padding: 16px; color: #ffedc9; background: #302344f5; border: 3px solid #d8a26b;
+    box-shadow: 5px 5px #191325; text-align: left;
+}
+.pista-abertura[hidden] { display: none; }
+.pista-abertura h2 { font-size: 1rem; margin: 0 0 12px; }
+.pista-abertura p { line-height: 1.6; font-size: .9rem; }
+.pista-abertura small { display: block; line-height: 1.5; margin-bottom: 12px; }
+.pista-abertura button { color: #302344; background: #ffd486; border: 2px solid #fff0c7; padding: 10px 16px; min-height: 44px; }
+.pista-abertura button:focus-visible { outline: 3px solid #fff0c7; outline-offset: 3px; }
+.tela-inicial-jogo {
+    background: #292343;
+    isolation: isolate;
+}
+.menu-inicial-cenario {
+    background: #326b35 url("../assets/fundo-menu-8bits.svg?v=11") center / cover no-repeat;
+    image-rendering: pixelated;
+}
+.menu-inicial-cenario::before {
+    inset: 0;
+    height: auto;
+    border: 0;
+    box-shadow: none;
+    background:
+        url("../assets/arvore-abertura.svg") -12px -8px / 106px 150px no-repeat,
+        url("../assets/arvore-abertura.svg") calc(100% + 8px) 18px / 88px 125px no-repeat;
+}
+.menu-inicial-cenario::after {
+    inset: 0;
+    height: auto;
+    opacity: 1;
+    background:
+        url("../assets/arvore-abertura.svg") 0 72% / 172px 244px no-repeat,
+        url("../assets/arvore-abertura.svg") 48% 72% / 164px 228px no-repeat,
+        url("../assets/arvore-abertura.svg") 100% 72% / 172px 244px no-repeat;
+}
+.menu-inicial-conteudo {
+    align-self: start;
+    min-height: 0;
+    margin-top: clamp(12px, 3vh, 40px);
+    width: min(94vw, 560px);
+}
+.menu-inicial-selo {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+    color: #432747;
+    background: #ffd486;
+    border-color: #fff0bf;
+    outline-color: #493354;
+    box-shadow: 5px 5px 0 #271b3f99;
+}
+.menu-inicial-saudacao {
+    color: #ffeac4;
+    background: #392649e6;
+    border-color: #db9a85;
+    box-shadow: 4px 4px 0 #22193299;
+    font-size: clamp(.75rem, 1.5vw, .95rem);
+}
+.menu-inicial-conteudo h1 span,
+.menu-inicial-conteudo h1 strong {
+    -webkit-text-stroke-color: #30213e;
+    text-shadow: 0 5px 0 #30213e, 4px 6px 0 #251a3599;
+    color: #fff0c7;
+}
+.menu-inicial-conteudo h1 span { font-size: clamp(2.1rem, 5.5vw, 3.5rem); }
+.menu-inicial-conteudo h1 strong { font-size: clamp(1.8rem, 4.5vw, 2.8rem); color: #ffc574; }
+.menu-inicial-descricao { color: #fff0dc; text-shadow: 1px 2px 0 #251b3f; }
+.botao-menu-inicial {
+    border-color: #49304e;
+    box-shadow: 6px 6px 0 #251b3fb3, inset 0 0 0 3px #fff0c733;
+}
+.botao-menu-inicial-jogar {
+    color: #35213c;
+    text-shadow: 1px 1px 0 #ffe8b580;
+    background: linear-gradient(#ffce86 0 48%, #eda65f 48%);
+}
+.botao-menu-inicial-sair { background: linear-gradient(#715080 0 48%, #50365f 48%); color: #ffecd1; }
+.botao-menu-inicial:focus-visible { outline-color: #fff2c6; }
+.tela-inicial-jogo.menu-inicial-saindo {
+    opacity: 0;
+    transform: none;
+    transition: none;
+    /* Animacao propria evita encurtamento ao reverter a entrada. */
+    animation: dissolver-abertura var(--duracao-saida-abertura, 1800ms) ease-in-out both;
+}
+@keyframes dissolver-abertura {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+body.menu-lobby-revelando .aplicacao-jogo,
+body.menu-lobby-revelando .menu-principal { visibility: visible; pointer-events: none; }
+@media (min-width: 701px) and (max-aspect-ratio: 16/9) {
+    /* MantÃƒÂ©m portal e relÃƒÂ³gio dentro da tela em monitores menos largos. */
+    .menu-inicial-cenario { background-size: 100% 100%; }
+}
+@media (max-width: 700px) {
+    .menu-inicial-cenario {
+        /* Mostra a paisagem inteira sob os controles no formato vertical. */
+        background-color: #326b35;
+        background-size: 100% auto;
+        background-position: center bottom;
+    }
+    .menu-inicial-cenario::before {
+        background:
+            url("../assets/arvore-abertura.svg") -16px -8px / 79px 112px no-repeat,
+            url("../assets/arvore-abertura.svg") calc(100% + 8px) 14px / 67px 95px no-repeat;
+    }
+    .menu-inicial-cenario::after { background:
+        url("../assets/arvore-abertura.svg") 0 93% / 110px 156px no-repeat,
+        url("../assets/arvore-abertura.svg") 48% 93% / 105px 149px no-repeat,
+        url("../assets/arvore-abertura.svg") 100% 93% / 110px 156px no-repeat; }
+    .menu-inicial-conteudo { min-height: 0; margin-top: 10px; }
+    .menu-inicial-descricao { margin: 12px 0 16px; }
+}
+@media (max-height: 560px) and (min-width: 701px) {
+    .menu-inicial-selo { display: none; }
+    .menu-inicial-conteudo { margin-top: 0; }
+    .menu-inicial-descricao { margin: 10px 0; }
+}

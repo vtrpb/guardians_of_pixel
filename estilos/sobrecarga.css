@@ -1,0 +1,27 @@
+.icone-nucleo { display:inline-block; width:40px; height:40px; flex-shrink:0; background:url('../assets/nucleo-sobrecarga.svg') center/contain no-repeat; image-rendering:pixelated; }
+.icone-mochila { display:inline-block; width:40px; height:40px; flex-shrink:0; background:url('../assets/mochila.svg') center/contain no-repeat; image-rendering:pixelated; }
+.nucleo-dano { filter:hue-rotate(170deg); }
+.nucleo-alcance { filter:hue-rotate(70deg); }
+#mochila-nucleos { position:fixed; z-index:24; right:18px; bottom:110px; width:min(490px,calc(100vw - 24px)); max-height:calc(100dvh - 140px); overflow-y:auto; padding:16px; background:#142d32; border:4px solid #6cd6bd; box-shadow:6px 6px #071619; color:#e8fff7; font-family:monospace; text-align:left; }
+#mochila-nucleos[hidden] { display:none; }
+#mochila-nucleos header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+#mochila-nucleos h2 { font-size:16px; margin:0; }
+#mochila-nucleos > p { line-height:1.5; }
+.mochila-item { display:flex; gap:12px; padding:12px 0; border-top:2px solid #42676a; }
+.mochila-item > div { flex:1; min-width:0; }
+.mochila-item h3 { margin:0; font-size:15px; }
+.mochila-item p { margin:6px 0; line-height:1.4; }
+.mochila-item small { display:block; margin:8px 0; }
+.mochila-item button { width:100%; }
+@media(max-width:700px) { #mochila-nucleos { right:12px; bottom:12px; max-height:calc(100dvh - 24px); } }
+#botao-sobrecarga { display:flex; align-items:center; gap:8px; border-color:#6ddbc8; }
+#botao-sobrecarga[hidden] { display:none; }
+#botao-sobrecarga small { display:block; margin-top:4px; }
+#botao-sobrecarga.sobrecarga-ativa { background:#194e4b; color:#cefff2; box-shadow:inset 0 0 0 2px #69ecd0; opacity:1; }
+.loja-nucleo { display:flex; align-items:center; gap:18px; margin:20px 0; padding:20px; background:#163c40; border:3px solid #69caba; color:#e4fff6; }
+.loja-nucleo .icone-nucleo { width:64px; height:64px; }
+.loja-nucleo div { flex:1; }
+.loja-nucleo h3 { margin:6px 0; }
+.loja-nucleo p { margin:8px 0; line-height:1.5; }
+.loja-nucleo .botao { flex-shrink:0; }
+@media(max-width:700px) { .loja-nucleo { flex-wrap:wrap; padding:12px; gap:12px; } .loja-nucleo div { flex-basis:65%; } .loja-nucleo .botao { width:100%; } #botao-sobrecarga { min-width:0; } }

@@ -10,7 +10,8 @@ const especificacao = fs.readFileSync(
     "utf8"
 );
 
-function extrairFuncao(nome) {
+function extrairFuncao(nome, codigoFonte = codigo) {
+    const codigo = codigoFonte;
     const inicio = codigo.indexOf(`function ${nome}(`);
     assert.notStrictEqual(inicio, -1, `Função ${nome} não encontrada.`);
     const inicioDoCorpo = codigo.indexOf("{", inicio);
@@ -26,7 +27,6 @@ function extrairFuncao(nome) {
 }
 
 assert.match(codigo, /function configuracaoPossuiMelhorias\(configuracao\)/);
-assert.match(codigo, /return configuracao\.melhorias\.length > 0;/);
 assert.match(
     codigo,
     /const nomeDoNivelBase = configuracaoEhExplosivoConsumivel\(configuracao\)\s*\|\| !configuracaoPossuiMelhorias\(configuracao\)\s*\? nomeDaTorre/
@@ -37,7 +37,7 @@ assert.ok(codigo.includes('"{nome} selecionado.": "{nome} seleccionado."'));
 assert.ok(codigo.includes('localizar("{nome} · Dano {dano} · Alcance {alcance}", parametros)'));
 assert.match(
     codigo,
-    /configuracaoPossuiMelhorias\(configuracaoSelecionada\)\s*\? localizar\("Nível \{nivel\}\/3"[\s\S]*?: obterNomeLocalizado\(configuracaoSelecionada\)/
+    /configuracaoPossuiMelhorias\(configuracaoSelecionada\)\s*\? localizar\("Nível \{nivel\}\/\{limite\}"[\s\S]*?: obterNomeLocalizado\(configuracaoSelecionada\)/
 );
 assert.ok(especificacao.includes("### Mudança: nomes de defesas sem melhorias"));
 
@@ -50,6 +50,8 @@ const contexto = {
     obterResistenciaDaTorre: torre => torre.resistenciaATiros
 };
 vm.createContext(contexto);
+vm.runInContext(extrairFuncao("configuracaoUsaMelhoriasEscolhidas",
+    fs.readFileSync(path.join(raiz, "modulos/melhorias.js"), "utf8")), contexto);
 vm.runInContext(
     `${extrairFuncao("configuracaoPossuiMelhorias")}\n${extrairFuncao("obterDescricaoDaTorreSelecionada")}`,
     contexto
@@ -59,14 +61,20 @@ const lancaChamas = {
     nome: "Lança-Chamas",
     melhorias: [],
     percentualBonusCadencia: 0,
-    naoAtira: false
+    naoAtira: false,
+    dano: 10,
+    velocidadeAtaque: 500
 };
 const torreSemMelhorias = { nivel: 0, dano: 10, alcance: 145 };
-assert.strictEqual(contexto.configuracaoPossuiMelhorias(lancaChamas), false);
+assert.strictEqual(contexto.configuracaoPossuiMelhorias(lancaChamas), true);
 assert.strictEqual(
     contexto.obterDescricaoDaTorreSelecionada(torreSemMelhorias, lancaChamas, {}),
-    "Lança-Chamas · Dano 10 · Alcance 145"
+    "Lança-Chamas · Nível 0 · Dano 10 · Alcance 145"
 );
+const suprema = { ...lancaChamas, nome: "Cronarca", suprema: true };
+assert.strictEqual(contexto.configuracaoPossuiMelhorias(suprema), false);
+assert.strictEqual(contexto.obterDescricaoDaTorreSelecionada(torreSemMelhorias, suprema, {}),
+    "Cronarca · Dano 10 · Alcance 145");
 
 const torrePadrao = {
     nome: "Torre padrão",

@@ -13,16 +13,11 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
 const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze({");
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = require("./apoio/codigo-jogo.cjs").carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",
@@ -38,7 +33,7 @@ assert.deepStrictEqual(
     { numero: fase14.numero, tema: fase14.tema, descricao: fase14.descricao },
     { numero: 14, tema: "eraApagada", descricao: "A Era Apagada" }
 );
-assert.strictEqual(CONFIG.fases.some(fase => fase.numero === 15), false);
+assert.strictEqual(CONFIG.fases.some(fase => fase.numero === 15), true);
 assert.strictEqual(CONFIG.torre.limitesPorFase[14], 15);
 assert.deepStrictEqual(Array.from(era.reescritaTemporal.wavesDeAtivacao), [3, 6, 9, 12, 15, 18]);
 assert.strictEqual(era.reescritaTemporal.duracaoDoAvisoMs, 2200);
@@ -81,8 +76,8 @@ assert.deepStrictEqual(
         vidaRestaurada: CONFIG.inimigo.curadorDoVazio.percentualDeVidaRestaurada
     },
     {
-        vida: 5600,
-        incremento: 600,
+        vida: 3920,
+        incremento: 360,
         velocidade: 0.62,
         restaurados: 2,
         janela: 5000,
@@ -170,8 +165,8 @@ vm.runInContext([
 ].join("\n"), contextoDoCurador);
 const curador = {
     tipo: "curadorDoVazio",
-    vida: 2800,
-    vidaMaxima: 5600,
+    vida: 1960,
+    vidaMaxima: 3920,
     restauracaoDoVazioRealizada: false,
     restauracaoDoVazioExpiraEm: 0
 };

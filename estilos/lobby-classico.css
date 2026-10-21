@@ -1,0 +1,86 @@
+/* Decoração esparsa, seguindo a composição dos lobbies da campanha. */
+.menu-principal.lobby-classico-exclusivo.tema-tundraBoreal {--chao-claro:#a4bfc8;--chao-escuro:#94afb9;--copa-clara:#dbece6;--copa-escura:#81aab0;--tronco:#567579;--detalhe:#e6fff0}
+.menu-principal.lobby-classico-exclusivo.tema-pantanoVagalumes {--chao-claro:#33594e;--chao-escuro:#294b45;--copa-clara:#78a26e;--copa-escura:#446d55;--tronco:#766650;--detalhe:#e0efa2}
+.menu-principal.lobby-classico-exclusivo.tema-canionVermelho {--chao-claro:#985440;--chao-escuro:#874937;--copa-clara:#db9969;--copa-escura:#b36b4b;--tronco:#724637;--detalhe:#e4bd8e}
+.menu-principal.lobby-classico-exclusivo.tema-jardimCogumelos {--chao-claro:#444360;--chao-escuro:#38384e;--copa-clara:#d591bc;--copa-escura:#945e92;--tronco:#c6c9d0;--detalhe:#88dbd1}
+.menu-principal.lobby-classico-exclusivo.tema-costaTempestade {--chao-claro:#56717c;--chao-escuro:#486371;--copa-clara:#b4cac8;--copa-escura:#719399;--tronco:#3c5968;--detalhe:#cfdfd7}
+.tema-tundraBoreal.lobby-classico-exclusivo .arvore-lobby::after {clip-path:polygon(44% 0,58% 0,76% 26%,66% 26%,92% 60%,76% 60%,100% 100%,0 100%,26% 60%,10% 60%,36% 26%,24% 26%)}
+.tema-pantanoVagalumes.lobby-classico-exclusivo .arvore-lobby::after {clip-path:polygon(18% 0,82% 0,100% 22%,100% 90%,88% 90%,88% 45%,70% 45%,70% 100%,60% 100%,60% 40%,40% 40%,40% 90%,28% 90%,28% 48%,12% 48%,12% 82%,0 82%,0 22%)}
+.tema-jardimCogumelos.lobby-classico-exclusivo .arvore-lobby::after {inset:0 0 45px;clip-path:polygon(25% 0,75% 0,75% 18%,90% 18%,90% 36%,100% 36%,100% 90%,0 90%,0 36%,10% 36%,10% 18%,25% 18%)}
+.tema-canionVermelho.lobby-classico-exclusivo .arvore-lobby::before,.tema-costaTempestade.lobby-classico-exclusivo .arvore-lobby::before {display:none}
+.tema-canionVermelho.lobby-classico-exclusivo .arvore-lobby::after,.tema-costaTempestade.lobby-classico-exclusivo .arvore-lobby::after {inset:20px 0 0;clip-path:polygon(25% 0,78% 0,78% 23%,100% 23%,100% 100%,0 100%,0 43%,25% 43%)}
+.menu-principal.lobby-classico-exclusivo {
+    --chao-claro: #387744;
+    --chao-escuro: #326e3d;
+    --copa-clara: #e7a1be;
+    --copa-escura: #bc638e;
+    --tronco: #735448;
+    --detalhe: #ffd4e4;
+    background-color: var(--chao-escuro);
+    background-image: conic-gradient(var(--chao-claro) 25%, var(--chao-escuro) 0 50%, var(--chao-claro) 0 75%, var(--chao-escuro) 0);
+    background-size: 96px 96px;
+}
+.lobby-classico-exclusivo .arvore-lobby { background: none; filter: drop-shadow(5px 6px 0 #101d2030); }
+.lobby-classico-exclusivo .arvore-lobby::before {
+    display: block; content: ""; position: absolute;
+    left: 31px; bottom: 0; width: 16px; height: 65px;
+    background: var(--tronco); box-shadow: inset 5px 0 #ffffff18;
+}
+.lobby-classico-exclusivo .arvore-lobby::after {
+    display: block; content: ""; position: absolute; inset: 0 0 28px;
+    background: var(--copa-clara); box-shadow: inset -12px -16px var(--copa-escura);
+    clip-path: polygon(30% 0,70% 0,70% 12%,85% 12%,85% 27%,100% 27%,100% 80%,85% 80%,85% 100%,15% 100%,15% 85%,0 85%,0 30%,15% 30%,15% 12%,30% 12%);
+}
+.lobby-classico-exclusivo .flores-lobby {
+    background: var(--detalhe);
+    box-shadow: 18px 8px var(--copa-clara),36px -4px var(--detalhe),54px 10px var(--copa-escura);
+}
+.lobby-classico-exclusivo .pedra-lobby {
+    background: var(--copa-escura); border-color: var(--tronco); box-shadow: inset 8px 7px var(--copa-clara);
+}
+.lobby-classico-exclusivo .lago-lobby {
+    background: #479fa8; border-color: var(--chao-escuro); box-shadow: inset 0 10px #85c5c6;
+}
+.menu-principal.tema-florestaMorta {
+    --chao-claro: #626e70; --chao-escuro: #5c676a;
+    --copa-clara: #d0d4d2; --copa-escura: #9ca7aa; --tronco: #737e83; --detalhe: #d7ddd6;
+}
+.tema-florestaMorta .lobby-cenario::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(174deg,transparent 20%,#d7e2e01c 26%,transparent 34%,transparent 62%,#d7e2e025 70%,transparent 82%);
+}
+.menu-principal.tema-lagoaCorais {
+    --chao-claro: #267d89; --chao-escuro: #247580;
+    --copa-clara: #f39c94; --copa-escura: #cf706f; --tronco: #c8aa78; --detalhe: #e7d4ac;
+}
+.tema-lagoaCorais .arvore-lobby::before { display: none; }
+.tema-lagoaCorais .arvore-lobby::after {
+    inset: 5px 0 0;
+    clip-path: polygon(10% 15%,24% 15%,24% 42%,40% 42%,40% 5%,55% 5%,55% 60%,75% 60%,75% 25%,90% 25%,90% 74%,55% 74%,55% 100%,38% 100%,38% 60%,10% 60%);
+}
+.tema-lagoaCorais .lago-lobby { background: #c7b689; box-shadow: inset 0 10px #e5d7ad; }
+.menu-principal.tema-valeCristais {
+    --chao-claro: #514467; --chao-escuro: #493d5f;
+    --copa-clara: #b6a3ed; --copa-escura: #8274b7; --tronco: #5f526f; --detalhe: #9adfe4;
+}
+.tema-valeCristais .arvore-lobby::before { display: none; }
+.tema-valeCristais .arvore-lobby::after {
+    inset: 0;
+    background: linear-gradient(90deg,#7a6ba7 0 30%,#c7b4f1 30% 45%,#9682cb 45% 65%,#77bfcf 65%);
+    clip-path: polygon(0 55%,15% 35%,28% 53%,28% 15%,47% 0,67% 18%,67% 58%,84% 35%,100% 55%,87% 100%,15% 100%);
+}
+.tema-valeCristais .lago-lobby { background: #547c9e; box-shadow: inset 0 10px #83b5d2; }
+.menu-principal.tema-dunasDouradas {
+    --chao-claro: #a18b50; --chao-escuro: #978047;
+    --copa-clara: #8db16b; --copa-escura: #537f55; --tronco: #766046; --detalhe: #dcc58b;
+}
+.tema-dunasDouradas .arvore-lobby::after {
+    clip-path: polygon(0 20%,30% 5%,50% 20%,70% 0,100% 18%,100% 38%,68% 27%,57% 38%,90% 55%,85% 75%,55% 53%,50% 85%,38% 85%,38% 48%,10% 66%,0 48%,30% 28%,0 38%);
+}
+.tema-dunasDouradas .pedra-lobby { background: #b6a16b; border-color: #827044; box-shadow: inset 8px 7px #d4c08a; }
+
+.tema-ruinasCelestes .arvore-lobby::after { clip-path: polygon(42% 0,58% 0,58% 20%,77% 20%,77% 42%,100% 42%,82% 100%,18% 100%,0 42%,23% 42%,23% 20%,42% 20%); }
+.tema-jardimBambu .arvore-lobby::after,.tema-temploJade .arvore-lobby::after { inset: 0 18px; clip-path: polygon(34% 0,66% 0,66% 14%,84% 14%,84% 38%,100% 38%,100% 52%,68% 52%,68% 100%,32% 100%,32% 52%,0 52%,0 38%,16% 38%,16% 14%,34% 14%); }
+.tema-desertoSal .arvore-lobby::after,.tema-marVidro .arvore-lobby::after { inset: 8px 0 0; clip-path: polygon(10% 100%,24% 36%,38% 58%,49% 0,62% 61%,78% 27%,92% 100%); }
+.tema-bosqueLunar .arvore-lobby::after { border-radius: 48% 52% 43% 57%; clip-path: none; }
+.tema-platoNuvens .arvore-lobby::after { inset: 16px 0 20px; clip-path: polygon(22% 0,78% 0,78% 20%,100% 20%,100% 74%,82% 74%,82% 100%,18% 100%,18% 74%,0 74%,0 20%,22% 20%); }

@@ -12,7 +12,7 @@ const especificacao = fs.readFileSync(
 );
 
 [
-    'class="botao-lobby-extra botao-lobby-apoiador"',
+    'class="botao-lobby-salvos lobby-atalho botao-lobby-apoiador"',
     'onclick="mostrarPacoteApoiador()"',
     'id="estado-pacote-apoiador-menu"',
     'id="lobby-jogador"',
@@ -22,8 +22,9 @@ const especificacao = fs.readFileSync(
 ].forEach((trecho) => assert.ok(html.includes(trecho), `Interface ausente: ${trecho}`));
 
 assert.ok(
-    html.indexOf("botao-lobby-apoiador") < html.indexOf("botao-lobby-missoes"),
-    "O Pacote Apoiador deve aparecer antes das Missões."
+    html.indexOf("botao-lobby-apoiador") > html.indexOf('class="lobby-atalhos-perfil"')
+        && html.indexOf("botao-lobby-apoiador") < html.indexOf("botao-lobby-treinamento"),
+    "O Pacote Apoiador deve aparecer nos atalhos do perfil, antes do Treinamento."
 );
 
 [

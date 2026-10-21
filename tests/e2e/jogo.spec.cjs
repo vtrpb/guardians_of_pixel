@@ -14,6 +14,12 @@ async function confirmarEquipeAtual(page) {
     await page.locator(".botao-confirmar-selecao-defesas").click();
 }
 
+async function concluirIntroducaoDaFaseSeAberta(page) {
+    while (await page.locator('#camada-cutscene-carta[data-tipo-carta="introducao-fase-1"]').isVisible()) {
+        await page.locator('#botao-continuar-cutscene-carta').click();
+    }
+}
+
 test.beforeEach(async ({ page }) => {
     await page.addInitScript((chaveTutorial) => {
         const chaveDaSessaoDeTeste = "guardians-of-pixel-e2e-inicializado";
@@ -48,7 +54,7 @@ test.beforeEach(async ({ page }) => {
     }, CHAVE_TUTORIAL);
 });
 
-test("mostra a produtora, diferencia primeira entrada e abre o lobby", async ({ page }, testInfo) => {
+test("mostra o núcleo de carregamento, diferencia primeira entrada e abre o lobby", async ({ page }, testInfo) => {
     await page.addInitScript(() => {
         Object.defineProperty(navigator, "webdriver", { get: () => false });
         sessionStorage.setItem("guardians-of-pixel-e2e-exibir-abertura", "true");
@@ -64,28 +70,17 @@ test("mostra a produtora, diferencia primeira entrada e abre o lobby", async ({ 
     const carregamento = page.locator("#tela-carregamento");
     const abertura = page.locator("#tela-inicial-jogo");
     await expect(carregamento).toBeVisible();
-    expect(await page.locator(".carregamento-logo-moldura img").evaluate(imagem => ({
-        completa: imagem.complete,
-        largura: imagem.naturalWidth
-    }))).toEqual({ completa: true, largura: 660 });
+    await expect(page.locator(".carregamento-nucleo")).toBeVisible();
     await carregamento.screenshot({ path: testInfo.outputPath("tela-carregamento.png") });
     await expect(carregamento).toBeHidden({ timeout: 5000 });
     await expect(abertura).toBeVisible();
     await expect(abertura).toHaveCSS("opacity", "1");
-    const relogioDeFundo = page.locator(".menu-inicial-relogio-fundo");
-    await expect(relogioDeFundo).toBeVisible();
-    const visualDoRelogio = await relogioDeFundo.evaluate(elemento => {
-        const estilo = getComputedStyle(elemento);
-        const caixa = elemento.getBoundingClientRect();
-        return {
-            desfocado: estilo.filter.includes("blur"),
-            opacidade: Number(estilo.opacity),
-            largura: Math.round(caixa.width)
-        };
-    });
-    expect(visualDoRelogio.desfocado).toBe(true);
-    expect(visualDoRelogio.opacidade).toBe(0.3);
-    expect(visualDoRelogio.largura).toBeGreaterThan(400);
+    const cenario = page.locator(".menu-inicial-cenario");
+    await expect(cenario).toBeVisible();
+    await expect(cenario).toHaveCSS("pointer-events", "none");
+    expect(await cenario.evaluate(elemento => getComputedStyle(elemento).backgroundImage))
+        .toContain("fundo-menu-8bits.svg");
+    expect((await page.request.get('/assets/fundo-menu-8bits.svg')).ok()).toBe(true);
     await expect(page.locator("#saudacao-menu-inicial")).toHaveText("Bem-vindo!");
     await expect(page.locator("#botao-jogar-menu-inicial")).toBeFocused();
     await expect(page.locator(".aplicacao-jogo")).toHaveAttribute("inert", "");
@@ -119,13 +114,13 @@ test("abre as áreas de consulta como páginas inteiras e preserva configuraçõ
 
     const paginas = [
         { tela: "album", seletor: 'button[onclick="mostrarAlbum()"]' },
-        { tela: "capitulos", seletor: 'button[onclick="mostrarCapitulos()"]' },
+        { tela: "capitulos", seletor: "#botao-capitulos-mapas" },
         { tela: "tutorial", seletor: 'button[onclick="mostrarTutorial()"]' },
         { tela: "loja", seletor: ".botao-lobby-loja" },
         { tela: "pacoteApoiador", seletor: ".botao-lobby-apoiador" },
         { tela: "missoes", seletor: ".botao-lobby-missoes" },
         { tela: "conquistas", seletor: ".botao-lobby-conquistas" },
-        { tela: "salvos", seletor: ".botao-lobby-salvos" }
+        { tela: "salvos", seletor: 'button[onclick="mostrarSalvos()"]' }
     ];
     const conteudo = page.locator("#conteudo-menu");
     const menu = page.locator("#menu-principal");
@@ -199,13 +194,14 @@ test("abre as áreas de consulta como páginas inteiras e preserva configuraçõ
     });
     await page.reload();
 
-    await page.locator("#portal-fase-secreta").click({ force: true });
+    await page.evaluate(() => { Math.random = () => 0.5; });
+    await page.locator("#portal-fase-secreta").click();
     await expect(page.locator("#camada-transicao-glitch")).toBeVisible();
     await expect(page.locator("#camada-conversa-portal")).toBeVisible({ timeout: 5000 });
     await expect(page.locator("#camada-conversa-portal .senhor-tempo-cabeca")).toBeVisible();
     await expect(page.locator("#camada-conversa-portal .senhor-tempo-corpo")).toBeVisible();
-    await expect(page.locator("#camada-conversa-portal .senhor-tempo-forma-humana")).toHaveCount(0);
-    await expect(page.locator("#camada-conversa-portal .senhor-tempo-braco")).toHaveCount(0);
+    await expect(page.locator("#camada-conversa-portal .senhor-tempo-forma-humana")).toHaveCount(1);
+    await expect(page.locator("#camada-conversa-portal .senhor-tempo-braco")).toHaveCount(2);
     await expect(page.locator(".conversa-portal-fala")).toContainText(
         "Era eu quem falava com você através do portal."
     );
@@ -235,7 +231,7 @@ test("escolhe no máximo seis defesas e aplica o novo teto de torres", async ({ 
 
     const conteudo = page.locator("#conteudo-menu");
     await expect(conteudo).toHaveAttribute("data-tela", "selecaoDefesas");
-    await expect(conteudo.locator(".selecao-defesa-cartao")).toHaveCount(25);
+    await expect(conteudo.locator(".selecao-defesa-cartao")).toHaveCount(30);
     await expect(conteudo.locator('.selecao-defesa-cartao[aria-pressed="true"]')).toHaveCount(1);
 
     for (const tipo of [
@@ -263,7 +259,8 @@ test("escolhe no máximo seis defesas e aplica o novo teto de torres", async ({ 
     await conteudo.locator('[data-tipo-defesa="iscaBlindada"]').click();
     await conteudo.locator(".botao-confirmar-selecao-defesas").click();
 
-    await expect(page.locator("#seletor-torres .botao-construcao:visible")).toHaveCount(6);
+    await expect(page.locator("#seletor-torres .botao-construcao:visible")).toHaveCount(7);
+    await expect(page.locator("#botao-canhao-blindado")).toContainText("Empréstimo da fase 1");
     await expect(page.locator("#botao-canhao-pesado")).toBeHidden();
     await expect(page.locator("#botao-isca-blindada")).toBeVisible();
     await expect.poll(() => page.evaluate(() => (
@@ -301,7 +298,11 @@ test("posiciona a Bomba Pesada somente sobre o caminho", async ({ page }) => {
     await page.goto("/");
     await page.locator(".botao-lobby-jogar").click();
     await confirmarEquipeAtual(page);
-    await page.evaluate(() => eval("dinheiro = 500;"));
+    await page.evaluate(() => {
+        while (cutsceneDaCartaAtiva) concluirCutsceneDaCarta();
+        definirJogoPausado(true);
+        dinheiro = 500;
+    });
     await page.locator("#botao-bomba-pesada").click();
 
     const mapa = page.locator("#game");
@@ -330,7 +331,7 @@ test("posiciona a Bomba Pesada somente sobre o caminho", async ({ page }) => {
     expect(posicaoDaBomba.y).toBeCloseTo(525, 5);
 });
 
-test("compra a Mina de Pulso, empurra inimigos e revalida Mestre do Arsenal", async ({ page }) => {
+test("compra a Mina de Pulso, empurra inimigos e preserva Mestre do Arsenal", async ({ page }) => {
     await page.addInitScript(({ chaveCompras, chaveFragmentos }) => {
         localStorage.setItem(chaveCompras, JSON.stringify([
             "iscaBlindada", "amplificadorPixel", "geradorDeCreditos",
@@ -356,8 +357,8 @@ test("compra a Mina de Pulso, empurra inimigos e revalida Mestre do Arsenal", as
 
     await page.locator(".botao-lobby-conquistas").click();
     let conquista = page.locator(".conquista-cartao").filter({ hasText: "Mestre do Arsenal" });
-    await expect(conquista).toHaveClass(/conquista-bloqueada/);
-    await expect(conquista).toContainText("22 / 23");
+    await expect(conquista).toHaveClass(/conquista-desbloqueada/);
+    await expect(conquista).toContainText("22 / 26");
     await page.locator("#conteudo-menu .botao-fechar").click();
 
     await page.locator(".botao-lobby-loja").click();
@@ -375,7 +376,7 @@ test("compra a Mina de Pulso, empurra inimigos e revalida Mestre do Arsenal", as
     await page.locator(".botao-lobby-conquistas").click();
     conquista = page.locator(".conquista-cartao").filter({ hasText: "Mestre do Arsenal" });
     await expect(conquista).toHaveClass(/conquista-desbloqueada/);
-    await expect(conquista).toContainText("23 / 23");
+    await expect(conquista).toContainText("23 / 26");
     await page.locator("#conteudo-menu .botao-fechar").click();
 
     await page.locator(".botao-lobby-jogar").click();
@@ -390,6 +391,9 @@ test("compra a Mina de Pulso, empurra inimigos e revalida Mestre do Arsenal", as
     await expect(cartaoDaMinaNaEquipe).toHaveAttribute("aria-pressed", "true");
     await confirmarEquipeAtual(page);
     await page.evaluate(() => eval("dinheiro = 500"));
+    while (await page.locator('#camada-cutscene-carta').isVisible()) {
+        await page.locator('#botao-continuar-cutscene-carta').click();
+    }
     await page.locator("#botao-mina-pulso").click();
 
     const mapa = page.locator("#game");
@@ -448,6 +452,12 @@ test("mantém a Torre padrão na equipe da primeira partida guiada", async ({ pa
         .toContainText("A Torre padrão precisa ficar na equipe");
     await page.locator(".botao-confirmar-selecao-defesas").click();
 
+    const introducao = page.locator('#camada-cutscene-carta[data-tipo-carta="introducao-fase-1"]');
+    await expect(introducao).toBeVisible();
+    for (let fala = 0; fala < 3; fala++) {
+        await page.locator("#botao-continuar-cutscene-carta").click();
+    }
+    await expect(introducao).toBeHidden();
     await expect(page.locator("#camada-tutorial-partida")).toBeVisible();
     await expect(page.locator("#botao-torre-padrao")).toBeVisible();
     await expect(page.locator("#botao-torre-padrao")).toBeEnabled();
@@ -459,7 +469,8 @@ test("revela o Senhor do Tempo e prende o jogador até vencer a Dimensão Glitch
         Math.random = () => 0.5;
     });
     await page.goto("/");
-    await page.locator("#portal-fase-secreta").click({ force: true });
+    await expect(page.locator('#tela-inicial-jogo')).toBeHidden();
+    await page.locator("#portal-fase-secreta").click();
     const conversa = page.locator("#camada-conversa-portal");
     const fala = conversa.locator(".conversa-portal-fala");
     const avancar = conversa.locator(".botao-avancar-senhor-tempo");
@@ -569,7 +580,7 @@ test("revela o Senhor do Tempo e prende o jogador até vencer a Dimensão Glitch
         "o caminho para o Capítulo 2 está aberto"
     );
     await page.locator("#botao-voltar-lobby-resultado").click();
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
     await expect(page.locator('[data-numero-capitulo="2"] .botao-capitulo-acao')).toBeEnabled();
 });
@@ -580,7 +591,8 @@ test("desvia 10% das entradas do portal para os Corredores Amarelos e retorna à
         Math.random = () => 0.05;
     });
     await page.goto("/");
-    await page.locator("#portal-fase-secreta").click({ force: true });
+    await expect(page.locator('#tela-inicial-jogo')).toBeHidden();
+    await page.locator("#portal-fase-secreta").click();
 
     const corredores = page.locator("#camada-corredores-amarelos");
     const labirinto = page.locator("#labirinto-amarelo");
@@ -667,15 +679,19 @@ test("encontra a carta misteriosa ao concluir a Fase 6 sem descobrir o portal", 
 
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cutscene).toBeHidden();
-    await expect(page.locator("#camada-resultado")).toBeVisible();
-    await expect(page.locator("#descricao-resultado")).toContainText("Fase concluída.");
-    await expect(page.locator("#descricao-resultado")).not.toContainText("A Fase 7 foi desbloqueada");
-    await expect(page.locator("#botao-proxima-fase-resultado")).toBeDisabled();
+    await expect(page.locator("#camada-resultado")).toBeHidden();
+    expect(await page.evaluate(() => ({ faseSelecionada, jogoIniciado, fase7Liberada: faseEstaDesbloqueada(7) })))
+        .toEqual({ faseSelecionada: 1, jogoIniciado: false, fase7Liberada: false });
 
-    await page.locator("#botao-repetir-resultado").click();
-    await page.evaluate(() => finalizarPartidaComVitoria());
+    await page.evaluate(() => {
+        faseSelecionada = 6;
+        iniciarPartida(false);
+        finalizarPartidaComVitoria();
+    });
     await expect(cutscene).toBeHidden();
     await expect(page.locator("#camada-resultado")).toBeVisible();
+    await expect(page.locator("#descricao-resultado")).not.toContainText("A Fase 7 foi desbloqueada");
+    await expect(page.locator("#botao-proxima-fase-resultado")).toBeDisabled();
 });
 
 test("inicia o Álbum sem inimigos e revela somente figurinhas conquistadas", async ({ page }) => {
@@ -692,14 +708,20 @@ test("inicia o Álbum sem inimigos e revela somente figurinhas conquistadas", as
 
     const conteudo = page.locator("#conteudo-menu");
     await expect(conteudo.getByRole("heading", { name: "Álbum de Figurinhas" })).toBeVisible();
-    await expect(conteudo.locator('[data-tipo-torre="padrao"]')).toHaveCount(4);
-    await expect(conteudo.locator('[data-tipo-torre="torreBesta"]')).toHaveCount(4);
+    const niveisEsperados = await page.evaluate(() => ({
+        padrao: obterLimiteVisualDaTorre(CONFIG.torre.tipos.padrao) + 1,
+        besta: obterLimiteVisualDaTorre(CONFIG.torre.tipos.torreBesta) + 1,
+        inimigos: obterDadosDasCategoriasDoAlbum().inimigos.total
+    }));
+    await expect(conteudo.locator('[data-tipo-torre="padrao"]')).toHaveCount(niveisEsperados.padrao);
+    await expect(conteudo.locator('[data-tipo-torre="torreBesta"]')).toHaveCount(niveisEsperados.besta);
     await expect(conteudo.locator('[data-tipo-torre="torreEsporos"]')).toHaveCount(0);
 
     await conteudo.locator("#aba-album-inimigos").click();
-    await expect(conteudo.locator(".album-vazio")).toBeVisible();
+    await expect(conteudo.locator(".album-grupo-inimigos")).toHaveCount(3);
+    await expect(conteudo.locator(".album-grupo-vazio")).toHaveCount(3);
     await expect(conteudo.locator(".album-cartao-inimigo")).toHaveCount(0);
-    await expect(conteudo.getByText("0 de 43 figurinhas coladas")).toBeVisible();
+    await expect(conteudo.getByText(`0 de ${niveisEsperados.inimigos} figurinhas coladas`)).toBeVisible();
 
     const contaPreservada = await page.evaluate(() => ({
         progresso: localStorage.getItem("tower-defense-2-progresso-fases-v2"),
@@ -721,7 +743,8 @@ test("inicia o Álbum sem inimigos e revela somente figurinhas conquistadas", as
     await conteudo.locator("#aba-album-inimigos").click();
     await expect(conteudo.locator('[data-tipo-inimigo="normal"]')).toHaveCount(1);
     await expect(conteudo.locator('[data-tipo-inimigo="elite"]')).toHaveCount(0);
-    await expect(conteudo.locator(".album-vazio")).toHaveCount(0);
+    await expect(conteudo.locator(".album-grupo-inimigos").first().locator(".album-grupo-vazio")).toHaveCount(0);
+    await expect(conteudo.locator(".album-grupo-inimigos").last().locator(".album-grupo-vazio")).toHaveCount(1);
 
     const descobertaRepetida = await page.evaluate(() =>
         window.registrarInimigoDerrotadoNoAlbum("normal")
@@ -754,13 +777,14 @@ test("mantém a forma humana futura guardada e fora do Álbum", async ({ page })
     await expect(page.locator(".album-cartao-conceito")).toHaveCount(0);
     await expect(page.locator('[data-tipo-inimigo="senhorDoTempoHumano"]')).toHaveCount(0);
     await expect(page.locator(".album-cartao-inimigo")).toHaveCount(0);
-    await expect(page.locator(".album-vazio")).toBeVisible();
-    await expect(page.getByText("0 de 46 figurinhas coladas")).toBeVisible();
+    await expect(page.locator(".album-grupo-vazio")).toHaveCount(2);
+    const totalDeInimigos = await page.evaluate(() => obterDadosDasCategoriasDoAlbum().inimigos.total);
+    await expect(page.getByText(`0 de ${totalDeInimigos} figurinhas coladas`)).toBeVisible();
 });
 
 test("desbloqueia, seleciona e inicia a Fase 7 no Pântano Tóxico", async ({ page }) => {
     await page.goto("/");
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
     await expect(page.locator('[data-numero-capitulo="2"] .botao-capitulo-acao')).toBeDisabled();
     await page.locator("#conteudo-menu .botao-fechar").click();
@@ -769,7 +793,7 @@ test("desbloqueia, seleciona e inicia a Fase 7 no Pântano Tóxico", async ({ pa
         localStorage.setItem("tower-defense-2-progresso-fases-v2", "6");
     });
     await page.reload();
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
 
     const capitulo1 = page.locator('[data-numero-capitulo="1"]');
@@ -784,7 +808,7 @@ test("desbloqueia, seleciona e inicia a Fase 7 no Pântano Tóxico", async ({ pa
         localStorage.setItem("guardians-of-pixel-capitulo-2-desbloqueado-v1", "true");
     });
     await page.reload();
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
     await expect(capitulo2).toContainText("0 de 6 fases concluídas");
     await expect(capitulo2.locator(".botao-capitulo-acao")).toBeEnabled();
@@ -864,8 +888,8 @@ test("recebe a Máquina do Tempo e encontra a Fase 8 jogável no Passado", async
     }))).toEqual({ carta: "true", maquina: "true", progresso: "7" });
 
     await page.locator("#botao-continuar-cutscene-carta").click();
-    await expect(page.locator("#camada-resultado")).toBeVisible();
-    await page.locator("#botao-voltar-lobby-resultado").click();
+    await expect(carta).toBeHidden();
+    await page.locator('#botao-capitulos-mapas').click();
     await expect(page.locator("#conteudo-menu")).toHaveAttribute("data-tela", "capitulos");
 
     const capitulo2 = page.locator('[data-numero-capitulo="2"]');
@@ -912,7 +936,7 @@ test("recebe a Máquina do Tempo e encontra a Fase 8 jogável no Passado", async
     await expect(page.locator(".botao-epoca-temporal")).toHaveCount(3);
 
     await page.reload();
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
     await page.locator('[data-numero-capitulo="2"] .botao-maquina-tempo-capitulo').click();
     await expect(page.locator('[data-epoca-temporal="passado"]'))
@@ -929,7 +953,7 @@ test("inicia a Selva Primordial e o Tirano chama sua matilha", async ({ page }) 
         localStorage.setItem("guardians-of-pixel-epoca-temporal-v1", "passado");
     });
     await page.goto("/");
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
     await page.locator('[data-numero-capitulo="2"] .botao-maquina-tempo-capitulo').click();
     await page.locator(".fase-tema-primordial .botao-fase-acao").click();
@@ -959,7 +983,7 @@ test("inicia a Selva Primordial e o Tirano chama sua matilha", async ({ page }) 
         limite: 15,
         wave: 1,
         trilhaPrimordial: true,
-        intervaloMusica: 230,
+        intervaloMusica: 285,
         comprimentos: [3200, 3180, 2320],
         rotasPorWave: [0, 0, 1, 1, 0, 1, 0, 1]
     });
@@ -975,7 +999,7 @@ test("inicia a Selva Primordial e o Tirano chama sua matilha", async ({ page }) 
             tipoDoBoss: obterTipoDeBossDaFase()
         };
     })()`))).toEqual({
-        raptors: 5,
+        raptors: 8,
         besouros: 4,
         triceratopos: 3,
         bosses: 1,
@@ -987,7 +1011,7 @@ test("inicia a Selva Primordial e o Tirano chama sua matilha", async ({ page }) 
         wave = 5;
         criarInimigo("bossPrimordial");
         const tirano = inimigos[0];
-        aplicarDanoAoInimigo(tirano, 3500, Date.now());
+        aplicarDanoAoInimigo(tirano, 2400, Date.now());
         return {
             vida: tirano.vida,
             chamados: tirano.chamadosPrimordiaisRealizados,
@@ -998,7 +1022,7 @@ test("inicia a Selva Primordial e o Tirano chama sua matilha", async ({ page }) 
             )).length
         };
     })()`))).toEqual({
-        vida: 1300,
+        vida: 960,
         chamados: 2,
         caminhoDoTirano: 2,
         raptorsInvocados: 4,
@@ -1014,7 +1038,7 @@ test("joga a Metrópole Neon, enfrenta o Protocolo Zero e abre a transmissão", 
         localStorage.setItem("guardians-of-pixel-epoca-temporal-v1", "futuro");
     });
     await page.goto("/");
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
     await page.locator('[data-numero-capitulo="2"] .botao-maquina-tempo-capitulo').click();
     const passagem = page.locator(".fase-tema-futurista");
@@ -1049,7 +1073,7 @@ test("joga a Metrópole Neon, enfrenta o Protocolo Zero e abre a transmissão", 
         limite: 15,
         wave: 1,
         trilhaAtiva: true,
-        intervaloMusica: 210,
+        intervaloMusica: 150,
         comprimento: 3010,
         velocidadeNoTrilho: 4.35
     });
@@ -1073,7 +1097,7 @@ test("joga a Metrópole Neon, enfrenta o Protocolo Zero e abre a transmissão", 
         aplicarDanoAoInimigo(protocolo, 4000, Date.now());
         return {
             ...composicao,
-            vidaDoBoss: protocolo.vida,
+            vidaDoBoss: Math.round(protocolo.vida),
             reversoes: protocolo.reversoesTemporaisRealizadas,
             progressoDoBoss: Math.round(calcularProgressoDoInimigo(protocolo))
         };
@@ -1083,7 +1107,7 @@ test("joga a Metrópole Neon, enfrenta o Protocolo Zero e abre a transmissão", 
         sentinelas: 3,
         bosses: 1,
         tipoDoBoss: "protocoloZero",
-        vidaDoBoss: 2264,
+        vidaDoBoss: 385,
         reversoes: 2,
         progressoDoBoss: 520
     });
@@ -1107,7 +1131,9 @@ test("joga a Metrópole Neon, enfrenta o Protocolo Zero e abre a transmissão", 
     );
     await expect(page.locator("#texto-cutscene-carta")).toContainText("Projeto Relógio");
     await expect(page.locator("#camada-cutscene-carta")).toHaveAttribute("data-tipo-carta", "transmissao");
-    await expect(page.locator(".radio-transmissao")).toBeVisible();
+    await expect(page.locator("#camada-cutscene-carta")).toHaveClass(/conversa-pixelada/);
+    await expect(page.locator("#camada-cutscene-carta .carta-misteriosa")).toBeVisible();
+    await expect(page.locator(".radio-transmissao")).toBeHidden();
     await expect(page.locator("#assinatura-cutscene-carta")).toHaveText("FREQUÊNCIA: PROJETO RELÓGIO");
     await expect(page.locator("#botao-continuar-cutscene-carta")).toHaveText("Desligar rádio");
     await page.locator("#botao-continuar-cutscene-carta").click();
@@ -1125,7 +1151,7 @@ test("joga o Laboratório Abandonado e conclui sua história", async ({ page }) 
         localStorage.setItem("guardians-of-pixel-epoca-temporal-v1", "passado");
     });
     await page.goto("/");
-    await page.locator('button[onclick="mostrarCapitulos()"]')
+    await page.locator('#botao-capitulos-mapas')
         .click();
     await page.locator('[data-numero-capitulo="2"] .botao-maquina-tempo-capitulo').click();
     const passagem = page.locator(".fase-tema-laboratorio");
@@ -1160,7 +1186,7 @@ test("joga o Laboratório Abandonado e conclui sua história", async ({ page }) 
         wave: 1,
         camaras: 2,
         trilhaAtiva: true,
-        intervaloMusica: 250,
+        intervaloMusica: 260,
         comprimento: 3150
     });
 
@@ -1245,11 +1271,11 @@ test("joga o Laboratório Abandonado e conclui sua história", async ({ page }) 
         };
     })()`))).toEqual({
         automatos: 5,
-        cobaias: 4,
+        cobaias: 7,
         guardas: 3,
         bosses: 1,
         tipoDoBoss: "prototipoAlfa",
-        vidaDoBoss: 1900,
+        vidaDoBoss: 130,
         pulsos: 2,
         torresParalisadas: 3,
         suporteParalisado: false
@@ -1271,7 +1297,7 @@ test("joga o Laboratório Abandonado e conclui sua história", async ({ page }) 
     await expect(page.locator("#titulo-cutscene-carta")).toHaveText("REGISTRO DE ATIVAÇÃO 00");
     await expect(page.locator("#texto-cutscene-carta")).toContainText("O corpo permaneceu vazio");
     await expect(page.locator("#texto-cutscene-carta")).toContainText("pesquisador-chefe desapareceu");
-    await expect(page.locator(".terminal-registro")).toBeVisible();
+    await expect(page.locator(".terminal-registro")).toBeHidden();
     await expect(page.locator("#assinatura-cutscene-carta")).toHaveText("ARQUIVO: ORIGEM / ACESSO PARCIAL");
     await expect(page.locator("#botao-continuar-cutscene-carta")).toHaveText("Fechar registro");
     expect(await page.evaluate(() => eval("jogoPausado"))).toBe(true);
@@ -1321,7 +1347,7 @@ test("joga o Laboratório Abandonado e conclui sua história", async ({ page }) 
     await expect(page.locator("#titulo-cutscene-carta")).toHaveText(
         "COORDENADA NÃO SOLICITADA"
     );
-    await expect(page.locator(".maquina-tempo-cena-final")).toBeVisible();
+    await expect(page.locator(".maquina-tempo-cena-final")).toBeHidden();
     await expect(page.locator(".terminal-registro")).toBeHidden();
     await expect(page.locator("#texto-cutscene-carta")).toContainText(
         "futuro que não deveria existir"
@@ -1359,7 +1385,7 @@ test("atravessa as Fendas Temporais e descobre o Futuro Despedaçado", async ({ 
         localStorage.removeItem("guardians-of-pixel-cena-final-futuro-despedacado-v1");
     });
     await page.goto("/");
-    await page.locator('button[onclick="mostrarCapitulos()"]').click();
+    await page.locator('#botao-capitulos-mapas').click();
     await page.locator('[data-numero-capitulo="2"] .botao-maquina-tempo-capitulo').click();
     const passagem = page.locator(".fase-tema-futuroDespedacado");
     await expect(passagem).toBeVisible();
@@ -1393,7 +1419,7 @@ test("atravessa as Fendas Temporais e descobre o Futuro Despedaçado", async ({ 
         wave: 1,
         fendas: 2,
         trilhaAtiva: true,
-        intervaloMusica: 235,
+        intervaloMusica: 315,
         comprimento: 3160
     });
 
@@ -1448,7 +1474,7 @@ test("atravessa as Fendas Temporais e descobre o Futuro Despedaçado", async ({ 
         sentinelas: 3,
         bosses: 1,
         tipoDoBoss: "sentinelaDoAmanha",
-        vidaDoBoss: 2200,
+        vidaDoBoss: 250,
         recuosDoBoss: 2,
         progressoDoBoss: 360,
         vidaDoEco: 380,
@@ -1481,7 +1507,9 @@ test("atravessa as Fendas Temporais e descobre o Futuro Despedaçado", async ({ 
     await expect(page.locator("#texto-cutscene-carta")).toContainText(
         "Não confie em quem lhe deu a máquina"
     );
-    await expect(page.locator(".transmissao-futuro-visual")).toBeVisible();
+    await expect(cena).toHaveClass(/conversa-pixelada/);
+    await expect(cena.locator('.carta-misteriosa')).toBeVisible();
+    await expect(page.locator(".transmissao-futuro-visual")).toBeHidden();
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toBeHidden();
 
@@ -1503,7 +1531,8 @@ test("atravessa as Fendas Temporais e descobre o Futuro Despedaçado", async ({ 
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toHaveAttribute("data-etapa-cena", "silhueta");
     await expect(page.locator("#texto-cutscene-carta")).toContainText("silhueta humana alta");
-    await expect(page.locator(".transmissao-futuro-relogio")).toBeVisible();
+    await expect(cena).toHaveClass(/conversa-pixelada/);
+    await expect(page.locator(".transmissao-futuro-relogio")).toBeHidden();
 
     await page.setViewportSize({ width: 390, height: 844 });
     await expect(page.locator("#titulo-cutscene-carta")).toBeInViewport();
@@ -1513,7 +1542,8 @@ test("atravessa as Fendas Temporais e descobre o Futuro Despedaçado", async ({ 
 
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toHaveAttribute("data-etapa-cena", "coordenada");
-    await expect(page.locator(".maquina-tempo-cena-final")).toBeVisible();
+    await expect(cena.locator('.carta-misteriosa')).toBeVisible();
+    await expect(page.locator(".maquina-tempo-cena-final")).toBeHidden();
     await expect(page.locator("#texto-cutscene-carta")).toContainText("03:17");
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toBeHidden();
@@ -1534,7 +1564,7 @@ test("encerra o Capítulo 2 no Ponto Zero", async ({ page }, testInfo) => {
         localStorage.removeItem("guardians-of-pixel-cena-final-ponto-zero-v1");
     });
     await page.goto("/");
-    await page.locator('button[onclick="mostrarCapitulos()"]').click();
+    await page.locator('#botao-capitulos-mapas').click();
     await page.locator('[data-numero-capitulo="2"] .botao-maquina-tempo-capitulo').click();
     const passagem = page.locator(".fase-tema-pontoZero");
     await expect(passagem).toBeVisible();
@@ -1610,7 +1640,8 @@ test("encerra o Capítulo 2 no Ponto Zero", async ({ page }, testInfo) => {
 
         criarInimigo("guardiaoDoPontoZero");
         const guardiao = inimigos.find(inimigo => inimigo.tipo === "guardiaoDoPontoZero");
-        aplicarDanoAoInimigo(guardiao, 2500, 2000);
+        aplicarDanoAoInimigo(guardiao, 800, 2000);
+        aplicarDanoAoInimigo(guardiao, 1200, 2000);
 
         return {
             ...composicao,
@@ -1666,7 +1697,9 @@ test("encerra o Capítulo 2 no Ponto Zero", async ({ page }, testInfo) => {
     await expect(cena).toBeVisible();
     await expect(cena).toHaveAttribute("data-tipo-carta", "registro-ponto-zero");
     await expect(page.locator("#titulo-cutscene-carta")).toHaveText("REGISTRO I — O CORPO");
-    await expect(page.locator(".terminal-registro")).toBeVisible();
+    await expect(cena).toHaveClass(/conversa-pixelada/);
+    await expect(cena.locator(".carta-misteriosa")).toBeVisible();
+    await expect(page.locator(".terminal-registro")).toBeHidden();
     await expect(page.locator("#texto-cutscene-carta")).toContainText("fora do fluxo normal do tempo");
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toBeHidden();
@@ -1683,7 +1716,8 @@ test("encerra o Capítulo 2 no Ponto Zero", async ({ page }, testInfo) => {
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toHaveAttribute("data-etapa-cena", "aparicao");
     await expect(page.locator("#titulo-cutscene-carta")).toHaveText("SENHOR DO TEMPO");
-    await expect(page.locator(".senhor-tempo-revelado")).toBeVisible();
+    await expect(cena.locator(".carta-misteriosa")).toBeVisible();
+    await expect(page.locator(".senhor-tempo-revelado")).toBeHidden();
     await expect(page.locator("#texto-cutscene-carta")).toContainText("finalmente descobriu");
     await expect(page.locator(".carta-misteriosa")).toHaveCSS("opacity", "1");
     await page.screenshot({ path: testInfo.outputPath("fase-12-senhor-do-tempo.png") });
@@ -1696,7 +1730,8 @@ test("encerra o Capítulo 2 no Ponto Zero", async ({ page }, testInfo) => {
 
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toHaveAttribute("data-etapa-cena", "maquina");
-    await expect(page.locator(".maquina-tempo-cena-final")).toBeVisible();
+    await expect(cena.locator(".carta-misteriosa")).toBeVisible();
+    await expect(page.locator(".maquina-tempo-cena-final")).toBeHidden();
     await expect(page.locator("#texto-cutscene-carta")).toContainText("coordenadas que eu preparei");
 
     await page.locator("#botao-continuar-cutscene-carta").click();
@@ -2000,7 +2035,7 @@ test("atravessa o Intervalo Perdido e inicia a Fase 13", async ({ page }, testIn
         inimigos = [];
         criarInimigo("executorCronal");
         const executor = inimigos[0];
-        aplicarDanoAoInimigo(executor, 4500, Date.now());
+        aplicarDanoAoInimigo(executor, 3100, Date.now());
         criarInimigo("soldadoCronal");
         const soldado = inimigos[inimigos.length - 1];
         soldado.x = 665;
@@ -2125,7 +2160,7 @@ test("preserva progresso legítimo sem marca de migração e o restante do perfi
         fragmentos: "777"
     });
 
-    await page.locator('button[onclick="mostrarCapitulos()"]') .click();
+    await page.locator('#botao-capitulos-mapas').click();
     await page.locator('[data-numero-capitulo="3"] .botao-capitulo-acao').click();
     const fase13 = page.locator(".fase-tema-linhaTemporal");
     const fase14 = page.locator(".fase-tema-eraApagada");
@@ -2147,7 +2182,7 @@ test("entra na Era Apagada, enfrenta a Reescrita e conclui a Fase 14", async ({ 
     });
     await page.goto("/");
 
-    await page.locator('button[onclick="mostrarCapitulos()"]') .click();
+    await page.locator("#botao-capitulos-mapas").click();
     const capitulo3 = page.locator('[data-numero-capitulo="3"]');
     await expect(capitulo3.locator(".botao-capitulo-acao")).toBeEnabled();
     await capitulo3.locator(".botao-capitulo-acao").click();
@@ -2191,7 +2226,8 @@ test("entra na Era Apagada, enfrenta a Reescrita e conclui a Fase 14", async ({ 
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toHaveAttribute("data-etapa-cena", "inimigosCamuflados");
     await expect(page.locator("#texto-cutscene-carta")).toContainText("nenhuma das suas torres enxerga");
-    await expect(cena.locator(".senhor-tempo-revelado")).toBeVisible();
+    await expect(cena.locator('.retrato-dialogo[data-personagem="tempo"]')).toBeVisible();
+    await expect(cena.locator(".senhor-tempo-revelado")).toBeHidden();
     await expect(cena.locator(".carta-misteriosa")).toHaveCSS("opacity", "1");
     await cena.screenshot({ path: testInfo.outputPath("fase-14-senhor-do-tempo.png") });
     await page.locator("#botao-continuar-cutscene-carta").click();
@@ -2224,17 +2260,29 @@ test("entra na Era Apagada, enfrenta a Reescrita e conclui a Fase 14", async ({ 
     const caixa = await canvas.boundingBox();
     expect(caixa).not.toBeNull();
     await page.locator("#botao-torre-varredura").click();
+    const encontrarPosicaoLivre = () => page.evaluate(() => {
+        for (let y = 100; y <= 600; y += 50) {
+            for (let x = 100; x <= 1100; x += 50) {
+                if (!posicaoEhInvalidaParaCursorDeConstrucao(x, y)) return { x, y };
+            }
+        }
+        return null;
+    });
+    const posicaoDaVarredura = await encontrarPosicaoLivre();
+    expect(posicaoDaVarredura).not.toBeNull();
     await page.mouse.click(
-        caixa.x + caixa.width * 70 / 1200,
-        caixa.y + caixa.height * 70 / 700
+        caixa.x + caixa.width * posicaoDaVarredura.x / 1200,
+        caixa.y + caixa.height * posicaoDaVarredura.y / 700
     );
     expect(await page.evaluate(() => eval(
         "torres.some(torre => torre.tipo === 'torreDeVarredura')"
     ))).toBe(true);
     await page.evaluate(() => eval("dinheiro = 500"));
+    const posicaoDoCursorValida = await encontrarPosicaoLivre();
+    expect(posicaoDoCursorValida).not.toBeNull();
     await page.mouse.move(
-        caixa.x + caixa.width * 500 / 1200,
-        caixa.y + caixa.height * 70 / 700
+        caixa.x + caixa.width * posicaoDoCursorValida.x / 1200,
+        caixa.y + caixa.height * posicaoDoCursorValida.y / 700
     );
     await expect(canvas).toHaveClass(/construcao-sob-cursor/);
     expect(await canvas.evaluate(elemento => getComputedStyle(elemento).cursor))
@@ -2349,12 +2397,13 @@ test("entra na Era Apagada, enfrenta a Reescrita e conclui a Fase 14", async ({ 
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(cena).toHaveAttribute("data-etapa-cena", "interrupcao");
     await expect(page.locator("#texto-cutscene-carta")).toContainText("É uma isca");
-    await expect(cena.locator(".senhor-tempo-revelado")).toBeVisible();
+    await expect(cena.locator(".senhor-tempo-revelado")).toBeHidden();
+    await expect(cena.locator(".carta-misteriosa")).toHaveAttribute("data-meio-comunicacao", "audio");
     await expect(cena.locator(".carta-misteriosa")).toHaveCSS("opacity", "1");
     await cena.screenshot({ path: testInfo.outputPath("fase-14-final.png") });
     await page.locator("#botao-continuar-cutscene-carta").click();
     await expect(page.locator("#camada-resultado")).toBeVisible();
-    await expect(page.locator("#botao-proxima-fase-resultado")).toBeDisabled();
+    await expect(page.locator("#botao-proxima-fase-resultado")).toBeEnabled();
     expect(await page.evaluate(() => localStorage.getItem(
         "tower-defense-2-progresso-fases-v2"
     ))).toBe("14");
@@ -2431,17 +2480,33 @@ test("cola a figurinha de um inimigo derrotado durante uma partida real", async 
     await page.goto("/");
     await page.locator(".botao-lobby-jogar").click();
     await confirmarEquipeAtual(page);
+    const introducao = page.locator('#camada-cutscene-carta[data-tipo-carta="introducao-fase-1"]');
+    await expect(introducao).toBeVisible();
+    for (let fala = 0; fala < 3; fala++) {
+        await page.locator("#botao-continuar-cutscene-carta").click();
+    }
+    await expect(introducao).toBeHidden();
 
     const canvas = page.locator("#game");
     const caixa = await canvas.boundingBox();
     expect(caixa).not.toBeNull();
     const posicaoDaTorre = {
-        x: caixa.width * 255 / 1200,
-        y: caixa.height * 375 / 700
+        x: caixa.width * 100 / 1200,
+        y: caixa.height * 440 / 700
     };
+    await page.locator("#botao-torre-padrao").click();
     await canvas.click({ position: posicaoDaTorre });
     await canvas.click({ position: posicaoDaTorre });
     await expect(page.locator("#botao-vender")).toBeEnabled();
+    await page.evaluate(() => {
+        const inimigosAntes = inimigos.length;
+        criarInimigo("normal");
+        const alvo = inimigos.at(-1);
+        alvo.x = 100;
+        alvo.y = 525;
+        alvo.velocidade = 0;
+        if (inimigos.length !== inimigosAntes + 1) throw new Error("Inimigo não foi criado");
+    });
 
     await expect.poll(async () => {
         const valorSalvo = await page.evaluate(() =>
@@ -2461,6 +2526,12 @@ test("confirma o bônus escolhido sem manter um painel sobre o mapa", async ({ p
     await page.goto("/");
     await page.locator(".botao-lobby-jogar").click();
     await confirmarEquipeAtual(page);
+    const introducao = page.locator('#camada-cutscene-carta[data-tipo-carta="introducao-fase-1"]');
+    await expect(introducao).toBeVisible();
+    for (let fala = 0; fala < 3; fala++) {
+        await page.locator("#botao-continuar-cutscene-carta").click();
+    }
+    await expect(introducao).toBeHidden();
 
     await expect(page.locator(".posto-comando-lateral")).toHaveCount(0);
     await expect(page.locator("#lista-bonus-posto")).toHaveCount(0);
@@ -2496,8 +2567,8 @@ test("amplia o mapa sem distorcer nem cobrir os controles", async ({ page }) => 
     expect(caixaMapa).not.toBeNull();
     expect(caixaSeletor).not.toBeNull();
     expect(caixaControles).not.toBeNull();
-    expect(caixaMapa.width).toBeGreaterThanOrEqual(1080);
-    expect(caixaMapa.height).toBeGreaterThanOrEqual(630);
+    expect(caixaMapa.width).toBeGreaterThanOrEqual(1363 * 0.77);
+    expect(caixaMapa.height).toBeGreaterThanOrEqual(756 * 0.8);
     expect(Math.abs(caixaMapa.width / caixaMapa.height - 12 / 7)).toBeLessThan(0.01);
     expect(caixaSeletor.height).toBeGreaterThanOrEqual(600);
     expect(caixaMapa.y + caixaMapa.height).toBeLessThan(caixaControles.y);
@@ -2511,6 +2582,7 @@ test("inicia uma partida, constrói, seleciona uma torre e pausa", async ({ page
     await confirmarEquipeAtual(page);
     await expect(page.locator("#menu-principal")).toHaveClass(/oculto/);
     await expect(page.locator("#seletor-torres")).not.toHaveClass(/oculto/);
+    await concluirIntroducaoDaFaseSeAberta(page);
 
     const canvas = page.locator("#game");
     const caixa = await canvas.boundingBox();
@@ -2599,7 +2671,7 @@ test("exibe e aplica as ofertas semanais da Loja", async ({ page }, testInfo) =>
     });
     await page.reload();
     await page.locator(".botao-lobby-loja").click();
-    await expect(page.locator(".loja-aba")).toHaveCount(4);
+    await expect(page.locator(".loja-aba")).toHaveCount(5);
     await page.locator('button[onclick="selecionarCategoriaDaLoja(\'ofertas\')"]').click();
 
     const ofertasAntesDaCompra = await page.evaluate(() => (
@@ -2705,7 +2777,7 @@ test("preserva o save principal e inicia outro espaço do zero", async ({ page }
     });
     await page.goto("/");
 
-    await page.locator(".botao-lobby-salvos").click();
+    await page.locator('button[onclick="mostrarSalvos()"]').click();
     const paginaDeSalvos = page.locator('#conteudo-menu[data-tela="salvos"]');
     const save1 = paginaDeSalvos.locator('[data-numero-salvo="1"]');
     const save2 = paginaDeSalvos.locator('[data-numero-salvo="2"]');
@@ -2716,8 +2788,8 @@ test("preserva o save principal e inicia outro espaço do zero", async ({ page }
     await expect(save1).toHaveClass(/salvo-cartao-ativo/);
     await expect(save1).toContainText("Nível 14");
     await expect(save1).toContainText("Fase 14 disponível");
-    await expect(save1).toContainText("87 Fragmentos");
-    await expect(save1).toContainText("2 itens da Loja");
+    await expect(save1).toContainText("133 Fragmentos");
+    await expect(save1).toContainText("5 itens da Loja");
     await expect(save1.locator(".salvo-acao")).toBeDisabled();
     await expect(save2).toContainText("VAZIO");
     await expect(save3).toContainText("VAZIO");
@@ -2736,7 +2808,8 @@ test("preserva o save principal e inicia outro espaço do zero", async ({ page }
 
     await save2.locator(".salvo-acao").click();
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await expect(page.locator(".botao-lobby-salvos")).toBeVisible({ timeout: 7000 });
+    await expect(page.locator('button[onclick="mostrarSalvos()"]')).toBeVisible({ timeout: 7000 });
+    await page.waitForFunction(() => typeof obterDadosDoNivel === "function");
     const estadoDoSaveNovo = await page.evaluate(() => ({
         fase: Number(localStorage.getItem("tower-defense-2-progresso-fases-v2") || 0),
         fragmentos: Number(localStorage.getItem("guardians-of-pixel-fragmentos-v2") || 0),
@@ -2752,7 +2825,7 @@ test("preserva o save principal e inicia outro espaço do zero", async ({ page }
     expect(estadoDoSaveNovo.sistema.espacos[0].dados["tower-defense-2-progresso-fases-v2"])
         .toBe("13");
 
-    await page.locator(".botao-lobby-salvos").click();
+    await page.locator('button[onclick="mostrarSalvos()"]').click();
     const paginaDoSaveNovo = page.locator('#conteudo-menu[data-tela="salvos"]');
     await expect(paginaDoSaveNovo.locator('[data-numero-salvo="2"]'))
         .toHaveClass(/salvo-cartao-ativo/);
@@ -2762,12 +2835,13 @@ test("preserva o save principal e inicia outro espaço do zero", async ({ page }
         .toContainText("Fase 1 disponível");
     await paginaDoSaveNovo.locator('[data-numero-salvo="1"] .salvo-acao').click();
 
-    await expect(page.locator(".botao-lobby-salvos")).toBeVisible({ timeout: 7000 });
+    await expect(page.locator('button[onclick="mostrarSalvos()"]')).toBeVisible({ timeout: 7000 });
+    await page.waitForFunction(() => typeof obterDadosDoNivel === "function");
     expect(await page.evaluate(() => ({
         fase: localStorage.getItem("tower-defense-2-progresso-fases-v2"),
         fragmentos: localStorage.getItem("guardians-of-pixel-fragmentos-v2"),
         nivel: eval("obterDadosDoNivel().nivel")
-    }))).toEqual({ fase: "13", fragmentos: "87", nivel: 14 });
+    }))).toEqual({ fase: "13", fragmentos: "133", nivel: 14 });
 });
 
 test("acumula XP e libera recompensas de nível", async ({ page }, testInfo) => {
@@ -2790,7 +2864,7 @@ test("acumula XP e libera recompensas de nível", async ({ page }, testInfo) => 
     const paginaDeNiveis = page.locator('#conteudo-menu[data-tela="niveis"]');
     await expect(paginaDeNiveis).toBeVisible();
     await expect(paginaDeNiveis).toContainText("Nível de experiência");
-    await expect(paginaDeNiveis.locator(".nivel-recompensa")).toHaveCount(3);
+    await expect(paginaDeNiveis.locator(".nivel-recompensa")).toHaveCount(19);
     await expect(paginaDeNiveis).toContainText("Vanguarda Esmeralda");
     await expect(paginaDeNiveis).toContainText("Torre de Raios");
     await expect(paginaDeNiveis).toContainText("Mira Calibrada");
@@ -2825,7 +2899,9 @@ test("acumula XP e libera recompensas de nível", async ({ page }, testInfo) => 
     expect(estadoSalvo.progresso.recompensasConcedidas).toEqual([
         "skinVanguardaEsmeralda",
         "torreRaiosPorNivel",
-        "miraCalibradaPorNivel"
+        "fragmentosNivel3",
+        "miraCalibradaPorNivel",
+        "fragmentosNivel5"
     ]);
     expect(estadoSalvo.compras).toEqual(expect.arrayContaining([
         "torreDeRaios",
@@ -2836,7 +2912,7 @@ test("acumula XP e libera recompensas de nível", async ({ page }, testInfo) => 
         path: testInfo.outputPath("nivel-experiencia-desktop.png")
     });
     await page.setViewportSize({ width: 390, height: 844 });
-    await expect(paginaDeNiveis.locator(".nivel-recompensa")).toHaveCount(3);
+    await expect(paginaDeNiveis.locator(".nivel-recompensa")).toHaveCount(19);
     expect(await paginaDeNiveis.evaluate((elemento) => (
         elemento.scrollWidth <= elemento.clientWidth
     ))).toBe(true);
@@ -2875,6 +2951,7 @@ test("cria, compartilha, importa, avalia e joga um mapa do Editor", async ({ pag
     await expect(paginaEditor).toContainText("0 de 2 espaços usados");
     await paginaEditor.getByRole("button", { name: "Criar novo mapa" }).click();
 
+    await expect(page.locator("#criador-mapa-editor")).toBeEmpty();
     await page.locator("#nome-mapa-editor").fill("Fortaleza Congelada");
     await page.locator("#criador-mapa-editor").fill("Lequ48");
     await paginaEditor.locator("textarea").first().fill("Uma trilha gelada criada no editor simples.");
@@ -2910,18 +2987,43 @@ test("cria, compartilha, importa, avalia e joga um mapa do Editor", async ({ pag
     ]);
 
     await paginaEditor.getByRole("button", { name: "Publicar e copiar código" }).click();
+    await paginaEditor.screenshot({ path: testInfo.outputPath("editor-mapa-proprio-publicado.png") });
     const campoDoCodigo = page.locator("#codigo-compartilhamento-editor");
     await expect(campoDoCodigo).toBeVisible();
     const codigoDoMapa = await campoDoCodigo.inputValue();
     expect(codigoDoMapa).toMatch(/^GP-MAPA-1\./);
 
-    await paginaEditor.getByRole("button", { name: "Comunidade" }).click();
+    await paginaEditor.getByRole("button", { name: "Comunidade", exact: true }).click();
     await page.locator("#codigo-importacao-editor").fill(codigoDoMapa);
     await paginaEditor.getByRole("button", { name: "Importar mapa" }).click();
     const cartaoImportado = paginaEditor.locator(".editor-mapa-cartao");
     await expect(cartaoImportado).toHaveCount(1);
     await expect(cartaoImportado).toContainText("Fortaleza Congelada");
     await expect(cartaoImportado).toContainText("Criado por Lequ48");
+    await expect(cartaoImportado.getByRole("button", { name: "Retirar da Comunidade" })).toHaveCount(0);
+    await page.evaluate(() => {
+        window.setItemOriginalDoEditor = Storage.prototype.setItem;
+        Storage.prototype.setItem = function (chave, valor) {
+            if (chave === "guardians-of-pixel-editor-comunidade-v1") {
+                throw new Error("Falha simulada ao salvar a biblioteca");
+            }
+            return window.setItemOriginalDoEditor.call(this, chave, valor);
+        };
+    });
+    await cartaoImportado.getByRole("button", { name: "Remover da biblioteca" }).click();
+    await expect(cartaoImportado).toHaveCount(1);
+    await expect(paginaEditor).toContainText("Não foi possível salvar neste navegador.");
+    await page.evaluate(() => {
+        Storage.prototype.setItem = window.setItemOriginalDoEditor;
+    });
+    await cartaoImportado.getByRole("button", { name: "Remover da biblioteca" }).click();
+    await expect(cartaoImportado).toHaveCount(0);
+    expect(await page.evaluate(() => JSON.parse(
+        localStorage.getItem("guardians-of-pixel-editor-comunidade-v1")
+    ))).toEqual([]);
+    await page.locator("#codigo-importacao-editor").fill(codigoDoMapa);
+    await paginaEditor.getByRole("button", { name: "Importar mapa" }).click();
+    await expect(cartaoImportado).toHaveCount(1);
     await cartaoImportado.getByLabel("Sua avaliação").selectOption("4");
     await cartaoImportado.getByLabel("Comentário opcional").fill("Caminho bonito e desafio justo.");
     await cartaoImportado.getByRole("button", { name: "Salvar avaliação" }).click();
@@ -2977,6 +3079,15 @@ test("cria, compartilha, importa, avalia e joga um mapa do Editor", async ({ pag
     await page.locator("#botao-voltar-lobby-resultado").click();
     await expect(paginaEditor).toBeVisible();
     await expect(paginaEditor).toContainText("Comunidade");
+    await paginaEditor.getByRole("button", { name: "Meus mapas" }).click();
+    await paginaEditor.getByRole("button", { name: "Retirar da Comunidade" }).click();
+    await expect(paginaEditor).toContainText("Publicação retirada deste navegador");
+    await expect(paginaEditor.getByRole("button", { name: "Retirar da Comunidade" })).toHaveCount(0);
+    await paginaEditor.getByRole("button", { name: "Comunidade", exact: true }).click();
+    await expect(paginaEditor.locator(".editor-mapa-cartao")).toHaveCount(0);
+    expect(await page.evaluate(() => JSON.parse(
+        localStorage.getItem("guardians-of-pixel-editor-comunidade-v1")
+    ))).toEqual([]);
     await paginaEditor.getByRole("button", { name: "Meus mapas" }).click();
     await paginaEditor.getByRole("button", { name: "Excluir", exact: true }).click();
     await expect(paginaEditor.getByRole("button", { name: "Confirmar exclusão" })).toBeVisible();
@@ -3110,8 +3221,9 @@ test("compra dois Lança-Chamas e incendeia um inimigo em uma partida real", asy
         .click();
     const figurinhaDoLancaChamas = page.locator(".album-cartao-torre")
         .filter({ hasText: "Lança-Chamas" });
-    await expect(figurinhaDoLancaChamas.locator("strong")).toHaveText("Lança-Chamas");
-    await expect(figurinhaDoLancaChamas).not.toContainText("nível 0");
+    await expect(figurinhaDoLancaChamas.locator("strong")).toHaveText(
+        Array.from({ length: 6 }, (_, nivel) => `Lança-Chamas · nível ${nivel}`)
+    );
     await page.locator("#conteudo-menu .botao-fechar").click();
     await page.locator(".botao-lobby-jogar").click();
     await page.locator('[data-tipo-defesa="lancaChamas"]').click();
@@ -3120,6 +3232,7 @@ test("compra dois Lança-Chamas e incendeia um inimigo em uma partida real", asy
     await expect(botaoDeConstrucao).toBeEnabled();
     await expect(botaoDeConstrucao).toContainText("650");
     await page.evaluate(() => eval("dinheiro = 2000"));
+    await concluirIntroducaoDaFaseSeAberta(page);
     await botaoDeConstrucao.click();
 
     const canvas = page.locator("#game");
@@ -3138,9 +3251,9 @@ test("compra dois Lança-Chamas e incendeia um inimigo em uma partida real", asy
     ))).toBe(2);
     await canvas.click({ position: converterPosicao({ x: 100, y: 440 }) });
     await expect(page.locator(".controles-contexto small")).toContainText("Lança-Chamas");
-    await expect(page.locator(".controles-contexto small")).not.toContainText("Nível 0");
+    await expect(page.locator(".controles-contexto small")).toContainText("Nível 0");
     await expect.poll(() => page.evaluate(() => eval("aviso")))
-        .toBe("Lança-Chamas selecionado.");
+        .toBe("Lança-Chamas nível 0 selecionado.");
     await expect.poll(() => page.evaluate(() => (
         eval("inimigos.some((inimigo) => inimigo.queimaduraExpiraEm > Date.now())")
     )), { timeout: 10000 }).toBe(true);
@@ -3261,8 +3374,11 @@ test("desbloqueia duas Torres Sísmicas e soma seus empurrões pelo caminho", as
         .locator('.miniatura-torre-album[data-tipo-torre="torreSismica"]')
         .locator("xpath=ancestor::button");
     await expect(figurinhasSismicas).toHaveCount(4);
-    await expect(figurinhasSismicas.nth(0)).toContainText("Carga: 3 inimigos");
-    await expect(figurinhasSismicas.nth(3)).toContainText("Segundo impacto após 0,7s");
+    await expect(figurinhasSismicas.nth(0)).toContainText("Recarga: 6s");
+    await expect(figurinhasSismicas.nth(1)).toContainText("Recarga 5s · Empurrão 120 px");
+    await expect(figurinhasSismicas.nth(2)).toContainText("Recarga 4,5s · Empurrão 125 px");
+    await expect(figurinhasSismicas.nth(3)).toContainText("Recarga 4s · Empurrão 130 px · Segundo impacto após 0,7s");
+    await figurinhasSismicas.nth(3).screenshot({ path: 'artifacts/torre-sismica-album.png' });
 
     await page.locator("#conteudo-menu .botao-fechar").click();
     await page.locator(".botao-lobby-jogar").click();
@@ -3273,6 +3389,7 @@ test("desbloqueia duas Torres Sísmicas e soma seus empurrões pelo caminho", as
     const botaoSismico = page.locator("#botao-torre-sismica");
     await expect(botaoSismico).toBeEnabled();
     await expect(botaoSismico).toContainText("600");
+    await concluirIntroducaoDaFaseSeAberta(page);
     await botaoSismico.click();
 
     const canvas = page.locator("#game");
@@ -3293,16 +3410,10 @@ test("desbloqueia duas Torres Sísmicas e soma seus empurrões pelo caminho", as
         for (let y = 40; y <= 660; y += 10) {
             for (let x = 40; x <= 1160; x += 10) {
                 const distancia = Math.hypot(primeiraTorre.x - x, primeiraTorre.y - y);
-                const longeDoFliperama = !fliperamaNoMapa || Math.hypot(
-                    fliperamaNoMapa.x - x,
-                    fliperamaNoMapa.y - y
-                ) >= CONFIG.fliperama.distanciaMinimaDasTorres;
                 if (
                     distancia >= 80
                     && distancia <= 220
-                    && !estaNoCaminho(x, y)
-                    && !estaPertoDeOutraTorreOuBomba(x, y)
-                    && longeDoFliperama
+                    && !posicaoEhInvalidaParaCursorDeConstrucao(x, y)
                 ) {
                     return { x, y };
                 }
@@ -3323,7 +3434,7 @@ test("desbloqueia duas Torres Sísmicas e soma seus empurrões pelo caminho", as
     await page.evaluate(() => eval("jogoPausado = true"));
     await canvas.click({ position: posicao });
     await expect(page.locator(".controles-contexto small"))
-        .toContainText("Nível 0 · Carga 0/3 · Empurra 110 px");
+        .toContainText(/Nível 0 · Recarga [0-6]s · Empurra 110 px/);
     await expect(page.locator("#botao-modo-alvo")).toContainText("Impacto automático");
 
     const resultadoDoImpacto = await page.evaluate(() => eval(`(() => {
@@ -3373,18 +3484,19 @@ test("desbloqueia duas Torres Sísmicas e soma seus empurrões pelo caminho", as
             inimigos.push(inimigo);
         }
 
+        torresSismicas.forEach(item => { item.sismicaProntaEm = 1000; });
         const progressoAntes = calcularProgressoDoInimigo(inimigos[0]);
         atualizarTorresSismicas(1000);
         const progressoDepois = calcularProgressoDoInimigo(inimigos[0]);
         return {
             empurrao: Math.round(progressoAntes - progressoDepois),
-            cargas: torresSismicas.map(item => item.cargaSismica),
+            proximosImpactos: torresSismicas.map(item => item.sismicaProntaEm),
             ondas: explosoesDosExplosivos.filter(
                 efeito => efeito.tipoVisual === "sismico"
             ).length
         };
     })()`));
-    expect(resultadoDoImpacto).toEqual({ empurrao: 220, cargas: [0, 0], ondas: 2 });
+    expect(resultadoDoImpacto).toEqual({ empurrao: 220, proximosImpactos: [7000, 7000], ondas: 2 });
 
     await page.evaluate(() => eval("jogoPausado = false"));
     await page.waitForTimeout(100);
@@ -3397,11 +3509,18 @@ test("desbloqueia duas Torres Sísmicas e soma seus empurrões pelo caminho", as
 
 test("avisa quando uma missão é concluída", async ({ page }) => {
     await page.goto("/");
-    await page.evaluate(() => registrarProgressoDaMissao("inimigosEliminados", 50));
+    await page.locator(".botao-lobby-jogar").click();
+    await confirmarEquipeAtual(page);
+    await page.evaluate(() => {
+        const desafio = CATALOGO_DOS_DESAFIOS_DIARIOS.find(item => item.propriedadeDoProgresso === 'danoTotal');
+        progressoDosDesafiosDiarios.ids = [desafio.id];
+        progressoDosDesafiosDiarios.progresso[desafio.id] = 0;
+        registrarProgressoDaMissao('danoTotal', desafio.objetivo);
+    });
     const aviso = page.locator('.notificacao-progresso[data-tipo="missao"]');
     await expect(aviso).toBeVisible();
     await expect(aviso).toContainText("Missão concluída");
-    await expect(aviso).toContainText("Pequena limpeza");
+    await expect(aviso).toContainText("Dano acumulado");
 });
 
 test("avisa quando uma conquista é desbloqueada", async ({ page }) => {
@@ -3413,7 +3532,7 @@ test("avisa quando uma conquista é desbloqueada", async ({ page }) => {
     await expect(aviso).toContainText("Primeira Vigília");
 });
 
-test("exige os cinco minigames para dominar o fliperama", async ({ page }) => {
+test("exige os oito minigames para dominar o fliperama", async ({ page }) => {
     await page.addInitScript(() => {
         const chaveDaPreparacao = "guardians-of-pixel-e2e-mestre-fliperama-preparado";
         if (sessionStorage.getItem(chaveDaPreparacao) === "true") {
@@ -3433,7 +3552,7 @@ test("exige os cinco minigames para dominar o fliperama", async ({ page }) => {
             "guardians-of-pixel-recompensas-missoes-v1",
             JSON.stringify({
                 skinsDesbloqueadas: [],
-                conquistasDesbloqueadas: ["mestreDoFliperama"],
+                conquistasDesbloqueadas: [],
                 skinTorrePadraoEquipada: null
             })
         );
@@ -3445,18 +3564,26 @@ test("exige os cinco minigames para dominar o fliperama", async ({ page }) => {
         hasText: "Mestre do Fliperama"
     });
     await expect(conquista).toHaveClass(/conquista-bloqueada/);
-    await expect(conquista.locator(".conquista-contador")).toHaveText("4 / 5");
+    await expect(conquista.locator(".conquista-contador")).toHaveText("4 / 8");
     await expect(conquista.locator(".conquista-progresso")).toHaveAttribute(
         "aria-valuemax",
-        "5"
+        "8"
     );
 
     await page.evaluate(() => {
         registrarMinigameFliperamaConcluidoParaConquistas("sequencia");
         mostrarConquistas();
     });
+    await expect(conquista).toHaveClass(/conquista-bloqueada/);
+    await expect(conquista.locator(".conquista-contador")).toHaveText("5 / 8");
+    await page.evaluate(() => {
+        for (const minigame of ["carga", "reflexo", "pulso"]) {
+            registrarMinigameFliperamaConcluidoParaConquistas(minigame);
+        }
+        mostrarConquistas();
+    });
     await expect(conquista).toHaveClass(/conquista-desbloqueada/);
-    await expect(conquista.locator(".conquista-contador")).toHaveText("5 / 5");
+    await expect(conquista.locator(".conquista-contador")).toHaveText("8 / 8");
     const aviso = page.locator('.notificacao-progresso[data-tipo="conquista"]');
     await expect(aviso).toContainText("Mestre do Fliperama");
 
@@ -3467,10 +3594,32 @@ test("exige os cinco minigames para dominar o fliperama", async ({ page }) => {
     })).toHaveClass(/conquista-desbloqueada/);
 });
 
+test("preserva Mestre do Fliperama obtida pela regra antiga", async ({ page }) => {
+    await page.addInitScript(() => {
+        localStorage.setItem("guardians-of-pixel-estatisticas-conquistas-v1", JSON.stringify({
+            minigamesFliperamaConcluidos: ["alvo", "labirinto", "voo", "coleta"]
+        }));
+        localStorage.setItem("guardians-of-pixel-recompensas-missoes-v1", JSON.stringify({
+            skinsDesbloqueadas: [],
+            conquistasDesbloqueadas: ["mestreDoFliperama"],
+            skinTorrePadraoEquipada: null
+        }));
+    });
+    await page.goto("/");
+    await page.locator(".botao-lobby-conquistas").click();
+    const conquista = page.locator(".conquista-cartao").filter({ hasText: "Mestre do Fliperama" });
+    await expect(conquista).toHaveClass(/conquista-desbloqueada/);
+    await expect(conquista.locator(".conquista-contador")).toHaveText("4 / 8");
+});
+
 test("oferece Voo Pixel, Chuva de Pixels e Sequência Neon no fliperama", async ({ page }) => {
     await page.goto("/");
     await page.locator(".botao-lobby-jogar").click();
     await confirmarEquipeAtual(page);
+    await page.evaluate(() => {
+        for (let fala = 0; fala < 3; fala++) concluirCutsceneDaCarta();
+    });
+    await expect(page.locator("#camada-cutscene-carta")).toBeHidden();
 
     const abrirMinigame = async (valorDoSorteio) => {
         await page.evaluate((valor) => eval(`(() => {
@@ -3623,6 +3772,7 @@ test("oferece os três desafios da central no fliperama com recompensas", async 
         for (const centro of CONFIG.centroDeTreinamento.pulso.centrosDasFaixas) {
             const deslocamento = centro * CONFIG.centroDeTreinamento.pulso.duracaoDoPercurso / 2;
             eval(`desafioDeTreinamentoAtivo.iniciadoEm = Date.now() - ${deslocamento}`);
+            atualizarInterfaceDoTreinamento(Date.now());
             acionarControleDoTreinamento();
         }
     });
@@ -3642,14 +3792,15 @@ test("esconde e revela a conquista Frequência 09", async ({ page }, testInfo) =
 
     const cartoes = page.locator(".conquista-cartao");
     const comuns = await page.evaluate(() => Object.values(CONFIG.conquistas).filter(c => !c.secreta).length);
+    const ocultas = await page.evaluate(() => Object.values(CONFIG.conquistas).filter(c => c.secreta).length);
     await expect(cartoes).toHaveCount(comuns);
     await expect(page.locator('.conquista-secreta')).toHaveCount(0);
     await expect(page.locator('[data-categoria-conquistas="comuns"]')).toHaveAttribute('aria-pressed','true');
     await page.locator('[data-categoria-conquistas="ocultas"]').click();
-    await expect(cartoes).toHaveCount(12);
-    await expect(page.locator('.conquista-secreta h3')).toHaveText(Array(12).fill('???'));
+    await expect(cartoes).toHaveCount(ocultas);
+    await expect(page.locator('.conquista-secreta h3')).toHaveText(Array(ocultas).fill('???'));
     await expect(page.locator('.conquista-secreta [role="progressbar"]')).toHaveCount(0);
-    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText('0/12');
+    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText(`0/${ocultas}`);
     await page.setViewportSize({width:390,height:844});
     await page.locator('#conteudo-menu').screenshot({path:testInfo.outputPath('conquistas-ocultas-celular.png')});
     const conquistaSecreta = page.locator('.conquista-secreta').filter({hasText:'Frequência 09'});
@@ -3662,7 +3813,7 @@ test("esconde e revela a conquista Frequência 09", async ({ page }, testInfo) =
     await expect(conquistaSecreta).toContainText(
         "Encontre e escute até o fim a transmissão do Projeto ???."
     );
-    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText('1/12');
+    await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText(`1/${ocultas}`);
     await page.evaluate(()=>selecionarIdioma('en'));
     await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toContainText('Hidden achievements');
     await expect(page.locator('[data-categoria-conquistas="ocultas"]')).toHaveAttribute('aria-pressed','true');
@@ -4095,6 +4246,7 @@ test("abre a central e treina os oito minigames sem recompensas", async ({ page 
         for (const centro of CONFIG.centroDeTreinamento.pulso.centrosDasFaixas) {
             const deslocamento = centro * CONFIG.centroDeTreinamento.pulso.duracaoDoPercurso / 2;
             eval(`desafioDeTreinamentoAtivo.iniciadoEm = Date.now() - ${deslocamento}`);
+            atualizarInterfaceDoTreinamento(Date.now());
             acionarControleDoTreinamento();
         }
     });

@@ -60,6 +60,8 @@ const conquistas = {
 };
 const desbloqueadas = [];
 const notificacoes = [];
+const construcoesParaMissoes = [];
+const progressoDasMissoes = [];
 const contexto = {
     CONFIG: {
         torre: { tipos: tiposDeDefesa },
@@ -72,9 +74,14 @@ const contexto = {
     },
     tiposDeDefesaConstruidosNaPartida: new Set(),
     estatisticasDasConquistas: { minigamesFliperamaConcluidos: [] },
+    progressoMissoesPermanentes: {},
+    comprasDaLoja: new Set(),
+    obterDadosDoNivel() { return { nivel: 1 }; },
     recompensasPermanentesDasMissoes: { conquistasDesbloqueadas: desbloqueadas },
     maiorFaseConcluida: 0,
     inimigos: [],
+    registrarConstrucaoParaMissoes(tipo) { construcoesParaMissoes.push(tipo); },
+    registrarProgressoDaMissao(...argumentos) { progressoDasMissoes.push(argumentos); },
     salvarRecompensasPermanentesDasMissoes() {},
     salvarEstatisticasDasConquistas() {},
     atualizarResumoDasConquistasNoMenu() {},
@@ -98,6 +105,7 @@ vm.runInContext([
     extrairFuncao("registrarUsoDoPulsoTemporalParaConquistas"),
     extrairFuncao("registrarEliminacoesDaBombaPesadaParaConquistas"),
     extrairFuncao("registrarTransmissaoProjetoRelogioParaConquistas"),
+    extrairFuncao("criarImagemDaConquista"),
     extrairFuncao("criarCartaoDeConquista")
 ].join("\n"), contexto);
 
@@ -108,6 +116,7 @@ contexto.registrarDefesaConstruidaParaConquistas("a");
 assert.ok(!desbloqueadas.includes("osSeisGuardioes"));
 contexto.registrarDefesaConstruidaParaConquistas("f");
 assert.ok(desbloqueadas.includes("osSeisGuardioes"));
+assert.deepStrictEqual(construcoesParaMissoes, ["a", "b", "c", "d", "e", "a", "f"]);
 
 desbloqueadas.push("mestreDoFliperama");
 contexto.estatisticasDasConquistas.minigamesFliperamaConcluidos.push(
@@ -151,11 +160,14 @@ assert.strictEqual(contexto.registrarEliminacoesDaBombaPesadaParaConquistas(8), 
 assert.ok(desbloqueadas.includes("demolicaoEmMassa"));
 
 const cartaoBloqueado = contexto.criarCartaoDeConquista(contexto.entradaSecreta);
-assert.ok(cartaoBloqueado.includes("Frequência 09"));
+assert.ok(cartaoBloqueado.includes("???"));
+assert.ok(!cartaoBloqueado.includes("Frequência 09"));
 assert.ok(cartaoBloqueado.includes('class="conquista-icone" aria-hidden="true">?</span>'));
-assert.ok(cartaoBloqueado.includes("O futuro guarda uma frequência esquecida."));
+assert.ok(cartaoBloqueado.includes("Explore o jogo para descobrir."));
+assert.ok(!cartaoBloqueado.includes("O futuro guarda uma frequência esquecida."));
 assert.ok(!cartaoBloqueado.includes("Escute a transmissão."));
 contexto.registrarTransmissaoProjetoRelogioParaConquistas();
+assert.deepStrictEqual(progressoDasMissoes, [["transmissao", 1, true]]);
 const cartaoDesbloqueado = contexto.criarCartaoDeConquista(contexto.entradaSecreta);
 assert.ok(cartaoDesbloqueado.includes("Frequência 09"));
 assert.ok(cartaoDesbloqueado.includes("Escute a transmissão."));

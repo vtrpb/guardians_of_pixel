@@ -1,0 +1,17 @@
+{
+  "DEVORADOR DE MEMÓRIAS": "ERINNERUNGSFRESSER",
+  "Dia de sorte": "Glückstag",
+  "Dimensão Glitch": "Glitch-Dimension",
+  "Dimensão Glitch reiniciada.": "Glitch-Dimension neu gestartet.",
+  "Dinheiro insuficiente para construir {nome}.": "Nicht genug Geld, um {nome} zu bauen.",
+  "Dinheiro insuficiente para esta melhoria.": "Nicht genug Geld für diese Verbesserung.",
+  "Dispara bolas de fogo e incendeia o alvo: {dano} de dano por segundo durante {segundos} segundos. Novos acertos renovam a duração.": "Verschießt Feuerbälle und setzt das Ziel in Brand: {dano} Schaden pro Sekunde für {segundos} Sekunden. Weitere Treffer erneuern die Dauer.",
+  "Dispara uma carga que salta entre até {quantidade} inimigos próximos e perde dano a cada salto.": "Feuert eine Ladung ab, die auf bis zu {quantidade} nahe Gegner überspringt und bei jedem Sprung an Schaden verliert.",
+  "Disponível": "Verfügbar",
+  "Disponível desde o início.": "Von Anfang an verfügbar.",
+  "Disponível na wave 1": "Ab Welle 1 verfügbar",
+  "Distribua {total} melhorias · Usadas: {usadas}/{total} · Dano {dano}, velocidade {velocidade}, alcance {alcance}": "Verteile {total} Verbesserungen · Verwendet: {usadas}/{total} · Schaden {dano}, Geschwindigkeit {velocidade}, Reichweite {alcance}",
+  "Domínio completo": "Meisterschaft abgeschlossen",
+  "Domínio concluído: {nomes}": "Meisterschaft abgeschlossen: {nomes}",
+  "Domínio das torres": "Turmmeisterschaft"
+}

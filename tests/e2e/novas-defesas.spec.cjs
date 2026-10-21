@@ -62,7 +62,7 @@ test('Novas defesas: desbloqueios, laser crescente, perda de foco e melhorias', 
     expect(await page.evaluate(() => torres[0].tipo)).toBe('torreFeixeContinuo');
     await page.evaluate(() => {
         selecionarTorre(torres[0]);
-        melhorarTorreSelecionada(); melhorarTorreSelecionada(); melhorarTorreSelecionada();
+        melhorarTorreSelecionada('dano'); melhorarTorreSelecionada('velocidade'); melhorarTorreSelecionada('alcance');
         desenharCenaPausadaDoTutorial();
     });
     expect(await page.evaluate(() => torres[0].nivel)).toBe(3);

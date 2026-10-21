@@ -53,7 +53,7 @@ test('Renda por tiro, falta de dinheiro, torres especiais e Álbum',async({page}
  await page.evaluate(()=>{voltarAoLobby();mostrarAlbum();});
  expect(await page.evaluate(()=>{
   const html=criarCartoesDaTorre('padrao',CONFIG.torre.tipos.padrao);
-  return html.includes('5 melhorias')&&!html.includes('data-nivel-torre="1"');
+  return html.includes('5 melhorias')&&[1,2,3].every(n=>html.includes('data-nivel-torre="'+n+'"'));
  })).toBe(true);
 });
 test('Waves especiais 17/18, aviso antecipado e isolamento',async({page})=>{
@@ -69,7 +69,9 @@ test('Waves especiais 17/18, aviso antecipado e isolamento',async({page})=>{
  })).toEqual({rapidos:19,quantidades:{batedorDeInstantes:33,couracadoDeAmpulheta:9,tecelaoDeSegundos:7},isolado:true,editor:true});
  expect(await page.evaluate(()=>{
   faseSelecionada=17;wave=7;inimigos=[];inimigosParaCriar=0;proximaWaveEm=0;atualizarWaves();
-  return proximaWaveEm>0&&obterWaveEspecialFinal(wave+1).aviso.includes('Investida');
+  const escolhaAberta=escolhaDeDesafioDaWaveEstaAberta()&&proximaWaveEm===0;
+  escolherDesafioDaWave('normal');
+  return escolhaAberta&&proximaWaveEm>0&&aviso.includes(obterWaveEspecialFinal(wave+1).aviso);
  })).toBe(true);
 });
 

@@ -31,7 +31,16 @@ function extrairFuncao(nome) {
 const armazenamento = new Map();
 const classesDaCamada = new Set();
 let resultadoExibido = 0;
+let retornosAoLobby = 0;
+const progressoDasMissoes = [];
 const contexto = {
+    voltarAoLobby() { retornosAoLobby++; },
+    fecharConteudoMenu() {},
+    atualizarIndicadorFaseSelecionada() {},
+    atualizarTemaDoLobby() {},
+    registrarProgressoDaMissao(...argumentos) { progressoDasMissoes.push(argumentos); },
+    limparCenaDoConfronto() {},
+    document: { getElementById() { return null; } },
     CONFIG: {
         faseSecreta: {
             faseConcluidaParaAcesso: 6,
@@ -47,6 +56,8 @@ const contexto = {
         setItem(chave, valor) { armazenamento.set(chave, String(valor)); }
     },
     camadaCutsceneCarta: {
+        dataset: {},
+        querySelector() { return null; },
         hidden: true,
         offsetWidth: 640,
         classList: {
@@ -81,6 +92,7 @@ vm.runInContext([
 assert.strictEqual(contexto.deveMostrarCartaMisteriosaAposVitoria(), true);
 contexto.mostrarCutsceneDaCarta();
 assert.strictEqual(contexto.cartaMisteriosaVista, true);
+assert.deepStrictEqual(progressoDasMissoes, [["carta", 1, true]]);
 assert.strictEqual(armazenamento.get(contexto.CHAVE_CARTA_MISTERIOSA_VISTA), "true");
 assert.strictEqual(contexto.camadaCutsceneCarta.hidden, false);
 assert.ok(classesDaCamada.has("cutscene-carta-em-exibicao"));
@@ -92,7 +104,9 @@ assert.strictEqual(contexto.deveMostrarCartaMisteriosaAposVitoria(), false);
 contexto.concluirCutsceneDaCarta();
 assert.strictEqual(contexto.camadaCutsceneCarta.hidden, true);
 assert.strictEqual(contexto.cutsceneDaCartaAtiva, false);
-assert.strictEqual(resultadoExibido, 1);
+assert.strictEqual(resultadoExibido, 0);
+assert.strictEqual(retornosAoLobby, 1);
+assert.strictEqual(contexto.faseSelecionada, 1);
 
 contexto.cartaMisteriosaVista = false;
 contexto.faseSecretaDescoberta = true;

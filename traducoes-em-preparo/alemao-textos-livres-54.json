@@ -1,0 +1,17 @@
+{
+  "Marés de safira": "Saphirfluten",
+  "Margem espelhada": "Spiegelndes Ufer",
+  "Marque somente as dificuldades que você venceu. Esta confirmação pode ser feita uma vez.": "Markiere nur die Schwierigkeitsgrade, die du abgeschlossen hast. Diese Bestätigung ist nur einmal möglich.",
+  "Mas ele disse que os criou... Preciso proteger este arquivo. A torre de varredura vai ser necessária de novo.": "Aber er sagte, dass er sie erschaffen hat ... Ich muss dieses Archiv schützen. Den Scannerturm werde ich wieder brauchen.",
+  "Mecânico": "Mechaniker",
+  "Melhor contra": "Besonders wirksam gegen",
+  "Melhora permanentemente o pagamento recebido pelas torres de combate.": "Erhöht dauerhaft die Einnahmen aus Kampftürmen.",
+  "Melhorar ({custo})": "Verbessern ({custo})",
+  "Melhorar torre ({custo})": "Turm verbessern ({custo})",
+  "Melhore uma torre pela primeira vez.": "Verbessere zum ersten Mal einen Turm.",
+  "Melhoria aplicada: {atributo} · {usadas}/{total}": "Verbesserung angewendet: {atributo} · {usadas}/{total}",
+  "Melhoria: {custo} | Dano: {dano} | Alcance: {alcance}": "Verbesserung: {custo} | Schaden: {dano} | Reichweite: {alcance}",
+  "Melhoria: {custo} | Produção: {creditos} por wave": "Verbesserung: {custo} | Ertrag: {creditos} pro Welle",
+  "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px": "Verbesserung: {custo} | Nachladen {segundos} s · Rückstoß {distancia} px",
+  "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Segundo impacto após {atraso}s": "Verbesserung: {custo} | Nachladen {segundos} s · Rückstoß {distancia} px · Zweiter Treffer nach {atraso} s"
+}

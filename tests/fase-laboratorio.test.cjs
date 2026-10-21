@@ -14,16 +14,11 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
 const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze({");
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = require("./apoio/codigo-jogo.cjs").carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",
@@ -86,6 +81,7 @@ const contextoDaVelocidade = {
     Date,
     pulsoTemporalNormalExpiraEm: 0,
     pulsoTemporalBossExpiraEm: 0,
+    boostInimigosFliperamaExpiraEm: 0,
     tipoEhBoss() { return false; },
     oncaEstaEmDisparada() { return false; },
     obterMultiplicadorDaArrancadaDoJavali() { return 1; }
@@ -153,7 +149,8 @@ const contextoDoDano = {
     ativarErupcaoDoTita() {},
     ativarChamadoDaMatilha() {},
     ativarReversaoDeEmergencia() {},
-    ativarPulsoDeEstase() {}
+    ativarPulsoDeEstase() {},
+    ativarConvocacaoDoInimigo() {}
 };
 vm.createContext(contextoDoDano);
 vm.runInContext(extrairFuncao("aplicarDanoAoInimigo"), contextoDoDano);

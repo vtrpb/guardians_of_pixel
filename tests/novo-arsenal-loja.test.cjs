@@ -14,15 +14,7 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
-const contextoDaConfig = {};
-vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
-const CONFIG = contextoDaConfig.CONFIG_TESTE;
+const CONFIG = require('./apoio/codigo-jogo.cjs').carregarConfig();
 
 const mina = CONFIG.torre.tipos.minaCorrosiva;
 assert.strictEqual(mina.nome, "Mina Corrosiva");
@@ -60,10 +52,13 @@ assert.strictEqual(melhorias.contratoDeRecuperacao.custoNaLoja, 90);
 
 const totalDeDefesasCompraveis = Object.values(CONFIG.torre.tipos)
     .filter((configuracao) => configuracao.requerCompraNaLoja).length;
-assert.strictEqual(totalDeDefesasCompraveis + Object.keys(CONFIG.loja.itens).length, 23);
+assert.strictEqual(totalDeDefesasCompraveis + Object.keys(CONFIG.loja.itens).length, 27);
+assert.ok(CONFIG.torre.tipos.torreDeBolhas?.aquatica);
+assert.ok(codigo.includes('"Compre todos os 27 itens disponíveis na Loja.": "Buy all 27 items available in the Shop."'));
+assert.ok(codigo.includes('"Compre todos os 27 itens disponíveis na Loja.": "Compra los 27 objetos disponibles en la Tienda."'));
 assert.strictEqual(
     CONFIG.conquistas.mestreDoArsenal.descricao,
-    "Compre todos os 23 itens disponíveis na Loja."
+    "Compre todos os 27 itens disponíveis na Loja."
 );
 
 const agora = 1000;
@@ -78,6 +73,7 @@ const contextoDaCorrosao = {
 };
 vm.createContext(contextoDaCorrosao);
 vm.runInContext([
+    extrairFuncao("ativarConvocacaoDoInimigo"),
     extrairFuncao("aplicarDanoAoInimigo"),
     extrairFuncao("aplicarCorrosaoAoInimigo"),
     extrairFuncao("obterInimigosVivosNaArea"),
@@ -106,6 +102,7 @@ const contextoDaFragmentacao = {
 };
 vm.createContext(contextoDaFragmentacao);
 vm.runInContext([
+    extrairFuncao("ativarConvocacaoDoInimigo"),
     extrairFuncao("aplicarDanoAoInimigo"),
     extrairFuncao("obterInimigosVivosNaArea"),
     extrairFuncao("aplicarDanoEmArea"),
@@ -129,20 +126,37 @@ const comprasDaLoja = new Set([
 ]);
 const contextoDasMelhorias = {
     CONFIG,
+    temposDosNucleos: {dano:0,velocidade:0,alcance:0},
+    desafioSupremoAtivo: null,
+    faseSelecionada: 1,
+    mapaPersonalizadoAtivo: null,
+    modoWavesInfinitas: false,
+    selecaoDeDefesasParaModoInfinito: false,
     Math,
     comprasDaLoja,
     multiplicadorDeDanoDasTorres: 1,
     multiplicadorDeAlcanceDasTorres: 1,
     multiplicadorDeCadenciaDasTorres: 1,
     boostFliperamaAtivo: false,
-    boostDanoFliperamaAtivo: false
+    boostDanoFliperamaAtivo: false,
+    CHAVE_VITORIAS_DOS_EVENTOS: 'guardians-of-pixel-eventos-v1',
+    localStorage: { getItem: () => null }
 };
 vm.createContext(contextoDasMelhorias);
+vm.runInContext(require('./apoio/codigo-jogo.cjs').extrairFuncao('obterMultiplicadorDoNucleo','modulos/mochila-nucleos.js'),contextoDasMelhorias);
+for (const nome of ['configuracaoUsaMelhoriasEscolhidas','obterConfiguracaoComMelhoriasEscolhidas','obterDistribuicaoDeMelhorias','obterVisualDaTorreNoNivel']) {
+    vm.runInContext(require('./apoio/codigo-jogo.cjs').extrairFuncao(nome,'modulos/melhorias.js'),contextoDasMelhorias);
+}
 vm.runInContext([
     extrairFuncao("obterBonusPermanenteDaLoja"),
     extrairFuncao("obterMultiplicadorPermanenteDaLoja"),
     extrairFuncao("obterConfiguracaoDaTorre"),
     extrairFuncao("obterConfiguracaoAtualDaTorre"),
+    extrairFuncao("obterMaiorDificuldadeConcluidaDoEvento"),
+    extrairFuncao("obterBonusDeDanoDaTorrePremio"),
+    extrairFuncao("partidaPermiteAfinidades"),
+    extrairFuncao("obterAfinidadesDasTorres"),
+    extrairFuncao("obterMultiplicadorDeAfinidadeDaTorre"),
     extrairFuncao("atualizarAtributosDaTorreComBonus"),
     extrairFuncao("calcularValorDeVenda")
 ].join("\n"), contextoDasMelhorias);
@@ -151,6 +165,12 @@ contextoDasMelhorias.atualizarAtributosDaTorreComBonus(torrePadrao);
 assert.strictEqual(torrePadrao.dano, 11);
 assert.strictEqual(torrePadrao.alcance, 158);
 assert.strictEqual(contextoDasMelhorias.calcularValorDeVenda(torrePadrao), 70);
+contextoDasMelhorias.localStorage.getItem = () => JSON.stringify({
+    superBossesMecanicos: 2,
+    dificuldadesConcluidas: { superBossesMecanicos: ['facil', 'medio'] }
+});
+assert.strictEqual(contextoDasMelhorias.obterBonusDeDanoDaTorrePremio('torreMagnetica'), 0.10);
+assert.strictEqual(contextoDasMelhorias.obterBonusDeDanoDaTorrePremio('torreMetamorfa'), 0);
 
 [
     'id="botao-mina-corrosiva"',
@@ -168,7 +188,7 @@ assert.strictEqual(contextoDasMelhorias.calcularValorDeVenda(torrePadrao), 70);
 assert.ok(especificacao.includes(
     "### Mudança: arsenal corrosivo, fragmentação e novas melhorias permanentes"
 ));
-assert.ok(especificacao.includes("Mestre do Arsenal mostra progresso sobre 23 itens"));
+assert.ok(especificacao.includes("Mestre do Arsenal mostra progresso sobre 27 itens"));
 assert.ok(codigo.includes('"Mina Corrosiva": "Corrosive Mine"'));
 assert.ok(codigo.includes('"Bomba de Fragmentação": "Bomba de Fragmentación"'));
 

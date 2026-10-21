@@ -1,6 +1,7 @@
 const assert = require("assert");
 const fs = require("fs");
 const vm = require("vm");
+const { carregarConfig } = require("./apoio/codigo-jogo.cjs");
 
 const codigo = fs.readFileSync("game.js", "utf8");
 const html = fs.readFileSync("index.htm", "utf8");
@@ -14,16 +15,11 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
 const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze({");
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",
@@ -86,7 +82,7 @@ assert.ok(Array.isArray(Array.from(caminhos[100])) && caminhos[100].length > 2);
 assert.strictEqual(CONFIG.torre.limitesPorFase[13], 15);
 assert.strictEqual(CONFIG.torre.limitesPorFase[100], 12);
 
-assert.strictEqual(CONFIG.inimigo.carcereiroDoIntervalo.vida, 5000);
+assert.strictEqual(CONFIG.inimigo.carcereiroDoIntervalo.vida, 3500);
 assert.strictEqual(CONFIG.inimigo.fragmentoDeSegundo.vida, 140);
 assert.strictEqual(CONFIG.inimigo.ponteiroErrante.velocidade, 2.45);
 assert.strictEqual(CONFIG.inimigo.paradoxoBlindado.reducaoDeDano, 0.18);
@@ -96,14 +92,23 @@ assert.strictEqual(CONFIG.audio.musicaDoIntervaloPerdido.nomeInterno, "Ecos do L
 assert.strictEqual(CONFIG.audio.musicaDoIntervaloPerdido.intervaloDoPasso, 480);
 assert.strictEqual(CONFIG.audio.musicaDoIntervaloPerdido.volumeRelativo, 1.9);
 assert.strictEqual(CONFIG.audio.musicaGuardadaDoIntervaloPerdido, undefined);
+const melodiaDoIntervalo = Array.from(CONFIG.audio.musicaDoIntervaloPerdido.melodia);
+assert.strictEqual(melodiaDoIntervalo.length, 64);
 assert.deepStrictEqual(
-    Array.from(CONFIG.audio.musicaDoIntervaloPerdido.melodia),
+    melodiaDoIntervalo.slice(0, 16),
     [
         523.25, 0, 659.25, 0,
         783.99, 698.46, 0, 587.33,
         493.88, 0, 739.99, 0,
         659.25, 587.33, 0, 392
     ]
+);
+assert.deepStrictEqual(
+    melodiaDoIntervalo.slice(-16),
+    [1046.5022612023945, 0, 783.9908719634985, 0, 659.2551138257398,
+        587.3295358348151, 0, 493.8833012561241, 523.2511306011972, 0,
+        391.99543598174927, 0, 329.6275569128699, 293.6647679174076, 0,
+        261.6255653005986]
 );
 assert.deepStrictEqual(
     Array.from(CONFIG.audio.musicaDoIntervaloPerdido.badaladas),
@@ -114,9 +119,9 @@ assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.intervaloDoPasso, 280);
 assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.volumeRelativo, 1.85);
 assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.multiplicadorDaEraEmDestaque, 1.25);
 assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.multiplicadorDasErasEmRecuo, 0.68);
-assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.notasDoPassado.length, 16);
-assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.pulsoDoPresente.length, 16);
-assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.arpejoDoFuturo.length, 16);
+assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.notasDoPassado.length, 64);
+assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.pulsoDoPresente.length, 64);
+assert.strictEqual(CONFIG.audio.musicaDaLinhaTemporal.arpejoDoFuturo.length, 64);
 
 const notasDosEcosDoLimbo = [];
 const destinoDosEcosDoLimbo = {};
@@ -158,7 +163,7 @@ assert.ok(notasDaLinhaTemporal.some(([, , , tipo]) => tipo === "triangle"));
 assert.ok(notasDaLinhaTemporal.some(([, , , tipo]) => tipo === "square"));
 assert.ok(notasDaLinhaTemporal.some(([, , , tipo]) => tipo === "sine"));
 assert.ok(notasDaLinhaTemporal.every(([, , , , , destino]) => destino === destinoDaLinhaTemporal));
-assert.strictEqual(ruidosDaLinhaTemporal.length, 16);
+assert.strictEqual(ruidosDaLinhaTemporal.length, 64);
 
 const notasComPassadoEmDestaque = [];
 const contextoDoDestaqueMusical = {
@@ -179,7 +184,7 @@ const notaDoPassadoEmDestaque = notasComPassadoEmDestaque.find(
 );
 assert.ok(notaDoPassadoEmDestaque);
 assert.ok(Math.abs(notaDoPassadoEmDestaque[4] - 0.0875) < 0.000001);
-assert.strictEqual(CONFIG.inimigo.executorCronal.vida, 6200);
+assert.strictEqual(CONFIG.inimigo.executorCronal.vida, 4340);
 assert.deepStrictEqual(
     Array.from(CONFIG.inimigo.executorCronal.percentuaisDeVidaParaOrdem),
     [0.6, 0.3]

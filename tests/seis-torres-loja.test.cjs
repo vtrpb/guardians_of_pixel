@@ -14,15 +14,7 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
-const contextoDaConfig = {};
-vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
-const tipos = contextoDaConfig.CONFIG_TESTE.torre.tipos;
+const tipos = require('./apoio/codigo-jogo.cjs').carregarConfig().torre.tipos;
 
 const torresEsperadas = [
     ["torrePerfuradora", "Torre Perfuradora", 80, 500, "perfuradora"],
@@ -30,7 +22,7 @@ const torresEsperadas = [
     ["torreDrones", "Torre de Drones", 110, 650, "drones"],
     ["torreCorrentes", "Torre de Correntes", 90, 525, "correntes"],
     ["torreSucata", "Torre de Sucata", 75, 450, "sucata"],
-    ["canhaoPrismatico", "Canhão Prismático", 125, 700, "prismatico"]
+    ["canhaoPrismatico", "Canhão Prismático", 125, 600, "prismatico"]
 ];
 
 for (const [tipo, nome, custoNaLoja, custo, tipoVisual] of torresEsperadas) {
@@ -63,6 +55,7 @@ assert.strictEqual(tipos.torreDrones.melhorias[1].efeitoDeDrones.quantidade, 3);
 assert.strictEqual(tipos.torreCorrentes.efeitoDeCorrente.multiplicadorDanoSegundoAlvo, 0.65);
 assert.strictEqual(tipos.torreSucata.melhorias[2].efeitoDeSucata.maximoDePecas, 7);
 assert.strictEqual(tipos.canhaoPrismatico.melhorias[2].efeitoPrismatico.multiplicadorVermelho, 1.65);
+assert.deepStrictEqual(Array.from(tipos.canhaoPrismatico.melhorias, melhoria => melhoria.custo), [500, 650, 850]);
 
 const contextoDasDescricoes = {
     localizar(texto, parametros = {}) {
@@ -101,7 +94,7 @@ const contextoDano = {
     CONFIG: { inimigo: { normal: { reducaoDeDano: 0.5 } } }
 };
 vm.createContext(contextoDano);
-vm.runInContext(extrairFuncao("aplicarDanoAoInimigo"), contextoDano);
+vm.runInContext(extrairFuncao("ativarConvocacaoDoInimigo") + '\n' + extrairFuncao("aplicarDanoAoInimigo"), contextoDano);
 const alvoMarcado = {
     tipo: "normal",
     vida: 500,
@@ -206,7 +199,12 @@ contextoPrisma.aplicarDisparoPrismatico({
 assert.strictEqual(contextoPrisma.ultimo.opcoes.ignorarReducoes, true);
 
 assert.ok(especificacao.includes("### Mudança: seis novas torres da Loja"));
-assert.ok(especificacao.includes("Os dezenove tipos de torre"));
+assert.strictEqual(Object.values(tipos).filter(c => !c.suprema && !['mina','bomba'].includes(c.tipoDeItem)).length, 28);
+assert.ok(tipos.torreDeBolhas?.aquatica);
+assert.ok(tipos.catapulta?.eventoParaDesbloqueio === 'idadeDaPedra');
+assert.ok(tipos.torreMagnetica?.eventoParaDesbloqueio === 'superBossesMecanicos');
+assert.ok(tipos.torreMetamorfa?.eventoParaDesbloqueio === 'superBossesMetamorfos');
+assert.ok(especificacao.includes("Os 28 tipos de torre permanentes"));
 assert.ok(especificacao.includes("Os ataques alternam sempre na ordem vermelho, azul e amarelo"));
 
 console.log("Seis novas torres da Loja: compra, melhorias, combate e interface validados.");

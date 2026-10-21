@@ -1,6 +1,7 @@
 const assert = require("assert");
 const fs = require("fs");
 const vm = require("vm");
+const { carregarConfig } = require("./apoio/codigo-jogo.cjs");
 
 const codigo = fs.readFileSync("game.js", "utf8");
 const estilos = fs.readFileSync("styles.css", "utf8");
@@ -13,16 +14,11 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
 const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze({");
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",

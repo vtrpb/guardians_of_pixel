@@ -1,0 +1,7 @@
+.desafios-diarios { margin-bottom: 18px; }
+.desafios-diarios .missoes-semana-cabecalho { background: #3c2c53; border-color: #9674b8; }
+.desafios-diarios .missoes-semana-cabecalho small { color: #e4bbff; }
+.desafio-diario-cartao { background: #3b3055; border-color: #8369a4; box-shadow: 5px 5px 0 #221a34; }
+.desafio-diario-cartao .missao-icone { background: #a88cda; border-color: #ead8ff; }
+.desafio-diario-cartao .missao-topo small { color: #e4bbff; }
+.desafio-diario-cartao .missao-progresso span { background: #c59bfa; }

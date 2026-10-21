@@ -14,15 +14,7 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
-const contextoDaConfig = {};
-vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
-const CONFIG = contextoDaConfig.CONFIG_TESTE;
+const CONFIG = require('./apoio/codigo-jogo.cjs').carregarConfig();
 const mina = CONFIG.torre.tipos.minaDePulso;
 
 assert.strictEqual(mina.nome, "Mina de Pulso");
@@ -39,10 +31,11 @@ assert.strictEqual(mina.tipoVisualDaExplosao, "pulso");
 
 const totalDeDefesasCompraveis = Object.values(CONFIG.torre.tipos)
     .filter((configuracao) => configuracao.requerCompraNaLoja).length;
-assert.strictEqual(totalDeDefesasCompraveis + Object.keys(CONFIG.loja.itens).length, 23);
+assert.strictEqual(totalDeDefesasCompraveis + Object.keys(CONFIG.loja.itens).length, 27);
+assert.ok(CONFIG.torre.tipos.torreDeBolhas?.aquatica);
 assert.strictEqual(
     CONFIG.conquistas.mestreDoArsenal.descricao,
-    "Compre todos os 23 itens disponíveis na Loja."
+    "Compre todos os 27 itens disponíveis na Loja."
 );
 
 assert.ok(html.includes('id="botao-mina-pulso"'));
@@ -110,6 +103,6 @@ assert.deepStrictEqual(desbloqueadas, []);
 assert.strictEqual(salvamentos, 1);
 
 assert.ok(especificacao.includes("### Mudança: Mina de Pulso e Mestre do Arsenal"));
-assert.ok(especificacao.includes("Mestre do Arsenal mostra progresso sobre 23 itens"));
+assert.ok(especificacao.includes("Mestre do Arsenal mostra progresso sobre 27 itens"));
 
 console.log("Mina de Pulso e Mestre do Arsenal: catálogo, pulso e revalidação validados.");

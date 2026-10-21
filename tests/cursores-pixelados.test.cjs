@@ -73,7 +73,9 @@ assert.match(estilos, /canvas\.posicao-invalida-sob-cursor \{\s*cursor: var\(--c
 assert.match(estilos, /canvas\.objeto-interativo-sob-cursor \{\s*cursor: var\(--cursor-pixel-acao\) !important;/);
 assert.match(estilos, /\.minigame-fliperama \{[\s\S]*?cursor: var\(--cursor-pixel-mira\);/);
 assert.match(estilos, /\.botao:disabled \{ cursor: not-allowed;/);
-assert.ok(html.includes("build=salvos-28"));
+const folhaPrincipal = html.match(/href="(styles\.css)(?:\?[^"]*)?"/);
+assert.ok(folhaPrincipal, "A página deve carregar a folha que define os cursores");
+assert.ok(fs.existsSync(path.join(raiz, folhaPrincipal[1])));
 
 assert.match(codigo, /const classesDosCursoresEspeciaisDoMapa = Object\.freeze\(\[/);
 assert.match(codigo, /function posicaoEhInvalidaParaCursorDeConstrucao\(x, y\)/);

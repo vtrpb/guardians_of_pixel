@@ -1,0 +1,19 @@
+{
+  "Parabéns, você conseguiu! Agora você desbloqueou o Canhão pesado.": "Glückwunsch, du hast es geschafft! Du hast jetzt die Schwere Kanone freigeschaltet.",
+  "Para ir para a Fase 2, clique em Próxima fase. Ou volte ao menu, entre em Capítulos, escolha o Capítulo 1 e selecione a Fase 2. Depois volte ao lobby e clique em Jogar.": "Um zu Phase 2 zu gelangen, klicke auf Nächste Phase. Oder kehre zum Menü zurück, öffne Kapitel, wähle Kapitel 1 und dann Phase 2. Kehre anschließend zur Lobby zurück und klicke auf Spielen.",
+  "Para saber que a Fase 2 está selecionada, o tema do lobby muda para um deserto.": "Du erkennst die ausgewählte Phase 2 daran, dass die Lobby ein Wüstenthema zeigt.",
+  "Use os créditos recebidos para construir ou melhorar. Confira o limite de melhorias de cada torre na ficha dela.": "Nutze die erhaltenen Credits, um Türme zu bauen oder zu verbessern. Das jeweilige Verbesserungslimit steht in den Turmdetails.",
+  "Purificadora": "Läuterin",
+  "Reveladora": "Enthüllerin",
+  "Restauração": "Wiederherstellung",
+  "Forma Exposta": "Enthüllte Gestalt",
+  "Zona Contaminada": "Verseuchte Zone",
+  "Espelhos da Ruptura": "Spiegel des Risses",
+  "Restaura até {tiros} acertos sofridos por cada torre ainda construída.": "Stellt bei jedem noch stehenden Turm bis zu {tiros} erlittene Treffer wieder her.",
+  "Expõe todos os inimigos atuais: +{percentual}% de dano recebido por {duracao}s.": "Entblößt alle aktuellen Gegner: Sie erleiden {duracao} s lang {percentual} % mehr Schaden.",
+  "Efetiva contra {nome}: +{percentual}% de dano.": "Wirksam gegen {nome}: +{percentual} % Schaden.",
+  "Resista aos ataques e recupere suas defesas entre as waves.": "Halte den Angriffen stand und stelle deine Verteidigung zwischen den Wellen wieder her.",
+  "Controle os rápidos sem deixar os blindados atravessarem.": "Halte schnelle Gegner auf, ohne die gepanzerten durchzulassen.",
+  "Suprema {nome} +{percentual}%": "Supremturm {nome} +{percentual} %",
+  "A Suprema indicada causa mais dano a este Superboss.": "Der angegebene Supremturm verursacht bei diesem Superboss mehr Schaden."
+}

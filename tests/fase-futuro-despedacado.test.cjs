@@ -14,16 +14,11 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
 const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze({");
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = require('./apoio/codigo-jogo.cjs').carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",
@@ -77,7 +72,7 @@ assert.deepStrictEqual(
     [0.7, 0.35]
 );
 assert.strictEqual(CONFIG.inimigo.sentinelaDoAmanha.distanciaDoRecuo, 320);
-assert.strictEqual(CONFIG.inimigo.sentinelaDoAmanha.incrementoVidaPorAparicao, 750);
+assert.strictEqual(CONFIG.inimigo.sentinelaDoAmanha.incrementoVidaPorAparicao, 450);
 assert.strictEqual(CONFIG.audio.musicaDoFuturoDespedacado.intervaloDoPasso, 235);
 
 const contextoDasFendas = {

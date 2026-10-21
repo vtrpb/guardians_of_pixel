@@ -6,17 +6,35 @@
     <meta name="theme-color" content="#07150f">
     <meta name="token-csrf-checkout" content="">
     <title>Guardians of Pixel</title>
-    <link rel="stylesheet" href="styles.css?v=maquina-tempo-1&build=replay-equipamentos-1">
-    <link rel="stylesheet" href="dialogos.css?v=7">
-    <link rel="stylesheet" href="floresta.css?v=7">
-    <link rel="stylesheet" href="melhorias.css?v=2">
+    <link rel="icon" type="image/x-icon" href="assets/guardians-of-pixel.ico?v=2">
+    <link rel="stylesheet" href="styles.css?v=maquina-tempo-1&build=lobby-classico-2&fala=idade-pedra-1&configuracoes=4&comunidade-local=1&tutorial-editor=3">
+    <link rel="stylesheet" href="estilos/lobby-classico.css?v=2">
+    <link rel="stylesheet" href="estilos/lobby-treinamento.css?v=1">
+    <link rel="stylesheet" href="estilos/recompensa-diaria.css?v=1">
+    <link rel="stylesheet" href="estilos/desafios-diarios.css?v=1">
+    <link rel="stylesheet" href="estilos/sobrecarga.css?v=2">
+    <link rel="stylesheet" href="estilos/dialogos.css?v=7">
+    <link rel="stylesheet" href="estilos/floresta.css?v=7">
+    <link rel="stylesheet" href="estilos/melhorias.css?v=2">
+    <link rel="stylesheet" href="estilos/enciclopedia.css?v=1">
+    <link rel="stylesheet" href="estilos/supremas.css?v=1">
+    <link rel="stylesheet" href="estilos/atalhos-lobby.css?v=1">
+    <link rel="stylesheet" href="estilos/desafios-classicos.css?v=1">
+    <link rel="stylesheet" href="estilos/laboratorio-classico.css?v=1">
+    <link rel="stylesheet" href="estilos/desafio-campanha.css?v=2">
+    <link rel="stylesheet" href="estilos/previa-inimigos.css?v=1">
+    <link rel="stylesheet" href="estilos/estatisticas-partida.css?v=1">
+    <link rel="stylesheet" href="estilos/clima-classico.css?v=1">
+    <link rel="stylesheet" href="estilos/segredos-lobby.css?v=2">
+    <link rel="stylesheet" href="estilos/menu-abertura.css?v=23">
+    <link rel="stylesheet" href="estilos/dominio-torres.css?v=2">
+    <link rel="stylesheet" href="estilos/editor-livre.css?v=1">
 </head>
 <body class="jogo-antes-do-lobby">
 <section id="tela-carregamento" class="tela-carregamento" role="status" aria-live="polite" aria-label="Carregando Guardians of Pixel" data-i18n-aria-label="abertura.carregandoJogo">
     <div class="carregamento-conteudo">
-        <span class="carregamento-selo" data-i18n="abertura.umaProducao">UMA PRODUÇÃO</span>
-        <div class="carregamento-logo-moldura">
-            <img src="assets/logo-lpg-studios.png" alt="LPG Studios" width="660" height="552">
+        <div class="carregamento-nucleo" aria-hidden="true">
+            <span></span><i></i><b></b>
         </div>
         <p data-i18n="abertura.preparando">Preparando as defesas</p>
         <div class="carregamento-barra" aria-hidden="true"><span></span></div>
@@ -26,12 +44,6 @@
 
 <section id="tela-inicial-jogo" class="tela-inicial-jogo" role="dialog" aria-modal="true" aria-labelledby="titulo-menu-inicial" hidden>
     <div class="menu-inicial-cenario" aria-hidden="true">
-        <span class="menu-inicial-relogio-fundo"><i></i><b></b></span>
-        <span class="menu-inicial-torre menu-inicial-torre-esquerda"><i></i></span>
-        <span class="menu-inicial-torre menu-inicial-torre-direita"><i></i></span>
-        <span class="menu-inicial-inimigo menu-inicial-inimigo-1"></span>
-        <span class="menu-inicial-inimigo menu-inicial-inimigo-2"></span>
-        <span class="menu-inicial-inimigo menu-inicial-inimigo-3"></span>
     </div>
     <div class="menu-inicial-conteudo">
         <span class="menu-inicial-selo" aria-hidden="true">GP</span>
@@ -48,7 +60,6 @@
                 <strong data-i18n="abertura.sair">SAIR</strong>
             </button>
         </div>
-        <small class="menu-inicial-produtora">LPG STUDIOS · LEQU48</small>
     </div>
 </section>
 
@@ -71,6 +82,34 @@
             </div>
 
             <canvas id="game" width="1200" height="700" aria-label="Mapa do jogo Guardians of Pixel" data-localizar-aria-label="Mapa do jogo Guardians of Pixel"></canvas>
+            <div id="anuncio-modificador-classico" class="anuncio-modificador-classico" role="status" aria-live="polite" hidden>
+                <div class="cena-modificador cena-inflacao" aria-hidden="true">
+                    <div class="grafico-inflacao">
+                        <div class="barras-inflacao"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                        <svg class="seta-inflacao" viewBox="0 0 280 100" preserveAspectRatio="none">
+                            <path class="seta-inflacao-contorno" pathLength="100" d="M12 66 L100 10 L166 31 L257 82"/>
+                            <path class="seta-inflacao-traco" pathLength="100" d="M12 66 L100 10 L166 31 L257 82"/>
+                            <path class="seta-inflacao-ponta" d="M236 78 L260 84 L252 59"/>
+                        <circle class="ponto-inflacao" cx="0" cy="0" r="7"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="cena-modificador cena-ventania" aria-hidden="true">
+                    <svg class="nuvem-ventania" viewBox="0 0 180 100">
+                        <path class="vento-ventania" d="M12 43 H41 M6 60 H31 M140 41 H169"/>
+                        <path class="corpo-nuvem-ventania" d="M50 76 C34 76 28 65 31 54 C34 45 42 40 52 41 C55 25 69 17 82 21 C91 23 97 29 101 37 C114 29 130 33 138 45 C151 46 159 57 155 66 C152 73 144 76 133 76 Z"/>
+                        <path class="raio-ventania" d="M91 63 L76 84 H88 L83 99 L107 74 H94 L103 63 Z"/>
+                    </svg>
+                </div>
+                <div class="cena-modificador cena-sorte" aria-hidden="true">
+                    <svg class="trevo-sorte" viewBox="0 0 100 110">
+                        <path class="haste-trevo" d="M52 62 Q57 83 72 101"/>
+                        <path class="folhas-trevo" d="M50 52 C24 27 30 5 46 9 C55 11 56 25 51 36 C62 10 83 12 83 28 C83 41 70 47 57 48 C82 48 86 67 73 74 C63 79 54 70 50 60 C46 77 25 80 18 68 C10 54 25 45 42 49 Z"/>
+                    </svg>
+                </div>
+                <strong id="nome-modificador-classico"></strong>
+                <span id="efeito-modificador-classico"></span>
+            </div>
         </div>
 
         <aside id="seletor-torres" class="seletor-torres oculto" aria-label="Defesas disponíveis" data-localizar-aria-label="Defesas disponíveis">
@@ -86,11 +125,23 @@
                 <button id="botao-canhao-pesado" class="botao botao-construcao botao-construcao-pesada" onclick="selecionarTipoDeTorre('canhaoPesado')" aria-pressed="false" aria-disabled="true" disabled>Canhão pesado (Conclua Fase 1)</button>
                 <button id="botao-torre-glacial" class="botao botao-construcao botao-construcao-glacial" onclick="selecionarTipoDeTorre('torreGlacial')" aria-pressed="false" aria-disabled="true" disabled>Torre Glacial (Conclua Fase 2)</button>
                 <button id="botao-torre-besta" class="botao botao-construcao botao-construcao-besta" onclick="selecionarTipoDeTorre('torreBesta')" aria-pressed="false" aria-disabled="true" disabled>Torre Besta (Conclua Fase 3)</button>
+                <button id="botao-catapulta" class="botao botao-construcao" onclick="selecionarTipoDeTorre('catapulta')" aria-pressed="false" aria-disabled="true" disabled>Catapulta (Vença Idade da Pedra)</button>
+                <button id="botao-torre-magnetica" class="botao botao-construcao" onclick="selecionarTipoDeTorre('torreMagnetica')" aria-pressed="false" aria-disabled="true" disabled>Torre Magnética (Vença o Titã da Forja)</button>
+                <button id="botao-torre-metamorfa" class="botao botao-construcao" onclick="selecionarTipoDeTorre('torreMetamorfa')" aria-pressed="false" aria-disabled="true" disabled>Torre Metamorfa (Vença o Metamorfo)</button>
                 <button id="botao-torre-esporos" class="botao botao-construcao botao-construcao-esporos" onclick="selecionarTipoDeTorre('torreEsporos')" aria-pressed="false" aria-disabled="true" disabled>Torre de Esporos (Conclua Fase 4)</button>
                 <button id="botao-obliterador" class="botao botao-construcao botao-construcao-obliterador" onclick="selecionarTipoDeTorre('obliterador')" aria-pressed="false" aria-disabled="true" disabled>Obliterador (Conclua Fase 5)</button>
                 <button id="botao-torre-sismica" class="botao botao-construcao botao-construcao-sismica" onclick="selecionarTipoDeTorre('torreSismica')" aria-pressed="false" aria-disabled="true" disabled>Torre Sísmica (Conclua Fase 6)</button>
                 <button id="botao-torre-varredura" class="botao botao-construcao botao-construcao-varredura" onclick="selecionarTipoDeTorre('torreDeVarredura')" aria-pressed="false" aria-disabled="true" disabled>Torre de Varredura (Conclua Fase 13)</button>
                 <button id="botao-isca-blindada" class="botao botao-construcao botao-construcao-isca" onclick="selecionarTipoDeTorre('iscaBlindada')" aria-pressed="false" aria-disabled="true" disabled>Isca Blindada (Compre na Loja)</button>
+                <button id="botao-canhao-blindado" class="botao botao-construcao botao-construcao-isca" onclick="selecionarTipoDeTorre('canhaoBlindado')" aria-pressed="false" aria-disabled="true" disabled>Canhão Blindado (Compre na Loja)</button>
+                <button id="botao-supremaCronarca" class="botao botao-construcao botao-construcao-suprema" onclick="selecionarTipoDeTorre('supremaCronarca')" aria-pressed="false" hidden>Cronarca</button>
+                <button id="botao-supremaTempestade" class="botao botao-construcao botao-construcao-suprema" onclick="selecionarTipoDeTorre('supremaTempestade')" aria-pressed="false" hidden>Tempestade</button>
+                <button id="botao-supremaBastiao" class="botao botao-construcao botao-construcao-suprema" onclick="selecionarTipoDeTorre('supremaBastiao')" aria-pressed="false" hidden>Bastião</button>
+                <button id="botao-supremaPurificadora" class="botao botao-construcao botao-construcao-suprema" onclick="selecionarTipoDeTorre('supremaPurificadora')" aria-pressed="false" hidden>Purificadora</button>
+                <button id="botao-supremaReveladora" class="botao botao-construcao botao-construcao-suprema" onclick="selecionarTipoDeTorre('supremaReveladora')" aria-pressed="false" hidden>Reveladora</button>
+                <button id="botao-boia-arpoes" class="botao botao-construcao" onclick="selecionarTipoDeTorre('boiaArpoes')" disabled>Boia de Arpões</button>
+                <button id="botao-torre-torpedos" class="botao botao-construcao" onclick="selecionarTipoDeTorre('torreTorpedos')" disabled>Torre de Torpedos</button>
+                <button id="botao-torre-de-bolhas" class="botao botao-construcao" onclick="selecionarTipoDeTorre('torreDeBolhas')" disabled>Torre de Bolhas</button>
                 <button id="botao-amplificador-pixel" class="botao botao-construcao botao-construcao-amplificador" onclick="selecionarTipoDeTorre('amplificadorPixel')" aria-pressed="false" aria-disabled="true" disabled>Amplificador Pixel (Compre na Loja)</button>
                 <button id="botao-gerador-creditos" class="botao botao-construcao botao-construcao-gerador" onclick="selecionarTipoDeTorre('geradorDeCreditos')" aria-pressed="false" aria-disabled="true" disabled>Gerador de Créditos (Compre na Loja)</button>
                 <button id="botao-torre-raios" class="botao botao-construcao botao-construcao-raios" onclick="selecionarTipoDeTorre('torreDeRaios')" aria-pressed="false" aria-disabled="true" disabled>Torre de Raios (Compre na Loja)</button>
@@ -112,11 +163,22 @@
     </div>
 
     <div class="controles" aria-label="Controles da partida" data-localizar-aria-label="Controles da partida">
+        <details id="desafios-classicos-partida" hidden><summary>Desafios do mapa</summary><div></div></details>
+        <p id="desafio-campanha-partida" hidden></p>
+        <div id="clima-classico-partida" hidden><span id="clima-classico-estado" role="status" aria-live="polite"></span><label><input id="clima-classico-suave" type="checkbox" onchange="definirClimaSuave(this.checked)"><span data-localizar="Clima visual suave">Clima visual suave</span></label></div>
         <div class="controles-contexto">
             <span class="controles-icone" aria-hidden="true">⌖</span>
             <span><strong data-localizar="Central da torre">Central da torre</strong><small data-localizar="Selecione uma torre no mapa">Selecione uma torre no mapa</small></span>
         </div>
         <div class="controles-acoes">
+            <span id="indicador-sobrevivencia-meteoros" class="indicador-sobrevivencia-meteoros" role="status" hidden></span>
+            <button id="botao-roleta-evento" class="botao" type="button" onclick="abrirRoletaDoEvento()" hidden>Girar roleta</button>
+            <button id="botao-acao-evento" class="botao" type="button" onclick="executarAcaoDoEvento()" hidden></button>
+            <button id="botao-poder-supremo" class="botao" type="button" onclick="ativarPoderSupremo()" disabled hidden><strong>Poder Supremo</strong><small></small><progress max="1" value="0" aria-label="Carga do poder Supremo" data-localizar-aria-label="Carga do poder Supremo"></progress></button>
+            <button id="botao-sobrecarga" class="botao" type="button" onclick="alternarMochila()" aria-keyshortcuts="Q" aria-controls="mochila-nucleos" aria-expanded="false" disabled hidden>
+                <span class="icone-mochila" aria-hidden="true"></span>
+                <span><strong><span data-localizar="Mochila">Mochila</span> [Q]</strong><small id="estado-sobrecarga">Núcleos: 0</small></span>
+            </button>
             <button id="botao-pulso-temporal" class="botao botao-pulso-temporal" type="button" onclick="ativarPulsoTemporal()" disabled hidden>
                 <span class="controle-pulso-icone" aria-hidden="true">⌛</span>
                 <span class="controle-pulso-texto">
@@ -128,6 +190,11 @@
             <button id="botao-melhorar" class="botao botao-primario botao-com-atalho" data-atalho="E" onclick="melhorarTorreSelecionada()" aria-keyshortcuts="E" disabled>Selecione uma torre</button>
             <button id="botao-vender" class="botao botao-perigo botao-com-atalho" data-atalho="X" onclick="venderTorreSelecionada()" aria-keyshortcuts="X" disabled>Selecione uma torre</button>
         </div>
+        <section id="mochila-nucleos" role="dialog" aria-label="Núcleos de Sobrecarga" data-localizar-aria-label="Núcleos de Sobrecarga" hidden>
+            <header><h2 data-localizar="Núcleos de Sobrecarga">Núcleos de Sobrecarga</h2><button id="fechar-mochila" class="botao" type="button" onclick="fecharMochila()" data-localizar="Fechar">Fechar</button></header>
+            <p data-localizar="Escolha um núcleo. A batalha continua enquanto a mochila está aberta.">Escolha um núcleo. A batalha continua enquanto a mochila está aberta.</p>
+            <div class="mochila-itens"></div>
+        </section>
         <section id="painel-melhorias-escolhidas" aria-label="Melhorias da torre" hidden>
             <div class="cabecalho-melhorias"><p id="resumo-melhorias-escolhidas" aria-live="polite"></p><button id="fechar-melhorias" type="button" onclick="fecharPainelDeMelhoriasEscolhidas()" data-localizar="Fechar">Fechar</button></div>
             <div class="opcoes-melhorias">
@@ -204,6 +271,27 @@
 </section>
 
 <section
+    id="camada-escolha-wave"
+    class="camada-escolha-wave"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="titulo-escolha-wave"
+    aria-describedby="descricao-escolha-wave"
+    hidden
+>
+    <div class="painel-escolha-wave">
+        <small id="rotulo-escolha-wave"></small>
+        <h2 id="titulo-escolha-wave"></h2>
+        <p id="descricao-escolha-wave"></p>
+        <div class="opcoes-escolha-wave">
+            <button class="botao opcao-escolha-wave" type="button" data-escolha-wave="velocidade" onclick="escolherDesafioDaWave('velocidade')"></button>
+            <button class="botao opcao-escolha-wave" type="button" data-escolha-wave="resistencia" onclick="escolherDesafioDaWave('resistencia')"></button>
+            <button class="botao opcao-escolha-wave opcao-escolha-wave-normal" type="button" data-escolha-wave="normal" onclick="escolherDesafioDaWave('normal')"></button>
+        </div>
+    </div>
+</section>
+
+<section
     id="camada-resultado"
     class="camada-resultado"
     role="dialog"
@@ -216,6 +304,14 @@
         <span id="selo-resultado" class="selo-resultado" data-localizar="Resultado da batalha">Resultado da batalha</span>
         <h2 id="titulo-resultado">GAME OVER</h2>
         <p id="descricao-resultado"></p>
+        <aside id="orientacao-vitoria-fase1" class="orientacao-vitoria-fase1" hidden>
+            <strong id="titulo-orientacao-vitoria-fase1"></strong>
+            <p id="texto-orientacao-vitoria-fase1"></p>
+            <p id="pista-orientacao-vitoria-fase1"></p>
+        </aside>
+        <p id="fala-idade-da-pedra" class="fala-idade-da-pedra" hidden></p>
+        <div id="resultado-desafio-campanha" hidden></div>
+        <section id="estatisticas-resultado" aria-label="Estatísticas da partida" data-localizar-aria-label="Estatísticas da partida" hidden></section>
         <div class="acoes-resultado">
             <button id="botao-repetir-resultado" class="botao botao-resultado-repetir" onclick="repetirFaseDoResultado()">Recomeçar fase</button>
             <button id="botao-voltar-lobby-resultado" class="botao botao-secundario" onclick="voltarAoLobbyDoResultado()" data-localizar="Voltar ao menu">Voltar ao menu</button>
@@ -307,10 +403,19 @@
     aria-relevant="additions"
 ></div>
 
-<audio id="musica" loop><source src="background_music.mp3" type="audio/mpeg"></audio>
+<audio id="musica" loop></audio>
 
 <main id="menu-principal" class="menu-principal" inert aria-hidden="true">
     <div class="lobby-cenario" aria-hidden="true">
+        <div class="campo-treinamento-classico">
+            <span class="treino-cerca"></span>
+            <span class="treino-arvore treino-arvore-1"></span><span class="treino-arvore treino-arvore-2"></span>
+            <span class="treino-arvore treino-arvore-3"></span><span class="treino-arvore treino-arvore-4"></span>
+            <span class="treino-alvo treino-alvo-1"></span><span class="treino-alvo treino-alvo-2"></span>
+            <span class="treino-torre treino-torre-1"></span><span class="treino-torre treino-torre-2"></span>
+            <span class="treino-bandeira treino-bandeira-1"></span><span class="treino-bandeira treino-bandeira-2"></span>
+            <span class="treino-piso"></span>
+        </div>
         <span class="lago-lobby"></span>
         <span class="arvore-lobby arvore-lobby-2"></span>
         <span class="arvore-lobby arvore-lobby-3"></span>
@@ -472,6 +577,11 @@
             <p class="menu-subtitulo">Pixel tower defense</p>
             <h1 id="titulo-menu"><span>Guardians</span> of <strong>Pixel</strong></h1>
             <p data-i18n="lobby.sobreviva">Sobreviva até o fim!</p>
+            <div class="segredos-lobby" role="group" aria-label="Objetos encontrados" data-localizar-aria-label="Objetos encontrados">
+                <button type="button" data-segredo-lobby="bussola" onclick="examinarSegredoDoLobby('bussola')" aria-label="Examinar bússola" data-localizar-aria-label="Examinar bússola"><span class="segredo-bussola" aria-hidden="true"></span></button>
+                <button type="button" data-segredo-lobby="bilhete" onclick="examinarSegredoDoLobby('bilhete')" aria-label="Examinar bilhete" data-localizar-aria-label="Examinar bilhete"><span class="segredo-bilhete" aria-hidden="true"></span></button>
+                <button type="button" data-segredo-lobby="cristal" onclick="examinarSegredoDoLobby('cristal')" aria-label="Examinar cristal" data-localizar-aria-label="Examinar cristal"><span class="segredo-cristal" aria-hidden="true"></span></button>
+            </div>
         </header>
 
         <nav class="lobby-acoes" aria-label="Ações do menu principal">
@@ -481,13 +591,13 @@
                 <small data-i18n="lobby.torresInimigos">Complete suas figurinhas</small>
             </button>
 
-            <button class="botao-lobby botao-lobby-jogar" onclick="abrirSelecaoDeDefesas()">
+            <button class="botao-lobby botao-lobby-jogar" onclick="lobbyClassicoAtivo ? jogarClassico() : abrirSelecaoDeDefesas()">
                 <span class="icone-lobby icone-jogar" aria-hidden="true">▶</span>
                 <strong data-i18n="lobby.comecarPartida">Começar partida</strong>
                 <small id="fase-selecionada-menu">Fase 1 · Wave 1</small>
             </button>
 
-            <button class="botao-lobby botao-lobby-secundario" onclick="mostrarCapitulos()">
+            <button id="botao-capitulos-mapas" class="botao-lobby botao-lobby-secundario" onclick="lobbyClassicoAtivo ? mostrarApresentacaoClassico() : mostrarCapitulos()">
                 <span class="icone-lobby icone-fases" aria-hidden="true">▤</span>
                 <strong data-i18n="lobby.capitulos">Capítulos</strong>
                 <small data-i18n="lobby.progressoCampanha">Progresso da campanha</small>
@@ -501,16 +611,12 @@
 
         </nav>
 
+        <p id="aviso-classico-lobby" role="alert" hidden></p>
         <div class="lobby-acoes-extras" aria-label="Loja, pacote apoiador, missões e modos">
             <button class="botao-lobby-extra botao-lobby-loja" onclick="mostrarLoja()">
                 <span aria-hidden="true">◆</span>
                 <strong data-i18n="lobby.loja">Loja</strong>
                 <small data-i18n="lobby.defesasMelhorias">Defesas e melhorias</small>
-            </button>
-            <button class="botao-lobby-extra botao-lobby-apoiador" onclick="mostrarPacoteApoiador()">
-                <span aria-hidden="true">♥</span>
-                <strong data-i18n="lobby.pacoteApoiador">Pacote Apoiador</strong>
-                <small id="estado-pacote-apoiador-menu">Cosméticos exclusivos</small>
             </button>
             <button class="botao-lobby-extra botao-lobby-missoes" onclick="mostrarMissoes()">
                 <span aria-hidden="true">✓</span>
@@ -522,33 +628,61 @@
                 <strong data-i18n="lobby.conquistas">Conquistas</strong>
                 <small id="resumo-conquistas-menu">0/6 desbloqueadas</small>
             </button>
-            <button class="botao-lobby-extra botao-lobby-infinito" onclick="abrirSelecaoDeDefesas(true)">
-                <span aria-hidden="true">∞</span>
-                <strong data-i18n="lobby.wavesInfinitas">Waves infinitas</strong>
-                <small data-i18n="lobby.jogueAteBaseCair">Jogue até sua base cair</small>
-            </button>
-            <button id="botao-editor-menu" class="botao-lobby-extra botao-lobby-editor botao-lobby-editor-bloqueado" onclick="mostrarEditorDeFases()" disabled aria-disabled="true">
-                <span aria-hidden="true">✎</span>
-                <strong data-i18n="lobby.editor">Editor</strong>
-                <small id="estado-editor-menu">Requer nível 5</small>
-            </button>
-            <button class="botao-lobby-extra botao-lobby-treinamento" onclick="mostrarCentroDeTreinamento()">
-                <span aria-hidden="true">⚡</span>
-                <strong data-i18n="lobby.treinamento">Treinamento</strong>
-                <small data-i18n="lobby.minigamesForaDoFliperama">Minigames fora do fliperama</small>
-            </button>
-            <button id="botao-modo-classico" class="botao-lobby-extra botao-modo-classico" type="button" onclick="mostrarApresentacaoClassico()">
+            <button id="botao-modo-classico" class="botao-lobby-extra botao-modo-classico" type="button" onclick="alternarModoClassico()">
                 <span aria-hidden="true">⚑</span>
                 <strong data-localizar="Modo clássico">Modo clássico</strong>
-                <small data-localizar="Em breve">Em breve</small>
             </button>
+            <button id="botao-eventos" class="botao-lobby-extra" type="button" onclick="mostrarEventos()"><span aria-hidden="true">✦</span><strong>Eventos</strong><small>Nove desafios para testar</small></button>
+            <button id="botao-supremas" class="botao-lobby-extra" type="button" onclick="mostrarSupremas()"><span aria-hidden="true">♜</span><strong data-localizar="Supremas">Supremas</strong><small data-localizar="Conquiste seu poder">Conquiste seu poder</small></button>
         </div>
 
+        <section class="cristal-diario" aria-labelledby="titulo-cristal-diario">
+            <span class="cristal-diario-desenho" aria-hidden="true"></span>
+            <div class="cristal-diario-textos"><strong id="titulo-cristal-diario"></strong><p id="estado-cristal-diario" role="status" aria-live="polite"></p></div>
+            <button id="botao-cristal-diario" type="button" onclick="resgatarCristalDiario()"></button>
+        </section>
         <footer class="lobby-rodape">
             <div class="lobby-perfil-e-salvos">
-                <button class="botao-lobby-salvos" type="button" onclick="mostrarSalvos()" aria-label="Partidas salvas" data-i18n-aria-label="lobby.salvos">
-                    <img class="icone-partidas-salvas" src="assets/partidas-salvas.svg" alt="">
-                </button>
+                <div class="lobby-atalhos-perfil">
+                    <div class="lobby-atalho-item">
+                        <button class="botao-lobby-salvos lobby-atalho" type="button" onclick="mostrarSalvos()" aria-label="Partidas salvas" data-i18n-aria-label="lobby.salvos">
+                            <img class="icone-partidas-salvas" src="assets/partidas-salvas.svg" alt="">
+                            <span class="atalho-rotulo" data-i18n="lobby.salvos">Partidas salvas</span>
+                        </button>
+                    </div>
+                    <div class="lobby-atalho-item">
+                        <button class="botao-lobby-salvos lobby-atalho botao-lobby-apoiador" type="button" onclick="mostrarPacoteApoiador()" aria-label="Pacote Apoiador" data-i18n-aria-label="lobby.pacoteApoiador" aria-describedby="estado-pacote-apoiador-menu">
+                            <img src="assets/atalho-apoiador.svg" alt="">
+                            <span class="atalho-rotulo" data-i18n="lobby.pacoteApoiador">Pacote Apoiador</span>
+                            <span id="estado-pacote-apoiador-menu" class="atalho-estado">Cosméticos exclusivos</span>
+                        </button>
+                    </div>
+                    <div class="lobby-atalho-item">
+                        <button class="botao-lobby-salvos lobby-atalho botao-lobby-treinamento" type="button" onclick="mostrarCentroDeTreinamento()" aria-label="Treinamento" data-i18n-aria-label="lobby.treinamento">
+                            <img src="assets/atalho-treinamento.svg" alt="">
+                            <span class="atalho-rotulo" data-i18n="lobby.treinamento">Treinamento</span>
+                        </button>
+                    </div>
+                    <div class="lobby-atalho-item">
+                        <button id="botao-editor-menu" disabled aria-disabled="true" class="botao-lobby-salvos lobby-atalho botao-lobby-editor botao-lobby-editor-bloqueado" type="button" onclick="mostrarEditorDeFases()" aria-label="Editor" data-i18n-aria-label="lobby.editor" aria-describedby="estado-editor-menu">
+                            <img src="assets/atalho-editor.svg" alt="">
+                            <span class="atalho-rotulo" data-i18n="lobby.editor">Editor</span>
+                            <span id="estado-editor-menu" class="atalho-estado">Requer nível 5</span>
+                        </button>
+                    </div>
+                    <div class="lobby-atalho-item">
+                        <button class="botao-lobby-salvos lobby-atalho botao-lobby-infinito" type="button" onclick="abrirSelecaoDeDefesas(true)" aria-label="Waves infinitas" data-i18n-aria-label="lobby.wavesInfinitas">
+                            <img src="assets/atalho-infinito.svg" alt="">
+                            <span class="atalho-rotulo" data-i18n="lobby.wavesInfinitas">Waves infinitas</span>
+                        </button>
+                    </div>
+                    <div class="lobby-atalho-item">
+                        <button id="botao-enciclopedia" class="botao-lobby-salvos lobby-atalho botao-lobby-enciclopedia" type="button" onclick="mostrarEnciclopedia()" aria-label="Enciclopédia" data-localizar-aria-label="Enciclopédia">
+                            <img src="assets/atalho-enciclopedia.svg" alt="">
+                            <span class="atalho-rotulo" data-localizar="Enciclopédia">Enciclopédia</span>
+                        </button>
+                    </div>
+                </div>
             <div id="lobby-jogador" class="lobby-jogador">
                 <span id="lobby-avatar" class="lobby-avatar" aria-hidden="true">GP</span>
                 <span><small id="rotulo-defensor-lobby">DEFENSOR</small><strong id="estado-defensor-lobby">PRONTO PARA JOGAR</strong></span>
@@ -569,11 +703,8 @@
                     <span class="lobby-nivel-barra" role="progressbar" aria-valuemin="0" aria-valuemax="200" aria-valuenow="0"><i id="barra-experiencia-jogador-menu"></i></span>
                 </span>
             </button>
-            <div class="lobby-status" aria-label="Resumo da partida">
-                <span><strong id="creditos-iniciais-menu">150</strong> <em data-i18n="lobby.creditos">créditos</em></span>
+            <div class="lobby-status" aria-label="Saldo de Fragmentos de Pixel">
                 <span><strong id="fragmentos-pixel-menu">0</strong> <em data-i18n="lobby.fragmentos">fragmentos</em></span>
-                <span><strong id="limite-torres-menu">10</strong> <em data-i18n="lobby.torres">torres</em></span>
-                <span><strong>20</strong> <em data-i18n="lobby.wavesPorFase">waves por fase</em></span>
             </div>
         </footer>
 
@@ -583,6 +714,11 @@
     <p class="credito-criador"><span data-i18n="lobby.criadoPor">Criado por</span> <strong>Lequ48</strong></p>
 </main>
 
+<dialog id="dialogo-segredo-lobby" aria-labelledby="titulo-segredo-lobby" aria-describedby="texto-segredo-lobby">
+    <h2 id="titulo-segredo-lobby"></h2><p id="texto-segredo-lobby"></p>
+    <p id="estado-segredo-lobby" role="status"></p><p id="conclusao-segredo-lobby" hidden></p>
+    <div class="segredo-acoes"><button id="fechar-segredo-lobby" class="botao" type="button" onclick="fecharSegredoDoLobby()">Fechar pista</button><button id="salvar-segredo-lobby" class="botao" type="button" onclick="examinarSegredoDoLobby(segredoLobbyAberto)" hidden>Tentar salvar novamente</button><button id="ler-segredo-lobby" class="botao" type="button" onclick="lerSegredoDoLobby()">Ler na Enciclopédia</button></div>
+</dialog>
 <div
     id="camada-transicao-glitch"
     class="camada-transicao-glitch"
@@ -777,6 +913,20 @@
             <button class="botao botao-fechar-configuracoes" onclick="fecharConfiguracoes()" aria-label="Fechar configurações" data-i18n-aria-label="configuracoes.fechar">×</button>
         </header>
 
+        <div id="apresentacao-primeiras-configuracoes" class="apresentacao-primeiras-configuracoes" hidden>
+            <strong>Escolha suas preferências · Choose your preferences · Elige tus preferencias</strong>
+            <p>Você sempre vai poder mudar essas coisas em Configurações.<br>You can always change these choices in Settings.<br>Siempre podrás cambiar estas opciones en Configuración.</p>
+        </div>
+
+        <div class="configuracoes-grupo configuracoes-grupo-idioma">
+            <span class="configuracoes-rotulo" data-i18n="configuracoes.idioma">Idioma</span>
+            <div class="seletor-idiomas" role="group" aria-label="Escolher idioma" data-i18n-aria-label="configuracoes.escolherIdioma">
+                <button class="botao botao-idioma" data-idioma="pt-BR" onclick="selecionarIdioma('pt-BR')" aria-pressed="true">Português (BR)</button>
+                <button class="botao botao-idioma" data-idioma="en" onclick="selecionarIdioma('en')" aria-pressed="false">English (US)</button>
+                <button class="botao botao-idioma" data-idioma="es" onclick="selecionarIdioma('es')" aria-pressed="false">Español (ES)</button>
+            </div>
+        </div>
+
         <div class="configuracoes-grupo">
             <label for="controle-volume-musica">
                 <span data-i18n="configuracoes.volumeMusica">Volume da música</span>
@@ -795,18 +945,21 @@
             <button id="botao-efeitos-sonoros" class="botao menu-partida-acao botao-efeitos" onclick="alternarEfeitosSonoros()" aria-pressed="true">🔊 Desativar efeitos</button>
         </div>
 
+        <div class="configuracoes-grupo">
+            <label class="configuracao-opcao" for="controle-animacao-vermelho"><span data-i18n="configuracoes.animacaoVermelho">Animar caminhada dos inimigos</span><input id="controle-animacao-vermelho" type="checkbox" checked onchange="alternarAnimacaoDoVermelho(this.checked)"></label>
+        </div>
+
         <div class="configuracoes-grupo configuracoes-grupo-aparencia">
             <span class="configuracoes-rotulo" data-i18n="configuracoes.iluminacao">Iluminação</span>
             <button id="botao-modo-dia-noite" class="botao menu-partida-acao" onclick="alternarModoDiaNoite()" aria-pressed="false">☾ Modo noite</button>
         </div>
 
-        <div class="configuracoes-grupo configuracoes-grupo-idioma">
-            <span class="configuracoes-rotulo" data-i18n="configuracoes.idioma">Idioma</span>
-            <div class="seletor-idiomas" role="group" aria-label="Escolher idioma" data-i18n-aria-label="configuracoes.escolherIdioma">
-                <button class="botao botao-idioma" data-idioma="pt-BR" onclick="selecionarIdioma('pt-BR')" aria-pressed="true">Português</button>
-                <button class="botao botao-idioma" data-idioma="en" onclick="selecionarIdioma('en')" aria-pressed="false">English</button>
-                <button class="botao botao-idioma" data-idioma="es" onclick="selecionarIdioma('es')" aria-pressed="false">Español</button>
-            </div>
+        <div class="configuracoes-grupo">
+            <label class="configuracao-opcao" for="controle-construcao-cursor"><span data-i18n="configuracoes.construcaoCursor">Mostrar a defesa seguindo o cursor antes de construir</span><input id="controle-construcao-cursor" type="checkbox" onchange="alternarConstrucaoSeguindoCursor(this.checked)"></label>
+        </div>
+
+        <div id="acoes-primeiras-configuracoes" class="acoes-primeiras-configuracoes" hidden>
+            <button id="botao-concluir-primeiras-configuracoes" class="botao menu-partida-acao" type="button" onclick="fecharConfiguracoes()" data-i18n="configuracoes.continuar">Continuar</button>
         </div>
     </section>
 </div>
@@ -836,9 +989,9 @@
             </div>
         </div>
     </section>
-    <script src="conquistas-extras.js?v=2"></script>
-    <script src="missoes.js?melhorias=1&v=3"></script>
-    <script src="missoes-idiomas.js?v=1"></script>
+    <script src="modulos/conquistas-extras.js?v=3"></script>
+    <script src="modulos/missoes.js?melhorias=1&v=6"></script>
+    <script src="modulos/missoes-idiomas.js?v=2"></script>
     <section id="floresta-secreta" role="dialog" aria-modal="true" aria-labelledby="floresta-titulo" hidden>
         <div class="floresta-painel">
             <header><h2 id="floresta-titulo"></h2><button id="floresta-sair" type="button">Salvar e voltar ao lobby</button></header>
@@ -849,16 +1002,45 @@
             <div id="floresta-controles"><div class="floresta-direcional"><button data-floresta-direcao="cima" aria-label="Cima">▲</button><button data-floresta-direcao="esquerda" aria-label="Esquerda">◀</button><button data-floresta-direcao="baixo" aria-label="Baixo">▼</button><button data-floresta-direcao="direita" aria-label="Direita">▶</button></div><button id="floresta-interagir" type="button">Interagir (E)</button><button id="floresta-pausar" type="button">Pausar</button></div>
         </div>
     </section>
-    <script src="fase18.js?v=11"></script>
-    <script src="melhorias.js?v=2"></script>
-    <script src="dialogos.js?v=6"></script>
-    <script src="game.js?v=maquina-tempo-1&build=replay-equipamentos-1"></script>
-    <script src="limbo-visual.js?v=5"></script>
-    <script src="limbo.js?v=5"></script>
-    <script src="floresta.js?v=7"></script>
-    <script src="casa.js?v=8"></script>
-    <script src="memoria.js?v=1"></script>
-    <script src="desfecho.js?v=9"></script>
-    <script src="classico.js?v=1"></script>
+    <script src="modulos/fase18.js?v=12"></script>
+    <script src="modulos/canhao-blindado.js?v=3"></script>
+    <script src="modulos/mochila-nucleos.js?v=2"></script>
+    <script src="modulos/visuais-evolucao.js?v=3"></script>
+    <script src="modulos/melhorias.js?v=11"></script>
+    <script src="modulos/dialogos.js?v=6"></script>
+    <script src="modulos/musicas-classicas.js?v=1"></script>
+    <script src="modulos/biomas-classicos.js?v=5"></script>
+    <script src="modulos/paisagens-classicas.js?v=4"></script>
+    <script src="modulos/mapas-classicos.js?v=7"></script>
+    <script src="modulos/decoracoes-classicas.js?v=3"></script>
+    <script src="modulos/terreno-construcao.js?v=2"></script>
+    <script src="modulos/supremas.js?v=3"></script>
+    <script src="modulos/editor-livre.js?v=4"></script>
+    <script src="game.js?v=maquina-tempo-1&build=forja-premios-1&abertura=11&audio=editor-campo-1&conquista=e-agora&caminhada=selva-1&fala=idade-pedra-1&torre=bolhas-1&premios=superboss-1&visuais=torres-premio-2&magnetica=2&coliseu=1&saldo=2&configuracoes=4&afinidades=3&supremas-slots=1&teste-sabotador=3&retomada=2&emprestimo=2&tutorial-fliperama=2&vitoria-fase1=1&comunidade-local=1&tutorial-editor=3&supremas=5&fraqueza=15"></script>
+    <script src="modulos/escolhas-wave.js?v=1"></script>
+    <script src="modulos/limbo-visual.js?v=5"></script>
+    <script src="modulos/limbo.js?v=7"></script>
+    <script src="modulos/floresta.js?v=8"></script>
+    <script src="modulos/casa.js?v=8"></script>
+    <script src="modulos/memoria.js?v=1"></script>
+    <script src="modulos/desfecho.js?retorno=1&v=12"></script>
+    <script src="modulos/classico.js?v=14"></script>
+    <script src="modulos/laboratorio-classico.js?v=1"></script>
+    <script src="modulos/desafios-classicos.js?v=2"></script>
+    <script src="modulos/desafio-campanha.js?v=3"></script>
+    <script src="modulos/carroca-campanha.js?v=1"></script>
+    <script src="modulos/previa-inimigos.js?v=3"></script>
+    <script src="modulos/estatisticas-partida.js?v=1"></script>
+    <script src="modulos/clima-classico.js?v=1"></script>
+    <script src="modulos/dominio-torres.js?v=3"></script>
+    <script src="modulos/chefes-etapas.js?v=2"></script>
+    <script src="modulos/segredos-abertura.js?v=12"></script>
+    <script src="modulos/segredos-lobby.js?v=2"></script>
+    <script src="modulos/enciclopedia.js?retorno=1&v=5"></script>
+    <script src="modulos/recompensa-diaria.js?v=1"></script>
+    <script src="modulos/desafios-semanais.js?v=1"></script>
+    <script src="modulos/desafios-diarios.js?v=1"></script>
+    <script src="modulos/eventos.js?v=11"></script>
+    <script src="modulos/lobby-interativo.js?v=1"></script>
 </body>
 </html>

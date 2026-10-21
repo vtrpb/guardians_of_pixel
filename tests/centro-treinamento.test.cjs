@@ -5,15 +5,7 @@ const vm = require("vm");
 
 const raiz = path.resolve(__dirname, "..");
 const codigo = fs.readFileSync(path.join(raiz, "game.js"), "utf8");
-const codigoSecundario = fs.readFileSync(
-    path.join(raiz, "tower defense 2", "game.js"),
-    "utf8"
-);
 const html = fs.readFileSync(path.join(raiz, "index.htm"), "utf8");
-const htmlSecundario = fs.readFileSync(
-    path.join(raiz, "tower defense 2", "index.htm"),
-    "utf8"
-);
 const estilos = fs.readFileSync(path.join(raiz, "styles.css"), "utf8");
 const especificacao = fs.readFileSync(
     path.join(raiz, "docs", "ESPECIFICACAO.md"),
@@ -66,16 +58,17 @@ const historico = contexto.normalizarHistoricoDoCentroDeTreinamento({
     partidas: 7.8,
     vitorias: 20,
     tiposConcluidos: ["alvo", "carga", "carga", "invalido"],
-    recordes: { alvo: 2100, carga: 4321.4, reflexo: -10, pulso: "6500" }
+    recordes: { alvo: 2100, voo: 8360, carga: 4321.4, reflexo: -10, pulso: "6500" }
 });
 assert.deepStrictEqual(JSON.parse(JSON.stringify(historico)), {
     partidas: 7,
     vitorias: 7,
     tiposConcluidos: ["alvo", "carga"],
+    recordesPorImpulsos: { voo: null },
     recordes: {
         alvo: 2100,
         labirinto: null,
-        voo: null,
+        voo: 8360,
         coleta: null,
         sequencia: null,
         carga: 4321,
@@ -83,6 +76,9 @@ assert.deepStrictEqual(JSON.parse(JSON.stringify(historico)), {
         pulso: 6500
     }
 });
+assert.strictEqual(contexto.normalizarHistoricoDoCentroDeTreinamento({
+    recordesPorImpulsos: { voo: 12 }
+}).recordesPorImpulsos.voo, 12);
 assert.strictEqual(contexto.obterPosicaoDoMarcadorDePulso(1000), 0);
 assert.strictEqual(contexto.obterPosicaoDoMarcadorDePulso(1250), 0.5);
 assert.strictEqual(contexto.obterPosicaoDoMarcadorDePulso(1500), 1);
@@ -103,15 +99,13 @@ for (const trecho of [
     "treinamento: mostrarCentroDeTreinamento"
 ]) {
     assert.ok(codigo.includes(trecho), `Integração ausente: ${trecho}`);
-    assert.ok(codigoSecundario.includes(trecho), `Cópia secundária ausente: ${trecho}`);
 }
 
 assert.match(html, /botao-lobby-treinamento[\s\S]*?mostrarCentroDeTreinamento/);
-assert.match(htmlSecundario, /botao-lobby-treinamento[\s\S]*?mostrarCentroDeTreinamento/);
-assert.ok(html.includes("build=salvos-28"));
-assert.ok(htmlSecundario.includes("build=salvos-28"));
+const scriptPrincipal = html.match(/<script\b[^>]*src="(game\.js\?[^"\s]+)"/);
+assert.ok(scriptPrincipal, 'A página deve carregar game.js com versão de cache');
+assert.ok(fs.existsSync(path.join(raiz, scriptPrincipal[1].split('?')[0])), 'O script carregado deve existir');
 assert.ok(html.includes('id="camada-minigame-treinamento-fliperama"'));
-assert.ok(htmlSecundario.includes('id="camada-minigame-treinamento-fliperama"'));
 
 for (const seletor of [
     ".treinamento-grade",

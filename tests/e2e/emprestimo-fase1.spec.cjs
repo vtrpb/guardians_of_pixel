@@ -1,0 +1,44 @@
+const { test, expect } = require('@playwright/test');
+
+test('Emprestimo permite construir sem gravar compra e fica restrito a fase 1', async ({ page }, info) => {
+    const erros = [];
+    page.on('pageerror', erro => erros.push(erro.message));
+    await page.addInitScript(() => localStorage.setItem('guardians-of-pixel-tutorial-concluido-v1', 'true'));
+    await page.goto('/');
+    await page.locator('#botao-jogar-menu-inicial').click();
+    await page.evaluate(() => iniciarPartida(false));
+    for (let i = 0; i < 3; i++) await page.locator('#botao-continuar-cutscene-carta').click();
+    await page.evaluate(() => { definirJogoPausado(true); dinheiro = 1000; atualizarBotoesDeConstrucao(); });
+    const botao = page.locator('#botao-isca-blindada');
+    await expect(botao).toBeVisible();
+    await expect(botao).toBeEnabled();
+    await expect(botao).toContainText('300');
+    await expect(botao).toContainText('Empréstimo da fase 1');
+    await expect(page.locator('#botao-canhao-blindado')).toBeHidden();
+    await botao.click();
+    const mapa = page.locator('#game');
+    const caixa = await mapa.boundingBox();
+    await mapa.click({ position: { x: 100 * caixa.width / 1200, y: 440 * caixa.height / 700 } });
+    expect(await page.evaluate(() => torres.map(torre => torre.tipo))).toEqual(['iscaBlindada']);
+    expect(await page.evaluate(() => dinheiro)).toBe(700);
+    await page.screenshot({ path: info.outputPath('emprestimo.png') });
+    expect(await page.evaluate(() => {
+        const compra = comprasDaLoja.has('iscaBlindada');
+        const album = torreEstaDesbloqueada('iscaBlindada');
+        const canhao = defesaEstaDisponivelNaPartida('canhaoBlindado');
+        faseSelecionada = 2;
+        const fase2 = defesaEstaDisponivelNaPartida('iscaBlindada');
+        faseSelecionada = 1; modoWavesInfinitas = true;
+        const infinito = defesaEstaDisponivelNaPartida('iscaBlindada');
+        modoWavesInfinitas = false; mapaPersonalizadoAtivo = {};
+        const personalizado = defesaEstaDisponivelNaPartida('iscaBlindada');
+        mapaPersonalizadoAtivo = null;
+        comprasDaLoja.add('iscaBlindada');
+        const custoAposCompra = obterCustoDeConstrucaoDaTorre('iscaBlindada');
+        comprasDaLoja.delete('iscaBlindada');
+        return { compra, album, canhao, fase2, infinito, personalizado, custoAposCompra };
+    })).toEqual({ compra: false, album: false, canhao: false, fase2: false, infinito: false, personalizado: false, custoAposCompra: 200 });
+    await page.reload();
+    expect(await page.evaluate(() => torreEstaDesbloqueada('iscaBlindada'))).toBe(false);
+    expect(erros).toEqual([]);
+});

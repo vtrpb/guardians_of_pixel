@@ -11,6 +11,12 @@ const especificacao = fs.readFileSync(
     path.join(raiz, "docs", "ESPECIFICACAO.md"),
     "utf8"
 );
+const listaDeTermos = codigo.match(/termosProibidos: Object\.freeze\(\[([\s\S]*?)\]\)/);
+assert.ok(listaDeTermos, "Lista de moderação ausente em CONFIG");
+const termosProibidos = JSON.parse(`[${listaDeTermos[1]}]`);
+const listaDeExpressoes = codigo.match(/expressoesProibidas: Object\.freeze\(\[([\s\S]*?)\]\)/);
+assert.ok(listaDeExpressoes, "Lista de expressões de moderação ausente em CONFIG");
+const expressoesProibidas = JSON.parse(`[${listaDeExpressoes[1]}]`);
 
 function extrairFuncao(nome) {
     const inicio = codigo.indexOf(`function ${nome}(`);
@@ -22,6 +28,7 @@ function extrairFuncao(nome) {
 const contexto = {
     CONFIG: {
         editorDeFases: {
+            moderacao: { termosProibidos, expressoesProibidas, tentativasParaBloqueio: 3, duracaoBloqueioMs: 600000 },
             maximoDeWaves: 20,
             maximoDeGruposPorWave: 6,
             maximoDeInimigosPorGrupo: 50,
@@ -50,6 +57,7 @@ vm.createContext(contexto);
 vm.runInContext(`
     ${extrairFuncao("clonarMapaDoEditor")}
     ${extrairFuncao("contarInimigosDoMapa")}
+    ${extrairFuncao("censurarTextoDoEditor")}
     ${extrairFuncao("normalizarMapaDoEditor")}
     ${extrairFuncao("calcularAssinaturaDoCodigoDoEditor")}
     ${extrairFuncao("codificarTextoDoEditor")}
@@ -82,6 +90,61 @@ const normalizado = JSON.parse(JSON.stringify(
 ));
 assert.strictEqual(normalizado.nome, "Caminho Congelado");
 assert.strictEqual(normalizado.waves.length, 2);
+assert.strictEqual(contexto.censurarTextoDoEditor("Computador grande").texto, "Computador grande");
+assert.strictEqual(contexto.censurarTextoDoEditor("Mapa MERDA livre").texto, "Mapa livre");
+assert.strictEqual(contexto.censurarTextoDoEditor("Uma PUTAIN fase").texto, "Uma fase");
+assert.strictEqual(contexto.censurarTextoDoEditor("No SHIT here").texto, "No here");
+assert.strictEqual(contexto.censurarTextoDoEditor("Qué cabrón").texto, "Qué");
+assert.strictEqual(contexto.censurarTextoDoEditor("Scheiße mapa").texto, "mapa");
+assert.strictEqual(contexto.censurarTextoDoEditor("Mapa filho da puta novo").texto, "Mapa novo");
+assert.strictEqual(contexto.censurarTextoDoEditor("Uma fase vai se ferrar logo").texto, "Uma fase logo");
+assert.strictEqual(contexto.censurarTextoDoEditor("Mapa pqp difícil").texto, "Mapa difícil");
+assert.strictEqual(contexto.censurarTextoDoEditor("Autor f.d.p incrível").texto, "Autor incrível");
+assert.strictEqual(contexto.censurarTextoDoEditor("Criador imbecil").texto, "Criador");
+assert.strictEqual(contexto.censurarTextoDoEditor("Um filho da floresta").texto, "Um filho da floresta");
+assert.strictEqual(contexto.censurarTextoDoEditor("FDPixel").texto, "FDPixel");
+const mapaComTermos = contexto.normalizarMapaDoEditor({
+    ...mapaValido,
+    nome: "Mapa MERDA livre",
+    criador: "shit",
+    descricao: "Uma PUTAIN fase"
+});
+assert.strictEqual(mapaComTermos.nome, "Mapa livre");
+assert.strictEqual(mapaComTermos.criador, "Anônimo");
+assert.strictEqual(mapaComTermos.descricao, "Uma fase");
+
+const armazenamentoDaModeracao = new Map();
+let agoraDaModeracao = 1000000;
+const contextoModeracao = {
+    CONFIG: contexto.CONFIG,
+    CHAVE_MODERACAO_DO_EDITOR: "guardians-of-pixel-editor-moderacao-v1",
+    Date: { now: () => agoraDaModeracao },
+    localStorage: {
+        getItem(chave) { return armazenamentoDaModeracao.get(chave) || null; },
+        setItem(chave, valor) { armazenamentoDaModeracao.set(chave, valor); }
+    }
+};
+vm.createContext(contextoModeracao);
+vm.runInContext(`
+    ${extrairFuncao("carregarEstadoModeracaoDoEditor")}
+    ${extrairFuncao("salvarEstadoModeracaoDoEditor")}
+    ${extrairFuncao("editorEstaBloqueado")}
+    ${extrairFuncao("registrarTextoProibidoNoEditor")}
+    let estadoModeracaoDoEditor = carregarEstadoModeracaoDoEditor();
+`, contextoModeracao);
+for (let tentativa = 1; tentativa <= 2; tentativa++) {
+    vm.runInContext("registrarTextoProibidoNoEditor()", contextoModeracao);
+    assert.strictEqual(vm.runInContext("editorEstaBloqueado()", contextoModeracao), false);
+}
+vm.runInContext("registrarTextoProibidoNoEditor()", contextoModeracao);
+assert.strictEqual(vm.runInContext("editorEstaBloqueado()", contextoModeracao), true);
+assert.strictEqual(
+    JSON.parse(armazenamentoDaModeracao.get(contextoModeracao.CHAVE_MODERACAO_DO_EDITOR)).bloqueadoAte,
+    agoraDaModeracao + 600000
+);
+agoraDaModeracao += 600001;
+assert.strictEqual(vm.runInContext("editorEstaBloqueado()", contextoModeracao), false);
+assert.strictEqual(vm.runInContext("estadoModeracaoDoEditor.tentativas", contextoModeracao), 0);
 assert.strictEqual(vm.runInContext("contarInimigosDoMapa(mapaDoTeste)", contexto), 15);
 
 for (const alteracaoInvalida of [
@@ -116,18 +179,37 @@ const importado = JSON.parse(JSON.stringify(
 assert.strictEqual(importado.nome, mapaValido.nome);
 assert.strictEqual(importado.criador, "Lequ48");
 assert.strictEqual(importado.publicado, true);
+assert.strictEqual(importado.idDoMapaOriginal, mapaValido.id);
+const cargaAntiga = contexto.codificarTextoDoEditor(JSON.stringify({
+    versao: 1,
+    mapa: Object.fromEntries(Object.entries(mapaValido).filter(([chave]) =>
+        !["id", "publicado", "atualizadoEm"].includes(chave)
+    ))
+}));
+contexto.codigoAntigo = `GP-MAPA-1.${cargaAntiga}.${contexto.calcularAssinaturaDoCodigoDoEditor(cargaAntiga)}`;
+assert.strictEqual(contexto.importarMapaPeloCodigo(contexto.codigoAntigo).nome, mapaValido.nome);
+assert.strictEqual(contexto.importarMapaPeloCodigo(contexto.codigoAntigo).idDoMapaOriginal, undefined);
 contexto.codigoAdulterado = `${codigoCompartilhado.slice(0, -1)}x`;
 assert.strictEqual(vm.runInContext("importarMapaPeloCodigo(codigoAdulterado)", contexto), null);
 
+const botaoEditor = html.match(/<button\b[^>]*id="botao-editor-menu"[^>]*>[\s\S]*?<\/button>/)?.[0];
+assert.ok(botaoEditor, 'Atalho do editor ausente');
+const classesEditor = botaoEditor.match(/class="([^"]*)"/)[1].split(/\s+/);
+['botao-lobby-salvos', 'lobby-atalho', 'botao-lobby-editor', 'botao-lobby-editor-bloqueado']
+    .forEach(classe => assert.ok(classesEditor.includes(classe), `Classe do atalho ausente: ${classe}`));
+assert.match(botaoEditor, /id="estado-editor-menu"[^>]*>Requer nível 5/);
+assert.match(botaoEditor, /aria-describedby="estado-editor-menu"/);
+assert.match(botaoEditor, /src="assets\/atalho-editor.svg"/);
+assert.ok(fs.existsSync(path.join(raiz, 'assets/atalho-editor.svg')));
+const scriptJogo = html.match(/<script\b[^>]*src="(game\.js(?:\?[^"]*)?)"[^>]*><\/script>/);
+assert.ok(scriptJogo, 'Carregamento do jogo ausente');
+assert.ok(fs.existsSync(path.join(raiz, scriptJogo[1].split('?')[0])));
 [
     'id="botao-editor-menu"',
-    'class="botao-lobby-extra botao-lobby-editor botao-lobby-editor-bloqueado"',
     'onclick="mostrarEditorDeFases()"',
     'disabled aria-disabled="true"',
-    'id="estado-editor-menu">Requer nível 5',
-    'data-i18n="lobby.editor"',
-    "build=salvos-28"
-].forEach(trecho => assert.ok(html.includes(trecho), `Interface ausente: ${trecho}`));
+    'data-i18n="lobby.editor"'
+].forEach(trecho => assert.ok(botaoEditor.includes(trecho), `Interface ausente: ${trecho}`));
 
 [
     'const CHAVE_MAPAS_DO_EDITOR = "guardians-of-pixel-editor-mapas-v1"',
@@ -145,7 +227,7 @@ assert.strictEqual(vm.runInContext("importarMapaPeloCodigo(codigoAdulterado)", c
     "function gerarCodigoDoMapaNoEditor(",
     "function importarMapaPeloCodigo(",
     "function configurarComposicaoDaWavePersonalizada(",
-    "if (!mapaPersonalizadoAtivo) {\n                    registrarInimigoEliminadoParaMissoes();"
+    "if (!mapaPersonalizadoAtivo) {\n                    registrarInimigoEliminadoParaMissoes(inimigo);"
 ].forEach(trecho => assert.ok(codigo.includes(trecho), `Regra ausente: ${trecho}`));
 
 [

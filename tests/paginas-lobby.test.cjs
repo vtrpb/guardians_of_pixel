@@ -21,7 +21,7 @@ for (const tela of [
     "conquistas",
     "salvos"
 ]) {
-    assert.match(javascript, new RegExp(`definirTelaDoMenuAberta\\("${tela}"\\)`));
+    assert.match(javascript, new RegExp(`definirTelaDoMenuAberta\\(\\s*(["'])${tela}\\1\\s*\\)`));
 }
 
 assert.match(javascript, /const TELAS_DO_LOBBY_EM_TELA_CHEIA = new Set/);
@@ -40,6 +40,8 @@ assert.match(css, /\.menu-principal\.pagina-menu-aberta \.menu-cartao\s*\{[\s\S]
 
 assert.match(especificacao, /### Mudança: páginas de conteúdo em tela inteira no lobby/);
 assert.match(especificacao, /Capítulos.*Álbum.*Como jogar.*Loja.*Pacote Apoiador.*Missões.*Conquistas/);
+assert.match(especificacao, /Missões.*missões diárias e semanais.*contador independente de 100 missões resgatadas/);
+assert.doesNotMatch(especificacao, /Missões.*painel de 100 objetivos permanentes/);
 assert.match(especificacao, /Configurações.*continua usando sua caixa central atual/);
 assert.match(especificacao, /portal secreto mantém a transição fixa e o balão do Senhor do Tempo/i);
 

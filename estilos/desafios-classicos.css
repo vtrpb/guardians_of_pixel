@@ -1,0 +1,29 @@
+.classico-desafios {padding:12px;background:#202d36;border-top:2px solid #8ca18a;text-align:left;color:#f7efd1;}
+.classico-desafios summary,#desafios-classicos-partida summary {cursor:var(--cursor-pixel-acao);line-height:1.6;font-size:12px;}
+.classico-desafio {display:flex;gap:12px;margin-top:16px;align-items:flex-start;}
+.classico-desafio strong {font-size:12px;line-height:1.7;}
+.classico-desafio small {display:block;font-size:10px;line-height:1.7;color:#a9bac2;}
+.classico-desafios .classico-desafio p {font-size:11px;line-height:1.7;margin:8px 0;color:#e4e4d5;}
+.desafio-medalha {flex:none;display:grid;place-items:center;width:34px;height:38px;border:3px solid #71858d;background:#33454f;color:#9aa9b2;font:24px monospace;box-shadow:0 5px 0 #1c202b;}
+.medalha-conquistada .desafio-medalha {background:#855d21;border-color:#ffe49c;color:#fff3b7;box-shadow:0 5px 0 #bd6549;}
+.medalha-conquistada small {color:#ffe49c;}
+.classico-desafios-resumo {max-width:850px;margin:24px auto;padding:20px;border:3px solid #bea66b;background:#24312f;color:#fff2c8;}
+.classico-desafios-resumo p {font-size:12px;line-height:1.8;}
+#desafios-classicos-partida {width:100%;padding:10px;border:2px solid #b7a375;background:#24312f;color:#fff2c8;}
+.controles:has(>#desafios-classicos-partida:not([hidden])) {flex-wrap:wrap;}
+#desafios-classicos-partida {flex-basis:100%;}
+#desafios-classicos-partida[hidden] {display:none;}
+#desafios-classicos-partida p {font-size:11px;line-height:1.7;}
+.classico-selo-contrato {display:inline-grid;place-items:center;margin:8px 0 0;padding:3px 9px;border:2px solid #71858d;background:#263c42;color:#8fa8a8;font:20px monospace;box-shadow:0 3px 0 #14282d;}
+.classico-selo-contrato.conquistado {border-color:#8ce8c7;background:#245d55;color:#e9fff4;box-shadow:0 3px 0 #143d38;}
+.classico-contrato {display:flex;gap:10px;margin-top:10px;padding:10px;border:2px solid #7baf9e;background:#203a39;text-align:left;color:#e6fff0;}
+.classico-contrato>span {font:24px monospace;color:#8ce8c7;}
+.classico-contrato strong {font-size:11px;}.classico-contrato small {display:block;margin-top:3px;color:#a9d4c5;font-size:10px;}
+.classico-mapa .classico-contrato p {margin:6px 0 0;color:#e6fff0;font-size:10px;line-height:1.5;}
+#desafios-classicos-partida .contrato-na-partida {padding-top:6px;border-top:1px solid #7baf9e;color:#a9f0d2;}
+#desafios-classicos-partida .mutacoes-na-partida {padding-top:6px;border-top:1px solid #7baf9e;color:#c8d8d0;}
+.classico-botao-mare {margin-top:8px;padding:6px 9px;color:#d5f5fc;background:#1a5264;border-color:#61b8d1;font-size:10px;}
+.classico-botao-mare[aria-pressed="true"] {color:#102d39;background:#89dcea;border-color:#d4f9ff;}
+.palco-jogo.mare-classica-ativa #game {outline:5px solid #80e5ff;box-shadow:0 8px 0 #020704,0 0 26px #65d1e9;}
+@media (max-width: 650px) {.classico-mapa[data-mapa="103"] {grid-column:1 / -1;width:min(100%,320px);justify-self:center;}}
+@media(max-width:600px){.classico-desafios{padding:8px;}.classico-desafio{gap:6px;}.desafio-medalha{width:24px;height:30px;font-size:18px;}.classico-desafio strong{font-size:10px;}.classico-desafios .classico-desafio p{font-size:10px;}}

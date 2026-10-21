@@ -1,0 +1,17 @@
+{
+  "A Suprema ocupa uma vaga da equipe. Uma única construção por partida, mesmo após vender ou perder a torre.": "Die Supreme belegt einen Platz im Team. Du kannst sie pro Partie nur einmal bauen, auch wenn du sie verkaufst oder verlierst.",
+  "A Suprema ocupou uma vaga; {nome} saiu da equipe.": "Die Supreme hat einen Platz belegt; {nome} wurde aus dem Team entfernt.",
+  "Melhoria: {custo} | Recarga {segundos}s · Empurrão {distancia} px · Vulnerabilidade +{percentual}%": "Verbesserung: {custo} | Nachladen {segundos} s · Rückstoß {distancia} px · Verwundbarkeit +{percentual} %",
+  "Melhorias": "Verbesserungen",
+  "Melhorias ({usadas}/{total})": "Verbesserungen ({usadas}/{total})",
+  "Melhorias aplicadas: {nivel}. Dano, velocidade e alcance dependem das escolhas feitas na partida.": "Angewendete Verbesserungen: {nivel}. Schaden, Geschwindigkeit und Reichweite hängen von den Entscheidungen in dieser Partie ab.",
+  "MEMÓRIA RECUPERADA": "ERINNERUNG WIEDERHERGESTELLT",
+  "MEMORIZE A SEQUÊNCIA": "PRÄGE DIR DIE REIHENFOLGE EIN",
+  "Mensagem no telefone": "Nachricht auf dem Telefon",
+  "Menu da partida": "Spielmenü",
+  "Mestre clássico": "Meister des Klassikmodus",
+  "Mestre do Arsenal": "Meister des Arsenals",
+  "Mestre do Fliperama": "Meister der Spielhalle",
+  "Metrópole Neon": "Neonmetropole",
+  "Meu nome é Senhor do Tempo.": "Mein Name ist Herr der Zeit."
+}

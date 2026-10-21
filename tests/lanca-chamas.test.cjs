@@ -64,6 +64,7 @@ const contexto = {
     ativarErupcaoDoTita() {}
 };
 vm.createContext(contexto);
+vm.runInContext(require("./apoio/codigo-jogo.cjs").extrairFuncao("ativarConvocacaoDoInimigo"), contexto);
 vm.runInContext(codigo.slice(inicioDasFuncoes, fimDasFuncoes), contexto);
 
 const inimigo = {

@@ -17,15 +17,7 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
-const contextoDaConfig = {};
-vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
-const CONFIG = contextoDaConfig.CONFIG_TESTE;
+const CONFIG = require("./apoio/codigo-jogo.cjs").carregarConfig();
 
 assert.strictEqual(CONFIG.elementos.tipos.fogo.multiplicadorDeVantagem, 1.35);
 assert.strictEqual(CONFIG.elementos.tipos.gelo.multiplicadorDeVantagem, 1.25);
@@ -44,7 +36,12 @@ assert.strictEqual(CONFIG.torre.tipos.torreEsporos.elemento, "toxico");
 assert.strictEqual(CONFIG.torre.tipos.minaCorrosiva.elemento, "toxico");
 assert.strictEqual(CONFIG.torre.tipos.padrao.elemento, undefined);
 
-const contexto = { CONFIG, Date, Math };
+const eventosDeMorte = [];
+const contexto = {
+    CONFIG, Date, Math,
+    tentarSoltarNucleo(inimigo) { eventosDeMorte.push(["nucleo", inimigo]); },
+    registrarGolpeFinalParaConquistas(inimigo, torre) { eventosDeMorte.push(["conquista", inimigo, torre]); }
+};
 vm.createContext(contexto);
 vm.runInContext([
     extrairFuncao("obterConfiguracaoDoElemento"),
@@ -52,6 +49,7 @@ vm.runInContext([
     extrairFuncao("obterVantagemElementalDoAtaque"),
     extrairFuncao("obterFormaDoCarcereiroDoIntervalo"),
     extrairFuncao("obterVantagemElementalContraInimigo"),
+    require("./apoio/codigo-jogo.cjs").extrairFuncao("ativarConvocacaoDoInimigo"),
     extrairFuncao("aplicarDanoAoInimigo")
 ].join("\n"), contexto);
 
@@ -120,6 +118,21 @@ assert.strictEqual(
     contexto.aplicarDanoAoInimigo(criarAlvo("loboDeGelo"), 100, 1000),
     100
 );
+
+const alvoFinal = criarAlvo("loboDeGelo");
+alvoFinal.vida = 100;
+const torreOrigem = { tipo: "lancaChamas" };
+assert.strictEqual(contexto.aplicarDanoAoInimigo(alvoFinal, 0, 1000), 0);
+assert.strictEqual(contexto.aplicarDanoAoInimigo(alvoFinal, -10, 1000), 0);
+assert.strictEqual(alvoFinal.vida, 100);
+contexto.aplicarDanoAoInimigo(alvoFinal, 100, 1000, {
+    elemento: "fogo", tipoDaDefesa: "lancaChamas", torreOrigem
+});
+assert.ok(alvoFinal.vida <= 0);
+assert.strictEqual(alvoFinal.defesaDoGolpeFinal, "lancaChamas");
+assert.deepStrictEqual(eventosDeMorte, [["nucleo", alvoFinal], ["conquista", alvoFinal, torreOrigem]]);
+assert.strictEqual(contexto.aplicarDanoAoInimigo(alvoFinal, 100, 1100), 0);
+assert.strictEqual(eventosDeMorte.length, 2, "Um alvo morto não concede outro drop ou conquista");
 
 [
     "elemento: configuracaoBase.elemento || null",

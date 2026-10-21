@@ -38,7 +38,8 @@ function extrairFuncao(nome) {
     "function moverTiros(multiplicadorDeMovimento = 1)",
     "function moverTirosDosInimigos(multiplicadorDeMovimento = 1)",
     "atualizarExplosoesDosExplosivos(multiplicadorDeMovimento)",
-    "requestAnimationFrame(atualizar);"
+    "requestAnimationFrame(instante => {",
+    "agendarQuadroDaPartida();"
 ].forEach((trecho) => assert.ok(
     codigo.includes(trecho),
     `Simulação estável ausente: ${trecho}`
@@ -83,6 +84,10 @@ const contextoDaVisibilidade = {
     menuAberto: false,
     duracaoCompensada: 0,
     focoRestaurado: false,
+    retomadasAgendadas: 0,
+    garantirRetomadaDaPartida() {
+        contextoDaVisibilidade.retomadasAgendadas++;
+    },
     definirMenuDaPartidaAberto(aberto) {
         contextoDaVisibilidade.menuAberto = aberto;
     },
@@ -109,6 +114,7 @@ assert.strictEqual(contextoDaVisibilidade.duracaoCompensada, 3000);
 assert.strictEqual(contextoDaVisibilidade.paginaOcultadaEm, 0);
 assert.strictEqual(contextoDaVisibilidade.pausaAutomaticaPorOcultacao, false);
 assert.strictEqual(contextoDaVisibilidade.focoRestaurado, true);
+assert.strictEqual(contextoDaVisibilidade.retomadasAgendadas, 1);
 
 const contextoDoMinigamePausado = {
     minigameFliperamaAtivo: true,

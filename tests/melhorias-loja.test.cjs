@@ -18,10 +18,14 @@ const especificacao = fs.readFileSync(path.join(raiz, "docs", "ESPECIFICACAO.md"
     "function obterItensDaLoja()",
     "function obterBonusPermanenteDaLoja(propriedade)",
     "dinheiro = obterDinheiroInicial();",
-    "dinheiro += obterRecompensaPorTiro();"
+    "function registrarCreditosPorDisparo()",
+    "dinheiro += creditosRecebidos;"
 ].forEach((trecho) => assert.ok(codigo.includes(trecho), `Integração ausente: ${trecho}`));
+assert.ok((codigo.match(/registrarCreditosPorDisparo\(alvo\);/g) || []).length >= 2,
+    "Os disparos comuns e o feixe devem passar pela remuneração dos tiros.");
 
-assert.ok(html.includes('id="creditos-iniciais-menu"'));
+assert.ok(html.includes('id="fragmentos-pixel-menu"'));
+assert.ok(!html.includes('id="creditos-iniciais-menu"'));
 assert.ok(html.includes("Defesas e melhorias"));
 assert.ok(css.includes(".loja-item-miniatura-melhoria"));
 assert.ok(css.includes(".melhoria-recompensa-otimizada"));

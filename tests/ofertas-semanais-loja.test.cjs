@@ -30,6 +30,7 @@ const configuracoesPorId = Object.fromEntries(itensDaLojaTeste);
 const armazenamento = new Map();
 const contexto = {
     CONFIG: {
+        sobrecarga: require("./apoio/codigo-jogo.cjs").carregarConfig().sobrecarga,
         loja: {
             ofertaSemanal: {
                 quantidadeMaximaDeItens: 3,
@@ -53,6 +54,7 @@ const contexto = {
     }
 };
 vm.createContext(contexto);
+vm.runInContext(require("./apoio/codigo-jogo.cjs").extrairFuncao("obterTipoDoNucleoDaLoja", "modulos/mochila-nucleos.js"), contexto);
 vm.runInContext(`
     function obterItensDaLoja() { return itensDaLojaTeste; }
     function obterConfiguracaoDoItemDaLoja(idDoItem) {

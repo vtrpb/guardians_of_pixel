@@ -23,7 +23,7 @@ assert.match(
 );
 assert.match(
     codigo,
-    /boss: Object\.freeze\(\{\s*nome: "Boss comum",\s*vida: 1000,\s*incrementoVidaPorAparicao: 500,\s*velocidade: 1\.1,\s*tamanho: 38,\s*cor: "#4a001f"\s*\}\)/
+    /boss: Object\.freeze\(\{\s*nome: "Boss comum",\s*vida: 600,\s*incrementoVidaPorAparicao: 250,\s*velocidade: 0\.9,\s*tamanho: 38,\s*cor: "#4a001f"\s*\}\)/
 );
 assert.ok(
     (codigo.match(/desenharCorpoDoInimigo\(/g) || []).length >= 3,
@@ -35,11 +35,11 @@ assert.match(
 );
 assert.match(
     codigo,
-    /const escalaVisual = obterEscalaVisualDoInimigo\(inimigo\.tipo, inimigo\.tamanho\);\s*const tamanho = escalaVisual \* 2;/
+    /const escalaVisual = obterEscalaVisualDoInimigo\(inimigo\.tipo, inimigo\.tamanho\);\s*const inimigoGrande = inimigoTemPorteGrande\(inimigo\);[\s\S]*?const tamanho = escalaVisual \* 2;/
 );
 assert.match(
     codigo,
-    /const escalaVisual = obterEscalaVisualDoInimigo\(tipo, configuracao\.tamanho\);\s*const tamanhoDoSprite = escalaVisual \* 2;/
+    /const escalaVisual = obterEscalaVisualDoInimigo\(tipo, configuracao\.tamanho\);\s*const tamanhoDoSprite = SPRITES_DOS_ELENCOS_EXCLUSIVOS\[tipo\]\s*\? Math\.min\(escalaVisual \* 2, tamanhoDaAreaDeDesenho - 8\)\s*: escalaVisual \* 2;/
 );
 
 const desenhosPorTipo = {
@@ -51,11 +51,13 @@ const desenhosPorTipo = {
 };
 
 for (const [tipo, nomeDaFuncao] of Object.entries(desenhosPorTipo)) {
+    const argumentos = 'x, y, tamanho, quadroDaCaminhada';
     assert.match(
         codigo,
-        new RegExp(`if \\(inimigo\\.tipo === "${tipo}"\\) \\{\\s*${nomeDaFuncao}\\(x, y, tamanho\\);\\s*return;\\s*\\}`)
+        new RegExp(`if \\(inimigo\\.tipo === "${tipo}"\\) \\{[\\s\\S]*?${nomeDaFuncao}\\(${argumentos}\\);\\s*return;\\s*\\}`)
     );
 }
+assert.match(codigo, /const quadroDaCaminhada = animacaoDoVermelhoAtiva\s*\? Math\.floor/);
 
 function extrairFuncao(nomeDaFuncao) {
     const inicio = codigo.indexOf(`function ${nomeDaFuncao}(`);
@@ -68,6 +70,7 @@ const operacoes = [];
 const contexto = {
     Math,
     CONFIG: {
+        animacaoDoVermelho: { distanciaPorQuadro: 8, quadrosDaCaminhada: 4 },
         inimigo: {
             normal: { cor: "#d33a45" },
             elite: { cor: "#7b2cbf" },
@@ -77,6 +80,9 @@ const contexto = {
         }
     },
     ctx: {
+        save() {},
+        translate(...argumentos) { operacoes.push(["transladar", ...argumentos]); },
+        restore() {},
         set fillStyle(valor) {
             operacoes.push(["cor", valor]);
         },
@@ -88,7 +94,8 @@ const contexto = {
 
 vm.createContext(contexto);
 vm.runInContext(
-    Object.values(desenhosPorTipo).map(extrairFuncao).join("\n"),
+    ["obterPassoDaCaminhada", "obterOscilacaoDaCaminhada", ...Object.values(desenhosPorTipo)]
+        .map(extrairFuncao).join("\n"),
     contexto
 );
 
@@ -112,6 +119,27 @@ for (const [nomeDaFuncao, tamanho, corDeDestaque] of casos) {
         `${nomeDaFuncao} precisa manter sua identidade visual.`
     );
 }
+
+const quadrosDaCaminhada = Array.from({ length: 4 }, (_, quadro) => {
+    operacoes.length = 0;
+    contexto.desenharInimigoVermelho(10, 20, 40, quadro);
+    return operacoes.filter(([tipo]) => tipo === "retangulo").slice(0, 4);
+});
+assert.strictEqual(new Set(quadrosDaCaminhada.map(JSON.stringify)).size, 4);
+assert.notDeepStrictEqual(quadrosDaCaminhada[0].slice(0, 2), quadrosDaCaminhada[2].slice(0, 2),
+    "Os braços devem alternar com as pernas.");
+assert.notDeepStrictEqual(quadrosDaCaminhada[0].slice(2), quadrosDaCaminhada[2].slice(2));
+for (const [nomeDaFuncao, tamanho] of casos.slice(1)) {
+    const poses = Array.from({ length: 4 }, (_, quadro) => {
+        operacoes.length = 0;
+        contexto[nomeDaFuncao](10, 20, tamanho, quadro);
+        return operacoes.filter(([tipo]) => tipo === "retangulo").slice(0, 6);
+    });
+    assert.strictEqual(new Set(poses.map(JSON.stringify)).size, 4,
+        `${nomeDaFuncao} deve ter quatro poses de caminhada distintas.`);
+}
+assert.match(codigo, /inimigo\.distanciaDaPassada = \(\(inimigo\.distanciaDaPassada \|\| 0\)/);
+assert.match(codigo, /distanciaPorQuadro: 8, quadrosDaCaminhada: 4/);
 
 assert.match(especificacao, /### Mudança: remake dos inimigos da Fase 1/);
 assert.match(especificacao, /\*\*Não alterar:\*\* nomes, tipos internos, vida, velocidade, tamanho lógico, hitboxes/);

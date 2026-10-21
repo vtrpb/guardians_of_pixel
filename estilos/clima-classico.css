@@ -1,0 +1,5 @@
+#clima-classico-partida{padding:10px 12px;max-width:440px;color:#dcecef;background:#203543;border:1px solid #7097aa;font-size:11px;line-height:1.7}
+#clima-classico-partida[hidden]{display:none}
+#clima-classico-partida label{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer}
+#clima-classico-partida input{width:18px;height:18px;accent-color:#b3dee5}
+.classico-clima{font-size:11px;line-height:1.7;padding:10px;border:1px solid #718f99;color:#d2eaf1;background:#203543}

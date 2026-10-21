@@ -21,6 +21,7 @@ function extrairFuncao(nome) {
 
 const armazenamento = new Map();
 const notificacoes = [];
+const conquistasDesbloqueadas = [];
 const contexto = {
     CONFIG: {
         progressaoDeNivel: {
@@ -66,6 +67,7 @@ const contexto = {
     atualizarSaldoDeFragmentos() {},
     atualizarBotoesDeConstrucao() {},
     verificarConquistasAutomaticas() {},
+    desbloquearConquista(id) { conquistasDesbloqueadas.push(id); },
     atualizarResumoDasConquistasNoMenu() {},
     mostrarNiveis() {},
     obterNomeLocalizado(item) { return item.nome; },
@@ -138,6 +140,7 @@ assert.strictEqual(contexto.progressaoDeNivel.experienciaTotal, 350);
 
 vm.runInContext("progressaoDeNivel = criarProgressaoDeNivelVazia(); progressaoDeNivel.historicoImportado = true; registrarExperiencia(900);", contexto);
 assert.strictEqual(vm.runInContext("obterDadosDoNivel().nivel", contexto), 4);
+assert.deepStrictEqual(conquistasDesbloqueadas, ["primeiroNivel"]);
 assert.ok(contexto.recompensasPermanentesDasMissoes.skinsDesbloqueadas.includes("vanguarda"));
 assert.ok(contexto.comprasDaLoja.has("raios"));
 assert.deepStrictEqual(

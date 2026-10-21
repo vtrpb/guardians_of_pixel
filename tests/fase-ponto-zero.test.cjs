@@ -1,6 +1,7 @@
 const assert = require("assert");
 const fs = require("fs");
 const vm = require("vm");
+const { carregarConfig } = require("./apoio/codigo-jogo.cjs");
 
 const codigo = fs.readFileSync("game.js", "utf8");
 const html = fs.readFileSync("index.htm", "utf8");
@@ -14,16 +15,11 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
 const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze({");
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",
@@ -64,7 +60,7 @@ assert.deepStrictEqual(
 );
 assert.strictEqual(CONFIG.audio.musicaDoPontoZero.intervaloDoPasso, 340);
 assert.strictEqual(CONFIG.audio.musicaDoPontoZero.volumeRelativo, 2.05);
-assert.strictEqual(CONFIG.audio.musicaDoPontoZero.melodia.length, 12);
+assert.strictEqual(CONFIG.audio.musicaDoPontoZero.melodia.length, 48);
 assert.ok(CONFIG.audio.musicaDoPontoZero.melodia.includes(0));
 const composicaoDoPontoZero = extrairFuncao("tocarPassoDaMusicaDoPontoZero");
 assert.ok(composicaoDoPontoZero.includes('"sine"'));
@@ -97,8 +93,8 @@ assert.strictEqual(CONFIG.inimigo.arquivistaCorrompido.velocidade, 0.75);
 assert.strictEqual(CONFIG.inimigo.arquivistaCorrompido.fragmentosLiberados, 2);
 assert.strictEqual(CONFIG.inimigo.fragmentoDeArquivo.velocidade, 2);
 assert.strictEqual(CONFIG.inimigo.vigiaDoPontoZero.reducaoDeDanoNoSetorDeRuptura, 0.25);
-assert.strictEqual(CONFIG.inimigo.guardiaoDoPontoZero.vida, 3500);
-assert.strictEqual(CONFIG.inimigo.guardiaoDoPontoZero.incrementoVidaPorAparicao, 1100);
+assert.strictEqual(CONFIG.inimigo.guardiaoDoPontoZero.vida, 2450);
+assert.strictEqual(CONFIG.inimigo.guardiaoDoPontoZero.incrementoVidaPorAparicao, 660);
 assert.strictEqual(CONFIG.inimigo.guardiaoDoPontoZero.residuosPorRuptura, 1);
 assert.strictEqual(CONFIG.inimigo.guardiaoDoPontoZero.reducaoDeDanoDoEscudo, 0.3);
 assert.strictEqual(CONFIG.inimigo.guardiaoDoPontoZero.duracaoDoEscudo, 1500);
@@ -182,8 +178,8 @@ assert.strictEqual(invocados.filter(item => item.tipo === "fragmentoDeArquivo").
 
 const guardiao = {
     tipo: "guardiaoDoPontoZero",
-    vida: 1000,
-    vidaMaxima: 3500,
+    vida: 700,
+    vidaMaxima: CONFIG.inimigo.guardiaoDoPontoZero.vida,
     rupturasDoPontoZeroRealizadas: 0,
     escudoPontoZeroExpiraEm: 0,
     rupturaPontoZeroExpiraEm: 0

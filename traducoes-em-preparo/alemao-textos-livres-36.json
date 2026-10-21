@@ -1,0 +1,19 @@
+{
+  " | Desbloqueio: vença Idade da Pedra": " | Freischaltung: Gewinne das Steinzeit-Ereignis",
+  "{nome} é desbloqueada ao vencer Idade da Pedra.": "{nome} wird durch einen Sieg im Steinzeit-Ereignis freigeschaltet.",
+  "Exclusivo da Fase 16 | Retorna uma vez com 35% da vida e recua 180 px": "Nur in Phase 16 | Kehrt einmal mit 35 % Gesundheit zurück und weicht 180 px zurück",
+  "Exclusivo da Fase 17 | Acelera 60% com metade da vida": "Nur in Phase 17 | Wird bei halber Gesundheit um 60 % schneller",
+  "Exclusivo da Fase 17 | Aos 70% e 35% de vida, sela duas torres por 2s e convoca um Couraçado": "Nur in Phase 17 | Versiegelt bei 70 % und 35 % Gesundheit zwei Türme für 2 s und beschwört einen Panzergegner",
+  "Exclusivo da Fase 17 | Armadura reduz o dano em 30%": "Nur in Phase 17 | Die Rüstung verringert den erlittenen Schaden um 30 %",
+  "Exclusivo da Fase 17 | Convoca dois Batedores com metade da vida": "Nur in Phase 17 | Beschwört bei halber Gesundheit zwei Späher",
+  "Exclusivo da Fase 2": "Nur in Phase 2",
+  "Exclusivo da Fase 2 | +{vida} de vida por aparição": "Nur in Phase 2 | +{vida} Gesundheit pro Erscheinen",
+  "Exclusivo da Fase 3": "Nur in Phase 3",
+  "Exclusivo da Fase 3 | +{vida} de vida por aparição": "Nur in Phase 3 | +{vida} Gesundheit pro Erscheinen",
+  "Exclusivo da Fase 4": "Nur in Phase 4",
+  "Exclusivo da Fase 4 | +{vida} de vida por aparição": "Nur in Phase 4 | +{vida} Gesundheit pro Erscheinen",
+  "Exclusivo da Fase 4 | Desacelera torres": "Nur in Phase 4 | Verlangsamt Türme",
+  "Exclusivo da Fase 5 | +{vida} de vida por aparição | Rugido atordoa torres próximas": "Nur in Phase 5 | +{vida} Gesundheit pro Erscheinen | Sein Brüllen betäubt nahe Türme",
+  "Exclusivo da Fase 5 | Faz arrancadas": "Nur in Phase 5 | Legt kurze Sprints ein",
+  "Exclusivo da Fase 6": "Nur in Phase 6"
+}

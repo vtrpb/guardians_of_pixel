@@ -48,9 +48,13 @@ const configuracoesPorNivel = [100, 150, 225, 325]
 const contexto = {
     wave: 5,
     dinheiro: 0,
+    mapaPersonalizadoAtivo: null,
+    desafioSupremoAtivo: null,
     torres: [],
     avisosDeCreditosGerados: [],
     CONFIG: {
+        economia: { tetoDeSaldoDasPartidasComuns: 5000 },
+        eventos: { elencosSuperBosses: {} },
         torre: {
             duracaoAvisoCreditosGeradosEmQuadros: 75
         }
@@ -74,6 +78,8 @@ const contexto = {
     }
 };
 vm.createContext(contexto);
+vm.runInContext(codigo.slice(codigo.indexOf("function faseUsaTetoDeSaldo("),
+    codigo.indexOf("function obterLimiteDeCombateNaWaveDosSuperBosses(")), contexto);
 vm.runInContext(codigo.slice(inicioDaFuncao, fimDaFuncao), contexto);
 
 const gerador = {
@@ -105,5 +111,20 @@ assert.strictEqual(contexto.dinheiro, 575);
 contexto.torres = [];
 assert.strictEqual(contexto.concederCreditosDosGeradoresAposWave(8), 0);
 assert.strictEqual(contexto.dinheiro, 575, "Um Gerador removido não pode pagar");
+
+contexto.mapaPersonalizadoAtivo = { evento: 'superBosses' };
+contexto.CONFIG.eventos = { elencosSuperBosses: { superBosses: {} },
+    economiaSuperBosses: { limiteInicialPorWave: 700, aumentoPorWave: 75 } };
+contexto.dinheiro = 24975;
+contexto.torres = [gerador];
+assert.strictEqual(contexto.concederCreditosDosGeradoresAposWave(8), 325);
+assert.strictEqual(contexto.dinheiro, 25300);
+assert.strictEqual(contexto.avisosDeCreditosGerados.at(-1).creditos, 325);
+
+contexto.mapaPersonalizadoAtivo = null;
+contexto.dinheiro = 4975;
+assert.strictEqual(contexto.concederCreditosDosGeradoresAposWave(9), 25);
+assert.strictEqual(contexto.dinheiro, 5000);
+assert.strictEqual(contexto.avisosDeCreditosGerados.at(-1).creditos, 25);
 
 console.log("Gerador de Créditos: compra, melhorias, wave inteira e pagamento único validados.");

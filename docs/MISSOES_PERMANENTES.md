@@ -1,6 +1,8 @@
 # Missões permanentes
 
-Prêmio de conclusão das 100: **Guardião Solar** e **Sentinela Cósmica** (skins cosméticas da Torre padrão), **1.250 XP** e a conquista **Lenda das 100 Missões**. Resgate único por slot, disponível ao cumprir os objetivos, independentemente dos resgates individuais. Sem Fragmentos diretos; XP segue a progressão normal. O prêmio fica no painel de Missões, e as skins obtidas também aparecem no Álbum.
+> Arquivo histórico para migração de saves. As 100 missões não aparecem mais no painel nem acumulam progresso novo. Somente prêmios já concluídos e ainda não resgatados podem ser reclamados na seção legada de Missões; o direito já conquistado aos 1.250 XP permanece separado.
+
+Prêmio de conclusão das 100 permanentes: **1.250 XP**. Resgate único por slot, disponível ao cumprir os objetivos, independentemente dos resgates individuais. Sem Fragmentos diretos; XP segue a progressão normal. **Guardião Solar** e **Sentinela Cósmica** agora são prêmios dos eventos Roleta e Super-Bosses. Skins já adquiridas pelo prêmio antigo permanecem no Álbum. A conquista **Lenda das 100 Missões** usa o contador independente de missões resgatadas de qualquer tipo, descrito em `ESPECIFICACAO.md`.
 
 100 objetivos sem prazo, divididos em dez categorias. Recompensas são únicas por slot. Contadores compartilhados acumulam desde o início do acompanhamento; resgatar não zera o progresso. Regras de migração, exclusões e condições: ESPECIFICACAO.md.
 
@@ -98,7 +100,7 @@ Prêmio de conclusão das 100: **Guardião Solar** e **Sentinela Cósmica** (ski
 
 | Nº | Missão | Objetivo | Recompensa |
 |---|---|---|---|
-| 61 | De volta ao campo | Vença 3 partidas de campanha. | Skin Sentinela Dourada |
+| 61 | De volta ao campo | Vença 3 partidas de campanha. | 15 Fragmentos de Pixel |
 | 62 | Defensor experiente | Vença 10 partidas de campanha. | 10 Fragmentos de Pixel |
 | 63 | Serviço de proteção | Vença 25 partidas de campanha. | 15 Fragmentos de Pixel |
 | 64 | Sempre de pé | Vença 50 partidas de campanha. | 20 Fragmentos de Pixel |
@@ -130,7 +132,7 @@ Prêmio de conclusão das 100: **Guardião Solar** e **Sentinela Cósmica** (ski
 |---|---|---|---|
 | 81 | Sem linha de chegada | Complete a wave 20 no modo infinito. | 10 Fragmentos de Pixel |
 | 82 | Só aquecendo | Complete a wave 30 no modo infinito. | 15 Fragmentos de Pixel |
-| 83 | Além do limite | Complete a wave 40 no modo infinito. | Conquista Além do Limite |
+| 83 | Além do limite | Complete a wave 40 no modo infinito. | 25 Fragmentos de Pixel |
 | 84 | Ainda estou aqui | Complete a wave 50 no modo infinito. | 20 Fragmentos de Pixel |
 | 85 | Resistência extrema | Complete a wave 60 no modo infinito. | 25 Fragmentos de Pixel |
 | 86 | Não acaba nunca? | Complete a wave 75 no modo infinito. | 25 Fragmentos de Pixel |
@@ -154,4 +156,4 @@ Prêmio de conclusão das 100: **Guardião Solar** e **Sentinela Cósmica** (ski
 | 99 | Arsenal da memória | Desbloqueie a Torre de Feixe Contínuo. | 5 Fragmentos de Pixel |
 | 100 | Muito longe do começo | Alcance o nível 12 e desbloqueie a Torre de Longo Alcance. | 20 Fragmentos de Pixel |
 
-A Sentinela Dourada já obtida rende 15 Fragmentos alternativos; Além do Limite já obtida rende 25. Os objetivos secretos 91–100 ficam ocultos até a conclusão. A arena do Limbo continua sem missões extras.
+A Sentinela Dourada agora é prêmio da primeira vitória em Caixa Surpresa; desbloqueios antigos são preservados. A conquista Além do Limite é concedida ao completar a wave 40 infinita, sem resgate da missão 83; essa missão permanece disponível com 25 Fragmentos. Resgates antigos e conquistas já obtidas permanecem. Os objetivos secretos 91–100 ficam ocultos até a conclusão. A arena do Limbo continua sem missões extras.

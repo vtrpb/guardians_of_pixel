@@ -20,11 +20,7 @@ const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig)
-        + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = require('./apoio/codigo-jogo.cjs').carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",
@@ -38,6 +34,11 @@ assert.strictEqual(fase.descricao, "Selva Primordial");
 assert.strictEqual(CONFIG.torre.limitesPorFase[8], 15);
 assert.strictEqual(CONFIG.audio.musicaDaSelvaPrimordial.intervaloDoPasso, 230);
 assert.strictEqual(CONFIG.audio.musicaDaSelvaPrimordial.volumeRelativo, 1.7);
+assert.strictEqual(CONFIG.inimigo.bossPrimordial.vida, 3360);
+assert.strictEqual(CONFIG.inimigo.bossPrimordial.incrementoVidaPorAparicao, 360);
+assert.ok(especificacao.includes("Sua vida começa em 3.360, aumenta 360 por aparição"));
+assert.ok(especificacao.includes("3.360 de vida inicial"));
+assert.ok(especificacao.includes("3.360 de vida na primeira aparição"));
 assert.deepStrictEqual(
     Array.from(CONFIG.inimigo.bossPrimordial.percentuaisDeVidaParaChamado),
     [0.6, 0.3]
@@ -109,6 +110,7 @@ const contextoDaBatalha = {
     CONFIG,
     Date,
     Math,
+    desafioSupremoAtivo: null,
     inimigos: [],
     mostrarAviso() {},
     localizar(texto) { return texto; },
@@ -118,6 +120,7 @@ vm.createContext(contextoDaBatalha);
 vm.runInContext([
     extrairFuncao("criarInimigoInvocado"),
     extrairFuncao("ativarChamadoDaMatilha"),
+    extrairFuncao("ativarConvocacaoDoInimigo"),
     extrairFuncao("aplicarDanoAoInimigo")
 ].join("\n"), contextoDaBatalha);
 
@@ -146,6 +149,7 @@ const contextoDoPulso = {
     CONFIG,
     Date,
     Math,
+    desafioSupremoAtivo: null,
     maiorFaseConcluida: 8,
     jogoIniciado: true,
     jogoPausado: false,
@@ -154,6 +158,7 @@ const contextoDoPulso = {
     proximaWaveDoPulsoTemporal: 1,
     pulsoTemporalNormalExpiraEm: 0,
     pulsoTemporalBossExpiraEm: 0,
+    boostInimigosFliperamaExpiraEm: 0,
     botaoPulsoTemporal: { disabled: true, hidden: true, dataset: {} },
     estadoPulsoTemporal: { textContent: "" },
     localizar(texto, variaveis = {}) {
@@ -166,6 +171,7 @@ const contextoDoPulso = {
 vm.createContext(contextoDoPulso);
 vm.runInContext([
     extrairFuncao("tipoEhBoss"),
+    extrairFuncao("obterProgressoParaEquipamentos"),
     extrairFuncao("pulsoTemporalEstaDesbloqueado"),
     extrairFuncao("pulsoTemporalEstaAtivo"),
     extrairFuncao("pulsoTemporalPodeSerAtivado"),

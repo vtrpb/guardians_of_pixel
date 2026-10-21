@@ -15,7 +15,11 @@ const especificacao = fs.readFileSync(path.join(raiz, "docs", "ESPECIFICACAO.md"
     "ganhoDaMusicaDoArtico.connect(contextoAudio.destination)"
 ].forEach((trecho) => assert.ok(codigo.includes(trecho), `Integração ausente: ${trecho}`));
 
-assert.match(codigo, /musicaDoArtico: Object\.freeze\(\{\s*intervaloDoPasso: 400,\s*volumeRelativo: 1\.55,/);
+const { carregarConfig } = require('./apoio/codigo-jogo.cjs');
+const musica = carregarConfig().audio.musicaDoArtico;
+assert.strictEqual(musica.intervaloDoPasso, 400);
+assert.strictEqual(musica.volumeRelativo, 1.55);
+assert.ok(musica.melodia.length > 0);
 assert.ok(especificacao.includes("composição procedural exclusiva do Ártico"));
 assert.ok(especificacao.includes("passos de 400 ms com ganho relativo de 155%"));
 

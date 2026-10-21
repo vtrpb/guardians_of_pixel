@@ -20,10 +20,7 @@ const inicioDosCaminhos = codigo.indexOf("const caminhosDasFases = Object.freeze
 const fimDosCaminhos = codigo.indexOf("const temasDoMapa = Object.freeze({", inicioDosCaminhos);
 const contextoDaConfig = {};
 vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
+contextoDaConfig.CONFIG_TESTE = require('./apoio/codigo-jogo.cjs').carregarConfig();
 vm.runInContext(
     codigo.slice(inicioDosCaminhos, fimDosCaminhos)
         + "\nglobalThis.CAMINHOS_TESTE = caminhosDasFases;",
@@ -71,6 +68,7 @@ const contextoDaVelocidade = {
     faseSelecionada: 9,
     pulsoTemporalNormalExpiraEm: 0,
     pulsoTemporalBossExpiraEm: 0,
+    boostInimigosFliperamaExpiraEm: 0,
     tipoEhBoss() { return false; }
 };
 vm.createContext(contextoDaVelocidade);
@@ -101,6 +99,7 @@ const contextoDoEscudo = {
 vm.createContext(contextoDoEscudo);
 vm.runInContext([
     extrairFuncao("obterReducaoDoEscudoParaInimigo"),
+    extrairFuncao("ativarConvocacaoDoInimigo"),
     extrairFuncao("aplicarDanoAoInimigo")
 ].join("\n"), contextoDoEscudo);
 assert.strictEqual(contextoDoEscudo.aplicarDanoAoInimigo(alvoProtegido, 100, 1000), 75);

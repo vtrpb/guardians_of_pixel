@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "verificar:recursos": "node scripts/verificar-recursos.cjs",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "node tests/executar-testes-unitarios.cjs",
     "test:e2e:install": "playwright install chromium",

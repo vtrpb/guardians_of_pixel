@@ -1,0 +1,29 @@
+.classico-abrir-laboratorio { margin: 6px auto 0; padding: 8px 14px; color: #c6ffea; border-color: #64cbab; background: #143d3d; }
+.laboratorio-classico { max-width: 1120px; margin: 18px auto; padding: 18px; color: #e8fff5; background: #0b2229; border: 4px solid #67c9b2; box-shadow: 8px 8px 0 #071318; font-family: "Courier New",monospace; }
+.laboratorio-cenario { min-height: 220px; display: grid; grid-template-columns: 1fr 1.5fr 1fr; align-items: end; gap: 16px; padding: 20px; overflow: hidden; background: repeating-linear-gradient(90deg,#102f38 0 34px,#143943 34px 38px); border: 3px solid #366c72; }
+.laboratorio-monitor { align-self: center; min-height: 118px; padding: 8px; background: #071719; border: 8px solid #637f7b; box-shadow: 4px 6px 0 #041014; color: #67e8b7; font-size: 12px; }
+.laboratorio-monitor svg { display: block; width: 100%; height: 84px; fill: none; stroke: #62f2b2; stroke-width: 3; }
+.laboratorio-monitor-lateral svg { stroke: #e5b75f; }
+.laboratorio-tubos { display: flex; align-items: end; justify-content: center; gap: 20px; }
+.laboratorio-tubo { position: relative; width: 78px; height: 150px; display: grid; place-items: center; overflow: hidden; border: 7px solid #8caaa5; border-top: 10px solid #c1d2c3; border-radius: 8px 8px 26px 26px; background: linear-gradient(180deg,#193e4c 15%,#2c776e 16%,#24aa84 100%); box-shadow: 0 0 20px #43eac050,inset 8px 0 #c5fff129; }
+.laboratorio-tubo-ativo { height: 180px; background: linear-gradient(180deg,#193e4c 15%,#685b39 16%,#c5a14b 100%); box-shadow: 0 0 28px #e4c66388,inset 8px 0 #fff9c34d; }
+.laboratorio-tubo span { z-index: 1; color: #101d1b; font-size: 40px; text-shadow: 1px 1px #d3f1a8; }
+.laboratorio-tubo i { position: absolute; bottom: 10px; width: 20px; height: 20px; border: 3px solid #e2ffdf; border-radius: 50%; box-shadow: 22px -35px 0 -5px #c9ffe2,-19px -62px 0 -6px #c9ffe2; animation: bolhas-laboratorio 3s linear infinite; }
+@keyframes bolhas-laboratorio { to { transform: translateY(-115px); opacity: 0; } }
+.laboratorio-leitura { padding: 18px 10px; text-align: center; }
+.laboratorio-leitura small { color: #8fe5bc; }
+.laboratorio-leitura h3 { margin: 8px 0; color: #f3d879; font-size: 1.4rem; }
+.laboratorio-leitura p { margin: 6px 0; line-height: 1.5; }
+.laboratorio-simulador { padding: 18px; background: #17333a; border: 2px solid #5f9b92; }
+.laboratorio-simulador h3 { margin: 0 0 14px; }
+.laboratorio-opcoes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.laboratorio-opcoes .botao { min-width: 100px; }
+.laboratorio-opcoes .botao[aria-pressed="true"] { color: #152a24; background: #d9e98d; border-color: #fff4bb; }
+.laboratorio-resultados { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.laboratorio-resultados>div { display: grid; gap: 8px; padding: 14px; background: #0a2027; border: 2px solid #527d76; }
+.laboratorio-resultados strong { color: #f3d879; }
+.laboratorio-resultados b { color: #98f3c2; }
+.laboratorio-simulador p { font-size: 12px; line-height: 1.5; }
+.laboratorio-voltar { margin-top: 16px; }
+@media (max-width: 720px) { .laboratorio-classico { margin: 10px; padding: 10px; } .laboratorio-cenario { min-height: 150px; gap: 5px; padding: 8px; } .laboratorio-monitor { min-height: 75px; padding: 3px; border-width: 4px; font-size: 7px; } .laboratorio-monitor svg { height: 50px; } .laboratorio-tubos { gap: 5px; } .laboratorio-tubo { width: 42px; height: 90px; border-width: 4px; } .laboratorio-tubo-ativo { height: 110px; } .laboratorio-tubo span { font-size: 22px; } .laboratorio-resultados { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .laboratorio-tubo i { animation: none; } }

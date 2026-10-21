@@ -7,7 +7,18 @@ const estilos = fs.readFileSync("styles.css", "utf8");
 const html = fs.readFileSync("index.htm", "utf8");
 const especificacao = fs.readFileSync("docs/ESPECIFICACAO.md", "utf8");
 
-assert.match(html, /onclick="mostrarCapitulos\(\)"/);
+const botaoCapitulos = html.match(/<button\b[^>]*id="botao-capitulos-mapas"[^>]*>/)?.[0];
+assert.ok(botaoCapitulos, 'Atalho de capítulos deve existir');
+const acaoCapitulos = botaoCapitulos.match(/onclick="([^"]+)"/)[1];
+for (const classico of [false, true]) {
+    const destinos = [];
+    vm.runInNewContext(acaoCapitulos, {
+        lobbyClassicoAtivo: classico,
+        mostrarCapitulos: () => destinos.push('capitulos'),
+        mostrarApresentacaoClassico: () => destinos.push('mapas')
+    });
+    assert.deepStrictEqual(destinos, [classico ? 'mapas' : 'capitulos']);
+}
 assert.match(html, /data-i18n="lobby\.capitulos">Capítulos</);
 assert.doesNotMatch(html, /onclick="mostrarFases\(\)"/);
 assert.match(codigo, /capitulos: Object\.freeze\(\[[\s\S]*?faseInicial: 1, faseFinal: 6[\s\S]*?faseInicial: 7, faseFinal: 12[\s\S]*?faseInicial: 13, faseFinal: 18/);

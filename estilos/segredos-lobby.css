@@ -1,0 +1,24 @@
+.segredos-lobby{position:fixed;inset:0;z-index:2;pointer-events:none}
+.pagina-menu-aberta .segredos-lobby{display:none}
+.segredos-lobby button{position:absolute;width:48px;height:48px;padding:0;border:0;background:transparent;box-shadow:none;cursor:default;pointer-events:auto;opacity:.68}
+.segredos-lobby [data-segredo-lobby="bussola"]{left:4%;top:65%}
+.segredos-lobby [data-segredo-lobby="bilhete"]{right:3%;top:29%}
+.segredos-lobby [data-segredo-lobby="cristal"]{right:5%;bottom:9%}
+.segredos-lobby button:before{content:'';position:absolute;left:12px;top:27px;width:24px;height:10px;background:#657457;clip-path:polygon(0 100%,5% 55%,30% 55%,35% 0,68% 0,85% 30%,100% 100%);z-index:1}
+.segredos-lobby [data-segredo-lobby="bilhete"]:before{background:#676954;top:26px;left:21px;width:17px}
+.segredos-lobby [data-segredo-lobby="cristal"]:before{background:#536957;top:29px;width:20px}
+.segredos-lobby button:focus-visible{outline:3px solid #f5de9f;outline-offset:4px}
+.segredo-bussola{display:block;width:13px;height:13px;margin:auto;background:#aaa078;border:2px solid #70634b;transform:rotate(35deg)}
+.segredo-bussola:after{content:'';position:absolute;width:2px;height:8px;left:4px;top:1px;background:#805c51}
+.segredo-bilhete{display:block;width:12px;height:16px;margin:auto;background:repeating-linear-gradient(#b5ad87 0 4px,#847a5b 4px 5px);border:2px solid #b5ad87;transform:rotate(-25deg)}
+.segredo-cristal{display:block;width:10px;height:16px;margin:auto;background:linear-gradient(90deg,#685f77 50%,#998ba6 50%);clip-path:polygon(50% 0,100% 30%,85% 82%,50% 100%,15% 82%,0 30%)}
+#dialogo-segredo-lobby{box-sizing:border-box;width:min(560px,calc(100vw - 32px));max-height:85dvh;overflow:auto;padding:24px;background:#29203b;color:#f1e5c5;border:3px solid #b79d6b;box-shadow:7px 7px #101018;font-family:inherit;line-height:1.9}
+#dialogo-segredo-lobby::backdrop{background:#080b16cc}
+#dialogo-segredo-lobby h2{font-size:19px;color:#f4d794;line-height:1.5;margin-top:0}
+#dialogo-segredo-lobby p{font-size:13px}
+#estado-segredo-lobby{color:#d2bfdc}
+#dialogo-segredo-lobby .segredo-acoes{display:flex;flex-wrap:wrap;gap:10px}
+#dialogo-segredo-lobby button{font-size:11px;min-height:44px;white-space:normal}
+#dialogo-segredo-lobby [hidden]{display:none}
+@media(max-width:700px){.segredos-lobby [data-segredo-lobby="bussola"]{left:0;top:130px}.segredos-lobby [data-segredo-lobby="bilhete"]{right:0;top:177px}.segredos-lobby [data-segredo-lobby="cristal"]{left:43%;right:auto;top:5px;bottom:auto}}
+@media(max-width:480px){#dialogo-segredo-lobby{padding:18px}}

@@ -19,19 +19,11 @@ function extrairFuncao(nome) {
     return codigo.slice(inicio, fim);
 }
 
-const inicioDaConfig = codigo.indexOf("const CONFIG = Object.freeze({");
-const fimDaConfig = codigo.indexOf("// Cada fase possui", inicioDaConfig);
-const contextoDaConfig = {};
-vm.createContext(contextoDaConfig);
-vm.runInContext(
-    codigo.slice(inicioDaConfig, fimDaConfig) + "\nglobalThis.CONFIG_TESTE = CONFIG;",
-    contextoDaConfig
-);
-const CONFIG = contextoDaConfig.CONFIG_TESTE;
+const CONFIG = require('./apoio/codigo-jogo.cjs').carregarConfig();
 
 assert.ok(html.includes('id="botao-torre-varredura"'));
 assert.ok(html.includes("selecionarTipoDeTorre('torreDeVarredura')"));
-assert.ok(html.includes("build=salvos-28"));
+assert.match(html, /src="game\.js\?[^\"]*build=[^\"]+"/);
 assert.ok(estilos.includes(".botao-construcao-varredura"));
 assert.ok(estilos.includes('[data-etapa-cena="fichaTecnica"]'));
 assert.ok(especificacao.includes("### Mudança: Protótipo V-13 e inimigos camuflados"));
@@ -85,6 +77,7 @@ const contextoDosAlvos = {
     Math,
     CONFIG,
     inimigos: [inimigoComum, inimigoCamuflado],
+    obterConfiguracaoDaTorre(tipo) { return CONFIG.torre.tipos[tipo]; },
     obterAlcanceAtualDaTorre() { return 100; }
 };
 vm.createContext(contextoDosAlvos);
@@ -124,9 +117,36 @@ assert.deepStrictEqual(alvosDeArea.map(alvo => alvo.vida), [75, 100]);
 contextoDaArea.aplicarDanoEmArea(0, 0, 20, 25, null, 1000, "torreDeVarredura");
 assert.deepStrictEqual(alvosDeArea.map(alvo => alvo.vida), [50, 75]);
 
-const contextoDaEquipe = { CONFIG };
+const contextoDaEquipe = { CONFIG, obterBonusPermanenteDaLoja: () => 0,
+    desafioSupremoAtivo: null, carregarSupremas: () => ({ equipada: null }) };
 vm.createContext(contextoDaEquipe);
-vm.runInContext(extrairFuncao("incluirTorreDeVarreduraNaSelecao"), contextoDaEquipe);
+vm.runInContext([
+    extrairFuncao("obterLimiteDaSelecaoDeDefesas"),
+    extrairFuncao("obterLimiteDeDefesasComuns"),
+    extrairFuncao("incluirTorreDeVarreduraNaSelecao")
+].join("\n"), contextoDaEquipe);
+assert.deepStrictEqual(
+    Array.from(contextoDaEquipe.incluirTorreDeVarreduraNaSelecao(
+        new Set(["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreEsporos", "obliterador"])
+    )),
+    ["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreEsporos", "torreDeVarredura"]
+);
+contextoDaEquipe.carregarSupremas = () => ({ equipada: "supremaCronarca" });
+assert.deepStrictEqual(
+    Array.from(contextoDaEquipe.incluirTorreDeVarreduraNaSelecao(
+        new Set(["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreEsporos", "obliterador"])
+    )),
+    ["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreDeVarredura"]
+);
+contextoDaEquipe.carregarSupremas = () => ({ equipada: null });
+contextoDaEquipe.obterBonusPermanenteDaLoja = () => 1;
+assert.deepStrictEqual(
+    Array.from(contextoDaEquipe.incluirTorreDeVarreduraNaSelecao(
+        new Set(["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreEsporos", "obliterador"])
+    )),
+    ["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreEsporos", "obliterador", "torreDeVarredura"]
+);
+contextoDaEquipe.carregarSupremas = () => ({ equipada: "supremaCronarca" });
 assert.deepStrictEqual(
     Array.from(contextoDaEquipe.incluirTorreDeVarreduraNaSelecao(
         new Set(["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreEsporos", "obliterador"])
@@ -134,16 +154,7 @@ assert.deepStrictEqual(
     ["padrao", "canhaoPesado", "torreGlacial", "torreBesta", "torreEsporos", "torreDeVarredura"]
 );
 
-const codigoSecundario = fs.readFileSync(
-    path.join(raiz, "tower defense 2", "game.js"),
-    "utf8"
-);
-const htmlSecundario = fs.readFileSync(
-    path.join(raiz, "tower defense 2", "index.htm"),
-    "utf8"
-);
-assert.ok(codigoSecundario.includes("torreDeVarredura: Object.freeze({"));
-assert.ok(codigoSecundario.includes("infiltradorCamuflado: Object.freeze({"));
-assert.ok(htmlSecundario.includes("build=salvos-28"));
+assert.ok(codigo.includes("torreDeVarredura: Object.freeze({"));
+assert.ok(codigo.includes("infiltradorCamuflado: Object.freeze({"));
 
 console.log("Protótipo V-13: desbloqueio, camuflagem, detecção e história validados.");

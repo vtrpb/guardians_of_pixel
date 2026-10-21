@@ -1,0 +1,9 @@
+.dominio-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+.dominio-cartao { padding: 16px; border: 2px solid #d5ac6a; background: #202c31; color: #f5e7c9; text-align: center; }
+.dominio-cartao h3 { font-size: 1rem; min-height: 2.4em; line-height: 1.4; }
+.dominio-cartao canvas { width: 160px; height: 160px; image-rendering: pixelated; background: #151d27; }
+.dominio-cartao .botao { width: 100%; min-height: 44px; }
+.dominio-cartao .botao[aria-pressed="true"] { border-color: #87f0ba; }
+.estrela-dominio { color: #d69b12; text-shadow: 1px 1px 0 #fff2a0; }
+.dominio-cartao .estrela-dominio { color: #fff07a; }
+@media(max-width: 520px) { .dominio-grade { grid-template-columns: 1fr; } }

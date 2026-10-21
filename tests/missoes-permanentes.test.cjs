@@ -2,8 +2,8 @@ const assert=require('assert');
 const fs=require('fs');
 const vm=require('vm');
 const contexto=vm.createContext({});
-vm.runInContext(fs.readFileSync('missoes.js','utf8'),contexto);
-vm.runInContext(fs.readFileSync('missoes-idiomas.js','utf8'),contexto);
+vm.runInContext(fs.readFileSync('modulos/missoes.js','utf8'),contexto);
+vm.runInContext(fs.readFileSync('modulos/missoes-idiomas.js','utf8'),contexto);
 const lista=contexto.criarCatalogoDeMissoesPermanentes();
 contexto.CONFIG={missoes:{permanentes:lista}};
 assert.equal(lista.length,100);
@@ -21,9 +21,11 @@ for(const m of lista) {
     }
 }
 assert.deepEqual(Array.from(lista.slice(10,20),m=>m.objetivo),[50,150,500,1000,2500,5000,10000,20000,35000,50000]);
-assert.equal(lista[60].recompensa.id,'sentinelaDourada');
-assert.equal(lista[82].recompensa.id,'alemDoLimite');
+assert.equal(lista[60].recompensa.tipo,'fragmentos');
+assert.equal(lista[60].recompensa.quantidade,15);
+assert.equal(lista[82].recompensa.tipo,'fragmentos');
+assert.equal(lista[82].recompensa.quantidade,25);
 assert.equal(lista[49].propriedadeDoProgresso,'eliminacoes_torreLongoAlcance');
 const html=fs.readFileSync('index.htm','utf8');
-assert.ok(html.indexOf('src="missoes.js')<html.indexOf('src="game.js'));
+assert.ok(html.indexOf('src="modulos/missoes.js')<html.indexOf('src="game.js'));
 console.log('100 missões permanentes: catálogo, metas, recompensas e idiomas validados.');

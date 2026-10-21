@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="68" viewBox="0 0 48 68" shape-rendering="crispEdges">
+  <!-- Árvore exclusiva da abertura: silhueta simples, feita para esconder detalhes sem cobrir o menu. -->
+  <path fill="#53382c" d="M18 38h12v30H18zM14 51h20v6H14z"/>
+  <path fill="#7d5134" d="M23 38h7v30h-7zM14 51h15v6H14z"/>
+  <path fill="#1d5636" d="M12 8h24v5h6v7h4v22h-5v7h-8v7H7v-7H1v-7h-1V20h4v-7h8z"/>
+  <path fill="#287342" d="M12 13h24v7h5v21h-6v8H9v-8H4V20h8z"/>
+  <path fill="#3d9049" d="M17 12h14v6h6v10h-5v7h-9v7h-9v-7H8v-9h5v-8h4z"/>
+  <path fill="#79bb52" d="M19 16h10v5h5v8h-8v6h-9v-7h-6v-7h8z"/>
+  <path fill="#a3d960" d="M20 17h8v5h4v4h-8v5h-7v-7h3z"/>
+</svg>

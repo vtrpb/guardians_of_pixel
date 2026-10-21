@@ -19,9 +19,9 @@ const especificacao = fs.readFileSync(
     'data-idioma="pt-BR"',
     'data-idioma="en"',
     'data-idioma="es"',
-    "Português",
-    "English",
-    "Español",
+    ">Português (BR)</button>",
+    ">English (US)</button>",
+    ">Español (ES)</button>",
     "styles.css?v=maquina-tempo-1",
     "game.js?v=maquina-tempo-1"
 ].forEach((trecho) => assert.ok(html.includes(trecho), `Interface ausente: ${trecho}`));
@@ -63,7 +63,7 @@ const especificacao = fs.readFileSync(
 
 [
     "### Mudança: seletor de idioma",
-    "**Português**, **English** e **Español**",
+    "**Português (BR)**, **English (US)** e **Español (ES)**",
     "guardians-of-pixel-idioma-v1",
     "O atributo `lang` do documento acompanha `pt-BR`, `en` ou `es`"
 ].forEach((trecho) => assert.ok(
@@ -102,6 +102,9 @@ const rotuloTraduzido = {
 };
 const armazenamento = new Map([["guardians-of-pixel-idioma-v1", "es"]]);
 const contexto = {
+    Image: class { constructor() { this.src = ''; } },
+    TELAS_DO_LOBBY_EM_TELA_CHEIA: new Set(),
+    window: {matchMedia: () => ({matches:false})},
     botoesDeIdiomaDoTeste,
     localStorage: {
         getItem: (chave) => armazenamento.get(chave) ?? null,
@@ -132,6 +135,8 @@ const contexto = {
     tutorialAtivo: false
 };
 vm.createContext(contexto);
+// Carrega os catálogos reais usados por localizar(), inclusive o confronto final.
+require('./apoio/catalogos-idiomas.cjs').carregarCatalogosDosModulos(contexto);
 
 const inicioDasConstantes = codigo.indexOf("const CHAVE_IDIOMA");
 const fimDasConstantes = codigo.indexOf("let musicaPausadaPeloJogador", inicioDasConstantes);
@@ -178,7 +183,7 @@ assert.strictEqual(
     "Permanent upgrades that strengthen your defense."
 );
 
-const traducoesCompletas = vm.runInContext("TEXTOS_LOCALIZADOS", contexto);
+const traducoesCompletas = vm.runInContext("Object.fromEntries(['en','es'].map(i=>[i,{...TEXTOS_LOCALIZADOS[i],...TRADUCOES_NOVAS_CONQUISTAS[i],...TRADUCOES_CONQUISTAS_MEMORAVEIS[i],...TRADUCOES_FASE18[i]}]))", contexto);
 const traducoesPrincipais = vm.runInContext("TRADUCOES", contexto);
 const textosLiteraisLocalizados = [...codigo.matchAll(/localizar\(\s*"([^"\n]+)"/g)]
     .map((correspondencia) => correspondencia[1]);

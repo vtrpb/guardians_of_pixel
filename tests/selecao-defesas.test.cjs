@@ -6,13 +6,24 @@ const codigo = fs.readFileSync("game.js", "utf8");
 const css = fs.readFileSync("styles.css", "utf8");
 const especificacao = fs.readFileSync("docs/ESPECIFICACAO.md", "utf8");
 
-assert.ok(html.includes('onclick="abrirSelecaoDeDefesas()"'));
+const acaoJogar = html.match(/onclick="([^"]*lobbyClassicoAtivo[^\"]*)"/);
+assert.ok(acaoJogar, "Botão Jogar deve respeitar o modo do lobby");
+for (const classico of [false, true]) {
+    const chamadas = [];
+    require("vm").runInNewContext(acaoJogar[1], {
+        lobbyClassicoAtivo: classico,
+        jogarClassico: () => chamadas.push("classico"),
+        abrirSelecaoDeDefesas: () => chamadas.push("selecao")
+    });
+    assert.deepStrictEqual(chamadas, [classico ? "classico" : "selecao"]);
+}
 assert.ok(html.includes('onclick="abrirSelecaoDeDefesas(true)"'));
 
 [
     'const CHAVE_SELECAO_DE_DEFESAS = "guardians-of-pixel-selecao-defesas-v1"',
     "quantidadeMaximaDeDefesasSelecionadas: 6",
-    "5: 15, 6: 15, 7: 15, 8: 15, 9: 15, 10: 15, 11: 15, 12: 15, 13: 15, 14: 15, 99: 12, 100: 12",
+    "function obterLimiteDaSelecaoDeDefesas()",
+    'obterBonusPermanenteDaLoja("bonusLimiteDeTorres")',
     "function carregarSelecaoDeDefesas()",
     "function salvarSelecaoDeDefesas()",
     "function normalizarSelecaoDeDefesas(selecao, preencherSeVazia = true)",
@@ -23,6 +34,13 @@ assert.ok(html.includes('onclick="abrirSelecaoDeDefesas(true)"'));
     'botao.elemento.hidden = !escolhidaParaPartida',
     "prepararSelecaoDeDefesasParaPartida(deveIniciarTutorial);"
 ].forEach((trecho) => assert.ok(codigo.includes(trecho), `Regra ausente: ${trecho}`));
+
+const limites = require("vm").runInNewContext(`(${codigo.match(/limitesPorFase: Object.freeze\((\{[^}]+\})\)/)[1]})`);
+for (let fase = 1; fase <= 18; fase++) {
+    assert.strictEqual(limites[fase], fase === 1 ? 10 : fase <= 3 ? 12 : fase === 4 ? 14 : 15);
+}
+assert.strictEqual(limites[99], 12);
+assert.strictEqual(limites[100], 12);
 
 [
     '.conteudo-menu[data-tela="selecaoDefesas"]',
@@ -36,5 +54,6 @@ assert.ok(html.includes('onclick="abrirSelecaoDeDefesas(true)"'));
 assert.ok(especificacao.includes("### Mudança: equipe de até seis defesas e teto de construção"));
 assert.ok(especificacao.includes("11, 13, 13, 15, 16, 16 e 16"));
 assert.ok(especificacao.includes("no mínimo 1 e no máximo 6 defesas desbloqueadas"));
+assert.ok(especificacao.includes("7 com a Licença de Construção"));
 
-console.log("Seleção de até 6 defesas e limites das fases validados.");
+console.log("Seleção de 6 ou 7 defesas com Licença e limites das fases validados.");

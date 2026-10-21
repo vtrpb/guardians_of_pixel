@@ -81,7 +81,7 @@ assert.match(codigo, /botaoVoltarLobbyResultado\.hidden = faseOculta && !vitoria
 assert.match(codigo, /const fasesDoCapitulo = CONFIG\.fases\.filter/);
 assert.doesNotMatch(configuracaoDasFasesComuns, /numero: 99/);
 assert.match(codigo, /const vitoriaNaFaseSecreta = faseAtualEhSecreta\(\)[\s\S]*?const deveDesbloquearCapitulo2[\s\S]*?!capitulo2Desbloqueado/);
-assert.match(codigo, /if \(vitoriaNaFaseSecreta\) \{\s*desbloquearConquista\("aindaEstaEsperando"\)/);
+assert.match(codigo, /if \(vitoriaNaFaseSecreta\) \{[\s\S]*?registrarProgressoDaMissao\('vitoriaGlitch',1,true\);[\s\S]*?desbloquearConquista\("aindaEstaEsperando"\)/);
 assert.match(codigo, /if \(partidaEraSecreta\) \{\s*faseSelecionada = 1;/);
 assert.match(html, /id="camada-corredores-amarelos"[\s\S]*?id="labirinto-amarelo"[\s\S]*?data-direcao-corredores="arrowup"/);
 assert.match(estilos, /\.camada-corredores-amarelos\s*\{[\s\S]*?z-index: 84/);
@@ -279,6 +279,8 @@ contextoDoPortal.tocarEfeitoTeleporteGlitch = () => (
     contextoDoPortal.tocouEfeitoDoTeleporte++
 );
 contextoDoPortal.faseAtualEhSecreta = () => contextoDoPortal.faseSelecionada === 99;
+contextoDoPortal.atualizarRetratoDoPortal = () => {};
+contextoDoPortal.registrarProgressoDaMissao = () => {};
 vm.createContext(contextoDoPortal);
 vm.runInContext([
     extrairFuncao("salvarFaseSecretaDescoberta"),
@@ -343,8 +345,8 @@ assert.ok(classesDaConversa.has("camada-conversa-senhor-tempo"));
 assert.strictEqual(contextoDoPortal.jogoPausado, true);
 assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, /senhor-tempo-cabeca/);
 assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, /senhor-tempo-corpo/);
-assert.doesNotMatch(contextoDoPortal.camadaConversaPortal.innerHTML, /senhor-tempo-forma-humana/);
-assert.doesNotMatch(contextoDoPortal.camadaConversaPortal.innerHTML, /senhor-tempo-braco/);
+assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, /senhor-tempo-forma-humana/);
+assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, /senhor-tempo-braco/);
 assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, />\?\?\?<\/h2>/);
 assert.match(contextoDoPortal.camadaConversaPortal.innerHTML, /Era eu quem falava com você através do portal\./);
 

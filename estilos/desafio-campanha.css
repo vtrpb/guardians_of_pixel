@@ -1,0 +1,8 @@
+.desafio-campanha-opcao{padding:14px;margin-top:12px;border:2px solid #ba9c62;background:#241d38;color:#f4e6c5}
+.desafio-campanha-opcao label{display:flex;gap:10px;align-items:center;min-height:44px;cursor:pointer}
+.desafio-campanha-opcao input{width:20px;height:20px;flex-shrink:0;accent-color:#c6a26c}
+#desafio-campanha-partida{padding:8px 12px;background:#241d38;color:#f4e6c5;font-size:13px;line-height:1.5}
+#resultado-desafio-campanha{padding:12px;background:#241d38;color:#f4e6c5;border:2px solid #ba9c62;margin:12px 0}
+#desafio-campanha-partida[hidden],#resultado-desafio-campanha[hidden]{display:none}
+#resultado-desafio-carta{padding:10px;color:#f4e6c5;background:#241d38;border:2px solid #ba9c62;margin:12px 0;font-size:13px;line-height:1.5}
+#resultado-desafio-carta[hidden]{display:none}

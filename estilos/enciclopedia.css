@@ -1,0 +1,16 @@
+.enciclopedia-contagem {color:#ffe39a;font-weight:bold;margin:22px 0;}
+.enciclopedia-vazia {color:#d4c9e1;line-height:1.7;}
+.enciclopedia-grade {display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;}
+.enciclopedia-registro {font:inherit;text-align:left;color:#f6edda;background:#302641;border:3px solid #a78b60;padding:18px;min-height:130px;display:flex;flex-direction:column;gap:12px;overflow-wrap:anywhere;}
+button.enciclopedia-registro {cursor:pointer;box-shadow:4px 4px 0 #15101e;}
+button.enciclopedia-registro:hover {background:#453454;border-color:#ffe39a;}
+.enciclopedia-registro:focus-visible {outline:3px solid #8ae9dd;outline-offset:3px;}
+.enciclopedia-registro>span {font-size:28px;color:#ffe39a;}
+.enciclopedia-registro strong {line-height:1.6;font-size:13px;}
+.enciclopedia-bloqueado {border-color:#554a61;color:#bdb1cc;background:#241f2c;}
+.enciclopedia-bloqueado small {line-height:1.6;}
+.enciclopedia-leitura {max-width:850px;margin:auto;background:#241b38;border:3px solid #cba66b;padding:28px;color:#f6edda;}
+.enciclopedia-leitura h3 {font-size:20px;line-height:1.6;margin:30px 0 20px;color:#ffe39a;overflow-wrap:anywhere;}
+.enciclopedia-texto {font-size:18px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere;}
+.enciclopedia-leitura footer {margin-top:30px;color:#b8dbc9;font-size:12px;line-height:1.7;}
+@media(max-width:600px){.enciclopedia-grade{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}.enciclopedia-registro{padding:12px;}.enciclopedia-registro strong{font-size:10px;}.enciclopedia-leitura{padding:16px;}.enciclopedia-leitura h3{font-size:16px;}.enciclopedia-texto{font-size:15px;}}

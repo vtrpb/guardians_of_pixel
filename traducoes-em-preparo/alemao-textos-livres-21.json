@@ -1,0 +1,22 @@
+{
+  "A cada {segundos} s, atinge até {alvos} torres. {efeito}": "Alle {segundos} s trifft er bis zu {alvos} Türme. {efeito}",
+  "A cada {segundos} s: {efeito}": "Alle {segundos} s: {efeito}",
+  "Ataque": "Angriff",
+  "Dano {dano} · Detecta camuflados · Alcance {alcance}": "Schaden {dano} · Erkennt getarnte Gegner · Reichweite {alcance}",
+  "Dano {dano} · Encadeia em {alvos} alvos · Alcance {alcance}": "Schaden {dano} · Springt auf {alvos} Ziele über · Reichweite {alcance}",
+  "Dano {dano} · Marca +{percentual}% de dano · Alcance {alcance}": "Schaden {dano} · Markiert für +{percentual}% Schaden · Reichweite {alcance}",
+  "Dano {dano} · Perfura uma faixa de {largura} px · Alcance {alcance}": "Schaden {dano} · Durchdringt eine {largura} px breite Bahn · Reichweite {alcance}",
+  "Dano {dano} · Queima {danoQueimadura}/s por {segundos}s · Alcance {alcance}": "Schaden {dano} · Brandschaden {danoQueimadura}/s für {segundos} s · Reichweite {alcance}",
+  "Dano {dano} + {quantidade} fragmentos de {danoFragmento} · Clique para detonar · Limite {limite}": "Schaden {dano} + {quantidade} Splitter mit je {danoFragmento} Schaden · Zum Zünden klicken · Limit {limite}",
+  "Dano {dano} em {raio} px": "Schaden {dano} in {raio} px Radius",
+  "Dano {dano} em {raio} px · Alcance {alcance}": "Schaden {dano} in {raio} px Radius · Reichweite {alcance}",
+  "Dano {dano} em {raio} px · Clique para detonar · Limite {limite}": "Schaden {dano} in {raio} px Radius · Zum Zünden klicken · Limit {limite}",
+  "Dano causado": "Verursachter Schaden",
+  "DATA: INEXISTENTE": "DATUM: NICHT VORHANDEN",
+  "DE VOLTA PARA CASA": "ZURÜCK NACH HAUSE",
+  "DE VOLTA PARA CASA?": "ZURÜCK NACH HAUSE?",
+  "Defenda a torre-base": "Verteidige den Basisturm",
+  "DEFENDA O NÚCLEO DAS MEMÓRIAS": "VERTEIDIGE DEN ERINNERUNGSKERN",
+  "Defender a passagem": "Den Durchgang verteidigen",
+  "Defender o arquivo": "Das Archiv verteidigen"
+}

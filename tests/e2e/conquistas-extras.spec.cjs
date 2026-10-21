@@ -4,9 +4,26 @@ async function abrir(page) {
     await page.addInitScript(()=>localStorage.setItem('guardians-of-pixel-tutorial-concluido-v1','true'));
     await page.goto('/');expect(erros).toEqual([]);await page.locator('#botao-jogar-menu-inicial').click();
 }
+test('catálogo atual tem 48 ícones válidos sem revelar as 15 conquistas ocultas',async({page})=>{
+    await abrir(page);
+    const catalogo=await page.evaluate(async()=>{
+        const ids=Object.keys(CONFIG.conquistas);
+        const validas=await Promise.all(ids.map(id=>new Promise(resolve=>{
+            const imagem=new Image();
+            imagem.onload=()=>resolve(imagem.naturalWidth>0);
+            imagem.onerror=()=>resolve(false);
+            imagem.src=`assets/conquistas/${id}.svg`;
+        })));
+        return {total:ids.length,ocultas:Object.values(CONFIG.conquistas).filter(c=>c.secreta).length,
+            imagensValidas:validas.filter(Boolean).length};
+    });
+    expect(catalogo).toEqual({total:48,ocultas:15,imagensValidas:48});
+    await page.evaluate(()=>mostrarConquistas('ocultas'));
+    await expect(page.locator('.conquista-icone')).toHaveText(Array(15).fill('?'));
+});
 test('20 conquistas novas: categorias, localização, limites dos Bosses e efeitos simultâneos',async({page},info)=>{
     const erros=[];page.on('pageerror',e=>erros.push(e.message));await abrir(page);
-    expect(await page.evaluate(()=>({total:Object.keys(CONFIG.conquistas).length,ocultas:Object.values(CONFIG.conquistas).filter(c=>c.secreta).length}))).toEqual({total:34,ocultas:12});
+    expect(await page.evaluate(()=>({total:Object.keys(CONFIG.conquistas).length,ocultas:Object.values(CONFIG.conquistas).filter(c=>c.secreta).length}))).toEqual({total:48,ocultas:15});
     expect(await page.evaluate(()=>Object.values(criarConquistasExtras()).every(c=>['en','es'].every(id=>TRADUCOES_NOVAS_CONQUISTAS[id][c.nome]&&TRADUCOES_NOVAS_CONQUISTAS[id][c.descricao])))).toBe(true);
     const dados=await page.evaluate(()=>{
         fecharConteudoMenu();iniciarPartida();for(let i=0;i<3;i++)concluirCutsceneDaCarta();definirJogoPausado(true);

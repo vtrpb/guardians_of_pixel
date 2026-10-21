@@ -26,7 +26,7 @@ const especificacao = fs.readFileSync(
     "function salvarTutorialConcluido()",
     "function iniciarTutorialDaPartida()",
     "function avancarTutorialPara(passo)",
-    "function concluirTutorialDaPartida()",
+    "function concluirTutorialDaPartida(pulado = false)",
     "function pularTutorialDaPartida()",
     "function iniciarTutorialPeloMenu()",
     "definirJogoPausado(true);",

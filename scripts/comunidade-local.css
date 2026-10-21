@@ -1,0 +1,9 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #0c211c; color: #effff5; font: 16px/1.5 system-ui, sans-serif; }
+main { max-width: 850px; margin: auto; padding: 24px; }
+h1 { color: #8ff2c5; }
+button { padding: 10px 15px; border: 2px solid #8ff2c5; border-radius: 6px; background: #205b46; color: white; font: inherit; cursor: pointer; }
+article { margin: 14px 0; padding: 16px; border: 2px solid #4fae8d; background: #153c32; }
+article h2 { margin: 0 0 6px; }
+article p { margin: 0 0 12px; }
+textarea { width: 100%; min-height: 68px; margin-top: 12px; background: #e6f5eb; color: #10251b; }

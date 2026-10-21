@@ -1,0 +1,26 @@
+.lobby-atalhos-perfil {display:flex;flex-wrap:wrap;gap:8px;max-width:100%;}
+.lobby-atalho-item {position:relative;width:52px;}
+.lobby-atalho-item:has(>[hidden]) {display:none;}
+.lobby-atalho {position:relative;width:52px;height:52px;min-width:0;flex:none;}
+.lobby-atalho img {width:32px;height:32px;image-rendering:pixelated;}
+.lobby-atalho .atalho-rotulo {position:absolute;bottom:calc(100% + 10px);left:0;z-index:5;width:max-content;max-width:180px;padding:8px;color:#fff4cc;background:#182737;border:2px solid #91c8ee;font:11px/1.5 monospace;visibility:hidden;pointer-events:none;}
+.lobby-atalho-item:hover .atalho-rotulo,.lobby-atalho:focus-visible .atalho-rotulo {visibility:visible;}
+.atalho-estado {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.lobby-atalho:disabled {cursor:not-allowed;filter:grayscale(.8);opacity:.65;}
+.botao-lobby-enciclopedia {background:#453b64;border-color:#b49be5;box-shadow:6px 6px 0 #261d3e;}
+.botao-lobby-enciclopedia:hover {box-shadow:3px 3px 0 #261d3e;}
+@media(max-width:600px),(hover:none){
+ .lobby-atalhos-perfil {gap:6px;}
+ .lobby-atalho-item {width:46px;margin-bottom:32px;}
+ .lobby-atalho {width:46px;height:46px;}
+ .lobby-atalho img {width:30px;height:30px;}
+ .lobby-atalho .atalho-rotulo {visibility:visible;top:calc(100% + 8px);bottom:auto;left:0;width:46px;padding:0;background:none;border:0;text-align:center;font-size:8px;line-height:1.3;overflow-wrap:anywhere;}
+ .botao-lobby-enciclopedia .atalho-rotulo {left:-4px;width:54px;font-size:7px;white-space:nowrap;}
+}
+@media(max-width:360px){
+ .lobby-atalhos-perfil {gap:1px;}
+ .lobby-atalho-item,.lobby-atalho {width:44px;}
+ .lobby-atalho {height:44px;}
+ .lobby-atalho .atalho-rotulo {width:44px;}
+ .botao-lobby-enciclopedia .atalho-rotulo {width:54px;}
+}
